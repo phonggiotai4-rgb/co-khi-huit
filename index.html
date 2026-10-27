@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CƠ KHÍ HUIT — Trang chủ</title>
+<meta name="description" content="Cổng học tập và ôn luyện dành cho sinh viên Khoa Công nghệ Cơ khí, Trường Đại học Công Thương TP. Hồ Chí Minh.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css?v=20261017d">
+<link rel="stylesheet" href="assets/timetable.css">
+<style>
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{
+  position:relative;overflow:hidden;
+  padding:0;border-radius:var(--r-xl);
+  margin-bottom:var(--gutter);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);
+}
+/* Ảnh đầu trang — lớp z-0, nằm DƯỚI lớp kính (design.md §3) */
+.hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 58%;
+  transform:scale(1.02);transition:transform 900ms var(--ease-out);
+}
+.hero:hover .hero-bg{transform:scale(1.06)}
+/* Lớp phủ pha brand — giữ chữ luôn đạt tương phản AA trên ảnh */
+.hero-scrim{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(100deg,
+      rgba(2, 58, 128, .94)  0%,
+      rgba(3, 78, 162, .86) 30%,
+      rgba(3, 78, 162, .58) 55%,
+      rgba(3, 78, 162, .26) 78%,
+      rgba(3, 78, 162, .16) 100%),
+    linear-gradient(0deg, rgba(2, 58, 128, .55), transparent 45%);
+}
+.hero-inner{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;
+  padding:34px 36px;min-height:260px;
+}
+.hero-logo{
+  width:104px;height:104px;border-radius:50%;object-fit:contain;
+  background:var(--white);padding:8px;box-shadow:0 10px 30px rgba(2,58,128,.45);flex:none;
+}
+.hero h2{
+  margin:0;font:800 clamp(26px,4.5vw,40px)/1.12 var(--font-display);
+  letter-spacing:-.025em;color:var(--text-invert);
+}
+.hero h2 span{color:rgba(255,255,255,.74)}
+.hero p{margin:10px 0 0;max-width:62ch;font-size:15px;line-height:1.65;color:rgba(255,255,255,.90)}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+/* Trên nền tối, nút chính đổi thành nền trắng — chữ brand */
+.hero-cta .ck-btn{
+  background:var(--white);color:var(--brand);box-shadow:0 6px 18px rgba(2,58,128,.35);
+}
+.hero-cta .ck-btn:hover{background:var(--off-white)}
+.hero-cta .ck-btn.ghost{
+  background:rgba(255,255,255,.14);color:var(--white);
+  border-color:rgba(255,255,255,.55);backdrop-filter:blur(8px);
+}
+.hero-cta .ck-btn.ghost:hover{background:rgba(255,255,255,.26)}
+@media (max-width:720px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;padding:24px 20px;min-height:0;gap:16px}
+  .hero-logo{width:84px;height:84px;margin:0 auto}
+  .hero-cta{justify-content:center}
+  .hero p{margin-inline:auto}
+  .hero-scrim{background:linear-gradient(180deg,rgba(2,58,128,.88),rgba(3,78,162,.80))}
+}
+
+/* ── THỐNG KÊ NHANH ───────────────────────────────────── */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:var(--gutter)}
+.kpi{padding:16px 18px;border-radius:var(--r-lg);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  display:flex;gap:12px;align-items:center}
+.kpi .ico{
+  width:40px;height:40px;flex:none;border-radius:var(--r-md);
+  background:var(--brand-10);color:var(--text-strong);display:grid;place-items:center;
+}
+.kpi .ico svg{width:19px;height:19px}
+.kpi .l{margin:0;font:600 11px/1.3 var(--font-display);letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
+.kpi .v{margin:1px 0 0;font:700 24px/1.15 var(--font-mono);color:var(--text-strong);letter-spacing:-.02em}
+.kpi .v small{font:500 12px/1 var(--font-display);color:var(--text-muted);letter-spacing:0}
+@media (max-width:960px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.kpis{grid-template-columns:1fr}}
+/* ── KHOI THOI GIAN BIEU ────────────────────────────────────
+   Khối này gộp trực tiếp từ công cụ cũ; toàn bộ style nằm ở
+   assets/timetable.css và đã được khoang dưới #tgb để không lấn
+   phần còn lại của trang. Ở đây chỉ cần lề ngoài cho khối.      */
+.tt{margin-bottom:var(--gutter);scroll-margin-top:96px;position:relative}
+
+/* ── LỌC MÔN HỌC ──────────────────────────────────────── */
+.filter{padding:16px 18px;border-radius:var(--r-xl);margin-bottom:var(--gutter);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.search{position:relative;flex:1 1 280px;min-width:0}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text-muted);pointer-events:none}
+.search input{width:100%;padding-left:40px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{
+  border:1px solid var(--brand-25);background:rgba(255,255,255,.50);color:var(--text);
+  border-radius:var(--r-full);padding:8px 15px;min-height:36px;cursor:pointer;
+  font:600 12.5px/1 var(--font-display);box-shadow:var(--sh-xs);
+  transition:all var(--dur-fast) var(--ease-out);
+}
+.chip:hover{background:var(--glass-3-bg)}
+.chip[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:transparent}
+.chip b{font-weight:700;opacity:.72;margin-left:6px;font-size:11px}
+
+/* ── NHÓM MÔN HỌC ─────────────────────────────────────── */
+.cat{margin-bottom:30px}
+.cat-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.cat-head h3{
+  margin:0;font:700 18px/1.3 var(--font-display);letter-spacing:.02em;
+  color:var(--text-strong);
+}
+.cat-head .n{font:600 12px/1 var(--font-mono);color:var(--text-muted)}
+.cat-head::after{content:"";flex:1 1 60px;height:1px;background:var(--brand-06)}
+
+.subj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px}
+.subj{
+  position:relative;display:flex;flex-direction:column;gap:10px;
+  padding:16px 18px;border-radius:var(--r-lg);
+  background:var(--glass-1-bg);border:1px solid var(--glass-1-br);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  transition:transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out),
+             background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter:blur(1px)){
+  .subj{backdrop-filter:blur(var(--blur-1)) saturate(120%);-webkit-backdrop-filter:blur(var(--blur-1)) saturate(120%);}
+}
+@media (max-width:768px){.subj{background:rgba(255,255,255,.88);backdrop-filter:none}}
+.subj:hover{transform:translateY(-2px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);background:var(--glass-3-bg)}
+.subj .nm{
+  font:700 14px/1.4 var(--font-display);color:var(--text-strong);
+  letter-spacing:.01em;margin:0;flex:1;
+}
+.subj .foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.subj .go{
+  display:inline-flex;align-items:center;gap:6px;
+  font:600 12.5px/1 var(--font-display);color:var(--text);text-decoration:none;
+}
+.subj .go svg{width:14px;height:14px;transition:transform var(--dur-fast) var(--ease-out)}
+.subj:hover .go{color:var(--text-strong)}
+.subj:hover .go svg{transform:translateX(3px)}
+.subj .prog{
+  font:600 11px/1 var(--font-mono);color:var(--text-muted);
+  padding:4px 8px;border-radius:var(--r-full);background:rgba(255,255,255,.6);border:1px solid var(--brand-06);
+}
+.subj .prog.done{background:var(--brand);color:#fff;border-color:transparent}
+
+.empty{padding:34px 20px;text-align:center;color:var(--text-muted)}
+.empty b{display:block;color:var(--text-strong);font-size:15px;margin-bottom:6px}
+</style>
+</head>
+<body data-depth="0">
+
+<div data-ck-nav="home"></div>
+
+<main class="ck-wrap">
+
+  <section class="hero glass g2">
+    <img class="hero-bg" src="assets/hero-campus.jpg" alt="" aria-hidden="true"
+         onerror="this.style.display='none'">
+    <span class="hero-scrim" aria-hidden="true"></span>
+    <div class="hero-inner">
+      <img class="hero-logo" src="assets/logo.png" alt="Logo Trường Đại học Công Thương TP. Hồ Chí Minh">
+      <div>
+        <h2>CƠ KHÍ <span>HUIT</span></h2>
+        <p>Kết Nối Tri Thức – Chia Sẻ Tài Liệu – Đồng Hành Cùng Sinh Viên Kỹ Thuật.
+           Một Nơi Để Học Tập, Ôn Luyện Và Khám Phá Kiến Thức Từ Đại Cương Đến Chuyên Ngành.</p>
+        <div class="hero-cta">
+          <a class="ck-btn" href="tinh-nang.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 4.5 7.4v9.2L12 20.8l7.5-4.2V7.4zM4.5 7.4 12 11.6l7.5-4.2M12 11.6v9.2"/></svg>
+            Mở tính năng
+          </a>
+          <a class="ck-btn ghost" href="lich-su-lam-bai.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+            Lịch sử làm bài
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpis" aria-label="Thống kê nhanh"></section>
+
+  <section class="tt" id="tgb" aria-label="Thời gian biểu">
+
+    <div class="glass card live-card">
+      <div class="live-top">
+        <div class="clock" id="clock" aria-live="off">--:--<small id="clockSub">Giờ Việt Nam</small></div>
+        <div class="status" aria-live="polite">
+          <span class="badge" id="badge"><i class="dot"></i><span id="badgeText">Đang tải</span></span>
+          <p class="status-title" id="statusTitle"></p>
+          <p class="status-detail" id="statusDetail"></p>
+        </div>
+        <div class="sim">
+          <label for="simTime">Xem theo giờ</label>
+          <input class="inp-glass" type="time" id="simTime">
+          <button class="link-btn" id="simReset" type="button" hidden>Về giờ hiện tại</button>
+        </div>
+        <button class="icon-btn" id="copyBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a1 1 0 01-1-1V4a1 1 0 011-1h10a1 1 0 011 1v1"/></svg>
+          Sao chép lịch
+        </button>
+      </div>
+      <div class="ruler-wrap">
+        <div class="ruler" id="ruler" role="img" aria-label="Dòng thời gian các tiết trong ngày"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+      </div>
+    </div>
+
+    <div class="tabs-wrap">
+      <div class="tabs glass g1" role="tablist" id="tabs" aria-label="Chọn loại lịch"></div>
+      <p class="note" id="note"></p>
+    </div>
+
+    <div class="grid" id="grid" aria-live="polite"></div>
+
+    <section class="glass g1 card tool" aria-label="Tính thời lượng nhiều tiết">
+      <h2>Tính giờ theo số tiết</h2>
+      <p>Chọn tiết bắt đầu và tiết kết thúc của lớp để xem giờ vào lớp và giờ tan lớp.</p>
+      <div class="tool-row">
+        <div class="field"><label for="from">Từ tiết</label><select id="from"></select></div>
+        <div class="field"><label for="to">Đến tiết</label><select id="to"></select></div>
+        <div class="result" id="result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status"></div>
+  </section>
+
+  <section id="lb" aria-labelledby="lbTitle">
+    <h2 class="ck-section-title" id="lbTitle">LÒ ÔN LUYỆN (CÁC MÔN HỌC)</h2>
+    <p class="ck-page-sub" style="margin-bottom:16px">Chọn môn để vào ôn tập. Mọi phiên làm bài đều được lưu vào <a href="lich-su-lam-bai.html" style="color:var(--text-strong);font-weight:600">Lịch sử làm bài</a>.</p>
+
+    <div class="filter glass g1">
+      <div class="filter-row">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+          <span class="sr-only">Tìm môn học</span>
+          <input class="ck-input" type="search" id="q" placeholder="Tìm môn học, ví dụ: Cơ khí, Điện tử, Giải tích…" autocomplete="off">
+        </label>
+        <span class="ck-pill light" id="countPill">—</span>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Lọc theo nhóm môn"></div>
+    </div>
+
+    <div id="cats"></div>
+    <div id="noResult" class="glass g1 empty" hidden>
+      <b>Không tìm thấy môn phù hợp</b>
+      Thử một từ khoá khác, hoặc bỏ bộ lọc nhóm môn để xem toàn bộ danh sách.
+    </div>
+  </section>
+
+</main>
+
+<div data-ck-footer></div>
+
+<div class="exam-modal" id="examModal" hidden>
+  <div class="exam-scrim" data-exam-dismiss></div>
+  <div class="exam-dialog" id="examDialog" role="dialog" aria-modal="true" aria-labelledby="examTitle">
+    <div id="examBody"></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=20261017d"></script>
+<script src="assets/timetable.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/quiz-bank.js"></script>
+<script src="assets/exam-card.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ───────── 1. THỐNG KÊ NHANH ───────── */
+  var hist = CK.history.all();
+  var done = {};
+  hist.forEach(function (e) { if (e.subject) done[e.subject] = (done[e.subject] || 0) + 1; });
+
+  var KPIS = [
+    { i: "M4.5 5.5h15v13h-15zM8 3.5v4M16 3.5v4M4.5 10h15", l: "Môn học ôn tập", v: CK.SUBJECTS.length, u: "môn" },
+    { i: "M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z", l: "Công cụ tính toán", v: 7, u: "công cụ" },
+    { i: "M5 12.5 10 17.5 19 7", l: "Phiên đã làm", v: hist.length, u: "phiên" },
+    { i: "M12 3.2 4.5 7.4v9.2L12 20.8l7.5-4.2V7.4z", l: "Chuỗi ngày ôn", v: CK.history.streak(), u: "ngày" }
+  ];
+  $("kpis").innerHTML = KPIS.map(function (k) {
+    return '<div class="kpi glass g1">' +
+      '<span class="ico">' + CK.svg(k.i) + '</span>' +
+      '<div><p class="l">' + k.l + '</p><p class="v">' + k.v + ' <small>' + k.u + '</small></p></div>' +
+    '</div>';
+  }).join("");
+
+/* ============================================================
+   THOI GIAN BIEU — gộp trực tiếp vào trang này, không dùng iframe.
+   Bọc trong IIFE riêng để không đụng biến $ của phần trang chủ phía trên.
+   ============================================================ */
+(function () {
+/* ---------- Dữ liệu (dùng chung với widget ở Trang chủ) ---------- */
+/* assets/timetable.js — sửa giờ học ở MỘT chỗ duy nhất cho cả website. */
+const TT = CK.TIMETABLE;
+const SETS = TT.sets;
+const SESSIONS = TT.sessions;
+
+/* ---------- Tiện ích ---------- */
+const $ = id => document.getElementById(id);
+const toMin = t => TT.toMin(t);
+const show = t => TT.show(t);
+const pad = n => String(n).padStart(2, "0");
+const sessionOf = n => TT.sessionOf(n);
+
+function fmtDur(totalMin){
+  const sec = Math.max(0, Math.ceil(totalMin * 60));
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  if (h > 0) return `${h} giờ ${pad(m)} phút`;
+  if (m >= 5) return `${m} phút`;
+  return m > 0 ? `${m} phút ${pad(s)} giây` : `${s} giây`;
+}
+
+let state = { set: 0, sim: null };
+try { const saved = localStorage.getItem("huit-set"); if (saved !== null) state.set = Math.min(2, +saved || 0); } catch(e){}
+
+function nowMinutes(){
+  if (state.sim !== null) return state.sim;
+  return TT.nowMinutes();
+}
+
+/* ---------- Dựng giao diện ---------- */
+function buildTabs(){
+  const el = $("tabs");
+  el.innerHTML = "";
+  SETS.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.className = "tab"; b.type = "button"; b.role = "tab";
+    b.setAttribute("aria-selected", i === state.set);
+    b.innerHTML = `<b>${s.name}</b><span>${s.desc}</span>`;
+    b.addEventListener("click", () => selectSet(i));
+    b.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight") selectSet((state.set + 1) % 3, true);
+      if (e.key === "ArrowLeft") selectSet((state.set + 2) % 3, true);
+    });
+    el.appendChild(b);
+  });
+}
+function selectSet(i, focus){
+  state.set = i;
+  try { localStorage.setItem("huit-set", i); } catch(e){}
+  buildTabs(); renderGrid(); renderRuler(); renderTool(); tick();
+  if (focus) $("tabs").children[i].focus();
+}
+
+function renderGrid(){
+  const set = SETS[state.set];
+  $("note").textContent = set.note;
+  const grid = $("grid");
+  grid.innerHTML = "";
+  SESSIONS.forEach(sess => {
+    const items = set.periods.filter(p => p.n >= sess.from && p.n <= sess.to);
+    const first = items[0], last = items[items.length - 1];
+    const card = document.createElement("article");
+    card.className = "glass g1 card session";
+    let html = `<h2>${sess.name}<small>${show(first.s)} – ${show(last.e)}</small></h2><ul class="list">`;
+    items.forEach((p, i) => {
+      if (i > 0) {
+        const gap = toMin(p.s) - toMin(items[i-1].e);
+        if (gap > 0) html += `<li class="brk" data-from="${toMin(items[i-1].e)}" data-to="${toMin(p.s)}"><span>Nghỉ giải lao ${gap} phút</span><span>${show(items[i-1].e)} – ${show(p.s)}</span></li>`;
+      }
+      html += `<li class="row" data-n="${p.n}">
+        <div class="num">${p.n}</div>
+        <div><div class="time">${show(p.s)}<em>đến</em>${show(p.e)}</div><div class="dur">${toMin(p.e) - toMin(p.s)} phút</div></div>
+        <span class="tag" hidden></span></li>`;
+    });
+    html += `</ul>`;
+    card.innerHTML = html;
+    grid.appendChild(card);
+  });
+}
+
+const R0 = 6 * 60, R1 = 22 * 60;
+const pct = m => ((m - R0) / (R1 - R0)) * 100;
+
+function renderRuler(){
+  const set = SETS[state.set];
+  const ruler = $("ruler");
+  ruler.innerHTML = "";
+  set.periods.forEach(p => {
+    const d = document.createElement("div");
+    d.className = "seg"; d.dataset.n = p.n;
+    d.style.left = pct(toMin(p.s)) + "%";
+    d.style.width = (pct(toMin(p.e)) - pct(toMin(p.s))) + "%";
+    d.title = `Tiết ${p.n}: ${show(p.s)} - ${show(p.e)}`;
+    ruler.appendChild(d);
+  });
+  const needle = document.createElement("div");
+  needle.className = "needle"; needle.id = "needle";
+  ruler.appendChild(needle);
+  const ticks = $("ticks");
+  ticks.innerHTML = "";
+  for (let h = 6; h <= 22; h += 2){
+    const s = document.createElement("span");
+    s.style.left = pct(h * 60) + "%";
+    s.textContent = pad(h) + "h";
+    ticks.appendChild(s);
+  }
+}
+
+function renderTool(){
+  const set = SETS[state.set];
+  ["from", "to"].forEach(id => {
+    const sel = $(id), old = sel.value;
+    sel.innerHTML = set.periods.map(p => `<option value="${p.n}">Tiết ${p.n} (${show(p.s)})</option>`).join("");
+    if (old) sel.value = old;
+  });
+  if (!$("from").value) $("from").value = 1;
+  if (!$("to").value || +$("to").value < +$("from").value) $("to").value = $("from").value;
+  calc();
+}
+function calc(){
+  const set = SETS[state.set];
+  let a = +$("from").value, b = +$("to").value;
+  if (b < a) { b = a; $("to").value = a; }
+  const pa = set.periods.find(p => p.n === a), pb = set.periods.find(p => p.n === b);
+  const span = toMin(pb.e) - toMin(pa.s);
+  const study = set.periods.filter(p => p.n >= a && p.n <= b).reduce((t, p) => t + toMin(p.e) - toMin(p.s), 0);
+  const count = b - a + 1;
+  const cross = sessionOf(a) !== sessionOf(b);
+  $("result").innerHTML = `<b>${show(pa.s)} – ${show(pb.e)}</b><span>${count} tiết, ${study} phút học${span > study ? `, ${span - study} phút nghỉ` : ""}${cross ? ". Trải dài qua nhiều buổi" : ""}</span>`;
+}
+
+/* ---------- Cập nhật theo thời gian ---------- */
+function tick(){
+  const set = SETS[state.set];
+  const t = nowMinutes();
+  const hh = Math.floor(t / 60), mm = Math.floor(t % 60);
+  /* Tuỳ chọn 24h (mặc định) hoặc 12h kèm SA/CH — xem TT.isH24() */
+  $("clock").firstChild.nodeValue = TT.isH24()
+    ? `${pad(hh)}:${pad(mm)}`
+    : `${pad(hh % 12 === 0 ? 12 : hh % 12)}:${pad(mm)}${hh < 12 ? " SA" : " CH"}`;
+  $("clockSub").textContent = state.sim !== null ? "Giờ bạn chọn" : "Giờ Việt Nam";
+
+  const per = set.periods.map(p => ({ ...p, a: toMin(p.s), b: toMin(p.e) }));
+  const cur = per.find(p => t >= p.a && t < p.b);
+  const next = per.find(p => p.a > t);
+  const prev = [...per].reverse().find(p => p.b <= t);
+
+  let badge = "", cls = "", title = "", detail = "", progress = 0, brkActive = null;
+  if (cur) {
+    cls = "on"; badge = "Đang trong tiết";
+    title = `Tiết ${cur.n}: ${show(cur.s)} – ${show(cur.e)}`;
+    detail = `Còn ${fmtDur(cur.b - t)} nữa là hết tiết.` + (cur.n < 16 ? "" : " Đây là tiết cuối trong ngày.");
+    progress = ((t - cur.a) / (cur.b - cur.a)) * 100;
+  } else if (next && prev) {
+    cls = "rest";
+    const same = sessionOf(prev.n) === sessionOf(next.n);
+    badge = same ? "Giờ giải lao" : "Giữa hai buổi";
+    title = same ? `Nghỉ giữa tiết ${prev.n} và tiết ${next.n}` : `Đã xong ${SESSIONS[sessionOf(prev.n)].name.toLowerCase()}`;
+    detail = `Tiết ${next.n} bắt đầu lúc ${show(next.s)}, sau ${fmtDur(next.a - t)}.`;
+    brkActive = [prev.b, next.a];
+    progress = ((t - prev.b) / (next.a - prev.b)) * 100;
+  } else if (next) {
+    badge = "Chưa vào học";
+    title = `Tiết ${next.n} bắt đầu lúc ${show(next.s)}`;
+    detail = `Còn ${fmtDur(next.a - t)} nữa.`;
+  } else {
+    badge = "Hết giờ học";
+    title = "Hôm nay đã kết thúc tiết cuối cùng";
+    detail = `Ngày mai tiết 1 bắt đầu lúc ${show(per[0].s)}.`;
+  }
+  const b = $("badge"); b.className = "badge " + cls;
+  $("badgeText").textContent = badge;
+  $("statusTitle").textContent = title;
+  $("statusDetail").textContent = detail;
+  $("bar").style.width = Math.min(100, Math.max(0, progress)) + "%";
+
+  const needle = $("needle");
+  const inRange = t >= R0 && t <= R1;
+  needle.style.display = inRange ? "block" : "none";
+  needle.style.left = pct(t) + "%";
+
+  document.querySelectorAll(".seg").forEach(s => {
+    s.classList.toggle("cur", !!cur && +s.dataset.n === cur.n);
+    s.classList.toggle("nxt", !cur && !!next && +s.dataset.n === next.n);
+  });
+  document.querySelectorAll(".row").forEach(r => {
+    const n = +r.dataset.n;
+    const isCur = !!cur && cur.n === n;
+    const isNext = !isCur && !!next && next.n === n;
+    r.classList.toggle("cur", isCur);
+    r.classList.toggle("nxt", isNext);
+    const tag = r.querySelector(".tag");
+    tag.hidden = !(isCur || isNext);
+    tag.textContent = isCur ? "Đang học" : "Kế tiếp";
+  });
+  document.querySelectorAll(".brk").forEach(r => {
+    r.classList.toggle("cur", !!brkActive && +r.dataset.from === brkActive[0] && +r.dataset.to === brkActive[1]);
+  });
+}
+
+/* ---------- Sự kiện ---------- */
+$("from").addEventListener("change", () => { if (+$("to").value < +$("from").value) $("to").value = $("from").value; calc(); });
+$("to").addEventListener("change", calc);
+
+$("simTime").addEventListener("input", e => {
+  if (!e.target.value) return;
+  state.sim = toMin(e.target.value);
+  $("simReset").hidden = false;
+  tick();
+});
+$("simReset").addEventListener("click", () => {
+  state.sim = null; $("simTime").value = ""; $("simReset").hidden = true; tick();
+});
+
+function toast(msg){
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.id); toast.id = setTimeout(() => t.classList.remove("show"), 2200);
+}
+$("copyBtn").addEventListener("click", async () => {
+  const set = SETS[state.set];
+  const lines = [`Thời gian biểu: ${set.name}`];
+  SESSIONS.forEach(s => {
+    lines.push("", s.name + ":");
+    set.periods.filter(p => p.n >= s.from && p.n <= s.to).forEach(p => lines.push(`Tiết ${p.n}: ${show(p.s)} - ${show(p.e)}`));
+  });
+  lines.push("", set.note);
+  const text = lines.join("\n");
+  try { await navigator.clipboard.writeText(text); toast("Đã sao chép lịch vào bộ nhớ tạm"); }
+  catch(e){
+    const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Đã sao chép lịch vào bộ nhớ tạm"); } catch(_) { toast("Không thể sao chép. Hãy thử lại."); }
+    ta.remove();
+  }
+});
+
+  /* ---------- Kh?i d?ng ---------- */
+  buildTabs(); renderGrid(); renderRuler(); renderTool(); tick();
+  setInterval(tick, 1000);
+})();
+
+  /* ───────── 3. LÒ ÔN LUYỆN ───────── */
+  var filterCat = "", query = "";
+
+  $("chips").innerHTML =
+    '<button class="chip" type="button" data-cat="" aria-pressed="true">Tất cả<b>' + CK.SUBJECTS.length + '</b></button>' +
+    CK.CATS.map(function (c) {
+      return '<button class="chip" type="button" data-cat="' + c.id + '" aria-pressed="false">' + c.name + '<b>' + c.subjects.length + '</b></button>';
+    }).join("");
+
+  $("chips").addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    filterCat = b.dataset.cat;
+    Array.prototype.forEach.call(this.querySelectorAll(".chip"), function (x) {
+      x.setAttribute("aria-pressed", x === b);
+    });
+    renderCats();
+  });
+  $("q").addEventListener("input", function () { query = CK.fold(this.value.trim()); renderCats(); });
+
+  function renderCats() {
+    var host = $("cats");
+    host.innerHTML = "";
+    var shown = 0;
+
+    CK.CATS.forEach(function (cat) {
+      if (filterCat && cat.id !== filterCat) return;
+      var list = cat.subjects.filter(function (s) {
+        return !query || CK.fold(s.name).indexOf(query) !== -1 || CK.fold(cat.name).indexOf(query) !== -1;
+      });
+      if (!list.length) return;
+      shown += list.length;
+
+      var sec = document.createElement("section");
+      sec.className = "cat";
+      sec.innerHTML =
+        '<div class="cat-head"><h3>' + cat.title + '</h3><span class="n">' + list.length + ' môn</span></div>' +
+        '<div class="subj-grid">' + list.map(function (s) {
+          var n = done[s.name] || 0;
+          var nf = CK.navFile(s.slug);
+          return '<a class="subj" href="' + (nf ? CK.url(nf) : CK.subjectUrl(s.slug)) + '" ' +
+            'data-slug="' + s.slug + '"' + (nf ? '' : ' aria-haspopup="dialog"') + '>' +
+            '<p class="nm">' + s.name + '</p>' +
+            '<span class="foot">' +
+              '<span class="go">Vào ôn tập ' + CK.svg("M5 12h13m-5-5 5 5-5 5") + '</span>' +
+              (n ? '<span class="prog done">✓ ' + n + '</span>' : '<span class="prog">Chưa làm</span>') +
+            '</span>' +
+          '</a>';
+        }).join("") + '</div>';
+      host.appendChild(sec);
+    });
+
+    $("countPill").textContent = shown + " / " + CK.SUBJECTS.length + " môn";
+    $("noResult").hidden = shown > 0;
+  }
+  renderCats();
+
+  /* ───────── 4. POPUP BÀI THI ─────────
+     Bấm thẻ môn ở Lò ôn luyện → mở popup. Môn chia nhiều đề (QPAN 1 & 2) đi
+     đúng 2 bước trong cùng popup: chọn CÁCH HỌC → chọn ĐỀ → xem thông tin đề.
+     Môn thường hiện thẳng thông tin đề.
+     Giữ href trên thẻ để người dùng mở tab mới vẫn vào thẳng được môn đó. */
+  var modal = $("examModal"), dlg = $("examDialog"), mbody = $("examBody");
+  var lastFocus = null;
+
+  function showModal() {
+    modal.hidden = false;
+    document.body.classList.add("ck-modal-open");
+  }
+
+  function closeExam() {
+    if (modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove("ck-modal-open");
+    mbody.innerHTML = "";
+    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+  }
+
+  function focusFirst(sel) {
+    var f = mbody.querySelector(sel) || mbody.querySelector("[data-exam-close]");
+    if (f) f.focus();
+  }
+
+  /* Thẻ thông tin đề — môn không chia đề, hoặc đã bấm một đề ở bước chọn đề */
+  function showCard(s, part, mode) {
+    CK.exam.render(mbody, s, {
+      part: part || null,
+      mode: mode || "learn",
+      glass: "glass g2", close: true, titleId: "examTitle",
+      noStart: true,                       /* không còn trang làm bài để sang */
+      back: !!part,
+      onBack: part ? function () { showParts(s, mode || "learn"); } : null,
+      onClose: closeExam
+    });
+    showModal();
+    focusFirst(part ? "[data-exam-back]" : "[data-exam-close]");
+  }
+
+  /* Bước 1: chọn cách học */
+  function showPicker(s) {
+    if (!CK.partsOf(s).length) { showCard(s); return; }
+    CK.exam.renderPicker(mbody, s, {
+      glass: "glass g2", close: true, titleId: "examTitle",
+      onMode: function (sub, mode) { showParts(sub, mode); },
+      onClose: closeExam
+    });
+    showModal();
+    focusFirst(".mode");
+  }
+
+  /* Bước 2: chọn đề trong cùng popup — bấm đề là xem thẻ thông tin đề đó.
+     Đề nào đã có trang làm bài riêng (CK.partFile, ví dụ 10 đề của QPAN1) thì
+     ở chế độ Luyện tập bấm đề là mở thẳng trang đề; nút "Quay lại" trong trang
+     đề đưa về đúng bước chọn đề này (CONFIG.exitUrl trong file đề).
+     Chế độ Thi thử: môn có trang thi trực tuyến (CK.partExam) thì thẻ chọn
+     đề không hiện danh sách đề, chỉ có một nút mở thẳng trang đó. */
+  function showParts(s, mode) {
+    CK.exam.renderParts(mbody, s, {
+      mode: mode, back: true, close: true, titleId: "examTitle",
+      onPart: function (sub, p, m) {
+        var f = CK.partFile && CK.partFile(sub.slug, p.id);
+        if (m === "learn" && f) { location.href = CK.url(f); return; }
+        /* Xem đề cương cũng mở thẳng trang riêng, giống hệt Luyện tập */
+        var sf = CK.partSyllabus && CK.partSyllabus(sub.slug, p.id);
+        if (m === "sylabus" && sf) { location.href = CK.url(sf); return; }
+        showCard(sub, p, m);
+      },
+      /* Nút "Mở trang thi thử" — chỉ hiện ở chế độ Thi thử.
+     Kèm `?m=<slug môn>` để trang thi tự chọn đúng lớp học phần + lịch thi. */
+      onExam: function (sub) {
+        var ef = CK.partExam && CK.partExam(sub.slug);
+        if (ef) location.href = CK.url(ef) + "?m=" + encodeURIComponent(sub.slug);
+      },
+      onMode: function (sub, m) { showParts(sub, m); },
+      onBack: function () { showPicker(s); },
+      onClose: closeExam
+    });
+    showModal();
+    focusFirst(".opt:not([disabled])");
+  }
+
+  $("cats").addEventListener("click", function (e) {
+    var a = e.target.closest(".subj");
+    if (!a) return;
+    var s = CK.subjectBySlug(a.dataset.slug);
+    if (!s) return;
+    /* Môn có trang riêng (vd ANH VĂN 2) — để trình duyệt mở thẳng trang đó,
+       không mở popup. */
+    if (CK.navFile(s.slug)) return;
+    e.preventDefault();
+    lastFocus = a;
+    showPicker(s);
+  });
+
+  /* Mở thẳng popup khi vào bằng đường dẫn có tham số: ?m=<môn>[&d=<đề>][&mode=]
+     Dùng cho link mở tab mới ở Lò ôn luyện, tìm kiếm và lịch sử làm bài. */
+  (function openDeepLink() {
+    var qs = new URLSearchParams(location.search);
+    var s = CK.subjectBySlug(qs.get("m") || "");
+    if (!s) return;
+    var mode = qs.get("mode") || "learn";
+    if (CK.exam.MODES.map(function (x) { return x.id; }).indexOf(mode) === -1) mode = "learn";
+    var p = CK.partById(s, qs.get("d") || "");
+    if (p) showCard(s, p, mode);
+    else if (CK.partsOf(s).length) showParts(s, mode);
+    else showCard(s, null, mode);
+    document.title = s.name + " — CƠ KHÍ HUIT";
+  })();
+
+  $("examModal").addEventListener("click", function (e) {
+    if (e.target.closest("[data-exam-dismiss]")) closeExam();
+  });
+
+  /* Esc đóng · Tab giữ tiêu điểm bên trong popup */
+  document.addEventListener("keydown", function (e) {
+    if (modal.hidden) return;
+    if (e.key === "Escape") { closeExam(); return; }
+    if (e.key !== "Tab") return;
+    var f = [].filter.call(dlg.querySelectorAll("a[href],button"), function (x) { return x.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* Đồng bộ ngay khi trang khác ghi thêm lịch sử */
+  document.addEventListener("ck:history", function () {
+    hist = CK.history.all();
+    renderCats();
+  });
+})();
+</script>
+</body>
+</html>

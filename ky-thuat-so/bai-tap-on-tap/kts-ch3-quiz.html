@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bài trắc nghiệm trực tuyến</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Font nap khong chan render: trang van hien thi ngay voi font he thong neu mang cham/offline -->
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" /></noscript>
+<style>
+
+  /* =====================================================================
+     DESIGN TOKENS — Glassmorphism trung tinh + 1 mau nhan #034EA2
+     Doi mau nhan: chi sua --brand va --brand-deep o duoi day.
+     ===================================================================== */
+  :root {
+    /* Trung tinh */
+    --white:     #FFFFFF;
+    --off-white: #F7F8FA;
+    --gray-100:  #E8EAEF;
+    --gray-300:  #C9CED8;
+    --gray-400:  #8B94A3;
+    --gray-600:  #4B5563;
+
+    /* Brand — mau nhan duy nhat */
+    --brand:        #034EA2;
+    --brand-deep:   #023A80;
+    --brand-06: rgba(3, 78, 162, .06);
+    --brand-10: rgba(3, 78, 162, .10);
+    --brand-25: rgba(3, 78, 162, .25);
+    --brand-45: rgba(3, 78, 162, .45);
+
+    /* Trang thai dung — xanh la */
+    --ok:        #12805C;
+    --ok-deep:   #0B5F42;
+    --ok-06: rgba(18, 128, 92, .06);
+    --ok-10: rgba(18, 128, 92, .10);
+    --ok-25: rgba(18, 128, 92, .25);
+    --ok-45: rgba(18, 128, 92, .45);
+
+/* Trang thai sai — do */
+    --bad:        #C0271E;
+    --bad-deep:   #9A1F17;
+    --bad-06: rgba(192, 39, 30, .06);
+    --bad-10: rgba(192, 39, 30, .10);
+    --bad-25: rgba(192, 39, 30, .25);
+    --bad-45: rgba(192, 39, 30, .45);
+
+    /* Trang thai sai roi lam lai dung — vang */
+    --warn:        #B45309;
+    --warn-deep:   #92400E;
+    --warn-06: rgba(180, 83, 9, .06);
+    --warn-10: rgba(180, 83, 9, .10);
+    --warn-25: rgba(180, 83, 9, .25);
+    --warn-45: rgba(180, 83, 9, .45);
+
+    /* Kinh */
+    --glass-1-bg: rgba(255, 255, 255, .52);
+    --glass-2-bg: rgba(255, 255, 255, .67);
+    --glass-3-bg: rgba(255, 255, 255, .82);
+    --glass-1-br: rgba(255, 255, 255, .72);
+    --glass-2-br: rgba(255, 255, 255, .88);
+    --glass-3-br: rgba(255, 255, 255, 1);
+    --blur-1: 18px; --blur-2: 30px; --blur-3: 46px;
+
+    /* Bo goc */
+    --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-full: 9999px;
+
+    /* Chu */
+    --text-strong: #034EA2;
+    --text:        #4B5563;
+    --text-muted:  #4B5563;   /* chu nho cung AA 6.5:1 — phan biet khoi body bang size/weight */
+    --text-icon:   #8B94A3;   /* chi dung cho ICON / placeholder, khong dung cho chu */
+    --text-faint:  #AEB5C0;
+    --text-invert: #FFFFFF;
+
+    /* Bong — luon pha brand, khong bao gio den */
+    --sh-xs:    0 1px 2px rgba(3, 78, 162, .05);
+    --sh-sm:    0 1px 2px rgba(3, 78, 162, .04), 0 4px 12px rgba(3, 78, 162, .07);
+    --sh-md:    0 2px 4px rgba(3, 78, 162, .04), 0 12px 28px rgba(3, 78, 162, .10);
+    --sh-lg:    0 8px 16px rgba(3, 78, 162, .07), 0 24px 56px rgba(3, 78, 162, .14);
+    --sh-float: 0 1px 2px rgba(3, 78, 162, .06), 0 10px 30px rgba(3, 78, 162, .12);
+    --sh-press: 0 1px 2px rgba(3, 78, 162, .14);
+
+    /* Motion */
+    --ease-out: cubic-bezier(.16, 1, .3, 1);
+    --dur-fast: 140ms;
+    --dur-base: 240ms;
+
+/* Trang thai: dung = xanh la (--ok), sai = do (--bad), canh bao = vang (--warn) */
+    --info:  var(--brand-25);
+  }
+
+  /* ========================= Base ========================= */
+  * { box-sizing: border-box; }
+  html { font-size: 16px; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', 'Be Vietnam Pro Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: .875rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    /* Fallback khi trinh duyet khong ho tro gradient phuc tap */
+    background: linear-gradient(155deg, var(--off-white), #E4E7ED);
+  }
+
+  /* Nen: gradient + mesh blob trang/xam — binh con dung gradient nen nen
+     khong can filter: blur rieng (radial-gradient da soft san). */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 14% 8%,  rgba(255, 255, 255, .90), transparent 70%),
+      radial-gradient(50% 45% at 80% 22%, rgba(160, 172, 190, .30), transparent 70%),
+      radial-gradient(50% 45% at 20% 88%, rgba(255, 255, 255, .70), transparent 70%),
+      radial-gradient(45% 40% at 92% 84%, rgba(148, 163, 184, .24), transparent 70%),
+      linear-gradient(155deg, var(--off-white), #E4E7ED);
+  }
+
+  button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+  button:disabled { cursor: not-allowed; }
+  .icon { display: block; flex: none; }
+
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+
+  /* ========================= Lop kinh ========================= */
+  .glass-1, .glass-2, .glass-3 {
+    position: relative;
+    border-radius: var(--r-lg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      0 1px 2px rgba(3, 78, 162, .04),
+      0 8px 24px rgba(3, 78, 162, .08);
+  }
+  .glass-1 { background: var(--glass-1-bg); border: 1px solid var(--glass-1-br); }
+  .glass-2 { background: var(--glass-2-bg); border: 1px solid var(--glass-2-br); box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-md); }
+  .glass-3 { background: var(--glass-3-bg); border: 1px solid var(--glass-3-br); border-radius: var(--r-xl); box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-lg); }
+
+/* Lop kinh: blur nhe + sat nhat nhe de cam -> cam giac liquid glass.
+     Be mat lon (qcard/modal/toast) blur manh; be mat nho chi blur-1 de
+     giu repaint re. */
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .qcard {
+      backdrop-filter: blur(var(--blur-2)) saturate(135%) brightness(1.02);
+      -webkit-backdrop-filter: blur(var(--blur-2)) saturate(135%) brightness(1.02);
+    }
+    .modal, .confirm, .toast {
+      backdrop-filter: blur(var(--blur-3)) saturate(135%) brightness(1.02);
+      -webkit-backdrop-filter: blur(var(--blur-3)) saturate(135%) brightness(1.02);
+    }
+    .topbar, .bottombar, .rcard, .timer, .icon-btn, .btn-ghost, .btn-glass,
+    .rank-count, .btn-share, .rv-score, .rv-side-box, .rv-head, .rv-item {
+      backdrop-filter: blur(var(--blur-1)) saturate(135%);
+      -webkit-backdrop-filter: blur(var(--blur-1)) saturate(135%);
+    }
+  }
+
+  /* ========================= Thanh tren ========================= */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4rem;
+    padding: .75rem 1.25rem;
+    background: var(--glass-2-bg);
+    border: 0;
+    border-bottom: 1px solid var(--brand-06);
+    box-shadow: var(--sh-md);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: .5rem;
+    min-height: 2.75rem;
+    padding: 0 .875rem;
+    border-radius: var(--r-md);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    font-size: .8125rem;
+    font-weight: 600;
+    box-shadow: var(--sh-sm);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, .85); }
+  .btn-ghost:active { transform: scale(.98); box-shadow: var(--sh-press); }
+
+  .candidate { text-align: center; font-weight: 700; color: var(--text-strong); }
+  .topbar-right { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; }
+  .icon-group { display: flex; align-items: center; gap: .375rem; }
+
+  .timer {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 .875rem;
+    border-radius: var(--r-full);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--text-strong);
+    font-size: .875rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    box-shadow: var(--sh-xs);
+  }
+  .timer.is-warning { background: var(--brand-10); border-color: var(--brand-25); color: var(--brand-deep); }
+  .timer.is-danger { background: var(--brand-deep); border-color: var(--brand-deep); color: var(--text-invert); }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--r-md);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    box-shadow: var(--sh-xs);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .icon-btn:hover { background: rgba(255, 255, 255, .85); }
+  .icon-btn:active { transform: scale(.96); }
+  .icon-btn.is-muted { color: var(--text-faint); background: rgba(255, 255, 255, .35); }
+
+  /* ========================= The lam bai ========================= */
+  .stage {
+    flex: 1;
+    padding: 1.5rem 1.25rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .qcard {
+    width: 100%;
+    max-width: 112rem;
+    align-self: flex-start;
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    border-radius: var(--r-xl);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-md);
+    padding: 1.75rem 2rem 2.25rem;
+  }
+
+  .q-head { display: flex; flex-direction: column; gap: .5rem; }
+  .q-number { font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+  .q-text { font-size: .9375rem; line-height: 1.7; color: var(--text); }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 1.75rem;
+    color: var(--text-muted);
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--brand-06); }
+
+  .options { display: flex; flex-direction: column; gap: .75rem; }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: .875rem;
+    min-height: 3rem;
+    text-align: left;
+    border-radius: var(--r-md);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .option-badge {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--r-full);
+    border: 1.5px solid var(--gray-300);
+    background: rgba(255, 255, 255, .75);
+    color: var(--text);
+    font-weight: 700;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+
+  .option-text {
+    flex: 1;
+    padding: .875rem 1.25rem;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .62);
+    box-shadow: var(--sh-xs);
+    color: var(--text);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .option:hover .option-badge { border-color: var(--brand-25); color: var(--brand); }
+  .option:hover .option-text { border-color: var(--brand-25); background: rgba(255, 255, 255, .88); }
+
+  /* da chon */
+  .option.is-selected .option-badge { background: var(--brand); border-color: var(--brand); color: var(--text-invert); }
+  .option.is-selected .option-text { background: var(--brand-06); border-color: var(--brand-25); color: var(--brand-deep); }
+
+/* chon sai: canh bao vang */
+  .option.is-wrong .option-badge { background: var(--warn); border-color: var(--warn); color: var(--text-invert); }
+  .option.is-wrong .option-text {
+    background: rgba(255, 255, 255, .92);
+    border: 1.5px solid var(--warn);
+    color: var(--warn-deep);
+    box-shadow: inset 0 -3px 0 var(--warn);
+  }
+
+  /* bo qua bang Esc: do */
+  .option.is-skipped .option-badge { background: var(--bad); border-color: var(--bad); color: var(--text-invert); }
+  .option.is-skipped .option-text {
+    background: rgba(255, 255, 255, .92);
+    border: 1.5px solid var(--bad);
+    color: var(--bad);
+    box-shadow: inset 0 -3px 0 var(--bad);
+  }
+
+/* chon dung: nen xanh la + vien ok-deep */
+  .option.is-correct .option-badge { background: var(--white); border-color: var(--ok); color: var(--ok); }
+  .option.is-correct .option-text {
+    background: var(--ok);
+    border-color: var(--ok-deep);
+    color: var(--text-invert);
+    font-weight: 600;
+    box-shadow: var(--sh-sm);
+  }
+
+  .option.is-locked { pointer-events: none; cursor: default; }
+
+  /* ========================= Toast ========================= */
+  .toast-layer {
+    position: fixed;
+    right: 1.5rem;
+    top: 5.5rem;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .toast {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: .875rem;
+    width: 22rem;
+    max-width: calc(100vw - 2rem);
+    padding: 1rem 1.125rem;
+    background: var(--glass-3-bg);
+    border: 1px solid var(--glass-3-br);
+    border-radius: var(--r-md);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-lg);
+    pointer-events: auto;
+  }
+  .toast[hidden] { display: none; }
+  .toast.is-in { animation: toastIn var(--dur-base) var(--ease-out) both; }
+  .toast.is-out { animation: toastOut var(--dur-fast) var(--ease-out) both; }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(1.25rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-.5rem); } }
+
+  .toast-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--r-full);
+    margin-top: .1rem;
+  }
+.toast.is-good .toast-icon { background: var(--ok); color: var(--text-invert); }
+  .toast.is-hint .toast-icon { background: var(--warn); color: var(--text-invert); }
+  .toast.is-wrong .toast-icon { background: var(--warn-10); color: var(--warn-deep); }
+  .toast.is-skipped .toast-icon { background: var(--bad-10); color: var(--bad); }
+
+  .toast-title { font-size: .9375rem; font-weight: 700; line-height: 1.35; color: var(--text-strong); }
+  .toast.is-wrong .toast-title { color: var(--warn-deep); }
+  .toast.is-skipped .toast-title { color: var(--bad); }
+  .toast-sub { margin-top: .125rem; font-size: .8125rem; color: var(--text-muted); }
+
+  .toast-close {
+    position: relative;
+    z-index: 1;
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--r-sm);
+    color: var(--brand-deep);
+  }
+  .toast-close:hover { background: var(--brand-10); }
+
+  /* ========================= Thanh duoi ========================= */
+  .bottombar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: .75rem 1.5rem;
+    background: var(--glass-2-bg);
+    border: 0;
+    border-top: 1px solid var(--brand-06);
+    box-shadow: 0 -8px 24px rgba(3, 78, 162, .08);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .bottombar-left { display: flex; align-items: center; gap: 1.25rem; min-width: 0; }
+  .bottombar-right { margin-left: auto; }
+
+  .link-btn {
+    flex: none;
+    white-space: nowrap;   /* khong bao gio de nut bi bop lai khi thanh duoi chat */
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 .5rem;
+    border-radius: var(--r-md);
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--brand);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .link-btn:hover { background: var(--brand-06); }
+  .link-btn[disabled] { color: var(--text-faint); }
+
+  .counter {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 .75rem;
+    border-radius: var(--r-full);
+    background: var(--brand-10);
+    color: var(--brand-deep);
+    font-size: .8125rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .counter:hover { background: var(--brand-25); }
+
+  .dots { display: flex; align-items: center; gap: .375rem; margin-left: .25rem; }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: .75rem;
+    height: .75rem;
+    padding: 0;
+    border-radius: var(--r-full);
+    border: 1.5px solid var(--gray-300);
+    background: rgba(255, 255, 255, .7);
+    color: var(--text-invert);
+    transition: width var(--dur-fast) var(--ease-out), height var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .dot-icon { width: .625rem; height: .625rem; }
+  .dot:hover:not(.is-locked) { transform: scale(1.2); }
+  .dot.is-current { width: 1.375rem; height: 1.375rem; border-color: var(--brand); border-width: 2px; background: transparent; }
+  .dot.is-current .dot-icon { width: .875rem; height: .875rem; }
+  .dot.is-marked { width: 1.125rem; height: 1.125rem; border-color: transparent; }
+  .dot.is-right { background: var(--ok); }
+.dot.is-retry { background: var(--warn); color: var(--warn-deep); }
+  .dot.is-wrong { background: rgba(255, 255, 255, .9); color: var(--bad); border-color: var(--bad); }
+  .dot.is-locked { border-color: var(--gray-100); background: rgba(255, 255, 255, .45); }
+  .dot.is-locked:hover { transform: none; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-width: 9.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.5rem;
+    border-radius: var(--r-md);
+    background: var(--brand);
+    color: var(--text-invert);
+    font-size: .875rem;
+    font-weight: 600;
+    box-shadow: var(--sh-sm);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .btn-primary:hover:not([disabled]) { background: var(--brand-deep); }
+  .btn-primary:active:not([disabled]) { transform: scale(.98); box-shadow: var(--sh-press); }
+  .btn-primary[disabled] { background: var(--gray-100); color: var(--text-faint); box-shadow: none; }
+  .btn-primary.btn-sm { min-width: 7.5rem; }
+
+/* ========================= Modal / Hop thoai ========================= */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1.25rem;
+    background: var(--brand-45);
+  }
+  .backdrop[hidden] { display: none; }
+  .backdrop.is-in { animation: fadeIn var(--dur-base) var(--ease-out) both; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal, .confirm {
+    position: relative;
+    width: min(100%, 32rem);
+    max-height: 100%;
+    overflow: auto;
+    background: var(--glass-3-bg);
+    border: 1px solid var(--glass-3-br);
+    border-radius: var(--r-xl);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-lg);
+    padding: 1.5rem 2rem 1.75rem;
+    animation: modalIn var(--dur-base) var(--ease-out) both;
+  }
+  .modal.is-wide { width: min(100%, 70rem); }
+  .confirm { padding: 0; overflow: hidden; }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(.875rem) scale(.96); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .modal-title { margin: 0 0 1.25rem; font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+
+  /* ========================= CHIA SE ========================= */
+  .share-summary {
+    margin: -.5rem 0 1.25rem;
+    padding: .75rem 1rem;
+    border-radius: var(--r-md);
+    background: var(--brand-06);
+    border: 1px solid var(--brand-25);
+    color: var(--brand-deep);
+    font-size: .8125rem;
+    font-weight: 600;
+  }
+  .share-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .75rem; }
+  .share-btn {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-height: 3.25rem;
+    padding: .5rem .875rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--brand-deep);
+    font-size: .8125rem;
+    font-weight: 600;
+    text-align: left;
+    box-shadow: var(--sh-xs);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .share-btn:hover { background: #fff; border-color: var(--brand); }
+  .share-ico {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-sm);
+    background: var(--brand-10);
+    color: var(--brand);
+  }
+  .share-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .modal-foot { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+    gap: .75rem;
+    padding: 1rem;
+    border-radius: var(--r-md);
+    background: var(--brand-06);
+    border: 1px solid var(--brand-06);
+  }
+  .map-btn {
+    min-height: 2.75rem;
+    border-radius: var(--r-sm);
+    background: rgba(255, 255, 255, .85);
+    border: 1px solid var(--gray-300);
+    box-shadow: var(--sh-xs);
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .map-btn:hover:not([disabled]) { background: #fff; border-color: var(--brand-25); color: var(--brand); }
+  .map-btn.is-current { border-color: var(--brand); color: var(--brand); background: var(--brand-10); box-shadow: 0 0 0 3px var(--brand-06); }
+  .map-btn.is-done { background: var(--ok-10); border-color: var(--ok-25); color: var(--ok-deep); }
+  .map-btn.is-retry { background: var(--warn-10); border-color: var(--warn-25); color: var(--warn-deep); }
+  .map-btn.is-bad { background: rgba(255, 255, 255, .9); border-color: var(--bad); color: var(--bad); box-shadow: inset 0 -3px 0 var(--bad); }
+  .map-btn[disabled] { background: rgba(255, 255, 255, .4); color: var(--text-faint); border-color: var(--gray-100); box-shadow: none; }
+
+  /* Hop xac nhan thoat — Danger: khong do, chi dung vien brand + icon tam giac canh bao */
+  .confirm-head { display: flex; align-items: center; gap: 1rem; padding: 1.5rem 1.75rem; }
+  .confirm-icon { flex: none; color: var(--brand-deep); }
+  .confirm-msg { margin: 0; font-size: .9375rem; line-height: 1.5; color: var(--text); }
+  .confirm-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    padding: 1rem 1.25rem 1.25rem;
+    background: var(--brand-06);
+    border-top: 1px solid var(--brand-06);
+  }
+  .btn-soft {
+    min-height: 2.75rem;
+    padding: 0 1.5rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .8);
+    border: 1px solid var(--brand-25);
+    color: var(--text);
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .btn-soft:hover { background: #fff; }
+
+  /* ========================= Man ket qua ========================= */
+  .result-page { padding: 1.5rem 1.25rem 2.5rem; }
+  .result-page[hidden] { display: none; }
+  .result-grid {
+    width: 100%;
+    max-width: 112rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .rcard {
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    border-radius: var(--r-lg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-md);
+    padding: 1.5rem;
+  }
+
+  .rcard-title { margin: 0 0 1.5rem; font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; text-align: center; color: var(--text-strong); }
+  .score-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: .75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--brand-06);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .score-row strong { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.875rem; font-weight: 700; color: var(--text-strong); letter-spacing: -.02em; }
+  .rcard-course { margin: 1.25rem 0 1.5rem; text-align: center; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+
+  .rlist { display: flex; flex-direction: column; gap: 1rem; margin: 0 0 1.75rem; }
+  .rrow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .875rem; }
+  .rrow dt { display: flex; align-items: center; gap: .625rem; color: var(--text-muted); }
+  .rrow dd { margin: 0; font-weight: 700; color: var(--text-strong); text-align: right; }
+
+  .rbtns { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .75rem; margin-bottom: .75rem; }
+  .rbtns .btn-block { width: 100%; }
+
+  /* Nut ket qua: glass / primary / outline-deep (khong con ten mau cu) */
+  .btn-glass, .btn-solid, .btn-outline-strong {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border: 1px solid var(--brand-25);
+    border-radius: var(--r-md);
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  /* Glass — hanh dong phu */
+  .btn-glass { background: rgba(255, 255, 255, .62); color: var(--brand); box-shadow: var(--sh-xs); }
+  .btn-glass:hover { background: #fff; border-color: var(--brand); }
+  /* Primary — hanh dong chinh */
+  .btn-solid { background: var(--brand); border-color: var(--brand); color: var(--text-invert); box-shadow: var(--sh-sm); }
+  .btn-solid:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+  /* Outline day — nhu "luyen tap lai cau sai" */
+  .btn-outline-strong {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid var(--brand-deep);
+    color: var(--brand-deep);
+  }
+  .btn-outline-strong:hover { background: var(--brand-10); }
+  .btn-glass:active, .btn-solid:active, .btn-outline-strong:active { transform: scale(.98); box-shadow: var(--sh-press); }
+
+  /* Bang xep hang */
+  .rank-head { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
+  .rank-head .icon { color: var(--brand); }
+  .rank-head h2 { margin: 0; font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+  .rank-count {
+    margin-left: auto;
+    padding: .3rem .75rem;
+    border-radius: var(--r-full);
+    background: var(--brand-10);
+    color: var(--brand-deep);
+    font-size: .75rem;
+    font-weight: 600;
+  }
+  .btn-share {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 1.125rem;
+    margin-bottom: 1.25rem;
+    border-radius: var(--r-full);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    font-size: .8125rem;
+    font-weight: 600;
+    box-shadow: var(--sh-xs);
+  }
+  .btn-share:hover { background: #fff; }
+
+  .rank-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .75rem; }
+  .rank-item {
+    display: flex;
+    align-items: center;
+    gap: .875rem;
+    padding: .875rem 1.125rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .62);
+    border: 1px solid var(--gray-300);
+    box-shadow: var(--sh-xs);
+  }
+.rank-item.is-top { background: var(--warn-06); border-color: var(--warn-25); }
+  .rank-item.is-me { border-color: var(--brand-25); }
+  .rank-empty {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, .5);
+    border: 1px dashed var(--gray-300);
+    border-radius: var(--r-md);
+    font-size: .8125rem;
+  }
+  .rank-no {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-full);
+    background: var(--gray-300);
+    color: var(--white);
+    font-weight: 700;
+  }
+  .rank-item.is-top .rank-no { background: var(--warn); }
+  .rank-avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-full);
+    background: var(--gray-100);
+    color: var(--text);
+    font-weight: 700;
+    font-size: .875rem;
+  }
+  .rank-item.is-top .rank-avatar { background: var(--warn-10); color: var(--warn-deep); }
+  .rank-info { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .rank-name { font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .rank-meta { display: flex; align-items: center; flex-wrap: wrap; gap: .125rem .5rem; margin-top: .125rem; }
+  .rank-score { font-weight: 700; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+  .rank-ratio { font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .rank-time { display: flex; align-items: center; gap: .375rem; font-size: .75rem; color: var(--text-muted); }
+  .rank-crown { margin-left: auto; color: var(--gray-300); }
+  .rank-item.is-top .rank-crown { color: var(--warn); }
+
+  /* ========================= Che do luyen tap ========================= */
+  .q-head-row { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+  .practice-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    min-height: 1.5rem;
+    padding: 0 .625rem;
+    border-radius: var(--r-full);
+    background: var(--brand-10);
+    border: 1px solid var(--brand-25);
+    color: var(--brand-deep);
+    font-size: .6875rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .practice-tag[hidden] { display: none; }
+  .link-back-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    min-height: 2.75rem;
+    margin-top: .75rem;
+    padding: 0 .75rem;
+    border-radius: var(--r-md);
+    color: var(--brand);
+    font-size: .8125rem;
+    font-weight: 600;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .link-back-result:hover { background: var(--brand-06); }
+  .link-back-result[hidden] { display: none; }
+  /* ========================= Trang xem dap an ========================= */
+  .review-page { padding: 1.25rem; }
+  .review-page[hidden] { display: none; }
+  .review-layout {
+    width: 100%;
+    max-width: 112rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 23rem 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+.review-layout.is-collapsed { grid-template-columns: 1fr; }
+  .review-layout.is-collapsed .rv-side { display: none; }
+  .review-layout.no-answer .rv-answer { display: none; }
+
+  .rv-side { display: flex; flex-direction: column; gap: 1rem; }
+  .rv-score {
+    display: flex;
+    align-items: baseline;
+    gap: .625rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--r-lg);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    box-shadow: var(--sh-sm);
+    font-size: 1.25rem;
+  }
+  .rv-score strong { color: var(--text); }
+  .rv-score span { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; color: var(--text-strong); }
+  .rv-side-box { background: var(--glass-1-bg); border: 1px solid var(--glass-1-br); border-radius: var(--r-lg); box-shadow: var(--sh-sm); overflow: hidden; }
+  .rv-side-title { background: var(--brand-06); padding: .875rem 1.25rem; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+  .rv-meta { margin: 0; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: .875rem; }
+  .rv-meta > div { display: flex; justify-content: space-between; gap: 1rem; font-size: .8125rem; }
+  .rv-meta dt { color: var(--text-muted); }
+  .rv-meta dd { margin: 0; font-weight: 700; color: var(--text-strong); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .rv-parts-label { padding: 0 1.25rem .75rem; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+  .rv-part {
+    display: flex;
+    gap: .875rem;
+    align-items: center;
+    margin: 0 1.25rem 1rem;
+    padding: .875rem 1rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .62);
+    border: 1px solid var(--brand-06);
+  }
+  .rv-part-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-md);
+    background: var(--brand-10);
+    color: var(--brand);
+  }
+  .rv-part-body { display: flex; flex-direction: column; min-width: 0; }
+  .rv-part-title { display: flex; justify-content: space-between; gap: 1rem; font-weight: 700; color: var(--text); }
+  .rv-part-title b { color: var(--text-strong); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .rv-part-sub { font-size: .75rem; color: var(--text-muted); margin-top: .125rem; }
+  .rv-history { display: flex; align-items: center; gap: .5rem; margin: 0 1.25rem; padding-bottom: .875rem; font-size: .8125rem; color: var(--text-muted); }
+  .rv-link {
+    display: block;
+    margin: 0 1.25rem 1.25rem;
+    padding: 0;
+    color: var(--brand);
+    font-weight: 600;
+    font-size: .8125rem;
+    text-align: left;
+  }
+  .rv-link:hover { text-decoration: underline; }
+
+  .rv-main { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+  .rv-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 1.25rem;
+    border-radius: var(--r-lg);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    box-shadow: var(--sh-sm);
+  }
+  .rv-icon-btn {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+  }
+  .rv-icon-btn:hover { background: #fff; }
+  .rv-course { flex: 1; text-align: center; font-weight: 600; color: var(--text); }
+  .rv-filters { display: flex; gap: .5rem; }
+  .rv-filter {
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: var(--r-full);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--text);
+    font-size: .8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .rv-filter:hover { background: #fff; }
+  .rv-filter.is-all { background: var(--brand); border-color: var(--brand); color: var(--text-invert); }
+  .rv-filter.is-right { background: var(--ok-10); border-color: var(--ok-25); color: var(--ok-deep); }
+  .rv-filter.is-wrong { background: rgba(255, 255, 255, .7); border: 1.5px solid var(--bad); color: var(--bad); }
+  .rv-filter.is-toggle.is-on { background: var(--brand-10); border-color: var(--brand-25); color: var(--brand-deep); box-shadow: inset 0 0 0 1px var(--brand-25); }
+
+  .rv-tabs { border-bottom: 1px solid var(--brand-06); }
+  .rv-tab, .rv-tab.is-active { display: inline-block; padding: .5rem 1.5rem; font-size: .8125rem; font-weight: 700; color: var(--brand); border-bottom: 2px solid var(--brand); margin-bottom: -1px; }
+
+  .rv-list { display: flex; flex-direction: column; gap: 1rem; }
+  .rv-item {
+    background: rgba(255, 255, 255, .62);
+    border: 1px solid var(--brand-06);
+    border-radius: var(--r-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--sh-xs);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 230px;
+  }
+  .rv-item.is-right { border-color: var(--ok-25); background: var(--ok-06); }
+  .rv-item.is-wrong { border-color: var(--bad); box-shadow: var(--sh-xs), inset 3px 0 0 var(--bad); }
+  .rv-item-head { display: flex; align-items: center; gap: .75rem; }
+  .rv-qno { font-weight: 700; font-size: 1rem; color: var(--text-strong); }
+  .rv-qid { padding: .2rem .5rem; border-radius: var(--r-sm); background: var(--gray-100); color: var(--text-muted); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .6875rem; }
+  .rv-tag { margin-left: auto; padding: .2rem .5rem; border-radius: var(--r-full); font-size: .6875rem; font-weight: 600; }
+.rv-tag.is-retry { background: var(--warn-10); color: var(--warn-deep); }
+  .rv-tag.is-wrong { background: rgba(255, 255, 255, .9); border: 1px solid var(--bad); color: var(--bad); }
+  .rv-empty { padding: 2.5rem 1rem; text-align: center; color: var(--text-muted); background: rgba(255, 255, 255, .5); border: 1px dashed var(--gray-300); border-radius: var(--r-lg); }
+  .rv-more {
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    font-weight: 600;
+    box-shadow: var(--sh-xs);
+  }
+  .rv-more:hover { background: #fff; }
+  .rv-qtext { margin-top: .5rem; line-height: 1.7; color: var(--text); }
+  .rv-options { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem 2rem; }
+  .rv-options li { font-weight: 500; color: var(--text-muted); }
+  .rv-answer { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; margin-top: 1.25rem; }
+  .rv-answer-text { font-weight: 700; }
+  .rv-item.is-right .rv-answer-text { color: var(--ok-deep); }
+  .rv-item.is-wrong .rv-answer-text { color: var(--bad); }
+  .rv-strip {
+    display: flex;
+    gap: 2rem;
+    padding: .5rem 1rem;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--brand-25);
+    background: rgba(255, 255, 255, .7);
+    font-weight: 600;
+  }
+  .rv-item.is-right .rv-strip { border-color: var(--ok-25); }
+  .rv-item.is-wrong .rv-strip { border-color: var(--bad); }
+  .rv-strip span { display: inline-flex; align-items: center; gap: .375rem; color: var(--text-faint); }
+  .rv-strip .is-correct { color: var(--ok); }
+  .rv-strip .is-yours { color: var(--warn-deep); }
+
+body.is-result .stage, body.is-result .bottombar,
+  body.is-review .stage, body.is-review .bottombar,
+  body.is-review .result-page { display: none; }
+
+  /* Đồng hồ đếm chỉ có ý nghĩa khi đang làm bài -> ẩn ở màn kết quả và bảng xếp hạng */
+  body.is-result .timer, body.is-review .timer { display: none; }
+
+  /* ========================= Responsive ========================= */
+  @media (max-width: 900px) {
+    .review-layout { grid-template-columns: 1fr; }
+    .rv-course { display: none; }
+    .rv-head { flex-wrap: wrap; }
+  }
+
+  /* Mobile: tat blur theo quy chuan (it kien thuc hon nhieu) */
+  @media (max-width: 768px) {
+    .glass-1, .glass-2, .glass-3,
+    .topbar, .bottombar, .qcard, .rcard, .modal, .confirm, .toast,
+    .timer, .icon-btn, .btn-ghost, .btn-glass, .rank-count, .btn-share,
+    .rv-score, .rv-side-box, .rv-head, .rv-item {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(255, 255, 255, .92);
+    }
+    .qcard { padding: 1.5rem 1.25rem 1.75rem; }
+  }
+
+  @media (max-width: 640px) {
+    .topbar { grid-template-columns: 1fr; justify-items: center; row-gap: .75rem; padding: .75rem 1rem; }
+    .btn-ghost { justify-self: center; }
+    .topbar-right { justify-content: center; flex-wrap: wrap; }
+
+    .bottombar { flex-wrap: wrap; gap: .5rem .75rem; padding: .75rem 1rem 1rem; }
+    .bottombar-left { flex: 1 1 auto; flex-wrap: wrap; gap: .5rem .9rem; }
+    .link-btn, .counter { white-space: nowrap; font-size: .75rem; }
+    .btn-primary { min-width: 7.5rem; }
+    .dots { order: 3; width: 100%; margin: 0; overflow-x: auto; padding-bottom: .25rem; }
+
+.toast-layer { top: 8.5rem; right: 1rem; left: 1rem; }
+    .toast { width: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Nen gradient + mesh blob duoc ve bang CSS (body::before) — khong can node HTML -->
+
+<header class="topbar">
+  <button class="btn-ghost" type="button" id="btnBack">
+    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Quay lại
+  </button>
+
+  <div class="candidate" aria-hidden="true"></div>
+
+  <div class="topbar-right">
+    <div class="timer" id="timer">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="timerText">Không giới hạn</span>
+    </div>
+    <div class="icon-group">
+      <button class="icon-btn" type="button" id="btnZoomOut" title="Thu nhỏ (Ctrl -)">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+      </button>
+      <button class="icon-btn" type="button" id="btnZoomIn" title="Phóng to (Ctrl +)">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+      </button>
+      <button class="icon-btn" type="button" id="btnSound" title="Bật / tắt âm thanh">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-on='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>' data-off='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>'><g id="soundIcon"></g></svg>
+      </button>
+      <button class="icon-btn" type="button" id="btnFullscreen" title="Toàn màn hình (F)">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 9 4 4 9 4"/><polyline points="15 4 20 4 20 9"/><polyline points="20 15 20 20 15 20"/><polyline points="9 20 4 20 4 15"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+  <section class="qcard" id="qcard">
+    <div class="q-head">
+      <div class="q-head-row">
+        <div class="q-number" id="qNumber">Câu 1</div>
+        <span class="practice-tag" id="practiceTag" hidden>
+          <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+          <span id="practiceTagText">Luyện tập</span>
+        </span>
+      </div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="divider">Chọn một đáp án đúng</div>
+    <div class="options" id="options"></div>
+  </section>
+</main>
+
+<section class="result-page" id="resultPage" hidden>
+  <div class="result-grid">
+
+    <article class="rcard">
+      <h2 class="rcard-title">Bài làm của bạn đã được gửi đi</h2>
+      <div class="score-row">
+        <span>Điểm của bạn:</span>
+        <strong id="resScore">0/0</strong>
+      </div>
+
+      <div class="rcard-course" id="resCourse">—</div>
+
+      <dl class="rlist">
+        <div class="rrow">
+          <dt>
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Thí sinh
+          </dt>
+          <dd id="resName">—</dd>
+        </div>
+        <div class="rrow">
+          <dt>
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Thời gian làm bài
+          </dt>
+          <dd id="resTime">—</dd>
+        </div>
+        <div class="rrow">
+          <dt>
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
+            Số câu trắc nghiệm đúng
+          </dt>
+          <dd id="resCorrect">0/0</dd>
+        </div>
+      </dl>
+
+      <div class="rbtns">
+        <button class="btn-glass btn-block" type="button" id="btnRetry">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+          Luyện tập lại
+        </button>
+        <button class="btn-solid btn-block" type="button" id="btnReviewAnswers">
+          Xem đáp án
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <button class="btn-outline-strong" type="button" id="btnRetryWrong">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+        Luyện tập lại câu sai
+      </button>
+      <button class="link-back-result" type="button" id="btnBackToResult" hidden>
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Quay lại phần xem điểm
+      </button>
+    </article>
+
+    <article class="rcard">
+      <div class="rank-head">
+        <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 5H7"/><path d="M17 6h2.5a2.5 2.5 0 0 1-2.5 5H17"/><path d="M12 14v3"/><path d="M8.5 20h7"/><path d="M9.5 17h5l1.5 3H8l1.5-3Z"/></svg>
+        <h2>Bảng xếp hạng</h2>
+        <span class="rank-count" id="rankCount">(0 Thí sinh)</span>
+      </div>
+      <button class="btn-share" type="button" id="btnShare">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+        Chia sẻ
+      </button>
+      <ol class="rank-list" id="rankList"></ol>
+    </article>
+
+  </div>
+</section>
+
+<section class="review-page" id="reviewPage" hidden>
+  <div class="review-layout" id="reviewLayout">
+
+    <aside class="rv-side" id="rvSide">
+      <div class="rv-score"><strong>Điểm:</strong><span id="rvScore">0/0</span></div>
+      <div class="rv-side-box">
+        <div class="rv-side-title">Thông tin chi tiết</div>
+        <dl class="rv-meta">
+          <div><dt>Thời gian làm bài:</dt><dd id="rvTime">—</dd></div>
+          <div><dt>Thời gian nộp bài:</dt><dd id="rvSubmit">—</dd></div>
+        </dl>
+
+        <div class="rv-parts-label">CHI TIẾT THEO PHẦN</div>
+        <div class="rv-part">
+          <span class="rv-part-icon">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 2.5 2.5L16 9"/></svg>
+          </span>
+          <span class="rv-part-body">
+            <span class="rv-part-title">Trắc nghiệm<b id="rvPartScore">0 / 0</b></span>
+            <span class="rv-part-sub" id="rvPartSub">0 câu (0 đúng - 0 sai)</span>
+          </span>
+        </div>
+
+        <p class="rv-history">
+          Xem chi tiết quá trình làm bài:
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/><path d="M12 8v4l2.5 2.5"/></svg>
+        </p>
+        <button class="rv-link" type="button" id="btnCopyLink">Copy link gửi giáo viên</button>
+      </div>
+    </aside>
+
+    <div class="rv-main">
+      <div class="rv-head">
+        <button class="rv-icon-btn" type="button" id="btnRvCollapse" title="Ẩn / hiện thông tin chi tiết" aria-pressed="false">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line id="btnRvCollapseLine" x1="14" y1="4" x2="14" y2="20"/></svg>
+        </button>
+        <div class="rv-course" id="rvCourse">—</div>
+        <div class="rv-filters">
+          <button class="rv-filter" type="button" id="btnRvFilter">Đúng &amp; sai</button>
+          <button class="rv-filter is-toggle" type="button" id="btnRvAnswer">Đáp án</button>
+        </div>
+      </div>
+
+      <div class="rv-tabs"><span class="rv-tab is-active">Trắc nghiệm</span></div>
+
+      <div class="rv-list" id="rvList"></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="toast-layer">
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <div class="toast-icon" id="toastIcon"></div>
+    <div>
+      <div class="toast-title" id="toastTitle"></div>
+      <div class="toast-sub" id="toastSub"></div>
+    </div>
+    <button class="toast-close" type="button" id="toastClose" aria-label="Đóng thông báo">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
+<footer class="bottombar" id="bottombar">
+  <div class="bottombar-left">
+    <button class="link-btn" type="button" id="btnRestart" disabled>
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+      Bắt đầu lại
+    </button>
+    <button class="counter" type="button" id="btnCounter" title="Danh sách câu hỏi">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3.5h6v3H9z"/><path d="M8.5 12h7"/><path d="M8.5 16h4.5"/></svg>
+      <span id="counterText">Câu 1/51</span>
+    </button>
+    <div class="dots" id="dots" role="tablist" aria-label="Tiến trình các câu hỏi"></div>
+  </div>
+  <div class="bottombar-right">
+    <button class="btn-primary" type="button" id="btnAction" disabled>Kiểm tra</button>
+  </div>
+</footer>
+
+<div class="backdrop" id="mapBackdrop" hidden>
+  <div class="modal is-wide" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
+    <h2 class="modal-title" id="mapTitle">Danh sách câu hỏi</h2>
+    <div class="map-grid" id="mapGrid"></div>
+    <div class="modal-foot">
+      <button class="btn-primary" type="button" id="btnCloseMap">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" id="confirmBackdrop" hidden>
+  <div class="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirmMsg" aria-describedby="confirmMsg">
+    <div class="confirm-head">
+      <svg class="confirm-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <p class="confirm-msg" id="confirmMsg">Bạn có chắc chắn muốn thoát bài thi ?</p>
+    </div>
+    <div class="confirm-foot">
+      <button class="btn-soft" type="button" id="btnConfirmClose">Đóng</button>
+      <button class="btn-primary btn-sm" type="button" id="btnConfirmOk">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" id="shareBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <h2 class="modal-title" id="shareTitle">Chia sẻ kết quả</h2>
+    <p class="share-summary" id="shareSummary">—</p>
+    <div class="share-grid">
+      <button class="share-btn" type="button" data-share="facebook">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H6v3h3v9h3v-9h3l1-3h-4V7a1 1 0 0 1 1-1h2Z"/></svg></span>
+        <span class="share-label">Facebook</span>
+      </button>
+      <button class="share-btn" type="button" data-share="messenger">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5a9.5 9.5 0 0 0-8.3 14L2.5 21.5l5.1-1.2A9.5 9.5 0 1 0 12 2.5Z"/><path d="M6.8 13.8 10 9.6l2.6 2.6 4.6-4.2"/></svg></span>
+        <span class="share-label">Messenger</span>
+      </button>
+      <button class="share-btn" type="button" data-share="zalo">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.1A9 9 0 1 0 12 3Z"/><path d="M8 10.5h8M8 13.5h5"/></svg></span>
+        <span class="share-label">Zalo</span>
+      </button>
+      <button class="share-btn" type="button" data-share="tiktok">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.2a3.3 3.3 0 1 1-2.6-3.2"/><path d="M14 6.2A5.8 5.8 0 0 0 19.8 10"/></svg></span>
+        <span class="share-label">TikTok</span>
+      </button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-soft" type="button" id="btnShareCopy">Sao chép kết quả</button>
+      <button class="btn-primary" type="button" id="btnShareClose">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ========================= CẤU HÌNH ========================= */
+  const CONFIG = {
+    questionCount: 45,             // = QUESTIONS.length
+    candidateName: '',           // tên thí sinh hiển thị ở màn kết quả
+    subjectName: 'Kỹ thuật số - Chương 3',// tên môn học hiển thị ở màn kết quả và trang xem đáp án
+    timeLimitSeconds: null,       // null = không giới hạn
+    dotWindow: 15,                // số chấm tròn hiển thị trên thanh dưới
+    startSound: true,
+    exitUrl: null,                // đường dẫn sau khi xác nhận thoát (null = quay lại trang trước)
+    onExit: null,                 // hàm tuỳ biến, ưu tiên hơn exitUrl (vd: gửi kết quả về server)
+    leaderboard: null,           // dữ liệu thật sẵn có: [{ name, score, seconds, total }]
+    leaderboardUrl: null,        // URL trả về JSON: mảng, hoặc { rows: [...] } — nguồn ưu tiên hơn leaderboard
+    shareUrl: null,               // link chia sẻ (mặc định = location.href của trang)
+    messengerAppId: null,         // App ID Facebook để mở hộp thoại Messenger trên web
+    onFinish: null                // nhận kết quả khi hoàn thành: ({ total, correct, score, wrongCount, seconds, ratio, name, subject, answers })
+  };
+
+  const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+  /* ========================= CÂU HỎI =========================
+     Nguồn: De_On_Tap_Trac_Nghiem_Chuong_3.md — đã tráo vị trí đáp án (45 câu)
+     Xem scoring.md cho quy tắc tính điểm (tự động, không cần cấu hình). */
+  const QUESTIONS = [
+    {"id": 1, "text": "Cho bảng chân trị của hàm Boole 3 biến F(A, B, C) có ngõ ra F = 1 tại các minterm m₀(000), m₃(011), m₄(100), m₇(111) và F = 0 tại các vị trí còn lại. Dạng tối giản của hàm F là:", "options": ["F = A̅B̅ + AB", "F = A ⊕ B ⊕ C", "F = B ⊕ C", "F = B̅C̅ + BC = B ⊙ C"], "correct": 3},
+    {"id": 2, "text": "Cho hàm tổ hợp 3 biến F(A, B, C) nhận giá trị F = 0 tại hai ô m₂(010) và m₅(101), các ô còn lại F = 1. Biểu thức dạng tích các tổng chuẩn (POS - Chuẩn 2) của F là:", "options": ["F = A̅BC̅ + AB̅C", "F = (A + B + C̅)(A̅ + B̅ + C)", "F = (A̅ + B + C̅)(A + B̅ + C)", "F = (A + B̅ + C)(A̅ + B + C̅)"], "correct": 3},
+    {"id": 3, "text": "Cho mạch tổ hợp 3 ngõ vào A, B, C và 1 ngõ ra F. Bảng chân trị cho thấy F = 1 tại các tổ hợp nhị phân 001, 011, 100, 101. Rút gọn biểu thức F bằng bìa Karnaugh ta được:", "options": ["F = A ⊙ C", "F = A + C", "F = A̅C + AC̅ = A ⊕ C", "F = A̅B + AC"], "correct": 2},
+    {"id": 4, "text": "Cho bảng chân trị 3 biến A, B, C có ngõ ra F = 1 tại m₀(000), m₁(001), m₄(100), m₅(101). Biểu thức rút gọn tối giản của F là:", "options": ["F = A̅ + B̅", "F = B̅", "F = A̅B̅", "F = B̅C̅"], "correct": 1},
+    {"id": 5, "text": "Cho bảng chân trị của hàm F(A, B, C) có F = 0 tại hai vị trí m₃(011) và m₄(100), tất cả các vị trí khác F = 1. Biểu thức POS tối giản của F là:", "options": ["F = B̅C̅ + BC", "F = (A̅ + B + C)(A + B + C̅)", "F = (A + B̅ + C̅)(A̅ + B + C)", "F = (A + B̅ + C̅) + (A̅ + B + C)"], "correct": 2},
+    {"id": 6, "text": "Cho bảng chân trị 4 biến A, B, C, D có ngõ ra F = 1 tại 8 minterm: m₂, m₃, m₆, m₇, m₁₀, m₁₁, m₁₄, m₁₅. Biểu thức rút gọn tối giản của F là:", "options": ["F = BC", "F = C + D", "F = CD", "F = C"], "correct": 3},
+    {"id": 7, "text": "Cho bảng chân trị 3 biến A, B, C có ngõ ra F = 1 tại m₀, m₂, m₄, m₆. Hàm F rút gọn bằng:", "options": ["F = C̅", "F = B̅C̅", "F = C", "F = A̅C̅"], "correct": 0},
+    {"id": 8, "text": "Thứ tự các bước chuẩn để thiết kế một mạch tổ hợp từ yêu cầu bài toán/bảng chân trị là:", "options": ["Phân tích yêu cầu → Vẽ sơ đồ mạch logic → Lập bảng chân trị → Rút gọn biểu thức Boole", "Phân tích yêu cầu → Lập bảng chân trị → Rút gọn biểu thức Boole → Vẽ sơ đồ mạch logic", "Phân tích yêu cầu → Rút gọn biểu thức Boole → Lập bảng chân trị → Vẽ sơ đồ mạch logic", "Lập bảng chân trị → Phân tích yêu cầu → Rút gọn biểu thức Boole → Vẽ sơ đồ mạch logic"], "correct": 1},
+    {"id": 9, "text": "Cho bảng chân trị 3 biến A, B, C với F = 1 tại các minterm m₁, m₂, m₃, m₅, m₇. Biểu thức SOP tối giản của F là:", "options": ["F = A̅C + B", "F = C + A̅B̅", "F = C + AB", "F = C + A̅B"], "correct": 3},
+    {"id": 10, "text": "Mạch tổ hợp có 3 ngõ vào A, B, C. Ngõ ra Y = 1 khi và chỉ khi số bit 1 ở ngõ vào là một số lẻ (Odd Parity). Biểu thức logic tối giản của Y là:", "options": ["Y = A ⊕ B ⊕ C", "Y = AB + BC + AC", "Y = A ⊙ B ⊙ C", "Y = A̅B̅C̅ + ABC"], "correct": 0},
+    {"id": 11, "text": "IC 74LS139 chứa mạch giải mã 2 sang 4 với các ngõ ra tích cực mức thấp (active-low). Khi ngõ cho phép G̅ = 0, ngõ vào địa chỉ B = 1, A = 0 (B là MSB), trạng thái các ngõ ra Y̅₀, Y̅₁, Y̅₂, Y̅₃ là:", "options": ["Y̅₀ = 1, Y̅₁ = 0, Y̅₂ = 1, Y̅₃ = 1", "Y̅₀ = 1, Y̅₁ = 1, Y̅₂ = 1, Y̅₃ = 0", "Y̅₀ = 1, Y̅₁ = 1, Y̅₂ = 0, Y̅₃ = 1", "Y̅₀ = 0, Y̅₁ = 1, Y̅₂ = 1, Y̅₃ = 1"], "correct": 2},
+    {"id": 12, "text": "IC giải mã 3 sang 8 74LS138 có 3 chân cho phép: G₁ (tích cực cao), G̅_(2A) và G̅_(2B) (tích cực thấp). Để IC giải mã bình thường, điều kiện điện thế các chân cho phép phải là:", "options": ["G₁ = 1, G̅_(2A) = 0, G̅_(2B) = 0", "G₁ = 0, G̅_(2A) = 1, G̅_(2B) = 1", "G₁ = 0, G̅_(2A) = 0, G̅_(2B) = 0", "G₁ = 1, G̅_(2A) = 1, G̅_(2B) = 0"], "correct": 0},
+    {"id": 13, "text": "IC 74LS138 đang hoạt động bình thường (G₁=1, G̅_(2A)=G̅_(2B)=0). Khi ngõ vào dữ liệu C = 1, B = 0, A = 1 (C là MSB), ngõ ra nào sẽ ở mức logic 0?", "options": ["Y₅", "Y̅₃", "Y̅₅", "Y̅₆"], "correct": 2},
+    {"id": 14, "text": "Để thực hiện hàm Boole F(A, B, C) = Σ(1, 3, 6) bằng 1 IC 74LS138 (ngõ ra tích cực thấp Y̅₀..Y̅₇) và 1 cổng logic, ta chọn kết nối 3 ngõ ra Y̅₁, Y̅₃, Y̅₆ vào:", "options": ["Cổng OR 3 ngõ vào", "Cổng AND 3 ngõ vào", "Cổng NOR 3 ngõ vào", "Cổng NAND 3 ngõ vào"], "correct": 3},
+    {"id": 15, "text": "IC 74LS148 là mạch mã hóa ưu tiên 8 sang 3 ngõ vào/ra tích cực thấp. Khi chân cho phép EI̅ = 0, trạng thái các ngõ vào là I̅₇=1, I̅₆=1, I̅₅=0, I̅₄=0, I̅₃=1, I̅₂=0, I̅₁=1, I̅₀=0. Ngõ vào được ưu tiên mã hóa và giá trị ngõ ra A̅₂A̅₁A̅₀ lần lượt là:", "options": ["Ngõ vào I₀, ngõ ra A̅₂A̅₁A̅₀ = 111₂", "Ngõ vào I₅, ngõ ra A̅₂A̅₁A̅₀ = 010₂", "Ngõ vào I₇, ngõ ra A̅₂A̅₁A̅₀ = 000₂", "Ngõ vào I₄, ngõ ra A̅₂A̅₁A̅₀ = 011₂"], "correct": 1},
+    {"id": 16, "text": "Khi ghép 2 IC 74LS138 để tạo thành bộ giải mã 4 sang 16 (với 4 ngõ vào địa chỉ D, C, B, A, trong đó D là MSB), tín hiệu D được kết nối như thế nào?", "options": ["D nối trực tiếp tới G₁ của IC2, và qua cổng NOT tới G₁ của IC1 (hoặc nối tới chân G̅_(2A) của IC1)", "D nối chung vào các ngõ vào địa chỉ C, B, A của cả 2 IC", "D nối trực tiếp tới G₁ của IC1 và qua cổng NOT tới G₁ của IC2", "D nối vào chân EI̅ của cả hai IC"], "correct": 0},
+    {"id": 17, "text": "Ưu điểm nổi bật nhất của mạch mã hóa ưu tiên (Priority Encoder) so với mạch mã hóa thông thường là:", "options": ["Cho phép nhiều ngõ vào tích cực đồng thời và xuất mã nhị phân của ngõ vào có chỉ số ưu tiên cao nhất", "Chỉ cho phép duy nhất một ngõ vào tích cực tại một thời điểm", "Không cần nguồn cấp V_(CC)", "Tự động sửa lỗi khi ngõ vào bị nhiễu"], "correct": 0},
+    {"id": 18, "text": "Số lượng bộ giải mã 2 sang 4 độc lập tích hợp bên trong một IC 74LS139 là:", "options": ["3 bộ", "1 bộ", "2 bộ", "4 bộ"], "correct": 2},
+    {"id": 19, "text": "Muốn sử dụng 1 IC 74LS138 làm mạch giải mã 2 sang 4 với 2 biến vào địa chỉ là B, A, ta có thể cố định ngõ vào C và sử dụng các ngõ ra nào?", "options": ["Cố định C = 1, lấy 4 ngõ ra Y̅₁, Y̅₂, Y̅₃, Y̅₄", "Cố định C = 0, lấy 4 ngõ ra Y̅₀, Y̅₁, Y̅₂, Y̅₃", "Cố định C = 1, lấy 4 ngõ ra Y̅₀, Y̅₁, Y̅₂, Y̅₃", "Cố định C = 0, lấy 4 ngõ ra Y̅₄, Y̅₅, Y̅₆, Y̅₇"], "correct": 1},
+    {"id": 20, "text": "Ngõ ra GS̅ (Group Select) của IC 74LS148 xuống mức 0 (tích cực) khi nào?", "options": ["Khi mạch bị quá nhiệt", "Khi chân cho phép EI̅ = 0 VÀ có ít nhất một ngõ vào dữ liệu (I̅₀..I̅₇) tích cực (bằng 0)", "Khi chân cho phép EI̅ = 0 VÀ tất cả các ngõ vào dữ liệu đều bằng 1", "Luôn bằng 0 khi EI̅ = 0"], "correct": 1},
+    {"id": 21, "text": "Chức năng của ngõ ra EO̅ (Enable Output) trên IC 74LS148 trong sơ đồ ghép nối tầng (cascade) là:", "options": ["Xuống mức 0 khi có ít nhất 1 ngõ vào dữ liệu tích cực", "Luôn nối xuống GND", "Xuống mức 0 khi EI̅ = 0 VÀ không có ngõ vào dữ liệu nào tích cực, dùng để cho phép IC tầng tiếp theo", "Dùng để xuất bit trọng số cao nhất A₃"], "correct": 2},
+    {"id": 22, "text": "Một IC 74LS138 có các ngõ vào địa chỉ C = A₂, B = A₁, A = A₀. Biểu thức logic mô tả ngõ ra Y̅₃ khi IC được cho phép là:", "options": ["Y̅₃ = NOT(A̅₂ A₁ A₀) = A₂ + A̅₁ + A̅₀", "Y̅₃ = A₂ A₁ A₀", "Y̅₃ = A₂ A̅₁ A₀", "Y̅₃ = A̅₂ A₁ A₀"], "correct": 0},
+    {"id": 23, "text": "Một mạch dồn kênh (Multiplexer - MUX) 8 sang 1 tiêu chuẩn có bao nhiêu ngõ vào dữ liệu, ngõ vào điều khiển chọn kênh và ngõ ra?", "options": ["8 ngõ vào dữ liệu, 8 ngõ vào điều khiển, 1 ngõ ra", "8 ngõ vào dữ liệu, 3 ngõ vào điều khiển, 1 ngõ ra", "3 ngõ vào dữ liệu, 8 ngõ vào điều khiển, 1 ngõ ra", "1 ngõ vào dữ liệu, 3 ngõ vào điều khiển, 8 ngõ ra"], "correct": 1},
+    {"id": 24, "text": "Cho MUX 4 sang 1 có 2 ngõ điều khiển S₁, S₀ (S₁ là MSB) và các ngõ dữ liệu D₀, D₁, D₂, D₃. Khi S₁ = 1, S₀ = 0, ngõ ra Y nhận tín hiệu từ:", "options": ["Ngõ vào D₂", "Ngõ vào D₁", "Ngõ vào D₀", "Ngõ vào D₃"], "correct": 0},
+    {"id": 25, "text": "Thực hiện hàm Boole F(A, B, C) = Σ(1, 2, 5, 7) bằng 1 MUX 8 sang 1 với các ngõ chọn kênh S₂ = A, S₁ = B, S₀ = C. Các ngõ dữ liệu D₀..D₇ phải nối mức logic như thế nào?", "options": ["D₁ = D₂ = D₅ = D₇ = 1; D₀ = D₃ = D₄ = D₆ = 0", "D₂ = D₄ = D₆ = D₇ = 1; D₀ = D₁ = D₃ = D₅ = 0", "D₁ = D₃ = D₅ = D₇ = 1; D₀ = D₂ = D₄ = D₆ = 0", "D₀ = D₃ = D₄ = D₆ = 1; D₁ = D₂ = D₅ = D₇ = 0"], "correct": 0},
+    {"id": 26, "text": "Thực hiện hàm F(A, B, C) = Σ(0, 3, 5, 6) bằng MUX 4 sang 1 với 2 ngõ chọn S₁ = A, S₀ = B. Biểu thức tín hiệu nối vào các ngõ dữ liệu D₀, D₁, D₂, D₃ theo biến C là:", "options": ["D₀ = C, D₁ = C, D₂ = C̅, D₃ = C̅", "D₀ = C, D₁ = C̅, D₂ = C̅, D₃ = C", "D₀ = C̅, D₁ = C, D₂ = C, D₃ = C̅", "D₀ = 1, D₁ = 0, D₂ = 1, D₃ = 0"], "correct": 2},
+    {"id": 27, "text": "Để tạo một MUX 4 sang 1 từ 3 IC MUX 2 sang 1 (không dùng thêm cổng logic), sơ đồ kết nối đúng là:", "options": ["2 MUX tầng 1 nhận D₀, D₂ và D₁, D₃ với chân chọn S₁; MUX tầng 2 có chân chọn S₀", "2 MUX tầng 1 nhận D₀, D₁ và D₂, D₃ với chân chọn S₀; ngõ ra 2 MUX này đưa vào MUX tầng 2 với chân chọn S₁", "Nối song song cả 3 MUX 2 sang 1", "Nối nối tiếp MUX1 → MUX2 → MUX3"], "correct": 1},
+    {"id": 28, "text": "Mạch phân kênh (Demultiplexer - DEMUX) 1 sang 4 có 1 ngõ vào dữ liệu D và 2 ngõ chọn S₁, S₀. Khi S₁ = 0, S₀ = 1, tín hiệu D xuất ra ở ngõ ra nào?", "options": ["Y₂", "Y₁", "Y₃", "Y₀"], "correct": 1},
+    {"id": 29, "text": "Số lượng MUX 8 sang 1 và MUX 4 sang 1 tối thiểu cần dùng để ghép thành một MUX 32 sang 1 là:", "options": ["4 MUX 8 sang 1 (tầng 1) và 1 MUX 4 sang 1 (tầng 2)", "8 MUX 4 sang 1 và 1 MUX 8 sang 1", "32 MUX 2 sang 1", "2 MUX 8 sang 1 và 2 MUX 4 sang 1"], "correct": 0},
+    {"id": 30, "text": "Cho MUX 4 sang 1 có ngõ cho phép E̅ (tích cực thấp). Biểu thức tổng quát ngõ ra Y theo E̅, S₁, S₀ và D₀..D₃ là:", "options": ["Y = E̅ · (S̅₁S̅₀ D₀ + S̅₁ S₀ D₁ + S₁S̅₀ D₂ + S₁ S₀ D₃)", "Y = S̅₁S̅₀ D₀", "Y = E̅ + (S̅₁S̅₀ D₀ + S̅₁ S₀ D₁ + S₁S̅₀ D₂ + S₁ S₀ D₃)", "Y = E · (S₁ D₀ + S₀ D₁)"], "correct": 0},
+    {"id": 31, "text": "Sử dụng MUX 8 sang 1 làm mạch kiểm tra số nhị phân 3 bit A, B, C (A là MSB đưa vào S₂, B → S₁, C → S₀). Ngõ ra Y = 1 khi giá trị thập phân ABC chia hết cho 3. Trạng thái các ngõ dữ liệu D₀..D₇ là:", "options": ["D₁ = 1, D₃ = 1, D₅ = 1, D₇ = 1; các ngõ còn lại bằng 0", "D₀ = 1, D₂ = 1, D₄ = 1, D₆ = 1; các ngõ còn lại bằng 0", "D₃ = 1, D₆ = 1; các ngõ còn lại bằng 0", "D₀ = 1, D₃ = 1, D₆ = 1; các ngõ còn lại bằng 0"], "correct": 3},
+    {"id": 32, "text": "Điểm khác biệt căn bản nhất giữa mạch dồn kênh (MUX) và mạch phân kênh (DEMUX) là:", "options": ["MUX có nhiều ngõ ra, DEMUX có 1 ngõ ra", "MUX là mạch tuần tự, DEMUX là mạch tổ hợp", "MUX không có ngõ vào điều khiển", "MUX chọn 1 trong N ngõ vào xuất ra 1 ngõ ra; DEMUX đưa 1 ngõ vào xuất ra 1 trong N ngõ ra"], "correct": 3},
+    {"id": 33, "text": "Mạch cộng bán phần (Half Adder - HA) thực hiện cộng 2 bit A và B. Biểu thức ngõ ra Tổng (S) và Số nhớ (C) là:", "options": ["S = A ⊕ B, C = AB", "S = A ⊙ B, C = A + B", "S = AB, C = A ⊕ B", "S = A + B, C = AB"], "correct": 0},
+    {"id": 34, "text": "Mạch cộng toàn phần (Full Adder - FA) cộng 3 bit A, B và số nhớ ngõ vào Cᵢₙ. Biểu thức Tổng (S) và Số nhớ ngõ ra (Cₒᵤₜ) là:", "options": ["S = A + B + Cᵢₙ, Cₒᵤₜ = ABCᵢₙ", "S = A ⊕ B ⊕ Cᵢₙ, Cₒᵤₜ = A ⊕ B ⊕ Cᵢₙ", "S = A ⊕ B ⊕ Cᵢₙ, Cₒᵤₜ = AB + BCᵢₙ + ACᵢₙ", "S = A ⊙ B ⊙ Cᵢₙ, Cₒᵤₜ = A + B + Cᵢₙ"], "correct": 2},
+    {"id": 35, "text": "Để cấu tạo nên 1 mạch cộng toàn phần (FA), ta có thể kết nối từ:", "options": ["1 mạch cộng bán phần (HA) và 2 cổng OR", "2 mạch cộng bán phần (HA) và 1 cổng AND", "3 mạch cộng bán phần (HA)", "2 mạch cộng bán phần (HA) và 1 cổng OR"], "correct": 3},
+    {"id": 36, "text": "IC cộng song song 4 bit 74LS83 thực hiện cộng A (A₄A₃A₂A₁) + B (B₄B₃B₂B₁) với C₀ = 0. Khi A = 0101₂ (5) và B = 0111₂ (7), ngõ ra C₄S₄S₃S₂S₁ nhận giá trị:", "options": ["C₄ = 0, S₄S₃S₂S₁ = 1011₂", "C₄ = 0, S₄S₃S₂S₁ = 1101₂", "C₄ = 0, S₄S₃S₂S₁ = 1100₂ (12₁₀)", "C₄ = 1, S₄S₃S₂S₁ = 0010₂"], "correct": 2},
+    {"id": 37, "text": "Để sử dụng IC 74LS83 làm mạch cộng/trừ số nhị phân 4 bit A ± B với tín hiệu điều khiển V (V = 0: cộng A+B, V = 1: trừ A-B), ta cần kết nối ngõ vào Bᵢ và C₀ như thế nào?", "options": ["Đưa các bit Bᵢ qua cổng NOT, và đưa C₀ = 0", "Đưa các bit Aᵢ qua cổng XOR với V, và đưa V vào C₀", "Đưa các bit Bᵢ qua cổng AND với V, và đưa C₀ = V", "Đưa các bit Bᵢ qua cổng XOR với V (thành Bᵢ ⊕ V), và đưa V vào C₀"], "correct": 3},
+    {"id": 38, "text": "Mạch so sánh 2 số 1 bit A và B có các ngõ ra Y_(A>B), Y_(A<B), Y_(A=B). Biểu thức đúng của các ngõ ra là:", "options": ["Y_(A>B) = A + B, Y_(A<B) = AB, Y_(A=B) = A̅B̅", "Y_(A>B) = A̅B, Y_(A<B) = AB̅, Y_(A=B) = A ⊕ B", "Y_(A>B) = AB̅, Y_(A<B) = A̅B, Y_(A=B) = A ⊙ B", "Y_(A>B) = AB, Y_(A<B) = A̅B̅, Y_(A=B) = A ⊕ B"], "correct": 2},
+    {"id": 39, "text": "IC so sánh 4 bit 74LS85 có các ngõ vào so sánh nối tầng I_(A>B), I_(A<B), I_(A=B). Khi dùng 1 IC 74LS85 độc lập để so sánh hai số 4 bit, ta phải nối cố định các ngõ vào này là:", "options": ["I_(A=B) = 0, I_(A>B) = 0, I_(A<B) = 1", "I_(A=B) = 1, I_(A>B) = 0, I_(A<B) = 0", "I_(A=B) = 0, I_(A>B) = 0, I_(A<B) = 0", "I_(A=B) = 0, I_(A>B) = 1, I_(A<B) = 0"], "correct": 1},
+    {"id": 40, "text": "Khi so sánh hai số nhị phân 4 bit A = A₃A₂A₁A₀ và B = B₃B₂B₁B₀, điều kiện để A > B được xét theo thứ tự ưu tiên là:", "options": ["So sánh tổng các bit của A và B", "So sánh số lượng bit 1 của hai số", "So sánh từ bit trọng số thấp nhất A₀ và B₀", "So sánh từ bit trọng số cao nhất A₃ và B₃; nếu A₃ > B₃ thì A > B; nếu A₃ = B₃ mới xét tiếp A₂ và B₂, v.v."], "correct": 3},
+    {"id": 41, "text": "Mạch tạo bit Parity chẵn (Even Parity Generator) cho từ dữ liệu 3 bit A, B, C xuất ra bit P sao cho tổng số bit 1 trong bộ (A, B, C, P) luôn là số chẵn. Biểu thức của P là:", "options": ["P = A̅B̅C̅", "P = AB + BC + AC", "P = A ⊙ B ⊙ C", "P = A ⊕ B ⊕ C"], "correct": 3},
+    {"id": 42, "text": "Cho từ dữ liệu 4 bit D₃D₂D₁D₀ = 1011₂. Bit Parity chẵn (Pₑᵥₑₙ) và bit Parity lẻ (P_(odd)) được tạo ra cho từ dữ liệu này lần lượt là:", "options": ["Pₑᵥₑₙ = 0, P_(odd) = 0", "Pₑᵥₑₙ = 1, P_(odd) = 0", "Pₑᵥₑₙ = 1, P_(odd) = 1", "Pₑᵥₑₙ = 0, P_(odd) = 1"], "correct": 1},
+    {"id": 43, "text": "Trong hệ thống truyền dữ liệu số, loại cổng logic cơ bản nhất được sử dụng trong các mạch tạo và kiểm tra Parity là:", "options": ["Cổng OR", "Cổng XOR (hoặc XNOR)", "Cổng AND", "Cổng NAND"], "correct": 1},
+    {"id": 44, "text": "Phương pháp kiểm tra Parity (chẵn/lẻ) có đặc điểm và khả năng là:", "options": ["Phát hiện được số chẵn bit bị lỗi", "Phát hiện và tự động sửa mọi lỗi bit", "Phát hiện được các lỗi đơn (lỗi 1 bit) hoặc số lẻ bit lỗi trong quá trình truyền dữ liệu, nhưng không có khả năng tự sửa lỗi", "Không phát hiện được lỗi nào"], "correct": 2},
+    {"id": 45, "text": "Tại bên thu, mạch kiểm tra Parity lẻ (Odd Parity Checker) nhận từ mã 5 bit (D₃D₂D₁D₀P) = 11010₂. Ngõ ra báo lỗi ERROR (ERROR = 1 khi có lỗi) sẽ có giá trị là:", "options": ["ERROR = 0 (không có lỗi)", "ERROR = 1 (có lỗi)", "ERROR = 11", "ERROR = X (không xác định)"], "correct": 0}
+  ];
+
+const ICONS = {
+    wrong: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/></svg>',
+    skipped: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+    star: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2.5 15 9 22 9.8 16.8 14.4 18.3 21.3 12 17.8 5.7 21.3 7.2 14.4 2 9.8 9 9"/></svg>',
+    done: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>'
+  };
+
+  /* Dựng sẵn icon toast 1 lần, tránh parse lại SVG mỗi lần hiện thông báo */
+  const ICON_NODES = Object.fromEntries(
+    Object.entries(ICONS).map(([key, svg]) => {
+      const holder = document.createElement('span');
+      holder.innerHTML = svg;
+      return [key, holder.firstElementChild];
+    })
+  );
+
+  const PRAISE = [
+    { title: 'Chú ý hơn nhé', sub: 'Hãy cố gắng hơn nhé', tone: 'hint' },
+    { title: 'Làm tốt lắm', sub: 'Hãy giữ vững phong độ. Tiến lên' },
+    { title: 'Tuyệt vời!', sub: 'Bạn đang làm rất tốt' },
+    { title: 'Chính xác', sub: 'Giữ nguyên nhịp độ này nhé' }
+  ];
+
+  /* Ký hiệu trạng thái trên thanh tiến trình */
+  const DOT_ICONS = {
+    right: '<svg class="dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    retry: '<svg class="dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    wrong: '<svg class="dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+  };
+  const STATUS_TEXT = {
+    right: 'làm đúng ngay',
+    retry: 'làm sai rồi chọn lại đúng',
+    wrong: 'làm sai, đã bỏ qua bằng phím Esc',
+    pending: 'chưa làm'
+  };
+
+  /* ========================= TRẠNG THÁI ========================= */
+  const ALL_QUESTIONS = QUESTIONS;
+  let SESSION = ALL_QUESTIONS;      // danh sách câu của phiên làm bài hiện tại
+  let startedAt = Date.now();       // mốc bắt đầu, dùng tính thời gian làm bài
+  const state = {
+    index: 0,
+    picked: {},        // id -> index đáp án đang chọn
+    solved: {},        // id -> true khi đã trả lời đúng
+    attempts: {},      // id -> số lần chọn sai
+    skipped: {},       // id -> true khi bỏ qua bằng phím Esc
+    lastWrong: null,   // { id, index } đáp án vừa bị báo sai (để tô đỏ)
+    finished: false,
+    lastResult: null,  // kết quả của phiên vừa hoàn thành
+    practice: false,   // phiên hiện tại có phải luyện tập từ trang điểm không
+    practiceLabel: '', // nhãn hiển thị trên khung làm bài
+    practiceSession: null,    // danh sách câu của phiên luyện tập (để Bắt đầu lại đúng tập)
+    practicePrevResult: null   // kết quả gốc để quay lại phần xem điểm
+  };
+
+  /* Trạng thái mỗi câu: right = đúng ngay lần đầu, retry = sai rồi làm đúng,
+     wrong = bấm Esc bỏ qua, pending = chưa làm */
+  const statusOf = (q) => {
+    if (state.solved[q.id]) return state.attempts[q.id] ? 'retry' : 'right';
+    if (state.skipped[q.id]) return 'wrong';
+    return 'pending';
+  };
+  const isResolved = (q) => state.solved[q.id] || state.skipped[q.id];
+
+  /* ĐIỂM: đúng ngay 100%, sai 1 lần 75%, sai 2 lần 50%, sai từ 3 lần 25%,
+     bỏ qua (Esc) hoặc chưa làm = 0%. Quy tắc đầy đủ: scoring.md */
+  const SCORE_RATE_BY_ATTEMPTS = [100, 75, 50, 25];   // % giá trị của câu
+  const pointsOf = (status, attempts) => {
+    if (status === 'right') return 1;
+    if (status === 'retry') return SCORE_RATE_BY_ATTEMPTS[Math.min(attempts || 0, 3)] / 100;
+    return 0;
+  };
+  const formatScore = (n) => String(Math.round(n * 100) / 100);
+
+  const elapsedSeconds = () => (remaining == null
+    ? Math.floor((Date.now() - startedAt) / 1000)
+    : Math.max(0, CONFIG.timeLimitSeconds - remaining));
+
+  /* Câu cao nhất đã xử lý xong (đúng hoặc bỏ qua), theo chỉ số trong SESSION */
+  const maxUnlockedIndex = () => {
+    let last = -1;
+    SESSION.forEach((q, i) => { if (isResolved(q)) last = i; });
+    return last + 1;
+  };
+  const isReachable = (index) => index <= maxUnlockedIndex();
+
+  /* ========================= DOM ========================= */
+  const $ = (id) => document.getElementById(id);
+  const el = {
+    timerText: $('timerText'), timer: $('timer'),
+    qcard: $('qcard'), qNumber: $('qNumber'), qText: $('qText'), options: $('options'),
+    toast: $('toast'), toastIcon: $('toastIcon'), toastTitle: $('toastTitle'), toastSub: $('toastSub'),
+    toastClose: $('toastClose'), dots: $('dots'), counter: $('counterText'),
+    btnAction: $('btnAction'), btnRestart: $('btnRestart'), btnCounter: $('btnCounter'),
+    mapBackdrop: $('mapBackdrop'), mapGrid: $('mapGrid'),
+    resultPage: $('resultPage'), resScore: $('resScore'), resCourse: $('resCourse'),
+    resName: $('resName'), resTime: $('resTime'), resCorrect: $('resCorrect'),
+    rankCount: $('rankCount'), rankList: $('rankList'),
+    btnRetry: $('btnRetry'), btnRetryWrong: $('btnRetryWrong'), btnBackToResult: $('btnBackToResult'),
+    practiceTag: $('practiceTag'), practiceTagText: $('practiceTagText'),
+    btnReviewAnswers: $('btnReviewAnswers'), btnShare: $('btnShare'),
+    reviewPage: $('reviewPage'), reviewLayout: $('reviewLayout'),
+    rvScore: $('rvScore'), rvTime: $('rvTime'), rvSubmit: $('rvSubmit'), rvCourse: $('rvCourse'),
+    rvPartScore: $('rvPartScore'), rvPartSub: $('rvPartSub'), rvList: $('rvList'),
+    btnRvCollapse: $('btnRvCollapse'), btnRvFilter: $('btnRvFilter'), btnRvAnswer: $('btnRvAnswer'),
+    btnCopyLink: $('btnCopyLink'),
+    btnZoomIn: $('btnZoomIn'), btnZoomOut: $('btnZoomOut'), btnSound: $('btnSound'),
+    btnFullscreen: $('btnFullscreen'), btnBack: $('btnBack'),
+    confirmBackdrop: $('confirmBackdrop'), confirmMsg: $('confirmMsg'), btnConfirmClose: $('btnConfirmClose'), btnConfirmOk: $('btnConfirmOk'),
+    shareBackdrop: $('shareBackdrop'), shareSummary: $('shareSummary'),
+    btnShareCopy: $('btnShareCopy'), btnShareClose: $('btnShareClose')
+  };
+
+  /* ========================= ÂM THANH ========================= */
+  let audioCtx = null;
+  let soundOn = CONFIG.startSound;
+
+  const playTone = (freqs, type = 'sine', duration = 0.14) => {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      freqs.forEach((f, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = f;
+        const start = audioCtx.currentTime + i * duration * 0.9;
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.18, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start(start);
+        osc.stop(start + duration + 0.02);
+      });
+    } catch (_) { /* im lặng nếu trình duyệt chặn audio */ }
+  };
+
+const sfx = {
+    select: () => playTone([520], 'sine', 0.08),
+    wrong: () => playTone([300, 220], 'sawtooth', 0.16),
+    right: () => playTone([660, 880], 'sine', 0.16),
+    finish: () => playTone([523, 659, 784], 'sine', 0.22)
+  };
+
+  /* Tạo AudioContext sẵn lúc rảnh: nếu để tới cú bấm đầu tiên thì có thể treo
+     vài chục tới vài trăm ms (mở thiết bị âm thanh) -> khung làm bài giật. */
+  const warmUpAudio = () => {
+    if (!soundOn || audioCtx) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+    } catch (_) { /* trình duyệt không cho tạo audio -> bo qua */ }
+  };
+  const whenIdle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200));
+  whenIdle(warmUpAudio, { timeout: 3000 });
+
+  /* ========================= TIMER ========================= */
+  let remaining = CONFIG.timeLimitSeconds;
+
+  const formatTime = (s) => {
+    const m = Math.floor(s / 60), r = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+  };
+
+  const paintTimer = () => {
+    if (remaining == null) {
+      el.timerText.textContent = 'Không giới hạn';
+      el.timer.classList.remove('is-warning', 'is-danger');
+      return;
+    }
+    el.timerText.textContent = formatTime(Math.max(remaining, 0));
+    el.timer.classList.toggle('is-danger', remaining <= 60);
+    el.timer.classList.toggle('is-warning', remaining > 60 && remaining <= 300);
+  };
+
+  setInterval(() => {
+    if (remaining == null || state.finished || remaining <= 0) return;
+    remaining -= 1;
+    paintTimer();
+    if (remaining === 0) showToast('done', 'Hết thời gian', 'Bài làm được ghi nhận với số điểm hiện tại');
+  }, 1000);
+
+  /* ========================= TOAST ========================= */
+  let toastTimer = null;
+  let toastHideTimer = null;
+
+  const hideToast = () => {
+    if (el.toast.hidden) return;
+    clearTimeout(toastHideTimer);
+    el.toast.classList.add('is-out');
+    toastHideTimer = setTimeout(() => { el.toast.hidden = true; el.toast.classList.remove('is-in', 'is-out'); }, 190);
+  };
+
+const showToast = (kind, title, sub, mod) => {
+    clearTimeout(toastHideTimer);          // huỷ ẩn đang chờ, tránh ẩn nhầm toast mới
+    const icon = ICON_NODES[kind] || ICON_NODES.star;
+    if (el.toastIcon.firstChild !== icon) {
+      el.toastIcon.textContent = '';
+      el.toastIcon.appendChild(icon);
+    }
+    el.toastTitle.textContent = title;
+    el.toastSub.textContent = sub || '';
+    el.toast.classList.remove('is-good', 'is-wrong', 'is-skipped', 'is-hint');
+    if (mod === 'hint') el.toast.classList.add('is-hint');
+    else if (kind === 'wrong' || kind === 'skipped') el.toast.classList.add(kind === 'skipped' ? 'is-skipped' : 'is-wrong');
+    else el.toast.classList.add('is-good');
+    // chỉ ép reflow khi toast đang mở (cần khởi động lại animation); lúc ẩn thì không cần
+    if (!el.toast.hidden) void el.toast.offsetWidth;
+    el.toast.hidden = false;
+    el.toast.classList.remove('is-in', 'is-out');
+    el.toast.classList.add('is-in');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 6000);
+  };
+
+  /* ========================= RENDER CÂU HỎI =========================
+     Tách 2 mức để không giật khi bấm đáp án:
+       buildQuestion()  - dựng DOM (chỉ chạy khi đổi câu)
+       syncQuestion()   - chỉ bật/tắt class, không tạo lại phần tử
+  */
+  let optionButtons = [];
+  let builtQuestionId = null;
+  let dotButtons = [];
+  let dotsStart = -1;
+  let mapButtons = [];
+
+  const buildQuestion = (q) => {
+    el.qNumber.textContent = 'Câu ' + q.id;
+    el.qText.textContent = q.text;
+    el.options.innerHTML = '';
+
+    const frag = document.createDocumentFragment();
+    optionButtons = q.options.map((text, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option';
+      btn.innerHTML =
+        '<span class="option-badge">' + LETTERS[i] + '</span>' +
+        '<span class="option-text"></span>';
+      btn.querySelector('.option-text').textContent = text;
+      btn.addEventListener('click', () => choose(i));
+      frag.appendChild(btn);
+      return btn;
+    });
+    el.options.appendChild(frag);
+    builtQuestionId = q.id;
+  };
+
+  const syncQuestion = () => {
+    const q = SESSION[state.index];
+    const picked = state.picked[q.id];
+    const solved = !!state.solved[q.id];
+    const skipped = !!state.skipped[q.id];
+    const wrong = state.lastWrong && state.lastWrong.id === q.id;
+
+    optionButtons.forEach((btn, i) => {
+      const isPicked = picked === i;
+      btn.classList.toggle('is-selected', isPicked && !solved && !skipped);
+      btn.classList.toggle('is-wrong', isPicked && !skipped && !!wrong);
+      btn.classList.toggle('is-skipped', isPicked && skipped);
+      btn.classList.toggle('is-correct', solved && picked === i);
+      btn.classList.toggle('is-locked', solved);   // đã trả lời đúng thì khoá; câu đã bỏ qua vẫn làm lại được
+    });
+  };
+
+/* Animation chuyển câu bằng Web Animations: không cần ép reflow thủ công */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let cardAnim = null;
+  const animateCard = () => {
+    if (reduceMotion.matches || !el.qcard.animate) return;
+    if (cardAnim) cardAnim.cancel();
+    cardAnim = el.qcard.animate(
+      [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+      { duration: 280, easing: 'ease' }
+    );
+  };
+
+  const renderQuestion = (animate = true) => {
+    const q = SESSION[state.index];
+    if (builtQuestionId !== q.id) buildQuestion(q);
+    syncQuestion();
+    renderPracticeTag();
+    if (animate) animateCard();
+    renderActionButton();
+    renderProgress();
+  };
+
+const renderActionButton = () => {
+    const q = SESSION[state.index];
+    const picked = state.picked[q.id];
+    const solved = !!state.solved[q.id];
+    const btn = el.btnAction;
+
+if (solved) {
+      btn.disabled = false;
+      btn.textContent = state.index === SESSION.length - 1 ? 'Hoàn tất' : 'Câu tiếp theo';
+    } else if (picked == null) {
+      btn.disabled = true;
+      btn.textContent = 'Kiểm tra';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Kiểm tra';
+    }
+  };
+
+  const renderProgress = () => {
+    const total = SESSION.length;
+    const done = Object.keys(state.solved).length;
+    const current = SESSION[state.index];
+    el.counter.textContent = 'Câu ' + (state.index + 1) + '/' + total;
+    el.btnRestart.disabled = done === 0 && state.picked[current.id] == null;   // đáp án A có chỉ số 0, phải so với null
+
+    const size = Math.min(CONFIG.dotWindow, total);
+    const start = Math.max(0, Math.min(state.index - Math.floor(CONFIG.dotWindow / 2), total - CONFIG.dotWindow));
+
+    if (start !== dotsStart) {              // chỉ dựng lại khi cửa sổ chấm tròn dịch chuyển
+      dotsStart = start;
+      el.dots.innerHTML = '';
+      dotButtons = SESSION.slice(start, start + size).map((q, k) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dot';
+        b.setAttribute('role', 'tab');
+        b.title = 'Câu ' + q.id;
+        b.setAttribute('aria-label', 'Câu ' + q.id);
+        b.addEventListener('click', () => goTo(start + k));
+        el.dots.appendChild(b);
+        return b;
+      });
+    }
+    dotButtons.forEach((b, k) => {
+      const index = start + k;
+      const q = SESSION[index];
+      const status = statusOf(q);
+      const marked = status !== 'pending';
+      b.classList.toggle('is-current', index === state.index);
+      b.classList.toggle('is-marked', marked);
+      b.classList.toggle('is-right', status === 'right');
+      b.classList.toggle('is-retry', status === 'retry');
+      b.classList.toggle('is-wrong', status === 'wrong');
+      b.classList.toggle('is-locked', !isReachable(index));
+      b.setAttribute('aria-selected', index === state.index ? 'true' : 'false');
+      b.setAttribute('aria-label', 'Câu ' + q.id + ' - ' + STATUS_TEXT[status]);
+      b.title = 'Câu ' + q.id + ' - ' + STATUS_TEXT[status];
+      const wantIcon = marked ? status : '';
+      if (b.dataset.icon !== wantIcon) {
+        b.dataset.icon = wantIcon;
+        b.innerHTML = wantIcon ? DOT_ICONS[wantIcon] : '';
+      }
+    });
+
+    if (!el.mapBackdrop.hidden) syncMap();   // chỉ cập nhật bản đồ khi nó đang mở
+  };
+
+  /* ========================= LOGIC ========================= */
+const choose = (optionIndex) => {
+    const q = SESSION[state.index];
+    if (state.solved[q.id]) return;            // đã trả lời đúng thì khoá, không chọn lại được
+    if (state.picked[q.id] === optionIndex) {
+      delete state.picked[q.id];
+    } else {
+      state.picked[q.id] = optionIndex;
+      state.lastWrong = null;              // bỏ dấu đỏ của lượt chọn sai trước
+      hideToast();
+    }
+    sfx.select();
+    renderQuestion(false);                 // chỉ đổi trạng thái, không dựng lại khung
+  };
+
+  const check = () => {
+    const q = SESSION[state.index];
+    const picked = state.picked[q.id];
+    if (picked == null) return;
+
+if (picked === q.correct) {
+      state.solved[q.id] = true;
+      delete state.skipped[q.id];   // làm lại đúng câu đã bỏ qua thì không còn tính là bỏ qua nữa
+      state.lastWrong = null;
+      const p = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+      sfx.right();
+      showToast('star', p.title, p.sub, p.tone);
+      renderQuestion(false);
+    } else {
+      state.attempts[q.id] = (state.attempts[q.id] || 0) + 1;
+      state.lastWrong = { id: q.id, index: picked };
+      sfx.wrong();
+      showToast('wrong', 'Không đúng!', 'Hãy chọn lại một đáp án khác');
+      renderQuestion(false);
+    }
+  };
+
+  const next = () => {
+    const q = SESSION[state.index];
+    if (!isResolved(q)) return;              // chỉ qua câu đã trả lời đúng hoặc đã bỏ qua
+    if (state.index === SESSION.length - 1) { finish(); return; }
+    state.index += 1;
+    state.lastWrong = null;
+    hideToast();
+    renderQuestion();
+  };
+
+const act = () => {
+    const q = SESSION[state.index];
+    if (state.solved[q.id]) next();
+    else check();
+  };
+
+  const goTo = (index) => {
+    if (index < 0 || index >= SESSION.length) return;
+    if (!isReachable(index)) {
+      showToast('wrong', 'Chưa mở câu này', 'Hãy trả lời đúng câu trước đã');
+      return;
+    }
+    state.index = index;
+    state.lastWrong = null;
+    hideToast();
+    renderQuestion();
+  };
+
+  /* Bỏ qua câu hiện tại bằng phím Esc.
+   Chỉ bỏ qua được sau khi đã chọn sai ít nhất 1 lần; chưa làm gì thì Esc không có tác dụng. */
+const skipCurrent = () => {
+    const q = SESSION[state.index];
+    const goNext = () => {
+      if (state.index === SESSION.length - 1) { finish(); return; }
+      state.index += 1;
+      renderQuestion();
+    };
+    if (state.solved[q.id]) return;          // đã trả lời đúng thì không bỏ qua được
+    if (state.skipped[q.id]) { goNext(); return; }   // đã bỏ qua rồi -> Esc để đi tiếp
+    if (!state.attempts[q.id]) return;       // chưa chọn sai lần nào -> không bỏ qua được
+
+    state.skipped[q.id] = true;
+    state.lastWrong = null;               // giữ lại đáp án sai đã chọn để xem lại
+    sfx.wrong();
+    showToast('skipped', 'Đã bỏ qua câu này', 'Câu này được tính là sai, xem lại được bất cứ lúc nào');
+    goNext();
+  };
+
+  const finish = () => {
+    state.finished = true;
+    sfx.finish();
+    const total = SESSION.length;
+    const answers = SESSION.map(q => ({
+      q,
+      picked: state.picked[q.id],
+      status: statusOf(q),
+      solved: !!state.solved[q.id],
+      firstTry: statusOf(q) === 'right',
+      attempts: state.attempts[q.id] || 0,
+      points: pointsOf(statusOf(q), state.attempts[q.id])
+    }));
+    /* Điểm = 100% mỗi câu đúng ngay, 75% nếu sai 1 lần, 50% nếu sai 2 lần,
+       25% nếu sai từ 3 lần; câu bỏ qua bằng Esc hoặc chưa làm = 0 điểm.
+       Quy tắc đầy đủ: scoring.md */
+    const correct = answers.filter(a => a.status !== 'wrong' && a.status !== 'pending').length;
+    const score = answers.reduce((sum, a) => sum + pointsOf(a.status, a.attempts), 0);
+    const missed = SESSION.filter(q => statusOf(q) !== 'right');
+    state.lastResult = {
+      total, correct, score, missedCount: missed.length,
+      wrongCount: Object.values(state.attempts).reduce((a, b) => a + b, 0),
+      seconds: elapsedSeconds(),
+      ratio: total ? Math.round((score / total) * 100) : 0,
+      submittedAt: formatDateTime(new Date()),
+      name: CONFIG.candidateName || 'Bạn',
+      subject: CONFIG.subjectName || '',      // tên môn học
+      missedQuestions: missed,
+      answers
+    };
+    if (typeof CONFIG.onFinish === 'function') CONFIG.onFinish(state.lastResult);
+    showResultPage();
+  };
+
+  /* ========================= MÀN KẾT QUẢ ========================= */
+  const CROWN = '<svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3 18h18l-1.2-9-4.3 3.4L12 5.5 8.5 12.4 4.2 9 3 18Z"/></svg>';
+
+  const formatDuration = (totalSeconds) => {
+    const s = Math.max(0, Math.round(totalSeconds));
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h) return h + ' giờ ' + String(m).padStart(2, '0') + ' phút';
+    if (m) return m + ' phút ' + String(sec).padStart(2, '0') + ' giây';
+    return sec + ' giây';
+  };
+
+  const initialsOf = (name) => String(name || '').trim().split(/\s+/).filter(Boolean).slice(-2).map(w => w[0] || '').join('').toUpperCase() || '?';
+
+  const formatDateTime = (d) => {
+    const p = (n) => String(n).padStart(2, '0');
+    return p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear() +
+      ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  };
+
+  /* Nguồn dữ liệu: CONFIG.leaderboardUrl (API) > CONFIG.leaderboard (mảng sẵn) > []
+     Hàng của người làm bài luôn được gộp vào, ưu tiên kết quả vừa làm. */
+  const normalizeRow = (row, fallbackTotal) => {
+    const total = Number(row.total) > 0 ? Number(row.total) : (fallbackTotal || 0);
+    const score = Number(row.score) || 0;
+    return {
+      name: String(row.name || 'Không rõ'),
+      score,
+      seconds: Math.max(0, Number(row.seconds) || 0),
+      total,
+      correct: Number(row.correct) || 0,
+      ratio: total ? Math.round((score / total) * 100) : null
+    };
+  };
+
+  const fetchLeaderboard = async () => {
+    if (Array.isArray(CONFIG.leaderboard) && CONFIG.leaderboard.length) return CONFIG.leaderboard;
+    const url = CONFIG.leaderboardUrl;
+    if (typeof url !== 'string' || !url) return [];
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : (Array.isArray(data?.rows) ? data.rows : []);
+    } catch (_) {
+      return [];
+    }
+  };
+
+  /* Xếp hạng: điểm giảm dần → tỷ lệ % giảm dần → thời gian tăng dần */
+  const buildRanking = async (r) => {
+    const rows = (await fetchLeaderboard()).map(row => normalizeRow(row, r.total));
+    const mine = normalizeRow(
+      { name: r.name, score: r.score, seconds: r.seconds, total: r.total, correct: r.correct },
+      r.total
+    );
+    const at = rows.findIndex(row => row.name === mine.name);
+    if (at >= 0) rows[at] = mine; else rows.push(mine);
+    rows.sort((a, b) => b.score - a.score
+      || (b.ratio ?? -1) - (a.ratio ?? -1)
+      || a.seconds - b.seconds);
+    return rows.map((row, i) => ({ rank: i + 1, ...row, isMe: row.name === mine.name }));
+  };
+
+  const RANK_TIME_ICON = '<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>';
+
+  const renderRanking = async (r) => {
+    let rows = [];
+    try { rows = await buildRanking(r); } catch (_) { rows = []; }
+    if (!rows.length) {
+      el.rankCount.textContent = '(0 Thí sinh)';
+      el.rankList.innerHTML = '<li class="rank-empty">Chưa có dữ liệu xếp hạng</li>';
+      return;
+    }
+    el.rankCount.textContent = '(' + rows.length + ' Thí sinh)';
+    el.rankList.innerHTML = '';
+
+    const frag = document.createDocumentFragment();
+    rows.forEach(row => {
+      const li = document.createElement('li');
+      li.className = 'rank-item' + (row.rank === 1 ? ' is-top' : '') + (row.isMe ? ' is-me' : '');
+      li.innerHTML =
+        '<span class="rank-no"></span>' +
+        '<span class="rank-avatar"></span>' +
+        '<span class="rank-info">' +
+          '<span class="rank-name"></span>' +
+          '<span class="rank-meta">' +
+            '<span class="rank-score"></span>' +
+            '<span class="rank-ratio"></span>' +
+            '<span class="rank-time">' + RANK_TIME_ICON + '<span></span></span>' +
+          '</span>' +
+        '</span>' +
+        '<span class="rank-crown">' + CROWN + '</span>';
+
+      li.querySelector('.rank-no').textContent = row.rank;
+      li.querySelector('.rank-avatar').textContent = initialsOf(row.name);
+      li.querySelector('.rank-name').textContent = row.name + (row.isMe ? ' (bạn)' : '');
+      li.querySelector('.rank-score').textContent = formatScore(row.score) + ' điểm';
+      li.querySelector('.rank-ratio').textContent =
+        (row.ratio === null ? '' : row.ratio + '%') +
+        (row.total ? ' · ' + row.correct + '/' + row.total + ' câu đúng' : '');
+      li.querySelector('.rank-time span').textContent = formatDuration(row.seconds);
+      frag.appendChild(li);
+    });
+    el.rankList.appendChild(frag);
+  };
+
+  const scrollToTop = () => { if (window.scrollY > 0) window.scrollTo(0, 0); };
+
+  const showResultPage = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    el.resScore.textContent = formatScore(r.score) + '/' + r.total;
+    el.resCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
+    el.resName.textContent = r.name;
+    el.resTime.textContent = formatDuration(r.seconds);
+    el.resCorrect.textContent = r.correct + '/' + r.total + ' câu · ' + formatScore(r.score) + ' điểm';
+    renderRanking(r);
+    renderBackLink();
+    hideToast();
+    document.body.classList.add('is-result');
+    el.resultPage.hidden = false;
+    scrollToTop();
+  };
+
+  /* Nút "Quay lại phần xem điểm" chỉ hiện khi đang luyện tập (hoặc vừa luyện tập xong) */
+  const renderBackLink = () => {
+    el.btnBackToResult.hidden = !state.practicePrevResult;
+  };
+
+  /* Nhãn "Luyện tập" trên khung làm bài */
+  const renderPracticeTag = () => {
+    const show = !!state.practice;
+    el.practiceTag.hidden = !show;
+    if (show) el.practiceTagText.textContent = state.practiceLabel || 'Luyện tập';
+  };
+
+  /* ================= TRANG XEM ĐÁP ÁN ================= */
+  const REVIEW_FILTERS = [
+    { key: 'all', label: 'Đúng & sai', cls: 'is-all' },
+    { key: 'right', label: 'Đúng ✓', cls: 'is-right' },
+    { key: 'wrong', label: 'Sai ✗', cls: 'is-wrong' }
+  ];
+  const reviewState = { filter: 0, showAnswer: true };
+
+  const codeOf = (q) => q.code || ('ID:' + (564058296 + q.id));
+
+const isRightStatus = (status) => status === 'right' || status === 'retry';
+
+  /* Trang xem đáp án có thể rất dài (hàng chục câu) -> hiển thị từng phần
+     để lần vẽ đầu tiên không bị nặng. */
+  const REVIEW_PAGE_SIZE = 10;
+  let reviewLimit = REVIEW_PAGE_SIZE;
+
+  const renderReviewList = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    const filter = REVIEW_FILTERS[reviewState.filter];
+    el.rvList.innerHTML = '';
+
+    const list = r.answers.filter(a => filter.key === 'all'
+      ? a.status !== 'pending'
+      : filter.key === 'right' ? isRightStatus(a.status) : !isRightStatus(a.status));
+
+    if (!list.length) {
+      const empty = document.createElement('div');
+      empty.className = 'rv-empty';
+      empty.textContent = filter.key === 'wrong'
+        ? 'Không có câu nào làm sai.'
+        : 'Không có câu nào làm đúng.';
+      el.rvList.appendChild(empty);
+      return;
+    }
+
+    const frag = document.createDocumentFragment();   // gắp 1 lần thay vì từng thẻ
+    list.slice(0, reviewLimit).forEach(({ q, picked, status, attempts, points }) => {
+      const right = isRightStatus(status);
+      const item = document.createElement('article');
+      item.className = 'rv-item ' + (right ? 'is-right' : 'is-wrong');
+
+      const options = q.options.map((text, i) =>
+        '<li>' + LETTERS[i] + '. <span></span></li>').join('');
+      const strip = q.options.map((text, i) => {
+        const marks = [];
+        if (i === q.correct) marks.push('is-correct');
+        if (!right && i === picked) marks.push('is-yours');
+        if (!marks.length) return '<span>' + LETTERS[i] + '</span>';
+        return '<span class="' + marks.join(' ') + '">' +
+          (marks.includes('is-correct')
+            ? '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+            : '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>') +
+          LETTERS[i] + '</span>';
+      }).join('');
+
+      item.innerHTML =
+        '<div class="rv-item-head"><span class="rv-qno"></span><span class="rv-qid"></span></div>' +
+        '<div class="rv-qtext"></div>' +
+        '<ul class="rv-options">' + options + '</ul>' +
+        '<div class="rv-answer">' +
+          '<div class="rv-answer-text">Đáp án đúng: ' + LETTERS[q.correct] + '</div>' +
+          '<div class="rv-strip">' + strip + '</div>' +
+        '</div>';
+
+      item.querySelector('.rv-qno').textContent = 'Câu ' + q.id;
+      item.querySelector('.rv-qid').textContent = codeOf(q);
+      item.querySelector('.rv-qtext').textContent = q.text;
+      item.querySelectorAll('.rv-options span').forEach((s, i) => { s.textContent = q.options[i]; });
+
+if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
+        'beforeend', '<span class="rv-tag is-retry">Làm sai ' + attempts + ' lần · +' + formatScore(points) + ' điểm</span>');
+      if (status === 'wrong') item.querySelector('.rv-item-head').insertAdjacentHTML(
+        'beforeend', '<span class="rv-tag is-wrong">Bỏ qua</span>');
+
+      frag.appendChild(item);
+    });
+
+    if (list.length > reviewLimit) {
+      const more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'rv-more';
+      const rest = list.length - reviewLimit;
+      more.textContent = 'Xem thêm ' + Math.min(REVIEW_PAGE_SIZE, rest) + ' câu (còn ' + rest + ' câu)';
+      more.addEventListener('click', () => { reviewLimit += REVIEW_PAGE_SIZE; renderReviewList(); });
+      frag.appendChild(more);
+    }
+    el.rvList.appendChild(frag);
+  };
+
+  const paintReviewFilter = () => {
+    const f = REVIEW_FILTERS[reviewState.filter];
+    el.btnRvFilter.textContent = f.label;
+    el.btnRvFilter.className = 'rv-filter ' + f.cls;
+  };
+
+  const showReviewPage = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    const wrongCount = r.total - r.correct;
+
+    el.rvScore.textContent = formatScore(r.score) + '/' + r.total;
+    el.rvTime.textContent = formatDuration(r.seconds);
+    el.rvSubmit.textContent = r.submittedAt;
+    el.rvCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
+    el.rvPartScore.textContent = formatScore(r.score) + ' / ' + r.total;
+    el.rvPartSub.textContent = r.total + ' câu (' + r.correct + ' đúng - ' + wrongCount + ' sai) · ' + formatScore(r.score) + ' điểm';
+
+reviewState.filter = 0;
+    reviewState.showAnswer = true;
+    reviewLimit = REVIEW_PAGE_SIZE;
+    paintReviewFilter();
+    el.reviewLayout.classList.remove('no-answer');
+    el.reviewLayout.classList.remove('is-collapsed');
+    el.btnRvCollapse.setAttribute('aria-pressed', 'false');
+    $('btnRvCollapseLine').setAttribute('x1', '14');
+    el.btnRvAnswer.classList.add('is-on');   // đáp án đang hiển thị -> nút ở trạng thái bật
+    renderReviewList();
+
+    document.body.classList.remove('is-result');
+    document.body.classList.add('is-review');
+    el.reviewPage.hidden = false;
+    scrollToTop();
+  };
+
+  const hideReviewPage = () => {
+    closeAllBackdrops();
+    document.body.classList.remove('is-review');
+    el.reviewPage.hidden = true;
+    showResultPage();
+  };
+
+  const copyTeacherLink = () => copyToClipboard(
+    window.location.href, 'Đã sao chép liên kết', 'Dán vào tin nhắn gửi giáo viên'
+  );
+
+  const shareResultText = (r) => {
+    const mon = r.subject ? r.subject + ' — ' : '';
+    return 'Kết quả bài trắc nghiệm ' + mon + ': ' + r.correct + '/' + r.total +
+      ' đúng (' + formatScore(r.score) + '/' + r.total + ' điểm), thời gian ' + formatDuration(r.seconds);
+  };
+
+  const shareResult = async () => {
+    const r = state.lastResult;
+    if (!r) return;
+    const text = shareResultText(r);
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Kết quả bài trắc nghiệm', text }); return; }
+      catch (_) { /* người dùng huỷ chia sẻ */ }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('done', 'Đã sao chép kết quả', 'Dán vào nơi bạn muốn chia sẻ');
+    } catch (_) {
+      showToast('wrong', 'Không chia sẻ được', 'Trình duyệt không cho phép chia sẻ');
+    }
+  };
+
+  /* ========================= CHIA SẺ KẾT QUẢ ========================= */
+  /* Facebook: sharer.php (chạy được trên web, kèm link trong bài đăng).
+     Messenger: deep-link app, thiếu app_id thì mở hộp thoại web.
+     Zalo: deep-link app, web không có endpoint chia sẻ công khai.
+     TikTok: không có endpoint chia sẻ web — dùng share sheet của hệ điều hành
+     (trên Android sẽ hiện TikTok nếu đã cài), không có thì chỉ sao chép được. */
+  const sharePayload = () => {
+    const r = state.lastResult;
+    const url = CONFIG.shareUrl || window.location.href;
+    return { url, text: shareResultText(r), title: 'Kết quả bài trắc nghiệm' };
+  };
+
+  const SHARE_TARGETS = {
+    facebook: (p) => 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(p.url),
+    messenger: (p) => CONFIG.messengerAppId
+      ? 'https://www.facebook.com/dialog/send?link=' + encodeURIComponent(p.url) +
+        '&app_id=' + encodeURIComponent(CONFIG.messengerAppId) +
+        '&redirect_uri=' + encodeURIComponent(p.url)
+      : 'fb-messenger://share?link=' + encodeURIComponent(p.url),
+    zalo: (p) => 'zalo://?url=' + encodeURIComponent(p.url),
+    tiktok: null                       // không có URL chia sẻ web -> dùng navigator.share
+  };
+
+  const copyToClipboard = async (text, okTitle, okSub) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('done', okTitle, okSub);
+      return true;
+    } catch (_) {
+      showToast('wrong', 'Không sao chép được', 'Trình duyệt không cho phép sao chép');
+      return false;
+    }
+  };
+
+  const openShare = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    el.shareSummary.textContent = formatScore(r.score) + '/' + r.total + ' điểm · ' +
+      r.correct + '/' + r.total + ' câu đúng · ' + formatDuration(r.seconds);
+    openBackdrop(el.shareBackdrop);
+  };
+
+  const shareTo = async (channel) => {
+    const p = sharePayload();
+    if (channel === 'tiktok') {
+      if (navigator.share) {
+        try { await navigator.share({ title: p.title, text: p.text, url: p.url }); closeBackdrop(el.shareBackdrop); }
+        catch (_) { /* người dùng huỷ */ }
+        return;
+      }
+      showToast('wrong', 'TikTok không có nút chia sẻ trên web', 'Đã chép sẵn nội dung, dán vào TikTok');
+      await copyToClipboard(p.text + ' ' + p.url, 'Đã sao chép nội dung', 'Dán vào bài đăng TikTok');
+      return;
+    }
+    const build = SHARE_TARGETS[channel];
+    if (!build) return;
+    if (channel === 'messenger' && !CONFIG.messengerAppId && !navigator.share) {
+      showToast('wrong', 'Messenger chưa sẵn sàng', 'Đã chép sẵn link, dán vào Messenger');
+      await copyToClipboard(p.url, 'Đã sao chép link', 'Dán vào tin nhắn Messenger');
+      return;
+    }
+    const target = build(p);
+    window.open(target, '_blank', 'noopener,noreferrer');
+    closeBackdrop(el.shareBackdrop);
+  };
+
+  /* ========================= THOÁT BÀI THI ========================= */
+  const exitQuiz = () => {
+    if (typeof CONFIG.onExit === 'function') { CONFIG.onExit(); return; }
+    if (CONFIG.exitUrl) { window.location.href = CONFIG.exitUrl; return; }
+    if (window.history.length > 1) window.history.back();
+  };
+
+  /* Bắt đầu một phiên làm bài.
+     opts.practice = true khi phiên này sinh ra từ nút "Luyện tập ..." trên trang điểm,
+     khi đó giữ lại kết quả gốc để người dùng quay lại phần xem điểm. */
+  const startSession = (list, opts = {}) => {
+    const isPractice = !!opts.practice;
+    SESSION = list && list.length ? list : ALL_QUESTIONS;
+    state.index = 0;
+    state.picked = {};
+    state.solved = {};
+    state.attempts = {};
+    state.skipped = {};
+    state.lastWrong = null;
+    state.finished = false;
+    state.practice = isPractice;
+    state.practiceLabel = opts.label || '';
+    state.practiceSession = isPractice ? SESSION.slice() : null;
+    state.practicePrevResult = isPractice ? state.lastResult : null;
+    startedAt = Date.now();
+    remaining = CONFIG.timeLimitSeconds;
+    dotsStart = -1;
+    paintTimer();
+    closeAllBackdrops();
+    hideToast();
+    document.body.classList.remove('is-result');
+    document.body.classList.remove('is-review');
+    el.resultPage.hidden = true;
+    el.reviewPage.hidden = true;
+    buildMap();
+    renderQuestion();
+  };
+
+  /* Quay lại phần xem điểm gốc (đang luyện tập hoặc vừa luyện tập xong) */
+  const backToResult = () => {
+    if (!state.practicePrevResult) return false;
+    state.lastResult = state.practicePrevResult;
+    state.practicePrevResult = null;
+    state.practice = false;
+    state.practiceLabel = '';
+    renderPracticeTag();
+    renderBackLink();
+    showResultPage();
+    showToast('done', 'Đã quay lại kết quả', 'Kết quả lần luyện tập được bỏ qua');
+    return true;
+  };
+
+  const retryWrongOnly = () => {
+    const wrong = state.lastResult ? state.lastResult.missedQuestions : [];
+    if (!wrong.length) {
+      showToast('star', 'Bạn đã làm đúng tất cả', 'Không có câu nào cần luyện lại');
+      return;
+    }
+    startSession(wrong, { practice: true, label: 'Luyện tập câu sai' });
+  };
+
+  /* Bắt đầu lại: đang luyện tập thì làm lại đúng tập câu đó (không mất chế độ luyện tập) */
+  /* Hộp thoại xác nhận dùng chung: truyền nội dung + hàm cần chạy khi xác nhận */
+  let confirmAction = null;
+  const openConfirm = (message, action) => {
+    el.confirmMsg.textContent = message;
+    confirmAction = action;
+    openBackdrop(el.confirmBackdrop);
+    el.btnConfirmOk.focus({ preventScroll: true });
+  };
+
+  const restart = () => {
+    if (state.practice && state.practiceSession && state.practiceSession.length) {
+      startSession(state.practiceSession, { practice: true, label: state.practiceLabel });
+      return;
+    }
+    startSession(ALL_QUESTIONS);
+  };
+
+  /* "Bắt đầu lại" xoá tiến độ đang làm (cả bài chính lẫn tập câu sai) -> luôn hỏi trước */
+  const requestRestart = () => openConfirm(
+    state.practice
+      ? 'Bắt đầu lại sẽ xoá tiến độ luyện tập. Bạn có chắc chắn muốn bắt đầu lại ?'
+      : 'Bắt đầu lại sẽ xoá toàn bộ tiến độ bài làm. Bạn có chắc chắn muốn bắt đầu lại ?',
+    restart
+  );
+
+
+  /* ========================= BẢN ĐỒ CÂU HỎI ========================= */
+  const buildMap = () => {
+    el.mapGrid.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    mapButtons = SESSION.map((q, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'map-btn';
+      b.textContent = q.id;
+      b.addEventListener('click', () => { closeBackdrop(el.mapBackdrop); goTo(i); });
+      frag.appendChild(b);
+      return b;
+    });
+    el.mapGrid.appendChild(frag);
+  };
+
+  const syncMap = () => {
+    if (!mapButtons.length) return;
+    const currentId = SESSION[state.index].id;
+    for (let i = 0; i < mapButtons.length; i++) {
+      const q = SESSION[i];
+      const b = mapButtons[i];
+      b.classList.toggle('is-current', q.id === currentId);
+      b.classList.toggle('is-done', !!state.solved[q.id]);
+      b.classList.toggle('is-retry', !!state.solved[q.id] && !!state.attempts[q.id]);
+      b.classList.toggle('is-bad', !!state.skipped[q.id]);
+      b.disabled = !isReachable(i);
+    }
+  };
+
+  /* ========================= BACKDROP ========================= */
+  const openBackdrop = (node) => {
+    node.hidden = false;
+    node.classList.add('is-in');
+  };
+  const closeBackdrop = (node) => {
+    node.hidden = true;
+    node.classList.remove('is-in');
+  };
+  const backdrops = [el.mapBackdrop, el.confirmBackdrop, el.shareBackdrop];
+  backdrops.forEach(b => {
+    b.addEventListener('click', (e) => { if (e.target === b) closeBackdrop(b); });
+  });
+  const closeAllBackdrops = () => backdrops.forEach(closeBackdrop);
+
+  /* Nút chia sẻ: mở bảng chọn nền tảng, bấm ra ngoài/Esc đều đóng được */
+  el.btnShare.addEventListener('click', openShare);
+  el.btnShareClose.addEventListener('click', () => closeBackdrop(el.shareBackdrop));
+  el.btnShareCopy.addEventListener('click', shareResult);
+  el.shareBackdrop.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-share]');
+    if (btn) shareTo(btn.dataset.share);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (backdrops.some(b => !b.hidden)) closeAllBackdrops();
+      else skipCurrent();
+      return;
+    }
+  });
+
+  /* ========================= ĐIỀU KHIỂN GIAO DIỆN ========================= */
+  let scale = 1;
+  const applyScale = () => document.documentElement.style.fontSize = (16 * scale) + 'px';
+  const zoom = (delta) => {
+    scale = Math.min(1.35, Math.max(0.85, +(scale + delta).toFixed(2)));
+    applyScale();
+  };
+
+  el.btnZoomIn.addEventListener('click', () => zoom(0.1));
+  el.btnZoomOut.addEventListener('click', () => zoom(-0.1));
+
+  el.btnSound.addEventListener('click', () => {
+    soundOn = !soundOn;
+    el.btnSound.classList.toggle('is-muted', !soundOn);
+    const g = el.btnSound.querySelector('#soundIcon');
+    const data = el.btnSound.querySelector('svg').dataset;
+    g.innerHTML = soundOn ? data.on : data.off;
+    if (soundOn) sfx.select();
+  });
+
+  el.btnFullscreen.addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+
+  el.btnAction.addEventListener('click', act);
+  el.btnRestart.addEventListener('click', requestRestart);
+  el.btnCounter.addEventListener('click', () => { syncMap(); openBackdrop(el.mapBackdrop); });
+  el.toastClose.addEventListener('click', hideToast);
+  el.btnBack.addEventListener('click', () => {
+    if (document.body.classList.contains('is-review')) { hideReviewPage(); return; }
+    if (backToResult()) return;            // đang luyện tập -> quay lại phần xem điểm
+    openConfirm('Bạn có chắc chắn muốn thoát bài thi ?', exitQuiz);
+  });
+  el.btnConfirmClose.addEventListener('click', () => closeBackdrop(el.confirmBackdrop));
+  el.btnConfirmOk.addEventListener('click', () => {
+    closeBackdrop(el.confirmBackdrop);
+    const run = confirmAction;
+    confirmAction = null;
+    if (run) run();
+  });
+  $('btnCloseMap').addEventListener('click', () => closeBackdrop(el.mapBackdrop));
+  el.btnRetry.addEventListener('click', () => startSession(ALL_QUESTIONS, { practice: true, label: 'Luyện tập lại' }));
+  el.btnRetryWrong.addEventListener('click', retryWrongOnly);
+  el.btnBackToResult.addEventListener('click', backToResult);
+  el.btnReviewAnswers.addEventListener('click', showReviewPage);
+  el.btnRvCollapse.addEventListener('click', () => {
+    const hidden = el.reviewLayout.classList.toggle('is-collapsed');
+    el.btnRvCollapse.setAttribute('aria-pressed', String(hidden));
+    $('btnRvCollapseLine').setAttribute('x1', hidden ? '10' : '14');
+  });
+el.btnRvFilter.addEventListener('click', () => {
+    reviewState.filter = (reviewState.filter + 1) % REVIEW_FILTERS.length;
+    reviewLimit = REVIEW_PAGE_SIZE;
+    paintReviewFilter();
+    renderReviewList();
+  });
+  el.btnRvAnswer.addEventListener('click', () => {
+    reviewState.showAnswer = !reviewState.showAnswer;
+    el.reviewLayout.classList.toggle('no-answer', !reviewState.showAnswer);
+    el.btnRvAnswer.classList.toggle('is-on', reviewState.showAnswer);
+  });
+  el.btnCopyLink.addEventListener('click', copyTeacherLink);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target instanceof Element && e.target.closest('input, textarea, [contenteditable]')) return;
+    const key = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && (key === '+' || key === '=')) { e.preventDefault(); zoom(0.1); }
+    else if ((e.ctrlKey || e.metaKey) && key === '-') { e.preventDefault(); zoom(-0.1); }
+    else if (key === 'f') { el.btnFullscreen.click(); }
+    else if (key === 'enter') { e.preventDefault(); act(); }
+    else if (/^[1-6]$/.test(key)) { choose(+key - 1); }
+    else if (/^[a-f]$/.test(key)) { choose('abcdef'.indexOf(key)); }
+  });
+
+  /* ========================= API TÍCH HỢP ========================= */
+  // Giao diện chính thức cho trang ngoài (nạp dữ liệu thật, nút nộp bài, hẹn giờ...).
+  // Lưu ý: đáp án đúng nằm ở client nên khi dùng thật phải chấm lại ở server.
+  window.quiz = {
+    config: CONFIG,
+    questions: ALL_QUESTIONS,
+    get session() { return SESSION; },
+    get state() { return state; },
+start: (list) => startSession(list || ALL_QUESTIONS),
+    finish: () => finish(),
+    elapsed: () => elapsedSeconds(),
+    get audioReady() { return !!audioCtx; }   // đã tạo AudioContext sẵn chưa (true = không bị nghẽn lần bấm đầu)
+  };
+
+  /* ========================= KHỞI TẠO ========================= */
+  buildMap();
+  el.btnSound.classList.toggle('is-muted', !soundOn);
+  el.btnSound.querySelector('#soundIcon').innerHTML = soundOn
+    ? el.btnSound.querySelector('svg').dataset.on
+    : el.btnSound.querySelector('svg').dataset.off;
+  applyScale();
+  paintTimer();
+  renderQuestion();
+})();
+</script>
+</body>
+</html>

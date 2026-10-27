@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anh văn 2 — CƠ KHÍ HUIT</title>
+<meta name="description" content="Anh văn 2 — bài giải và tóm tắt ngữ pháp các Unit 7 đến Unit 12 trong sách Global Success 2, kèm bộ ôn tập và đề thi tham khảo.">
+<link rel="icon" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css?v=20261017d">
+<style>
+/* ── HERO ─────────────────────────────────────────────── */
+.av-hero{
+  position:relative;overflow:hidden;
+  padding:0;border-radius:var(--r-xl);
+  margin-bottom:var(--gutter);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);
+}
+.av-hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 58%;
+  transform:scale(1.02);transition:transform 900ms var(--ease-out);
+}
+.av-hero:hover .av-hero-bg{transform:scale(1.06)}
+.av-hero-scrim{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(100deg,
+      rgba(2, 58, 128, .94)  0%,
+      rgba(3, 78, 162, .86) 30%,
+      rgba(3, 78, 162, .58) 55%,
+      rgba(3, 78, 162, .26) 78%,
+      rgba(3, 78, 162, .16) 100%),
+    linear-gradient(0deg, rgba(2, 58, 128, .55), transparent 45%);
+}
+.av-hero-inner{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;
+  padding:34px 36px;min-height:230px;
+}
+.av-hero-logo{
+  width:96px;height:96px;border-radius:50%;object-fit:contain;
+  background:var(--white);padding:8px;box-shadow:0 10px 30px rgba(2,58,128,.45);flex:none;
+}
+.av-hero h1{
+  margin:0;font:800 clamp(28px,5vw,44px)/1.1 var(--font-display);
+  letter-spacing:-.03em;color:var(--text-invert);
+}
+.av-hero h1 span{color:rgba(255,255,255,.72)}
+.av-hero p{margin:12px 0 0;max-width:60ch;font-size:15px;line-height:1.65;color:rgba(255,255,255,.90)}
+.av-hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.av-stat{
+  display:inline-flex;align-items:baseline;gap:7px;
+  padding:8px 15px;border-radius:var(--r-full);
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.42);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:#fff;font:600 12.5px/1 var(--font-display);
+}
+.av-stat b{font:700 15px/1 var(--font-mono)}
+@media (max-width:720px){
+  .av-hero-inner{grid-template-columns:1fr;text-align:center;padding:24px 20px;min-height:0;gap:16px}
+  .av-hero-logo{width:80px;height:80px;margin:0 auto}
+  .av-hero p{margin-inline:auto}
+  .av-hero-stats{justify-content:center}
+  .av-hero-scrim{background:linear-gradient(180deg,rgba(2,58,128,.88),rgba(3,78,162,.80))}
+}
+
+/* ── THANH CHUYỂN NHANH ──────────────────────────────── */
+.av-jump{
+  position:sticky;top:calc(var(--ck-nav-h,86px) + 8px);z-index:30;
+  margin-bottom:var(--gutter);padding:12px 14px;border-radius:var(--r-full);
+  box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);
+}
+.av-jump-row{display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.av-jump-row::-webkit-scrollbar{display:none}
+.av-jump-label{
+  flex:none;display:inline-flex;align-items:center;gap:6px;padding:0 6px 0 8px;
+  font:600 10.5px/1 var(--font-display);letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.av-jump-label svg{width:14px;height:14px;color:var(--text-strong)}
+.av-jump a{
+  display:inline-flex;align-items:center;gap:7px;flex:none;
+  min-height:36px;padding:0 15px;border-radius:var(--r-full);
+  border:1px solid var(--brand-25);background:var(--glass-1-bg);color:var(--text);
+  font:600 12.5px/1 var(--font-display);text-decoration:none;white-space:nowrap;
+  box-shadow:var(--sh-xs);
+  transition:background var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out),
+             color var(--dur-fast) var(--ease-out);
+}
+.av-jump a b{font:700 11px/1 var(--font-mono);color:var(--text-muted)}
+.av-jump a:hover{background:var(--glass-3-bg);transform:translateY(-1px)}
+.av-jump a:hover b{color:var(--text-strong)}
+.av-jump a.is-on{background:var(--brand);color:var(--text-invert);border-color:transparent}
+.av-jump a.is-on b{color:rgba(255,255,255,.78)}
+
+/* ── KHỐI SECTION ─────────────────────────────────────── */
+.av-sec{margin-bottom:var(--gutter)}
+.av-sec-head{margin-bottom:16px}
+.av-sec-head p{margin:6px 0 0;max-width:76ch;font-size:14px;line-height:1.6;color:var(--text-muted)}
+.av-sec-head p a{color:var(--text-strong);font-weight:600}
+
+/* ── LƯỚI UNIT ────────────────────────────────────────── */
+.unit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px}
+.unit-card{
+  position:relative;display:flex;flex-direction:column;gap:10px;
+  padding:18px 20px;border-radius:var(--r-lg);overflow:hidden;
+  background:var(--glass-1-bg);border:1px solid var(--glass-1-br);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  text-decoration:none;color:inherit;
+  transition:transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out),
+             background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter:blur(1px)){
+  .unit-card{backdrop-filter:blur(var(--blur-1)) saturate(120%);-webkit-backdrop-filter:blur(var(--blur-1)) saturate(120%)}
+}
+@media (max-width:768px){.unit-card{background:rgba(255,255,255,.88);backdrop-filter:none}}
+.unit-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);background:var(--glass-3-bg)}
+.unit-card::after{
+  content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;
+  border-radius:0 3px 3px 0;background:var(--brand);opacity:.85;
+}
+.unit-top{display:flex;align-items:center;gap:10px}
+.unit-no{
+  flex:none;min-width:46px;height:28px;padding:0 10px;border-radius:var(--r-full);
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-invert);
+  font:700 11.5px/1 var(--font-mono);letter-spacing:.05em;
+}
+.unit-emoji{
+  flex:none;width:34px;height:34px;border-radius:var(--r-md);
+  display:grid;place-items:center;font-size:17px;line-height:1;
+  background:var(--brand-10);
+}
+.unit-nm{margin:0;font:700 15px/1.35 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.unit-vi{margin:1px 0 0;font:400 13px/1.45 var(--font-display);color:var(--text-muted)}
+.unit-list{margin:2px 0 0;padding:0;list-style:none;display:grid;gap:5px}
+.unit-list li{
+  display:flex;gap:8px;align-items:flex-start;
+  font:400 13px/1.5 var(--font-display);color:var(--text);
+}
+.unit-list li::before{
+  content:"";flex:none;width:5px;height:5px;margin-top:8px;border-radius:50%;
+  background:var(--brand);opacity:.55;
+}
+.unit-foot{
+  margin-top:auto;padding-top:11px;border-top:1px solid var(--brand-06);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.unit-foot .n{flex:none;font:600 11px/1 var(--font-mono);color:var(--text-muted)}
+.unit-foot .go{
+  display:inline-flex;align-items:center;gap:6px;flex:none;white-space:nowrap;
+  font:600 12.5px/1 var(--font-display);color:var(--text);text-decoration:none;
+}
+.unit-foot .go svg{width:14px;height:14px;transition:transform var(--dur-fast) var(--ease-out)}
+.unit-card:hover .go{color:var(--text-strong)}
+.unit-card:hover .go svg{transform:translateX(3px)}
+
+/* ── LƯỚI LINK (luyện tập / ôn tập ngoài) ──────────────── */
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:12px}
+.link-card{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:var(--r-lg);min-height:60px;
+  background:var(--glass-1-bg);border:1px solid var(--glass-1-br);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  text-decoration:none;color:inherit;text-align:left;cursor:pointer;width:100%;
+  font:inherit;
+  transition:transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out),
+             background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter:blur(1px)){
+  .link-card{backdrop-filter:blur(var(--blur-1)) saturate(120%);-webkit-backdrop-filter:blur(var(--blur-1)) saturate(120%)}
+}
+@media (max-width:768px){.link-card{background:rgba(255,255,255,.88);backdrop-filter:none}}
+.link-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);background:var(--glass-3-bg)}
+.link-card .ico{
+  flex:none;width:38px;height:38px;border-radius:var(--r-md);
+  display:grid;place-items:center;background:var(--brand-10);color:var(--text-strong);
+}
+.link-card .ico svg{width:18px;height:18px}
+.link-card .tx{min-width:0;flex:1}
+.link-card .tx b{display:block;font:700 13.5px/1.35 var(--font-display);color:var(--text-strong);letter-spacing:-.005em}
+.link-card .tx span{display:block;margin-top:1px;font:400 12px/1.45 var(--font-display);color:var(--text-muted)}
+.link-card .ar{flex:none;color:var(--text-muted);transition:transform var(--dur-fast) var(--ease-out)}
+.link-card .ar svg{width:15px;height:15px}
+
+/* ── THẺ BÀI TẬP (Tiếng Anh — Luyện tập) ────────────────── */
+.task-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:1180px){.task-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:880px){.task-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.task-grid{grid-template-columns:1fr}}
+
+.task{
+  display:flex;flex-direction:column;
+  padding:14px 16px 16px;border-radius:var(--r-lg);
+  background:var(--glass-1-bg);border:1px solid var(--glass-1-br);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  transition:transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out),
+             background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter:blur(1px)){
+  .task{backdrop-filter:blur(var(--blur-1)) saturate(120%);-webkit-backdrop-filter:blur(var(--blur-1)) saturate(120%)}
+}
+@media (max-width:768px){.task{background:rgba(255,255,255,.88);backdrop-filter:none}}
+.task:hover{transform:translateY(-2px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);background:var(--glass-3-bg)}
+
+.task-badges{
+  display:flex;gap:8px;flex-wrap:wrap;
+  padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--brand-06);
+}
+/* Ba bậc trạng thái đều thuộc thang brand — phân biệt bằng độ đậm + chữ + dot
+   (design.md §4.6), không thêm hue thứ hai. */
+.tst{
+  display:inline-flex;align-items:center;gap:6px;
+  min-height:24px;padding:0 10px;border-radius:var(--r-full);
+  border:1px solid transparent;white-space:nowrap;
+  font:600 11.5px/1 var(--font-display);
+}
+.tst .dot{width:6px;height:6px;border-radius:50%;flex:none}
+.tst.solid{background:var(--brand);color:var(--text-invert)}
+.tst.solid .dot{background:#fff}
+.tst.mid{background:var(--brand-10);color:var(--brand-deep);border-color:var(--brand-20)}
+.tst.mid .dot{background:var(--brand)}
+.tst.light{background:rgba(255,255,255,.60);color:var(--text);border-color:var(--brand-25)}
+.tst.light .dot{width:8px;height:8px;background:transparent;border:1.5px solid var(--gray-400)}
+
+.task-body{display:flex;flex-direction:column;flex:1}
+.task-sub{margin:0;font:400 12px/1.5 var(--font-display);color:var(--text-muted)}
+.task-title{margin:3px 0 0;font:700 14.5px/1.4 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.task-due{
+  margin:9px 0 0;display:flex;align-items:center;gap:6px;
+  font:400 12px/1.5 var(--font-display);color:var(--text-muted);
+}
+.task-due svg{width:13px;height:13px;flex:none}
+.task-cta{
+  margin-top:13px;width:100%;min-height:38px;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:0;border-radius:var(--r-md);cursor:pointer;
+  background:var(--brand);color:var(--text-invert);box-shadow:var(--sh-sm);
+  font:700 12.5px/1 var(--font-display);text-decoration:none;
+  transition:background var(--dur-fast) var(--ease-out),
+             transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out);
+}
+.task-cta:hover{background:var(--brand-deep);transform:translateY(-1px)}
+.task-cta:active{transform:scale(.98);box-shadow:var(--sh-press)}
+.task-cta svg{width:15px;height:15px;flex:none}
+.task-cta[disabled]{
+  background:rgba(255,255,255,.62);color:var(--text-muted);
+  border:1px solid var(--brand-06);box-shadow:none;
+  cursor:not-allowed;transform:none;
+}
+.link-card:hover .ar{color:var(--text-strong);transform:translateX(3px)}
+
+/* ── NGỮ PHÁP ─────────────────────────────────────────── */
+.gp-bar{
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+  margin-bottom:var(--gutter);padding:14px 16px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+}
+.gp-search{position:relative;flex:1 1 260px;min-width:0}
+.gp-search > svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--text-muted);pointer-events:none}
+.gp-search .ck-input{width:100%;padding-left:38px}
+.gp-count{margin-left:auto;font:600 12.5px/1 var(--font-mono);color:var(--text-muted)}
+.gp-count b{color:var(--text-strong)}
+
+.gp-unit{
+  margin-bottom:var(--gutter);
+  scroll-margin-top:calc(var(--ck-nav-h,86px) + 76px);
+}
+.gp-unit[hidden]{display:none}
+.gp-unit-head{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--brand-06);
+}
+.gp-unit-head h2{
+  margin:0;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  font:800 24px/1.25 var(--font-display);letter-spacing:-.02em;color:var(--text-strong);
+}
+.gp-unit-head h2 small{
+  font:600 11px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.gp-topic{
+  padding:20px 22px;border-radius:var(--r-lg);margin-bottom:12px;
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  scroll-margin-top:calc(var(--ck-nav-h,86px) + 76px);
+}
+.gp-topic[hidden]{display:none}
+.gp-topic-head{margin-bottom:12px}
+.gp-topic-head h3{
+  margin:0;font:700 17px/1.35 var(--font-display);letter-spacing:-.01em;color:var(--text-strong);
+}
+.gp-topic-head p{margin:3px 0 0;font:400 13px/1.5 var(--font-display);color:var(--text-muted);font-style:italic}
+
+.fx{
+  margin:0 0 12px;padding:12px 15px;border-radius:var(--r-md);
+  background:var(--brand-06);border-left:3px solid var(--brand);
+  font:500 13.5px/1.75 var(--font-mono);color:var(--brand-deep);
+  overflow-x:auto;
+}
+.fx b{color:var(--brand);font-weight:700}
+.fx em{font-style:normal;color:var(--text);font-family:var(--font-display);font-weight:600}
+.ex{
+  margin:0 0 12px;padding:11px 15px;border-radius:var(--r-md);
+  background:rgba(255,255,255,.60);border:1px solid var(--brand-06);
+  font:400 13.5px/1.65 var(--font-display);color:var(--text);
+}
+.ex::before{
+  content:"Ví dụ";display:block;margin-bottom:3px;
+  font:600 10.5px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);
+}
+.ex em{font-style:italic;color:var(--text-strong);font-weight:600}
+.ex + .fx{margin-top:0}
+
+.gp-topic .doc h2{margin:24px 0 8px;font-size:16px}
+.gp-topic .doc p{max-width:none}
+
+.av-empty{
+  padding:44px 20px;text-align:center;
+}
+.av-empty b{display:block;margin-bottom:6px;font:700 16px/1.3 var(--font-display);color:var(--text-strong)}
+.av-empty p{margin:0 0 16px;font-size:14px;color:var(--text-muted)}
+
+.av-back{margin-top:var(--gutter);display:flex;gap:10px;flex-wrap:wrap}
+
+@media (max-width:768px){
+  .av-jump{position:static;border-radius:var(--r-xl)}
+  .gp-topic{padding:16px 15px}
+}
+</style>
+</head>
+<body data-depth="1">
+
+<div data-ck-nav="features"></div>
+
+<main class="ck-wrap">
+
+  <section class="av-hero glass g2">
+    <img class="av-hero-bg" src="../assets/hero-campus.jpg" alt="" aria-hidden="true"
+         onerror="this.style.display='none'">
+    <span class="av-hero-scrim" aria-hidden="true"></span>
+    <div class="av-hero-inner">
+      <img class="av-hero-logo" src="../assets/logo.png" alt="Logo Trường Đại học Công Thương TP. Hồ Chí Minh">
+      <div>
+        <h1>ANH VĂN <span>2</span></h1>
+        <p>Giải bài tập trong sách — tóm tắt toàn bộ ngữ pháp từ <b>Unit 7</b> đến <b>Unit 12</b>,
+           kèm bộ ôn tập và đề thi tham khảo cho môn Anh văn 2.</p>
+        <div class="av-hero-stats" id="heroStats"></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="av-jump glass g2" aria-label="Chuyển nhanh tới unit">
+    <div class="av-jump-row" id="jumpRow">
+      <span class="av-jump-label" id="jumpLabel"></span>
+    </div>
+  </nav>
+
+  <section class="av-sec" aria-labelledby="unitsTitle">
+    <div class="av-sec-head">
+      <h2 class="ck-section-title" id="unitsTitle">SÁU UNIT TRONG SÁCH</h2>
+      <p>Chọn một unit để xem ngay phần ngữ pháp tương ứng. Mỗi thẻ liệt kê các chủ đề ngữ pháp
+         thuộc unit đó — bấm vào sẽ nhảy tới đúng chỗ, kèm công thức, cách dùng và ví dụ minh hoạ.</p>
+    </div>
+    <div class="unit-grid" id="unitGrid"></div>
+  </section>
+
+  <section class="av-sec" aria-labelledby="lpTitle">
+    <div class="av-sec-head">
+      <h2 class="ck-section-title" id="lpTitle">TIẾNG ANH — LUYỆN TẬP</h2>
+      <p>Danh sách bài tập của học phần. Bấm <b>Làm bài</b> để mở phần ngữ pháp của unit tương ứng
+         và ôn lại trước khi nộp — bộ câu hỏi trắc nghiệm đang được bổ sung, xem thêm tại
+         <a href="../index.html?m=anh-van-2&amp;mode=learn#lb">Lò ôn luyện</a>.</p>
+    </div>
+    <div class="task-grid" id="lpGrid"></div>
+  </section>
+
+  <section class="av-sec" aria-labelledby="exTitle">
+    <div class="av-sec-head">
+      <h2 class="ck-section-title" id="exTitle">MỤC ĐÍCH CHỈ ĐỂ ÔN TẬP — KHÔNG CÓ TRONG ĐỀ THI</h2>
+      <p>Các bộ đề bên ngoài dùng để luyện thêm cho quen tay, không thuộc phạm vi đề thi chính thức.
+         Mở bằng tab mới.</p>
+    </div>
+    <div class="link-grid" id="exGrid"></div>
+  </section>
+
+  <section class="av-sec" aria-labelledby="gpTitle">
+    <div class="av-sec-head">
+      <h2 class="ck-section-title" id="gpTitle">NGỮ PHÁP TỪNG UNIT</h2>
+      <p>Tóm tắt công thức, cách dùng và ví dụ cho toàn bộ chủ đề ngữ pháp của Anh văn 2.
+         Dùng ô tìm kiếm bên dưới để lọc nhanh một cấu trúc cần tra.</p>
+    </div>
+
+    <div class="gp-bar glass g2">
+      <label class="gp-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+        <span class="sr-only">Tìm trong phần ngữ pháp</span>
+        <input class="ck-input" type="search" id="gpQ" placeholder="Tìm cấu trúc, ví dụ: already, would, passive, so / such…" autocomplete="off">
+      </label>
+      <span class="ck-pill light" id="gpUnitPill">Tất cả unit</span>
+      <span class="gp-count" id="gpCount" role="status" aria-live="polite">—</span>
+    </div>
+
+    <div id="gpBox"></div>
+
+    <div id="gpNone" class="av-empty glass g1" hidden>
+      <b>Không tìm thấy nội dung phù hợp</b>
+      <p>Thử từ khoá khác, ví dụ <code>since</code>, <code>would</code>, <code>used to</code> hoặc <code>reported speech</code>.</p>
+      <button class="ck-btn ghost" type="button" id="gpReset">Xoá tìm kiếm</button>
+    </div>
+
+    <div class="av-back">
+      <a class="ck-btn ghost" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Về trang chủ
+      </a>
+      <a class="ck-btn ghost" href="../index.html?m=anh-van-2&amp;mode=learn#lb">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h14v15H5zM8.5 9h7M8.5 12.5h7M8.5 16h4"/></svg>
+        Mở Anh văn 2 trong Lò ôn luyện
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="../assets/app.js?v=20261017d"></script>
+<script src="../assets/data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ══════════════════════════════════════════════════════════════
+     DỮ LIỆU 6 UNIT — sửa nội dung ở đây là đủ.
+     Mỗi topic: t = tiêu đề, en = nhãn tiếng Anh, p = các đoạn.
+     Đoạn p có thể chứa: <p>, <ul>, <div class="fx"> (công thức),
+     <div class="ex"> (ví dụ), <div class="doc-wrap"><table> (bảng).
+     ══════════════════════════════════════════════════════════════ */
+  var UNITS = [
+    {
+      n: 7, slug: "unit-7", emoji: "🏡",
+      en: "HOMELIFE", vi: "Cuộc sống gia đình",
+      file: "UNIT 7 HOMELIFE.html",
+      topics: [
+        {
+          t: "Thì hiện tại hoàn thành & quá khứ đơn",
+          en: "Present perfect with already and yet, and simple past with just",
+          p:
+            '<p>Dùng quá khứ đơn với <code>just</code> khi hành động vừa xảy ra và còn ảnh hưởng tới hiện tại.</p>' +
+            '<div class="fx">S + <b>just</b> + V<sub>(quá khứ)</sub></div>' +
+            '<div class="ex"><em>I just made some coffee.</em></div>' +
+            '<p>Hiện tại hoàn thành với <code>already</code> — nhấn mạnh việc đã xong, thường kèm “cũng/đã rồi”.</p>' +
+            '<div class="fx">S + have/has + <b>already</b> + V<sub>(phân từ thứ 3)</sub></div>' +
+            '<div class="ex"><em>I\'ve already loaded the dishwasher.</em></div>' +
+            '<p>Hiện tại hoàn thành với <code>yet</code> — dùng với câu phủ định và câu hỏi.</p>' +
+            '<div class="fx">S + have/has + <b>not</b> + V<sub>(pp)</sub> + <b>yet</b><br>Have/Has + S + V<sub>(pp)</sub> + <b>yet</b>?</div>' +
+            '<div class="ex"><em>I haven\'t cleaned up the kitchen yet.</em><br><em>Have you had coffee yet?</em></div>'
+        },
+        {
+          t: "Hiện tại hoàn thành với for &amp; since",
+          en: "Present perfect with for and since",
+          p:
+            '<p>Cả hai từ nối đi sau động từ khuyết thiếu và trạng ngữ, nhưng khác nhau về nghĩa.</p>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Từ nối</th><th>Đi với</th><th>Ví dụ</th></tr></thead><tbody>' +
+            '<tr><td><code>for</code></td><td>Khoảng thời gian (dài, không xác định)</td><td><em>He\'s been mayor for over twenty years.</em></td></tr>' +
+            '<tr><td><code>since</code></td><td>Mốc thời gian</td><td><em>We haven\'t had cars here since the ban.</em></td></tr>' +
+            '</tbody></table></div>' +
+            '<div class="ex"><em>I lived in Pontevedra from 1990 to 1996 / for six years.</em></div>'
+        },
+        {
+          t: "Từ nối",
+          en: "Linkers",
+          p:
+            '<h2>1. Thêm thông tin (To add extra information)</h2>' +
+            '<div class="fx">and · as well · too · also</div>' +
+            '<div class="ex"><em>The city is dirty, and it\'s polluted.</em><br><em>It\'s very noisy, as well.</em></div>' +
+            '<h2>2. Tương phản thông tin (To contrast information)</h2>' +
+            '<div class="fx">but · however · although</div>' +
+            '<div class="ex"><em>Living in this city is exciting, but it\'s very expensive.</em><br><em>These houses are good quality although they\'re cheap.</em></div>'
+        }
+      ]
+    },
+
+    {
+      n: 8, slug: "unit-8", emoji: "📱",
+      en: "TECHNOLOGY", vi: "Công nghệ",
+      file: "UNIT 8 TECHNOLOGY.html",
+      topics: [
+        {
+          t: "Danh động từ &amp; động từ nguyên mẫu",
+          en: "-ing form and infinitive",
+          p:
+            '<p>Động từ nào đứng trước quyết định dạng động từ đi sau nó.</p>' +
+            '<h2>1. Động từ đi với V-ing</h2>' +
+            '<div class="fx">enjoy · hate · not mind · can\'t stand · miss · look forward to<br>' +
+            'recommend · spend time · suggest · finish</div>' +
+            '<div class="ex"><em>She <b>enjoys</b> <u>learning</u> new languages.</em></div>' +
+            '<h2>2. Động từ đi với To V</h2>' +
+            '<div class="fx">want · decide · afford · learn · agree · hope · manage · plan · promise · would like</div>' +
+            '<div class="ex"><em>We <b>decided</b> <u>to leave</u> early.</em></div>' +
+            '<h2>3. Động từ đi với cả hai dạng (không đổi nghĩa)</h2>' +
+            '<div class="fx">like · love · prefer · start · continue</div>' +
+            '<div class="ex"><em>I <b>don\'t like</b> <u>to get</u> up early, but my sister <b>likes</b> <u>getting</u> up at six.</em></div>'
+        },
+        {
+          t: "Từ chỉ số lượng",
+          en: "Quantifiers",
+          p:
+            '<h2>1. Danh từ không đếm được (Uncountable nouns)</h2>' +
+            '<div class="fx">How much…? / a lot of, lots of / some, a little / very little / not much / none, not any</div>' +
+            '<div class="ex"><em>How much water do you drink?</em> · <em>There isn\'t much time left.</em></div>' +
+            '<h2>2. Danh từ đếm được số nhiều (Countable nouns)</h2>' +
+            '<div class="fx">How many…? / a lot of, lots of / some, a few / very few / not many / none, not any</div>' +
+            '<div class="ex"><em>How many devices are connected?</em> · <em>Only a few people knew about it.</em></div>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Từ</th><th>Đếm được (nhiều)</th><th>Không đếm được</th></tr></thead><tbody>' +
+            '<tr><td>a little / very little</td><td>—</td><td>✓</td></tr>' +
+            '<tr><td>a few / very few</td><td>✓</td><td>—</td></tr>' +
+            '<tr><td>a lot of / lots of</td><td>✓</td><td>✓</td></tr>' +
+            '<tr><td>none / not any</td><td>✓</td><td>✓</td></tr>' +
+            '</tbody></table></div>'
+        }
+      ]
+    },
+
+    {
+      n: 9, slug: "unit-9", emoji: "🥗",
+      en: "HEALTHY LIFESTYLES", vi: "Lối sống lành mạnh",
+      file: "UNIT 9 HEALTHY LIFESTYLES.html",
+      topics: [
+        {
+          t: "Cấu trúc với too, too much/many &amp; (not) enough",
+          en: "Nói về mức độ nhiều hơn hoặc ít hơn mức cần thiết",
+          p:
+            '<p><code>too</code> luôn đứng sau tính từ hoặc trạng ngữ; <code>enough</code> đứng <b>sau</b> tính từ nhưng đứng <b>trước</b> danh từ.</p>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Cấu trúc</th><th>Vị trí</th><th>Ví dụ</th></tr></thead><tbody>' +
+            '<tr><td><code>too</code> + adj</td><td>sau tính từ</td><td><em>It\'s too expensive for me.</em></td></tr>' +
+            '<tr><td><code>too much</code> + V-ing / danh từ không đếm được</td><td>—</td><td><em>He spends too much time on the Internet.</em></td></tr>' +
+            '<tr><td><code>too many</code> + danh từ đếm được số nhiều</td><td>—</td><td><em>She drinks too many sugary drinks.</em></td></tr>' +
+            '<tr><td><code>adj</code> + <code>enough</code></td><td>đủ, ở mức vừa</td><td><em>The room isn\'t big enough for six people.</em></td></tr>' +
+            '<tr><td><code>enough</code> + danh từ</td><td>đứng trước danh từ</td><td><em>We don\'t have enough time to finish.</em></td></tr>' +
+            '</tbody></table></div>'
+        },
+        {
+          t: "Câu điều kiện loại 1",
+          en: "First conditional",
+          p:
+            '<p>Nói về một tình huống có thật trong tương lai — giả định có khả năng xảy ra.</p>' +
+            '<div class="fx"><em>If</em> + S + <b>V(simple present)</b>, S + <b>will</b> + V</div>' +
+            '<div class="ex"><em>If I <b>sleep</b> early tonight, I <b>won\'t be</b> tired tomorrow.</em></div>' +
+            '<p>Không dùng <code>will</code> trong mệnh đề <code>if</code>, và không dùng <em>mệnh đề mệnh lệnh</em>.</p>' +
+            '<div class="fx"><em>If</em> + S + <b>will</b> + V ✗</div>'
+        },
+        {
+          t: "Trạng từ chỉ thể cách",
+          en: "Adverbs of manner",
+          p:
+            '<p>Đứng sau động từ, giải thích “thế nào”. Phần lớn tính từ cộng <code>-ly</code>.</p>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Quy tắc</th><th>Tính từ</th><th>Trạng từ</th></tr></thead><tbody>' +
+            '<tr><td>Hầu hết</td><td>quick</td><td>quickly</td></tr>' +
+            '<tr><td>từng</td><td>careful</td><td>carefully</td></tr>' +
+            '<tr><td>kết thúc bằng <code>-le</code></td><td>simple</td><td>simply</td></tr>' +
+            '<tr><td>kết thúc bằng <code>-y</code></td><td>happy</td><td>happily</td></tr>' +
+            '<tr><td>bất quy tắc</td><td>good · hard · fast</td><td>well · hard · fast</td></tr>' +
+            '</tbody></table></div>' +
+            '<div class="ex"><em>She exercises regularly to stay healthy.</em></div>'
+        }
+      ]
+    },
+
+    {
+      n: 10, slug: "unit-10", emoji: "💰",
+      en: "MONEY AND SHOPPING", vi: "Tiền bạc và mua sắm",
+      file: "UNIT 10 MONEY AND SHOPPING.html",
+      topics: [
+        {
+          t: "Câu điều kiện loại 2",
+          en: "Second conditional",
+          p:
+            '<p>Nói về một tình huống giả định, không có khả năng xảy ra, hoặc một ước muốn trong hiện tại.</p>' +
+            '<div class="fx"><em>If</em> + S + <b>V(past)</b>, S + <b>would</b> + V</div>' +
+            '<div class="ex"><em>If I <b>had</b> more money, I <b>would buy</b> that laptop.</em></div>' +
+            '<p>Trong lời khuyên: <code>If I were you, I\'d…</code></p>' +
+            '<div class="ex"><em>If I were you, I\'d spend less on delivery.</em></div>'
+        },
+        {
+          t: "Cấu trúc nhấn mạnh với so &amp; such",
+          en: "So and such",
+          p:
+            '<p><code>so</code> đứng sau tính từ; <code>such</code> đứng trước cụm danh từ có tính từ.</p>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>' +
+            '<tr><td><code>so</code> + adj + a + <b>that</b> + mệnh đề</td><td><em>It was <b>so</b> hot <b>that</b> we stayed indoors.</em></td></tr>' +
+            '<tr><td><b>such</b> + a + noun + <b>that</b> + mệnh đề</td><td><em>It was <b>such</b> a hot day <b>that</b> we stayed indoors.</em></td></tr>' +
+            '<tr><td><code>so</code> + adj</td><td><em>The bag was <b>so</b> expensive.</em></td></tr>' +
+            '<tr><td><b>such</b> + a + noun</td><td><em>It was <b>such</b> a waste of money.</em></td></tr>' +
+            '</tbody></table></div>' +
+            '<div class="fx">✗ <em>such</em> expensive bag<br>✓ <em>such an</em> expensive bag</div>'
+        },
+        {
+          t: "Đại từ bất định",
+          en: "Indefinite pronouns",
+          p:
+            '<p>Dùng cho người hoặc vật không xác định. Chọn đại từ theo nghĩa câu.</p>' +
+            '<div class="doc-wrap"><table><thead><tr><th></th><th>Đầy đủ (phủ định / câu hỏi)</th><th>Hạn định</th><th>Tồn tại</th></tr></thead><tbody>' +
+            '<tr><td>Người</td><td>anyone · no one</td><td>everyone · someone</td><td>—</td></tr>' +
+            '<tr><td>Vật</td><td>anything · nothing</td><td>everything · something</td><td>—</td></tr>' +
+            '<tr><td>Nơi chốn</td><td>anywhere · nowhere</td><td>everywhere · somewhere</td><td>—</td></tr>' +
+            '</tbody></table></div>' +
+            '<div class="fx">someone / anybody / no one / everybody — mọi người<br>' +
+            'something / anything / nothing / everything — mọi thứ<br>' +
+            'every- · some- · any- · no-</div>' +
+            '<div class="ex"><em>Did <b>anyone</b> call me this morning?</em><br><em><b>Nothing</b> in this shop is cheap.</em></div>'
+        }
+      ]
+    },
+
+    {
+      n: 11, slug: "unit-11", emoji: "🌍",
+      en: "A GLOBAL MARKET", vi: "Thị trường toàn cầu",
+      file: "UNIT 11 A GLOBAL MARKET.html",
+      topics: [
+        {
+          t: "Thể bị động",
+          en: "Passives",
+          p:
+            '<p>Dùng khi chủ thể không rõ hoặc không quan trọng.</p>' +
+            '<div class="fx">S + <b>am/is/are</b> + V<sub>(pp)</sub> + (by + t/c nhân)</div>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Thì</th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>' +
+            '<tr><td>Hiện tại đơn</td><td>S + am/is/are + V(pp)</td><td><em>Vietnamese products <b>are exported</b> to 40 countries.</em></td></tr>' +
+            '<tr><td>Quá khứ đơn</td><td>S + was/were + V(pp)</td><td><em>The factory <b>was built</b> in 1995.</em></td></tr>' +
+            '</tbody></table></div>'
+        },
+        {
+          t: "Cấu trúc used to",
+          en: "Used to",
+          p:
+            '<p>Nói về một việc đã từng xảy ra trong quá khứ và nay không còn.</p>' +
+            '<div class="fx"><b>Khẳng định</b>  S + used to + V<sub>(nguyên mẫu)</sub><br>' +
+            '<b>Phủ định</b>  S + did not/didn\'t + use to + V<br>' +
+            '<b>Nghi vấn</b>  Did + S + use to + V?</div>' +
+            '<div class="ex"><em>My grandpa <b>used to work</b> in a garment factory.</em><br>' +
+            '<em>She didn\'t <b>use to</b> like spicy food when she was a child.</em></div>'
+        },
+        {
+          t: "Thì quá khứ hoàn thành",
+          en: "Past Perfect",
+          p:
+            '<p>Hành động xảy ra và kết thúc <b>trước</b> một mốc quá khứ khác.</p>' +
+            '<div class="fx">S + <b>had</b> + V<sub>(pp)</sub> + <em>before / by / when…</em></div>' +
+            '<div class="ex"><em>By the time we got there, the shop <b>had already closed</b>.</em></div>' +
+            '<p>Ghép với câu điều kiện loại 3 — trong trường hợp ngược lại với quá khứ.</p>' +
+            '<div class="fx"><em>If</em> + S + <b>had</b> + V<sub>(pp)</sub>, S + <b>would have</b> + V<sub>(pp)</sub></div>'
+        }
+      ]
+    },
+
+    {
+      n: 12, slug: "unit-12", emoji: "🎭",
+      en: "ENTERTAIN ME!", vi: "Giải trí",
+      file: "UNIT 12 ENTERTAIN ME!.html",
+      topics: [
+        {
+          t: "Câu tường thuật",
+          en: "Reported speech",
+          p:
+            '<h2>1. Động từ tường thuật</h2>' +
+            '<div class="fx">tell + tân ngữ + <b>that</b> + mệnh đề<br>' +
+            'say + chủ ngữ + <b>that</b> + mệnh đề (không có tân ngữ)</div>' +
+            '<div class="ex"><em>He <b>told me that</b> he had finished the project.</em><br>' +
+            '<em>She <b>said that</b> she was leaving.</em></div>' +
+            '<h2>2. Quy tắc lùi thì (Tense shifts)</h2>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Câu gốc</th><th>Câu tường thuật</th></tr></thead><tbody>' +
+            '<tr><td>simple present</td><td>simple past</td></tr>' +
+            '<tr><td>simple past</td><td>past perfect</td></tr>' +
+            '<tr><td>will</td><td>would</td></tr>' +
+            '<tr><td>can / may</td><td>could / might</td></tr>' +
+            '<tr><td>must</td><td>had to</td></tr>' +
+            '<tr><td>present continuous</td><td>past continuous</td></tr>' +
+            '</tbody></table></div>' +
+            '<div class="ex"><em>“I <b>will</b> call you later.” → He said he <b>would</b> call me later.</em></div>' +
+            '<h2>3. Biến đổi đại từ và trạng từ</h2>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Câu gốc</th><th>Câu tường thuật</th></tr></thead><tbody>' +
+            '<tr><td>I / me / my / mine</td><td>he / him / his / his (hoặc you / your)</td></tr>' +
+            '<tr><td>here</td><td>there</td></tr>' +
+            '<tr><td>this / these</td><td>that / those</td></tr>' +
+            '<tr><td>now</td><td>then</td></tr>' +
+            '<tr><td>today → that day · tonight → that night</td><td></td></tr>' +
+            '</tbody></table></div>'
+        },
+        {
+          t: "Cách dùng V-ing và động từ nguyên mẫu",
+          en: "Uses of -ing form and infinitive",
+          p:
+            '<h2>1. Dạng V-ing (Gerund)</h2>' +
+            '<div class="fx">preposition + <b>V-ing</b>  ·  enjoy / avoid / mind / finish + <b>V-ing</b><br>' +
+            '<b>V-ing</b> + noun  ·  look forward to / be used to / get used to + <b>V-ing</b></div>' +
+            '<div class="ex"><em>I <b>look forward to</b> seeing you again.</em></div>' +
+            '<h2>2. Dạng động từ nguyên mẫu có to (To-Infinitive)</h2>' +
+            '<div class="fx">decide / hope / plan / promise / agree + <b>to V</b><br>' +
+            'It\'s + adj + <b>to V</b>  ·  purpose: <b>to</b> + V</div>' +
+            '<div class="ex"><em>It\'s important <b>to</b> protect our cultural identity.</em></div>'
+        },
+        {
+          t: "Tính từ thường và tính từ tuyệt đối",
+          en: "Gradable and extreme adjectives",
+          p:
+            '<p>Tính từ thường có dạng so sánh; tính từ tuyệt đối không dùng so sánh nhưng đứng trước danh từ.</p>' +
+            '<div class="doc-wrap"><table><thead><tr><th>Tính từ</th><th>So sánh bằng</th><th>So sánh hơn nhất</th><th>Dạng tuyệt đối</th></tr></thead><tbody>' +
+            '<tr><td>good</td><td>good</td><td>best</td><td>excellent</td></tr>' +
+            '<tr><td>bad</td><td>bad</td><td>worst</td><td>terrible</td></tr>' +
+            '<tr><td>big</td><td>big</td><td>biggest</td><td>enormous</td></tr>' +
+            '<tr><td>interesting</td><td>interesting</td><td>most interesting</td><td>fascinating</td></tr>' +
+            '</tbody></table></div>' +
+            '<div class="ex"><em>This is <b>the most exciting</b> film I\'ve ever seen.</em><br>' +
+            '<em>The concert was <b>absolutely brilliant</b>.</em></div>'
+        }
+      ]
+    }
+  ];
+
+  /* ══════════════════════════════════════════════════════════════
+     ĐẦU BÀI LUYỆN TẬP + ĐỀ ÔN TẬP NGOÀI
+     ══════════════════════════════════════════════════════════════ */
+  /* Đầu bài luyện tập — thứ tự và nội dung giữ nguyên như bảng bài tập trên LMS.
+     g    = nhóm bài (dòng phụ thứ 2 trên thẻ)   u  = unit dùng để nhảy tới
+     t    = tiêu đề thẻ   due = hạn nộp
+st   = trạng thái nộp bài (badge): "open" chưa nộp · "live" đang diễn ra · "done" đã nộp
+     url  = nếu có, nút "Làm bài" mở thẳng file này; bỏ trống thì nhảy tới unit trong trang
+     cta  = hành động của nút, mặc định "do" = nút "Làm bài";
+             đặt "result" để khoá nút thành "Xem kết quả" (mờ, không bấm được)  */
+  var TASKS = [
+    { g: "Kiểm tra thường xuyên", u: 12, t: "Extra Activities - Unit 12",              due: "23:59 06/12/2026", st: "open", url: "Luyentap-Extra-Activities-Unit_12.html" },
+    { g: "Kiểm tra thường xuyên", u: 11, t: "Extra Activities - Unit 11",              due: "23:59 06/12/2026", st: "open", url: "Luyentap-Extra-Activities-Unit_11.html" },
+    { g: "Kiểm tra thường xuyên", u: 10, t: "Extra Activities - Unit 10",              due: "23:59 06/12/2026", st: "open", url: "Luyentap-Extra-Activities-Unit_10.html" },
+    { g: "Kiểm tra thường xuyên", u: 9,  t: "Extra Activities - Unit 09",              due: "23:59 06/12/2026", st: "open", url: "Luyentap-Extra-Activities-Unit_09.html" },
+    { g: "Kiểm tra thường xuyên", u: 8,  t: "Extra Activities - Unit 08",              due: "23:59 06/12/2026", st: "open", url: "Luyentap-Extra-Activities-Unit_08.html" },
+    { g: "Kiểm tra thường xuyên", u: 7,  t: "Extra Activities - Unit 07",              due: "23:59 06/12/2026", st: "open", url: "Luyentap-Extra-Activities-Unit_07.html" },
+    { g: "Kiểm tra giữa kỳ",      u: 10, t: "Luyện tập - Mid-term - Units 10-12",     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Mid-term-Units10-12.html" },
+    { g: "Kiểm tra giữa kỳ",      u: 7,  t: "Luyện tập - Mid-term - Units 7-9",       due: "23:59 06/12/2026", st: "open", url: "Luyentap-Mid-term-Units7-9.html" },
+    { g: "Kiểm tra thường xuyên", u: 12, t: "Luyện tập - Unit 12",                     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Unit_12.html" },
+    { g: "Kiểm tra thường xuyên", u: 11, t: "Luyện tập - Unit 11",                     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Unit_11.html" },
+    { g: "Kiểm tra thường xuyên", u: 10, t: "Luyện tập - Unit 10",                     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Unit_10.html" },
+    { g: "Kiểm tra thường xuyên", u: 9,  t: "Luyện tập - Unit 09",                     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Unit_9.html" },
+    { g: "Kiểm tra thường xuyên", u: 8,  t: "Luyện tập - Unit 08",                     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Unit_8.html" },
+    { g: "Kiểm tra thường xuyên", u: 7,  t: "Luyện tập - Unit 07",                     due: "23:59 06/12/2026", st: "open", url: "Luyentap-Unit 07.html" }
+  ];
+
+  /* Badge trạng thái — 3 bậc của thang brand, tương ứng bảng §4.6 trong design.md */
+  var STATUS = {
+    live: { cls: "mid",   label: "Đang diễn ra" },
+    open: { cls: "light", label: "Chưa nộp bài" },
+    done: { cls: "solid", label: "Đã nộp bài" }
+  };
+
+  var EXTRA = [
+    { u: 7,  unit: "Unit 7",  url: "https://azota.vn/de-thi/tetw5e" },
+    { u: 8,  unit: "Unit 8",  url: "https://azota.vn/de-thi/2rbu0s" },
+    { u: 9,  unit: "Unit 9",  url: "https://azota.vn/de-thi/xvxyyk" },
+    { u: 10, unit: "Unit 10", url: "https://azota.vn/de-thi/nfmupe" },
+    { u: 11, unit: "Unit 11", url: "https://azota.vn/de-thi/fd7qpw" },
+    { u: 12, unit: "Unit 12", url: "https://azota.vn/de-thi/ptkhw7" }
+  ];
+
+  var ICON_ARROW  = "M5 12h13m-5-5 5 5-5 5";
+  var ICON_EXT    = "M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5";
+  var ICON_CLOCK  = "M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+  var ICON_TICK   = "M5 12.5 10 17.5 19 7";
+  var ICON_EYE    = "M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12zM12 14.6a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2z";
+  var ICON_COMPASS= "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM15 9l-1.8 4.2L9 15l1.8-4.2z";
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  function unitOf(n) {
+    for (var i = 0; i < UNITS.length; i++) if (UNITS[i].n === n) return UNITS[i];
+    return null;
+  }
+  function topicCount(u) {
+    return u.topics.length;
+  }
+
+  /* ══════════ 1. HERO — số liệu tổng ══════════ */
+  (function hero() {
+    var topics = UNITS.reduce(function (t, u) { return t + topicCount(u); }, 0);
+    var examples = UNITS.reduce(function (t, u) {
+      return t + u.topics.reduce(function (a, x) {
+        return a + (x.p.match(/class="ex"/g) || []).length;
+      }, 0);
+    }, 0);
+    var stats = [
+      { v: UNITS.length, l: "unit" },
+      { v: topics, l: "chủ đề ngữ pháp" },
+      { v: examples, l: "ví dụ minh hoạ" }
+    ];
+    $("heroStats").innerHTML = stats.map(function (s) {
+      return '<span class="av-stat"><b>' + s.v + "</b>" + esc(s.l) + "</span>";
+    }).join("");
+  })();
+
+  /* ══════════ 2. THANH CHUYỂN NHANH ══════════ */
+  var JUMPS = [];
+  (function jump() {
+    $("jumpLabel").innerHTML = CK.svg(ICON_COMPASS) + "Unit";
+    JUMPS = UNITS.map(function (u) {
+      var a = document.createElement("a");
+      a.href = "#" + u.slug;
+      a.dataset.slug = u.slug;
+      a.dataset.n = u.n;
+      a.innerHTML = "<b>U" + u.n + "</b>" + esc(u.en);
+      $("jumpRow").appendChild(a);
+      return a;
+    });
+  })();
+
+  /* ══════════ 3. LƯỚI UNIT ══════════ */
+  (function grid() {
+    $("unitGrid").innerHTML = UNITS.map(function (u) {
+      var href = u.file || ("#" + u.slug);
+      var go = u.file ? "Mở trang unit" : "Xem lời giải";
+      var extra = u.file ? '' : ' data-unit-card="' + u.n + '"';
+      return '<a class="unit-card" href="' + href + '"' + extra + '>' +
+        '<div class="unit-top">' +
+          '<span class="unit-no">UNIT ' + u.n + "</span>" +
+          '<span class="unit-emoji" aria-hidden="true">' + u.emoji + "</span>" +
+        "</div>" +
+        "<div>" +
+          '<h3 class="unit-nm">' + esc(u.en) + "</h3>" +
+          '<p class="unit-vi">' + esc(u.vi) + "</p>" +
+        "</div>" +
+        '<ul class="unit-list">' +
+          u.topics.map(function (t) { return "<li>" + t.t + "</li>"; }).join("") +
+        "</ul>" +
+        '<div class="unit-foot">' +
+          '<span class="n">' + topicCount(u) + " chủ đề</span>" +
+          '<span class="go">' + go + CK.svg(ICON_ARROW) + "</span>" +
+        "</div>" +
+      "</a>";
+    }).join("");
+  })();
+
+  /* ══════════ 4. THẺ BÀI TẬP + LINK ÔN TẬP NGOÀI ══════════ */
+  /* Mapping từ tên file trong url → phần slug đã lưu trong CK.history */
+  var TASK_PART_MAP = {
+    "Luyentap-Unit 07.html": "unit-07",
+    "Luyentap-Unit%2007.html": "unit-07",
+    "Luyentap-Unit_8.html": "unit-08",
+    "Luyentap-Unit_9.html": "unit-09",
+    "Luyentap-Unit_10.html": "unit-10",
+    "Luyentap-Unit_11.html": "unit-11",
+    "Luyentap-Unit_12.html": "unit-12",
+    "Luyentap-Extra-Activities-Unit_07.html": "extra-unit-07",
+    "Luyentap-Extra-Activities-Unit_08.html": "extra-unit-08",
+    "Luyentap-Extra-Activities-Unit_09.html": "extra-unit-09",
+    "Luyentap-Extra-Activities-Unit_10.html": "extra-unit-10",
+    "Luyentap-Extra-Activities-Unit_11.html": "extra-unit-11",
+    "Luyentap-Extra-Activities-Unit_12.html": "extra-unit-12",
+    "Luyentap-Mid-term-Units7-9.html": "mid-term-7-9",
+    "Luyentap-Mid-term-Units10-12.html": "mid-term-10-12"
+  };
+
+  function taskPartSlug(url) {
+    if (!url) return "";
+    return TASK_PART_MAP[decodeURIComponent(url.split("/").pop())] || "";
+  }
+
+  function taskDone(t) {
+    var part = taskPartSlug(t.url);
+    if (!part) return false;
+    var list = CK.history.all();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].slug === "anh-van-2" && list[i].part === part) return true;
+    }
+    return false;
+  }
+
+  function taskEffectiveSt(t) {
+    return taskDone(t) ? "done" : (t.st || "open");
+  }
+
+  function statusBadge(st) {
+    var s = STATUS[st] || STATUS.open;
+    return '<span class="tst ' + s.cls + '"><i class="dot" aria-hidden="true"></i>' + s.label + "</span>";
+  }
+
+  function taskCard(t) {
+    var u = unitOf(t.u);
+    var st = taskEffectiveSt(t);
+    var cta;
+    if (t.url) {
+      /* bài đã có file riêng -> mở thẳng, không nhảy trong trang */
+      if (st === "done") {
+        cta = '<a class="task-cta" href="' + t.url + '">' + CK.svg(ICON_EYE) + "Làm lại bài</a>";
+      } else {
+        cta = '<a class="task-cta" href="' + t.url + '">' + CK.svg(ICON_ARROW) + "Làm bài</a>";
+      }
+    } else if ((t.cta || "do") === "result") {
+      cta = '<button class="task-cta" type="button" disabled>' + CK.svg(ICON_EYE) + "Xem kết quả</button>";
+    } else {
+      cta = '<a class="task-cta" href="#' + u.slug + '" data-jump="' + u.slug + '">Làm bài</a>';
+    }
+
+    return '<article class="task">' +
+      '<div class="task-badges">' +
+        statusBadge("live") + statusBadge(st) +
+      "</div>" +
+      '<div class="task-body">' +
+        '<p class="task-sub">Tiếng Anh</p>' +
+        '<p class="task-sub">' + esc(t.g) + "</p>" +
+        '<h3 class="task-title">' + esc(t.t) + "</h3>" +
+        '<p class="task-due">' + CK.svg(ICON_CLOCK) + "Hạn nộp " + esc(t.due) + "</p>" +
+      "</div>" +
+      cta +
+    "</article>";
+  }
+
+  function linkCard(o) {
+    return '<a class="link-card" href="' + o.href + '"' +
+      (o.ext ? ' target="_blank" rel="noopener"' : "") + ">" +
+      '<span class="ico">' + CK.svg(o.icon) + "</span>" +
+      '<span class="tx"><b>' + esc(o.title) + "</b>" +
+        (o.desc ? "<span>" + esc(o.desc) + "</span>" : "") +
+      "</span>" +
+      '<span class="ar" aria-hidden="true">' + CK.svg(o.icon2 || (o.ext ? ICON_EXT : ICON_ARROW)) + "</span>" +
+    "</a>";
+  }
+
+  (function links() {
+    $("lpGrid").innerHTML = TASKS.map(taskCard).join("");
+
+    $("exGrid").innerHTML = EXTRA.map(function (x) {
+      var u = unitOf(x.u);
+      return linkCard({
+        href: x.url, ext: true, icon: ICON_EXT, icon2: ICON_ARROW,
+        title: "ÔN TẬP " + x.unit,
+        desc: u.vi + " · mở tab mới"
+      });
+    }).join("");
+
+    /* Bấm "Làm bài" → nhảy tới đúng unit + báo ngắn gọn */
+    $("lpGrid").addEventListener("click", function (e) {
+      var a = e.target.closest("[data-jump]");
+      if (!a) return;
+      e.preventDefault();
+      var u = unitOf(+(a.dataset.jump || "").replace("unit-", ""));
+      gotoUnit(a.dataset.jump, true);
+      if (u) CK.toast("Unit <b>" + u.n + " · " + esc(u.en) + "</b> — " + esc(u.vi) + ".", "Mở phần ôn tập");
+    });
+
+    /* Đồng bộ badge khi tab khác ghi lịch sử */
+    document.addEventListener("ck:history", renderLinks);
+  })();
+
+  function renderLinks() {
+    $("lpGrid").innerHTML = TASKS.map(taskCard).join("");
+    $("lpGrid").addEventListener("click", function (e) {
+      var a = e.target.closest("[data-jump]");
+      if (!a) return;
+      e.preventDefault();
+      var u = unitOf(+(a.dataset.jump || "").replace("unit-", ""));
+      gotoUnit(a.dataset.jump, true);
+      if (u) CK.toast("Unit <b>" + u.n + " · " + esc(u.en) + "</b> — " + esc(u.vi) + ".", "Mở phần ôn tập");
+    });
+  }
+
+  /* ══════════ 5. NGỮ PHÁP ══════════ */
+  var TOPICS = [];   /* [{el, unit, text}] dùng cho tìm kiếm */
+  (function grammar() {
+    $("gpBox").innerHTML = UNITS.map(function (u) {
+      return '<section class="gp-unit" id="' + u.slug + '" data-gp-unit="' + u.n + '">' +
+        '<div class="gp-unit-head">' +
+          "<h2>" + esc(u.en) + " <small>Unit " + u.n + " · " + esc(u.vi) + "</small></h2>" +
+          '<span class="ck-pill light">' + topicCount(u) + " chủ đề</span>" +
+        "</div>" +
+        u.topics.map(function (t) {
+          return '<article class="gp-topic glass g1" data-gp-topic>' +
+            '<div class="gp-topic-head"><h3>' + t.t + "</h3>" +
+              (t.en ? "<p>" + t.en + "</p>" : "") +
+            "</div>" +
+            '<div class="doc">' + t.p + "</div>" +
+          "</article>";
+        }).join("") +
+      "</section>";
+    }).join("");
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-gp-topic]"), function (el) {
+      TOPICS.push({ el: el, text: CK.fold(el.textContent || "") });
+    });
+  })();
+
+  /* ══════════ 6. TÌM KIẾM ══════════ */
+  var S = { q: "" };
+
+  function apply() {
+    var fq = CK.fold(S.q).trim();
+    var shown = 0;
+
+    TOPICS.forEach(function (t) {
+      var on = !fq || t.text.indexOf(fq) !== -1;
+      t.el.hidden = !on;
+      if (on) shown++;
+    });
+
+    /* Ẩn unit không còn topic nào hiện */
+    UNITS.forEach(function (u) {
+      var host = document.getElementById(u.slug);
+      if (host) host.hidden = !Array.prototype.some.call(
+        host.querySelectorAll("[data-gp-topic]"), function (x) { return !x.hidden; }
+      );
+    });
+
+    $("gpCount").innerHTML = fq
+      ? "<b>" + shown + "</b> / " + TOPICS.length + " chủ đề"
+      : "<b>" + TOPICS.length + "</b> chủ đề";
+    $("gpNone").hidden = shown > 0;
+  }
+
+  $("gpQ").addEventListener("input", function () { S.q = this.value; apply(); });
+  $("gpReset").addEventListener("click", function () {
+    S.q = ""; $("gpQ").value = ""; apply();
+  });
+
+  /* ══════════ 7. NHẢY UNIT + ĐÁNH DẤU KHI CUỘN ══════════ */
+  function gotoUnit(slug, flash) {
+    var el = document.getElementById(slug);
+    if (!el) return;
+    el.hidden = false;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (flash && el.animate) {
+      el.animate(
+        [{ boxShadow: "0 0 0 0 rgba(3,78,162,.34)" }, { boxShadow: "0 0 0 10px rgba(3,78,162,0)" }],
+        800
+      );
+    }
+  }
+
+  /* Bấm chip trên thanh chuyển nhanh → nhảy tới unit */
+  (function wireJump() {
+    $("jumpRow").addEventListener("click", function (e) {
+      var a = e.target.closest("a[data-slug]");
+      if (!a) return;
+      e.preventDefault();
+      var u = unitOf(+a.dataset.n);
+      gotoUnit(a.dataset.slug, true);
+      if (u) CK.toast("Unit <b>" + u.n + " · " + esc(u.en) + "</b> — " + esc(u.vi) + ".", "Đang xem");
+    });
+
+    /* Thẻ unit trong lưới cũng dùng cùng cơ chế */
+    $("unitGrid").addEventListener("click", function (e) {
+      var a = e.target.closest("[data-unit-card]");
+      if (!a) return;
+      e.preventDefault();
+      gotoUnit("unit-" + a.dataset.unitCard, true);
+    });
+  })();
+
+  /* Đánh dấu unit đang ở trên màn hình — CHỈ đổi màu chip, không lọc nội dung */
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (rows) {
+      rows.forEach(function (row) {
+        if (!row.isIntersecting) return;
+        JUMPS.forEach(function (a) {
+          a.classList.toggle("is-on", a.dataset.slug === row.target.id);
+        });
+        var u = unitOf(+row.target.dataset.gpUnit);
+        $("gpUnitPill").textContent = u ? "Unit " + u.n + " · " + u.en : "Tất cả unit";
+      });
+    }, { rootMargin: "-150px 0px -60% 0px", threshold: 0 });
+    UNITS.forEach(function (u) {
+      var el = document.getElementById(u.slug);
+      if (el) io.observe(el);
+    });
+  }
+
+  /* Mở đúng unit khi vào bằng đường dẫn có tham số ?u=<số> */
+  (function deepLink() {
+    var want = +new URLSearchParams(location.search).get("u");
+    if (!want || !unitOf(want)) return;
+    gotoUnit(unitOf(want).slug, true);
+  })();
+
+  apply();
+})();
+</script>
+</body>
+</html>

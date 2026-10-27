@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 2 (PHẦN 2): BÌA KARNAUGH VÀ CÁC CỔNG LOGIC | CƠ KHÍ HUIT</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#034EA2',
+              600: '#023c7d',
+              700: '#012c5d',
+              800: '#001d3f',
+              accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .k-map-table {
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0 auto;
+    }
+    .k-map-table th, .k-map-table td {
+      border: 1.5px solid #1e293b;
+      min-width: 2.25rem;
+      height: 2.25rem;
+      text-align: center;
+      vertical-align: middle;
+      padding: 0.15rem;
+      font-size: 0.9rem;
+    }
+    .k-map-table th.no-border, .k-map-table td.no-border {
+      border: none;
+    }
+    .k-map-corner {
+      position: relative;
+      border: none !important;
+      min-width: 3.5rem !important;
+    }
+    .k-diag-line {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .k-group-box {
+      border: 2px solid #0284c7;
+      background-color: rgba(14, 165, 233, 0.12);
+      border-radius: 0.375rem;
+    }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+
+<!-- BEGIN: Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+  CƠ KHÍ HUIT
+  <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+</span>
+</div>
+</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="Chuong2-dai-so-boole-va-cac-cong-locgic-phan1.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span>Về Phần 1 (Mục 2.1 - 2.5)</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: Site Header -->
+
+<!-- BEGIN: Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+<a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+<span>/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+<span>/</span>
+<span class="text-slate-800 font-semibold truncate">Chương 2 (Phần 2): Bìa Karnaugh và các cổng logic</span>
+</div>
+</div>
+<!-- END: Breadcrumb Bar -->
+
+<!-- BEGIN: Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+<!-- BEGIN: Title Banner -->
+<section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center justify-center gap-3 mb-4">
+<span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+<span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">2</span>
+<span class="text-2xl sm:text-3xl font-bold text-slate-400 font-mono">(Phần 2)</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+  BÌA KARNAUGH VÀ CÁC CỔNG LOGIC
+</h1>
+<div class="mt-4 flex items-center justify-center gap-2">
+<span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+<span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+<span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+</div>
+</section>
+<!-- END: Title Banner -->
+
+<!-- BEGIN: Section 2.6 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-6">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.6</span>
+  BÌA KARNAUGH
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 37 - 42</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<p>Bìa Karnaugh (gọi tắt là bìa K) là một phương pháp biểu diễn hàm Boole thích hợp cho việc rút gọn hàm. Mỗi ô của bìa K biểu diễn một giá trị của hàm F (0, 1 hoặc X), tương ứng với một hàng trong bảng chân trị.</p>
+
+<!-- 1- Bìa K 2 biến -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Bìa K 2 biến</h3>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table">
+      <tr>
+        <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">F \ AB</th>
+        <th class="bg-slate-100 text-slate-700">0</th>
+        <th class="bg-slate-100 text-slate-700">1</th>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">0</th>
+        <td class="font-bold">0</td>
+        <td class="font-bold">2</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">1</th>
+        <td class="font-bold">1</td>
+        <td class="font-bold">3</td>
+      </tr>
+    </table>
+  </div>
+  <p class="text-sm text-slate-600 italic text-center">Ghi chú: Các số ghi trong các ô của bìa K trên là số thứ tự của ô và cũng là số thứ tự của hàng trong bảng chân trị (xem A là MSB).</p>
+</div>
+
+<!-- 2- Bìa K 3 biến -->
+<div class="space-y-3 pt-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Bìa K 3 biến</h3>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table">
+      <tr>
+        <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">F \ AB</th>
+        <th class="bg-slate-100 text-slate-700 px-3">00</th>
+        <th class="bg-slate-100 text-slate-700 px-3">01</th>
+        <th class="bg-slate-100 text-slate-700 px-3">11</th>
+        <th class="bg-slate-100 text-slate-700 px-3">10</th>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">0 (C=0)</th>
+        <td class="font-bold">0</td>
+        <td class="font-bold">2</td>
+        <td class="font-bold">6</td>
+        <td class="font-bold">4</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">1 (C=1)</th>
+        <td class="font-bold">1</td>
+        <td class="font-bold">3</td>
+        <td class="font-bold">7</td>
+        <td class="font-bold">5</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- 3- Bìa K 4 biến -->
+<div class="space-y-3 pt-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Bìa K 4 biến</h3>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table">
+      <tr>
+        <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">CD \ AB</th>
+        <th class="bg-slate-100 text-slate-700 px-3">00</th>
+        <th class="bg-slate-100 text-slate-700 px-3">01</th>
+        <th class="bg-slate-100 text-slate-700 px-3">11</th>
+        <th class="bg-slate-100 text-slate-700 px-3">10</th>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">00</th>
+        <td class="font-bold">0</td>
+        <td class="font-bold">4</td>
+        <td class="font-bold">12</td>
+        <td class="font-bold">8</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">01</th>
+        <td class="font-bold">1</td>
+        <td class="font-bold">5</td>
+        <td class="font-bold">13</td>
+        <td class="font-bold">9</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">11</th>
+        <td class="font-bold">3</td>
+        <td class="font-bold">7</td>
+        <td class="font-bold">15</td>
+        <td class="font-bold">11</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">10</th>
+        <td class="font-bold">2</td>
+        <td class="font-bold">6</td>
+        <td class="font-bold">14</td>
+        <td class="font-bold">10</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- 4- Bìa K 5 biến -->
+<div class="space-y-3 pt-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Bìa K 5 biến</h3>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table text-xs sm:text-sm">
+      <tr>
+        <th class="no-border pr-2 text-right font-sans text-xs">DE \ BC</th>
+        <th class="bg-blue-50 text-blue-900 px-2" colspan="4">A = 0</th>
+        <th class="no-border w-2"></th>
+        <th class="bg-indigo-50 text-indigo-900 px-2" colspan="4">A = 1</th>
+      </tr>
+      <tr class="bg-slate-100 text-slate-700">
+        <th class="no-border pr-2 font-mono"></th>
+        <th>00</th><th>01</th><th>11</th><th>10</th>
+        <th class="no-border"></th>
+        <th>10</th><th>11</th><th>01</th><th>00</th>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">00</th>
+        <td class="font-bold">0</td><td class="font-bold">4</td><td class="font-bold">12</td><td class="font-bold">8</td>
+        <td class="no-border"></td>
+        <td class="font-bold">24</td><td class="font-bold">28</td><td class="font-bold">20</td><td class="font-bold">16</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">01</th>
+        <td class="font-bold">1</td><td class="font-bold">5</td><td class="font-bold">13</td><td class="font-bold">9</td>
+        <td class="no-border"></td>
+        <td class="font-bold">25</td><td class="font-bold">29</td><td class="font-bold">21</td><td class="font-bold">17</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">11</th>
+        <td class="font-bold">3</td><td class="font-bold">7</td><td class="font-bold">15</td><td class="font-bold">11</td>
+        <td class="no-border"></td>
+        <td class="font-bold">27</td><td class="font-bold">31</td><td class="font-bold">23</td><td class="font-bold">19</td>
+      </tr>
+      <tr>
+        <th class="no-border pr-2 font-mono text-slate-700">10</th>
+        <td class="font-bold">2</td><td class="font-bold">6</td><td class="font-bold">14</td><td class="font-bold">10</td>
+        <td class="no-border"></td>
+        <td class="font-bold">26</td><td class="font-bold">30</td><td class="font-bold">22</td><td class="font-bold">18</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3 pt-4">Cách điền vào bìa K</h3>
+<p><strong>1- Nếu cho một hàm F biểu diễn dưới dạng chuẩn 1 (dạng &sum;)</strong> thì ta điền 1 vào các ô có số thứ tự tương ứng với các minterm, điền X vào các ô ứng với các trường hợp tùy định và điền 0 vào các ô còn lại.</p>
+<p class="text-slate-600 italic">Ta có thể chỉ điền vào bìa K hai ký hiệu 0 và X hoặc 1 và X. Các ô bỏ trống được ngầm hiểu.</p>
+
+<!-- Ví dụ 2.26 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.26: Điền vào bìa K hàm F(A,B,C,D) = &sum;(2, 3, 5, 8, 11, 13, 14) + d(1, 4, 15)</p>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table font-mono text-sm">
+      <tr>
+        <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">CD \ AB</th>
+        <th class="bg-slate-100 px-3">00</th><th class="bg-slate-100 px-3">01</th><th class="bg-slate-100 px-3">11</th><th class="bg-slate-100 px-3">10</th>
+      </tr>
+      <tr><th class="no-border pr-2">00</th><td></td><td class="font-bold text-amber-600">x</td><td></td><td class="font-bold text-brand-600">1</td></tr>
+      <tr><th class="no-border pr-2">01</th><td class="font-bold text-amber-600">x</td><td class="font-bold text-brand-600">1</td><td class="font-bold text-brand-600">1</td><td></td></tr>
+      <tr><th class="no-border pr-2">11</th><td class="font-bold text-brand-600">1</td><td></td><td class="font-bold text-amber-600">x</td><td class="font-bold text-brand-600">1</td></tr>
+      <tr><th class="no-border pr-2">10</th><td class="font-bold text-brand-600">1</td><td></td><td class="font-bold text-brand-600">1</td><td></td></tr>
+    </table>
+  </div>
+</div>
+
+<p class="pt-2"><strong>2- Nếu cho một hàm F biểu diễn dưới dạng chuẩn 2 (dạng &Pi;)</strong> thì ta điền 0 vào các ô có số thứ tự tương ứng với các maxterm, điền X vào các ô ứng với các trường hợp tùy định và điền 1 vào các ô còn lại.</p>
+
+<!-- Ví dụ 2.27 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.27: Điền vào bìa K hàm F(A,B,C,D) = &Pi;(4, 5, 12, 14, 15) &middot; d(3, 7, 8, 11)</p>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table font-mono text-sm">
+      <tr>
+        <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">CD \ AB</th>
+        <th class="bg-slate-100 px-3">00</th><th class="bg-slate-100 px-3">01</th><th class="bg-slate-100 px-3">11</th><th class="bg-slate-100 px-3">10</th>
+      </tr>
+      <tr><th class="no-border pr-2">00</th><td></td><td class="font-bold text-slate-900">0</td><td class="font-bold text-slate-900">0</td><td class="font-bold text-amber-600">x</td></tr>
+      <tr><th class="no-border pr-2">01</th><td></td><td class="font-bold text-slate-900">0</td><td></td><td></td></tr>
+      <tr><th class="no-border pr-2">11</th><td class="font-bold text-amber-600">x</td><td class="font-bold text-amber-600">x</td><td class="font-bold text-slate-900">0</td><td class="font-bold text-amber-600">x</td></tr>
+      <tr><th class="no-border pr-2">10</th><td></td><td></td><td class="font-bold text-slate-900">0</td><td></td></tr>
+    </table>
+  </div>
+</div>
+
+<p class="pt-2"><strong>3- Nếu cho một hàm Boole biểu diễn dưới dạng bảng chân trị</strong> thì ta điền 0, 1 hoặc X vào các ô có tổ hợp nhị phân trùng với tổ hợp nhị phân của bảng chân trị.</p>
+
+<!-- Ví dụ 2.28 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.28: Cho bảng chân trị sau, hãy điền vào bìa K.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+    <div class="overflow-x-auto">
+      <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300">
+          <th class="p-1 px-3 border-r border-slate-300">A</th>
+          <th class="p-1 px-3 border-r border-slate-300">B</th>
+          <th class="p-1 px-3 border-r border-slate-300">C</th>
+          <th class="p-1 px-3">F</th>
+        </tr>
+        <tr class="border-b border-slate-200 text-center"><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="border-b border-slate-200 text-center"><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr class="border-b border-slate-200 text-center"><td>0</td><td>1</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200 text-center"><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr class="border-b border-slate-200 text-center"><td>1</td><td>0</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200 text-center"><td>1</td><td>0</td><td>1</td><td class="font-bold text-amber-600">X</td></tr>
+        <tr class="border-b border-slate-200 text-center"><td>1</td><td>1</td><td>0</td><td class="font-bold text-amber-600">X</td></tr>
+        <tr class="text-center"><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+      </table>
+    </div>
+    <div class="flex justify-center overflow-x-auto">
+      <table class="k-map-table font-mono text-sm">
+        <tr>
+          <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">C \ AB</th>
+          <th class="bg-slate-100 px-3">00</th><th class="bg-slate-100 px-3">01</th><th class="bg-slate-100 px-3">11</th><th class="bg-slate-100 px-3">10</th>
+        </tr>
+        <tr><th class="no-border pr-2">0</th><td></td><td class="font-bold text-brand-600">1</td><td class="font-bold text-amber-600">x</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr><th class="no-border pr-2">1</th><td></td><td></td><td></td><td class="font-bold text-amber-600">x</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<p class="pt-2"><strong>4- Nếu cho hàm Boole biểu diễn dưới dạng đại số</strong>, ta có thể dùng một trong các cách sau:</p>
+<p class="pl-4">a) Chuyển hàm Boole về dạng chuẩn 1 hoặc chuẩn 2 rồi điền vào bìa K.</p>
+
+<!-- Ví dụ 2.29 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.29: Cho hàm F sau. Hãy điền vào bìa K.</p>
+  <p class="font-mono pl-4">F(A,B,C,D) = A<span class="border-t border-slate-900">B</span>CD + <span class="border-t border-slate-900">A</span>BC + <span class="border-t border-slate-900">B</span>C<span class="border-t border-slate-900">D</span> + AD</p>
+  <p class="font-bold text-slate-800 pt-1">Giải</p>
+  <div class="font-mono text-sm pl-4 space-y-1">
+    <p>F(A,B,C,D) = A<span class="border-t border-slate-900">B</span>CD + <span class="border-t border-slate-900">A</span>BC(D + <span class="border-t border-slate-900">D</span>) + <span class="border-t border-slate-900">B</span>C<span class="border-t border-slate-900">D</span>(A + <span class="border-t border-slate-900">A</span>) + AD(B + <span class="border-t border-slate-900">B</span>)(C + <span class="border-t border-slate-900">C</span>)</p>
+    <p class="pl-12">= A<span class="border-t border-slate-900">B</span>CD + <span class="border-t border-slate-900">A</span>BCD + <span class="border-t border-slate-900">A</span>BC<span class="border-t border-slate-900">D</span> + A<span class="border-t border-slate-900">B</span>C<span class="border-t border-slate-900">D</span> + <span class="border-t border-slate-900">A</span><span class="border-t border-slate-900">B</span>C<span class="border-t border-slate-900">D</span> + ABCD + AB<span class="border-t border-slate-900">C</span>D + A<span class="border-t border-slate-900">B</span>CD + A<span class="border-t border-slate-900">B</span><span class="border-t border-slate-900">C</span>D</p>
+    <p class="pl-12">= A<span class="border-t border-slate-900">B</span>CD + <span class="border-t border-slate-900">A</span>BCD + <span class="border-t border-slate-900">A</span>BC<span class="border-t border-slate-900">D</span> + A<span class="border-t border-slate-900">B</span>C<span class="border-t border-slate-900">D</span> + <span class="border-t border-slate-900">A</span><span class="border-t border-slate-900">B</span>C<span class="border-t border-slate-900">D</span> + ABCD + AB<span class="border-t border-slate-900">C</span>D + A<span class="border-t border-slate-900">B</span><span class="border-t border-slate-900">C</span>D</p>
+    <p class="pl-12 font-bold text-brand-600">= &sum;(2, 6, 7, 9, 10, 11, 13, 15)</p>
+  </div>
+  <div class="flex justify-center p-3 overflow-x-auto">
+    <table class="k-map-table font-mono text-sm">
+      <tr>
+        <th class="no-border pr-2 pb-1 text-right text-xs font-sans text-slate-500">CD \ AB</th>
+        <th class="bg-slate-100 px-3">00</th><th class="bg-slate-100 px-3">01</th><th class="bg-slate-100 px-3">11</th><th class="bg-slate-100 px-3">10</th>
+      </tr>
+      <tr><th class="no-border pr-2">00</th><td></td><td></td><td></td><td></td></tr>
+      <tr><th class="no-border pr-2">01</th><td></td><td></td><td class="font-bold text-brand-600">1</td><td class="font-bold text-brand-600">1</td></tr>
+      <tr><th class="no-border pr-2">11</th><td></td><td class="font-bold text-brand-600">1</td><td class="font-bold text-brand-600">1</td><td class="font-bold text-brand-600">1</td></tr>
+      <tr><th class="no-border pr-2">10</th><td class="font-bold text-brand-600">1</td><td class="font-bold text-brand-600">1</td><td></td><td class="font-bold text-brand-600">1</td></tr>
+    </table>
+  </div>
+</div>
+
+<p class="pl-4">b) Nếu hàm Boole có dạng tổng các tích thì lần lượt xét các tích và điền 1 vào một hay nhiều ô tương ứng. Chú ý là biến không bù tương ứng với 1 và biến bù tương ứng với 0. Nếu tích số chứa đầy đủ các biến thì điền vào 1 ô, nếu tích thiếu 1 biến thì điền vào 2 ô, ... Tổng quát là nếu tích thiếu n biến thì điền vào 2<sup>n</sup> ô. Những ô nào đã điền rồi thì không cần điền lần nữa (do định lý A + A = A).</p>
+
+<!-- Ví dụ 2.30 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.30: Cho hàm F sau. Hãy điền vào bìa K.</p>
+  <p class="font-mono pl-4">F(A,B,C,D) = A<span class="border-t border-slate-900">B</span><span class="border-t border-slate-900">C</span>D + AB<span class="border-t border-slate-900">D</span> + <span class="border-t border-slate-900">B</span><span class="border-t border-slate-900">C</span>D + A<span class="border-t border-slate-900">B</span></p>
+  <p class="text-slate-700 italic pl-4">Giải: Công việc thực hiện được minh họa qua các hình vẽ ở trang 41.</p>
+</div>
+
+<!-- Ví dụ 2.31 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.31: Điền vào bìa K hàm</p>
+  <p class="font-mono pl-4">F(A,B,C,D) = (A + <span class="border-t border-slate-900">B</span> + C + D)(A + <span class="border-t border-slate-900">C</span> + D)(B + <span class="border-t border-slate-900">C</span> + D)(C + D)</p>
+  <p class="text-slate-700 italic pl-4">Công việc thực hiện được minh họa qua các hình vẽ sau (trang 41).</p>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.6 -->
+
+<!-- BEGIN: Section 2.7 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-7">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.7</span>
+  CÁC CỔNG LOGIC
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 42 - 44</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Cổng NOT -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Cổng NOT (Cổng đảo, Inverter)</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = <span class="border-t border-slate-900">A</span></strong></p>
+      <!-- SVG NOT gate -->
+      <div class="py-2">
+        <svg width="150" height="50" viewBox="0 0 150 50">
+          <line x1="10" y1="25" x2="40" y2="25" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="29" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <polygon points="40,10 40,40 75,25" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <circle cx="80" cy="25" r="4" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="85" y1="25" x2="125" y2="25" stroke="#1e293b" stroke-width="2"/>
+          <text x="132" y="29" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Cổng không đảo (Buffer) -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Cổng không đảo (Buffer)</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = A</strong></p>
+      <!-- SVG Buffer gate -->
+      <div class="py-2">
+        <svg width="150" height="50" viewBox="0 0 150 50">
+          <line x1="10" y1="25" x2="45" y2="25" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="29" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <polygon points="45,10 45,40 85,25" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="85" y1="25" x2="125" y2="25" stroke="#1e293b" stroke-width="2"/>
+          <text x="132" y="29" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 3- Cổng AND -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Cổng AND</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = AB</strong></p>
+      <!-- SVG AND gate -->
+      <div class="py-2">
+        <svg width="170" height="60" viewBox="0 0 170 60">
+          <line x1="10" y1="18" x2="45" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="22" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <line x1="10" y1="42" x2="45" y2="42" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="46" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">B</text>
+          <path d="M 45,10 L 75,10 A 20,20 0 0,1 75,50 L 45,50 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="95" y1="30" x2="135" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="142" y="34" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-600 pt-1 font-mono">Tổng quát: Cổng AND có n ngõ vào F = X<sub>1</sub> &middot; X<sub>2</sub> ... X<sub>n</sub></p>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3 border-r border-slate-300">B</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr class="border-b border-slate-200"><td>1</td><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr><td>1</td><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 4- Cổng NAND -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Cổng NAND</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = <span class="border-t border-slate-900">AB</span></strong></p>
+      <!-- SVG NAND gate -->
+      <div class="py-2">
+        <svg width="175" height="60" viewBox="0 0 175 60">
+          <line x1="10" y1="18" x2="45" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="22" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <line x1="10" y1="42" x2="45" y2="42" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="46" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">B</text>
+          <path d="M 45,10 L 75,10 A 20,20 0 0,1 75,50 L 45,50 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <circle cx="100" cy="30" r="4" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="105" y1="30" x2="145" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="152" y="34" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-600 pt-1 font-mono">Tổng quát: Cổng NAND có n ngõ vào F = <span class="border-t border-slate-900">X<sub>1</sub> &middot; X<sub>2</sub> ... X<sub>n</sub></span></p>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3 border-r border-slate-300">B</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200"><td>1</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr><td>1</td><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 5- Cổng OR -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">5- Cổng OR</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = A + B</strong></p>
+      <!-- SVG OR gate -->
+      <div class="py-2">
+        <svg width="170" height="60" viewBox="0 0 170 60">
+          <line x1="10" y1="18" x2="52" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="22" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <line x1="10" y1="42" x2="52" y2="42" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="46" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">B</text>
+          <path d="M 45,10 Q 60,30 45,50 Q 80,50 100,30 Q 80,10 45,10 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="100" y1="30" x2="135" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="142" y="34" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-600 pt-1 font-mono">Tổng quát: Cổng OR có n ngõ vào F = X<sub>1</sub> + X<sub>2</sub> + ... + X<sub>n</sub></p>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3 border-r border-slate-300">B</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200"><td>1</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr><td>1</td><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 6- Cổng NOR -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">6- Cổng NOR</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = <span class="border-t border-slate-900">A + B</span></strong></p>
+      <!-- SVG NOR gate -->
+      <div class="py-2">
+        <svg width="175" height="60" viewBox="0 0 175 60">
+          <line x1="10" y1="18" x2="52" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="22" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <line x1="10" y1="42" x2="52" y2="42" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="46" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">B</text>
+          <path d="M 45,10 Q 60,30 45,50 Q 80,50 100,30 Q 80,10 45,10 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <circle cx="105" cy="30" r="4" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="110" y1="30" x2="145" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="152" y="34" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-600 pt-1 font-mono">Tổng quát: Cổng NOR có n ngõ vào F = <span class="border-t border-slate-900">X<sub>1</sub> + X<sub>2</sub> + ... + X<sub>n</sub></span></p>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3 border-r border-slate-300">B</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr class="border-b border-slate-200"><td>1</td><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr><td>1</td><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 7- Cổng EXOR -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">7- Cổng EXOR (XOR - Exclusive OR)</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm logic: <strong>F = A<span class="border-t border-slate-900">B</span> + <span class="border-t border-slate-900">A</span>B = A &oplus; B</strong></p>
+      <!-- SVG XOR gate -->
+      <div class="py-2">
+        <svg width="175" height="60" viewBox="0 0 175 60">
+          <line x1="10" y1="18" x2="48" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="22" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <line x1="10" y1="42" x2="48" y2="42" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="46" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">B</text>
+          <path d="M 40,10 Q 55,30 40,50" fill="none" stroke="#034EA2" stroke-width="2"/>
+          <path d="M 47,10 Q 62,30 47,50 Q 82,50 102,30 Q 82,10 47,10 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="102" y1="30" x2="140" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="147" y="34" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3 border-r border-slate-300">B</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200"><td>1</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr><td>1</td><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 8- Cổng EXNOR -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">8- Cổng EXNOR (XNOR - Exclusive NOR)</h3>
+  <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+    <div>
+      <p class="font-mono text-base">Hàm đại số: <strong>F = AB + <span class="border-t border-slate-900">A</span><span class="border-t border-slate-900">B</span> = <span class="border-t border-slate-900">A &oplus; B</span></strong></p>
+      <!-- SVG XNOR gate -->
+      <div class="py-2">
+        <svg width="180" height="60" viewBox="0 0 180 60">
+          <line x1="10" y1="18" x2="48" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="22" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">A</text>
+          <line x1="10" y1="42" x2="48" y2="42" stroke="#1e293b" stroke-width="2"/>
+          <text x="5" y="46" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">B</text>
+          <path d="M 40,10 Q 55,30 40,50" fill="none" stroke="#034EA2" stroke-width="2"/>
+          <path d="M 47,10 Q 62,30 47,50 Q 82,50 102,30 Q 82,10 47,10 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <circle cx="107" cy="30" r="4" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+          <line x1="112" y1="30" x2="148" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="155" y="34" font-family="'JetBrains Mono', monospace" font-size="14" fill="#1e293b">F</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <p class="text-xs font-semibold text-slate-500 pb-1 text-center">Bảng chân trị</p>
+      <table class="border-collapse border border-slate-300 font-mono text-sm text-center">
+        <tr class="bg-slate-100 font-bold border-b border-slate-300"><th class="p-1 px-3 border-r border-slate-300">A</th><th class="p-1 px-3 border-r border-slate-300">B</th><th class="p-1 px-3">F</th></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>0</td><td class="font-bold text-brand-600">1</td></tr>
+        <tr class="border-b border-slate-200"><td>0</td><td>1</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr class="border-b border-slate-200"><td>1</td><td>0</td><td class="font-bold text-brand-600">0</td></tr>
+        <tr><td>1</td><td>1</td><td class="font-bold text-brand-600">1</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Giới thiệu vi mạch họ 74LS -->
+<div class="space-y-3 pt-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 font-mono text-sm">
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS00</strong>: 4 cổng NAND 2 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS02</strong>: 4 cổng NOR 2 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS04</strong>: 6 cổng NOT</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS08</strong>: 4 cổng AND 2 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS10</strong>: 3 cổng NAND 3 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS11</strong>: 3 cổng AND 3 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS20</strong>: 2 cổng NAND 4 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS21</strong>: 2 cổng AND 4 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS27</strong>: 3 cổng NOR 3 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS30</strong>: 1 cổng NAND 8 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS32</strong>: 4 cổng OR 2 ngõ vào</div>
+    <div class="bg-white p-2.5 rounded-lg border border-slate-200"><strong>74LS86</strong>: 4 cổng EX-OR</div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.7 -->
+
+<!-- BEGIN: Section 2.8 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-8">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.8</span>
+  RÚT GỌN HÀM BOOLE BẰNG BÌA KARNAUGH
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 44 - 49</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Định nghĩa ô kế cận -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Định nghĩa ô kế cận</h3>
+  <p>Hai ô được gọi là kế cận nhau nếu chúng nằm kế nhau hoặc đối xứng nhau qua trục. Hai ô kế cận có đặc điểm là chúng ứng với hai minterm (hoặc maxterm) chỉ khác nhau ở một biến.</p>
+  <p>Bốn ô được gọi là kế cận nhau nếu chúng gồm hai nhóm hai ô kế cận và mỗi ô của nhóm này là kế cận với một ô của nhóm kia.</p>
+  <p>Tương tự cho định nghĩa 8 ô kế cận và 2<sup>n</sup> ô kế cận.</p>
+  <p>Các ô kế cận được gom thành một nhóm nếu chúng có cùng giá trị 0 hay 1.</p>
+</div>
+
+<!-- 2- Việc gom các ô kế cận -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Việc gom các ô kế cận</h3>
+  <ul class="list-disc pl-6 space-y-2">
+    <li>Khi gom các ô kế cận có cùng giá trị 1, ta được một tích của các biến có giá trị giống nhau: 0 tương ứng với bù, 1 tương ứng với không bù, còn các biến có giá trị khác nhau thì được lược bỏ đi.</li>
+    <li>Khi gom các ô kế cận có cùng giá trị 0, ta được một tổng của các biến có giá trị giống nhau: 0 tương ứng với không bù, 1 tương ứng với bù, còn các biến có giá trị khác nhau thì được lược bỏ đi.</li>
+  </ul>
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-1">
+    <p>Hai ô kế cận có tổ hợp nhị phân khác nhau tại một biến nên khi gom hai ô kế cận thì loại bỏ được một biến.</p>
+    <p>Tương tự: Khi gom 4 ô kế cận thì loại bỏ được 2 biến.</p>
+    <p class="pl-16">Khi gom 8 ô kế cận thì loại bỏ được 3 biến.</p>
+    <p class="font-bold text-slate-900 pt-1">Tổng quát: khi gom 2<sup>n</sup> ô kế cận thì loại bỏ được n biến.</p>
+  </div>
+</div>
+
+<!-- Ví dụ 2.37 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.37: Rút gọn hàm F(A,B,C,D) = &sum;(0, 1, 4, 5, 6, 7, 14, 15)</p>
+  <p class="font-mono text-base font-bold text-brand-600 pl-4">&rArr; F(A,B,C,D) = <span class="border-t border-slate-900">A</span><span class="border-t border-slate-900">C</span> + BD</p>
+  <p class="text-sm text-slate-600 italic pl-4">Chú ý: nếu gom 4 ô hàng dọc là dư.</p>
+</div>
+
+<!-- Ví dụ 2.38 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.38: Rút gọn hàm F(A,B,C,D) = &Pi;(0, 2, 4, 6, 9, 11, 12, 13, 15)</p>
+  <p class="font-mono text-base font-bold text-brand-600 pl-4">&rArr; F(A,B,C,D) = (A + D)(<span class="border-t border-slate-900">A</span> + <span class="border-t border-slate-900">D</span>)(<span class="border-t border-slate-900">B</span> + C + D)</p>
+  <p class="font-mono text-base font-bold text-slate-700 pl-4">hoặc F(A,B,C,D) = (A + D)(<span class="border-t border-slate-900">A</span> + <span class="border-t border-slate-900">D</span>)(<span class="border-t border-slate-900">A</span> + <span class="border-t border-slate-900">B</span> + C)</p>
+</div>
+
+<!-- Ví dụ 2.39 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.39: Rút gọn hàm F(A,B,C,D) = &sum;(0, 1, 2, 3, 11) + d(6, 7, 9)</p>
+  <p class="font-mono text-base font-bold text-brand-600 pl-4">&rArr; F(A,B,C,D) = <span class="border-t border-slate-900">A</span><span class="border-t border-slate-900">B</span> + <span class="border-t border-slate-900">B</span>D</p>
+</div>
+
+<!-- Ví dụ 2.40 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.40: Rút gọn hàm F(A,B,C,D) = &sum;(0, 1, 2, 4, 5, 6, 8, 9, 12, 13, 14)</p>
+  <p class="font-mono text-base font-bold text-brand-600 pl-4">&rArr; F(A,B,C,D) = <span class="border-t border-slate-900">C</span> + <span class="border-t border-slate-900">A</span> &middot; <span class="border-t border-slate-900">D</span> + B &middot; <span class="border-t border-slate-900">D</span></p>
+</div>
+
+<!-- Ví dụ 2.41 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.41: Rút gọn hàm F(A,B,C,D) = <span class="border-t border-slate-900">A</span> &middot; <span class="border-t border-slate-900">B</span> &middot; <span class="border-t border-slate-900">C</span> + <span class="border-t border-slate-900">B</span> &middot; C &middot; <span class="border-t border-slate-900">D</span> + <span class="border-t border-slate-900">A</span> &middot; B &middot; C &middot; <span class="border-t border-slate-900">D</span> + A &middot; <span class="border-t border-slate-900">B</span> &middot; <span class="border-t border-slate-900">C</span></p>
+  <p class="font-mono text-base font-bold text-brand-600 pl-4">&rArr; F(A,B,C,D) = <span class="border-t border-slate-900">B</span> &middot; <span class="border-t border-slate-900">C</span> + <span class="border-t border-slate-900">B</span> &middot; <span class="border-t border-slate-900">D</span> + <span class="border-t border-slate-900">A</span> &middot; C &middot; <span class="border-t border-slate-900">D</span></p>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.8 -->
+
+<!-- BEGIN: Section 2.9 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-9">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.9</span>
+  CÁC PHƯƠNG PHÁP THỰC HIỆN HÀM BOOLE BẰNG SƠ ĐỒ LOGIC
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 49 - 50</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Cấu trúc AND-OR -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Cấu trúc AND-OR</h3>
+  <p>Sơ đồ logic AND-OR được tạo ra từ hàm Boole dạng tổng các tích.</p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.39: Vẽ sơ đồ logic cho hàm F(A,B,C,D) = A &middot; <span class="border-t border-slate-900">B</span> + B &middot; C &middot; <span class="border-t border-slate-900">D</span></p>
+    <div class="py-2 flex justify-center">
+      <svg width="280" height="90" viewBox="0 0 280 90">
+        <!-- AND gate 1 -->
+        <path d="M 40,10 L 70,10 A 15,15 0 0,1 70,40 L 40,40 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+        <line x1="10" y1="18" x2="40" y2="18" stroke="#1e293b" stroke-width="1.5"/><text x="2" y="22" font-size="12" font-family="'JetBrains Mono'">A</text>
+        <line x1="10" y1="32" x2="40" y2="32" stroke="#1e293b" stroke-width="1.5"/><text x="2" y="36" font-size="12" font-family="'JetBrains Mono'">B̄</text>
+        <!-- AND gate 2 -->
+        <path d="M 40,50 L 70,50 A 15,15 0 0,1 70,80 L 40,80 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+        <line x1="10" y1="56" x2="40" y2="56" stroke="#1e293b" stroke-width="1.5"/><text x="2" y="60" font-size="12" font-family="'JetBrains Mono'">B</text>
+        <line x1="10" y1="65" x2="40" y2="65" stroke="#1e293b" stroke-width="1.5"/><text x="2" y="69" font-size="12" font-family="'JetBrains Mono'">C</text>
+        <line x1="10" y1="74" x2="40" y2="74" stroke="#1e293b" stroke-width="1.5"/><text x="2" y="78" font-size="12" font-family="'JetBrains Mono'">D̄</text>
+        <!-- Lines to OR -->
+        <line x1="85" y1="25" x2="140" y2="25" stroke="#1e293b" stroke-width="1.5"/>
+        <line x1="140" y1="25" x2="140" y2="35" stroke="#1e293b" stroke-width="1.5"/>
+        <line x1="85" y1="65" x2="140" y2="65" stroke="#1e293b" stroke-width="1.5"/>
+        <line x1="140" y1="65" x2="140" y2="55" stroke="#1e293b" stroke-width="1.5"/>
+        <line x1="140" y1="35" x2="155" y2="35" stroke="#1e293b" stroke-width="1.5"/>
+        <line x1="140" y1="55" x2="155" y2="55" stroke="#1e293b" stroke-width="1.5"/>
+        <!-- OR gate -->
+        <path d="M 155,25 Q 170,45 155,65 Q 190,65 210,45 Q 190,25 155,25 Z" fill="#f8fafc" stroke="#034EA2" stroke-width="2"/>
+        <line x1="210" y1="45" x2="250" y2="45" stroke="#1e293b" stroke-width="1.5"/>
+        <text x="256" y="49" font-size="14" font-family="'JetBrains Mono'" font-weight="bold">F</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Cấu trúc OR-AND -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Cấu trúc OR-AND</h3>
+  <p>Sơ đồ logic OR-AND được tạo ra từ hàm Boole dạng tích các tổng.</p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.40: Vẽ sơ đồ logic cho hàm F(A,B,C,D) = (B + C) &middot; (A + C + <span class="border-t border-slate-900">D</span>)</p>
+  </div>
+</div>
+
+<!-- 3- Cấu trúc NAND-NAND -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Cấu trúc NAND-NAND</h3>
+  <p>Sơ đồ logic NAND-NAND được tạo ra từ hàm Boole dạng tổng các tích, sau đó lấy bù hai lần và áp dụng định lý De Morgan.</p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.41: Vẽ sơ đồ logic cho hàm</p>
+    <div class="font-mono text-base pl-4 space-y-1">
+      <p>F(A,B,C,D) = A &middot; <span class="border-t border-slate-900">B</span> + B &middot; C &middot; <span class="border-t border-slate-900">D</span></p>
+      <p>&hArr; F(A,B,C,D) = <span class="border-t-2 border-slate-900">A &middot; <span class="border-t border-slate-900">B</span> + B &middot; C &middot; <span class="border-t border-slate-900">D</span></span></p>
+      <p>&hArr; F(A,B,C,D) = <span class="border-t border-slate-900"><span class="border-t border-slate-900">A &middot; <span class="border-t border-slate-900">B</span></span> &middot; <span class="border-t border-slate-900">B &middot; C &middot; <span class="border-t border-slate-900">D</span></span></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- 4- Cấu trúc NOR-NOR -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Cấu trúc NOR-NOR</h3>
+  <p>Sơ đồ logic NOR-NOR được tạo ra từ hàm Boole dạng tích các tổng, sau đó lấy bù hai lần và áp dụng định lý De Morgan.</p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.42: Vẽ sơ đồ logic cho hàm</p>
+    <div class="font-mono text-base pl-4 space-y-1">
+      <p>F(A,B,C,D) = (B + C) &middot; (A + C + <span class="border-t border-slate-900">D</span>)</p>
+      <p>&hArr; F(A,B,C,D) = <span class="border-t-2 border-slate-900">(B + C) &middot; (A + C + <span class="border-t border-slate-900">D</span>)</span></p>
+      <p>&hArr; F(A,B,C,D) = <span class="border-t border-slate-900"><span class="border-t border-slate-900">(B + C)</span> + <span class="border-t border-slate-900">(A + C + <span class="border-t border-slate-900">D</span>)</span></span></p>
+    </div>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+    <p class="text-slate-800">Ngoài ra, còn có thể thực hiện hàm Boole bằng sơ đồ logic dùng toàn cổng NAND hai ngõ vào hoặc toàn cổng NOR hai ngõ vào.</p>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.9 -->
+
+<!-- BEGIN: Chapter Navigation Footer -->
+<div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+<div class="text-center sm:text-left">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+<h4 class="text-base font-bold text-slate-800">Kỹ thuật số & Thiết kế vi mạch</h4>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="Chuong2-dai-so-boole-va-cac-cong-locgic-phan1.html">
+  &larr; Về Phần 1 (Mục 2.1 - 2.5)
+</a>
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-2-6">
+  Lên đầu trang
+</a>
+<a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="Chuong3-he-to-hop.html">
+  Tiếp tục: Chương 3 &rarr;
+</a>
+</div>
+</div>
+<!-- END: Chapter Navigation Footer -->
+
+</main>
+<!-- END: Main Content Area -->
+
+</body>
+</html>

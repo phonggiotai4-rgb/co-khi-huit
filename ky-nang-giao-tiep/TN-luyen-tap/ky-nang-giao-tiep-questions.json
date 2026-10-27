@@ -1,0 +1,2232 @@
+{
+  "chuong-1": [
+    {
+      "id": 1,
+      "text": "Định nghĩa nào sau đây mô tả chính xác nhất bản chất của giao tiếp?",
+      "options": [
+        "Giao tiếp là một quá trình truyền tải, chia sẻ thông điệp từ người nói đến người nghe nhằm đảm bảo thông điệp được truyền đi một cách chuẩn xác nhất, tránh gây hiểu nhầm.",
+        "Giao tiếp là sự tương tác và trao đổi thông tin giữa người nói và người nghe.",
+        "Giao tiếp bao gồm sự tương tác giữa người nói và người nghe trong một hoàn cảnh nhất định.",
+        "Giao tiếp chỉ mang tính chất thời điểm khi những đối tượng giao tiếp tiếp xúc cùng nhau."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 2,
+      "text": "Chức năng nào sau đây không thuộc kiểu chức năng xã hội trong giao tiếp?",
+      "options": [
+        "Chức năng thông tin.",
+        "Chức năng động viên, khích lệ.",
+        "Chức năng điều khiển.",
+        "Chức năng phê bình."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 3,
+      "text": "Cùng nhau để hiệu quả công việc đạt mức độ cao nhất người lãnh đạo nên sử dụng chức năng giao tiếp nào sau đây?",
+      "options": [
+        "Chức năng tổ chức, phối hợp hành động.",
+        "Chức năng điều khiển.",
+        "Chức năng thông tin.",
+        "Chức năng phê bình."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 4,
+      "text": "Trong một doanh nghiệp hoặc một trường học để kiểm soát nhân viên hoặc giáo viên thực hiện công việc được giao thì người đứng đầu nên sử dụng chức năng nào?",
+      "options": [
+        "Chức năng tổ chức, phối hợp hành động.",
+        "Chức năng điều khiển.",
+        "Chức năng thông tin.",
+        "Chức năng phê bình và tự phê bình."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 5,
+      "text": "Khi giảng viên cấp cho bạn dấu cộng điểm thì đó là chức năng nào?",
+      "options": [
+        "Chức năng động viên, khích lệ.",
+        "Chức năng điều khiển.",
+        "Chức năng thông tin.",
+        "Chức năng phê bình và tự phê bình."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 6,
+      "text": "Khi thông báo lịch làm việc đến nhân viên mình quản lý, người lãnh đạo đã thực hiện chức năng gì trong giao tiếp?",
+      "options": [
+        "Chức năng tổ chức, phối hợp hành động",
+        "Chức năng phê bình và tự phê bình",
+        "Chức năng thông tin",
+        "Chức năng điều khiển"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 7,
+      "text": "Để mỗi người tiến bộ hơn trong cuộc sống, chúng ta nên sử dụng chức năng nào trong giao tiếp?",
+      "options": [
+        "Chức năng tổ chức, phối hợp hành động",
+        "Chức năng phê bình và tự phê bình",
+        "Chức năng thông tin",
+        "Chức năng điều khiển"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 8,
+      "text": "Giao tiếp trực tiếp có lợi ích gì hơn so với việc giao tiếp qua điện thoại?",
+      "options": [
+        "Diễn ra nhanh chóng, dễ dàng và tiện lợi.",
+        "Quá trình giao tiếp được xác định không gian và thời gian.",
+        "Nhiều thông tin có thể không cập nhật được.",
+        "Tác động của môi trường giao tiếp."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 9,
+      "text": "Theo tính chất tiếp xúc thì giao tiếp được phân thành những loại nào?",
+      "options": [
+        "Giao tiếp chính thức và không chính thức.",
+        "Giao tiếp trực tiếp và gián tiếp.",
+        "Giao tiếp giữa cá nhân và nhóm.",
+        "Giao tiếp bên ngoài và giao tiếp bên trong."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 10,
+      "text": "Phân loại giao tiếp theo quy cách của giao tiếp gồm có",
+      "options": [
+        "Giao tiếp chính thức và không chính thức.",
+        "Giao tiếp trực tiếp và gián tiếp.",
+        "Giao tiếp giữa cá nhân và nhóm.",
+        "Giao tiếp bên ngoài và giao tiếp bên trong."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 11,
+      "text": "Theo bạn, các cuộc gặp chính thức của hai nhà nước Việt Nam và nước ngoài thường mang đặc điểm của kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp nhóm.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp cá nhân.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa vị thế yếu và vị thế mạnh.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa thế cân bằng."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 12,
+      "text": "“Người xin việc trả lời câu hỏi của người tuyển dụng”, trường hợp này mang đặc điểm của các kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp cá nhân.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa thế cân bằng.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa vị thế yếu và vị thế mạnh.",
+        "Giao tiếp không chính thức - Giao tiếp trực tiếp - Giao tiếp nhóm."
+      ],
+      "correct": 2
+    },
+    {
+      "id": 13,
+      "text": "“Tôi đã gửi đơn xin việc cho Công ty”, trường hợp này mang đặc điểm của các kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp cá nhân.",
+        "Giao tiếp chính thức - Giao tiếp gián tiếp - Giao tiếp nhóm.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa vị thế yếu và vị thế mạnh.",
+        "Giao tiếp chính thức - Giao tiếp gián tiếp - Giao tiếp giữa thế cân bằng."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 14,
+      "text": "“Công an khu vực kiểm tra tạm trú, tạm vằng”, trường hợp này mang đặc điểm của các kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa vị thế yếu và vị thế mạnh.",
+        "Giao tiếp chính thức - Giao tiếp gián tiếp - Giao tiếp giữa vị thế yếu và vị thế mạnh.",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp giữa thế cân bằng.",
+        "Giao tiếp không chính thức - Giao tiếp gián tiếp - Giao tiếp nhóm"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 15,
+      "text": "“Mỗi năm cứ đến ngày 20/11 học sinh cũ lại tìm về thăm thầy cô ngày xưa”, trường hợp này mang đặc điểm của các kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp không chính thức – Giao tiếp trực tiếp – Giao tiếp cá nhân.",
+        "Giao tiếp chính thức – Giao tiếp trực tiếp – Giao tiếp cá nhân.",
+        "Giao tiếp chính thức – Giao tiếp gián tiếp – Giao tiếp nhóm.",
+        "Giao tiếp chính thức – Giao tiếp trực tiếp – Giao tiếp giữa vị thế yếu và vị thế mạnh."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 16,
+      "text": "Trẻ em tiểu học ở Nhật Bản được dạy là phải tự phục vụ bản thân khi đến trường học bán trú, mục đích của hoạt động trên nhằm vào điều gì ở mỗi cá nhân và tập thể?",
+      "options": [
+        "Chức năng hình thành phát triển tâm lý và nhân cách",
+        "Chức năng động viên, khích lệ",
+        "Chức năng cân bằng cảm xúc",
+        "Chức năng điều khiển"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 17,
+      "text": "Trong cửa sổ Johari, vùng nào nhỏ lại nếu chúng ta không ngừng học hỏi và thử thách không ngừng hoàn thiện và nâng cao của mình?",
+      "options": [
+        "Cái tôi mở",
+        "Cái tôi mù",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 18,
+      "text": "Bạn kiểm soát và nhận diện được thái độ gì của đối tượng giao tiếp khi giao tiếp trực tiếp?",
+      "options": [
+        "Cảm xúc",
+        "Tâm lý",
+        "Động viên",
+        "Thông tin"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 19,
+      "text": "Chuỗi nào thể hiện đúng nhất quá trình giao tiếp?",
+      "options": [
+        "Thông tin -> Mã hóa -> Người gửi -> Người nhận -> Giải mã",
+        "Người gửi -> Mã hóa -> Thông tin -> Người nhận -> Giải mã -> Phản hồi",
+        "Người gửi -> Mã hóa -> Thông tin -> Giải mã -> Người nhận -> Phản hồi",
+        "Người gửi -> Mã hóa -> Thông tin -> Giải mã -> Người nhận"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 20,
+      "text": "“Mối tình đầu của tôi là bài thơ còn hoài trong vở, giữa giờ chơi mang đến lại mang về”, nguyên nhân gây đổ vỡ giao tiếp trong trường hợp này là do?",
+      "options": [
+        "Thông điệp người gửi không đến được người nhận.",
+        "Người nhận hiểu sai thông điệp của người gửi.",
+        "Người nhận làm sai thông điệp của người gửi.",
+        "Người nhận giả vờ hiểu người gửi."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 21,
+      "text": "Câu thành ngữ “Chớ thấy sóng cả mà ngã tay chèo” muốn hàm ý thúc đẩy năng lực gì?",
+      "options": [
+        "Năng lực giao tiếp.",
+        "Tâm lý cá nhân.",
+        "Môi trường tự nhiên.",
+        "Tâm lý xã hội."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 22,
+      "text": "Bạn hiểu câu “Không hứa trong lúc vui, không nói trong lúc giận” có ý nghĩa gì?",
+      "options": [
+        "Lắng nghe khi nói.",
+        "Kiểm soát cảm xúc.",
+        "Hình thành, phát triển tâm lý và nhân cách.",
+        "Thiết lập, củng cố các mối quan hệ trong giao tiếp."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 23,
+      "text": "Trong một nhóm làm việc cùng nhau, để hiệu quả công việc đạt mức độ cao, người lãnh đạo nên sử dụng chức năng giao tiếp nào sau đây?",
+      "options": [
+        "Chức năng tổ chức, phối hợp hành động.",
+        "Chức năng phê bình và tự phê bình.",
+        "Chức năng thông tin.",
+        "Chức năng điểu khiển."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 24,
+      "text": "Trong cuộc sống, chúng ta hay mắc phải những lỗi lầm. Vậy, khi rơi vào những trường hợp như thế, bạn cần điều gì?",
+      "options": [
+        "Cần được thiết lập, phát triển, củng cố các mối quan hệ.",
+        "Cần cân bằng cảm xúc.",
+        "Cần được động viên khích lệ.",
+        "Cần hình thành, phát triển tâm lý, nhân cách."
+      ],
+      "correct": 2
+    },
+    {
+      "id": 25,
+      "text": "Câu “Mất niềm tin là mất tất cả” hàm ý điều gì?",
+      "options": [
+        "Bất đồng về ngôn ngữ.",
+        "Phong cách xử sự khi tiếp xúc.",
+        "Bất đồng về học vấn và chuyên môn.",
+        "Lòng tin và sự đồng cảm."
+      ],
+      "correct": 3
+    },
+    {
+      "id": 26,
+      "text": "Để thể hiện sự tôn trọng và hiểu biết hơn về đối tượng giao tiếp, bạn cần thực hiện nguyên tắc nào sau đây?",
+      "options": [
+        "Sử dụng ngôn ngữ biểu cảm.",
+        "Lắng nghe người khác khi nói.",
+        "Sử dụng tâm lý xã hội.",
+        "Môi trường tự nhiên phù hợp."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 27,
+      "text": "Bạn được giao nhiệm vụ điều tra thói quen mua sắm của khách hàng nội trợ. Để lấy được nhiều thông tin cần thiết từ họ, khi giao tiếp bạn nên sử dụng nguyên tắc nào sau đây?",
+      "options": [
+        "Dùng những thuật ngữ chuyên ngành để giải thích",
+        "Dùng những từ ngữ thấp như giải thích cho đứa trẻ",
+        "Dùng những từ ngữ đời thường",
+        "Dùng từ địa phương"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 28,
+      "text": "Câu “Đừng nói tất cả những điều mình nghĩ mà hãy nghĩ tới tất cả những điều mình nói” khuyên bạn điều gì?",
+      "options": [
+        "Nắm rõ phong tục tập quán",
+        "Cân nhắc kỹ khi phát ngôn",
+        "Lắng nghe người khác nói",
+        "Do tác động của môi trường giao tiếp"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 29,
+      "text": "Để hình thành, phát triển tâm lý nhân cách của cá nhân, chúng ta nên thực hiện các hoạt động nào sau đây?",
+      "options": [
+        "Lao động",
+        "Học tập",
+        "Giao tiếp",
+        "Vui chơi, giải trí"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 30,
+      "text": "Bạn hãy cho biết thông tin mà doanh nghiệp sử dụng trong câu nói sau để gửi đến khách hàng là gì? “Tài sản lớn nhất của chúng tôi là sự phồn vinh của bạn” (HD Bank)",
+      "options": [
+        "Gửi cho khách hàng món tiền lớn",
+        "Gửi cho khách hàng niềm tin và sự giàu có",
+        "Gửi cho khách hàng sự tín nhiệm",
+        "Gửi cho khách hàng gói sản phẩm mới"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 31,
+      "text": "Người gửi muốn gửi đến người nhận thông điệp nào trong câu nói sau? “Hôm nay là một ngày đẹp trời. Và tôi không thể nhìn thấy nó”",
+      "options": [
+        "Sự thông báo",
+        "Sự cảnh giác",
+        "Nỗi buồn",
+        "Sự kém may mắn"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 32,
+      "text": "Để biết quan hệ thân hay sơ của những người đi cùng nhau, bạn dựa vào những yếu tố nào?",
+      "options": [
+        "Ngôn ngữ cơ thể",
+        "Lời nói",
+        "Quang cảnh xung quanh",
+        "Giao tiếp với họ"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 33,
+      "text": "Theo quy trình của sở đồ giao tiếp, chúng ta cần mấy yếu tố?",
+      "options": [
+        "Con người, thông tin",
+        "Con người, phản hồi",
+        "Con người, thông tin, phản hồi",
+        "Khách thể, thông tin, phản hồi"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 34,
+      "text": "Trong kinh doanh, khi kí kết các hợp đồng, chúng ta nên lưu ý đến yếu tố nào dễ gây nhiễu trong quá trình giao tiếp?",
+      "options": [
+        "Khác biệt về văn hóa",
+        "Yếu tố tâm lý ở người gửi và ngưởi nhận",
+        "Môi trường giao tiếp",
+        "Kênh truyền thông không hiệu quả"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 35,
+      "text": "Trong thông điệp gửi đến khách hàng của mình (khách hàng vay tiền và gửi tiền), ngân hàng HD đã nói rằng: “Tài sản lớn nhất của chúng tôi là sự phồn vinh của bạn.” Thông qua câu nói trên của HD bank muốn gửi đến khách hàng điều gì?",
+      "options": [
+        "Mời gọi khách hàng đầu tư",
+        "Trân trọng và tạo lợi nhuận của khách hàng",
+        "Thuyết phục khách hàng vay tiền",
+        "Nói với khách hàng rằng họ có giàu thì ngân hàng mới giàu"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 36,
+      "text": "Cửa sổ Johari được xây dựng bởi người nào?",
+      "options": [
+        "Giáo sư Daniel Goleman",
+        "Tiến sỹ tâm lý học người Mỹ Maslow",
+        "Giáo sư Albert Mehrabian",
+        "Harry Ingham và Joseph Luft"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 37,
+      "text": "Trong cửa sổ Johari, vùng nào càng mở rộng thì mối quan hệ càng phát triển?",
+      "options": [
+        "Cái tôi mở",
+        "Cái tôi mù",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 38,
+      "text": "Trong cửa số Johari, vùng nào càng lớn thì sự hiểu lầm càng nhiều?",
+      "options": [
+        "Cái tôi mù",
+        "Cái tôi mở",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 39,
+      "text": "Câu nào dưới đây mô tả chính xác nhất về “Cái tôi mở” trong khung cửa sổ Johari?",
+      "options": [
+        "Bao gồm những thông tin về bản thân mà cả bạn và người khác đều biết",
+        "Thể hiện những gì mà người khác nhận thức về bạn nhưng bản thân bạn không biết",
+        "Bao gồm những thông tin mà bạn biết về chính bạn nhưng người khác lại không biết",
+        "Bao gồm những điều về mình mà chính bản thân mình không biết và người khác cũng không biết"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 40,
+      "text": "Câu nào dưới đây mô tả chính xác nhất về “Cái tôi không biết” trong khung cửa sổ Johari?",
+      "options": [
+        "Bao gồm những thông tin về bản thân mà cả bạn và người khác đều biết",
+        "Thể hiện những gì mà người khác nhận thức về bạn nhưng bản thân bạn không biết",
+        "Bao gồm những thông tin mà bạn biết về chính bạn nhưng người khác lại không biết",
+        "Bao gồm những điều về mình mà chính bản thân mình không biết và người khác cũng không biết"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 41,
+      "text": "Câu nào dưới đây mô tả chính xác nhất về “Cái tôi mù” trong khung cửa sổ Johari?",
+      "options": [
+        "Bao gồm những thông tin về bản thân mà cả bạn và người khác đều biết",
+        "Thể hiện những gì mà người khác nhận thức về bạn nhưng bản thân bạn không biết",
+        "Bao gồm những thông tin mà bạn biết về chính bạn nhưng người khác lại không biết",
+        "Bao gồm những điều về mình mà chính bản thân mình không biết và người khác cũng không biết"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 42,
+      "text": "Câu nào dưới đây mô tả chính xác nhất về “Cái tôi che giấu” trong khung cửa sổ Johari?",
+      "options": [
+        "Bao gồm những thông tin về bản thân mà cả bạn và người khác đều biết",
+        "Thể hiện những gì mà người khác nhận thức về bạn nhưng bản thân bạn không biết",
+        "Bao gồm những thông tin mà bạn biết về chính bạn nhưng người khác lại không biết",
+        "Bao gồm những điều về mình mà chính bản thân mình không biết và người khác cũng không biết"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 43,
+      "text": "“Người khác nghĩ gì về bạn là người bảo thủ nhưng bạn không biết và luôn nghĩ mình là người linh hoạt”. Câu này thể hiện ô tâm lý nào trong cửa sổ Johari?",
+      "options": [
+        "Phần mở",
+        "Phần mù",
+        "Phần che giấu",
+        "Phần không biết"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 44,
+      "text": "“Con gái nói có là không, con gái nói không là có”, trường hợp này có thể đưa đến nguyên nhân gây đổ vỡ giao tiếp nào?",
+      "options": [
+        "Thông điệp người gửi không đến được người nhận.",
+        "Người nhận hiểu sai thông điệp của người gửi.",
+        "Người nhận làm sai thông điệp của người gửi.",
+        "Người nhận giả vờ hiểu người gửi."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 45,
+      "text": "“Thủ tướng Việt Nam đón tiếp thủ tướng Úc”, trường hợp này mang đặc điểm của các kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp chính thức – Giao tiếp trực tiếp – Giao tiếp nhóm.",
+        "Giao tiếp chính thức – Giao tiếp trực tiếp – Giao tiếp cá nhân.",
+        "Giao tiếp không chính thức – Giao tiếp trực tiếp – Giao tiếp giữa vị thế yếu và vị thế mạnh.",
+        "Giao tiếp không chính thức – Giao tiếp trực tiếp – Giao tiếp giữa thế cân bằng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 46,
+      "text": "Phân loại giao tiếp theo số lượng người tham gia giao tiếp và tính chất của mối quan hệ giữa họ gồm có:",
+      "options": [
+        "Giao tiếp chính thức và không chính thức",
+        "Giao tiếp trực tiếp và gián tiếp",
+        "Giao tiếp giữa cá nhân và nhóm",
+        "Giao tiếp bên ngoài và giao tiếp bên trong"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 47,
+      "text": "Trong bài thơ Con cá chột nưa, Tố Hữu viết:”Ăn đi vài con cá, năm bảy cái chột nưa. Có ai biết ai ngờ, thế vẫn tròn danh dự”, trong cửa sổ Johari trường hợp này thuộc ô cửa nào? (Chột nưa là tên một món ăn xứ Nghệ)",
+      "options": [
+        "Cái tôi mở",
+        "Cái tôi mù",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 48,
+      "text": "Giai đoạn giải mã thông điệp diễn ra khi nào?",
+      "options": [
+        "Khi bạn diễn đạt suy nghĩ và ý tưởng của mình",
+        "Khi người nghe tiếp nhận thông tin",
+        "Khi người nghe lý giải thông tin",
+        "Khi các thông tin được truyền tải đi"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 49,
+      "text": "Hình thức đổ vỡ quen thuộc nhất của quá trình giao tiếp",
+      "options": [
+        "Thông điệp người gửi không đến được người nhận.",
+        "Người nhận hiểu sai thông điệp của người gửi.",
+        "Người nhận làm sai thông điệp của người gửi.",
+        "Người nhận giả vờ hiểu người gửi."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 50,
+      "text": "Quy luật 7%-38%-55% là do ai tìm ra?",
+      "options": [
+        "Giáo sư Daniel Goleman",
+        "Tiến sỹ tâm lý học người Mỹ Maslow",
+        "Giáo sư Albert Mehrabiand.",
+        "Harry Ingham và Joseph Luf"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 51,
+      "text": "Quan hệ xã hội có được nhờ:",
+      "options": [
+        "Tài năng",
+        "Rèn luyện",
+        "Giao tiếp",
+        "Học tập"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 52,
+      "text": "Những rào cản trong giao tiếp:",
+      "options": [
+        "Có thể loại bỏ được",
+        "Không thể loại bỏ được",
+        "Không phải lúc nào cũng loại bỏ được",
+        "Hoàn toàn loại bỏ được."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 53,
+      "text": "\"Trung sĩ Nguyễn Văn A, 23 tuổi, thuộc tiểu đội 4, trung đội 5, báo cáo đại đội trường\", trường hợp này thuộc ô nào trong cửa sổ Johari?",
+      "options": [
+        "Cái tôi mở",
+        "Cái tôi mù",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 54,
+      "text": "Người khách nghĩ :\"Mình không biết ăn cá mà bà Lan lại gắp cá bỏ vào cho mình\". Đối với bà Lan nguyên nhân gây ra sự đổ vỡ không hài lòng với khách thuộc ô cửa nào trong cửa sổ Johari?",
+      "options": [
+        "Cái tôi mở",
+        "Cái tôi mù",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 55,
+      "text": "Ưu điểm của giao tiếp trực tiếp là gì?",
+      "options": [
+        "Có thể nhanh chóng biết được ý kiến của người đối thoại và nhanh chóng điều chỉnh quá trình giao tiếp một cách kịp thời để đạt mục đích",
+        "Ít bị hạn chế về mặt không gian",
+        "Không khí thân tình, cởi mở, người giao tiếp có thể thổ lộ những nỗi niềm, những suy nghĩ của mình mà không e ngại điều gì",
+        "Tất cả đều đúng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 56,
+      "text": "Ưu điểm của giao tiếp gián tiếp là gì ?",
+      "options": [
+        "Có thể nhanh chóng biết được ý kiến của người đối thoại và nhanh chóng điều chỉnh quá trình giao tiếp một cách kịp thời để đạt mục đích",
+        "Ít bị hạn chế về mặt không gian",
+        "Không khí thân tình, cởi mở, người giao tiếp có thể thổ lộ những nỗi niềm, những suy nghĩ của mình mà không e ngại điều gi",
+        "Tất cả đều đúng"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 57,
+      "text": "Nguyên nhân đổ vỡ quen thuộc nhất của quá trình giao tiếp là gì?",
+      "options": [
+        "Thông điệp của người gửi không phù hợp với cảm xúc của người nhận.",
+        "Thông điệp của người gửi không đến được của người nhận.",
+        "Thông điệp của người gửi không đến đúng thời điểm của người nhận.",
+        "Thông điệp của người gửi không phù hợp với quan điểm của người nhận."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 58,
+      "text": "“Có khi nào trên đường đời tấp nập, ta vô tình đi lướt vội qua nhau. Bước lơ đãng chẳng ngờ đang để mất, một tâm hồn ta đã đợi từ lâu”, trong cửa sổ Johari trường hợp này thuộc ô cửa nào?",
+      "options": [
+        "Cái tôi mở",
+        "Cái tôi mù",
+        "Cái tôi che giấu",
+        "Cái tôi không biết"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 59,
+      "text": "“Bạn có khả năng kinh doanh nhưng người thân trong gia đình thì thường nói rằng bạn ít nói không nhanh nhẹn cho nên không thể kinh doanh được”, trong cửa sổ Johari trường hợp này thuộc ô cửa nào?",
+      "options": [
+        "Cái tôi không nhận biết được",
+        "Cái tôi nhận biết được",
+        "Cái tôi mù",
+        "Cái tôi che giấu"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 60,
+      "text": "\"Sự ăn cho ta cái lực, sự ở cho ta cái chí, sự bang giao cho ta cái nghiệp\". Từ “nghiệp” ở đây có nghĩa là gì?",
+      "options": [
+        "Nghiệp vụ",
+        "Nghiệp chướng",
+        "Hướng nghiệp",
+        "Sự nghiệp"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 61,
+      "text": "\"Chào mừng anh đến dự sinh nhật của tôi\", trường hợp này mang đặc điểm của các kiểu giao tiếp nào?",
+      "options": [
+        "Giao tiếp không chính thức - Giao tiếp trực tiếp - Giao tiếp cá nhân",
+        "Giao tiếp không chính thức - Giao tiếp gián tiếp - Giao tiếp nhóm",
+        "Giao tiếp chính thức - Giao tiếp trực tiếp - Giao tiếp nhóm",
+        "Giao tiếp chính thức - Giao tiếp gián tiếp - Giao tiếp giữa thế cân bằng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 62,
+      "text": "“Bản thân chúng ta là nguồn gốc của tất cả, vậy nên muốn thay đổi hết thảy, đầu tiên phải thay đổi chính mình!”, câu nói này thuộc quy luật giao tiếp nào?",
+      "options": [
+        "Quy luật “biết người biết ta”",
+        "Quy luật “cảm xúc”",
+        "Quy luật “tương thích”",
+        "Quy luật “7% - 38% - 55%”"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 63,
+      "text": "Giá trị bản thân của mỗi người sẽ thể hiện rõ ràng nhất qua quy luật giao tiếp nào?",
+      "options": [
+        "Quy luật “biết người biết ta”",
+        "Quy luật “cảm xúc”",
+        "Quy luật “tương thích”",
+        "Quy luật “7% - 38% - 55%”"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 64,
+      "text": "“Người buồn cảnh có vui đâu bao giờ”, trường hợp này thuộc quy luật giao tiếp nào?",
+      "options": [
+        "Quy luật “biết người biết ta”",
+        "Quy luật “cảm xúc”",
+        "Quy luật “tương thích”",
+        "Quy luật “7% - 38% - 55%”"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 65,
+      "text": "Gia Cát Lượng có câu nói: Cho họ uống rượu say để dò tâm tính; đưa họ vào lợi lộc để biết tấm lòng “liêm chính”, trường hợp này thuộc quy luật giao tiếp nào?",
+      "options": [
+        "Quy luật “biết người biết ta”",
+        "Quy luật “cảm xúc”",
+        "Quy luật “tương thích”",
+        "Quy luật “7% - 38% - 55%”"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 66,
+      "text": "“Chồng giận thì vợ bớt lời/ Cơm sôi nhỏ lửa một đời không khê”, trường hợp này thuộc quy luật giao tiếp nào?",
+      "options": [
+        "Quy luật “biết người biết ta”",
+        "Quy luật “cảm xúc”",
+        "Quy luật “tương thích”",
+        "Quy luật “7% - 38% - 55%”"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 67,
+      "text": "Hãy chọn từ đúng điền vào chỗ trống trong câu sau: “Điểm quan trọng nhất trong khái niệm “cửa sổ Johari” là bạn phải đặt mục tiêu mở rộng… của mình và tất cả mọi người”",
+      "options": [
+        "Ô mở",
+        "Ô mù",
+        "Ô che giấu",
+        "Ô không biết"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 68,
+      "text": "Ưu điểm chính của giao tiếp không chính xác là",
+      "options": [
+        "Thông tin thường có tính chính xác cao",
+        "Ít bị hạn chế về mặt không gian",
+        "Có thể điều chỉnh quá trình giao tiếp một cách kịp thời để đạt mục đích",
+        "Không khí thân tình, cởi mở và hiểu biết lẫn nhau"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 69,
+      "text": "Hội họp, thảo luận, đàm phán là loại giao tiếp nào?",
+      "options": [
+        "Giao tiếp không chính thức",
+        "Giao tiếp gián tiếp",
+        "Giao tiếp chính thức",
+        "Giao tiếp giữa hai cá nhân"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 70,
+      "text": "Sử dụng các phương tiện phi ngôn ngữ, nhanh chóng biết được ý kiến người đối thoại là ưu điểm của loại giao tiếp nào?",
+      "options": [
+        "Giao tiếp chính thức",
+        "Giao tiếp không chính thức",
+        "Giao tiếp trực tiếp",
+        "Giao tiếp gián tiếp"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 71,
+      "text": "“Tôi muốn được làm việc mình thích”, trường hợp này thuộc nhu cầu nào trong tháp nhu cầu của Maslow?",
+      "options": [
+        "Nhu cầu tự khẳng định",
+        "Nhu cầu an toàn",
+        "Nhu cầu sinh học",
+        "Nhu cầu tình cảm"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 72,
+      "text": "Khi giao tiếp trực tiếp, để truyền tải một thông điệp hiệu quả, kênh nào sau đây chiếm vai trò quan trọng nhất?",
+      "options": [
+        "Nội dung thông điệp",
+        "Giọng nói",
+        "Hình ảnh và cử chỉ",
+        "Ngôn từ"
+      ],
+      "correct": 2
+    }
+  ],
+  "chuong-2": [
+    {
+      "id": 1,
+      "text": "Yếu tố nào giúp người ta hiểu rõ nhất tình cảm của nhau trong giao tiếp?",
+      "options": [
+        "Ánh mắt",
+        "Nụ cười",
+        "Nét mặt",
+        "Trang phục"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 2,
+      "text": "“Yêu nhau đứng ở đằng xa, con mắt liếc lại bằng ba đứng gần” Nhân vật trữ tình trong bài ca dao đang sử dụng phương tiện giao tiếp phi ngôn ngữ nào?",
+      "options": [
+        "Ánh mắt",
+        "Nụ cười",
+        "Nét mặt",
+        "Trang phục"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 3,
+      "text": "“Em bảo anh đi đi Sao anh không đứng lại Em bảo anh đừng đợi Sao anh lại vội về Lời nói gió thoảng bay Đôi mắt huyền đẫm lệ Sao mà anh ngốc thế Không nhìn vào mắt em!” Trong bài đang sử dụng phương tiện giao tiếp phi ngôn ngữ nào?",
+      "options": [
+        "Ánh mắt",
+        "Nụ cười",
+        "Nét mặt",
+        "Giọng điệu"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 4,
+      "text": "Trong giao tiếp kinh doanh thì ánh nhìn như thế nào?",
+      "options": [
+        "Trán nhìn xuống mắt và mũi",
+        "Đi từ đôi mắt miệng cho đến toàn bộ cơ thể",
+        "Hai mắt và miệng",
+        "Toàn bộ cơ thể"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 5,
+      "text": "Giao tiếp xã hội thì ánh mắt nên nhìn như thế nào?",
+      "options": [
+        "Hai mắt và miệng",
+        "Toàn bộ cơ thể",
+        "Trán nhìn xuống mắt và mũi",
+        "Đi từ đôi mắt miệng cho đến toàn bộ cơ thể"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 6,
+      "text": "Ánh nhìn trong giao tiếp thân mật nhìn như thế nào?",
+      "options": [
+        "Hai mắt và miệng",
+        "Toàn bộ cơ thể",
+        "Trán nhìn xuống mắt và mũi",
+        "Đi từ đôi mắt miệng cho đến toàn bộ cơ thể"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 7,
+      "text": "Nụ cười trễ hàm xuống là nụ cười như thế nào?",
+      "options": [
+        "Hàm dưới được hạ xuống tạo cảm giác như đang cười hoặc bông đùa",
+        "Hai môi bím chặt và căng ngang thành một đường thẳng và che răng",
+        "Nụ cười cố ý, chứa nhiều sự mỉa mai",
+        "Nụ cười trái ngược ở một bên gương mặt"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 8,
+      "text": "Nụ cười méo xệch tạo ấn tượng như thế nào ở văn hóa phương Tây?",
+      "options": [
+        "Cố ý, mỉm mai",
+        "Trái ngược ở một bên gương mặt",
+        "Hai môi bím chặt và căng ngang thành một đường thẳng và che răng",
+        "Hàm dưới được hạ xuống tạo cảm giác như đang cười hoặc bông đùa"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 9,
+      "text": "“Nhìn mặt mà bắt hình dong” có nghĩa là gì?",
+      "options": [
+        "Nhìn nét mặt đoán tâm trạng",
+        "Nhìn nét mặt đoán suy nghĩ",
+        "Nhìn nét mặt đoán thái độ",
+        "Nhìn nét mặt đoán bản chất"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 10,
+      "text": "Để tạo ấn tượng tốt đẹp, thân thiện trong giao tiếp trang phục công sở dành cho nam và nữ như thế nào?",
+      "options": [
+        "Chọn trang phục tùy theo ý thích của mỗi người",
+        "Đi dép lê đến cơ quan làm việc",
+        "Quần áo sạch sẽ, ủi là thẳng nếp, giản dị, phù hợp với thân hình",
+        "Mặc áo phông, quần bò, quần bó ống, váy quá ngắn"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 11,
+      "text": "Muốn có giọng nói nhanh và truyền cảm thì chúng ta không nên như thế nào?",
+      "options": [
+        "Nói nhanh và nói lớn tiếng",
+        "Phát âm rõ ràng và chuẩn xác",
+        "Luyện tập thường xuyên và chuẩn bị kỹ lưỡng",
+        "Thay đổi cao độ và nhấn nhá các từ quan trọng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 12,
+      "text": "Khi đi phỏng vấn xin việc làm, bạn cần chọn những trang phục như thế nào?",
+      "options": [
+        "Những trang phục bắt mắt, thể hiện cá tính của bạn",
+        "Những trang phục hở táo bạo khiến người khác phải kính nể bạn",
+        "Trang phục phù hợp dáng người, phù hợp môi trường gặp gỡ",
+        "Có thể chọn bất cứ trang phục nào miễn là bạn thích"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 13,
+      "text": "Trong văn hóa giao tiếp của người Brazin, có một biểu tượng của ngôn ngữ cơ thể nhạy cảm không được sử dụng của người bản địa. Theo bạn, biểu tượng của ngôn ngữ cơ thể đó là gì?",
+      "options": [
+        "Cười to",
+        "Cái liếc nhìn",
+        "Đưa ngón tay cái lên",
+        "Đưa ngón tay cái xuống"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 14,
+      "text": "Khi đi lên cầu thang, vì lý do tế nhị người đàn ông nên để ai đi sau?",
+      "options": [
+        "Người phụ nữ",
+        "Người già",
+        "Người đàn ông",
+        "Trẻ con"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 15,
+      "text": "Hành động gật đầu ở một số nơi như Hy Lạp, Bungari, Thổ Nhĩ Kỳ mang ý nghĩa gì?",
+      "options": [
+        "Tôi đồng ý",
+        "Tôi không đồng ý",
+        "Tôi không có ý kiến",
+        "Tôi đang lắng nghe"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 16,
+      "text": "Hành động chỉ người khác bằng ngón trỏ được xem là bất kính và vô cùng mất lịch sự ở quốc gia nào sau đây?",
+      "options": [
+        "Nhật Bản và Trung Quốc",
+        "Nhật Bản",
+        "Trung Quốc và Mỹ",
+        "Italia"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 17,
+      "text": "Hành động nhướng lông mày ở Thái Lan có nghĩa là gì?",
+      "options": [
+        "Xin chào",
+        "Đừng hành động như thế",
+        "Đồng ý",
+        "Không có gì"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 18,
+      "text": "Đâu là đặc trưng cơ bản của phong cách ngôn ngữ thông tấn?",
+      "options": [
+        "Tính thời sự",
+        "Tính truyền cảm mạnh mẽ",
+        "Tính khuôn mẫu",
+        "Tính hình tượng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 19,
+      "text": "Đâu là đặc trưng cơ bản của phong cách ngôn ngữ văn chương?",
+      "options": [
+        "Tính lập luận chặt chẽ",
+        "Tính khuôn mẫu",
+        "Tính cụ thể hóa",
+        "Tính chính xác khách quan"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 20,
+      "text": "Đâu là đặc trưng cơ bản của phong cách ngôn ngữ hành chính?",
+      "options": [
+        "Tính chính xác minh bạch",
+        "Tính lập luận chặt chẽ",
+        "Tính logic nghiêm ngặt",
+        "Tính chính xác khách quan"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 21,
+      "text": "Đâu là đặc trưng cơ bản của phong cách ngôn ngữ sinh hoạt?",
+      "options": [
+        "Tính chính xác minh bạch",
+        "Tính nghiêm túc khách quan",
+        "Tính cơ cấu",
+        "Tính cá thể"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 22,
+      "text": "Các công trình nghiên cứu khoa học, các bài nghiên cứu đăng trong tạp chí và thông báo luận án khoa học thì thuộc phong cách ngôn ngữ nào?",
+      "options": [
+        "Khoa học",
+        "Chính luận",
+        "Hành chính",
+        "Thông tấn"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 23,
+      "text": "Lời kêu gọi toàn quốc kháng chiến chính trị xã hội bình luận thuộc phong cách ngôn ngữ nào?",
+      "options": [
+        "Khoa học",
+        "Văn chương",
+        "Chính luận",
+        "Thông tấn"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 24,
+      "text": "Các văn bản pháp luật, pháp lệnh chỉ thị quyết định thuộc phong cách ngôn ngữ nào?",
+      "options": [
+        "Văn chương",
+        "Chính luận",
+        "Hành chính",
+        "Thông tấn"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 25,
+      "text": "Phong cách ngôn ngữ hành chính chủ yếu xuất hiện ở dạng nào?",
+      "options": [
+        "Nói",
+        "Viết",
+        "Nói và viết",
+        "Đọc"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 26,
+      "text": "Truyện ký kì bút thuộc loại phong cách ngôn ngữ nào?",
+      "options": [
+        "Văn chương",
+        "Chính luận",
+        "Hành chính",
+        "Thông tấn"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 27,
+      "text": "Đặc điểm nào dưới đây không thuộc về đặc điểm cách sử dụng các phương tiện diễn đạt của phong cách ngôn ngữ văn chương?",
+      "options": [
+        "Ngôn ngữ văn chương tạo hình biểu cảm",
+        "Ngôn ngữ văn chương có nhiều tầng nghĩa",
+        "Ngôn ngữ văn chương có nét riêng của các nhà văn trong diễn đạt",
+        "Ngôn ngữ văn chương có tính khuôn mẫu"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 28,
+      "text": "Loại văn bản nào sau đây không thuộc văn bản hành chính?",
+      "options": [
+        "Thông báo",
+        "Luận văn",
+        "Quyết định",
+        "Thông tư"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 29,
+      "text": "Cho đoạn văn bản: “Nhà di truyền học lấy một tế bào của các sợi tóc tìm thấy trên thi thể của nạn nhân…” Đoạn văn bản trên thuộc phong cách ngôn ngữ nào?",
+      "options": [
+        "Khoa học",
+        "Văn chương",
+        "Chính luận",
+        "Thông tấn"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 30,
+      "text": "Thư từ, nhật ký, chuyện trò thuộc loại phong cách ngôn ngữ nào?",
+      "options": [
+        "Khẩu ngữ",
+        "Văn chương",
+        "Chính luận",
+        "Thông tấn"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 31,
+      "text": "Đâu không phải là một trong ba phong cách ngôn ngữ khoa học?",
+      "options": [
+        "Khoa học chuyên sâu",
+        "Khoa học giáo khoa",
+        "Khoa học phổ cập",
+        "Khoa học nghệ thuật"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 32,
+      "text": "Phong cách ngôn ngữ thông tấn không tồn tại ở dạng nào?",
+      "options": [
+        "Dạng nói",
+        "Dạng nói và dạng hình",
+        "Dạng viết",
+        "Dạng diễn xướng"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 33,
+      "text": "Nguyên tắc 5C trong giao tiếp viết tắt là gì?",
+      "options": [
+        "Clean, Complete, Concise, Correct, Courteous",
+        "Clear, Complete, Concise, Correct, Courteous",
+        "Clean, Complex, Concise, Connect, Courteous",
+        "Clear, Complex, Concise, Connect, Courteous"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 34,
+      "text": "Khoảng cách giao tiếp vùng cá nhân là bao nhiêu?",
+      "options": [
+        "46cm – 1.2m",
+        "1.22m – 3.6m",
+        "Trên 3.6m",
+        "15cm – 45cm"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 35,
+      "text": "Khoảng cách giao tiếp vùng công cộng là bao nhiêu?",
+      "options": [
+        "46cm – 1.2m",
+        "1.22m – 3.6m",
+        "Trên 3.6m",
+        "15cm – 45cm"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 36,
+      "text": "Khoảng cách giao tiếp vùng thân thiện là bao nhiêu?",
+      "options": [
+        "46cm – 1.2m",
+        "1.22m – 3.6m",
+        "Trên 3.6m",
+        "15cm – 45cm"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 37,
+      "text": "Khoảng cách giao tiếp vùng xã hội là bao nhiêu?",
+      "options": [
+        "46cm – 1.2m",
+        "1.22m – 3.6m",
+        "Trên 3.6m",
+        "15cm – 45cm"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 38,
+      "text": "Màu trắng khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Đơn sơ, thanh khiết, trung thực",
+        "U buồn, tang chế",
+        "Nhớ nhung, lãng mạn, trang trọng",
+        "Yêu đời, bao dung, êm dịu"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 39,
+      "text": "Màu đen khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Đơn sơ, thanh khiết, trung thực",
+        "U buồn, tang chế",
+        "Nồng cháy, sôi nổi",
+        "Yêu đời, bao dung, êm dịu"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 40,
+      "text": "Màu tím khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Đơn sơ, thanh khiết, trung thực",
+        "Rực rỡ, sung túc, cơ hội mới",
+        "Nhớ nhung, lãng mạn, trang trọng",
+        "Yêu đời, bao dung, êm dịu"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 41,
+      "text": "Màu vàng khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Đơn sơ, thanh khiết, trung thực",
+        "Rực rỡ, sung túc, cơ hội mới",
+        "Nhớ nhung, lãng mạn, trang trọng",
+        "Yêu đời, bao dung, êm dịu"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 42,
+      "text": "Màu xanh da trời khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Dịu dàng, nhã nhặn",
+        "Rực rỡ, sung túc, cơ hội mới",
+        "Tươi vui, rạng rỡ",
+        "Yêu đời, bao dung, êm dịu"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 43,
+      "text": "Màu xanh lý khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Dịu dàng, nhã nhặn",
+        "Tươi mát, hy vọng, sinh động",
+        "Tươi vui, rạng rỡ",
+        "Nồng nàn, thơ ngây, đam mê"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 44,
+      "text": "Màu xanh lá cây khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Dịu dàng, nhã nhặn",
+        "Tươi mát, hy vọng, sinh động",
+        "Tươi vui, rạng rỡ",
+        "Nồng nàn, thơ ngây, đam mê"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 45,
+      "text": "Màu hồng khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Dịu dàng, nhã nhặn",
+        "Nồng cháy, sôi nổi",
+        "Tươi vui, rạng rỡ",
+        "Nồng nàn, thơ ngây, đam mê"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 46,
+      "text": "Màu đỏ khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Dịu dàng, nhã nhặn",
+        "Nồng cháy, sôi nổi",
+        "Tươi vui, rạng rỡ",
+        "Nồng nàn, thơ ngây, đam mê"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 47,
+      "text": "Màu cam khi tặng hoa mang ý nghĩa gì?",
+      "options": [
+        "Dịu dàng, nhã nhặn",
+        "Nồng cháy, sôi nổi",
+        "Tươi vui, rạng rỡ",
+        "Nồng nàn, thơ ngây, đam mê"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 48,
+      "text": "Quốc gia ở Âu Mỹ cần tránh những con số nào khi tặng hoa?",
+      "options": [
+        "13 và 15",
+        "1,3,5",
+        "10 và 11",
+        "1,3,5,7,9,11"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 49,
+      "text": "Khi tặng quà người Hàn Quốc, tránh tặng những vật gì?",
+      "options": [
+        "Trà",
+        "Rượu",
+        "Dao kéo",
+        "Bóp ví"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 50,
+      "text": "Khi tặng quà người Nhật, tránh tặng những vật gì?",
+      "options": [
+        "Trà",
+        "Rượu",
+        "Đồ vật có hình vỏ ốc",
+        "Bóp ví"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 51,
+      "text": "Khi tặng quà người Đức, tránh tặng những vật gì?",
+      "options": [
+        "Trà",
+        "Rượu",
+        "Đồ vật có hình vỏ ốc",
+        "Bóp ví"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 52,
+      "text": "Khi tặng quà người Venezuela, tránh tặng những vật gì?",
+      "options": [
+        "Trà",
+        "Rượu",
+        "Đồ vật có hình vỏ ốc",
+        "Bóp ví"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 53,
+      "text": "Trong văn hóa người Việt nên tránh tặng những vật gì?",
+      "options": [
+        "Rượu",
+        "Gương",
+        "Khăn",
+        "Bông hoa"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 54,
+      "text": "Trong văn hóa của người Pháp, việc trao danh thiếp thuộc về",
+      "options": [
+        "Chủ nhà trao danh thiếp cho khách",
+        "Khách chủ động trao danh thiếp cho chủ nhà",
+        "Không phân biệt chủ nhà hay khách trong việc trao danh thiếp",
+        "Tất cả đều sai"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 55,
+      "text": "Khi in danh thiếp cần chú ý những vấn đề gì?",
+      "options": [
+        "Tránh lạm dụng danh thiếp để quảng cáo",
+        "Nên tận dụng danh thiếp để tô vẽ bản thân",
+        "Danh thiếp phải sạch, không bị cong hoặc gấp nếp",
+        "Nên in đầy đủ những thông tin cần thiết và tô màu"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 56,
+      "text": "Những việc không nên làm khi nhận danh thiếp",
+      "options": [
+        "Nhận danh thiếp bằng hai tay",
+        "Cất danh thiếp vào túi áo, ví",
+        "Đọc rồi để lên bàn",
+        "Trao lại danh thiếp của mình"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 57,
+      "text": "Người ta thường bắt tay nhau khi:",
+      "options": [
+        "Vừa mới gặp",
+        "Chào tạm biệt",
+        "Ký kết",
+        "Không làm gì cả"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 58,
+      "text": "Tình huống nào là giao tiếp ngôn ngữ:",
+      "options": [
+        "Anh vừa nói xong đã khép chặt đôi môi",
+        "Tiếng anh hô “hãy nhớ lấy lời tôi”đang vang dội",
+        "Đôi mắt sáng ngời của anh như đang muốn nói với tôi điều gì",
+        "Bạn ấy ra dấu cho tôi im lặng"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 59,
+      "text": "Tình huống nào không phải là giao tiếp phi ngôn ngữ:",
+      "options": [
+        "Ông ấy hôi đến nỗi tôi không thể lại gần",
+        "Đừng nhìn tôi bằng ánh mắt như thế",
+        "Cô ấy gào lên thật to cho tất cả mọi người cùng nghe thấy",
+        "Bạn ấy ra dấu cho tôi im lặng"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 60,
+      "text": "Khi in danh thiếp, cần chú ý điều gì?",
+      "options": [
+        "Tránh in danh thiếp quá mỏng manh, lòe loẹt, cầu kỳ",
+        "Nên in nhiều chức danh dù chẳng có liên quan, phù hợp gì với doanh nghiệp, tổ chức mà bạn đang làm việc",
+        "Danh thiếp phải sạch, không bị cong hoặc gấp nếp",
+        "Danh thiếp ngăn nắp, không dính bụi bẩn, cất giữ an toàn"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 61,
+      "text": "Tình huống nào không phải là giao tiếp phi ngôn ngữ:",
+      "options": [
+        "Ông ấy thở dài và tiễn tôi ra về",
+        "Một tiếng thét thất thanh giữa đêm khuya",
+        "Từng dòng chữ, từng chữ làm tôi rơi nước mắt",
+        "Cô bé nhà bên nhìn tôi cười khúc khích"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 62,
+      "text": "Bắt tay đúng cách là",
+      "options": [
+        "Đứng thẳng người",
+        "Chìa tay ra",
+        "Nắm cả bàn tay, siết chặt rồi giữ ít lâu",
+        "Ôm hôn hữu nghị"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 63,
+      "text": "Khi đén nhà người khác nên:",
+      "options": [
+        "Chào hỏi",
+        "Bắt tay mọi người",
+        "Ôm hôn hữu nghị",
+        "Không làm gì cả"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 64,
+      "text": "Thế nào là phong cách khoa học?",
+      "options": [
+        "Dùng trong sinh hoạt hằng ngày, thông qua nhật ký, trò chuyện, thư từ",
+        "Dùng ngôn ngữ đặc trưng cho các mục đích chuyên môn sâu",
+        "Dùng để cung cấp tất cả những thông tin mang tính tổng hợp như khoa học, hành chính, chính luận, văn chương",
+        "Dùng trong lĩnh vực chính trị xã hội để bày tỏ công khai quan điểm chính trị, tư tưởng của mình"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 65,
+      "text": "Thế nào là phong cách chính luận?",
+      "options": [
+        "Dùng trong sinh hoạt hằng ngày, thông qua nhật ký, trò chuyện, thư từ",
+        "Dùng ngôn ngữ đặc trưng cho các mục đích chuyên môn sâu",
+        "Dùng để cung cấp tất cả những thông tin mang tính tổng hợp như khoa học, hành chính, chính luận, văn chương",
+        "Dùng trong lĩnh vực chính trị xã hội để bày tỏ công khai quan điểm chính trị, tư tưởng của mình"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 66,
+      "text": "Thế nào là phong cách khẩu ngữ?",
+      "options": [
+        "Dùng trong sinh hoạt hằng ngày, thông qua nhật ký, trò chuyện, thư từ",
+        "Dùng ngôn ngữ đặc trưng cho các mục đích chuyên môn sâu",
+        "Dùng để cung cấp tất cả những thông tin mang tính tổng hợp như khoa học, hành chính, chính luận, văn chương",
+        "Dùng trong lĩnh vực chính trị xã hội để bày tỏ công khai quan điểm chính trị, tư tưởng của mình"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 67,
+      "text": "Thế nào là phong cách thông tấn?",
+      "options": [
+        "Dùng trong sinh hoạt hằng ngày, thông qua nhật ký, trò chuyện, thư từ",
+        "Dùng ngôn ngữ đặc trưng cho các mục đích chuyên môn sâu",
+        "Dùng để cung cấp tất cả những thông tin mang tính tổng hợp như khoa học, hành chính, chính luận, văn chương",
+        "Dùng trong lĩnh vực chính trị xã hội để bày tỏ công khai quan điểm chính trị, tư tưởng của mình"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 68,
+      "text": "Dấu hiệu “OK” (ngón cái và ngón trỏ tạo thành chữ O) có ý nghĩa gì đối với người Nhật Bản?",
+      "options": [
+        "Tiền",
+        "Sự sỉ nhục",
+        "Vô dụng",
+        "Tốt đẹp"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 69,
+      "text": "Khi khách hàng giân dữ, chúng ta “hạ hỏa” khách hàng bằng việc nào sau đây?",
+      "options": [
+        "Luôn đổ lỗi cho khách",
+        "Tìm cách chống chế, bao biện",
+        "Tỏ ra thiện chí, ưu tiên giải quyết vấn đề của khách",
+        "Không giải thích gì cả"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 70,
+      "text": "Trong văn hóa của người Việt Nam, khi nhận được quà người ta thường",
+      "options": [
+        "Mở quà trước mặt khách",
+        "Cảm ơn người tặng và mở quà khi khách đã về",
+        "Vui vẻ nhận quà, không quên cảm ơn và có thể mở quà trước mặt khách",
+        "Tất cả đều đúng."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 71,
+      "text": "\"Ai dám bảo cuộc Cách mạng tháng Tám của ta là cuộc đảo chính? Đảo chính là hai bọn thống trị trong nước hất cẳng nhau. Bọn này quật đổ bọn kia để lập chính phủ mới, nhưng căn bản chế độ cũ vẫn để nguyên. Đằng này nhân dân bị áp bức nổi dậy tự giải phóng giành chính quyền, sao gọi là đảo chính?\" Đoạn văn trên thuộc phong cách ngôn ngữ nào?",
+      "options": [
+        "Phong cách chính luận",
+        "Phong cách hành chính",
+        "Phong cách thông tấn",
+        "Phong cách khẩu ngữ."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 72,
+      "text": "Trong giao tiếp phi ngôn ngữ, cười như thế nào là hiệu quả khi gặp một ai đó lần đầu tiên?",
+      "options": [
+        "Hãy cười ngay trước khi chào họ",
+        "Hãy vừa cười vừa chào họ",
+        "Hãy nhìn họ vài giây, sau đó nở nụ cười và chào họ",
+        "Hãy giới thiệu, sau đó nở nụ cười và chào họ"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 73,
+      "text": "Các chuyên gia về nguồn nhân lực thường sử dụng chiến thuật giao tiếp bằng mắt nào?",
+      "options": [
+        "Kỹ thuật Sticky Eyes",
+        "Kỹ thuật Epoxy Eyes",
+        "Ánh nhìn thân mật",
+        "Ánh nhìn quan tâm và đánh giá"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 74,
+      "text": "Nguyên tắc nào sau đây không phải là nguyên tắc cơ bản của việc tiếp khách?",
+      "options": [
+        "Kết hợp tính mềm dẻo và tính cứng rắn",
+        "Kết hợp tỉnh khoa học và tính nghệ thuật",
+        "Kết hợp tính dân tộc và tính quốc tế",
+        "Kết hợp tỉnh truyền thống và tính hiện đại"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 75,
+      "text": "Lời chàng trai đối đáp với cô gái trong bài ca dao: “Bây giờ mận mới hỏi đào; Vuờn hồng đã có ai vào hay chưa- Mận hỏi thì đào xin thưa- Vườn hồng có lối nhưng chưa ai vào\". Cách thể hiện trên của họ được thực hiện bởi phong cách ngôn ngữ nào trong giao tiếp?",
+      "options": [
+        "Phong cách khẩu ngữ.",
+        "Phong cách văn chương.",
+        "Phong cách thông tấn.",
+        "Phong cách khoa học."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 76,
+      "text": "Để giao tiếp bằng ngôn ngữ hiệu quả cần?",
+      "options": [
+        "Chọn từ ngữ phù hợp với người nhận",
+        "Dùng biệt ngữ",
+        "Dùng từ địa phương",
+        "Dùng từ chuyên ngành"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 77,
+      "text": "Yếu tố nào ảnh hưởng đến việc trao danh thiếp?",
+      "options": [
+        "Trình độ",
+        "Văn hóa",
+        "Kinh nghiệm",
+        "Tất cả đều đúng"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 78,
+      "text": "Nguyên tắc cơ bản trong giao tiếp ngôn ngữ gồm những gì?",
+      "options": [
+        "Why, What, Who, How, When, Where",
+        "Why, What, Who, How, Which, Where",
+        "Why, Which, Who, How, When, Where",
+        "Why, What, Who, How, When, Which"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 79,
+      "text": "Nguyên tắc ABC là gì?",
+      "options": [
+        "Accracy – Brevity – Clarity",
+        "Accracy – Brevity – Courteous",
+        "Accracy – Brevity – Clear",
+        "Accracy – Brevity – Correct"
+      ],
+      "correct": 0
+    }
+  ],
+  "chuong-3": [
+    {
+      "id": 1,
+      "text": "So sánh khen và nịnh, câu nào không đúng?",
+      "options": [
+        "Khen là tích cực, nịnh là tiêu cực",
+        "Khen chân thành, nịnh chót lưỡi đầu môi",
+        "Khen đi kèm với thưởng, nịnh đi kèm với biếu tặng",
+        "Khen hợp lý, nịnh phóng đại"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 2,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Tập nói rõ ràng, tốc độ vừa phải",
+        "Xưng danh vào cơ quan",
+        "Tạo cảm giác thoải mái cho người nghe"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 3,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Học cách cười qua điện thoại",
+        "Giải thích lý do gọi đến và người cần liên hệ",
+        "Kết thúc cuộc gọi một cách lịch sự",
+        "Sử dụng kỹ năng đặt câu hỏi và lắng nghe"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 4,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Thái độ, giọng nói, cách diễn đạt",
+        "Tạo cảm giác thoải mái cho người nghe",
+        "Tập sử dụng giọng điệu tích cực, hòa nhã",
+        "Xưng danh vào cơ quan"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 5,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Phát hiện giọng điệu người gọi để giao tiếp phù hợp",
+        "Tạo cảm giác thoải mái cho người nghe",
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Kết thúc cuộc gọi một cách lịch sự"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 6,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Biết sử dụng kỹ năng đặt câu hỏi và lắng nghe",
+        "Xưng danh vào cơ quan",
+        "Tạo cảm giác thoải mái cho người nghe"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 7,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Thái độ, giọng nói, cách diễn đạt",
+        "Tạo cảm giác thoải mái cho người nghe",
+        "Thỉnh thoảng nhắc lại tên người gọi",
+        "Xưng danh vào cơ quan"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 8,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Tiến hành cuộc gọi ngắn gọn để giảm tối thiểu cước phí",
+        "Tạo cảm giác thoải mái cho người nghe",
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Kết thúc cuộc gọi một cách lịch sự"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 9,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Ghi lại thông tin cần thiết",
+        "Ghi trước các ý cần trao đổi hay nội dung tin nhắn để gửi lại",
+        "Các tài liệu liên quan",
+        "Kết thúc cuộc gọi một cách lịch sự"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 10,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Chào trước khi kết thúc, gác máy nhẹ nhàng",
+        "Tạo cảm giác thoải mái cho người nghe",
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Kết thúc cuộc gọi một cách lịch sự"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 11,
+      "text": "Đâu là một trong các nguyên tắc vàng khi sử dụng điện thoại?",
+      "options": [
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Thực hiện những điều đã thỏa thuận",
+        "Xưng danh vào cơ quan",
+        "Tạo cảm giác thoải mái cho người nghe"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 12,
+      "text": "Đâu không phải là một trong 10 nguyên tắc khi giao tiếp qua điện thoại?",
+      "options": [
+        "Thỉnh thoảng nhắc lại tên người gọi",
+        "Biết sử dụng kỹ năng đặt câu hỏi và lắng nghe",
+        "Biết sử dụng ánh mắt thân mật trong giao tiếp",
+        "Ghi lại thông tin cần thiết"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 13,
+      "text": "Đâu là kỹ năng để chuẩn bị cho một cuộc gọi hiệu quả?",
+      "options": [
+        "Danh mục số điện thoại nội bộ và bên ngoài",
+        "Xưng danh vào cơ quan",
+        "Thỉnh thoảng nhắc lại tên người gọi",
+        "Biết sử dụng kỹ năng đặt câu hỏi và lắng nghe"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 14,
+      "text": "Đâu là kỹ năng gọi điện thoại?",
+      "options": [
+        "Thỉnh thoảng nhắc lại tên người gọi",
+        "Biết sử dụng kỹ năng đặt câu hỏi và lắng nghe",
+        "Xác định thời điểm thích hợp cho cuộc gọi",
+        "Ghi lại thông tin cần thiết"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 15,
+      "text": "Trong giao tiếp điện thoại, điều nào là không cần thiết?",
+      "options": [
+        "Chuẩn bị các tài liệu có liên quan",
+        "Xưng danh",
+        "Chuẩn bị giấy bút",
+        "Chỉnh sửa tư thế, trang phục"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 16,
+      "text": "Trong kỹ năng giao tiếp điện thoại, điều nào sau đây là không phù hợp?",
+      "options": [
+        "Nhận biết cảm xúc của người gọi",
+        "Nói rõ ràng, tốc độ vừa phải",
+        "Hỏi nhiều thông tin cùng một lúc",
+        "Ghi lại thông tin cần thiết"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 17,
+      "text": "Cách tốt nhất để chuẩn bị cho một cuộc giao tiếp qua điện thoại là gì?",
+      "options": [
+        "Nghĩ trước hoặc chuẩn bị nội dung cuộc gọi",
+        "Không chuẩn bị gì cả",
+        "Nghĩ trước một vài câu hỏi người giao tiếp có thể sẽ hỏi",
+        "Trang điểm thật đẹp trước khi gọi"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 18,
+      "text": "“Sao khuya hôm qua tôi gọi mà không thấy anh trả lời?”. Nguyên nhân giao tiếp không thành công trong trường hợp này là do?",
+      "options": [
+        "Thời điểm gọi không phù hợp",
+        "Không nhấc máy sau 2 hồi chuông",
+        "Không xưng danh",
+        "Tay chống nạnh"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 19,
+      "text": "Trong lúc tiếp khách, điều nào không nên?",
+      "options": [
+        "Lễ độ, thân thiện",
+        "Chuyên nghiệp",
+        "Đứng khoanh tay",
+        "Cười – chào – chuyện trò – cảm ơn – chúc"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 20,
+      "text": "Biểu hiện phi ngôn ngữ nào sau đây cho thấy khách hàng đang cảm thấy hài lòng?",
+      "options": [
+        "Tay chống nạnh",
+        "Thỉnh thoảng gật đầu",
+        "Khoanh tay vào",
+        "Nheo mắt"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 21,
+      "text": "“A: Alo, xin chào. Có việc gì thế?. B:”Tôi muốn bảo hành sản phẩm”.A đã cư xử không đúng vì?",
+      "options": [
+        "Không chào hỏi",
+        "Không xưng danh",
+        "Không đúng thời điểm",
+        "Không hẹn trước"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 22,
+      "text": "Công việc nào sau đây cần chuẩn bị trước khi bắt đầu cuộc hẹn?",
+      "options": [
+        "Quần áo lịch sự",
+        "Trang điểm",
+        "Chuẩn bị chỗ đậu xe",
+        "Chuẩn bị máy tính để in tài liệu cho khách"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 23,
+      "text": "“Bao nhiêu khách ăn không việc gì có mình chị đổ thừa do thức ăn”. Trường hợp này thuộc nội dung nào trong các điều cần tránh khi giao tiếp với khách hàng?",
+      "options": [
+        "Tránh bào chữa, đổ lỗi",
+        "Tránh tranh luận với khách",
+        "Tránh kéo dài cuộc nói chuyện không cần thiết",
+        "Tránh các thành kiến"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 24,
+      "text": "Câu nói “Từ nào tới giờ, tôi thấy cái xe của anh là xịn nhất!” là một câu:",
+      "options": [
+        "Khen ngợi",
+        "Nhận xét",
+        "Góp ý",
+        "Nịnh"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 25,
+      "text": "Hạn chế lớn nhất trong sử dụng giao tiếp điện thoại là?",
+      "options": [
+        "Cước phí cao",
+        "Không biết tình trạng của người đối thoại",
+        "Dễ bị nhiễu",
+        "Giờ giấc liên lạc"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 26,
+      "text": "Quy trình ứng xử khi gặp khách hàng giận dữ là?",
+      "options": [
+        "Nhận biết dấu hiệu khách hàng giận dữ qua ngôn ngữ cơ thể - hạ hỏa khách hàng",
+        "Nhận biết dấu hiệu khách hàng giận dữ qua ngôn ngữ cơ thể - Phân tích các dấu hiệu đó",
+        "Phân tích dấu hiệu khách hàng giận dữ qua ngôn ngữ cơ thể - Đánh giá các dấu hiệu đó",
+        "Tổng hợp dấu hiệu khách hàng giận dữ qua ngôn ngữ cơ thể - Đánh giá các dấu hiệu đó"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 27,
+      "text": "Khi giao tiếp khách hàng qua điện thoại, chúng ta nên:",
+      "options": [
+        "Thường xuyên nhắc lại tên người gọi",
+        "Tuyệt đối không nhắc tên người gọi",
+        "Thỉnh thoảng nhắc lại tên người gọi",
+        "Tất cả đều sai"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 28,
+      "text": "Cử chỉ nào sau đây không phải là dấu hiệu khách hàng đang giận dữ?",
+      "options": [
+        "Liên tục chỉ thẳng mặt",
+        "Bắt chéo chân rồi lại hạ xuống một cách liên tục",
+        "Bưng ly nước uống",
+        "Tay nắm chặt lại"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 29,
+      "text": "“Chai nước có vật thể lạ là do việc bảo quản”. Trường hợp này thuộc nội dung nào trong các điều cần tránh khi giao tiếp với khách hàng?",
+      "options": [
+        "Tránh bào chữa, đổ lỗi",
+        "Tránh tranh luận với khách",
+        "Tránh kéo dài cuộc nói chuyện không cần thiết",
+        "Tránh các thành kiến"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 30,
+      "text": "“Vì muốn hỏi vài vấn đề cho đề tài thuyết trình, sáng sớm nay tôi đã gọi cho cô giáo nhưng cô không trả lời”. Nguyên nhân là do:",
+      "options": [
+        "Không chào hỏi và xưng danh",
+        "Không tạo cảm giác thoải mái cho người nghe",
+        "Không giải thích lý do gọi đến",
+        "Thời điểm không thích hợp"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 31,
+      "text": "Khi nói chuyện với một người đang ngồi, bạn nên:",
+      "options": [
+        "Ngồi xuống rồi mới nói chuyện",
+        "Đứng nói chuyện",
+        "Đứng thẳng khoanh tay nói chuyện",
+        "Khom lưng xuống đối mặt với người đang ngồi"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 32,
+      "text": "Trong quá trình lắng nghe người khác nói, chúng ta nên cử động đầu như thế nào?",
+      "options": [
+        "Liên tục gật đầu",
+        "Gật đầu ở những thời điểm thích hợp",
+        "Giữ yên đầu",
+        "Thỉnh thoảng cúi đầu xuống khoảng 3 giây"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 33,
+      "text": "Trong quá trình giao tiếp với người khác, chúng ta nên cười như thế nào?",
+      "options": [
+        "Không mỉm cười trong suốt cuộc trò chuyện",
+        "Luôn luôn cười lúc trò chuyện",
+        "Cười đúng lúc, khiêm nhường, lịch sự",
+        "Cười to khoái chí"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 34,
+      "text": "Trong khi đứng trò chuyện với đồng nghiệp, bạn nên giữ khoảng cách với họ như thế nào?",
+      "options": [
+        "Đứng cách nhau 5 - 6 bước chân.",
+        "Đứng cách nhau 1 bước chân.",
+        "Đứng cách nhau 2 - 3 bước chân",
+        "Đứng cách nhau 7 - 8 bước chân."
+      ],
+      "correct": 2
+    },
+    {
+      "id": 35,
+      "text": "Người bố đang tiếp khách, đứa con ra ngồi hóng chuyện, thỉnh thoảng còn chen ngang. Người bố phải làm sao để đứa con thôi hành động bất lịch sự đó?",
+      "options": [
+        "Nói với con là hãy giữ lịch sự.",
+        "Quát tháo kêu con đi vào trong phòng của mình.",
+        "Nhìn vào mắt con với vẻ nghiêm khắc, ý là con hãy mau ra ngoài",
+        "Mặc kệ con ngồi đó, khi nào con nói chen ngang thì gõ nhẹ vào đầu con."
+      ],
+      "correct": 2
+    },
+    {
+      "id": 36,
+      "text": "Trong quá trình giao tiếp, bạn cần bao nhiêu thời gian để gây ấn tượng ban đầu với người khác?",
+      "options": [
+        "1 phút.",
+        "5 phút.",
+        "20 giây.",
+        "10 phút."
+      ],
+      "correct": 2
+    },
+    {
+      "id": 37,
+      "text": "Tư thế đứng khi đang lắng nghe người khác nói là gì?",
+      "options": [
+        "Khoanh tay trước ngực và mắt nhìn vô định.",
+        "Hơi nghiêng người về phía trước và đứng đối diện với người nói.",
+        "Đứng tựa lưng, cách xa người nói.",
+        "Bắt chéo tay sau lưng, mắt nhìn chỗ khác."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 38,
+      "text": "Thành ngữ “Chạm mặt đè tình” ngụ ý gì?",
+      "options": [
+        "Giáp mặt ai đó để đỡ xét ý từ ra sao.",
+        "Ưu điểm của giao tiếp trực tiếp.",
+        "Gặp mặt ai đó để tỏ tình.",
+        "Ưu điểm của giao tiếp gián tiếp."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 39,
+      "text": "S. Freud đã nói: \"Phàm là con người có tai để nghe, có mắt để nhìn, thì hãy tin rằng không có một kẻ trần tục nào có thể giữ bí mật. Nếu anh ta im lặng thì tiếng gõ nhịp của những ngón tay của anh ta sẽ nói thay cho anh ta. Sự thật vẫn sẽ bị lộ ra mọi lỗ chân lông bé nhỏ\". Câu nói này thể hiện vai trò rất quan trọng của loại giao tiếp nào?",
+      "options": [
+        "Giao tiếp bằng ngôn ngữ nói.",
+        "Giao tiếp bằng ngôn ngữ viết.",
+        "Giao tiếp phi ngôn ngữ",
+        "Giao tiếp ngôn ngữ"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 40,
+      "text": "Để có giọng nói hay và thuyết phục trong giao tiếp, chúng ta cần",
+      "options": [
+        "có vốn từ nhất định và khả năng sử dụng ngôn từ nhuần nhuyễn.",
+        "Xác định rõ mục đích của cuộc giao tiếp để có thái độ và giọng điệu phù hợp.",
+        "làm chủ được bộ máy phát âm của mình trong giao tiếp.",
+        "có vốn từ nhất định và khả năng sử dụng ngôn từ nhuần nhuyễn, xác định rõ mục đích của cuộc giao tiếp, làm chủ được bộ máy phát âm."
+      ],
+      "correct": 3
+    },
+    {
+      "id": 41,
+      "text": "“Nhất dáng, nhì da, thứ ba nét mặt\" ý nói điều gì?",
+      "options": [
+        "Điều đầu tiên trong giao tiếp là quan sát hình ảnh lúc mới xuất hiện của người đối diện.",
+        "Dáng điệu, cử chỉ là yếu tố đầu tiên thu hút, tạo ấn tượng và để người khác đánh giá về đối tượng giao tiếp.",
+        "Người ta đánh giá con người thông qua dáng vẻ, làn da, biểu hiện nét mặt.",
+        "Dáng điệu là yếu tố đầu tiên để đánh giá một con người."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 42,
+      "text": "Khi cảm thấy chán, người ta thường nhìn người đối diện hoặc nhìn xung quanh phòng như thế nào?",
+      "options": [
+        "Nhìn lướt qua.",
+        "Nhìn chằm chằm.",
+        "Nhìn sâu.",
+        "Nghiêng người rồi nhìn."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 43,
+      "text": "Hành động lòng bàn tay úp và chạm các đầu ngón tay vào nhau thể hiện điều gì?",
+      "options": [
+        "Tự tin và độc lập.",
+        "Lo lắng và sợ hãi.",
+        "Hứng thú, vui vẻ.",
+        "Buồn bã, suy tư."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 44,
+      "text": "Khi bắt tay, lòng bàn tay hướng xuống phía dưới đè tay đối phương thể hiện điều gì ở người bắt tay?",
+      "options": [
+        "Người này thể hiện sự khiêm nhường và trọng lễ tiết.",
+        "Người này có xu hướng chi phối người khác rất lớn, muốn thể hiện vị trí cao hơn.",
+        "Người này thiếu tự tin vì đang ở thế yếu.",
+        "Người này muốn thể hiện sự bình đẳng trong vị thế của hai bên."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 45,
+      "text": "Khi bắt tay, hai bàn tay úp vào nhau tạo thành góc vuông thể hiện điều gì ở người bắt tay?",
+      "options": [
+        "Người này là một người rất tự nhiên và trọng sự bình đẳng trong giao tiếp.",
+        "Người này là người có xu hướng chi phối người khác, muốn thể hiện vị trí cao hơn.",
+        "Người này thể hiện sự khiêm nhường và trọng lễ tiết.",
+        "Người này rụt rè, không tự tin trước người đối diện."
+      ],
+      "correct": 0
+    },
+    {
+      "id": 46,
+      "text": "Hành động thè lưỡi của mình ra ở Polynesia được dùng trong các trường hợp nào?",
+      "options": [
+        "Chế nhạo, nhạo báng người khác.",
+        "Thế hiện người đó đang nói sai hoặc làm sai điều gì đó.",
+        "Dùng như lời chào hỏi hoặc biểu hiện của sự tôn kính.",
+        "Thể hiện sự thích thú trước điều gì đó"
+      ],
+      "correct": 2
+    }
+  ],
+  "chuong-4": [
+    {
+      "id": 1,
+      "text": "Trong giao tiếp với người khác, chúng ta phải hết sức chú trọng đến vấn đề gì?",
+      "options": [
+        "Trang phục",
+        "Cách nói",
+        "Cử điệu",
+        "Quà tặng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 2,
+      "text": "Chủ đề giao tiếp hằng ngày mà cư dân khu vực Nam Mỹ ưa thích là gì?",
+      "options": [
+        "Khiêu vũ và đá bóng",
+        "Dầu mỏ và kinh tế",
+        "Chính trị và xã hội",
+        "Bóng bầu dục"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 3,
+      "text": "Trong giao tiếp của người phương Tây, khi một người vừa nói chuyện vừa sờ mũi, sờ miệng, sờ cổ áo cho thấy",
+      "options": [
+        "Người đó đang bối rối",
+        "Người đó đang khó xử",
+        "Người đó đang nối dối",
+        "Người đó đang chân thật"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 4,
+      "text": "Ở Tây Ban Nha, vỗ tay có nghĩa là gì?",
+      "options": [
+        "Tán dương người nào đó.",
+        "Mong chờ điều gì đó.",
+        "Thích thú điều gì đó.",
+        "Cách để gọi phục vụ bản trong nhà hàng"
+      ],
+      "correct": 0
+    },
+    {
+      "id": 5,
+      "text": "Người nước nào coi trọng việc đóng gói và nghi thức trao quả là nghệ thuật văn hóa giao tiếp tinh tế và nhiều ý nghĩa?",
+      "options": [
+        "Việt Nam",
+        "Mỹ",
+        "Nhật Bản",
+        "Đức"
+      ],
+      "correct": 2
+    }
+  ]
+}

@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phòng Thí Nghiệm — Trường Đại học Công Thương TP.HCM (HUT)</title>
+<style>
+/* ============================================================
+   1. TOKENS + NỀN GLASSMORPHISM
+   ============================================================ */
+:root{
+  --base:#E9ECF3;
+  --ink:#12304F; --dim:#5B6B80; --faint:#93A2B8;
+  --hut:#0057A8; --hut-deep:#034EA2;
+  --glass:rgba(255,255,255,.58); --glass-br:rgba(255,255,255,.80);
+  --sh-md:0 2px 6px rgba(18,48,79,.06), 0 14px 34px rgba(18,48,79,.10);
+  --r-lg:22px; --pill:999px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font); color:var(--ink); background:var(--base);
+  overflow:hidden; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:-12%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(46% 42% at 12% 10%, rgba(255,255,255,.95), transparent 70%),
+    radial-gradient(40% 38% at 86% 16%, rgba(0,87,168,.18), transparent 72%),
+    radial-gradient(44% 42% at 22% 88%, rgba(237,28,36,.12), transparent 72%),
+    linear-gradient(158deg,#F7F8FA,#E4E8F0);
+  filter:blur(80px);
+}
+.glass{
+  background:var(--glass); border:1px solid var(--glass-br);
+  backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+  box-shadow:var(--sh-md);
+}
+
+/* ============================================================
+   2. BỐ CỤC
+   ============================================================ */
+.stage{position:fixed; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+       padding:14px 14px 92px}
+.sceneWrap{
+  position:relative; width:100%; max-width:1680px; aspect-ratio:1600/892;
+  filter:drop-shadow(0 26px 54px rgba(18,48,79,.20)); transition:filter .5s var(--ease);
+}
+.scene{width:100%; height:100%; display:block; overflow:visible}
+body.lights-off .sceneWrap{filter:drop-shadow(0 26px 54px rgba(18,48,79,.28)) saturate(.82) brightness(.9)}
+
+/* lớp phủ: robot sống nằm đúng toạ độ của phòng */
+.overlay{position:absolute; inset:0; pointer-events:none; z-index:2;
+         --rs:.55}   /* tỉ lệ thu nhỏ robot cho hợp tỉ lệ với phòng */
+.overlay .mr-root{pointer-events:auto; transform:scale(var(--rs))}
+/* bong bóng thoại giữ nguyên cỡ chữ dù robot bị thu nhỏ.
+   Dùng var(--mr-h) của engine (thừa kế từ .mr-root) thay vì ghi cứng 246px —
+   nếu đổi kích thước robot trong engine thì bong bóng không bị rời ra. */
+.overlay .mr-root .mr-bubble{transform:translate(-50%,10px) scale(calc(.9 / var(--rs)));
+                              bottom:calc(var(--mr-h) + 18px / var(--rs))}
+.overlay .mr-root .mr-bubble.show{transform:translate(-50%,0) scale(calc(1 / var(--rs)))}
+
+/* ---------- chip thương hiệu (góc trên trái) ---------- */
+.brand{
+  position:fixed; z-index:6; top:14px; left:14px;
+  display:flex; align-items:center; gap:10px; padding:7px 16px 7px 8px;
+  border-radius:var(--pill);
+}
+.brand svg{width:32px; height:32px; flex:none}
+.brand span{font-size:10px; font-weight:700; color:var(--dim); line-height:1.3; white-space:nowrap}
+.brand b{display:block; font-size:12.5px; color:var(--ink); letter-spacing:.01em}
+
+/* ---------- thanh công cụ nổi (đáy màn hình) ---------- */
+.dock{
+  position:fixed; z-index:6; left:50%; bottom:14px; transform:translateX(-50%);
+  display:flex; align-items:center; gap:5px; padding:7px 9px;
+  /* width:max-content là bắt buộc — với position:fixed + left:50%,
+     không có nó thì không gian khả dụng chỉ bằng nửa màn hình và thanh sẽ vỡ dòng */
+  width:max-content; max-width:calc(100vw - 28px);
+  border-radius:18px; flex-wrap:wrap; justify-content:center;
+}
+.sep{width:1px; height:20px; flex:none; background:rgba(18,48,79,.13); margin:0 2px}
+
+button{
+  font:inherit; font-size:12px; font-weight:700; color:var(--ink); cursor:pointer;
+  display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
+  padding:7px 10px; border-radius:var(--pill);
+  background:rgba(255,255,255,.62); border:1px solid var(--glass-br);
+  box-shadow:0 1px 2px rgba(18,48,79,.05);
+  transition:transform .16s var(--ease), background .16s, border-color .16s, color .16s;
+}
+button:hover{background:#fff; border-color:rgba(0,87,168,.4); transform:translateY(-2px)}
+button:active{transform:translateY(0) scale(.96)}
+button:focus-visible{outline:2px solid var(--hut); outline-offset:2px}
+button[aria-pressed="true"]{
+  background:rgba(0,87,168,.13); border-color:rgba(0,87,168,.38);
+  color:var(--hut-deep); box-shadow:inset 0 0 0 1px rgba(0,87,168,.10);
+}
+button[disabled]{opacity:.4; cursor:not-allowed; transform:none}
+button .ic{font-size:13px; line-height:1}
+
+.ctl{display:inline-flex; align-items:center; gap:6px; padding:4px 9px;
+     border-radius:var(--pill); background:rgba(255,255,255,.46); border:1px solid var(--glass-br)}
+.ctl label{font-size:9.5px; font-weight:800; color:var(--faint);
+           text-transform:uppercase; letter-spacing:.06em; white-space:nowrap}
+.ctl select{
+  font:inherit; font-size:12px; font-weight:700; color:var(--ink); cursor:pointer;
+  border:0; background:transparent; outline:none; padding:0 2px 0 0;
+  max-width:104px; text-overflow:ellipsis;
+}
+.ctl input[type="range"]{width:64px; accent-color:var(--hut); cursor:pointer; margin:0}
+.ctl .out{font-family:ui-monospace,Consolas,monospace; font-size:10.5px; color:var(--dim); min-width:22px; text-align:right}
+
+/* chế độ gọn: chỉ còn biểu tượng */
+body.fold .dock .lbl, body.fold .dock .ctl{display:none}
+body.fold .dock{gap:3px; padding:6px}
+
+/* ---------- popover thông tin ---------- */
+.info{
+  position:fixed; z-index:7; left:50%; bottom:70px; transform:translate(-50%,8px) scale(.97);
+  width:min(560px, calc(100vw - 28px)); padding:16px 18px; border-radius:var(--r-lg);
+  opacity:0; pointer-events:none;
+  transition:opacity .2s, transform .26s var(--ease);
+}
+.info.show{opacity:1; pointer-events:auto; transform:translate(-50%,0) scale(1)}
+.info h3{font-size:12.5px; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px}
+.info h3 .dot{width:8px; height:8px; border-radius:50%; background:var(--hut); box-shadow:0 0 0 3px rgba(0,87,168,.16)}
+.info p{font-size:12px; line-height:1.65; color:var(--dim); margin-bottom:9px}
+.info p b{color:var(--ink)}
+.info ul{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:5px 14px; margin-bottom:10px}
+.info li{font-size:11.5px; color:var(--dim); display:flex; gap:6px; line-height:1.45}
+.info li b{color:var(--ink); font-weight:700}
+.info li i{color:var(--hut); font-style:normal; font-weight:800}
+.keys{font-size:10.5px; color:var(--faint); border-top:1px solid rgba(18,48,79,.09); padding-top:9px; line-height:1.7}
+.keys kbd{
+  font-family:ui-monospace,Consolas,monospace; font-size:10px; padding:1px 5px; border-radius:4px;
+  background:rgba(255,255,255,.7); border:1px solid var(--glass-br); color:var(--ink); font-weight:700;
+}
+
+/* ---------- tooltip khi rê chuột vào thiết bị ---------- */
+.tip{
+  position:fixed; z-index:20; pointer-events:none; max-width:250px;
+  padding:9px 12px; border-radius:13px; background:rgba(11,32,56,.94); color:#fff;
+  font-size:12px; line-height:1.5; box-shadow:0 12px 30px rgba(0,0,0,.3);
+  opacity:0; transform:translate(-50%,-118%) scale(.94); transform-origin:50% 100%;
+  transition:opacity .16s, transform .2s var(--ease);
+}
+.tip.show{opacity:1; transform:translate(-50%,-124%) scale(1)}
+.tip b{display:block;font-size:12.5px;margin-bottom:2px;color:#8FD0FF}
+.tip span{color:#C7D6E6}
+
+@media (max-width:900px){
+  .stage{padding:10px 10px 100px}
+  .brand span{display:none}
+  .brand{padding:6px}
+  .info ul{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<div class="brand glass">
+  <svg viewBox="0 0 300 300" aria-hidden="true"><use href="#hut"></use></svg>
+  <span><b>PHÒNG THÍ NGHIỆM HUIT</b>Đại học Công Thương TP.HCM</span>
+</div>
+
+<div class="info glass" id="info" role="dialog" aria-label="Thông tin">
+  <h3><span class="dot"></span> Phòng Thí Nghiệm — Đại học Công Thương TP.HCM</h3>
+  <p>Cảnh lab và <b>robot sống</b> trong cùng một khung. Kéo robot đi khắp phòng, bấm để nó phản ứng, để yên thì nó tự ngủ và tỉnh dậy khi bạn chạm vào.</p>
+  <ul>
+    <li><i>◉</i><span><b>Robot sống</b> — 10 biểu cảm, mắt nhìn theo trỏ, tự ngủ</span></li>
+    <li><i>◉</i><span><b>Logo HUIT</b> tái dựng vector: vòng chữ tròn, mũ, sách, HUIT đỏ</span></li>
+    <li><i>◉</i><span><b>3 bàn thí nghiệm</b> — kính hiển vi, dao động ký, in 3D, bàn hàn</span></li>
+    <li><i>◉</i><span><b>An toàn</b> — EXIT, chữa cháy, sơ cứu, tủ điện, bảng nội quy</span></li>
+  </ul>
+  <div class="keys">
+    <kbd>Rê</kbd> xem thiết bị · <kbd>Kéo</kbd> di chuyển robot · <kbd>Enter</kbd> phản ứng ·
+    <kbd>L</kbd> đèn · <kbd>N</kbd> ngày/đêm · <kbd>Home</kbd> robot về bàn · <kbd>F</kbd> gọn thanh
+  </div>
+</div>
+
+<div class="dock glass" role="toolbar" aria-label="Điều khiển">
+  <button id="btnTalk"   type="button" title="Robot nói chuyện"><i class="ic">💬</i><span class="lbl">Nói</span></button>
+  <button id="btnWave"   type="button" title="Robot vẫy tay"><i class="ic">👋</i><span class="lbl">Vẫy</span></button>
+  <button id="btnSleep"  type="button" aria-pressed="false" title="Cho robot ngủ / thức dậy"><i class="ic">😴</i><span class="lbl">Ngủ</span></button>
+  <button id="btnRandom" type="button" title="Biểu cảm ngẫu nhiên"><i class="ic">🎲</i></button>
+
+  <div class="sep"></div>
+
+  <div class="ctl">
+    <label for="sleepSel">Tự ngủ</label>
+    <select id="sleepSel">
+      <option value="10000">10s</option>
+      <option value="20000" selected>20s</option>
+      <option value="45000">45s</option>
+      <option value="90000">90s</option>
+      <option value="0">Tắt</option>
+    </select>
+  </div>
+
+  <div class="ctl">
+    <label for="voiceSel">Giọng</label>
+    <select id="voiceSel"><option value="">— đang tải —</option></select>
+  </div>
+
+  <div class="ctl">
+    <label for="rate">Tốc độ</label>
+    <input id="rate" type="range" min="0.6" max="1.6" step="0.05" value="1" aria-label="Tốc độ đọc">
+    <span class="out" id="rateOut">1.0</span>
+  </div>
+
+  <div class="sep"></div>
+
+  <button id="btnTts" type="button" aria-pressed="true" title="Bật/tắt giọng nói"><i class="ic">🔊</i></button>
+  <button id="btnSfx" type="button" aria-pressed="true" title="Bật/tắt hiệu ứng âm thanh"><i class="ic">🎵</i></button>
+
+  <div class="sep"></div>
+
+  <button id="btnLights" type="button" aria-pressed="true" title="Bật/tắt đèn phòng"><i class="ic">💡</i></button>
+  <button id="btnNight"  type="button" aria-pressed="false" title="Chế độ ban đêm"><i class="ic">🌙</i></button>
+  <button id="btnSave"   type="button" title="Xuất ảnh PNG của phòng"><i class="ic">⬇</i></button>
+  <button id="btnHome"   type="button" title="Robot về vị trí cũ"><i class="ic">⌂</i></button>
+
+  <div class="sep"></div>
+
+  <button id="btnInfo" type="button" aria-pressed="false" aria-controls="info" title="Giới thiệu (I)"><i class="ic">ⓘ</i></button>
+  <button id="btnFold" type="button" aria-pressed="false" title="Gọn thanh công cụ (F)"><i class="ic">⇔</i></button>
+</div>
+
+<div class="stage">
+<div class="sceneWrap">
+<svg class="scene" id="scene" viewBox="0 86 1600 892" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="Cảnh phòng thí nghiệm của Trường Đại học Công Thương TP.HCM có robot tương tác">
+
+<style>
+  #scene{
+    --hut:#0057A8; --hut-lt:#0072BC; --hut-pale:#E4EEF8; --red:#ED1C24;
+    --ink:#12304F; --dim:#5B6B80;
+    --wall:#F3F6FA; --floor:#DCE3ED; --ceil:#FBFCFE;
+    --metal:#C9D4E4; --metal-d:#9AA9BE; --dark:#2B3A4E; --glassc:#D6E8F5;
+    font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+    transition:filter .6s cubic-bezier(.16,1,.3,1);
+  }
+  body.lights-off #scene{filter:saturate(.72) brightness(.88)}
+  body.night #scene{filter:saturate(.55) brightness(.62) contrast(1.06)}
+  #scene .night-tint{opacity:0;transition:opacity .6s;pointer-events:none}
+  body.night #scene .night-tint{opacity:.30}
+  /* khi xuất PNG, file SVG đứng độc lập nên không có body.night —
+     dùng class trên chính #scene để giữ đúng trạng thái ban đêm */
+  #scene.ex-night .night-tint{opacity:.30}
+  #scene.ex-night{filter:saturate(.55) brightness(.62) contrast(1.06)}
+  #scene.ex-night .scr{filter:brightness(1.75) saturate(1.35)}
+  #scene.ex-dark .cone,#scene.ex-dark .pool{opacity:.05}
+  #scene.ex-dark .winlight{opacity:.3}
+  #scene .scr{transition:filter .6s}
+  body.night #scene .scr{filter:brightness(1.75) saturate(1.35)}
+
+  /* chuyển động */
+  #scene .eye{transform-box:fill-box;transform-origin:50% 50%;animation:eyeBlink 7s infinite}
+  #scene .r2 .eye{animation-delay:1.4s}
+  #scene .r3 .eye{animation-delay:2.6s} #scene .r4 .eye{animation-delay:3.7s}
+  #scene .r5 .eye{animation-delay:5.1s}
+  @keyframes eyeBlink{0%,91%,100%{transform:scaleY(1)}93%,96%{transform:scaleY(.1)}}
+  #scene .ball{animation:ballPulse 2.4s ease-in-out infinite}
+  #scene .r2 .ball{animation-delay:.5s} #scene .r4 .ball{animation-delay:1.1s}
+  @keyframes ballPulse{0%,100%{opacity:.45}50%{opacity:1}}
+  #scene .led{animation:ledBlink 3.2s ease-in-out infinite}
+  @keyframes ledBlink{0%,100%{opacity:.4}50%{opacity:1}}
+  #scene .wave{stroke-dasharray:5 7;animation:waveMove 2.2s linear infinite}
+  @keyframes waveMove{to{stroke-dashoffset:-24}}
+  #scene .scanline{animation:scanMove 5s linear infinite}
+  @keyframes scanMove{0%{transform:translateY(0)}100%{transform:translateY(34px)}}
+  #scene .cone{opacity:.26;transition:opacity .6s}
+  #scene .pool{opacity:.16;transition:opacity .6s;filter:blur(10px)}
+  body.lights-off #scene .cone{opacity:.05}
+  body.lights-off #scene .pool{opacity:.04}
+  body.night #scene .cone{opacity:.04} body.night #scene .pool{opacity:.03}
+  body.night #scene .winlight{opacity:.14}
+
+  /* hover thiết bị */
+  #scene .hot{cursor:pointer}
+  #scene .hot .hl{opacity:0;transition:opacity .18s}
+  #scene .hot:hover .hl{opacity:1}
+</style>
+
+<defs>
+  <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FAFCFE"/><stop offset="100%" stop-color="#E7EDF5"/>
+  </linearGradient>
+  <linearGradient id="gWallSide" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#DDE6F0"/><stop offset="100%" stop-color="#EDF2F8"/>
+  </linearGradient>
+  <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#C9D4E2"/><stop offset="100%" stop-color="#E6ECF4"/>
+  </linearGradient>
+  <linearGradient id="gCeil" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E9EFF7"/>
+  </linearGradient>
+  <linearGradient id="gMetal" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FFFFFF"/><stop offset="60%" stop-color="#E3EAF5"/><stop offset="100%" stop-color="#B9C5D8"/>
+  </linearGradient>
+  <linearGradient id="gBenchTop" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F3F7FC"/><stop offset="100%" stop-color="#D7E0EC"/>
+  </linearGradient>
+  <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#BFE0F5"/><stop offset="60%" stop-color="#E3F1FA"/><stop offset="100%" stop-color="#F6FBFE"/>
+  </linearGradient>
+  <linearGradient id="gScreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#123A5E"/><stop offset="100%" stop-color="#0A2138"/>
+  </linearGradient>
+  <linearGradient id="gBoard" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#EEF3F9"/>
+  </linearGradient>
+  <radialGradient id="gCast" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#12304F" stop-opacity=".34"/>
+    <stop offset="70%" stop-color="#12304F" stop-opacity=".14"/>
+    <stop offset="100%" stop-color="#12304F" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="gVig" cx="50%" cy="46%" r="72%">
+    <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0B2038" stop-opacity=".26"/>
+  </radialGradient>
+  <filter id="fSoft" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="9"/>
+  </filter>
+  <filter id="fDrop" x="-25%" y="-25%" width="150%" height="150%">
+    <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#12304F" flood-opacity=".22"/>
+  </filter>
+  <filter id="fDropSm" x="-25%" y="-25%" width="150%" height="150%">
+    <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#12304F" flood-opacity=".2"/>
+  </filter>
+
+  <symbol id="hut" viewBox="0 0 300 300">
+    <circle cx="150" cy="150" r="146" fill="#FFFFFF" stroke="#0057A8" stroke-width="7"/>
+    <circle cx="150" cy="150" r="137" fill="none" stroke="#0057A8" stroke-width="1.5" opacity=".55"/>
+    <path id="ring" d="M63.7 236.3 A122 122 0 1 1 236.3 236.3" fill="none"/>
+    <g fill="#0057A8" font-weight="700" font-size="17.5" font-family="Arial, Helvetica, sans-serif">
+      <text><textPath href="#ring" startOffset="1%">TRƯỜNG ĐẠI HỌC</textPath></text>
+      <text><textPath href="#ring" startOffset="29%">CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</textPath></text>
+    </g>
+    <text x="150" y="274" text-anchor="middle" fill="#ED1C24" font-size="28"
+          font-weight="800" font-family="Arial Black, Arial, Helvetica, sans-serif">• HUIT •</text>
+    <g fill="#0057A8">
+      <path d="M150 92 L206 120 L150 148 L94 120 Z"/>
+      <path d="M116 132 L116 152 Q150 170 184 152 L184 132 L150 150 Z"/>
+      <path d="M203 126 C216 142 214 160 207 174" fill="none" stroke="#0057A8" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="206" cy="178" r="5.5"/>
+    </g>
+    <g fill="#0057A8">
+      <path d="M150 172 L92 146 L84 194 L150 246 Z"/>
+      <path d="M150 172 L208 146 L216 194 L150 246 Z"/>
+    </g>
+    <g stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" opacity=".75">
+      <path d="M104 160 L104 176"/><path d="M119 167 L119 183"/><path d="M134 174 L134 190"/>
+      <path d="M196 160 L196 176"/><path d="M181 167 L181 183"/><path d="M166 174 L166 190"/>
+    </g>
+    <path d="M150 172 L150 246" stroke="#FFFFFF" stroke-width="4"/>
+  </symbol>
+
+  <symbol id="robot" viewBox="0 0 120 152">
+    <path d="M60 28 V14" stroke="#9AA9BE" stroke-width="4" stroke-linecap="round"/>
+    <circle class="ball" cx="60" cy="10" r="6" fill="#38BDF8"/>
+    <rect x="16" y="24" width="88" height="68" rx="19" fill="url(#gMetal)" stroke="#9AA9BE" stroke-width="2"/>
+    <rect x="8" y="44" width="9" height="24" rx="4" fill="#C0CBD9"/>
+    <rect x="103" y="44" width="9" height="24" rx="4" fill="#C0CBD9"/>
+    <rect x="23" y="34" width="74" height="38" rx="14" fill="#0D1424"/>
+    <g class="eye"><ellipse cx="46" cy="53" rx="9" ry="10.5" fill="#F2F8FF"/>
+      <circle cx="46" cy="53" r="4" fill="#0B1220"/></g>
+    <g class="eye"><ellipse cx="74" cy="53" rx="9" ry="10.5" fill="#F2F8FF"/>
+      <circle cx="74" cy="53" r="4" fill="#0B1220"/></g>
+    <path d="M48 68 Q60 76 72 68" stroke="#1B2942" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <rect x="28" y="98" width="64" height="36" rx="11" fill="url(#gMetal)" stroke="#9AA9BE" stroke-width="2"/>
+    <circle class="led" cx="60" cy="114" r="6" fill="#38BDF8"/>
+    <rect x="10" y="102" width="11" height="28" rx="5.5" fill="url(#gMetal)" stroke="#9AA9BE" stroke-width="1.6"/>
+    <rect x="99" y="102" width="11" height="28" rx="5.5" fill="url(#gMetal)" stroke="#9AA9BE" stroke-width="1.6"/>
+    <rect x="38" y="134" width="13" height="14" rx="5" fill="#AEBCCE"/>
+    <rect x="69" y="134" width="13" height="14" rx="5" fill="#AEBCCE"/>
+  </symbol>
+
+  <symbol id="bench" viewBox="0 0 520 300">
+    <ellipse cx="262" cy="240" rx="252" ry="15" fill="#12304F" opacity=".13"/>
+    <path d="M36 62 L484 62 L484 34 L36 34 Z" fill="#DDE5EF" stroke="#C3CFDE" stroke-width="1.5"/>
+    <g fill="#AAB8CA"><rect x="90" y="42" width="16" height="11" rx="2.5"/><rect x="132" y="42" width="16" height="11" rx="2.5"/>
+      <rect x="372" y="42" width="16" height="11" rx="2.5"/><rect x="414" y="42" width="16" height="11" rx="2.5"/></g>
+    <path d="M0 104 L520 104 L484 62 L36 62 Z" fill="url(#gBenchTop)" stroke="#C3CFDE" stroke-width="1.5"/>
+    <rect x="0" y="104" width="520" height="11" fill="#C8D4E2"/>
+    <rect x="14" y="115" width="492" height="102" rx="7" fill="#EDF2F8" stroke="#C3CFDE" stroke-width="1.6"/>
+    <g fill="#E2E9F2" stroke="#C3CFDE" stroke-width="1.3">
+      <rect x="30" y="126" width="146" height="38" rx="5"/><rect x="187" y="126" width="146" height="38" rx="5"/>
+      <rect x="344" y="126" width="146" height="38" rx="5"/>
+      <rect x="30" y="172" width="146" height="34" rx="5"/><rect x="187" y="172" width="146" height="34" rx="5"/>
+      <rect x="344" y="172" width="146" height="34" rx="5"/>
+    </g>
+    <g fill="#9AA9BE"><rect x="88" y="141" width="30" height="6" rx="3"/><rect x="245" y="141" width="30" height="6" rx="3"/>
+      <rect x="402" y="141" width="30" height="6" rx="3"/><rect x="88" y="185" width="30" height="6" rx="3"/>
+      <rect x="245" y="185" width="30" height="6" rx="3"/><rect x="402" y="185" width="30" height="6" rx="3"/></g>
+    <rect x="24" y="217" width="472" height="13" rx="4" fill="#A9B7C9"/>
+  </symbol>
+
+  <symbol id="microscope" viewBox="0 0 110 130">
+    <path d="M8 122 L102 122 L92 102 L18 102 Z" fill="#8B9AAF" stroke="#6F7F95" stroke-width="1.5"/>
+    <path d="M34 102 C30 74 34 52 52 42" fill="none" stroke="#8494A9" stroke-width="9" stroke-linecap="round"/>
+    <path d="M44 46 L76 28 L86 46 L54 64 Z" fill="#0057A8" opacity=".9"/>
+    <rect x="36" y="22" width="20" height="11" rx="3" transform="rotate(-24 46 27)" fill="#5E6E84"/>
+    <rect x="26" y="80" width="58" height="8" rx="2.5" fill="#7E8DA3"/>
+    <g fill="#5E6E84"><path d="M48 68 L56 68 L58 78 L46 78 Z"/><path d="M44 56 L52 56 L53 64 L43 64 Z"/></g>
+    <circle cx="88" cy="112" r="7" fill="#C9D4E4" stroke="#8B9AAF" stroke-width="1.5"/>
+  </symbol>
+
+  <symbol id="scope" viewBox="0 0 130 100">
+    <rect x="3" y="6" width="124" height="82" rx="8" fill="#33445C" stroke="#24344A" stroke-width="1.5"/>
+    <rect class="scr" x="12" y="16" width="86" height="58" rx="4" fill="#0A1626"/>
+    <g stroke="#1E3B57" stroke-width=".8" opacity=".9">
+      <path d="M12 30h86M12 44h86M12 58h86M32 16v58M52 16v58M72 16v58"/>
+    </g>
+    <path class="wave" d="M14 46 L28 46 L34 30 L42 62 L50 38 L58 46 L74 46 L80 34 L86 56 L94 46"
+          fill="none" stroke="#4ADE80" stroke-width="2.6" stroke-linecap="round"/>
+    <g><circle cx="110" cy="28" r="7" fill="#5B6C84"/><circle cx="110" cy="50" r="7" fill="#5B6C84"/>
+      <circle cx="110" cy="72" r="7" fill="#5B6C84"/></g>
+    <g fill="#8FA3BC"><rect x="18" y="79" width="26" height="4" rx="2"/><rect x="50" y="79" width="18" height="4" rx="2"/></g>
+  </symbol>
+
+  <symbol id="printer3d" viewBox="0 0 130 140">
+    <rect x="10" y="10" width="110" height="120" rx="8" fill="#2F3F56" stroke="#24344A" stroke-width="1.5"/>
+    <rect class="scr" x="20" y="20" width="90" height="66" rx="5" fill="#16283C"/>
+    <rect class="led" x="24" y="24" width="40" height="6" rx="3" fill="#38BDF8"/>
+    <path class="wave" d="M26 46 h16 l5 -8 l6 16 l6 -10 h20" fill="none" stroke="#4ADE80" stroke-width="2"/>
+    <path class="wave" d="M26 66 h30 l5 -7 l5 14 h22" fill="none" stroke="#4ADE80" stroke-width="2" opacity=".65"/>
+    <rect x="20" y="92" width="90" height="10" rx="3" fill="#7E8DA3"/>
+    <rect x="34" y="76" width="52" height="16" rx="3" fill="#C9D4E4"/>
+    <rect x="40" y="66" width="40" height="12" rx="3" fill="#38BDF8" opacity=".55"/>
+    <circle cx="65" cy="60" r="4" fill="#ED1C24"/>
+    <circle cx="106" cy="112" r="8" fill="#5B6C84"/>
+  </symbol>
+
+  <symbol id="iron" viewBox="0 0 120 90">
+    <rect x="4" y="18" width="70" height="52" rx="7" fill="#33445C" stroke="#24344A" stroke-width="1.5"/>
+    <rect x="12" y="28" width="34" height="22" rx="3" fill="#0A1626"/>
+    <text x="29" y="44" text-anchor="middle" font-size="13" fill="#4ADE80" font-family="monospace">350°</text>
+    <g fill="#5B6C84"><circle cx="58" cy="38" r="7"/><circle cx="58" cy="58" r="7"/></g>
+    <path d="M76 52 L100 44 L106 54 L84 64 Z" fill="#6F7F95"/>
+    <path d="M100 46 C114 34 116 20 108 12" fill="none" stroke="#5E6E84" stroke-width="3.5"/>
+    <path d="M78 66 L104 58" stroke="#8B9AAF" stroke-width="6" stroke-linecap="round"/>
+    <rect x="86" y="70" width="30" height="8" rx="4" fill="#9AA9BE"/>
+  </symbol>
+
+  <symbol id="stool" viewBox="0 0 100 120">
+    <ellipse cx="50" cy="112" rx="38" ry="8" fill="#12304F" opacity=".14"/>
+    <path d="M20 112 L14 74 M80 112 L86 74 M50 112 L50 76" stroke="#8B9AAF" stroke-width="6" stroke-linecap="round"/>
+    <rect x="44" y="48" width="12" height="30" fill="#9AA9BE"/>
+    <ellipse cx="50" cy="46" rx="34" ry="12" fill="#33445C"/>
+    <ellipse cx="50" cy="42" rx="34" ry="12" fill="#46596F"/>
+    <path d="M18 46 a34 12 0 0 0 64 0" fill="none" stroke="#5B6C84" stroke-width="2"/>
+  </symbol>
+
+  <symbol id="ac" viewBox="0 0 240 66">
+    <rect x="2" y="2" width="236" height="56" rx="12" fill="#FBFCFE" stroke="#C9D4E2" stroke-width="2"/>
+    <path d="M14 46 h212" stroke="#D5DEE9" stroke-width="7" stroke-linecap="round"/>
+    <g stroke="#BCC8D8" stroke-width="2"><path d="M30 50v6M56 50v6M82 50v6M108 50v6M134 50v6M160 50v6M186 50v6M212 50v6"/></g>
+    <circle class="led" cx="222" cy="18" r="4" fill="#38BDF8"/>
+    <text x="18" y="24" font-size="11" fill="#93A2B8" font-weight="700">DAIKIN</text>
+  </symbol>
+
+  <symbol id="clock" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="37" fill="#FFFFFF" stroke="#9AA9BE" stroke-width="3.5"/>
+    <circle cx="40" cy="40" r="30" fill="#F7FAFD" stroke="#E1E8F1" stroke-width="1.5"/>
+    <g stroke="#5B6B80" stroke-width="2.4" stroke-linecap="round">
+      <path d="M40 40V19"/><path d="M40 40 L57 47"/></g>
+    <circle cx="40" cy="40" r="3.4" fill="#0057A8"/>
+    <g fill="#93A2B8"><circle cx="40" cy="15" r="2"/><circle cx="65" cy="40" r="2"/><circle cx="40" cy="65" r="2"/><circle cx="15" cy="40" r="2"/></g>
+  </symbol>
+
+  <symbol id="fire" viewBox="0 0 44 100">
+    <rect x="6" y="4" width="32" height="9" rx="3" fill="#5B6C84"/>
+    <rect x="14" y="10" width="16" height="10" rx="3" fill="#2B3A4E"/>
+    <rect x="9" y="20" width="26" height="72" rx="9" fill="#ED1C24"/>
+    <path d="M9 36 h26" stroke="#fff" stroke-width="2" opacity=".5"/>
+    <rect x="13" y="44" width="18" height="20" rx="2.5" fill="#fff" opacity=".92"/>
+    <text x="22" y="58" text-anchor="middle" font-size="10" font-weight="800" fill="#ED1C24">BC</text>
+    <path d="M35 30 C44 40 44 54 36 62" fill="none" stroke="#2B3A4E" stroke-width="3.5"/>
+  </symbol>
+
+  <symbol id="aid" viewBox="0 0 70 70">
+    <rect x="3" y="6" width="64" height="56" rx="8" fill="#FFFFFF" stroke="#9AA9BE" stroke-width="2"/>
+    <rect x="9" y="12" width="52" height="44" rx="5" fill="#EAF6EF"/>
+    <path d="M35 22 v24 M23 34 h24" stroke="#16A34A" stroke-width="7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="bin" viewBox="0 0 80 110">
+    <ellipse cx="40" cy="104" rx="32" ry="7" fill="#12304F" opacity=".13"/>
+    <path d="M14 30 L66 30 L60 102 L20 102 Z" fill="#46596F"/>
+    <rect x="8" y="20" width="64" height="13" rx="5" fill="#33445C"/>
+    <path d="M30 14 h20 v8 h-20 z" fill="#33445C"/>
+    <rect x="22" y="48" width="36" height="26" rx="4" fill="#0057A8" opacity=".9"/>
+    <text x="40" y="66" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">HUT</text>
+  </symbol>
+
+  <symbol id="plant" viewBox="0 0 90 150">
+    <ellipse cx="45" cy="144" rx="32" ry="7" fill="#12304F" opacity=".13"/>
+    <path d="M22 100 h46 l-6 44 h-34 z" fill="#C2703F"/>
+    <rect x="18" y="92" width="54" height="12" rx="4" fill="#A85C31"/>
+    <g fill="#2F8F5B">
+      <path d="M45 92 C30 70 26 48 32 26 C44 42 48 66 45 92 Z"/>
+      <path d="M45 92 C60 72 66 50 62 30 C50 46 44 70 45 92 Z"/>
+      <path d="M45 92 C40 66 44 40 56 22 C58 46 52 72 45 92 Z" opacity=".85"/>
+    </g>
+  </symbol>
+</defs>
+
+<g class="lyr" data-depth="6">
+  <path d="M210 700 L1520 700 L1660 940 L60 940 Z" fill="url(#gFloor)"/>
+  <g stroke="#C2CEDD" stroke-width="1.4" opacity=".85">
+    <path d="M210 700 h1310M205 722 h1320M196 748 h1336M183 779 h1358M166 815 h1386M145 857 h1420M118 906 h1472M60 940 h1600"/>
+    <path d="M210 700 L60 940M341 700 L234 940M472 700 L408 940M603 700 L582 940M734 700 L756 940
+             M865 700 L930 940M996 700 L1104 940M1127 700 L1278 940M1258 700 L1452 940M1389 700 L1626 940M1520 700 L1660 940"/>
+  </g>
+  <path d="M210 700 L1520 700 L1524 714 L206 714 Z" fill="#B4C1D2" opacity=".55"/>
+  <path d="M60 290 L210 120 L210 700 L60 940 Z" fill="url(#gWallSide)"/>
+  <g stroke="#D3DDE9" stroke-width="1.6" opacity=".7"><path d="M95 252 L95 866"/><path d="M135 187 L135 786"/></g>
+  <path d="M1660 290 L1520 120 L1520 700 L1660 940 Z" fill="#E9EEF6"/>
+  <g stroke="#D3DDE9" stroke-width="1.6" opacity=".7"><path d="M1595 252 L1595 866"/><path d="M1555 187 L1555 786"/></g>
+  <path d="M210 120 L1520 120 L1520 700 L210 700 Z" fill="url(#gWall)"/>
+  <path d="M60 290 L210 120 L1520 120 L1660 290 Z" fill="url(#gCeil)"/>
+  <g stroke="#DFE7F1" stroke-width="2"><path d="M380 120 L290 290M700 120 L640 290M1000 120 L980 290M1300 120 L1330 290"/>
+    <path d="M110 200 L1490 200M80 250 L1550 250"/></g>
+
+  <g>
+    <path d="M210 612 L1520 612 L1520 700 L210 700 Z" fill="#CFE2F3"/>
+    <path d="M210 600 L1520 600 L1520 614 L210 614 Z" fill="#0057A8" opacity=".8"/>
+    <g stroke="#B6D2EA" stroke-width="2" opacity=".7">
+      <path d="M420 614 L420 700M680 614 L680 700M940 614 L940 700M1200 614 L1200 700M1460 614 L1460 700"/></g>
+    <path d="M60 900 L210 660 L210 700 L60 940 Z" fill="#CFE2F3"/>
+    <path d="M60 892 L210 652 L210 662 L60 902 Z" fill="#0057A8" opacity=".55"/>
+    <path d="M1660 900 L1520 660 L1520 700 L1660 940 Z" fill="#CFE2F3"/>
+    <path d="M1660 892 L1520 652 L1520 662 L1660 902 Z" fill="#0057A8" opacity=".55"/>
+  </g>
+</g>
+
+<g class="lyr" data-depth="4">
+  <g>
+    <g>
+      <path d="M330 132 L580 132 L598 166 L348 166 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M338 140 L572 140 L586 160 L350 160 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="348" y="160" width="250" height="400" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="473" cy="838" rx="168" ry="30" fill="#FFF8E2"/>
+    </g>
+    <g>
+      <path d="M700 132 L950 132 L968 166 L718 166 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M708 140 L942 140 L956 160 L720 160 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="718" y="160" width="250" height="400" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="843" cy="838" rx="168" ry="30" fill="#FFF8E2"/>
+    </g>
+    <g>
+      <path d="M1070 132 L1320 132 L1338 166 L1088 166 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M1078 140 L1312 140 L1326 160 L1090 160 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="1088" y="160" width="250" height="400" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="1213" cy="838" rx="168" ry="30" fill="#FFF8E2"/>
+    </g>
+    <g>
+      <path d="M180 226 L420 226 L442 266 L202 266 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M188 234 L412 234 L428 258 L204 258 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="202" y="262" width="240" height="300" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="322" cy="906" rx="160" ry="28" fill="#FFF8E2"/>
+    </g>
+    <g>
+      <path d="M560 226 L800 226 L822 266 L582 266 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M568 234 L792 234 L808 258 L584 258 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="582" y="262" width="240" height="300" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="702" cy="906" rx="160" ry="28" fill="#FFF8E2"/>
+    </g>
+    <g>
+      <path d="M940 226 L1180 226 L1202 266 L962 266 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M948 234 L1172 234 L1188 258 L964 258 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="962" y="262" width="240" height="300" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="1082" cy="906" rx="160" ry="28" fill="#FFF8E2"/>
+    </g>
+    <g>
+      <path d="M1320 226 L1560 226 L1582 266 L1342 266 Z" fill="#DCE5EF" stroke="#B7C5D6" stroke-width="1.5"/>
+      <path d="M1328 234 L1552 234 L1568 258 L1344 258 Z" fill="#FFFDF2"/>
+      <rect class="cone" x="1342" y="262" width="240" height="300" fill="#FFF3D0" filter="url(#fSoft)"/>
+      <ellipse class="pool" cx="1462" cy="906" rx="160" ry="28" fill="#FFF8E2"/>
+    </g>
+  </g>
+</g>
+
+<g class="lyr" data-depth="9">
+
+  <g class="hot" data-n="Điều hòa treo tường" data-d="Daikin 2 chiều · 24.000 BTU/h · điều khiển nhiệt độ phòng thí nghiệm 25°C">
+    <use href="#ac" x="248" y="130" width="230" height="63"/>
+    <rect class="hl" x="246" y="128" width="234" height="67" rx="14" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Đồng hồ treo tường" data-d="Theo dõi thời gian thực hành, đảm bảo ca thí nghiệm đúng tiến độ">
+    <use href="#clock" x="1412" y="132" width="76" height="76"/>
+    <circle class="hl" cx="1450" cy="170" r="42" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Bảng chỉ dẫn lối thoát hiểm" data-d="Đèn EXIT nguồn dự phòng tự động sáng khi mất điện, tuân thủ PCCC">
+    <rect x="700" y="132" width="180" height="42" rx="7" fill="#0F7B3E" stroke="#0B5E2E" stroke-width="2"/>
+    <g fill="#FFFFFF"><circle cx="726" cy="153" r="6"/><path d="M726 161 l-4 8 m4 -8 l5 7 m-5 -7 l-6 6"/></g>
+    <text x="756" y="162" font-size="21" font-weight="800" fill="#FFFFFF" letter-spacing="1">EXIT</text>
+    <rect class="hl" x="698" y="130" width="184" height="46" rx="9" fill="none" stroke="#ED1C24" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Bảng tên phòng thí nghiệm" data-d="Đơn vị trực thuộc Khoa công nghệ Cơ khí, Trường Đại học Công Thương TP.HCM">
+    <g filter="url(#fDrop)">
+      <rect x="614" y="196" width="532" height="288" rx="12" fill="url(#gBoard)" stroke="#0057A8" stroke-width="7"/>
+      <rect x="630" y="212" width="500" height="256" rx="7" fill="none" stroke="#C9DCEC" stroke-width="2"/>
+    </g>
+    <use href="#hut" x="756" y="222" width="148" height="148"/>
+    <text x="830" y="398" text-anchor="middle" font-size="25" font-weight="800" fill="#0057A8" letter-spacing="3">PHÒNG THÍ NGHIỆM</text>
+    <text x="830" y="424" text-anchor="middle" font-size="15.5" font-weight="700" fill="#5B6B80" letter-spacing="1.6">ROBOT · TỰ ĐỘNG HOÁ · ĐIỆN TỬ</text>
+    <g>
+      <rect x="700" y="438" width="96" height="20" rx="10" fill="#0057A8"/>
+      <text x="748" y="452" text-anchor="middle" font-size="11.5" font-weight="800" fill="#fff" letter-spacing="1">HỘI THẢO</text>
+      <rect x="806" y="438" width="96" height="20" rx="10" fill="#E4EEF8" stroke="#B9D2E8"/>
+      <text x="854" y="452" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0057A8" letter-spacing="1">ĐỒ ÁN</text>
+      <rect x="912" y="438" width="88" height="20" rx="10" fill="#ED1C24"/>
+      <text x="956" y="452" text-anchor="middle" font-size="11.5" font-weight="800" fill="#fff" letter-spacing="1">THỰC HÀNH</text>
+    </g>
+    <rect class="hl" x="610" y="192" width="540" height="296" rx="14" fill="none" stroke="#ED1C24" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Bảng nội quy an toàn lao động" data-d="5 điều bắt buộc trong phòng thí nghiệm của HUT">
+    <g filter="url(#fDropSm)">
+      <rect x="250" y="200" width="330" height="264" rx="10" fill="#FFFFFF" stroke="#0057A8" stroke-width="5"/>
+    </g>
+    <rect x="262" y="212" width="306" height="30" rx="6" fill="#0057A8"/>
+    <text x="415" y="233" text-anchor="middle" font-size="14.5" font-weight="800" fill="#fff" letter-spacing="1.4">AN TOÀN LAO ĐỘNG</text>
+    <g font-size="13" fill="#12304F">
+      <g transform="translate(276 262)"><circle r="9" fill="#ED1C24"/><text y="4.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">1</text>
+        <text x="18" y="5">Mặc đồ phòng thí nghiệm</text></g>
+      <g transform="translate(276 296)"><circle r="9" fill="#ED1C24"/><text y="4.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">2</text>
+        <text x="18" y="5">Đeo kính bảo hộ khi hàn</text></g>
+      <g transform="translate(276 330)"><circle r="9" fill="#ED1C24"/><text y="4.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">3</text>
+        <text x="18" y="5">Ngắt nguồn trước khi sửa</text></g>
+      <g transform="translate(276 364)"><circle r="9" fill="#ED1C24"/><text y="4.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">4</text>
+        <text x="18" y="5">Không ăn uống trong lab</text></g>
+      <g transform="translate(276 398)"><circle r="9" fill="#ED1C24"/><text y="4.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">5</text>
+        <text x="18" y="5">Biết vị trí bình chữa cháy</text></g>
+    </g>
+    <g transform="translate(276 424)"><rect width="278" height="26" rx="6" fill="#E4EEF8"/>
+      <text x="139" y="18" text-anchor="middle" font-size="12" font-weight="800" fill="#0057A8" letter-spacing=".6">KHOA CÔNG NGHỆ CƠ KHÍ · HUIT</text></g>
+    <rect class="hl" x="246" y="196" width="338" height="272" rx="12" fill="none" stroke="#ED1C24" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Cửa sổ kính hoá năng" data-d="Kính 2 lớp chống nóng, giữ nhiệt độ phòng ổn định cho linh kiện điện tử">
+    <rect x="1180" y="196" width="316" height="250" rx="8" fill="#B8C7D8" stroke="#9AA9BE" stroke-width="3"/>
+    <rect class="scr winlight" x="1190" y="206" width="296" height="230" fill="url(#gSky)"/>
+    <path d="M1190 300 h296" stroke="#A8C4D8" stroke-width="2"/>
+    <path class="scanline" d="M1190 212 h296" stroke="#FFFFFF" stroke-width="26" opacity=".38"/>
+    <g stroke="#9AA9BE" stroke-width="5">
+      <path d="M1338 206 v230M1190 320 h296"/></g>
+    <path class="cone" d="M1190 436 L1486 436 L1560 700 L1120 700 Z" fill="#EAF6FF" filter="url(#fSoft)" opacity=".5"/>
+    <rect x="1170" y="440" width="336" height="10" rx="4" fill="#C4D2E1"/>
+    <rect class="hl" x="1176" y="192" width="324" height="258" rx="10" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Tủ điện phòng thí nghiệm" data-d="Nguồn 220V/50Hz · ổ cắm ổn định điện áp cho bàn thí nghiệm, có cầu dao tổng và nút dừng khẩn">
+    <rect x="258" y="486" width="214" height="126" rx="8" fill="#EDF2F8" stroke="#9AA9BE" stroke-width="2.5"/>
+    <rect x="272" y="500" width="186" height="60" rx="5" fill="#33445C"/>
+    <g><rect x="284" y="514" width="26" height="16" rx="3" fill="#5B6C84"/><rect x="322" y="514" width="26" height="16" rx="3" fill="#5B6C84"/>
+       <rect x="360" y="514" width="26" height="16" rx="3" fill="#5B6C84"/><rect x="398" y="514" width="26" height="16" rx="3" fill="#5B6C84"/></g>
+    <g fill="#38BDF8"><circle class="led" cx="292" cy="550" r="5"/><circle class="led" cx="330" cy="550" r="5" opacity=".7"/>
+      <circle class="led" cx="368" cy="550" r="5" opacity=".5"/></g>
+    <circle cx="434" cy="550" r="13" fill="#ED1C24"/><rect x="432" y="540" width="4" height="13" rx="2" fill="#fff"/>
+    <text x="365" y="596" text-anchor="middle" font-size="11" font-weight="700" fill="#5B6B80">TỦ ĐIỆN CHÍNH · 220V</text>
+    <rect class="hl" x="254" y="482" width="222" height="134" rx="10" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Bảng tên giảng viên phụ trách" data-d="Niêm yết theo quy định của Trường Đại học Công Thương TP.HCM">
+    <rect x="1060" y="464" width="200" height="128" rx="8" fill="#FFFFFF" stroke="#C3CFDE" stroke-width="2.5"/>
+    <rect x="1060" y="464" width="200" height="26" rx="8" fill="#0057A8"/>
+    <rect x="1060" y="482" width="200" height="8" fill="#0057A8"/>
+    <text x="1160" y="482" text-anchor="middle" font-size="11.5" font-weight="800" fill="#fff" letter-spacing="1">PHỤ TRÁCH PHÒNG</text>
+    <use href="#hut" x="1082" y="498" width="50" height="50"/>
+    <text x="1142" y="514" font-size="11.5" font-weight="700" fill="#12304F">ThS. PHONGCODIENTU</text>
+    <text x="1142" y="532" font-size="10.5" fill="#5B6B80">Khoa công nghệ Cơ khí</text>
+    <g stroke="#DCE4EE" stroke-width="1.4"><path d="M1074 556 h172M1074 574 h172"/></g>
+    <rect class="hl" x="1056" y="460" width="208" height="136" rx="10" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+</g>
+
+<g class="lyr" data-depth="12">
+  <g class="hot" data-n="Bình chữa cháy CO₂" data-d="Bình 5kg đặt ngay lối ra, kiểm tra định kỳ 6 tháng/lần">
+    <use href="#fire" x="1546" y="452" width="52" height="118"/>
+    <rect class="hl" x="1542" y="448" width="60" height="126" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Hộp sơ cứu" data-d="Bộ sơ cứu đạt chuẩn, kiểm tra hạn dùng hàng quý">
+    <use href="#aid" x="1524" y="322" width="66" height="66"/>
+    <rect class="hl" x="1520" y="318" width="74" height="74" rx="10" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Camera an ninh" data-d="Camera IP giám sát khu vực thực hành, lưu trữ 30 ngày">
+    <path d="M600 120 v11" stroke="#9FB0C4" stroke-width="2.5"/>
+    <path d="M589 133 h24 l7 12 -7 12 h-24 l-7 -12 z" fill="#7E90A6" stroke="#64758C" stroke-width="1.2"/>
+    <circle cx="601" cy="145" r="5" fill="#0D1424"/><circle cx="599" cy="143" r="1.8" fill="#6B7C92"/>
+  </g>
+</g>
+
+<g class="lyr" data-depth="13">
+  <g class="hot" data-n="Bàn thí nghiệm điện tử" data-d="Mặt bàn chống tĩnh điện, 8 ổ cắm 5V, có bộ nguồn lab 0-30V điều chỉnh được">
+    <use href="#bench" x="626" y="572" width="392" height="226"/>
+  </g>
+  <g class="hot" data-n="Dao động ký số" data-d="RIGOL DS1054Z · 4 kênh · 100MHz · dùng đo tín hiệu cảm biến và mạch điều khiển">
+    <use href="#scope" x="880" y="592" width="120" height="92"/>
+    <rect class="hl" x="876" y="588" width="128" height="100" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Robot kit giải lập" data-d="Robot 3 bánh · cảm biến hồng ngoại và siêu âm · vi điều khiển Arduino Uno R4">
+    <g class="r2">
+      <use href="#robot" x="700" y="586" width="66" height="84"/>
+      <rect class="hl" x="696" y="582" width="74" height="92" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+    </g>
+  </g>
+  <g class="hot" data-n="Khay linh kiện điện tử" data-d="Điện trở, tụ hoá, IC số, dây nối, breadboard — cấp phát cho mỗi nhóm thực hành">
+    <g transform="translate(1000 640)">
+      <rect width="150" height="42" rx="5" fill="#33445C"/>
+      <g fill="#E3EAF5"><rect x="8" y="7" width="16" height="6" rx="2"/><rect x="30" y="7" width="16" height="6" rx="2"/>
+        <rect x="52" y="7" width="16" height="6" rx="2"/><rect x="74" y="7" width="16" height="6" rx="2"/></g>
+      <g fill="#38BDF8" opacity=".85"><rect x="100" y="8" width="10" height="22" rx="2"/><rect x="116" y="8" width="10" height="22" rx="2"/></g>
+      <rect x="8" y="20" width="84" height="8" rx="2" fill="#F2F7FD"/><rect x="8" y="31" width="84" height="7" rx="2" fill="#E3EAF5"/>
+      <rect class="hl" x="-6" y="-6" width="162" height="54" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+    </g>
+  </g>
+</g>
+
+<g class="lyr" data-depth="16">
+  <g class="hot" data-n="Ghế điều chỉnh chiều cao" data-d="Ghế xoay cho học sinh, điều chỉnh 45–65cm, bánh xe im lặng">
+    <use href="#stool" x="248" y="786" width="88" height="106"/>
+    <rect class="hl" x="244" y="782" width="96" height="114" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Ghế điều chỉnh chiều cao" data-d="Ghế xoay cho học sinh, điều chỉnh 45–65cm, bánh xe im lặng">
+    <use href="#stool" x="1168" y="790" width="88" height="106"/>
+    <rect class="hl" x="1164" y="786" width="96" height="114" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+
+  <g class="hot" data-n="Bàn thí nghiệm cơ khí" data-d="Bàn thọ 3 tầng, kẹp bàn, dụng cụ đo cho nhóm cơ khí">
+    <use href="#bench" x="118" y="606" width="440" height="254"/>
+  </g>
+  <g class="hot" data-n="Kính hiển vi" data-d="Trường đo 1000× · đèn LED · dùng quan sát linh kiện và mẫu vật">
+    <use href="#microscope" x="168" y="612" width="104" height="123"/>
+    <rect class="hl" x="164" y="608" width="112" height="131" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Máy in 3D" data-d="FDM filament PLA/PETG · bàn in 220×220×250mm · in linh kiện thực hành">
+    <use href="#printer3d" x="296" y="592" width="128" height="138"/>
+    <rect class="hl" x="292" y="588" width="136" height="146" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Robot tự hành" data-d="Robot dò hướng dùng 2 cảm biến hồng ngoại TC-SR04 + 2 motor DC">
+    <g class="r3">
+      <use href="#robot" x="444" y="626" width="70" height="89"/>
+      <rect class="hl" x="440" y="622" width="78" height="97" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+    </g>
+  </g>
+
+  <g class="hot" data-n="Bàn thí nghiệm điện – tự động" data-d="Bàn dày 25mm chống rung, ổ cắm Schuko và bộ chia nguồn cho cả lớp">
+    <use href="#bench" x="1046" y="606" width="440" height="254"/>
+  </g>
+  <g class="hot" data-n="Máy tính thiết kế mạch" data-d="Phần mềm EAGLE · Altium Designer · mô phỏng mạch in và file gửi đến máy CNC để gia công">
+    <g filter="url(#fDropSm)">
+      <rect x="1078" y="592" width="196" height="128" rx="7" fill="#2B3A4E"/>
+      <rect class="scr" x="1086" y="600" width="180" height="104" rx="4" fill="url(#gScreen)"/>
+    </g>
+    <use href="#hut" x="1116" y="608" width="54" height="54"/>
+    <text x="1180" y="648" font-size="11.5" font-weight="800" fill="#7EC8FF" letter-spacing=".8">HUT</text>
+    <text x="1180" y="666" font-size="9.5" fill="#5B8FBF">MẠCH ĐIỀU KHIỂN</text>
+    <g class="scanline"><rect x="1086" y="600" width="180" height="14" fill="#7EC8FF" opacity=".22"/></g>
+    <path d="M1166 720 h20 l6 10 h-32 z" fill="#3B4C63"/>
+    <rect x="1120" y="728" width="112" height="9" rx="3" fill="#46596F"/>
+    <rect class="hl" x="1072" y="588" width="208" height="154" rx="9" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Bàn hàn điện tử" data-d="Hàn không chì 350°C, có khói hút và tẩy nhựa thủ công">
+    <use href="#iron" x="1300" y="620" width="118" height="89"/>
+    <rect class="hl" x="1296" y="616" width="126" height="97" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+  <g class="hot" data-n="Robot cánh tay" data-d="Robot 4 bậc tự do điều khiển bằng joystick, nhiệm vụ sắp xếp vật theo màu">
+    <g class="r4">
+      <use href="#robot" x="1420" y="630" width="64" height="81"/>
+      <rect class="hl" x="1416" y="626" width="72" height="89" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+    </g>
+  </g>
+</g>
+
+<g class="lyr" data-depth="22">
+  <ellipse cx="800" cy="922" rx="330" ry="26" fill="#12304F" opacity=".16"/>
+  <path d="M492 792 L1108 792 L1146 762 L454 762 Z" fill="url(#gBenchTop)" stroke="#C3CFDE" stroke-width="2"/>
+  <rect x="454" y="792" width="692" height="18" rx="4" fill="#C8D4E2"/>
+  <path d="M470 810 h660 l-12 108 h-636 z" fill="#E8EEF6" stroke="#C3CFDE" stroke-width="2"/>
+  <g fill="#DCE4EE"><rect x="530" y="826" width="200" height="34" rx="5"/><rect x="760" y="826" width="200" height="34" rx="5"/>
+    <rect x="990" y="826" width="120" height="34" rx="5"/></g>
+  <g fill="#9AA9BE"><rect x="600" y="840" width="60" height="6" rx="3"/><rect x="830" y="840" width="60" height="6" rx="3"/>
+    <rect x="1020" y="840" width="60" height="6" rx="3"/></g>
+
+  <g class="hot" data-n="Máy tính xách tay của lớp" data-d="Màn hình đang hiển thị mô hình robot và mã nguồn do sinh viên viết">
+    <g filter="url(#fDrop)">
+      <path d="M540 706 h172 l14 78 h-200 z" fill="#2B3A4E"/>
+      <path class="scr" d="M548 714 h156 l11 62 h-178 z" fill="url(#gScreen)"/>
+    </g>
+    <use href="#hut" x="576" y="720" width="40" height="40"/>
+    <g fill="#7EC8FF" opacity=".9">
+      <rect x="624" y="728" width="52" height="6" rx="3"/><rect x="624" y="740" width="34" height="5" rx="2.5" opacity=".7"/>
+      <rect x="556" y="756" width="30" height="5" rx="2.5" opacity=".6"/>
+      <rect x="592" y="756" width="48" height="5" rx="2.5" opacity=".45"/>
+    </g>
+    <path d="M520 784 h212 l14 18 h-240 z" fill="#46596F"/>
+    <path d="M600 786 h52 l4 8 h-60 z" fill="#5B6C84"/>
+    <rect class="hl" x="512" y="700" width="230" height="108" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+  </g>
+
+  <g id="heroHome">
+    <ellipse cx="900" cy="828" rx="78" ry="18" fill="none" stroke="#0057A8"
+             stroke-width="2.5" stroke-dasharray="7 8" opacity=".45"/>
+  </g>
+  <g id="heroShadow"></g>
+
+  <g class="hot" data-n="Breadboard và dây nối" data-d="Mạch thử nhanh không cần hàn, kết nối cảm biến với vi điều khiển">
+    <g transform="translate(1040 756)">
+      <rect width="112" height="34" rx="4" fill="#F2F7FD" stroke="#C3CFDE" stroke-width="1.6"/>
+      <g fill="#C9D6E4"><circle cx="10" cy="9" r="1.8"/><circle cx="26" cy="9" r="1.8"/><circle cx="42" cy="9" r="1.8"/><circle cx="58" cy="9" r="1.8"/>
+        <circle cx="74" cy="9" r="1.8"/><circle cx="90" cy="9" r="1.8"/><circle cx="10" cy="17" r="1.8"/><circle cx="26" cy="17" r="1.8"/>
+        <circle cx="42" cy="17" r="1.8"/><circle cx="58" cy="17" r="1.8"/><circle cx="74" cy="17" r="1.8"/><circle cx="90" cy="17" r="1.8"/></g>
+      <path d="M18 12 C30 2 46 2 56 10" stroke="#ED1C24" stroke-width="2.4" fill="none"/>
+      <path d="M40 14 C52 4 70 6 82 14" stroke="#0F7B3E" stroke-width="2.4" fill="none"/>
+      <rect class="hl" x="-6" y="-6" width="124" height="46" rx="8" fill="none" stroke="#0057A8" stroke-width="3"/>
+    </g>
+  </g>
+  <g>
+    <path d="M470 764 h64 v26 a6 6 0 0 1 -6 6 h-52 a6 6 0 0 1 -6 -6 z" fill="#FFFFFF" stroke="#9AA9BE" stroke-width="2"/>
+    <path d="M534 770 c16 0 16 18 0 18" fill="none" stroke="#9AA9BE" stroke-width="2.4"/>
+    <text x="502" y="782" font-size="11" font-weight="800" fill="#0057A8" text-anchor="middle">HUT</text>
+    <path d="M476 764 h52 v-8 a6 6 0 0 0 -6 -6 h-40 a6 6 0 0 0 -6 6 z" fill="#E8EEF6" stroke="#9AA9BE" stroke-width="2"/>
+  </g>
+</g>
+
+<g class="lyr" data-depth="26">
+  <use href="#bin"  x="1440" y="812" width="82" height="113"/>
+  <use href="#plant" x="120" y="800" width="92" height="153"/>
+  <path d="M60 940 h1600 v60 H60 z" fill="#CBD6E3" opacity=".5"/>
+  <path d="M60 940 h1600" stroke="#B4C1D2" stroke-width="3"/>
+</g>
+
+<rect class="night-tint" x="0" y="86" width="1600" height="892" fill="#0A1E3A" pointer-events="none"/>
+<path d="M0 0 h1600 v1000 H0 z" fill="url(#gVig)" pointer-events="none"/>
+</svg>
+<div class="overlay" id="overlay"></div>
+</div>
+</div>
+
+<script>
+/* ============================================================
+   ROBOT ENGINE — da nhung truc tiep vao file nay de lab-robot.html
+   hoan toan doc lap, khong con can file ben ngoai.
+   ============================================================ */
+/*! ============================================================================
+ * Mini Robot Engine (UMD) — không phụ thuộc framework
+ * ----------------------------------------------------------------------------
+ * Engine này đã NHÚNG TRỰC TIẾP vào lab-robot.html nên file đó chạy độc lập,
+ * không phụ thuộc file ngoài. Muốn dùng lại ở nơi khác thì copy riêng khối này.
+ *
+ *   const bot = RobotEngine.createRobot({ mount: document.body });
+ *   bot.say("Xin chào"); bot.setMood("happy"); bot.destroy();
+ *
+ * Tự ngủ: mặc định 20s không ai đụng tới -> buồn ngủ -> ngủ (có "Z" bay lên),
+ * chạm vào là tỉnh. Tắt bằng sleepAfter: 0, chỉnh bằng setSleepAfter(ms).
+ * ========================================================================== */
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) module.exports = factory();
+  else root.RobotEngine = factory();
+})(typeof self !== "undefined" ? self : this, function () {
+  "use strict";
+
+  /* ==========================================================================
+   * 1. CSS (tự chèn 1 lần, mọi class đều có tiền tố .mr- để không rò sang app)
+   * ======================================================================== */
+  var CSS = `
+.mr-root{
+  --mr-w:190px; --mr-h:246px;
+  --mr-metal-2:#e3eaf5;
+  --mr-visor:#0d1424;
+  --mr-cyan:#38bdf8; --mr-pink:#f472b6;
+  --mr-glass-br:rgba(255,255,255,.80);
+  --mr-panel:rgba(255,255,255,.66);
+  --mr-ink:#12304f;
+  --mr-shadow:0 20px 44px rgba(18,48,79,.18);
+  --mr-floor:rgba(18,48,79,.20);
+  --mr-spark:#2f80ed;
+  position:absolute; left:50%; top:50%;
+  width:var(--mr-w); height:var(--mr-h);
+  margin:calc(var(--mr-h) / -2) 0 0 calc(var(--mr-w) / -2);
+  cursor:grab; touch-action:none; user-select:none; -webkit-user-select:none;
+  outline:none; z-index:1; color:var(--mr-ink);
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.mr-root.mr-fixed{position:fixed; z-index:20}
+.mr-root.mr-relative{position:relative; left:auto; top:auto; margin:0}
+.mr-root.mr-dark{
+  --mr-glass-br:rgba(255,255,255,.16);
+  --mr-panel:rgba(255,255,255,.10);
+  --mr-ink:#e6edf7;
+  --mr-shadow:0 20px 44px rgba(0,0,0,.45);
+  --mr-floor:rgba(0,0,0,.5);
+  --mr-spark:#7dd3fc;
+}
+.mr-root *{box-sizing:border-box}
+.mr-root:focus-visible .mr-focus-ring{opacity:1}
+
+.mr-focus-ring{
+  position:absolute; inset:-16px -10px -8px; border-radius:34px;
+  border:2px solid var(--mr-spark); opacity:0; transition:opacity .2s;
+}
+.mr-shadow{
+  position:absolute; left:50%; bottom:-16px; width:126px; height:22px; margin-left:-63px;
+  background:radial-gradient(50% 50% at 50% 50%, var(--mr-floor), transparent 72%);
+  filter:blur(4px); transition:transform .2s cubic-bezier(.16,1,.3,1), opacity .2s;
+}
+
+/* Bong bóng thoại — kính mờ trên nền sáng */
+.mr-bubble{
+  position:absolute; left:50%; bottom:calc(100% + 16px);
+  transform:translate(-50%,10px) scale(.9);
+  min-width:112px; max-width:236px; padding:11px 15px;
+  background:var(--mr-panel); color:var(--mr-ink);
+  border:1px solid var(--mr-glass-br); border-radius:16px;
+  box-shadow:var(--mr-shadow); backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  font-size:14px; font-weight:600; line-height:1.45; text-align:center;
+  opacity:0; pointer-events:none; transition:opacity .22s, transform .28s cubic-bezier(.16,1,.3,1);
+}
+.mr-bubble.show{opacity:1; transform:translate(-50%,0) scale(1)}
+.mr-bubble::after{
+  content:""; position:absolute; left:50%; top:100%; margin-left:-7px;
+  border:7px solid transparent; border-top-color:var(--mr-glass-br); border-bottom:0;
+}
+.mr-bubble .mr-caret{
+  display:inline-block; width:2px; height:1em; vertical-align:-2px;
+  background:var(--mr-ink); animation:mrCaret .6s steps(1) infinite;
+}
+.mr-bubble.done .mr-caret{display:none}
+.mr-root.mr-bubble-below .mr-bubble{bottom:auto; top:calc(100% + 16px)}
+.mr-root.mr-bubble-below .mr-bubble::after{
+  top:auto; bottom:100%; border:7px solid transparent;
+  border-bottom-color:var(--mr-glass-br); border-top:0;
+}
+
+/* Robot SVG */
+.mr-robot{width:100%; height:100%; overflow:visible; animation:mrBob 3.4s cubic-bezier(.16,1,.3,1) infinite; transform-origin:50% 100%}
+.mr-root.mr-hop .mr-robot{animation:mrHop .62s cubic-bezier(.16,1,.3,1)}
+.mr-root.mr-hop .mr-shadow{transform:scale(.6); opacity:.55}
+.mr-root .mr-eye{transition:transform .18s cubic-bezier(.16,1,.3,1)}
+.mr-root .mr-eye-normal,.mr-root .mr-eye-line,.mr-root .mr-eye-heart{transition:opacity .16s, transform .18s cubic-bezier(.16,1,.3,1)}
+.mr-root .mr-eye-normal{transform-box:fill-box; transform-origin:50% 50%}
+.mr-root .mr-eye-line,.mr-root .mr-eye-heart{opacity:0}
+.mr-root .mr-white{fill:#f7fbff}
+.mr-root .mr-glow{filter:drop-shadow(0 0 6px rgba(125,211,252,.95))}
+.mr-root .mr-pupil{fill:#0b1220}
+.mr-root .mr-glint{fill:rgba(255,255,255,.9)}
+.mr-root .mr-heart{fill:var(--mr-pink); filter:drop-shadow(0 0 7px rgba(244,114,182,.85))}
+.mr-root.mr-blink .mr-eye-normal{transform:scaleY(.1)}
+/* Buồn ngủ: mắt héo, chuyển động chậm lại */
+.mr-root[data-eyes="half"] .mr-eye-normal{transform:scaleY(.42)}
+.mr-root.mr-asleep .mr-robot{filter:saturate(.72) brightness(.97); animation-duration:5.6s}
+.mr-root.mr-asleep .mr-armL,.mr-root.mr-asleep .mr-armR,
+.mr-root.mr-asleep .mr-legL,.mr-root.mr-asleep .mr-legR{animation-duration:6.2s}
+.mr-root.mr-asleep .mr-ball{animation-duration:4.4s; opacity:.45}
+.mr-root.mr-asleep .mr-led{animation:none; opacity:.28}
+.mr-root.mr-asleep .mr-head{transform:rotate(4deg)}
+.mr-root[data-eyes="line"] .mr-eye-normal,
+.mr-root[data-eyes="heart"] .mr-eye-normal,
+.mr-root[data-eyes="wink"] .mr-eye-L .mr-eye-normal{opacity:0}
+.mr-root[data-eyes="line"] .mr-eye-line,
+.mr-root[data-eyes="wink"] .mr-eye-L .mr-eye-line,
+.mr-root[data-eyes="heart"] .mr-eye-heart{opacity:1}
+.mr-root[data-eyes="wide"] .mr-eye{transform:scale(1.16)}
+.mr-root .mr-mouth{fill:var(--mr-visor); transition:transform .18s cubic-bezier(.16,1,.3,1)}
+.mr-root .mr-ball{fill:var(--mr-cyan); animation:mrPulse 1.9s ease-in-out infinite}
+.mr-root .mr-metal-stop{stop-color:var(--mr-metal-2)}
+.mr-root .mr-led{fill:var(--mr-cyan); animation:mrLed 2.2s ease-in-out infinite}
+.mr-root .mr-scan{stroke:rgba(45,120,200,.35); stroke-width:2; stroke-linecap:round}
+
+@keyframes mrBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes mrHop{
+  0%{transform:translateY(0) scale(1,1)}
+  18%{transform:translateY(5px) scale(1.06,.92)}
+  50%{transform:translateY(-42px) scale(.95,1.07)}
+  78%{transform:translateY(2px) scale(1.05,.95)}
+  100%{transform:translateY(0) scale(1,1)}
+}
+@keyframes mrSway{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes mrPulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes mrLed{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes mrCaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes mrWave{0%,100%{transform:rotate(-8deg)}30%{transform:rotate(-142deg)}60%{transform:rotate(-108deg)}}
+
+/* Tay/chân/đầu/antenna */
+.mr-root .mr-arm{transform-box:fill-box}
+.mr-root .mr-armL{transform-origin:100% 20%; animation:mrArmL 3.4s cubic-bezier(.16,1,.3,1) infinite}
+.mr-root .mr-armR{transform-origin:0% 20%; animation:mrArmR 3.4s cubic-bezier(.16,1,.3,1) infinite}
+.mr-root.mr-wave .mr-armR{animation:mrWave .7s cubic-bezier(.16,1,.3,1) 3}
+.mr-root.mr-cheer .mr-arm{animation:mrArmL 1.1s cubic-bezier(.16,1,.3,1) infinite}
+.mr-root .mr-leg{transform-box:fill-box; transform-origin:50% 0%}
+.mr-root .mr-legL{animation:mrLeg 3.4s cubic-bezier(.16,1,.3,1) infinite}
+.mr-root .mr-legR{animation:mrLeg 3.4s cubic-bezier(.16,1,.3,1) infinite; animation-delay:.35s}
+.mr-root .mr-head{transform-box:fill-box; transform-origin:50% 100%; transition:transform .18s cubic-bezier(.16,1,.3,1)}
+.mr-root .mr-antenna{transform-box:fill-box; transform-origin:50% 100%; animation:mrSway 2.6s cubic-bezier(.16,1,.3,1) infinite}
+.mr-root.mr-cheer .mr-antenna{animation:mrSway .5s cubic-bezier(.16,1,.3,1) 3}
+@keyframes mrArmL{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-2deg)}}
+@keyframes mrArmR{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(2deg)}}
+@keyframes mrLeg{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+
+/* Hạt bụi / tim */
+.mr-sparks{position:absolute; inset:0; pointer-events:none; overflow:visible}
+.mr-spark{
+  position:absolute; font-size:16px; line-height:1; pointer-events:none;
+  animation:mrFloat .95s cubic-bezier(.16,1,.3,1) forwards; will-change:transform,opacity;
+}
+.mr-spark.mr-dot{width:7px; height:7px; border-radius:50%; background:var(--mr-spark); box-shadow:0 0 8px var(--mr-spark)}
+.mr-spark.mr-z{
+  font-size:15px; font-weight:800; color:#8fa3bd;
+  font-family:ui-monospace,"SF Mono",Consolas,monospace;
+  text-shadow:0 1px 2px rgba(18,48,79,.22);
+}
+@keyframes mrFloat{
+  0%{transform:translate(-50%,0) scale(.4); opacity:0}
+  20%{opacity:1; transform:translate(-50%,-14px) scale(1.1)}
+  100%{transform:translate(calc(-50% + var(--dx,0px)),-94px) scale(.7); opacity:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .mr-root *{animation:none!important; transition-duration:.01ms!important}
+}
+`;
+
+  function injectStyles(){
+    if (document.getElementById("mini-robot-styles")) return;
+    var tag = document.createElement("style");
+    tag.id = "mini-robot-styles";
+    tag.textContent = CSS;
+    (document.head || document.documentElement).appendChild(tag);
+  }
+
+  /* ==========================================================================
+   * 2. DỮ LIỆU: biểu cảm + câu thoại
+   * ======================================================================== */
+  var HEART_PATH = "M0 12C-13 3-14-6-7-10-2-13 0-8 0-8s2-5 7-2c7 4 6 13 0 12Z";
+
+  var MOODS = {
+    idle:     { eyes:"normal", mouth:"M86 116Q100 126 114 116" },
+    happy:    { eyes:"normal", mouth:"M78 112Q100 132 122 112" },
+    love:     { eyes:"heart",  mouth:"M88 116Q100 130 112 116" },
+    surprise: { eyes:"wide",   mouth:"M92 111Q100 107 108 111Q113 124 100 130Q87 124 92 111Z" },
+    sad:      { eyes:"line",   mouth:"M82 127Q100 112 118 127" },
+    sleep:    { eyes:"line",   mouth:"M93 121Q100 115 107 121" },
+    drowsy:   { eyes:"half",   mouth:"M93 112Q100 106 107 112Q111 123 100 127Q89 123 93 112Z" },
+    wink:     { eyes:"wink",   mouth:"M80 113Q100 131 120 113" },
+    focus:    { eyes:"normal", mouth:"M93 117Q100 111 107 117" }
+  };
+
+  var DEFAULT_LINES = {
+    idle:     ["Chào bạn! Tôi đang rảnh đây.", "Bạn kéo tôi đi đâu cũng được.", "Hôm nay học gì vậy?", "Tôi sẵn sàng giúp!", "Bấm vào tôi thử xem~"],
+    happy:    ["Tuyệt quá!", "Nữa đi, nữa đi!", "Woah, vui ghê!", "Bạn giỏi lắm!", "Yay~"],
+    love:     ["Bạn dễ thương quá!", "Gửi một tim nè!", "Mình là bạn thân nhé!", "Yayyy!"],
+    surprise: ["Ồ! Có gì vậy?", "Bất ngờ ghê!", "Hả?!", "Điều gì xảy ra rồi?"],
+    sad:      ["Ôi...", "Ai bỏ tôi mất rồi...", "Buồn thật đó...", "Kéo tôi lại gần với!"],
+    sleep:    ["Zzz... ngủ ngon...", "Mơ về mấy cái răng ổn...", "Zzz... mã hoá... Zzz..."],
+    drowsy:   ["Buồn ngủ quá...", "Mắt tôi nặng trĩu rồi...", "Ai cho tôi một giấc...", "Hít mít một giấc nữa thôi..."],
+    wake:     ["Ơi, tôi ngủ rồi à?", "Bạn gọi tôi à?", "À, xin lỗi, tôi buồn ngủ quá!", "Tỉnh táo rồi!"],
+    wink:     ["Chào bạn!", "Làm quen nhé~", "Tôi thấy bạn rồi đó!", "Hehe~"],
+    focus:    ["Đang tập trung đây!", "Ôm công việc vào!", "Kéo đi nào!", "Đi nào, đi nào!"]
+  };
+
+  var MOUTH_TALK = [
+    "M93 116Q100 110 107 116",
+    "M92 112Q100 106 108 112Q112 124 100 129Q88 124 92 112Z"
+  ];
+
+  var REACTIONS = [
+    { mood:"happy",    act:function(api){ api.hop(1); api.burst(8, "dot"); } },
+    { mood:"love",     act:function(api){ api._cheer(1600); api.hop(2); api.burst(7, "emoji"); } },
+    { mood:"surprise", act:function(api){ api._cheer(1400); api.burst(12, "dot"); } },
+    { mood:"wink",     act:function(api){ api._wave(2200); } },
+    { mood:"idle",     act:function(api){ api.hop(1); } }
+  ];
+
+  /* ==========================================================================
+   * 3. MARKUP SVG
+   * ======================================================================== */
+  var uid = 0;
+  function markup(gradId){
+    function eye(side, x){
+      return '<g class="mr-eye mr-eye-' + side + '" transform="translate(' + x + ',78)">' +
+        '<g class="mr-eye-normal mr-glow">' +
+          '<ellipse class="mr-white" rx="15" ry="17"/>' +
+          '<circle class="mr-pupil" r="6"/>' +
+          '<circle class="mr-glint" cx="-4.5" cy="-6" r="2.4"/>' +
+        '</g>' +
+        '<g class="mr-eye-line mr-glow"><rect x="-15" y="-3.4" width="30" height="6.8" rx="3.4" class="mr-white"/></g>' +
+        '<g class="mr-eye-heart"><path class="mr-heart" d="' + HEART_PATH + '"/></g>' +
+      '</g>';
+    }
+    return '' +
+      '<div class="mr-focus-ring" aria-hidden="true"></div>' +
+      '<div class="mr-bubble" aria-live="polite"><span class="mr-bubble-text"></span><span class="mr-caret">|</span></div>' +
+      '<div class="mr-sparks" aria-hidden="true"></div>' +
+      '<div class="mr-shadow" aria-hidden="true"></div>' +
+      '<svg class="mr-robot" viewBox="0 0 200 260" aria-hidden="true" focusable="false">' +
+        '<g>' +
+          '<rect class="mr-leg mr-legL" x="66" y="206" width="26" height="34" rx="12" fill="url(#' + gradId + ')"/>' +
+          '<rect class="mr-leg mr-legR" x="108" y="206" width="26" height="34" rx="12" fill="url(#' + gradId + ')"/>' +
+          '<ellipse cx="79" cy="243" rx="22" ry="9" fill="#8f9cb2"/>' +
+          '<ellipse cx="121" cy="243" rx="22" ry="9" fill="#8f9cb2"/>' +
+        '</g>' +
+        '<rect x="52" y="140" width="96" height="74" rx="20" fill="url(#' + gradId + ')" stroke="#93a2b8" stroke-width="2"/>' +
+        '<rect x="70" y="156" width="60" height="42" rx="12" fill="#eaf0f8" stroke="#b9c5d8" stroke-width="1.5"/>' +
+        '<circle class="mr-led" cx="100" cy="172" r="7"/>' +
+        '<path class="mr-scan" d="M84 186h32"/>' +
+        '<rect x="62" y="204" width="76" height="8" rx="4" fill="#a3b0c2"/>' +
+        '<g class="mr-arm mr-armL"><rect x="30" y="152" width="20" height="54" rx="10" fill="url(#' + gradId + ')" stroke="#93a2b8" stroke-width="1.5"/></g>' +
+        '<g class="mr-arm mr-armR"><rect x="150" y="152" width="20" height="54" rx="10" fill="url(#' + gradId + ')" stroke="#93a2b8" stroke-width="1.5"/></g>' +
+        '<g class="mr-head">' +
+          '<g class="mr-antenna">' +
+            '<path d="M100 34V16" stroke="#93a2b8" stroke-width="5" stroke-linecap="round"/>' +
+            '<circle class="mr-ball" cx="100" cy="12" r="8"/>' +
+          '</g>' +
+          '<rect x="34" y="30" width="132" height="104" rx="30" fill="url(#' + gradId + ')" stroke="#93a2b8" stroke-width="2"/>' +
+          '<rect x="26" y="62" width="10" height="30" rx="5" fill="#c6d1e0"/>' +
+          '<rect x="164" y="62" width="10" height="30" rx="5" fill="#c6d1e0"/>' +
+          '<rect x="48" y="50" width="104" height="58" rx="22" fill="#0d1424"/>' +
+          eye("L", 78) + eye("R", 122) +
+          '<path class="mr-mouth" d="' + MOODS.idle.mouth + '"/>' +
+          '<circle cx="52" cy="112" r="6" fill="#f7c9d9" opacity=".5"/>' +
+          '<circle cx="148" cy="112" r="6" fill="#f7c9d9" opacity=".5"/>' +
+        '</g>' +
+        '<defs><linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="#ffffff"/>' +
+          '<stop offset="55%" class="mr-metal-stop"/>' +
+          '<stop offset="100%" stop-color="#b9c5d8"/>' +
+        '</linearGradient></defs>' +
+      '</svg>';
+  }
+
+  /* ==========================================================================
+   * 4. TTS — Web Speech API, tự ưu tiên giọng tiếng Việt
+   * ======================================================================== */
+  function createSpeech(opts){
+    var synth = window.speechSynthesis;
+    var supported = !!synth && typeof window.SpeechSynthesisUtterance === "function";
+    var voiceURI = opts.voiceURI || null;
+    var lang = opts.lang || "vi";
+    var rate = typeof opts.rate === "number" ? opts.rate : 1;
+    var pitch = typeof opts.pitch === "number" ? opts.pitch : 1.05;
+    var enabled = opts.speech !== false && supported;
+
+    function all(){ return supported ? synth.getVoices() || [] : []; }
+
+    function best(){
+      var list = all();
+      if (!list.length) return null;
+      var prefix = lang.split("-")[0];
+      var vi = list.filter(function (v) { return (v.lang || "").toLowerCase().indexOf(prefix) === 0; });
+      var pool = vi.length ? vi : list;
+      for (var i = 0; i < pool.length; i++){
+        var name = (pool[i].name || "").toLowerCase();
+        if (/google|natural|enhanced|premium/.test(name)) return pool[i];
+      }
+      return pool[0];
+    }
+
+    function resolve(){
+      if (voiceURI){
+        var found = all().filter(function (v) { return v.voiceURI === voiceURI; })[0];
+        if (found) return found;
+      }
+      return best();
+    }
+
+    var speech = {
+      supported: supported,
+      isEnabled: function(){ return enabled; },
+      setEnabled: function(v){ enabled = !!v && supported; },
+      getVoices: all,
+      getLang: function(){ var v = resolve(); return v ? v.lang : lang; },
+      getVoiceURI: function(){ var v = resolve(); return v ? v.voiceURI : null; },
+      setVoice: function(uri){ voiceURI = uri; },
+      setRate: function(v){ rate = Math.max(.5, Math.min(2, +v || 1)); },
+      setPitch: function(v){ pitch = Math.max(0, Math.min(2, +v || 1)); },
+      stop: function(){ try { synth && synth.cancel(); } catch (e) {} },
+      speak: function(text){
+        if (!enabled || !supported || !text) return false;
+        try {
+          synth.cancel();
+          var u = new window.SpeechSynthesisUtterance(String(text));
+          var v = resolve();
+          u.lang = v ? v.lang : lang;
+          if (v) u.voice = v;
+          u.rate = rate; u.pitch = pitch; u.volume = 1;
+          synth.speak(u);
+          return true;
+        } catch (e) { return false; }
+      }
+    };
+    return speech;
+  }
+
+  /* ==========================================================================
+   * 5. HÀM NHỎ
+   * ======================================================================== */
+  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+  /* ==========================================================================
+   * 6. createRobot — trả về API
+   * ======================================================================== */
+  function createRobot(options){
+    var opt = options || {};
+    injectStyles();
+
+    var mount      = opt.mount || document.body;
+    var theme      = opt.theme === "dark" ? "dark" : "light";
+    var position   = opt.position || (opt.position === "relative" ? "relative" : "fixed");
+    var label      = opt.label || "Mini robot tương tác";
+    var lines      = opt.lines ? Object.assign({}, DEFAULT_LINES, opt.lines) : DEFAULT_LINES;
+    var typingMs   = opt.typingSpeed || 70;
+    var maxTilt    = opt.maxTilt == null ? 9 : opt.maxTilt;
+    var eyeRange   = opt.eyeRange == null ? 6.5 : opt.eyeRange;
+    var lookMax    = opt.lookRadius || 320;
+    /* Tự ngủ: không ai đụng tới trong sleepAfter ms thì buồn ngủ rồi ngủ.
+       sleepAfter = 0 để tắt hẳn. */
+    var sleepAfter = opt.sleepAfter == null ? 20000 : Math.max(0, +opt.sleepAfter || 0);
+
+    var gradId = "mr-grad-" + (++uid);
+
+    /* ---------- DOM ---------- */
+    var el = document.createElement("div");
+    el.className = "mr-root mr-" + position + (theme === "dark" ? " mr-dark" : "");
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("role", "button");
+    el.setAttribute("aria-label", label);
+    if (opt.className) el.className += " " + opt.className;
+    if (opt.style) Object.keys(opt.style).forEach(function (k) { el.style[k] = opt.style[k]; });
+    el.innerHTML = markup(gradId, label);
+    mount.appendChild(el);
+
+    var bubble     = el.querySelector(".mr-bubble");
+    var bubbleText = el.querySelector(".mr-bubble-text");
+    var sparks     = el.querySelector(".mr-sparks");
+    var mouth      = el.querySelector(".mr-mouth");
+    var head       = el.querySelector(".mr-head");
+    var pupils     = Array.prototype.slice.call(el.querySelectorAll(".mr-pupil"));
+    var tts        = createSpeech(opt);
+
+    /* ---------- trạng thái ---------- */
+    var mood = "idle";
+    var timers = { mood:0, typing:0, blink:0, idle:0, snore:0, hop:0, wave:0, cheer:0, hide:0 };
+    var talkingInterval = null;
+    var audioCtx = null;
+    var soundOn = opt.sfx !== false;
+    var destroyed = false;
+    var pos = { x:0, y:0 }, target = { x:0, y:0 };
+    var dragging = false, moved = false, grabDX = 0, grabDY = 0, dragAt = 0;
+    var bounds = opt.bounds || null;
+    var robotH = 0;              /* chiều cao thật của robot, đo 1 lần sau khi gắn DOM */
+    var sleepState = "awake";          // awake | drowsy | asleep
+    var lastTouch = Date.now();
+
+    /* ---------- vị trí ---------- */
+    function limits(){
+      /* bounds tu dinh nghia (px trong container) — dung khi nhung robot vao mot khung */
+      if (bounds){
+        var bl = Number(bounds.left) || 0, bt = Number(bounds.top) || 0;
+        var br = Number(bounds.right), bb = Number(bounds.bottom);
+        if (br == null) br = Math.max(bl, (hostWidth() || 0) - bl);
+        if (bb == null) bb = Math.max(bt, (hostHeight() || 0) - bt);
+        return { minX: bl, maxX: Math.max(bl, br), minY: bt, maxY: Math.max(bt, bb) };
+      }
+      if (position === "fixed"){
+        return { minX: 100, maxX: Math.max(100, window.innerWidth - 100),
+                 minY: 140, maxY: Math.max(140, window.innerHeight - 130) };
+      }
+      /* container nhỏ hơn robot (hoặc chưa layout) → ghim đúng giữa thay vì kẹp */
+      var w = hostWidth() || 190, h = hostHeight() || 246;
+      return { minX: w <= 190 ? w / 2 : 100, maxX: w <= 190 ? w / 2 : w - 100,
+               minY: h <= 246 ? h / 2 : 140, maxY: h <= 246 ? h / 2 : h - 130 };
+    }
+    function hostWidth(){
+      var r = mount.getBoundingClientRect && mount.getBoundingClientRect();
+      return (r && r.width) || 0;
+    }
+    function hostHeight(){
+      var r = mount.getBoundingClientRect && mount.getBoundingClientRect();
+      return (r && r.height) || 0;
+    }
+    function hostOrigin(){
+      var r = mount.getBoundingClientRect && mount.getBoundingClientRect();
+      return { left: (r && r.left) || 0, top: (r && r.top) || 0 };
+    }
+    function setPosition(x, y){
+      var L = limits();
+      pos = { x: Math.min(L.maxX, Math.max(L.minX, x)), y: Math.min(L.maxY, Math.max(L.minY, y)) };
+      el.style.left = pos.x + "px";
+      el.style.top = pos.y + "px";
+      target = { x: pos.x, y: pos.y };
+      /* đảo bong bóng khi robot sắp tràn lên đỉnh khung chứa (dùng chiều cao thật) */
+      el.classList.toggle("mr-bubble-below", pos.y < (robotH || 246) / 2 + 40);
+    }
+    function center(){
+      if (position === "fixed") return setPosition(window.innerWidth / 2, window.innerHeight / 2 - 20);
+      setPosition((hostWidth() || 190) / 2, (hostHeight() || 246) / 2);
+    }
+    /* đo kích thước 1 lần (phần tử đã nằm trong DOM) để các phép tính sau
+       không phải offsetHeight — tránh layout thrash khi kéo */
+    function measure(){ if (!robotH) robotH = el.offsetHeight || 246; }
+
+    /* ---------- biểu cảm ---------- */
+    function setMood(next, o){
+      o = o || {};
+      var m = MOODS[next]; if (!m || destroyed) return mood;
+      mood = next;
+      el.dataset.mood = next;
+      el.dataset.eyes = m.eyes;
+      mouth.setAttribute("d", m.mouth);
+      clearTimeout(timers.mood);
+      if (o.restore !== 0)
+        timers.mood = setTimeout(function(){ setMood("idle", { restore: 0, say: false }); }, o.restore || 2600);
+      if (o.say !== false && lines[next] && lines[next].length)
+        say(pick(lines[next]));
+      beep(next);
+      return mood;
+    }
+
+    /* ---------- nói (bong bóng + TTS) ---------- */
+    /* chỉ hiển thị + đọc, KHÔNG đụng tới trạng thái ngủ (dùng cho lời của chính nó) */
+    function speakBubble(text, hold){
+      clearInterval(talkingInterval);
+      clearTimeout(timers.typing);
+      tts.stop();
+      bubbleText.textContent = "";
+      bubble.classList.remove("done");
+      bubble.classList.add("show");
+      var i = 0, str = String(text);
+      function tick(){
+        bubbleText.textContent = str.slice(0, ++i);
+        mouth.setAttribute("d", MOUTH_TALK[i % 2]);
+        if (i >= str.length){
+          clearInterval(talkingInterval); talkingInterval = null;
+          bubble.classList.add("done");
+          mouth.setAttribute("d", MOODS[mood].mouth);
+          clearTimeout(timers.hide);
+          timers.hide = setTimeout(function(){ bubble.classList.remove("show"); }, hold || 1800);
+        }
+      }
+      tick();
+      timers.typing = setInterval(tick, typingMs);
+      tts.speak(str);
+    }
+    /* say() là API công khai: nói = có hoạt động, nên robot đang ngủ sẽ tỉnh luôn */
+    function say(text, o){
+      if (destroyed || !text) return;
+      o = o || {};
+      if (sleepState !== "awake"){
+        sleepState = "awake";
+        stopSnore();
+        el.classList.remove("mr-asleep");
+      }
+      markTouch();
+      speakBubble(String(text), o.hold);
+    }
+
+    /* ==========================================================================
+     * HỆ THỐNG TỰ NGỦ — không ai đụng tới thì buồn ngủ rồi ngủ
+     * ======================================================================== */
+    function markTouch(){ lastTouch = Date.now(); }
+
+    /* nói là đặt biểu cảm + dùng speakBubble (nội bộ) để không tự tỉnh mình */
+    function wakeUp(o){
+      o = o || {};
+      markTouch();
+      if (sleepState === "awake") return false;
+      sleepState = "awake";
+      stopSnore();
+      el.classList.remove("mr-asleep");
+      if (o.anim !== false) hop(1);
+      setMood("wink", { restore: 1800, say: false });
+      if (o.say !== false) speakBubble(pick(lines.wake || DEFAULT_LINES.wake), 2200);
+      return true;
+    }
+    function goDrowsy(){
+      if (sleepState !== "awake") return;
+      sleepState = "drowsy";
+      setMood("drowsy", { restore: 0, say: false });
+      if (lines.drowsy && lines.drowsy.length) speakBubble(pick(lines.drowsy));
+    }
+    function goSleep(){
+      if (sleepState === "asleep") return;
+      sleepState = "asleep";
+      el.classList.add("mr-asleep");
+      setMood("sleep", { restore: 0, say: false });
+      if (lines.sleep && lines.sleep.length) speakBubble(pick(lines.sleep), 2600);
+      startSnore();
+    }
+    /* touch() = mọi cửa sổ tương tác đều chạm vào đồng hồ đếm ngược */
+    function touch(o){
+      var wasAsleep = sleepState !== "awake";
+      markTouch();
+      if (wasAsleep) wakeUp(o);
+      return wasAsleep;
+    }
+    function snore(){
+      if (destroyed || sleepState !== "asleep") return;
+      var z = document.createElement("span");
+      z.className = "mr-spark mr-z";
+      z.textContent = "Z";
+      z.style.left = "64%";
+      z.style.top = "14%";
+      z.style.setProperty("--dx", "28px");
+      z.style.animationDuration = "2.4s";
+      sparks.appendChild(z);
+      z.addEventListener("animationend", function (){ z.remove(); });
+      setTimeout(function (){ z.remove(); }, 2600);   /* dự phòng reduced-motion */
+    }
+    function startSnore(){
+      stopSnore();
+      snore();
+      timers.snore = setInterval(snore, 2400);
+    }
+    function stopSnore(){ clearInterval(timers.snore); }
+    function idleTick(){
+      if (destroyed || !sleepAfter) return;
+      /* phòng trường hợp pointerup bị mất (đổi tab giữa lúc kéo) -> kẹt dragging
+         thì tự thả, nếu không robot sẽ không bao giờ được ngủ */
+      if (dragging && Date.now() - dragAt > 20000){
+        dragging = false; moved = false;
+        el.classList.remove("mr-dragging");
+      }
+      if (dragging || document.hidden) return;
+      var idle = Date.now() - lastTouch;
+      if (sleepState !== "asleep" && idle >= sleepAfter) goSleep();
+      else if (sleepState === "awake" && idle >= sleepAfter * 0.6) goDrowsy();
+    }
+    function startIdleWatch(){
+      clearInterval(timers.idle);
+      if (!sleepAfter) return;
+      timers.idle = setInterval(idleTick, 1000);
+    }
+    function setSleepAfter(ms){
+      sleepAfter = Math.max(0, +ms || 0);
+      markTouch();
+      startIdleWatch();
+    }
+    function onEnter(){ if (sleepState !== "awake") touch(); }
+    function onDocDown(e){ if (!el.contains(e.target)) touch(); }
+    function onDocKey(){ touch(); }
+    function onVisibility(){
+      if (!document.hidden) markTouch();
+    }
+
+    /* ---------- nhìn theo con trỏ ---------- */
+    function look(px, py){
+      var dx = px - target.x, dy = py - target.y;
+      var dist = Math.hypot(dx, dy) || 1;
+      var strength = Math.min(1, dist / lookMax) * (dragging ? 1 : .9);
+      var ox = (dx / dist) * eyeRange * strength;
+      var oy = (dy / dist) * eyeRange * strength;
+      for (var i = 0; i < pupils.length; i++)
+        pupils[i].style.transform = "translate(" + ox.toFixed(2) + "px," + oy.toFixed(2) + "px)";
+      var ang = Math.max(-maxTilt, Math.min(maxTilt, (dx / lookMax) * maxTilt * 2));
+      head.style.transform = "rotate(" + ang.toFixed(2) + "deg)";
+    }
+
+    /* ---------- kéo thả ---------- */
+    function onDown(e){
+      touch({ say: false });                 /* nắm vào robot -> tỉnh, không cần lời chào */
+      dragging = true; moved = false;
+      el.classList.add("mr-dragging");
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+      dragAt = Date.now();
+      grabDX = e.clientX - pos.x;
+      grabDY = e.clientY - pos.y;
+      setMood("focus", { restore: 1400, say: false });
+    }
+    function onMove(e){
+      if (!dragging) return;
+      markTouch();
+      if (Math.abs(e.clientX - pos.x - grabDX) > 6 || Math.abs(e.clientY - pos.y - grabDY) > 6) moved = true;
+      var nx = e.clientX - grabDX, ny = e.clientY - grabDY;
+      if (position !== "fixed"){
+        var o = hostOrigin();
+        nx += o.left; ny += o.top;
+      }
+      setPosition(nx, ny);
+      look(e.clientX, e.clientY);
+    }
+    function onUp(e){
+      if (!dragging) return;
+      dragging = false;
+      el.classList.remove("mr-dragging");
+      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      markTouch();
+      if (moved){ hop(1); burst(6, "dot"); setMood("happy", { restore: 1800 }); }
+    }
+    function onClick(){ if (!moved){ touch(); react(); } }
+    function onDblClick(){ touch(); burst(16, "emoji"); hop(3); setMood("love", { restore: 2600 }); }
+    function onKey(e){
+      var step = 26;
+      var moves = { ArrowLeft:[-step,0], ArrowRight:[step,0], ArrowUp:[0,-step], ArrowDown:[0,step] };
+      if (moves[e.key]){
+        e.preventDefault();
+        touch({ say: false });
+        setPosition(pos.x + moves[e.key][0], pos.y + moves[e.key][1]);
+        setMood("focus", { restore: 1200, say: false });
+        return;
+      }
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar"){ e.preventDefault(); touch(); react(); }
+    }
+    function onFocus(){ if (!dragging) setMood("wink", { restore: 1600 }); }
+    function onBlur(){ if (!dragging) setMood("idle", { restore: 0, say: false }); }
+    /* gom theo khung hình: pointermove có thể đến 100+ lần/giây, mỗi lần đều ghi
+       style của 2 con ngươi + đầu robot — dồn vào rAF để tối đa 1 lần/khung */
+    var lookRaf = 0, lookX = 0, lookY = 0;
+    function onDocMove(e){
+      if (dragging) return;
+      lookX = e.clientX; lookY = e.clientY;
+      if (lookRaf) return;
+      lookRaf = requestAnimationFrame(function (){ lookRaf = 0; look(lookX, lookY); });
+    }
+    function onResize(){ setPosition(pos.x, pos.y); }
+
+    /* ---------- hành động ---------- */
+    function hop(times){
+      times = times || 1;
+      for (var i = 0; i < times; i++)
+        (function (i){
+          setTimeout(function(){ if (!destroyed) el.classList.add("mr-hop"); }, i * 640);
+        })(i);
+      clearTimeout(timers.hop);
+      timers.hop = setTimeout(function(){ el.classList.remove("mr-hop"); }, times * 640);
+    }
+    function _wave(ms){
+      el.classList.add("mr-wave");
+      clearTimeout(timers.wave);
+      timers.wave = setTimeout(function(){ el.classList.remove("mr-wave"); }, ms || 2200);
+    }
+    function _cheer(ms){
+      el.classList.add("mr-cheer");
+      clearTimeout(timers.cheer);
+      timers.cheer = setTimeout(function(){ el.classList.remove("mr-cheer"); }, ms || 1500);
+    }
+    function burst(n, type){
+      n = n || 8; type = type || "dot";
+      var emojis = ["♥", "✦", "★", "✧"];
+      for (var i = 0; i < n; i++){
+        var s = document.createElement("span");
+        s.className = "mr-spark" + (type === "emoji" ? "" : " mr-dot");
+        if (type === "emoji") s.textContent = emojis[i % emojis.length];
+        s.style.left = (50 + Math.random() * 70 - 35) + "%";
+        s.style.top = (38 + Math.random() * 34 - 17) + "%";
+        s.style.setProperty("--dx", (Math.random() * 90 - 45) + "px");
+        s.style.animationDelay = (i * 34) + "ms";
+        sparks.appendChild(s);
+        (function (node){
+          node.addEventListener("animationend", function(){ node.remove(); });
+          setTimeout(function(){ node.remove(); }, 1400);   /* dự phòng reduced-motion */
+        })(s);
+      }
+    }
+    function react(){
+      if (sleepState !== "awake") wakeUp({ say: false });
+      markTouch();
+      var r = pick(REACTIONS);
+      r.act(api);
+      setMood(r.mood);
+      return r.mood;
+    }
+
+    /* ---------- âm thanh SFX (WebAudio) ---------- */
+    function beep(kind){
+      if (!soundOn) return;
+      var map = {
+        happy:[660, 990], love:[880, 1320], surprise:[520, 300], sad:[330, 240],
+        sleep:[420, 300], idle:[740], focus:[700], wink:[820, 880]
+      };
+      var notes = map[kind] || map.idle;
+      try {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        if (!audioCtx) audioCtx = new AC();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        notes.forEach(function (f, i){
+          var t = audioCtx.currentTime + i * 0.11;
+          var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+          o.type = kind === "sad" ? "triangle" : "sine";
+          o.frequency.value = f;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(0.06, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+          o.connect(g); g.connect(audioCtx.destination);
+          o.start(t); o.stop(t + 0.2);
+        });
+      } catch (e) {}
+    }
+
+    /* ---------- vòng lặp sống ---------- */
+    function loopBlink(){
+      timers.blink = setTimeout(function (){
+        if (el.dataset.eyes === "normal"){
+          el.classList.add("mr-blink");
+          setTimeout(function(){ el.classList.remove("mr-blink"); }, 130);
+        }
+        loopBlink();
+      }, 2200 + Math.random() * 3800);
+    }
+
+    /* ---------- API ---------- */
+    var api = {
+      el: el,
+      getMood: function(){ return mood; },
+      setMood: function(name, o){ return setMood(name, o); },
+      say: say,
+      react: react,
+      hop: hop,
+      wave: function(){ _wave(2200); return setMood("happy"); },
+      cheer: function(ms){ _cheer(ms || 1500); return setMood("love", { restore: 2600 }); },
+      burst: burst,
+      blink: function(){
+        el.classList.add("mr-blink");
+        setTimeout(function(){ el.classList.remove("mr-blink"); }, 130);
+      },
+      look: look,
+      setPosition: setPosition,
+      center: center,
+      getBounds: function(){ return bounds; },
+      setBounds: function(b){
+        bounds = b || null;
+        setPosition(pos.x, pos.y);   /* kep lai ngay neu vung moi nho hon */
+      },
+      setTheme: function(t){ el.classList.toggle("mr-dark", t === "dark"); },
+      /* --- tự ngủ --- */
+      isSleeping: function(){ return sleepState === "asleep"; },
+      getSleepState: function(){ return sleepState; },
+      getSleepAfter: function(){ return sleepAfter; },
+      setSleepAfter: setSleepAfter,
+      goToSleep: function(){
+        if (sleepState === "asleep"){ speakBubble(pick(lines.sleep || DEFAULT_LINES.sleep), 2600); return; }
+        markTouch(); goSleep();
+      },
+      wakeUp: wakeUp,
+      getSpeech: function(){ return tts; },
+      setSpeechEnabled: function(v){ tts.setEnabled(v); if (!v) tts.stop(); },
+      setVoice: function(uri){ tts.setVoice(uri); },
+      getVoices: function(){ return tts.getVoices(); },
+      setRate: function(v){ tts.setRate(v); },
+      setPitch: function(v){ tts.setPitch(v); },
+      setSfx: function(v){ soundOn = !!v; },
+      _cheer: _cheer,
+      _wave: _wave,
+      destroy: function (){
+        if (destroyed) return;
+        destroyed = true;
+        Object.keys(timers).forEach(function (k){ clearTimeout(timers[k]); clearInterval(timers[k]); });
+        clearInterval(talkingInterval);
+        tts.stop();
+        el.removeEventListener("pointerdown", onDown);
+        el.removeEventListener("pointermove", onMove);
+        el.removeEventListener("pointerup", onUp);
+        el.removeEventListener("pointercancel", onUp);
+        el.removeEventListener("pointerenter", onEnter);
+        el.removeEventListener("click", onClick);
+        el.removeEventListener("dblclick", onDblClick);
+        el.removeEventListener("keydown", onKey);
+        el.removeEventListener("focus", onFocus);
+        el.removeEventListener("blur", onBlur);
+        document.removeEventListener("pointermove", onDocMove);
+        document.removeEventListener("pointerdown", onDocDown);
+        document.removeEventListener("keydown", onDocKey);
+        document.removeEventListener("visibilitychange", onVisibility);
+        window.removeEventListener("resize", onResize);
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }
+    };
+
+    /* ---------- gắn sự kiện ---------- */
+    el.addEventListener("pointerdown", onDown);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", onUp);
+    el.addEventListener("pointercancel", onUp);
+    el.addEventListener("pointerenter", onEnter);
+    el.addEventListener("click", onClick);
+    el.addEventListener("dblclick", onDblClick);
+    el.addEventListener("keydown", onKey);
+    el.addEventListener("focus", onFocus);
+    el.addEventListener("blur", onBlur);
+    document.addEventListener("pointermove", onDocMove, { passive: true });
+    document.addEventListener("pointerdown", onDocDown);
+    document.addEventListener("keydown", onDocKey);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("resize", onResize);
+
+    /* ---------- khởi động ---------- */
+    center();
+    measure();
+    el.dataset.mood = "idle";
+    el.dataset.eyes = "normal";
+    setMood("wink", { restore: 2200 });
+    loopBlink();
+    startIdleWatch();
+    setTimeout(function(){ if (!destroyed && mood === "idle") setMood("happy"); }, 4200);
+
+    return api;
+  }
+
+  return {
+    createRobot: createRobot,
+    MOODS: MOODS,
+    DEFAULT_LINES: DEFAULT_LINES,
+    version: "2.0.0"
+  };
+});
+</script>
+<script>
+/* ============================================================
+   1. TOOLTIP
+   ============================================================ */
+const tip = document.getElementById("tip");
+const scene = document.getElementById("scene");
+
+/* Chỉ dựng lại nội dung tooltip khi đổi thiết bị; di chuyển chuột chỉ cập nhật vị trí.
+   Trước đây innerHTML được gán lại ở MỌI sự kiện pointermove. */
+let tipTarget = null;
+document.addEventListener("pointermove", e => {
+  const hot = e.target.closest ? e.target.closest(".hot") : null;
+  if (!hot){ tipTarget = null; tip.classList.remove("show"); return; }
+  if (hot !== tipTarget){
+    tipTarget = hot;
+    tip.innerHTML = "<b></b><span></span>";
+    tip.querySelector("b").textContent = hot.dataset.n || "";
+    tip.querySelector("span").textContent = hot.dataset.d || "";
+  }
+  tip.style.left = e.clientX + "px";
+  tip.style.top = e.clientY + "px";
+  tip.classList.add("show");
+}, { passive:true });
+
+document.addEventListener("pointerout", e => {
+  if (!e.relatedTarget){ tipTarget = null; tip.classList.remove("show"); }
+});
+document.addEventListener("scroll",  () => tip.classList.remove("show"), true);
+
+/* ============================================================
+   2. PARALLAX — các lớp dịch nhẹ theo con trỏ
+   ============================================================ */
+const layers = [...document.querySelectorAll(".lyr")];
+const overlayEl = document.getElementById("overlay");
+let raf = 0;
+scene.addEventListener("pointermove", e => {
+  if (raf) return;
+  raf = requestAnimationFrame(() => {
+    const r = scene.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+    const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+    layers.forEach(l => {
+      const d = +l.dataset.depth || 6;
+      l.setAttribute("transform", `translate(${(dx * d).toFixed(2)} ${(dy * d * .5).toFixed(2)})`);
+    });
+    /* robot đi cùng lớp bàn phía trước (depth 22) */
+    const d = 22;
+    overlayEl.style.transform = `translate(${(dx * d).toFixed(2)}px, ${(dy * d * .5).toFixed(2)}px)`;
+    raf = 0;
+  });
+}, { passive:true });
+scene.addEventListener("pointerleave", () => {
+  layers.forEach(l => l.setAttribute("transform", ""));
+  overlayEl.style.transform = "";
+});
+
+/* ============================================================
+   3. ĐÈN / NGÀY-ĐÊM
+   ============================================================ */
+const btnLights = document.getElementById("btnLights");
+const btnNight  = document.getElementById("btnNight");
+
+function setLights(on){
+  document.body.classList.toggle("lights-off", !on);
+  btnLights.setAttribute("aria-pressed", String(on));
+  btnLights.textContent = on ? "💡 Đèn bật" : "🔦 Đèn tắt";
+}
+function setNight(on){
+  document.body.classList.toggle("night", on);
+  btnNight.setAttribute("aria-pressed", String(on));
+}
+btnLights.onclick = () => setLights(document.body.classList.contains("lights-off"));
+btnNight.onclick  = () => setNight(!document.body.classList.contains("night"));
+
+/* ============================================================
+   4. PHÍM TẮT
+   ============================================================ */
+addEventListener("keydown", e => {
+  const t = e.target;
+  if (t && typeof t.matches === "function" && t.matches("input,textarea,select,[contenteditable]")) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = String(e.key || "").toLowerCase();
+  if (k === "l") btnLights.click();
+  if (k === "n") btnNight.click();
+  if (k === "home") goHome();
+  if (k === "f") btnFold.click();
+  if (k === "i" || k === "?") btnInfo.click();
+  if (k === "escape") setInfo(false);
+});
+
+/* ============================================================
+   6. ROBOT SỐNG — nằm trong phòng, kéo được, tự ngủ, có giọng nói
+   ============================================================ */
+const overlay = document.getElementById("overlay");
+const wrap   = document.querySelector(".sceneWrap");
+
+/* toạ độ phòng (viewBox) -> pixel. viewBox = "0 86 1600 892" */
+const VB = { x:0, y:86, w:1600, h:892 };
+/* vùng robot được đi trong phòng: sàn phía trước (bề rộng sàn theo phối cảnh).
+   Cao dải này phải lớn hơn chiều cao hiển thị của robot, nếu không robot
+   sẽ bị kẹp cứng không di chuyển được theo chiều dọc. */
+const ROOM = { left:140, right:1462, top:700, bottom:936, homeX:900, homeY:812 };
+
+const RW = 190, RH = 246;            /* kích thước robot trong engine (px CSS) */
+const rs = () => parseFloat(getComputedStyle(overlay).getPropertyValue("--rs")) || 0.72;
+const scale = () => (wrap.getBoundingClientRect().width || VB.w) / VB.w;
+const toPxX = x => x * scale();
+const toPxY = y => (y - VB.y) * scale();
+const toSceneX = px => px / scale();
+const toSceneY = py => VB.y + py / scale();
+
+function roomBounds(){
+  const k = rs();
+  const hx = RW * k / 2, hy = RH * k / 2;      /* nửa kích thước hiển thị */
+  return { left:  toPxX(ROOM.left) + hx, right: toPxX(ROOM.right) - hx,
+           top:   toPxY(ROOM.top)  + hy, bottom: toPxY(ROOM.bottom) - hy };
+}
+
+const bot = RobotEngine.createRobot({
+  mount: overlay,
+  position: "absolute",
+  theme: "light",
+  bounds: roomBounds(),
+  lang: "vi",
+  sleepAfter: 20000,
+  speech: true,
+  sfx: true,
+  rate: 1,
+  pitch: 1.05,
+  label: "Robot mini trong phòng thí nghiệm. Kéo để di chuyển, Enter để phản ứng.",
+  lines: {
+    idle:    ["Chào chủ nhân! Em là robot của phòng lab đây.", "Phòng hôm nay đông vui quá.",
+              "Chủ nhân cần em làm gì ạ?", "Kéo em đi bất cứ đâu nha chủ nhân!"],
+    happy:   ["Dạ vâng ạ!", "Tuyệt vời!", "Em làm được mẹ!", "Yay~"],
+    love:    ["Chủ nhân dễ thương quá!", "Gửi chủ nhân một trái tim nhé!", "Em thích chủ nhân lắm!"],
+    drowsy:  ["Buồn ngủ quá...", "Mắt em nặng trĩu rồi...", "Ai cho em một giấc..."],
+    sleep:   ["Zzz... ngủ ngon chủ nhân...", "Zzz... đang mô phỏng thuật toán... Zzz..."],
+    wake:    ["Ơi em ngủ rồi à?", "À, xin lỗi chủ nhân, em buồn ngủ quá!", "Tỉnh táo rồi!"],
+    wink:    ["Chào chủ nhân!", "Làm quen với em đi!", "Em thấy chủ nhân rồi đó!", "Hihi~"],
+    sad:     ["Ôi...", "Chủ nhân bỏ em rồi à...", "Buồn thật đó...", "Kéo em lại gần với!"],
+    surprise:["Ồ! Có gì vậy ạ?", "Bất ngờ ghê!", "Hả chủ nhân?!", "Điều gì xảy ra rồi?"],
+    focus:   ["Em đang tập trung đây!", "Ôm việc vào nè!", "Kéo em đi nào!", "Đi nào, đi nào!"]
+  }
+});
+window.labBot = bot;
+
+/* robot đứng trên sàn → đổ bóng theo vị trí.
+   Dùng rAF + so sánh thay đổi thay vì setInterval: trước đây ghi innerHTML 16 lần/giây
+   kể cả khi robot đứng yên. */
+const heroShadow = document.getElementById("heroShadow");
+let shadowKey = "";
+
+function syncSpot(){
+  const k = rs();
+  const x = toSceneX(parseFloat(bot.el.style.left) || 0);
+  const y = toSceneY(parseFloat(bot.el.style.top) || 0);
+  const w = RW * k / scale(), h = RH * k / scale();
+  const key = x.toFixed(1) + "|" + y.toFixed(1) + "|" + w.toFixed(1);
+  if (key === shadowKey) return;                 /* không đổi -> không vẽ lại */
+  shadowKey = key;
+  heroShadow.innerHTML =
+    '<ellipse cx="' + x.toFixed(1) + '" cy="' + (y + h / 2 - h * 0.035).toFixed(1) +
+      '" rx="' + (w / 2.3).toFixed(1) + '" ry="' + (h / 22).toFixed(1) +
+      '" fill="url(#gCast)"/>';
+}
+(function shadowLoop(){
+  syncSpot();
+  requestAnimationFrame(shadowLoop);
+})();
+
+function goHome(){
+  bot.setPosition(toPxX(ROOM.homeX), toPxY(ROOM.homeY));
+  bot.hop(1);
+  bot.setMood("happy", { restore: 2000 });
+}
+document.getElementById("btnHome").onclick = goHome;
+
+addEventListener("resize", () => {
+  bot.setBounds(roomBounds());
+  bot.setPosition(toPxX(ROOM.homeX), toPxY(ROOM.homeY));
+});
+
+/* parallax: robot đi cùng lớp bàn phía trước */
+const overlayLayer = overlay;
+
+/* ============================================================
+   7. ĐIỀU KHIỂN ROBOT
+   ============================================================ */
+document.getElementById("btnTalk").onclick = function () {
+  const pool = ["Chào chủ nhân, em là robot mini trong phòng thí nghiệm HUT đây!",
+                "Chủ nhân muốn hôm nay làm gì ạ?",
+                "Chủ nhân kéo em đi đâu em cũng đi theo!",
+                "Trong phòng này có đủ thiết bị để chủ nhân thực hành đồ án robot rồi ạ.",
+                "Em nghe lời chủ nhân, cứ gọi em là em có mặt!"];
+  bot._wave(2200);
+  bot.say(pool[Math.floor(Math.random() * pool.length)], { hold: 3000 });
+  bot.setMood("wink", { restore: 0 });
+};
+document.getElementById("btnWave").onclick = function () { bot.wave(); };
+document.getElementById("btnRandom").onclick = function () {
+  const keys = Object.keys(RobotEngine.MOODS).filter(k => k !== "idle" && k !== "focus");
+  bot.setMood(keys[Math.floor(Math.random() * keys.length)]);
+  bot.hop(1);
+};
+
+const sleepBtn = document.getElementById("btnSleep");
+const sleepIc  = sleepBtn.querySelector(".ic");
+const sleepLbl = sleepBtn.querySelector(".lbl");
+sleepBtn.onclick = function () {
+  if (bot.isSleeping()){ bot.wakeUp(); }
+  else { bot.goToSleep(); }
+};
+setInterval(function () {
+  const s = bot.isSleeping();
+  if (sleepBtn.getAttribute("aria-pressed") !== String(s)){
+    sleepBtn.setAttribute("aria-pressed", String(s));
+    /* chỉ đổi biểu tượng + chữ, giữ nguyên cấu trúc nút */
+    sleepIc.textContent = s ? "⏰" : "😴";
+    sleepLbl.textContent = s ? "Thức dậy" : "Ngủ";
+  }
+}, 400);
+
+document.getElementById("sleepSel").onchange = function (e) {
+  bot.setSleepAfter(parseInt(e.target.value, 10));
+};
+
+/* giọng nói */
+const voiceSel = document.getElementById("voiceSel");
+const tts = bot.getSpeech();
+function fillVoices(){
+  const list = tts.getVoices() || [];
+  voiceSel.innerHTML = "";
+  if (!list.length){ voiceSel.innerHTML = '<option value="">— Trình duyệt chưa có giọng —</option>'; return; }
+  list.forEach(v => {
+    const o = document.createElement("option");
+    o.value = v.voiceURI; o.textContent = v.name + " · " + v.lang;
+    voiceSel.appendChild(o);
+  });
+  voiceSel.value = tts.getVoiceURI() || (list[0] && list[0].voiceURI) || "";
+}
+fillVoices();
+if (tts.supported){
+  window.speechSynthesis.addEventListener("voiceschanged", fillVoices);
+  setTimeout(fillVoices, 400); setTimeout(fillVoices, 1500);
+} else {
+  voiceSel.disabled = true;
+  document.getElementById("btnTts").disabled = true;
+}
+voiceSel.onchange = function () {
+  bot.setVoice(voiceSel.value);
+  bot.say("Em là robot của chủ nhân đây.");
+};
+
+const rateInput = document.getElementById("rate"), rateOut = document.getElementById("rateOut");
+rateInput.oninput = function (e) {
+  const v = parseFloat(e.target.value);
+  bot.setRate(v); rateOut.textContent = v.toFixed(1);
+};
+rateOut.textContent = "1.0";
+
+const ttsBtn = document.getElementById("btnTts");
+ttsBtn.onclick = function () {
+  const on = ttsBtn.getAttribute("aria-pressed") !== "true";
+  ttsBtn.setAttribute("aria-pressed", String(on));
+  bot.setSpeechEnabled(on);
+  if (on) bot.say("Em đã bật giọng nói nhé chủ nhân!");
+};
+const sfxBtn = document.getElementById("btnSfx");
+sfxBtn.onclick = function () {
+  const on = sfxBtn.getAttribute("aria-pressed") !== "true";
+  sfxBtn.setAttribute("aria-pressed", String(on));
+  bot.setSfx(on);
+};
+
+/* ============================================================
+   7b. GIAO DIỆN: popover thông tin + gọn thanh công cụ
+   ============================================================ */
+const infoEl = document.getElementById("info");
+const btnInfo = document.getElementById("btnInfo");
+const btnFold = document.getElementById("btnFold");
+
+function setInfo(on){
+  infoEl.classList.toggle("show", on);
+  btnInfo.setAttribute("aria-pressed", String(on));
+}
+btnInfo.onclick = function () {
+  setInfo(!infoEl.classList.contains("show"));
+};
+infoEl.addEventListener("click", e => { if (e.target.closest("a,button")) return; setInfo(false); });
+
+function setFold(on){
+  document.body.classList.toggle("fold", on);
+  btnFold.setAttribute("aria-pressed", String(on));
+  /* đổi cảnh khi thanh gọn/thay đổi kích thước khung cảnh */
+  requestAnimationFrame(() => bot.setBounds(roomBounds()));
+}
+btnFold.onclick = function () { setFold(!document.body.classList.contains("fold")); };
+
+/* ============================================================
+   8. XUẤT PNG — nhúng luôn robot đang đứng ở vị trí hiện tại
+   ============================================================ */
+document.getElementById("btnSave").onclick = function () {
+  const clone = scene.cloneNode(true);
+  clone.removeAttribute("style");
+  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+  /* giữ trạng thái ban đêm / tắt đèn trong ảnh xuất ra */
+  if (document.body.classList.contains("night"))     clone.classList.add("ex-night");
+  else if (document.body.classList.contains("lights-off")) clone.classList.add("ex-dark");
+  const W = 2400, H = 1500;
+  clone.setAttribute("width", W);
+  clone.setAttribute("height", H);
+
+  /* chèn bản robot tĩnh đúng chỗ robot sống đang đứng */
+  const NS = "http://www.w3.org/2000/svg";
+  const rx = toSceneX(parseFloat(bot.el.style.left) || 0) - RW * rs() / scale() / 2;
+  const ry = toSceneY(parseFloat(bot.el.style.top) || 0) - RH * rs() / scale() / 2;
+  const use = document.createElementNS(NS, "use");
+  use.setAttribute("href", "#robot");
+  use.setAttribute("x", rx.toFixed(1));
+  use.setAttribute("y", ry.toFixed(1));
+  use.setAttribute("width", (RW * rs() / scale()).toFixed(1));
+  use.setAttribute("height", (RH * rs() / scale()).toFixed(1));
+  const g = document.createElementNS(NS, "g");
+  g.appendChild(use);
+  clone.appendChild(g);
+
+  const src = new XMLSerializer().serializeToString(clone);
+  const blob = new Blob([src], { type:"image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+
+  img.onload = function () {
+    const cv = document.createElement("canvas");
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext("2d");
+    ctx.fillStyle = "#E9ECF3";
+    ctx.fillRect(0, 0, W, H);
+    ctx.drawImage(img, 0, 0, W, H);
+    URL.revokeObjectURL(url);
+    const a = document.createElement("a");
+    a.download = "phong-thi-nghiem-hut-robot.png";
+    a.href = cv.toDataURL("image/png");
+    a.click();
+    tip.classList.remove("show");
+  };
+  img.onerror = function () {
+    URL.revokeObjectURL(url);
+    alert("Trình duyệt không cho xuất ảnh từ SVG. Bạn có thể chụp màn hình hoặc lưu SVG bằng Ctrl+S.");
+  };
+  img.src = url;
+};
+</script>
+</body>
+</html>

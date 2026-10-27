@@ -1,0 +1,1359 @@
+﻿<!DOCTYPE html><html lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport">
+<title>Kỹ thuật số — CƠ KHÍ HUIT</title>
+<meta content="Kỹ thuật số — Ebook giáo trình, bài tập ôn tập, danh sách video bài giảng và mô phỏng thực hành từ Chương 0 đến Chương 5." name="description">
+<link href="../assets/logo.png" rel="icon">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="../assets/app.css?v=20261017d" rel="stylesheet">
+<style>
+/* ── CSS VARIABLES THEO DESIGN.MD ────────────────────── */
+:root {
+  --white: #FFFFFF;
+  --off-white: #F7F8FA;
+  --gray-100: #E8EAEF;
+  --gray-300: #C9CED8;
+  --gray-400: #8B94A3;
+  --gray-600: #4B5563;
+  --brand: #034EA2;
+  --brand-deep: #023A80;
+  --brand-06: rgba(3, 78, 162, 0.06);
+  --brand-10: rgba(3, 78, 162, 0.10);
+  --brand-20: rgba(3, 78, 162, 0.20);
+  --brand-25: rgba(3, 78, 162, 0.25);
+  --brand-45: rgba(3, 78, 162, 0.45);
+
+  --glass-1-bg: rgba(255, 255, 255, 0.55);
+  --glass-2-bg: rgba(255, 255, 255, 0.70);
+  --glass-3-bg: rgba(255, 255, 255, 0.85);
+  --glass-1-br: rgba(255, 255, 255, 0.70);
+  --glass-2-br: rgba(255, 255, 255, 0.85);
+  --glass-3-br: rgba(255, 255, 255, 1.00);
+
+  --blur-1: 16px;
+  --blur-2: 28px;
+  --blur-3: 44px;
+
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-full: 9999px;
+
+  --text-strong: #034EA2;
+  --text: #4B5563;
+  --text-muted: #8B94A3;
+  --text-invert: #FFFFFF;
+
+  --sh-xs: 0 1px 2px rgba(3, 78, 162, 0.05);
+  --sh-sm: 0 1px 2px rgba(3, 78, 162, 0.04), 0 4px 12px rgba(3, 78, 162, 0.07);
+  --sh-md: 0 2px 4px rgba(3, 78, 162, 0.04), 0 12px 28px rgba(3, 78, 162, 0.10);
+  --sh-lg: 0 8px 16px rgba(3, 78, 162, 0.07), 0 24px 56px rgba(3, 78, 162, 0.14);
+  --sh-press: 0 1px 2px rgba(3, 78, 162, 0.14);
+
+  --hi: rgba(255, 255, 255, 0.95);
+  --gutter: 24px;
+  --font-display: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+}
+
+/* ── Dark mode overrides (đồng bộ với app.css) ── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0B1220;
+  --off-white: #0B1220;
+  --gray-100: #1E293B;
+  --gray-300: #334155;
+  --gray-400: #64748B;
+  --gray-600: #CBD5E1;
+  --hi: rgba(255, 255, 255, .12);
+}
+:root[data-theme="dark"] body::before {
+  background:
+    radial-gradient(55% 45% at 14% 10%, rgba(30, 41, 59, .6), transparent 70%),
+    radial-gradient(50% 45% at 78% 26%, rgba(3, 78, 162, .18), transparent 70%),
+    radial-gradient(50% 45% at 22% 86%, rgba(30, 41, 59, .4), transparent 70%),
+    radial-gradient(45% 40% at 92% 82%, rgba(3, 78, 162, .14), transparent 70%),
+    linear-gradient(155deg, #0B1220, #0F172A);
+  filter: blur(90px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --off-white: #0B1220;
+    --gray-100: #1E293B;
+    --gray-300: #334155;
+    --gray-400: #64748B;
+    --gray-600: #CBD5E1;
+    --hi: rgba(255, 255, 255, .12);
+  }
+  :root:not([data-theme="light"]) body::before {
+    background:
+      radial-gradient(55% 45% at 14% 10%, rgba(30, 41, 59, .6), transparent 70%),
+      radial-gradient(50% 45% at 78% 26%, rgba(3, 78, 162, .18), transparent 70%),
+      radial-gradient(50% 45% at 22% 86%, rgba(30, 41, 59, .4), transparent 70%),
+      radial-gradient(45% 40% at 92% 82%, rgba(3, 78, 162, .14), transparent 70%),
+      linear-gradient(155deg, #0B1220, #0F172A);
+    filter: blur(90px);
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: var(--font-display);
+  background-color: var(--off-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Nền Mesh Blobs chuẩn Glassmorphism Light */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(55% 45% at 14% 10%, rgba(255,255,255,.85), transparent 70%),
+    radial-gradient(50% 45% at 78% 26%, rgba(160,172,190,.28), transparent 70%),
+    radial-gradient(50% 45% at 22% 86%, rgba(255,255,255,.60), transparent 70%),
+    radial-gradient(45% 40% at 92% 82%, rgba(148,163,184,.22), transparent 70%),
+    linear-gradient(155deg, #F7F8FA, #E4E7ED);
+  filter: blur(90px);
+}
+
+.ck-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+/* Glass classes */
+.glass {
+  position: relative;
+  border-radius: var(--r-lg);
+  box-shadow: inset 0 1px 0 var(--hi), inset 0 -1px 0 rgba(3, 78, 162, 0.04), 0 1px 2px rgba(3, 78, 162, 0.04), 0 8px 24px rgba(3, 78, 162, 0.08);
+}
+.glass.g1 { background: var(--glass-1-bg); border: 1px solid var(--glass-1-br); }
+.glass.g2 { background: var(--glass-2-bg); border: 1px solid var(--glass-2-br); }
+.glass.g3 { background: var(--glass-3-bg); border: 1px solid var(--glass-3-br); }
+@supports (backdrop-filter: blur(1px)) {
+  .glass.g1 { backdrop-filter: blur(var(--blur-1)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+  .glass.g2 { backdrop-filter: blur(var(--blur-2)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-2)) saturate(120%); }
+  .glass.g3 { backdrop-filter: blur(var(--blur-3)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-3)) saturate(120%); }
+}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.kts-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border-radius: var(--r-xl);
+  margin-bottom: var(--gutter);
+  box-shadow: var(--sh-md), inset 0 1px 0 var(--hi);
+}
+.kts-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  transform: scale(1.02);
+  transition: transform 900ms var(--ease-out);
+}
+.kts-hero:hover .kts-hero-bg { transform: scale(1.06); }
+.kts-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg,
+      rgba(2, 58, 128, .95) 0%,
+      rgba(3, 78, 162, .88) 32%,
+      rgba(3, 78, 162, .60) 58%,
+      rgba(3, 78, 162, .28) 80%,
+      rgba(3, 78, 162, .18) 100%),
+    linear-gradient(0deg, rgba(2, 58, 128, .55), transparent 45%);
+}
+.kts-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 34px 36px;
+  min-height: 230px;
+}
+.kts-hero-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: var(--white);
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(2,58,128,.45);
+  flex: none;
+}
+.kts-hero h1 {
+  margin: 0;
+  font: 800 clamp(28px, 5vw, 44px)/1.1 var(--font-display);
+  letter-spacing: -.03em;
+  color: var(--text-invert);
+}
+.kts-hero h1 span { color: rgba(255, 255, 255, .75); }
+.kts-hero p {
+  margin: 12px 0 0;
+  max-width: 65ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .92);
+}
+.kts-hero-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.kts-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: var(--r-full);
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font: 600 12.5px/1 var(--font-display);
+}
+.kts-stat b { font: 700 15px/1 var(--font-mono); }
+
+@media (max-width: 720px) {
+  .kts-hero-inner { grid-template-columns: 1fr; text-align: center; padding: 24px 20px; min-height: 0; gap: 16px; }
+  .kts-hero-logo { width: 80px; height: 80px; margin: 0 auto; }
+  .kts-hero p { margin-inline: auto; }
+  .kts-hero-stats { justify-content: center; }
+  .kts-hero-scrim { background: linear-gradient(180deg, rgba(2,58,128,.90), rgba(3,78,162,.85)); }
+}
+
+/* ── THANH CHUYỂN NHANH ──────────────────────────────── */
+.kts-jump {
+  position: sticky;
+  top: calc(var(--ck-nav-h, 72px) + 8px);
+  z-index: 30;
+  margin-bottom: var(--gutter);
+  padding: 12px 14px;
+  border-radius: var(--r-full);
+  box-shadow: var(--sh-md), inset 0 1px 0 var(--hi);
+}
+.kts-jump-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.kts-jump-row::-webkit-scrollbar { display: none; }
+.kts-jump-label {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px 0 8px;
+  font: 600 10.5px/1 var(--font-display);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.kts-jump-label svg { width: 14px; height: 14px; color: var(--text-strong); }
+.kts-jump a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  min-height: 36px;
+  padding: 0 15px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--brand-25);
+  background: var(--glass-1-bg);
+  color: var(--text);
+  font: 600 12.5px/1 var(--font-display);
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: var(--sh-xs);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.kts-jump a b { font: 700 11px/1 var(--font-mono); color: var(--text-muted); }
+.kts-jump a:hover { background: var(--glass-3-bg); transform: translateY(-1px); }
+.kts-jump a:hover b { color: var(--text-strong); }
+.kts-jump a.is-on { background: var(--brand); color: var(--text-invert); border-color: transparent; }
+.kts-jump a.is-on b { color: rgba(255, 255, 255, .80); }
+
+/* ── KHỐI SECTION ─────────────────────────────────────── */
+.kts-sec { margin-bottom: var(--gutter); }
+.kts-sec-head { margin-bottom: 16px; }
+.ck-section-title {
+  margin: 0;
+  font: 800 20px/1.3 var(--font-display);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--text-strong);
+}
+.kts-sec-head p {
+  margin: 6px 0 0;
+  max-width: 78ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+.kts-sec-head p a { color: var(--text-strong); font-weight: 600; text-decoration: none; }
+.kts-sec-head p a:hover { text-decoration: underline; }
+
+/* ── LƯỚI EBOOK GIÁO TRÌNH ────────────────────────────── */
+.unit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.unit-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--glass-1-bg);
+  border: 1px solid var(--glass-1-br);
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter: blur(1px)) {
+  .unit-card { backdrop-filter: blur(var(--blur-1)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+}
+@media (max-width: 768px) { .unit-card { background: rgba(255,255,255,.90); backdrop-filter: none; } }
+.unit-card:hover { transform: translateY(-2px); box-shadow: var(--sh-md), inset 0 1px 0 var(--hi); background: var(--glass-3-bg); }
+.unit-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 3.5px;
+  border-radius: 0 3px 3px 0;
+  background: var(--brand);
+  opacity: .85;
+}
+.unit-top { display: flex; align-items: center; gap: 10px; }
+.unit-no {
+  flex: none;
+  min-width: 52px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand);
+  color: var(--text-invert);
+  font: 700 11.5px/1 var(--font-mono);
+  letter-spacing: .05em;
+}
+.unit-emoji {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-md);
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  line-height: 1;
+  background: var(--brand-10);
+}
+.unit-nm { margin: 0; font: 700 15px/1.35 var(--font-display); color: var(--text-strong); letter-spacing: -.01em; }
+.unit-vi { margin: 2px 0 0; font: 400 13px/1.45 var(--font-display); color: var(--text-muted); }
+.unit-list { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 5px; }
+.unit-list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font: 400 13px/1.5 var(--font-display);
+  color: var(--text);
+}
+.unit-list li::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: .6;
+}
+.unit-foot {
+  margin-top: auto;
+  padding-top: 11px;
+  border-top: 1px solid var(--brand-06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.unit-foot .n { flex: none; font: 600 11px/1 var(--font-mono); color: var(--text-muted); }
+.unit-foot .go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  white-space: nowrap;
+  font: 600 12.5px/1 var(--font-display);
+  color: var(--text);
+  text-decoration: none;
+}
+.unit-foot .go svg { width: 14px; height: 14px; transition: transform var(--dur-fast) var(--ease-out); }
+.unit-card:hover .go { color: var(--text-strong); }
+.unit-card:hover .go svg { transform: translateX(3px); }
+
+/* ── THẺ BÀI TẬP ÔN TẬP ──────────────────────────────── */
+.task-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 960px) { .task-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .task-grid { grid-template-columns: 1fr; } }
+
+.task {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  border-radius: var(--r-lg);
+  background: var(--glass-1-bg);
+  border: 1px solid var(--glass-1-br);
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter: blur(1px)) {
+  .task { backdrop-filter: blur(var(--blur-1)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+}
+@media (max-width: 768px) { .task { background: rgba(255,255,255,.90); backdrop-filter: none; } }
+.task:hover { transform: translateY(-2px); box-shadow: var(--sh-md), inset 0 1px 0 var(--hi); background: var(--glass-3-bg); }
+
+.task-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--brand-06);
+}
+.tst {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-full);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  font: 600 11.5px/1 var(--font-display);
+}
+.tst .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+.tst.solid { background: var(--brand); color: var(--text-invert); }
+.tst.solid .dot { background: #fff; }
+.tst.mid { background: var(--brand-10); color: var(--brand-deep); border-color: var(--brand-20); }
+.tst.mid .dot { background: var(--brand); }
+.tst.light { background: rgba(255,255,255,.65); color: var(--text); border-color: var(--brand-25); }
+.tst.light .dot { width: 7px; height: 7px; background: transparent; border: 1.5px solid var(--gray-400); }
+
+.task-body { display: flex; flex-direction: column; flex: 1; }
+.task-sub { margin: 0; font: 400 12px/1.5 var(--font-display); color: var(--text-muted); }
+.task-title { margin: 4px 0 0; font: 700 15px/1.4 var(--font-display); color: var(--text-strong); letter-spacing: -.01em; }
+.task-due {
+  margin: 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 400 12px/1.5 var(--font-display);
+  color: var(--text-muted);
+}
+.task-due svg { width: 13px; height: 13px; flex: none; }
+.task-cta {
+  margin-top: 14px;
+  width: 100%;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  background: var(--brand);
+  color: var(--text-invert);
+  box-shadow: var(--sh-sm);
+  font: 700 12.5px/1 var(--font-display);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.task-cta:hover { background: var(--brand-deep); transform: translateY(-1px); }
+.task-cta:active { transform: scale(.98); box-shadow: var(--sh-press); }
+.task-cta svg { width: 15px; height: 15px; flex: none; }
+
+/* ── LƯỚI VIDEO BÀI GIẢNG ─────────────────────────────── */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.video-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r-lg);
+  background: var(--glass-1-bg);
+  border: 1px solid var(--glass-1-br);
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter: blur(1px)) {
+  .video-card { backdrop-filter: blur(var(--blur-1)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+}
+@media (max-width: 768px) { .video-card { background: rgba(255,255,255,.90); backdrop-filter: none; } }
+.video-card:hover { transform: translateY(-2px); box-shadow: var(--sh-md), inset 0 1px 0 var(--hi); background: var(--glass-3-bg); }
+.video-card .ico {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-md);
+  display: grid;
+  place-items: center;
+  background: var(--brand-10);
+  color: var(--text-strong);
+}
+.video-card .ico svg { width: 18px; height: 18px; }
+.video-card .tx { min-width: 0; flex: 1; }
+.video-card .tx b { display: block; font: 700 13.5px/1.35 var(--font-display); color: var(--text-strong); letter-spacing: -.005em; }
+.video-card .tx span { display: block; margin-top: 2px; font: 400 12px/1.4 var(--font-display); color: var(--text-muted); }
+.video-card .ar { flex: none; color: var(--text-muted); transition: transform var(--dur-fast) var(--ease-out); }
+.video-card .ar svg { width: 15px; height: 15px; }
+.video-card:hover .ar { color: var(--text-strong); transform: translateX(3px); }
+
+/* ── LƯỚI MÔ PHỎNG HỌC TẬP ────────────────────────────── */
+.link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  min-height: 60px;
+  background: var(--glass-1-bg);
+  border: 1px solid var(--glass-1-br);
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter: blur(1px)) {
+  .link-card { backdrop-filter: blur(var(--blur-1)) saturate(120%); -webkit-backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+}
+@media (max-width: 768px) { .link-card { background: rgba(255,255,255,.90); backdrop-filter: none; } }
+.link-card:hover { transform: translateY(-2px); box-shadow: var(--sh-md), inset 0 1px 0 var(--hi); background: var(--glass-3-bg); }
+.link-card .ico {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-md);
+  display: grid;
+  place-items: center;
+  background: var(--brand-10);
+  color: var(--text-strong);
+}
+.link-card .ico svg { width: 18px; height: 18px; }
+.link-card .tx { min-width: 0; flex: 1; }
+.link-card .tx b { display: block; font: 700 13.5px/1.35 var(--font-display); color: var(--text-strong); letter-spacing: -.005em; }
+.link-card .tx span { display: block; margin-top: 1px; font: 400 12px/1.45 var(--font-display); color: var(--text-muted); }
+.link-card .ar { flex: none; color: var(--text-muted); transition: transform var(--dur-fast) var(--ease-out); }
+.link-card .ar svg { width: 15px; height: 15px; }
+.link-card:hover .ar { color: var(--text-strong); transform: translateX(3px); }
+
+/* ── TÓM TẮT KIẾN THỨC / CÔNG THỨC CHƯƠNG ─────────────── */
+.gp-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--gutter);
+  padding: 14px 16px;
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+}
+.gp-search { position: relative; flex: 1 1 260px; min-width: 0; }
+.gp-search > svg {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.ck-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 16px 10px 38px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--brand-25);
+  background: rgba(255, 255, 255, 0.65);
+  font: 400 14px var(--font-display);
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.ck-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.12);
+}
+.ck-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--r-full);
+  font: 600 12px/1 var(--font-display);
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid var(--brand-10);
+  color: var(--text-strong);
+}
+.gp-count { margin-left: auto; font: 600 12.5px/1 var(--font-mono); color: var(--text-muted); }
+
+/* ── Dark mode: component overrides ── */
+:root[data-theme="dark"] .ck-input { background: rgba(255, 255, 255, .06); }
+:root[data-theme="dark"] .ck-pill { background: rgba(255, 255, 255, .08); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ck-input { background: rgba(255, 255, 255, .06); }
+  :root:not([data-theme="light"]) .ck-pill { background: rgba(255, 255, 255, .08); }
+}
+.gp-count b { color: var(--text-strong); }
+
+.gp-unit {
+  margin-bottom: var(--gutter);
+  scroll-margin-top: calc(var(--ck-nav-h, 72px) + 76px);
+}
+.gp-unit[hidden] { display: none; }
+.gp-unit-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--brand-06);
+}
+.gp-unit-head h2 {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  font: 800 24px/1.25 var(--font-display);
+  letter-spacing: -.02em;
+  color: var(--text-strong);
+}
+.gp-unit-head h2 small {
+  font: 600 11px/1 var(--font-display);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.gp-topic {
+  padding: 20px 22px;
+  border-radius: var(--r-lg);
+  margin-bottom: 12px;
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+  scroll-margin-top: calc(var(--ck-nav-h, 72px) + 76px);
+}
+.gp-topic[hidden] { display: none; }
+.gp-topic-head { margin-bottom: 12px; }
+.gp-topic-head h3 {
+  margin: 0;
+  font: 700 17px/1.35 var(--font-display);
+  letter-spacing: -.01em;
+  color: var(--text-strong);
+}
+.gp-topic-head p { margin: 3px 0 0; font: 400 13px/1.5 var(--font-display); color: var(--text-muted); font-style: italic; }
+
+.fx {
+  margin: 0 0 12px;
+  padding: 12px 15px;
+  border-radius: var(--r-md);
+  background: var(--brand-06);
+  border-left: 3px solid var(--brand);
+  font: 500 13.5px/1.75 var(--font-mono);
+  color: var(--brand-deep);
+  overflow-x: auto;
+}
+.fx b { color: var(--brand); font-weight: 700; }
+.fx em { font-style: normal; color: var(--text); font-family: var(--font-display); font-weight: 600; }
+
+.ex {
+  margin: 0 0 12px;
+  padding: 11px 15px;
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.60);
+  border: 1px solid var(--brand-06);
+  font: 400 13.5px/1.65 var(--font-display);
+  color: var(--text);
+}
+.ex::before {
+  content: "Ứng dụng & Lưu ý";
+  display: block;
+  margin-bottom: 3px;
+  font: 600 10.5px/1 var(--font-display);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.ex em { font-style: italic; color: var(--text-strong); font-weight: 600; }
+
+.doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13.5px;
+}
+.doc th, .doc td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--brand-06);
+}
+.doc th {
+  background: var(--brand-06);
+  color: var(--text-strong);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.av-empty {
+  padding: 44px 20px;
+  text-align: center;
+}
+.av-empty b { display: block; margin-bottom: 6px; font: 700 16px/1.3 var(--font-display); color: var(--text-strong); }
+.av-empty p { margin: 0 0 16px; font-size: 14px; color: var(--text-muted); }
+
+.ck-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: var(--r-md);
+  font: 600 13px/1 var(--font-display);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--brand-25);
+  background: var(--glass-1-bg);
+  color: var(--text-strong);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.ck-btn:hover { background: var(--glass-3-bg); transform: translateY(-1px); }
+.ck-btn.ghost { background: transparent; border-color: var(--brand-10); color: var(--text); }
+.ck-btn.ghost:hover { background: var(--glass-1-bg); color: var(--text-strong); }
+
+.av-back {
+  margin-top: var(--gutter);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Footer & Creator notes */
+.kts-footer-note {
+  margin-top: 40px;
+  padding: 24px;
+  border-radius: var(--r-xl);
+  text-align: center;
+  box-shadow: var(--sh-sm), inset 0 1px 0 var(--hi);
+}
+.kts-footer-note h4 {
+  margin: 0 0 8px;
+  font: 700 16px/1.3 var(--font-display);
+  color: var(--text-strong);
+}
+.kts-footer-note p {
+  margin: 0 auto 12px;
+  max-width: 70ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+.kts-footer-note a {
+  color: var(--text-strong);
+  font-weight: 600;
+  text-decoration: none;
+}
+.kts-footer-note a:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .kts-jump { position: static; border-radius: var(--r-xl); }
+  .gp-topic { padding: 16px 15px; }
+}
+</style>
+</head>
+<body data-depth="1">
+<div data-ck-nav="features"></div>
+<main class="ck-wrap">
+<!-- HERO SECTION -->
+<section class="kts-hero glass g2">
+<img alt="" aria-hidden="true" class="kts-hero-bg" onerror="this.style.display='none'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_8dAVNdrTjnBfpZIX_LVwwmMSzWVwWgtfF-d56Rvmshem7SXUGrmGZmd8Ik4Z6MqxH9abmPwHWrzJKWaiAPVL5oBhFBO1IZW44vQZWWOaNZr-VXBryqdM-7-Cd4FyoeCPp3topH9DNasQsQLF1FhcuI3CR9a7i5ohVpjSKrVHn1u36yNtZpe0VnSUJnrNBXJil7wVYrDuH1wVEBNlj724y6llMYxtklUAp4HJyTLQO4TFyFx4r5_qn50qhO44CyaC4q3KGQMS_fPifco">
+<span aria-hidden="true" class="kts-hero-scrim"></span>
+<div class="kts-hero-inner">
+<img alt="Logo Trường Đại học Công Thương TP. Hồ Chí Minh" class="kts-hero-logo" onerror="this.src='data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'&gt;&lt;circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23034EA2\'/&gt;&lt;text x=\'50\' y=\'56\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-family=\'sans-serif\' font-weight=\'bold\'&gt;HUIT&lt;/text&gt;&lt;/svg&gt;'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVSukKTVZNJL9dXNBFuOA2KkJ9u8g0Mih9kaQiycuph2NsiHNIfVzNipNJ6hZlXzqb3DpPRv0pHI2aHePc60FkE3tP9a5WITMEwgux4LJORZlhEmVUmfGwRpLvikSliXLk_t8TKNqRVUYVcOoNPRkzKYacHqBVKceojhgY6JOUZ5kInqy_cdOAGP4kx95RvfF3l1__Jo_nmrkRPlyQOgCrKrdtwU5lYRGnqFNhJt7c2r5iO5wq850cylZ3XCUCr_DyU6JmsPUZsg7Tohc">
+<div>
+<h1 class="">KỸ THUẬT <span class="">SỐ</span></h1>
+<p class="">Ebook giáo trình điện tử, bộ câu hỏi trắc nghiệm ôn tập, danh sách 15 video bài giảng chi tiết và phòng thí nghiệm mô phỏng mạch số từ <b>Chương 0</b> đến <b>Chương 5</b>.</p>
+<div class="kts-hero-stats" id="heroStats"><span class="kts-stat"><b>6</b> chương giáo trình</span><span class="kts-stat"><b>17</b> chuyên đề lý thuyết</span><span class="kts-stat"><b>15</b> video bài giảng</span><span class="kts-stat"><b>6</b> mô phỏng mạch số</span></div>
+</div>
+</div>
+</section>
+<!-- THANH CHUYỂN NHANH CHƯƠNG -->
+
+<!-- EBOOK GIÁO TRÌNH -->
+<section aria-labelledby="ebookTitle" class="kts-sec">
+<div class="kts-sec-head">
+<h2 class="ck-section-title" id="ebookTitle">EBOOK GIÁO TRÌNH</h2>
+<p class="">Hệ thống 6 chương giáo trình Kỹ thuật số chuẩn theo đề cương môn học. Bấm vào từng chương để mở tài liệu chi tiết hoặc duyệt tóm tắt lý thuyết, bảng chân trị và sơ đồ mạch bên dưới.</p>
+</div>
+<div class="unit-grid" id="unitGrid"><a class="unit-card" href="ebook/Chuong0-khai-niem-ve-ky-thuat-so.html"><div class="unit-top"><span class="unit-no">CHƯƠNG 0</span><span class="unit-emoji" aria-hidden="true">⚡</span></div><div><h3 class="unit-nm">Khái niệm về Kỹ thuật số</h3><p class="unit-vi">DIGITAL CONCEPTS</p></div><ul class="unit-list"><li class="">Tín hiệu Tương tự (Analog) &amp; Tín hiệu Số (Digital)</li><li class="">Dạng sóng xung và các thông số chu kỳ</li></ul><div class="unit-foot"><span class="n">2 chủ đề cốt lõi</span><span class="go">Mở Ebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></div></a><a class="unit-card" href="ebook/Chuong1-cac-he-thong-so-dem.html"><div class="unit-top"><span class="unit-no">CHƯƠNG 1</span><span class="unit-emoji" aria-hidden="true">🔢</span></div><div><h3 class="unit-nm">Các hệ thống số đếm</h3><p class="unit-vi">NUMBER SYSTEMS &amp; CODES</p></div><ul class="unit-list"><li class="">Chuyển đổi giữa các hệ cơ số (Dec, Bin, Oct, Hex)</li><li class="">Số bù 1, Số bù 2 và Phép toán nhị phân có dấu</li><li class="">Mã BCD, Mã Gray và Mã Parity kiểm tra lỗi</li></ul><div class="unit-foot"><span class="n">3 chủ đề cốt lõi</span><span class="go">Mở Ebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></div></a><a class="unit-card" href="ebook/Chuong2-dai-so-boole-va-cac-cong-locgic-phan2.html"><div class="unit-top"><span class="unit-no">CHƯƠNG 2</span><span class="unit-emoji" aria-hidden="true">📐</span></div><div><h3 class="unit-nm">Đại số Boole và Cổng logic</h3><p class="unit-vi">BOOLEAN ALGEBRA &amp; LOGIC GATES</p></div><ul class="unit-list"><li class="">Cổng logic cơ bản &amp; Cổng logic vạn năng (NAND, NOR)</li><li class="">Định lý De Morgan &amp; Rút gọn biểu thức Boole</li><li class="">Bìa Karnaugh (K-Map) rút gọn tối ưu hàm logic</li></ul><div class="unit-foot"><span class="n">3 chủ đề cốt lõi</span><span class="go">Mở Ebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></div></a><a class="unit-card" href="ebook/Chuong3-he-to-hop.html"><div class="unit-top"><span class="unit-no">CHƯƠNG 3</span><span class="unit-emoji" aria-hidden="true">🎛️</span></div><div><h3 class="unit-nm">Hệ tổ hợp</h3><p class="unit-vi">COMBINATIONAL LOGIC CIRCUITS</p></div><ul class="unit-list"><li class="">Mạch cộng bán phần (Half-Adder) và toàn phần (Full-Adder)</li><li class="">Mạch dồn kênh (Multiplexer - MUX) &amp; Phân kênh (DEMUX)</li><li class="">Mạch giải mã (Decoder) &amp; Mã hóa (Encoder) hiển thị 7 đoạn</li></ul><div class="unit-foot"><span class="n">3 chủ đề cốt lõi</span><span class="go">Mở Ebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></div></a><a class="unit-card" href="ebook/Chuong4-he-tuan-tu-&-fipl-flop-phan2.html"><div class="unit-top"><span class="unit-no">CHƯƠNG 4</span><span class="unit-emoji" aria-hidden="true">⏱️</span></div><div><h3 class="unit-nm">Hệ tuần tự</h3><p class="unit-vi">SEQUENTIAL LOGIC CIRCUITS</p></div><ul class="unit-list"><li class="">Các phần tử nhớ cơ bản: Latch và Flip-Flop (SR, D, JK, T)</li><li class="">Bộ đếm bất đồng bộ (Asynchronous) và Đồng bộ (Synchronous)</li><li class="">Thanh ghi dịch (Shift Registers - SISO, SIPO, PISO, PIPO)</li></ul><div class="unit-foot"><span class="n">3 chủ đề cốt lõi</span><span class="go">Mở Ebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></div></a><a class="unit-card" href="ebook/Chuong5-giao-tiep-giua-cac-ho-vi-mach-so.html"><div class="unit-top"><span class="unit-no">CHƯƠNG 5</span><span class="unit-emoji" aria-hidden="true">🔌</span></div><div><h3 class="unit-nm">Giao tiếp giữa các họ vi mạch số</h3><p class="unit-vi">DIGITAL IC FAMILIES &amp; INTERFACING</p></div><ul class="unit-list"><li class="">Đặc tuyến của họ vi mạch TTL và CMOS (74xx vs 40xx)</li><li class="">Giao tiếp giữa TTL và CMOS (Phối hợp mức điện áp &amp; Dòng tải)</li><li class="">Hệ số chịu tải (Fan-out) và Thời gian trễ lan truyền</li></ul><div class="unit-foot"><span class="n">3 chủ đề cốt lõi</span><span class="go">Mở Ebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></div></a></div>
+</section>
+<!-- BÀI TẬP ÔN TẬP (KHÔNG CÓ TRONG THI) -->
+<section aria-labelledby="taskTitle" class="kts-sec">
+<div class="kts-sec-head">
+<h2 class="ck-section-title" id="taskTitle">BÀI TẬP ÔN TẬP (KHÔNG CÓ TRONG ĐỀ THI)</h2>
+<p class="">Bộ câu hỏi trắc nghiệm rèn luyện tư duy logic và kỹ năng thiết kế mạch, phục vụ củng cố kiến thức trước kỳ thi đánh giá học phần.</p>
+</div>
+<div class="task-grid" id="taskGrid"><article class="task"><div class="task-badges"><span class="tst mid"><i class="dot" aria-hidden="true"></i>Tài liệu mở</span><span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span></div><div class="task-body"><p class="task-sub">Kỹ thuật số · Ôn tập kiến thức</p><h3 class="task-title">Ôn tập Chương 0: Khái niệm Kỹ thuật số</h3><p class="task-due"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>Thời gian: Trước kỳ thi</p></div><a class="task-cta" href="bai-tap-on-tap/kts-ch0-quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>Làm bài tập</a></article><article class="task"><div class="task-badges"><span class="tst mid"><i class="dot" aria-hidden="true"></i>Tài liệu mở</span><span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span></div><div class="task-body"><p class="task-sub">Kỹ thuật số · Ôn tập kiến thức</p><h3 class="task-title">Ôn tập Chương 1: Hệ thống số đếm &amp; Mã</h3><p class="task-due"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>Thời gian: Trước kỳ thi</p></div><a class="task-cta" href="bai-tap-on-tap/kts-ch1-quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>Làm bài tập</a></article><article class="task"><div class="task-badges"><span class="tst mid"><i class="dot" aria-hidden="true"></i>Tài liệu mở</span><span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span></div><div class="task-body"><p class="task-sub">Kỹ thuật số · Ôn tập kiến thức</p><h3 class="task-title">Ôn tập Chương 2: Đại số Boole &amp; Cổng logic</h3><p class="task-due"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 1 18 0z"></path></svg>Thời gian: Trước kỳ thi</p></div><a class="task-cta" href="bai-tap-on-tap/kts-ch2-quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>Làm bài tập</a></article><article class="task"><div class="task-badges"><span class="tst mid"><i class="dot" aria-hidden="true"></i>Tài liệu mở</span><span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span></div><div class="task-body"><p class="task-sub">Kỹ thuật số · Ôn tập kiến thức</p><h3 class="task-title">Ôn tập Chương 3: Thiết kế Hệ tổ hợp</h3><p class="task-due"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 1 18 0z"></path></svg>Thời gian: Trước kỳ thi</p></div><a class="task-cta" href="bai-tap-on-tap/kts-ch3-quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>Làm bài tập</a></article><article class="task"><div class="task-badges"><span class="tst mid"><i class="dot" aria-hidden="true"></i>Tài liệu mở</span><span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span></div><div class="task-body"><p class="task-sub">Kỹ thuật số · Ôn tập kiến thức</p><h3 class="task-title">Ôn tập Chương 4: Thiết kế Hệ tuần tự &amp; Đếm</h3><p class="task-due"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 1 18 0z"></path></svg>Thời gian: Trước kỳ thi</p></div><a class="task-cta" href="bai-tap-on-tap/kts-ch4-quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>Làm bài tập</a></article><article class="task"><div class="task-badges"><span class="tst mid"><i class="dot" aria-hidden="true"></i>Tài liệu mở</span><span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span></div><div class="task-body"><p class="task-sub">Kỹ thuật số · Ôn tập kiến thức</p><h3 class="task-title">Ôn tập Chương 5: Giao tiếp họ vi mạch số</h3><p class="task-due"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 1 18 0z"></path></svg>Thời gian: Trước kỳ thi</p></div><a class="task-cta" href="bai-tap-on-tap/kts-ch5-quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>Làm bài tập</a></article></div>
+</section>
+<!-- DANH SÁCH VIDEO HỌC -->
+<section aria-labelledby="videoTitle" class="kts-sec">
+<div class="kts-sec-head">
+<h2 class="ck-section-title" id="videoTitle">DANH SÁCH VIDEO HỌC (15 BUỔI)</h2>
+<p class="">Tổng hợp chuỗi video bài giảng trực quan đầy đủ từ Buổi 1 đến Buổi 15, hướng dẫn chi tiết từ lý thuyết cổng logic đến phân tích thiết kế hệ tuần tự và vi mạch số.</p>
+</div>
+<div class="video-grid" id="videoGrid"><a class="video-card" href="https://youtu.be/fhitclIgNDk?si=Us7jVn6wv-xywxcv" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 1</b><span class="">Giới thiệu môn học, khái niệm số &amp; tương tự</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/EAaHmWugawE?si=50kQyX0u9YwjGpQb" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 2</b><span class="">Hệ thống số đếm &amp; chuyển đổi cơ số</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/-kzMn9Na6f0?si=iH60f7SfWBctkZ7m" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 3</b><span class="">Số bù 1, bù 2 &amp; phép tính nhị phân</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/D3_vFcKI5dc?si=gVyHUjPGpCSPWXRw" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 4</b><span class="">Mã hóa BCD, Gray và kiểm tra Parity</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/ZiDcQlYueGI?si=U9bteJ4KYV_0EuBp" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 5</b><span class="">Đại số Boole &amp; Các định lý cơ bản</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/MS4GiZzg-EI?si=8j_ZpL5nbewcVi6E" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 6</b><span class="">Cổng logic &amp; Định lý De Morgan</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/ih-YwYmmYwU?si=O4IjNByWOmqwrTjp" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 7</b><span class="">Tối ưu hàm logic bằng Bìa Karnaugh</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/rN4vjqlZwFM?si=KeHC972ifj_5dlGV" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 8</b><span class="">Thiết kế mạch cộng Half/Full Adder</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/s1GdAhuDRHs?si=OJ0Yfum96u987jsg" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 9</b><span class="">Mạch dồn kênh MUX &amp; phân kênh DEMUX</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/7vY2MfIS5lg?si=Mq5e2SerEb1_JV-_" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 10</b><span class="">Mạch giải mã Decoder &amp; LED 7 đoạn</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/y9exrPhcCKA?si=f5N41G2F1CmxohpN" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 11</b><span class="">Phần tử nhớ Latch &amp; Flip-Flop SR, D</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/ZpcyFSLFNwc?si=pdgIcZuBmKrOLjG7" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 12</b><span class="">JK Flip-Flop, T-Flip-Flop &amp; Xung clock</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/dzp9sFBebNQ?si=ZnqWW2mVPMi3eUQL" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 13</b><span class="">Thiết kế bộ đếm bất đồng bộ &amp; đồng bộ</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/JfYI3cHYzQg?si=sULmW0AbnOF1UV-4" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 14</b><span class="">Thanh ghi dịch &amp; Chuyển đổi dữ liệu</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a><a class="video-card" href="https://youtu.be/5Cuh-qj_yeA?si=bp845wsRG23nbEhj" target="_blank" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg></span><span class="tx"><b>Kỹ thuật số Buổi 15</b><span class="">Họ vi mạch số TTL/CMOS &amp; Giao tiếp mạch</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a></div>
+</section>
+<!-- MÔ PHỎNG HỌC TẬP -->
+<section aria-labelledby="simTitle" class="kts-sec">
+<div class="kts-sec-head">
+<h2 class="ck-section-title" id="simTitle">MÔ PHỎNG HỌC TẬP &amp; PHÒNG THÍ NGHIỆM MẠCH SỐ</h2>
+<p class="">Công cụ mô phỏng tương tác trực tuyến giúp sinh viên trực quan hóa bảng trạng thái, kiểm tra xung nhịp clock và thử nghiệm hệ tổ hợp – tuần tự ngay trên trình duyệt.</p>
+</div>
+<div class="link-grid" id="simGrid"><a class="link-card" href="sim/mophong_Ch0.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"></path></svg></span><span class="tx"><b>CHƯƠNG 0: MÔ PHỎNG KỸ THUẬT SỐ</b><span class="">Trực quan hóa dạng sóng xung clock & mức logic</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></a><a class="link-card" href="sim/mophong_Ch1.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"></path></svg></span><span class="tx"><b>CHƯƠNG 1: MÔ PHỎNG HỆ THỐNG SỐ ĐẾM</b><span class="">Mô phỏng bộ đổi cơ số nhị phân và mã BCD</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></a><a class="link-card" href="sim/mophong_Ch2.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"></path></svg></span><span class="tx"><b>CHƯƠNG 2: MÔ PHỎNG ĐẠI SỐ BOOLE &amp; CỔNG LOGIC</b><span class="">Phòng thí nghiệm bảng chân trị và cổng logic ảo</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></a><a class="link-card" href="sim/mophong_Ch3.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"></path></svg></span><span class="tx"><b>CHƯƠNG 3: PHÒNG THÍ NGHIỆM MẠCH SỐ: HỆ TỔ HỢP</b><span class="">Mô phỏng IC cộng, MUX 4:1 và giải mã LED 7 đoạn</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></a><a class="link-card" href="sim/mophong_Ch4.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"></path></svg></span><span class="tx"><b>CHƯƠNG 4: PHÒNG THÍ NGHIỆM HỆ TUẦN TỰ</b><span class="">Kiểm tra đáp ứng Flip-Flop và bộ đếm MOD-10</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></a><a class="link-card" href="sim/mophong_Ch5.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"></path></svg></span><span class="tx"><b>CHƯƠNG 5: MÔ PHỎNG GIAO TIẾP HỌ VI MẠCH SỐ</b><span class="">Thử nghiệm phối hợp điện trở kéo lên TTL và CMOS</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg></span></a><a class="link-card" href="sim/game-yen-tiec-chuoc-thu-doc/index.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"></rect><path d="M6 12h4m-2-2v4m9-3a1 1 0 1 0 0 .01M17 13a1 1 0 1 0 0 .01"></path></svg></span><span class="tx"><b>GAME YẾN TIỆC CHUỘT THỬ ĐỘC</b><span class="">Trò chơi tư duy logic &amp; mã nhúng: Bài toán chuột thử rượu độc</span></span><span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"></path></svg></span></a></div>
+</section>
+<!-- TÓM TẮT LÝ THUYẾT VÀ CÔNG THỨC -->
+
+<!-- CREATOR & COMMUNITY FOOTER NOTE -->
+
+</main>
+<div data-ck-footer=""></div>
+<script src="../assets/app.js?v=20261017d"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* Safe fallback cho CK helpers nếu app.js chưa nạp hoặc offline */
+  window.CK = window.CK || {
+    svg: function(pathD) {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+             '<path d="' + pathD + '"></path></svg>';
+    },
+    toast: function(msg) {
+      console.log("[Toast]:", msg);
+    },
+    fold: function(str) {
+      return (str || "").toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d");
+    }
+  };
+
+  /* ══════════════════════════════════════════════════════════════
+     DỮ LIỆU KỸ THUẬT SỐ — 6 CHƯƠNG (CHƯƠNG 0 -> CHƯƠNG 5)
+     ══════════════════════════════════════════════════════════════ */
+  var CHAPTERS = [
+    {
+      n: 0, slug: "chuong-0", emoji: "⚡",
+      en: "DIGITAL CONCEPTS", vi: "Khái niệm về Kỹ thuật số",
+      url: "ebook/Chuong0-khai-niem-ve-ky-thuat-so.html",
+      topics: [
+        {
+          t: "Tín hiệu Tương tự (Analog) & Tín hiệu Số (Digital)",
+          en: "Analog vs Digital Signals & Levels",
+          p:
+            '<p>Tín hiệu số chỉ mang hai mức logic rời rạc là <b>0 (LOW)</b> và <b>1 (HIGH)</b>, có khả năng chống nhiễu vượt trội so với tín hiệu tương tự liên tục theo thời gian.</p>' +
+            '<div class="fx">Mức logic chuẩn TTL: <b>0V – 0.8V</b> = mức 0 (LOW) · <b>2.0V – 5.0V</b> = mức 1 (HIGH)</div>' +
+            '<div class="ex"><em>Ưu điểm của kỹ thuật số: độ chính xác cao, lưu trữ dữ liệu bền vững, khả năng lập trình và tái cấu hình dễ dàng.</em></div>'
+        },
+        {
+          t: "Dạng sóng xung và các thông số chu kỳ",
+          en: "Pulse waveforms, Clock, Duty Cycle",
+          p:
+            '<p>Tín hiệu xung vuông tuần hoàn (Clock) đóng vai trò định thời trong hệ thống số.</p>' +
+            '<div class="fx">Chu kỳ: T = 1 / f  ·  Độ rộng xung: t<sub>w</sub>  ·  Hệ số chu kỳ (Duty Cycle): <b>D = (t<sub>w</sub> / T) × 100%</b></div>' +
+            '<div class="ex"><em>Xung đồng hồ 10 MHz có chu kỳ T = 100 ns. Nếu t<sub>w</sub> = 50 ns thì Duty cycle đạt 50% (xung đối xứng).</em></div>'
+        }
+      ]
+    },
+
+    {
+      n: 1, slug: "chuong-1", emoji: "🔢",
+      en: "NUMBER SYSTEMS & CODES", vi: "Các hệ thống số đếm",
+      url: "ebook/Chuong1-cac-he-thong-so-dem.html",
+      topics: [
+        {
+          t: "Chuyển đổi giữa các hệ cơ số (Dec, Bin, Oct, Hex)",
+          en: "Radix conversions & Base 2, 8, 10, 16",
+          p:
+            '<p>Biểu diễn giá trị đa thức theo cơ số <i>r</i>: N = ∑ (a<sub>i</sub> × r<sup>i</sup>).</p>' +
+            '<div class="fx">Bin → Hex: Gom nhóm 4 bit từ dấu chấm thập phân.<br>Ví dụ: 1101 1010<sub>(2)</sub> = <b>DA<sub>(16)</sub></b> = 218<sub>(10)</sub></div>' +
+            '<div class="doc"><table><thead><tr><th>Hệ đếm</th><th>Cơ số (r)</th><th>Ký tự cho phép</th><th>Ứng dụng chính</th></tr></thead><tbody>' +
+            '<tr><td>Binary</td><td>2</td><td>0, 1</td><td>Mạch logic, xử lý CPU</td></tr>' +
+            '<tr><td>Hexadecimal</td><td>16</td><td>0–9, A–F</td><td>Địa chỉ bộ nhớ, mã màu</td></tr>' +
+            '<tr><td>BCD (8421)</td><td>10</td><td>4-bit/chữ số (0000–1001)</td><td>Hiển thị LED 7 đoạn</td></tr>' +
+            '</tbody></table></div>'
+        },
+        {
+          t: "Số bù 1, Số bù 2 và Phép toán nhị phân có dấu",
+          en: "1\'s Complement, 2\'s Complement & Signed arithmetic",
+          p:
+            '<p>Số bù 2 được dùng trong hầu hết các bộ vi xử lý để thực hiện phép trừ thông qua phép cộng.</p>' +
+            '<div class="fx">Số bù 2 = <b>(Số bù 1) + 1</b> = (Đảo tất cả bit) + 1</div>' +
+            '<div class="ex"><em>Chuyển +5 (0101) sang -5: Bù 1 là 1010 → Bù 2 là <b>1011</b>. Phép trừ A - B = A + [B]<sub>bù 2</sub>.</em></div>'
+        },
+        {
+          t: "Mã BCD, Mã Gray và Mã Parity kiểm tra lỗi",
+          en: "BCD Code, Gray Code & Error Detection Parity",
+          p:
+            '<p>Mã Gray chỉ có <b>đúng 1 bit thay đổi</b> giữa 2 trạng thái liên tiếp, tránh xung nhọn trong bộ mã hóa vị trí (Encoders).</p>' +
+            '<div class="fx">Bit chẵn (Even Parity): Tổng số bit 1 trong khung truyền luôn là số chẵn.</div>'
+        }
+      ]
+    },
+
+    {
+      n: 2, slug: "chuong-2", emoji: "📐",
+      en: "BOOLEAN ALGEBRA & LOGIC GATES", vi: "Đại số Boole và Cổng logic",
+      url: "ebook/Chuong2-dai-so-boole-va-cac-cong-locgic-phan2.html",
+      topics: [
+        {
+          t: "Cổng logic cơ bản & Cổng logic vạn năng (NAND, NOR)",
+          en: "Basic gates: AND, OR, NOT, XOR, XNOR, NAND, NOR",
+          p:
+            '<p>Các cổng NAND và NOR là cổng vạn năng (Universal gates) vì có thể dùng để tạo ra bất kỳ hàm logic nào.</p>' +
+            '<div class="fx">XOR: Y = A ⊕ B = A·B + A·B (khác nhau ra 1, giống nhau ra 0)<br>XNOR: Y = A ⊙ B = A·B + A·B (giống nhau ra 1)</div>' +
+            '<div class="ex"><em>Cổng NAND: Chỉ cho ngõ ra 0 khi tất cả ngõ vào đều bằng 1.</em></div>'
+        },
+        {
+          t: "Định lý De Morgan & Rút gọn biểu thức Boole",
+          en: "De Morgan's Theorems & Algebraic simplification",
+          p:
+            '<p>Hai định lý cốt lõi giúp chuyển đổi hàm tích sang tổng và ngược lại:</p>' +
+            '<div class="fx">Định lý 1: <b>(A · B) = A + B</b><br>Định lý 2: <b>(A + B) = A · B</b></div>' +
+            '<div class="ex"><em>Quy tắc: Đổi dấu phép toán (· ↔ +) và phủ định từng biến thành phần.</em></div>'
+        },
+        {
+          t: "Bìa Karnaugh (K-Map) rút gọn tối ưu hàm logic",
+          en: "Karnaugh Maps for 2, 3, 4 variables & Don\'t Care terms",
+          p:
+            '<p>K-Map sắp xếp theo thứ tự mã Gray để các ô kề nhau chỉ sai khác đúng 1 biến.</p>' +
+            '<div class="fx">Quy tắc khoanh: Số ô khoanh là lũy thừa của 2 (1, 2, 4, 8, 16) — vòng khoanh càng lớn càng triệt tiêu được nhiều biến.</div>' +
+            '<div class="ex"><em>Trạng thái tùy định (Don\'t Care - d/X) có thể coi là 0 hoặc 1 tùy ý để mở rộng kích thước vòng khoanh.</em></div>'
+        }
+      ]
+    },
+
+    {
+      n: 3, slug: "chuong-3", emoji: "🎛️",
+      en: "COMBINATIONAL LOGIC CIRCUITS", vi: "Hệ tổ hợp",
+      url: "ebook/Chuong3-he-to-hop.html",
+      topics: [
+        {
+          t: "Mạch cộng bán phần (Half-Adder) và toàn phần (Full-Adder)",
+          en: "Half-Adder, Full-Adder & Ripple Carry Adder",
+          p:
+            '<p>Mạch cộng nhị phân tạo nền tảng cho khối tính toán ALU trong vi xử lý.</p>' +
+            '<div class="fx">Half Adder: <b>S = A ⊕ B</b>  ·  <b>C<sub>out</sub> = A · B</b><br>Full Adder: <b>S = A ⊕ B ⊕ C<sub>in</sub></b>  ·  <b>C<sub>out</sub> = A·B + C<sub>in</sub>·(A ⊕ B)</b></div>'
+        },
+        {
+          t: "Mạch dồn kênh (Multiplexer - MUX) & Phân kênh (DEMUX)",
+          en: "Multiplexers (MUX 2:1, 4:1, 8:1) & Demultiplexers",
+          p:
+            '<p>Bộ dồn kênh cho phép chọn 1 trong 2<sup>n</sup> đường dữ liệu ngõ vào đưa tới ngõ ra duy nhất dựa vào n ngõ điều khiển.</p>' +
+            '<div class="fx">MUX 4:1: Y = S<sub>1</sub>S<sub>0</sub>·D<sub>0</sub> + S<sub>1</sub>S<sub>0</sub>·D<sub>1</sub> + S<sub>1</sub>S<sub>0</sub>·D<sub>2</sub> + S<sub>1</sub>S<sub>0</sub>·D<sub>3</sub></div>' +
+            '<div class="ex"><em>Ứng dụng: MUX có thể hiện thực hóa mọi hàm logic bất kỳ mà không cần ráp cổng riêng lẻ.</em></div>'
+        },
+        {
+          t: "Mạch giải mã (Decoder) & Mã hóa (Encoder) hiển thị 7 đoạn",
+          en: "Decoders, Priority Encoders & BCD to 7-Segment (74LS47)",
+          p:
+            '<p>IC 74LS47 giải mã tín hiệu BCD sang điều khiển thanh LED 7 đoạn (anode chung).</p>' +
+            '<div class="fx">Bộ giải mã 3 sang 8: Có 3 ngõ vào chọn ra 1 trong 8 ngõ ra tích cực mức thấp (Active-LOW).</div>'
+        }
+      ]
+    },
+
+    {
+      n: 4, slug: "chuong-4", emoji: "⏱️",
+      en: "SEQUENTIAL LOGIC CIRCUITS", vi: "Hệ tuần tự",
+      url: "ebook/Chuong4-he-tuan-tu-&-fipl-flop-phan2.html",
+      topics: [
+        {
+          t: "Các phần tử nhớ cơ bản: Latch và Flip-Flop (SR, D, JK, T)",
+          en: "Latches & Flip-Flops triggering (Edge-triggered vs Level)",
+          p:
+            '<p>Hệ tuần tự có ngõ ra phụ thuộc vào cả ngõ vào hiện tại lẫn trạng thái quá khứ nhờ phần tử nhớ.</p>' +
+            '<div class="fx">D-FlipFlop: <b>Q(t+1) = D</b> (lưu dữ liệu theo sườn xung clock)<br>JK-FlipFlop: <b>Q(t+1) = J·Q + K·Q</b> (J=1, K=1 → Đảo trạng thái Toggle)</div>' +
+            '<div class="ex"><em>T-FlipFlop (Toggle) được tạo từ JK bằng cách nối chung J và K, ứng dụng trực tiếp làm mạch chia đôi tần số xung.</em></div>'
+        },
+        {
+          t: "Bộ đếm bất đồng bộ (Asynchronous) và Đồng bộ (Synchronous)",
+          en: "Ripple Counters vs Synchronous Counters (MOD-N)",
+          p:
+            '<p>Bộ đếm đồng bộ có tất cả FF được kích bởi cùng một nguồn xung clock, triệt tiêu trễ truyền dẫn (Ripple delay).</p>' +
+            '<div class="fx">Số trạng thái đếm: <b>MOD = 2<sup>n</sup></b> (hoặc MOD &lt; 2<sup>n</sup> khi dùng cổng xóa CLEAR đưa về 0).</div>' +
+            '<div class="ex"><em>Bộ đếm thập phân MOD-10 (BCD Counter): Đếm từ 0000 đến 1001, khi tới 1010 tự kích chân Reset.</em></div>'
+        },
+        {
+          t: "Thanh ghi dịch (Shift Registers - SISO, SIPO, PISO, PIPO)",
+          en: "Shift Registers & Serial/Parallel Data Conversion",
+          p:
+            '<p>Dùng để lưu trữ dữ liệu tạm thời và chuyển đổi giữa dữ liệu truyền nối tiếp (Serial) và dữ liệu song song (Parallel).</p>'
+        }
+      ]
+    },
+
+    {
+      n: 5, slug: "chuong-5", emoji: "🔌",
+      en: "DIGITAL IC FAMILIES & INTERFACING", vi: "Giao tiếp giữa các họ vi mạch số",
+      url: "ebook/Chuong5-giao-tiep-giua-cac-ho-vi-mach-so.html",
+      topics: [
+        {
+          t: "Đặc tuyến của họ vi mạch TTL và CMOS (74xx vs 40xx)",
+          en: "TTL (BJT) vs CMOS (MOSFET) characteristics",
+          p:
+            '<p>So sánh hai họ logic phổ biến trong thiết kế phần cứng vi mạch số:</p>' +
+            '<div class="doc"><table><thead><tr><th>Thông số</th><th>Họ TTL (74LS, 74HC)</th><th>Họ CMOS (CD4000, 74HCT)</th></tr></thead><tbody>' +
+            '<tr><td>Điện áp hoạt động (V<sub>CC</sub>)</td><td>Chuẩn 5V ± 5%</td><td>Dải rộng 3V – 15V</td></tr>' +
+            '<tr><td>Công suất tiêu tán</td><td>Trung bình / Cao</td><td>Cực thấp ở tần số thấp</td></tr>' +
+            '<tr><td>Trở kháng vào (Z<sub>in</sub>)</td><td>Vừa phải</td><td>Rất cao (~10<sup>12</sup> Ω)</td></tr>' +
+            '<tr><td>Độ lề chống nhiễu</td><td>0.4V</td><td>Lên đến 30% – 40% V<sub>DD</sub></td></tr>' +
+            '</tbody></table></div>'
+        },
+        {
+          t: "Giao tiếp giữa TTL và CMOS (Phối hợp mức điện áp & Dòng tải)",
+          en: "Interfacing TTL to CMOS & CMOS to TTL, Pull-up resistors",
+          p:
+            '<p>Khi kết nối TTL lái CMOS: Ngõ ra V<sub>OH(min)</sub> của TTL (2.7V) không đủ mức điện áp nhận biết V<sub>IH(min)</sub> của CMOS (3.5V khi V<sub>DD</sub>=5V).</p>' +
+            '<div class="fx">Giải pháp: Dùng <b>Điện trở kéo lên (Pull-up resistor ~ 2.2kΩ – 4.7kΩ)</b> lên nguồn +5V hoặc dùng đệm chuyển tiếp như IC 74HCT.</div>'
+        },
+        {
+          t: "Hệ số chịu tải (Fan-out) và Thời gian trễ lan truyền",
+          en: "Fan-out, Fan-in & Propagation Delay (t_PLH, t_PHL)",
+          p:
+            '<p>Fan-out quy định số lượng cổng logic tối đa mà một ngõ ra có thể điều khiển tin cậy mà không làm suy sụp mức điện áp logic.</p>' +
+            '<div class="fx">Fan-out = <b>min { I<sub>OH</sub> / I<sub>IH</sub> , I<sub>OL</sub> / I<sub>IL</sub> }</b></div>'
+        }
+      ]
+    }
+  ];
+
+  /* ══════════════════════════════════════════════════════════════
+     DANH SÁCH BÀI TẬP ÔN TẬP
+     ══════════════════════════════════════════════════════════════ */
+  var TASKS = [
+    { n: 0, g: "Ôn tập kiến thức", t: "Ôn tập Chương 0: Khái niệm Kỹ thuật số", due: "Trước kỳ thi", st: "open", url: "bai-tap-on-tap/kts-ch0-quiz.html" },
+    { n: 1, g: "Ôn tập kiến thức", t: "Ôn tập Chương 1: Hệ thống số đếm & Mã", due: "Trước kỳ thi", st: "open", url: "bai-tap-on-tap/kts-ch1-quiz.html" },
+    { n: 2, g: "Ôn tập kiến thức", t: "Ôn tập Chương 2: Đại số Boole & Cổng logic", due: "Trước kỳ thi", st: "open", url: "bai-tap-on-tap/kts-ch2-quiz.html" },
+    { n: 3, g: "Ôn tập kiến thức", t: "Ôn tập Chương 3: Thiết kế Hệ tổ hợp", due: "Trước kỳ thi", st: "open", url: "bai-tap-on-tap/kts-ch3-quiz.html" },
+    { n: 4, g: "Ôn tập kiến thức", t: "Ôn tập Chương 4: Thiết kế Hệ tuần tự & Đếm", due: "Trước kỳ thi", st: "open", url: "bai-tap-on-tap/kts-ch4-quiz.html" },
+    { n: 5, g: "Ôn tập kiến thức", t: "Ôn tập Chương 5: Giao tiếp họ vi mạch số", due: "Trước kỳ thi", st: "open", url: "bai-tap-on-tap/kts-ch5-quiz.html" }
+  ];
+
+  /* ══════════════════════════════════════════════════════════════
+     DANH SÁCH 15 VIDEO BÀI GIẢNG
+     ══════════════════════════════════════════════════════════════ */
+  var VIDEOS = [
+    { b: 1,  title: "Kỹ thuật số Buổi 1",  url: "https://youtu.be/fhitclIgNDk?si=Us7jVn6wv-xywxcv", desc: "Giới thiệu môn học, khái niệm số & tương tự" },
+    { b: 2,  title: "Kỹ thuật số Buổi 2",  url: "https://youtu.be/EAaHmWugawE?si=50kQyX0u9YwjGpQb", desc: "Hệ thống số đếm & chuyển đổi cơ số" },
+    { b: 3,  title: "Kỹ thuật số Buổi 3",  url: "https://youtu.be/-kzMn9Na6f0?si=iH60f7SfWBctkZ7m", desc: "Số bù 1, bù 2 & phép tính nhị phân" },
+    { b: 4,  title: "Kỹ thuật số Buổi 4",  url: "https://youtu.be/D3_vFcKI5dc?si=gVyHUjPGpCSPWXRw", desc: "Mã hóa BCD, Gray và kiểm tra Parity" },
+    { b: 5,  title: "Kỹ thuật số Buổi 5",  url: "https://youtu.be/ZiDcQlYueGI?si=U9bteJ4KYV_0EuBp", desc: "Đại số Boole & Các định lý cơ bản" },
+    { b: 6,  title: "Kỹ thuật số Buổi 6",  url: "https://youtu.be/MS4GiZzg-EI?si=8j_ZpL5nbewcVi6E", desc: "Cổng logic & Định lý De Morgan" },
+    { b: 7,  title: "Kỹ thuật số Buổi 7",  url: "https://youtu.be/ih-YwYmmYwU?si=O4IjNByWOmqwrTjp", desc: "Tối ưu hàm logic bằng Bìa Karnaugh" },
+    { b: 8,  title: "Kỹ thuật số Buổi 8",  url: "https://youtu.be/rN4vjqlZwFM?si=KeHC972ifj_5dlGV", desc: "Thiết kế mạch cộng Half/Full Adder" },
+    { b: 9,  title: "Kỹ thuật số Buổi 9",  url: "https://youtu.be/s1GdAhuDRHs?si=OJ0Yfum96u987jsg", desc: "Mạch dồn kênh MUX & phân kênh DEMUX" },
+    { b: 10, title: "Kỹ thuật số Buổi 10", url: "https://youtu.be/7vY2MfIS5lg?si=Mq5e2SerEb1_JV-_", desc: "Mạch giải mã Decoder & LED 7 đoạn" },
+    { b: 11, title: "Kỹ thuật số Buổi 11", url: "https://youtu.be/y9exrPhcCKA?si=f5N41G2F1CmxohpN", desc: "Phần tử nhớ Latch & Flip-Flop SR, D" },
+    { b: 12, title: "Kỹ thuật số Buổi 12", url: "https://youtu.be/ZpcyFSLFNwc?si=pdgIcZuBmKrOLjG7", desc: "JK Flip-Flop, T-Flip-Flop & Xung clock" },
+    { b: 13, title: "Kỹ thuật số Buổi 13", url: "https://youtu.be/dzp9sFBebNQ?si=ZnqWW2mVPMi3eUQL", desc: "Thiết kế bộ đếm bất đồng bộ & đồng bộ" },
+    { b: 14, title: "Kỹ thuật số Buổi 14", url: "https://youtu.be/JfYI3cHYzQg?si=sULmW0AbnOF1UV-4", desc: "Thanh ghi dịch & Chuyển đổi dữ liệu" },
+    { b: 15, title: "Kỹ thuật số Buổi 15", url: "https://youtu.be/5Cuh-qj_yeA?si=bp845wsRG23nbEhj", desc: "Họ vi mạch số TTL/CMOS & Giao tiếp mạch" }
+  ];
+
+  /* ══════════════════════════════════════════════════════════════
+     DANH SÁCH MÔ PHỎNG HỌC TẬP
+     ══════════════════════════════════════════════════════════════ */
+  var SIMULATIONS = [
+    { n: 0, title: "CHƯƠNG 0: MÔ PHỎNG KỸ THUẬT SỐ", desc: "Trực quan hóa dạng sóng xung clock & mức logic", url: "sim/mophong_Ch0.html" },
+    { n: 1, title: "CHƯƠNG 1: MÔ PHỎNG HỆ THỐNG SỐ ĐẾM", desc: "Mô phỏng bộ đổi cơ số nhị phân và mã BCD", url: "sim/mophong_Ch1.html" },
+    { n: 2, title: "CHƯƠNG 2: MÔ PHỎNG ĐẠI SỐ BOOLE & CỔNG LOGIC", desc: "Phòng thí nghiệm bảng chân trị và cổng logic ảo", url: "sim/mophong_Ch2.html" },
+    { n: 3, title: "CHƯƠNG 3: PHÒNG THÍ NGHIỆM MẠCH SỐ: HỆ TỔ HỢP", desc: "Mô phỏng IC cộng, MUX 4:1 và giải mã LED 7 đoạn", url: "sim/mophong_Ch3.html" },
+    { n: 4, title: "CHƯƠNG 4: PHÒNG THÍ NGHIỆM HỆ TUẦN TỰ", desc: "Kiểm tra đáp ứng Flip-Flop và bộ đếm MOD-10", url: "sim/mophong_Ch4.html" },
+    { n: 5, title: "CHƯƠNG 5: MÔ PHỎNG GIAO TIẾP HỌ VI MẠCH SỐ", desc: "Thử nghiệm phối hợp điện trở kéo lên TTL và CMOS", url: "sim/mophong_Ch5.html" }
+  ];
+
+  var STATUS = {
+    open: { cls: "mid", label: "Tài liệu mở" },
+    done: { cls: "solid", label: "Đã hoàn thành" }
+  };
+
+  var ICON_ARROW  = "M5 12h13m-5-5 5 5-5 5";
+  var ICON_EXT    = "M14 4.5h5.5V10M19 5l-7 7M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5";
+  var ICON_CLOCK  = "M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+  var ICON_VIDEO  = "m10 15 5-3-5-3v6zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+  var ICON_CPU    = "M4 4h16v16H4zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3";
+  var ICON_COMPASS= "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM15 9l-1.8 4.2L9 15l1.8-4.2z";
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function getChapter(n) {
+    for (var i = 0; i < CHAPTERS.length; i++) {
+      if (CHAPTERS[i].n === n) return CHAPTERS[i];
+    }
+    return null;
+  }
+
+  /* ══════════ 1. HERO — THỐNG KÊ ══════════ */
+  (function hero() {
+    var totalTopics = CHAPTERS.reduce(function (t, c) { return t + c.topics.length; }, 0);
+    var stats = [
+      { v: CHAPTERS.length, l: "chương giáo trình" },
+      { v: totalTopics, l: "chuyên đề lý thuyết" },
+      { v: VIDEOS.length, l: "video bài giảng" },
+      { v: SIMULATIONS.length, l: "mô phỏng mạch số" }
+    ];
+    $("heroStats").innerHTML = stats.map(function (s) {
+      return '<span class="kts-stat"><b>' + s.v + "</b> " + esc(s.l) + "</span>";
+    }).join("");
+  })();
+
+  /* ══════════ 2. THANH CHUYỂN NHANH ══════════ */
+  var JUMPS = [];
+  (function jump() {
+    $("jumpLabel").innerHTML = CK.svg(ICON_COMPASS) + "Chương";
+    JUMPS = CHAPTERS.map(function (c) {
+      var a = document.createElement("a");
+      a.href = "#" + c.slug;
+      a.dataset.slug = c.slug;
+      a.dataset.n = c.n;
+      a.innerHTML = "<b>C" + c.n + "</b> " + esc(c.vi.split(" ")[0]);
+      $("jumpRow").appendChild(a);
+      return a;
+    });
+  })();
+
+  /* ══════════ 3. LƯỚI EBOOK GIÁO TRÌNH ══════════ */
+  (function grid() {
+    $("unitGrid").innerHTML = CHAPTERS.map(function (c) {
+      return '<a class="unit-card" href="' + c.url + '">' +
+        '<div class="unit-top">' +
+          '<span class="unit-no">CHƯƠNG ' + c.n + "</span>" +
+          '<span class="unit-emoji" aria-hidden="true">' + c.emoji + "</span>" +
+        "</div>" +
+        "<div>" +
+          '<h3 class="unit-nm">' + esc(c.vi) + "</h3>" +
+          '<p class="unit-vi">' + esc(c.en) + "</p>" +
+        "</div>" +
+        '<ul class="unit-list">' +
+          c.topics.map(function (t) { return "<li>" + esc(t.t) + "</li>"; }).join("") +
+        "</ul>" +
+        '<div class="unit-foot">' +
+          '<span class="n">' + c.topics.length + " chủ đề cốt lõi</span>" +
+          '<span class="go">Mở Ebook ' + CK.svg(ICON_ARROW) + "</span>" +
+        "</div>" +
+      "</a>";
+    }).join("");
+  })();
+
+  /* ══════════ 4. BÀI TẬP ÔN TẬP ══════════ */
+  (function tasks() {
+    $("taskGrid").innerHTML = TASKS.map(function (t) {
+      var s = STATUS[t.st] || STATUS.open;
+      return '<article class="task">' +
+        '<div class="task-badges">' +
+          '<span class="tst ' + s.cls + '"><i class="dot" aria-hidden="true"></i>' + s.label + "</span>" +
+          '<span class="tst light"><i class="dot" aria-hidden="true"></i>Tự luyện</span>' +
+        "</div>" +
+        '<div class="task-body">' +
+          '<p class="task-sub">Kỹ thuật số · ' + esc(t.g) + "</p>" +
+          '<h3 class="task-title">' + esc(t.t) + "</h3>" +
+          '<p class="task-due">' + CK.svg(ICON_CLOCK) + "Thời gian: " + esc(t.due) + "</p>" +
+        "</div>" +
+        '<a class="task-cta" href="' + esc(t.url) + '">' + CK.svg(ICON_ARROW) + "Làm bài tập</a>" +
+      "</article>";
+    }).join("");
+  })();
+
+  /* ══════════ 5. DANH SÁCH 15 VIDEO HỌC ══════════ */
+  (function videos() {
+    $("videoGrid").innerHTML = VIDEOS.map(function (v) {
+      return '<a class="video-card" href="' + v.url + '" target="_blank" rel="noopener">' +
+        '<span class="ico">' + CK.svg(ICON_VIDEO) + "</span>" +
+        '<span class="tx">' +
+          '<b>' + esc(v.title) + "</b>" +
+          '<span>' + esc(v.desc) + "</span>" +
+        "</span>" +
+        '<span class="ar" aria-hidden="true">' + CK.svg(ICON_EXT) + "</span>" +
+      "</a>";
+    }).join("");
+  })();
+
+  /* ══════════ 6. MÔ PHỎNG HỌC TẬP ══════════ */
+  (function sim() {
+    $("simGrid").innerHTML = SIMULATIONS.map(function (s) {
+      var href = s.url ? s.url : ("#" + CHAPTERS[s.n].slug);
+      var attr = s.url ? ('href="' + s.url + '"') : ('href="#' + CHAPTERS[s.n].slug + '" data-jump="' + CHAPTERS[s.n].slug + '"');
+      return '<a class="link-card" ' + attr + '>' +
+        '<span class="ico">' + CK.svg(ICON_CPU) + "</span>" +
+        '<span class="tx">' +
+          '<b>' + esc(s.title) + "</b>" +
+          '<span>' + esc(s.desc) + "</span>" +
+        "</span>" +
+        '<span class="ar" aria-hidden="true">' + CK.svg(ICON_ARROW) + "</span>" +
+      "</a>";
+    }).join("");
+
+    $("simGrid").addEventListener("click", function(e) {
+      var a = e.target.closest("[data-jump]");
+      if (!a) return;
+      e.preventDefault();
+      gotoChapter(a.dataset.jump, true);
+    });
+  })();
+
+  /* ══════════ 7. TÓM TẮT LÝ THUYẾT & TÌM KIẾM ══════════ */
+  var TOPICS = [];
+  (function grammar() {
+    $("gpBox").innerHTML = CHAPTERS.map(function (c) {
+      return '<section class="gp-unit" id="' + c.slug + '" data-gp-chapter="' + c.n + '">' +
+        '<div class="gp-unit-head">' +
+          "<h2>" + esc(c.vi) + " <small>Chương " + c.n + " · " + esc(c.en) + "</small></h2>" +
+          '<span class="ck-pill">' + c.topics.length + " chủ đề</span>" +
+        "</div>" +
+        c.topics.map(function (t) {
+          return '<article class="gp-topic glass g1" data-gp-topic>' +
+            '<div class="gp-topic-head">' +
+              "<h3>" + esc(t.t) + "</h3>" +
+              (t.en ? "<p>" + esc(t.en) + "</p>" : "") +
+            "</div>" +
+            '<div class="doc">' + t.p + "</div>" +
+          "</article>";
+        }).join("") +
+      "</section>";
+    }).join("");
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-gp-topic]"), function (el) {
+      TOPICS.push({ el: el, text: CK.fold(el.textContent || "") });
+    });
+  })();
+
+  var S = { q: "" };
+  function applySearch() {
+    var fq = CK.fold(S.q).trim();
+    var shown = 0;
+
+    TOPICS.forEach(function (t) {
+      var match = !fq || t.text.indexOf(fq) !== -1;
+      t.el.hidden = !match;
+      if (match) shown++;
+    });
+
+    CHAPTERS.forEach(function (c) {
+      var host = document.getElementById(c.slug);
+      if (host) {
+        host.hidden = !Array.prototype.some.call(
+          host.querySelectorAll("[data-gp-topic]"), function (x) { return !x.hidden; }
+        );
+      }
+    });
+
+    $("gpCount").innerHTML = fq
+      ? "<b>" + shown + "</b> / " + TOPICS.length + " chủ đề"
+      : "<b>" + TOPICS.length + "</b> chủ đề";
+    $("gpNone").hidden = shown > 0;
+  }
+
+  $("gpQ").addEventListener("input", function () { S.q = this.value; applySearch(); });
+  $("gpReset").addEventListener("click", function () {
+    S.q = ""; $("gpQ").value = ""; applySearch();
+  });
+
+  /* ══════════ 8. CUỘN TỚI CHƯƠNG ══════════ */
+  function gotoChapter(slug, flash) {
+    var el = document.getElementById(slug);
+    if (!el) return;
+    el.hidden = false;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (flash && el.animate) {
+      el.animate(
+        [{ boxShadow: "0 0 0 0 rgba(3,78,162,.34)" }, { boxShadow: "0 0 0 10px rgba(3,78,162,0)" }],
+        800
+      );
+    }
+  }
+
+  (function wireJump() {
+    $("jumpRow").addEventListener("click", function (e) {
+      var a = e.target.closest("a[data-slug]");
+      if (!a) return;
+      e.preventDefault();
+      var c = getChapter(+a.dataset.n);
+      gotoChapter(a.dataset.slug, true);
+      if (c && CK.toast) CK.toast("Chương <b>" + c.n + " · " + esc(c.vi) + "</b>", "Đang xem");
+    });
+  })();
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (rows) {
+      rows.forEach(function (row) {
+        if (!row.isIntersecting) return;
+        JUMPS.forEach(function (a) {
+          a.classList.toggle("is-on", a.dataset.slug === row.target.id);
+        });
+        var c = getChapter(+row.target.dataset.gpChapter);
+        $("gpUnitPill").textContent = c ? "Chương " + c.n + " · " + c.vi : "Tất cả chương";
+      });
+    }, { rootMargin: "-150px 0px -60% 0px", threshold: 0 });
+
+    CHAPTERS.forEach(function (c) {
+      var el = document.getElementById(c.slug);
+      if (el) io.observe(el);
+    });
+  }
+
+  applySearch();
+})();
+</script>
+
+
+
+
+
+
+
+</body></html>

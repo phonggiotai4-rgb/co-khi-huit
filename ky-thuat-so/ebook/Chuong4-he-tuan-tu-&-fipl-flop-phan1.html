@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 4: HỆ TUẦN TỰ (PHẦN 1) | CƠ KHÍ HUIT</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#034EA2',
+              600: '#023c7d',
+              700: '#012c5d',
+              800: '#001d3f',
+              accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #f8f9ff;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .overline {
+      text-decoration: overline;
+    }
+    .waveform-svg {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+    }
+    .kmap-table th, .kmap-table td {
+      border: 1px solid #94a3b8;
+      text-align: center;
+      padding: 0.35rem 0.5rem;
+    }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+
+<!-- BEGIN: Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+            CƠ KHÍ HUIT
+            <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+          </span>
+        </div>
+      </a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="../index.html">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+        </svg>
+        <span>Về mục lục Kỹ thuật số</span>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- END: Site Header -->
+
+<!-- BEGIN: Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+    <a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+    <span>/</span>
+    <a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+    <span>/</span>
+    <span class="text-slate-800 font-semibold truncate">Chương 4: Hệ tuần tự (Phần 1: Mục 4.1 – 4.2)</span>
+  </div>
+</div>
+<!-- END: Breadcrumb Bar -->
+
+<!-- BEGIN: Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+  <!-- BEGIN: Title Banner -->
+  <section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+    <div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+    <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+    <div class="inline-flex items-center justify-center gap-3 mb-4">
+      <span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+      <span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">4</span>
+      <span class="text-xl sm:text-2xl font-bold text-slate-500 font-sans tracking-normal">(Phần 1)</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+      HỆ TUẦN TỰ & FLIP-FLOP (FF)
+    </h1>
+    <p class="mt-2 text-sm sm:text-base text-slate-600 font-medium">Khái niệm hệ tuần tự, các loại Flip-Flop (D, T, JK, SR), dạng xung nhịp kích khởi & vi mạch thông dụng</p>
+    <div class="mt-4 flex items-center justify-center gap-2">
+      <span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+      <span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+      <span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+    </div>
+  </section>
+  <!-- END: Title Banner -->
+
+  <!-- BEGIN: Section 4.1 -->
+  <article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-4-1">
+    <div class="flex items-center justify-between border-b pb-3 border-slate-200">
+      <h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.1</span>
+        KHÁI NIỆM
+      </h2>
+      <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 69</span>
+    </div>
+    <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+      <p class="flex items-start gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+        <span>Các ngõ ra của một hệ tuần tự không chỉ phụ thuộc trạng thái các ngõ vào mà còn phụ thuộc vào trạng thái hiện tại của các phần tử nhớ. Các phần tử nhớ sử dụng các flipflop.</span>
+      </p>
+
+      <!-- Sơ đồ khối hệ tuần tự -->
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+        <div class="w-full max-w-lg">
+          <svg viewBox="0 0 500 240" class="w-full h-auto font-sans text-sm">
+            <!-- Background & Arrows -->
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+              </marker>
+            </defs>
+            <!-- Input arrow -->
+            <line x1="40" y1="80" x2="140" y2="80" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="50" y="70" font-weight="600" fill="#475569">Ngõ vào</text>
+
+            <!-- Mạch tổ hợp Box -->
+            <rect x="140" y="50" width="180" height="60" rx="8" fill="#eff6ff" stroke="#034ea2" stroke-width="2.5"/>
+            <text x="230" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#034ea2">Mạch tổ hợp</text>
+
+            <!-- Output arrow -->
+            <line x1="320" y1="80" x2="440" y2="80" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="400" y="70" font-weight="600" fill="#475569">Ngõ ra</text>
+
+            <!-- Feedback loop downward from output line to Memory block -->
+            <line x1="370" y1="80" x2="370" y2="180" stroke="#1e293b" stroke-width="2"/>
+            <line x1="370" y1="180" x2="320" y2="180" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+
+            <!-- Các phần tử nhớ Box -->
+            <rect x="140" y="150" width="180" height="60" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+            <text x="230" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#1e293b">Các phần tử nhớ</text>
+
+            <!-- Feedback loop backward to input -->
+            <line x1="140" y1="180" x2="90" y2="180" stroke="#1e293b" stroke-width="2"/>
+            <line x1="90" y1="180" x2="90" y2="80" stroke="#1e293b" stroke-width="2"/>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-500 font-sans italic mt-2 text-center">Sơ đồ cấu trúc tổng quát của một hệ tuần tự</p>
+      </div>
+
+      <p>Vì vậy, các ngõ ra của hệ tuần tự là các hàm của các ngõ vào và các trạng thái trước đó của các ngõ ra.</p>
+
+      <p>Mạch tuần tự được chia ra thành hai loại là mạch tuần tự đồng bộ (<em>Synchronous</em>) và mạch tuần tự bất đồng bộ (<em>Asynchronous</em>). Mạch tuần tự đồng bộ là mạch có sử dụng xung nhịp (xung clock). Mạch tuần tự bất đồng bộ là mạch không sử dụng xung nhịp.</p>
+    </div>
+  </article>
+  <!-- END: Section 4.1 -->
+
+  <!-- BEGIN: Section 4.2 -->
+  <article class="glass-card rounded-2xl p-6 sm:p-8 space-y-10" id="sec-4-2">
+    <div class="flex items-center justify-between border-b pb-3 border-slate-200">
+      <h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.2</span>
+        FLIP-FLOP (FF)
+      </h2>
+      <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 69 - 75</span>
+    </div>
+
+    <!-- 1- D FF -->
+    <div class="space-y-6" id="sec-4-2-1">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+        1- D FF (Data / Delay Flip-Flop)
+      </h3>
+      <p class="text-base sm:text-lg text-slate-800">
+        D-FF có 1 ngõ vào D, 2 ngõ ra Q, <span class="overline">Q</span> và 1 ngõ vào xung nhịp (ngõ CK). Đây là loại D-FF có xung nhịp tác động cạnh xuống (xem thêm mục 4.2.5).
+      </p>
+
+      <!-- Ký hiệu D-FF -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+          <span class="text-xs font-semibold text-slate-500 mb-3">Ký hiệu ngõ ra Q và <span class="overline">Q</span></span>
+          <svg viewBox="0 0 220 180" class="w-48 h-auto font-mono text-sm">
+            <!-- Box -->
+            <rect x="60" y="30" width="100" height="120" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+            <!-- Pin D -->
+            <line x1="20" y1="60" x2="60" y2="60" stroke="#1e293b" stroke-width="2"/>
+            <text x="70" y="65" font-weight="700">D</text>
+            <!-- Pin CK (falling edge with circle) -->
+            <line x1="20" y1="100" x2="52" y2="100" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="56" cy="100" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="60,93 68,100 60,107" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="15" y="95" font-size="12" font-weight="700">CK</text>
+            <!-- Pin Q -->
+            <line x1="160" y1="60" x2="200" y2="60" stroke="#1e293b" stroke-width="2"/>
+            <text x="140" y="65" font-weight="700">Q</text>
+            <!-- Pin Q_bar (with circle or direct) -->
+            <line x1="160" y1="120" x2="200" y2="120" stroke="#1e293b" stroke-width="2"/>
+            <text x="135" y="125" font-weight="700">Q<tspan dy="-6" font-size="10">_</tspan></text>
+          </svg>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+          <span class="text-xs font-semibold text-slate-500 mb-3">Ký hiệu với ngõ ra đảo có vòng tròn</span>
+          <svg viewBox="0 0 220 180" class="w-48 h-auto font-mono text-sm">
+            <rect x="60" y="30" width="100" height="120" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+            <line x1="20" y1="60" x2="60" y2="60" stroke="#1e293b" stroke-width="2"/>
+            <text x="70" y="65" font-weight="700">D</text>
+            <line x1="20" y1="100" x2="52" y2="100" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="56" cy="100" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="60,93 68,100 60,107" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="15" y="95" font-size="12" font-weight="700">CK</text>
+            <line x1="160" y1="60" x2="200" y2="60" stroke="#1e293b" stroke-width="2"/>
+            <text x="140" y="65" font-weight="700">Q</text>
+            <!-- Q bar circle -->
+            <circle cx="164" cy="120" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <line x1="168" y1="120" x2="200" y2="120" stroke="#1e293b" stroke-width="2"/>
+            <text x="135" y="125" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Bảng đặc tính & Bảng kích thích D-FF -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng đặc tính</h4>
+          <table class="w-full max-w-xs mx-auto border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-2 border-r border-slate-300">D</th>
+                <th class="p-2">Q<sup>+</sup></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-2 border-r border-slate-300">0</td><td class="p-2">0</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">1</td><td class="p-2 font-bold text-brand-600">1</td></tr>
+            </tbody>
+          </table>
+          <p class="text-sm text-slate-700 text-center pt-2">
+            Hàm đặc tính: <strong class="font-mono text-brand-600">Q<sup>+</sup> = D</strong>
+          </p>
+          <p class="text-xs text-slate-500 italic">Q<sup>+</sup> là trạng thái của ngõ ra Q khi có tác động của xung nhịp. Q<sup>+</sup> chính là trạng thái kế của Q.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng kích thích</h4>
+          <table class="w-full max-w-xs mx-auto border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-2 border-r border-slate-300">Q</th>
+                <th class="p-2 border-r border-slate-300">Q<sup>+</sup></th>
+                <th class="p-2">D</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-2 border-r border-slate-300">0</td><td class="p-2 border-r border-slate-300">0</td><td class="p-2">0</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">0</td><td class="p-2 border-r border-slate-300">1</td><td class="p-2 font-bold text-brand-600">1</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">1</td><td class="p-2 border-r border-slate-300">0</td><td class="p-2">0</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">1</td><td class="p-2 border-r border-slate-300">1</td><td class="p-2 font-bold text-brand-600">1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ví dụ 4.1a -->
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <p class="font-bold text-slate-900 text-base">
+          Ví dụ 4.1a: <span class="font-normal">Vẽ giản đồ xung tại ngõ ra Q (giả sử ban đầu Q = 0) khi có giản đồ xung của CK và D của một D-FF (CK cạnh xuống) như sau:</span>
+        </p>
+        <div class="overflow-x-auto p-2">
+          <!-- Waveform 4.1a SVG -->
+          <svg viewBox="0 0 700 200" class="w-full min-w-[600px] h-auto font-mono text-xs">
+            <!-- Grid dashed lines at falling edges: x = 110, 190, 270, 350, 430, 510, 590 -->
+            <line x1="110" y1="20" x2="110" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+            <line x1="190" y1="20" x2="190" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+            <line x1="270" y1="20" x2="270" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+            <line x1="350" y1="20" x2="350" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+            <line x1="430" y1="20" x2="430" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+            <line x1="510" y1="20" x2="510" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+            <line x1="590" y1="20" x2="590" y2="180" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="1.5"/>
+
+            <!-- CK Signal -->
+            <text x="25" y="45" font-weight="700" font-size="14" fill="#1e293b">CK</text>
+            <!-- Pulses (falling at 110, 190, 270, 350, 430, 510, 590) with arrows -->
+            <path d="M 60 55 L 70 55 L 70 30 L 110 30 L 110 55 L 150 55 L 150 30 L 190 30 L 190 55 L 230 55 L 230 30 L 270 30 L 270 55 L 310 55 L 310 30 L 350 30 L 350 55 L 390 55 L 390 30 L 430 30 L 430 55 L 470 55 L 470 30 L 510 30 L 510 55 L 550 55 L 550 30 L 590 30 L 590 55 L 640 55" fill="none" stroke="#1e293b" stroke-width="2"/>
+            <!-- Falling edge arrows -->
+            <path d="M 110 37 L 107 43 M 110 37 L 113 43" stroke="#e11d48" stroke-width="2"/>
+            <path d="M 190 37 L 187 43 M 190 37 L 193 43" stroke="#e11d48" stroke-width="2"/>
+            <path d="M 270 37 L 267 43 M 270 37 L 273 43" stroke="#e11d48" stroke-width="2"/>
+            <path d="M 350 37 L 347 43 M 350 37 L 353 43" stroke="#e11d48" stroke-width="2"/>
+            <path d="M 430 37 L 427 43 M 430 37 L 433 43" stroke="#e11d48" stroke-width="2"/>
+            <path d="M 510 37 L 507 43 M 510 37 L 513 43" stroke="#e11d48" stroke-width="2"/>
+            <path d="M 590 37 L 587 43 M 590 37 L 593 43" stroke="#e11d48" stroke-width="2"/>
+
+            <!-- D Signal -->
+            <text x="25" y="105" font-weight="700" font-size="14" fill="#1e293b">D</text>
+            <path d="M 60 115 L 140 115 L 140 90 L 230 90 L 230 115 L 250 115 L 250 90 L 270 90 L 270 115 L 330 115 L 330 90 L 530 90 L 530 115 L 640 115" fill="none" stroke="#0284c7" stroke-width="2"/>
+
+            <!-- Q Output -->
+            <text x="25" y="165" font-weight="700" font-size="14" fill="#034ea2">Q</text>
+            <path d="M 60 175 L 190 175 L 190 150 L 270 150 L 270 175 L 350 175 L 350 150 L 590 150 L 590 175 L 640 175" fill="none" stroke="#034ea2" stroke-width="2.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Ví dụ 4.1b -->
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+        <p class="font-bold text-slate-900 text-base">
+          Ví dụ 4.1b: <span class="font-normal">Vẽ giản đồ xung của ngõ ra Q của mạch sau khi có giản đồ xung của CK. Giả sử ban đầu Q = 0.</span>
+        </p>
+
+        <!-- Sơ đồ mạch chia 2 dùng D-FF nối Q_bar về D -->
+        <div class="flex flex-col md:flex-row items-center justify-around gap-6 py-2">
+          <div class="w-64">
+            <svg viewBox="0 0 240 160" class="w-full h-auto font-mono text-sm">
+              <rect x="70" y="30" width="100" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+              <!-- D pin -->
+              <text x="80" y="60" font-weight="700">D</text>
+              <!-- CK pin with inverted arrow -->
+              <line x1="30" y1="80" x2="62" y2="80" stroke="#1e293b" stroke-width="2"/>
+              <circle cx="66" cy="80" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+              <polyline points="70,73 78,80 70,87" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+              <text x="15" y="85" font-size="12" font-weight="700">CK</text>
+              <!-- Q pin -->
+              <line x1="170" y1="60" x2="210" y2="60" stroke="#1e293b" stroke-width="2"/>
+              <text x="150" y="60" font-weight="700">Q</text>
+              <!-- Q_bar pin -->
+              <line x1="170" y1="100" x2="190" y2="100" stroke="#1e293b" stroke-width="2"/>
+              <text x="145" y="105" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+              <!-- Feedback line from Q_bar up and around to D -->
+              <path d="M 190 100 L 190 145 L 50 145 L 50 55 L 70 55" fill="none" stroke="#1e293b" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <!-- Waveform 4.1b: Tần số f_Q = 1/2 f_CK -->
+          <div class="flex-1 w-full overflow-x-auto">
+            <svg viewBox="0 0 540 130" class="w-full min-w-[450px] h-auto font-mono text-xs">
+              <line x1="80" y1="15" x2="80" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="140" y1="15" x2="140" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="200" y1="15" x2="200" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="260" y1="15" x2="260" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="320" y1="15" x2="320" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="380" y1="15" x2="380" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="440" y1="15" x2="440" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+              <line x1="500" y1="15" x2="500" y2="115" stroke="#cbd5e1" stroke-dasharray="3"/>
+
+              <text x="15" y="45" font-weight="700" font-size="14" fill="#1e293b">CK</text>
+              <path d="M 50 50 L 60 50 L 60 30 L 80 30 L 80 50 L 120 50 L 120 30 L 140 30 L 140 50 L 180 50 L 180 30 L 200 30 L 200 50 L 240 50 L 240 30 L 260 30 L 260 50 L 300 50 L 300 30 L 320 30 L 320 50 L 360 50 L 360 30 L 380 30 L 380 50 L 420 50 L 420 30 L 440 30 L 440 50 L 480 50 L 480 30 L 500 30 L 500 50 L 530 50" fill="none" stroke="#1e293b" stroke-width="2"/>
+              <!-- Falling arrows -->
+              <path d="M 80 35 L 77 42 M 80 35 L 83 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 140 35 L 137 42 M 140 35 L 143 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 200 35 L 197 42 M 200 35 L 203 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 260 35 L 257 42 M 260 35 L 263 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 320 35 L 317 42 M 320 35 L 323 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 380 35 L 377 42 M 380 35 L 383 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 440 35 L 437 42 M 440 35 L 443 42" stroke="#e11d48" stroke-width="1.8"/>
+              <path d="M 500 35 L 497 42 M 500 35 L 503 42" stroke="#e11d48" stroke-width="1.8"/>
+
+              <text x="15" y="105" font-weight="700" font-size="14" fill="#034ea2">Q</text>
+              <path d="M 50 110 L 80 110 L 80 85 L 140 85 L 140 110 L 200 110 L 200 85 L 260 85 L 260 110 L 320 110 L 320 85 L 380 85 L 380 110 L 440 110 L 440 85 L 500 85 L 500 110 L 530 110" fill="none" stroke="#034ea2" stroke-width="2.5"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 font-semibold text-slate-900 flex items-center justify-between">
+          <span>Nhận xét: Mạch chia đôi tần số của xung nhịp CK</span>
+          <span class="font-mono text-lg font-bold text-brand-600 bg-white px-3 py-1 rounded-lg border border-brand-200">
+            f<sub>Q</sub> = <span class="inline-flex flex-col text-center align-middle text-sm"><span class="border-b border-brand-600 px-1 leading-tight">1</span><span class="leading-tight">2</span></span> f<sub>CK</sub>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2- T FF -->
+    <div class="space-y-6 border-t pt-8 border-slate-200" id="sec-4-2-2">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+        2- T-FF (Toggle Flip-Flop)
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Ký hiệu T-FF -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+          <span class="text-xs font-semibold text-slate-500 mb-3">Ký hiệu logic T-FF</span>
+          <svg viewBox="0 0 200 160" class="w-40 h-auto font-mono text-sm">
+            <rect x="50" y="30" width="100" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+            <line x1="10" y1="55" x2="50" y2="55" stroke="#1e293b" stroke-width="2"/>
+            <text x="60" y="60" font-weight="700">T</text>
+            <line x1="10" y1="95" x2="42" y2="95" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="46" cy="95" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="50,88 58,95 50,102" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="5" y="90" font-size="11" font-weight="700">CK</text>
+            <line x1="150" y1="55" x2="190" y2="55" stroke="#1e293b" stroke-width="2"/>
+            <text x="130" y="60" font-weight="700">Q</text>
+            <line x1="150" y1="95" x2="190" y2="95" stroke="#1e293b" stroke-width="2"/>
+            <text x="125" y="100" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+        </div>
+
+        <!-- Bảng đặc tính -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng đặc tính</h4>
+          <table class="w-full border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-2 border-r border-slate-300">T</th>
+                <th class="p-2">Q<sup>+</sup></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-2 border-r border-slate-300">0</td><td class="p-2 font-bold text-slate-800">Q</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">1</td><td class="p-2 font-bold text-brand-600"><span class="overline">Q</span></td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-slate-600 pt-1">
+            Hàm đặc tính: <strong class="font-mono text-brand-600">Q<sup>+</sup> = <span class="overline">T</span>·Q + T·<span class="overline">Q</span> = T &oplus; Q</strong>
+          </p>
+        </div>
+
+        <!-- Bảng kích thích -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng kích thích</h4>
+          <table class="w-full border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-2 border-r border-slate-300">Q</th>
+                <th class="p-2 border-r border-slate-300">Q<sup>+</sup></th>
+                <th class="p-2">T</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-2 border-r border-slate-300">0</td><td class="p-2 border-r border-slate-300">0</td><td class="p-2">0</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">0</td><td class="p-2 border-r border-slate-300">1</td><td class="p-2 font-bold text-brand-600">1</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">1</td><td class="p-2 border-r border-slate-300">0</td><td class="p-2 font-bold text-brand-600">1</td></tr>
+              <tr><td class="p-2 border-r border-slate-300">1</td><td class="p-2 border-r border-slate-300">1</td><td class="p-2">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ví dụ 4.2a -->
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <p class="font-bold text-slate-900 text-base">
+          Ví dụ 4.2a: <span class="font-normal">Vẽ giản đồ xung tại ngõ ra Q (giả sử ban đầu Q = 0) khi có giản đồ xung của CK và T của một T-FF (CK cạnh xuống) như sau:</span>
+        </p>
+        <div class="overflow-x-auto p-2">
+          <svg viewBox="0 0 650 180" class="w-full min-w-[550px] h-auto font-mono text-xs">
+            <line x1="100" y1="15" x2="100" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="170" y1="15" x2="170" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="240" y1="15" x2="240" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="310" y1="15" x2="310" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="380" y1="15" x2="380" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="450" y1="15" x2="450" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="520" y1="15" x2="520" y2="165" stroke="#cbd5e1" stroke-dasharray="3"/>
+
+            <!-- T Signal -->
+            <text x="25" y="45" font-weight="700" font-size="14" fill="#1e293b">T</text>
+            <path d="M 60 55 L 140 55 L 140 30 L 280 30 L 280 55 L 410 55 L 410 30 L 580 30" fill="none" stroke="#0284c7" stroke-width="2"/>
+
+            <!-- Q Output -->
+            <text x="25" y="125" font-weight="700" font-size="14" fill="#034ea2">Q</text>
+            <path d="M 60 135 L 170 135 L 170 100 L 240 100 L 240 135 L 450 135 L 450 100 L 520 100 L 520 135 L 600 135" fill="none" stroke="#034ea2" stroke-width="2.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Ví dụ 4.2b -->
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+        <p class="font-bold text-slate-900 text-base">
+          Ví dụ 4.2b: <span class="font-normal">Vẽ giản đồ xung của ngõ ra Q của mạch sau khi có giản đồ xung của CK. Giả sử ban đầu Q = 0.</span>
+        </p>
+
+        <div class="flex flex-col md:flex-row items-center justify-around gap-6 py-2">
+          <!-- T nối lên Vcc = 1 -->
+          <div class="w-64">
+            <svg viewBox="0 0 240 160" class="w-full h-auto font-mono text-sm">
+              <rect x="70" y="30" width="100" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+              <!-- T pin connected to Vcc -->
+              <line x1="70" y1="55" x2="40" y2="55" stroke="#1e293b" stroke-width="2"/>
+              <line x1="40" y1="55" x2="40" y2="15" stroke="#1e293b" stroke-width="2"/>
+              <text x="32" y="10" font-weight="700" font-size="12" fill="#e11d48">Vcc</text>
+              <text x="80" y="60" font-weight="700">T</text>
+
+              <!-- CK pin with circle -->
+              <line x1="30" y1="95" x2="62" y2="95" stroke="#1e293b" stroke-width="2"/>
+              <circle cx="66" cy="95" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+              <polyline points="70,88 78,95 70,102" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+              <text x="10" y="100" font-size="12" font-weight="700">CK</text>
+
+              <!-- Q & Q_bar pin -->
+              <line x1="170" y1="55" x2="210" y2="55" stroke="#1e293b" stroke-width="2"/>
+              <text x="145" y="60" font-weight="700">Q</text>
+              <line x1="170" y1="105" x2="210" y2="105" stroke="#1e293b" stroke-width="2"/>
+              <text x="140" y="110" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+            </svg>
+            <p class="text-xs text-slate-500 font-sans italic text-center mt-1">Ghi chú: nối T lên V<sub>cc</sub> nghĩa là T = 1.</p>
+          </div>
+
+          <!-- Waveform 4.2b -->
+          <div class="flex-1 w-full overflow-x-auto">
+            <svg viewBox="0 0 500 100" class="w-full min-w-[420px] h-auto font-mono text-xs">
+              <text x="15" y="45" font-weight="700" font-size="14" fill="#034ea2">Q</text>
+              <path d="M 50 60 L 80 60 L 80 30 L 140 30 L 140 60 L 200 60 L 200 30 L 260 30 L 260 60 L 320 60 L 320 30 L 380 30 L 380 60 L 440 60 L 440 30 L 490 30" fill="none" stroke="#034ea2" stroke-width="2.5"/>
+            </svg>
+            <div class="bg-brand-50/60 p-3 rounded-lg border-l-4 border-brand-500 font-semibold text-slate-900 mt-2 flex items-center justify-between">
+              <span>Nhận xét: T = 1 mạch chia đôi tần số CK</span>
+              <span class="font-mono font-bold text-brand-600 bg-white px-2.5 py-0.5 rounded border border-brand-200">
+                f<sub>Q</sub> = ½ f<sub>CK</sub>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3- JK FF -->
+    <div class="space-y-6 border-t pt-8 border-slate-200" id="sec-4-2-3">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+        3- JK-FF (Jack Kilby Flip-Flop)
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Ký hiệu logic JK-FF -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+          <span class="text-xs font-semibold text-slate-500 mb-3">Ký hiệu logic JK-FF</span>
+          <svg viewBox="0 0 200 160" class="w-40 h-auto font-mono text-sm">
+            <rect x="50" y="25" width="100" height="110" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+            <line x1="10" y1="45" x2="50" y2="45" stroke="#1e293b" stroke-width="2"/>
+            <text x="60" y="50" font-weight="700">J</text>
+
+            <line x1="10" y1="80" x2="42" y2="80" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="46" cy="80" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="50,73 58,80 50,87" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="5" y="85" font-size="11" font-weight="700">CK</text>
+
+            <line x1="10" y1="115" x2="50" y2="115" stroke="#1e293b" stroke-width="2"/>
+            <text x="60" y="120" font-weight="700">K</text>
+
+            <line x1="150" y1="45" x2="190" y2="45" stroke="#1e293b" stroke-width="2"/>
+            <text x="130" y="50" font-weight="700">Q</text>
+            <line x1="150" y1="115" x2="190" y2="115" stroke="#1e293b" stroke-width="2"/>
+            <text x="125" y="120" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+        </div>
+
+        <!-- Bảng đặc tính & Bìa K -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng đặc tính</h4>
+          <table class="w-full border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-1.5 border-r border-slate-300">J</th>
+                <th class="p-1.5 border-r border-slate-300">K</th>
+                <th class="p-1.5">Q<sup>+</sup></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">Q</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-rose-600">0</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-emerald-600">1</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600"><span class="overline">Q</span></td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-slate-700 pt-1">
+            Hàm đặc tính: <strong class="font-mono text-brand-600">Q<sup>+</sup> = <span class="overline">K</span>·Q + J·<span class="overline">Q</span></strong>
+          </p>
+        </div>
+
+        <!-- Bảng kích thích -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng kích thích</h4>
+          <table class="w-full border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-1.5 border-r border-slate-300">Q</th>
+                <th class="p-1.5 border-r border-slate-300">Q<sup>+</sup></th>
+                <th class="p-1.5 border-r border-slate-300">J</th>
+                <th class="p-1.5">K</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-slate-800">0</td><td class="p-1.5 text-amber-600 font-bold">x</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td><td class="p-1.5 text-amber-600 font-bold">x</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 text-amber-600 font-bold">x</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 text-amber-600 font-bold">x</td><td class="p-1.5 font-bold text-slate-800">0</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-slate-500 italic">với x là trạng thái tùy định (don't care)</p>
+        </div>
+      </div>
+
+      <!-- Ví dụ 4.3 -->
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <p class="font-bold text-slate-900 text-base">
+          Ví dụ 4.3: <span class="font-normal">Vẽ giản đồ xung tại ngõ ra Q (giả sử ban đầu Q = 0) khi có giản đồ xung của CK, J và K của một JK-FF (CK cạnh xuống) như sau:</span>
+        </p>
+        <div class="overflow-x-auto p-2">
+          <svg viewBox="0 0 650 220" class="w-full min-w-[550px] h-auto font-mono text-xs">
+            <line x1="110" y1="15" x2="110" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="180" y1="15" x2="180" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="250" y1="15" x2="250" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="320" y1="15" x2="320" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="390" y1="15" x2="390" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="460" y1="15" x2="460" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="530" y1="15" x2="530" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+            <line x1="600" y1="15" x2="600" y2="205" stroke="#cbd5e1" stroke-dasharray="3"/>
+
+            <!-- CK -->
+            <text x="25" y="40" font-weight="700" font-size="14" fill="#1e293b">CK</text>
+            <path d="M 60 45 L 80 45 L 80 25 L 110 25 L 110 45 L 150 45 L 150 25 L 180 25 L 180 45 L 220 45 L 220 25 L 250 25 L 250 45 L 290 45 L 290 25 L 320 25 L 320 45 L 360 45 L 360 25 L 390 25 L 390 45 L 430 45 L 430 25 L 460 25 L 460 45 L 500 45 L 500 25 L 530 25 L 530 45 L 570 45 L 570 25 L 600 25 L 600 45 L 630 45" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+            <!-- J -->
+            <text x="25" y="90" font-weight="700" font-size="14" fill="#0284c7">J</text>
+            <path d="M 60 100 L 150 100 L 150 75 L 360 75 L 360 100 L 490 100 L 490 75 L 630 75" fill="none" stroke="#0284c7" stroke-width="2"/>
+
+            <!-- K -->
+            <text x="25" y="140" font-weight="700" font-size="14" fill="#e11d48">K</text>
+            <path d="M 60 150 L 220 150 L 220 125 L 430 125 L 430 150 L 630 150" fill="none" stroke="#e11d48" stroke-width="2"/>
+
+            <!-- Q Output -->
+            <text x="25" y="195" font-weight="700" font-size="14" fill="#034ea2">Q</text>
+            <path d="M 60 205 L 180 205 L 180 175 L 320 175 L 320 205 L 530 205 L 530 175 L 630 175" fill="none" stroke="#034ea2" stroke-width="2.5"/>
+          </svg>
+        </div>
+
+        <!-- Nhận xét chuyển đổi JK-FF -->
+        <div class="mt-4 pt-4 border-t border-slate-200 space-y-4">
+          <p class="font-bold text-slate-900 text-base">Nhận xét chuyển đổi từ JK-FF:</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- JK thành T-FF -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+              <span class="font-semibold text-slate-800 text-sm mb-2">- Khi nối chung J và K thì JK-FF tương đương với T-FF</span>
+              <svg viewBox="0 0 200 120" class="w-44 h-auto font-mono text-xs">
+                <rect x="60" y="20" width="80" height="80" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" rx="3"/>
+                <text x="70" y="42" font-weight="700">J</text>
+                <text x="70" y="85" font-weight="700">K</text>
+                <text x="120" y="42" font-weight="700">Q</text>
+                <text x="115" y="85" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+                <!-- Tie J and K together -->
+                <line x1="60" y1="38" x2="35" y2="38" stroke="#1e293b" stroke-width="1.8"/>
+                <line x1="60" y1="82" x2="35" y2="82" stroke="#1e293b" stroke-width="1.8"/>
+                <line x1="35" y1="38" x2="35" y2="82" stroke="#1e293b" stroke-width="1.8"/>
+                <line x1="35" y1="60" x2="15" y2="60" stroke="#1e293b" stroke-width="1.8"/>
+                <!-- Output pins -->
+                <line x1="140" y1="38" x2="170" y2="38" stroke="#1e293b" stroke-width="1.8"/>
+                <line x1="140" y1="82" x2="170" y2="82" stroke="#1e293b" stroke-width="1.8"/>
+              </svg>
+            </div>
+
+            <!-- JK thành D-FF -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+              <span class="font-semibold text-slate-800 text-sm mb-2">- Khi nối J qua cổng NOT tới K thì JK-FF tương đương với D-FF</span>
+              <svg viewBox="0 0 220 120" class="w-48 h-auto font-mono text-xs">
+                <rect x="90" y="20" width="80" height="80" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" rx="3"/>
+                <text x="100" y="42" font-weight="700">J</text>
+                <text x="100" y="85" font-weight="700">K</text>
+                <text x="150" y="42" font-weight="700">Q</text>
+                <text x="145" y="85" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+                <!-- D input line to J -->
+                <line x1="20" y1="38" x2="90" y2="38" stroke="#1e293b" stroke-width="1.8"/>
+                <!-- Branch to Inverter to K -->
+                <line x1="45" y1="38" x2="45" y2="82" stroke="#1e293b" stroke-width="1.8"/>
+                <!-- Triangle inverter -->
+                <polygon points="45,76 65,82 45,88" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+                <circle cx="68" cy="82" r="3" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+                <line x1="71" y1="82" x2="90" y2="82" stroke="#1e293b" stroke-width="1.8"/>
+                <!-- Outputs -->
+                <line x1="170" y1="38" x2="195" y2="38" stroke="#1e293b" stroke-width="1.8"/>
+                <line x1="170" y1="82" x2="195" y2="82" stroke="#1e293b" stroke-width="1.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4- SR FF -->
+    <div class="space-y-6 border-t pt-8 border-slate-200" id="sec-4-2-4">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+        4- SR-FF (Set - Reset Flip-Flop)
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Ký hiệu logic SR-FF -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+          <span class="text-xs font-semibold text-slate-500 mb-3">Ký hiệu logic SR-FF</span>
+          <svg viewBox="0 0 200 160" class="w-40 h-auto font-mono text-sm">
+            <rect x="50" y="25" width="100" height="110" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="4"/>
+            <line x1="10" y1="45" x2="50" y2="45" stroke="#1e293b" stroke-width="2"/>
+            <text x="60" y="50" font-weight="700">S</text>
+
+            <line x1="10" y1="80" x2="50" y2="80" stroke="#1e293b" stroke-width="2"/>
+            <polyline points="50,73 58,80 50,87" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="15" y="85" font-size="11" font-weight="700">CK</text>
+
+            <line x1="10" y1="115" x2="50" y2="115" stroke="#1e293b" stroke-width="2"/>
+            <text x="60" y="120" font-weight="700">R</text>
+
+            <line x1="150" y1="45" x2="190" y2="45" stroke="#1e293b" stroke-width="2"/>
+            <text x="130" y="50" font-weight="700">Q</text>
+            <line x1="150" y1="115" x2="190" y2="115" stroke="#1e293b" stroke-width="2"/>
+            <text x="125" y="120" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+        </div>
+
+        <!-- Bảng đặc tính & Bìa K -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng đặc tính</h4>
+          <table class="w-full border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-1.5 border-r border-slate-300">S</th>
+                <th class="p-1.5 border-r border-slate-300">R</th>
+                <th class="p-1.5">Q<sup>+</sup></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">Q</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-rose-600">0</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-emerald-600">1</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-red-500">X (Cấm)</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-slate-700 pt-1">
+            Hàm đặc tính: <strong class="font-mono text-brand-600">Q<sup>+</sup> = <span class="overline">R</span>·Q + S</strong> (với S·R = 0)
+          </p>
+        </div>
+
+        <!-- Bảng kích thích -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-slate-900 text-base">Bảng kích thích</h4>
+          <table class="w-full border-collapse font-mono text-center text-sm border border-slate-300">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300">
+              <tr>
+                <th class="p-1.5 border-r border-slate-300">Q</th>
+                <th class="p-1.5 border-r border-slate-300">Q<sup>+</sup></th>
+                <th class="p-1.5 border-r border-slate-300">S</th>
+                <th class="p-1.5">R</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td><td class="p-1.5 text-amber-600 font-bold">x</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td><td class="p-1.5">0</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+              <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 text-amber-600 font-bold">x</td><td class="p-1.5">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-2">
+        <p class="font-bold text-slate-900 not-italic">Nhận xét:</p>
+        <p class="text-slate-800">- Khi nối S qua cổng NOT tới R thì SR-FF tương đương với D-FF.</p>
+        <p class="text-rose-700 font-semibold">- Không được nối chung S và R (vì tổ hợp S = R = 1 là trạng thái không xác định/cấm).</p>
+      </div>
+    </div>
+
+    <!-- 5- Các loại xung nhịp (xung Clock) -->
+    <div class="space-y-6 border-t pt-8 border-slate-200" id="sec-4-2-5">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+        5- Các loại xung nhịp (xung Clock)
+      </h3>
+      <p class="text-base sm:text-lg text-slate-800">
+        Ngoài các FF có ngõ CK tác động cạnh xuống, còn có các loại FF có ngõ CK tác động mức thấp, tác động mức cao và tác động cạnh lên. Hình vẽ sau đây đưa ra 4 loại D-FF với các loại ngõ CK khác nhau:
+      </p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- CK cạnh xuống -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <svg viewBox="0 0 160 140" class="w-28 h-auto font-mono text-xs mb-2">
+            <rect x="40" y="20" width="80" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" rx="3"/>
+            <line x1="10" y1="45" x2="40" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="50" y="50" font-weight="700">D</text>
+
+            <line x1="10" y1="85" x2="32" y2="85" stroke="#1e293b" stroke-width="1.8"/>
+            <circle cx="36" cy="85" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="40,78 48,85 40,92" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="5" y="90" font-size="10" font-weight="700">CK</text>
+
+            <line x1="120" y1="45" x2="150" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="105" y="50" font-weight="700">Q</text>
+            <line x1="120" y1="95" x2="150" y2="95" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="100" y="100" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+          <span class="font-bold text-sm text-brand-600">CK cạnh xuống</span>
+          <span class="text-xs text-slate-500">(Falling edge - &darr;)</span>
+        </div>
+
+        <!-- CK cạnh lên -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <svg viewBox="0 0 160 140" class="w-28 h-auto font-mono text-xs mb-2">
+            <rect x="40" y="20" width="80" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" rx="3"/>
+            <line x1="10" y1="45" x2="40" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="50" y="50" font-weight="700">D</text>
+
+            <!-- Triangle only without circle -->
+            <line x1="10" y1="85" x2="40" y2="85" stroke="#1e293b" stroke-width="1.8"/>
+            <polyline points="40,78 48,85 40,92" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="5" y="90" font-size="10" font-weight="700">CK</text>
+
+            <line x1="120" y1="45" x2="150" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="105" y="50" font-weight="700">Q</text>
+            <line x1="120" y1="95" x2="150" y2="95" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="100" y="100" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+          <span class="font-bold text-sm text-brand-600">CK cạnh lên</span>
+          <span class="text-xs text-slate-500">(Rising edge - &uarr;)</span>
+        </div>
+
+        <!-- CK mức thấp -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <svg viewBox="0 0 160 140" class="w-28 h-auto font-mono text-xs mb-2">
+            <rect x="40" y="20" width="80" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" rx="3"/>
+            <line x1="10" y1="45" x2="40" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="50" y="50" font-weight="700">D</text>
+
+            <!-- Circle only without triangle -->
+            <line x1="10" y1="85" x2="32" y2="85" stroke="#1e293b" stroke-width="1.8"/>
+            <circle cx="36" cy="85" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="5" y="90" font-size="10" font-weight="700">CK</text>
+
+            <line x1="120" y1="45" x2="150" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="105" y="50" font-weight="700">Q</text>
+            <line x1="120" y1="95" x2="150" y2="95" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="100" y="100" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+          <span class="font-bold text-sm text-brand-600">CK mức thấp</span>
+          <span class="text-xs text-slate-500">(Low level - 0)</span>
+        </div>
+
+        <!-- CK mức cao -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <svg viewBox="0 0 160 140" class="w-28 h-auto font-mono text-xs mb-2">
+            <rect x="40" y="20" width="80" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" rx="3"/>
+            <line x1="10" y1="45" x2="40" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="50" y="50" font-weight="700">D</text>
+
+            <!-- Straight line only -->
+            <line x1="10" y1="85" x2="40" y2="85" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="5" y="90" font-size="10" font-weight="700">CK</text>
+
+            <line x1="120" y1="45" x2="150" y2="45" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="105" y="50" font-weight="700">Q</text>
+            <line x1="120" y1="95" x2="150" y2="95" stroke="#1e293b" stroke-width="1.8"/>
+            <text x="100" y="100" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+          <span class="font-bold text-sm text-brand-600">CK mức cao</span>
+          <span class="text-xs text-slate-500">(High level - 1)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6- Các ngõ điều khiển (Preset và Clear) -->
+    <div class="space-y-6 border-t pt-8 border-slate-200" id="sec-4-2-6">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+        6- Các ngõ điều khiển
+      </h3>
+      <div class="space-y-3 text-base sm:text-lg leading-relaxed text-slate-800">
+        <p>
+          Các FF còn có thể có các ngõ điều khiển <strong>Preset (Pr - đặt trước)</strong> và <strong>Clear (Clr - xóa)</strong>. Các ngõ này có thể tích cực mức cao hoặc mức thấp.
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>Khi ngõ <strong>Preset</strong> tích cực thì ngõ ra Q sẽ bằng 1 (bất chấp trạng thái xung CK).</li>
+          <li>Khi ngõ <strong>Clear</strong> tích cực thì ngõ ra Q sẽ bằng 0 (bất chấp trạng thái xung CK).</li>
+          <li>Một trường hợp không mong muốn xảy ra là ngõ Preset và ngõ Clear đồng thời tích cực, khi đó trạng thái ngõ ra sẽ phụ thuộc vào loại vi mạch cụ thể, thông thường thì cả hai ngõ ra Q và <span class="overline">Q</span> đều sẽ là mức 1.</li>
+        </ul>
+      </div>
+
+      <!-- Hình vẽ 2 loại D-FF với Pr và Clr -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center">
+          <svg viewBox="0 0 180 180" class="w-40 h-auto font-mono text-sm">
+            <rect x="50" y="40" width="80" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="3"/>
+            <!-- Pr on top (no circle: active high) -->
+            <line x1="90" y1="10" x2="90" y2="40" stroke="#1e293b" stroke-width="2"/>
+            <text x="80" y="55" font-weight="700">PR</text>
+            <!-- Clr on bottom (no circle: active high) -->
+            <line x1="90" y1="140" x2="90" y2="170" stroke="#1e293b" stroke-width="2"/>
+            <text x="75" y="135" font-weight="700">CLR</text>
+            <!-- D, CK, Q, Q_bar -->
+            <line x1="15" y1="65" x2="50" y2="65" stroke="#1e293b" stroke-width="2"/>
+            <text x="58" y="70" font-weight="700">D</text>
+            <line x1="15" y1="105" x2="42" y2="105" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="46" cy="105" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="50,98 58,105 50,112" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="10" y="100" font-size="10" font-weight="700">CK</text>
+            <line x1="130" y1="65" x2="165" y2="65" stroke="#1e293b" stroke-width="2"/>
+            <text x="115" y="70" font-weight="700">Q</text>
+            <line x1="130" y1="115" x2="165" y2="115" stroke="#1e293b" stroke-width="2"/>
+            <text x="110" y="120" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+          <span class="font-bold text-sm text-brand-600 mt-2">Pr và Clr tích cực mức cao</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center">
+          <svg viewBox="0 0 180 180" class="w-40 h-auto font-mono text-sm">
+            <rect x="50" y="40" width="80" height="100" fill="#ffffff" stroke="#1e293b" stroke-width="2" rx="3"/>
+            <!-- Pr on top with circle: active low -->
+            <line x1="90" y1="10" x2="90" y2="32" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="90" cy="36" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="80" y="55" font-weight="700">PR</text>
+            <!-- Clr on bottom with circle: active low -->
+            <line x1="90" y1="148" x2="90" y2="170" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="90" cy="144" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="75" y="135" font-weight="700">CLR</text>
+            <!-- D, CK, Q, Q_bar -->
+            <line x1="15" y1="65" x2="50" y2="65" stroke="#1e293b" stroke-width="2"/>
+            <text x="58" y="70" font-weight="700">D</text>
+            <line x1="15" y1="105" x2="42" y2="105" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="46" cy="105" r="4" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <polyline points="50,98 58,105 50,112" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            <text x="10" y="100" font-size="10" font-weight="700">CK</text>
+            <line x1="130" y1="65" x2="165" y2="65" stroke="#1e293b" stroke-width="2"/>
+            <text x="115" y="70" font-weight="700">Q</text>
+            <line x1="130" y1="115" x2="165" y2="115" stroke="#1e293b" stroke-width="2"/>
+            <text x="110" y="120" font-weight="700"><tspan text-decoration="overline">Q</tspan></text>
+          </svg>
+          <span class="font-bold text-sm text-brand-600 mt-2">Pr và Clr tích cực mức thấp</span>
+        </div>
+      </div>
+
+      <!-- Giới thiệu vi mạch TTL FF thông dụng -->
+      <div class="space-y-4 pt-4">
+        <h4 class="font-bold text-slate-900 text-lg">Giới thiệu vi mạch Flip-Flop thông dụng (74LS series)</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- 74LS74 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-brand-600 text-base">74LS74: gồm 2 D-FF</span>
+            <p class="text-xs text-slate-600">CK kích cạnh lên, ngõ PR và CLR tích cực mức thấp.</p>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200 text-xs font-mono">
+              <p>FF1: D (chân 2), CLK (3), PR (4), CLR (1), Q (5), <span class="overline">Q</span> (6)</p>
+              <p class="mt-1">FF2: D (chân 12), CLK (11), PR (10), CLR (13), Q (9), <span class="overline">Q</span> (8)</p>
+            </div>
+          </div>
+
+          <!-- 74LS109 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-brand-600 text-base">74LS109: gồm 2 JK-FF</span>
+            <p class="text-xs text-slate-600">CK kích cạnh lên, ngõ vào là J và <span class="overline">K</span>, PR và CLR tích cực mức thấp.</p>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200 text-xs font-mono">
+              <p>FF1: J (2), <span class="overline">K</span> (3), CLK (4), PR (5), CLR (1), Q (6), <span class="overline">Q</span> (7)</p>
+              <p class="mt-1">FF2: J (14), <span class="overline">K</span> (13), CLK (12), PR (11), CLR (15), Q (10), <span class="overline">Q</span> (9)</p>
+            </div>
+          </div>
+
+          <!-- 74LS112 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-brand-600 text-base">74LS112: gồm 2 JK-FF</span>
+            <p class="text-xs text-slate-600">CK kích cạnh xuống, ngõ PR và CLR tích cực mức thấp.</p>
+            <div class="p-2 bg-slate-50 rounded border border-slate-200 text-xs font-mono">
+              <p>FF1: J (3), K (2), CLK (1), PR (4), CLR (15), Q (5), <span class="overline">Q</span> (6)</p>
+              <p class="mt-1">FF2: J (11), K (12), CLK (13), PR (10), CLR (14), Q (9), <span class="overline">Q</span> (7)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- END: Section 4.2 -->
+
+  <!-- BEGIN: Chapter Navigation Footer -->
+  <div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+    <div class="text-center sm:text-left">
+      <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+      <h4 class="text-base font-bold text-slate-800">Kỹ thuật số & Thiết kế vi mạch — Chương 4</h4>
+    </div>
+    <div class="flex items-center gap-3 w-full sm:w-auto">
+      <a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-4-1">
+        Lên đầu trang
+      </a>
+      <a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="Chuong4-he-tuan-tu-&-fipl-flop-phan2.html">
+        Tiếp tục: Phần 2 (Mục 4.3 & 4.4) &rarr;
+      </a>
+    </div>
+  </div>
+  <!-- END: Chapter Navigation Footer -->
+
+</main>
+<!-- END: Main Content Area -->
+
+</body>
+</html>

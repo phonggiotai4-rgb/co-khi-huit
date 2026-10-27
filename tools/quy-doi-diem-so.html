@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quy đổi điểm &amp; Quản lý GPA | CƠ KHÍ HUIT</title>
+<meta name="description" content="Quy đổi điểm hệ 10 sang thang 4 và điểm chữ, tính GPA tích lũy theo quy chế đào tạo đại học — CƠ KHÍ HUIT.">
+<meta name="theme-color" content="#034EA2">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="../assets/app.css?v=20261017d">
+
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   1. TOKENS RIÊNG CỦA TRANG — ánh xạ sang design.md §2 (một màu nhấn #034EA2)
+   ══════════════════════════════════════════════════════════════════════════ */
+:root{
+  /* chữ: dùng alias nên tự đổi theo theme của app.css */
+  --strong:var(--text-strong);
+  --muted :var(--text-muted);
+  --faint :var(--text-faint);
+  --font  :var(--font-display);
+  --ease  :var(--ease-out);
+  --fast  :var(--dur-fast);
+  --base  :var(--dur-base);
+
+  --line  :var(--brand-06);
+  --line-2:var(--brand-20);
+
+  /* nền kính phục vụ input/chip — biến hoá theo theme */
+  --fill    :rgba(255,255,255,.50);
+  --fill-hi :rgba(255,255,255,.72);
+  --seg-bg  :rgba(255,255,255,.48);
+  --seg-on  :rgba(255,255,255,.92);
+
+  /* ramp điểm: đơn sắc brand + xám, đúng chuẩn dữ liệu thứ tự */
+  --gA:var(--brand); --gB:#2A63A8; --gC:#4A7FBA; --gD:#C3D2E3; --gF:#B4453C;
+  --gDink:#023A80;
+
+  /* ngoại lệ ngữ nghĩa duy nhất (đã khai báo ở design.md §4.6) */
+  --danger:#B4453C; --danger-soft:rgba(180,69,60,.12);
+
+  --navH:74px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --fill:rgba(255,255,255,.07); --fill-hi:rgba(255,255,255,.11);
+    --seg-bg:rgba(255,255,255,.05); --seg-on:rgba(255,255,255,.14);
+    --gB:#5C92CE; --gC:#8FB6DE; --gD:#2A3A55; --gF:#D9705F;
+    --gDink:#DCE8F6;
+    --danger:#D9705F; --danger-soft:rgba(217,112,95,.16);
+  }
+}
+:root[data-theme="dark"]{
+  --fill:rgba(255,255,255,.07); --fill-hi:rgba(255,255,255,.11);
+  --seg-bg:rgba(255,255,255,.05); --seg-on:rgba(255,255,255,.14);
+  --gB:#5C92CE; --gC:#8FB6DE; --gD:#2A3A55; --gF:#D9705F;
+  --gDink:#DCE8F6;
+  --danger:#D9705F; --danger-soft:rgba(217,112,95,.16);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   2. NỀN / RESET NHỎ
+   ══════════════════════════════════════════════════════════════════════════ */
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--navH) + 124px)}
+body{padding-bottom:env(safe-area-inset-bottom,0px)}
+::selection{background:var(--brand);color:#fff}
+button,input,select{font:inherit;color:inherit}
+.hidden{display:none!important}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:3px solid var(--strong);outline-offset:2px;border-radius:10px;
+}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:99px}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   3. KHUNG TRANG
+   ══════════════════════════════════════════════════════════════════════════ */
+.page{flex:1;width:100%;max-width:1240px;margin:0 auto;padding:16px 16px 0}
+.stack{display:flex;flex-direction:column;gap:24px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+/* Cột grid/flex phải co được, nếu không bảng min-width sẽ đẩy trang rộng ra */
+.grid > *,.stack > *{min-width:0}
+.g3{grid-column:span 3} .g4{grid-column:span 4} .g5{grid-column:span 5}
+.g7{grid-column:span 7} .g8{grid-column:span 8}
+.g12{grid-column:span 12}
+.sticky-col{align-self:start;position:sticky;top:calc(var(--navH) + 18px)}
+.page-foot{padding:32px 4px 8px;text-align:center;font:400 12.5px/1.6 var(--font-display);color:var(--faint)}
+
+/* ── Thanh công cụ dính ─────────────────────────────────────────────────── */
+.toolbar{
+  position:sticky;top:calc(var(--navH) + 8px);z-index:35;
+  padding:12px 14px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-float),inset 0 1px 0 var(--hi);
+}
+.toolbar__main{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.toolbar__lead{margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line);
+  font:400 13.5px/1.65 var(--font-display);color:var(--text)}
+.toolbar__lead b{color:var(--strong);font-weight:600}
+.tb-id{display:flex;align-items:center;gap:12px;min-width:0}
+.tb-ico{width:42px;height:42px;border-radius:var(--r-md);flex:none;display:grid;place-items:center;
+  background:var(--brand);color:#fff;font-size:17px;box-shadow:var(--sh-brand)}
+.tb-txt{min-width:0}
+.tb-crumb{margin:0;font:700 10.5px/1.2 var(--font-display);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-title{margin:2px 0 0;font:800 17px/1.2 var(--font-display);letter-spacing:-.02em;
+  color:var(--strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-push{flex:1 1 auto}
+
+/* ── Segmented tabs (active = nền trắng đục + chữ brand, design.md §4.2) ─ */
+.seg{display:flex;gap:2px;padding:4px;border-radius:9999px;
+  background:var(--seg-bg);border:1px solid var(--glass-1-br);box-shadow:var(--sh-xs)}
+.seg__btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;
+  border:0;border-radius:9999px;background:transparent;color:var(--text);cursor:pointer;
+  font:600 13px/1 var(--font-display);white-space:nowrap;
+  transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
+.seg__btn i{font-size:11px;color:var(--muted);transition:color var(--fast) var(--ease)}
+.seg__btn:hover{background:var(--fill-hi);color:var(--strong)}
+.seg__btn[aria-selected="true"]{background:var(--seg-on);color:var(--strong);box-shadow:var(--sh-xs)}
+.seg__btn[aria-selected="true"] i{color:var(--strong)}
+
+/* ── Giới thiệu ─────────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   4. THÀNH PHẦN KÍNH
+   ══════════════════════════════════════════════════════════════════════════ */
+.card{padding:26px;border-radius:var(--r-xl);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi)}
+.card--flush{padding:0;overflow:hidden}
+.card__head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding-bottom:16px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.card__title{display:flex;align-items:center;gap:11px;margin:0;font:700 17px/1.3 var(--font-display);color:var(--strong)}
+.card__sub{margin:6px 0 0;font:400 12.5px/1.5 var(--font-display);color:var(--muted)}
+.card__ico{width:34px;height:34px;border-radius:var(--r-sm);flex:none;display:grid;place-items:center;
+  background:var(--brand-10);color:var(--strong);font-size:14px}
+.pill{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 12px;border-radius:9999px;
+  background:var(--brand-10);border:1px solid var(--brand-20);color:var(--strong);
+  font:700 11px/1 var(--font-display);white-space:nowrap}
+.lbl{display:block;margin:0 0 7px;font:700 10.5px/1.2 var(--font-display);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted)}
+.notice{display:flex;gap:13px;margin:22px 26px 24px;border-radius:var(--r-md);padding:15px 17px;
+  background:var(--brand-06);border:1px solid var(--brand-20)}
+.notice i{color:var(--strong);font-size:15px;flex:none;margin-top:2px}
+.notice p{margin:0;font:400 12.5px/1.65 var(--font-display);color:var(--text)}
+.notice strong{color:var(--strong);font-weight:600}
+
+/* ── Form ───────────────────────────────────────────────────────────────── */
+.field{margin-bottom:20px}
+.input{width:100%;min-height:46px;padding:11px 15px;font:400 14px/1.4 var(--font-display);
+  background:var(--fill);border:1px solid var(--brand-25);border-radius:var(--r-md);
+  color:var(--text);box-shadow:var(--sh-xs);
+  transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease),background var(--fast) var(--ease)}
+.input::placeholder{color:var(--faint)}
+.input:hover{border-color:var(--brand-25);background:var(--fill-hi)}
+.input:focus{outline:none;border-color:var(--brand);background:var(--fill-hi);box-shadow:0 0 0 3px var(--brand-20)}
+.input[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
+.input--num{font:700 15px/1.2 var(--font-display);color:var(--text)}
+.input-wrap{position:relative}
+.input-wrap .lead{position:absolute;left:15px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:13px;pointer-events:none}
+.err-msg{display:none;align-items:center;gap:7px;margin:9px 0 0;font:600 12.5px/1.5 var(--font-display);color:var(--danger)}
+.err-msg.show{display:flex}
+
+/* Ô nhập điểm lớn */
+.scorebox{position:relative}
+.scorebox .input{padding-left:46px;padding-right:62px;min-height:64px;
+  font:800 30px/1 var(--font-display);letter-spacing:-.02em;color:var(--strong)}
+.scorebox .lead{left:18px;font-size:16px}
+.scorebox .unit{position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font:700 13px/1 var(--font-display);color:var(--muted)}
+
+/* ── Thanh trượt ────────────────────────────────────────────────────────── */
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:34px;margin:6px 0 0;
+  background:transparent;cursor:pointer}
+.slider:focus-visible{outline:3px solid var(--brand);outline-offset:4px;border-radius:9999px}
+.slider::-webkit-slider-runnable-track{height:8px;border-radius:9999px;
+  background:linear-gradient(90deg,var(--brand) 0 var(--p,0%),var(--fill) var(--p,0%) 100%);
+  box-shadow:inset 0 1px 2px var(--line-2)}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;
+  border-radius:50%;background:#fff;border:1px solid var(--brand-25);box-shadow:var(--sh-sm);
+  transition:transform var(--fast) var(--ease)}
+.slider:hover::-webkit-slider-thumb{transform:scale(1.1)}
+.slider:active::-webkit-slider-thumb{transform:scale(1.18)}
+.slider::-moz-range-track{height:8px;border-radius:9999px;background:var(--fill);
+  box-shadow:inset 0 1px 2px var(--line-2)}
+.slider::-moz-range-progress{height:8px;border-radius:9999px;background:var(--brand)}
+.slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;
+  border:1px solid var(--brand-25);box-shadow:var(--sh-sm)}
+.slider-scale{display:flex;justify-content:space-between;margin-top:2px;
+  font:500 10.5px/1 var(--font-mono);color:var(--faint)}
+
+/* ── Chip mẫu điểm ──────────────────────────────────────────────────────── */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chipbtn{min-height:36px;padding:0 15px;border-radius:9999px;cursor:pointer;
+  background:var(--fill);border:1px solid var(--glass-1-br);box-shadow:var(--sh-xs);
+  font:700 12.5px/1 var(--font-mono);color:var(--text);
+  transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease),
+             color var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.chipbtn:hover{background:var(--brand-10);border-color:var(--brand-20);color:var(--strong);transform:translateY(-1px)}
+
+/* ── Nút ────────────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 22px;
+  border:1px solid transparent;border-radius:var(--r-md);cursor:pointer;
+  font:700 14.5px/1 var(--font-display);text-decoration:none;
+  transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease),
+             color var(--fast) var(--ease),transform var(--fast) var(--ease),box-shadow var(--fast) var(--ease)}
+.btn.sm{height:40px;padding:0 16px;font-size:12.5px}
+.btn-primary{background:var(--brand);color:var(--text-invert);box-shadow:var(--sh-brand)}
+.btn-primary:hover{background:var(--brand-deep);transform:translateY(-1px)}
+.btn-primary:active{transform:scale(.98);box-shadow:var(--sh-press)}
+.btn-glass{background:var(--fill);color:var(--strong);border-color:var(--glass-2-br);box-shadow:var(--sh-sm)}
+.btn-glass:hover{background:var(--fill-hi);transform:translateY(-1px)}
+.btn-tinted{background:var(--brand-10);color:var(--strong);border-color:var(--brand-20)}
+.btn-tinted:hover{background:var(--brand-20)}
+.btn-ghost{background:transparent;color:var(--text)}
+.btn-ghost:hover{background:var(--fill);color:var(--strong)}
+.btn-danger{background:transparent;color:var(--danger);border:1.5px solid var(--danger)}
+.btn-danger:hover{background:var(--danger-soft)}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
+.w-full{width:100%}
+
+.icon-btn{width:34px;height:34px;flex:none;border-radius:var(--r-sm);cursor:pointer;
+  background:var(--fill);border:1px solid var(--glass-1-br);box-shadow:var(--sh-xs);
+  display:grid;place-items:center;font-size:12px;color:var(--muted);
+  transition:background var(--fast) var(--ease),color var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.icon-btn:hover{background:var(--fill-hi);color:var(--strong);transform:translateY(-1px)}
+.icon-btn--danger:hover{color:var(--danger);background:var(--danger-soft)}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   5. THANG ĐIỂM TRỰC QUAN + KẾT QUẢ
+   ══════════════════════════════════════════════════════════════════════════ */
+.ladder{padding:22px 24px;border-radius:var(--r-xl);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.ladder__head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.ladder__title{font:700 15px/1.3 var(--font-display);color:var(--strong)}
+.ladder__read{font:500 12px/1.4 var(--font-mono);color:var(--muted)}
+.ladder__track{position:relative;padding-top:30px}
+.ladder__bands{display:flex;gap:2px;height:46px}
+.band{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  padding:0;border:1px solid transparent;border-radius:var(--r-sm);cursor:pointer;overflow:hidden;
+  transition:transform var(--fast) var(--ease),box-shadow var(--fast) var(--ease)}
+.band__l{font:800 14px/1 var(--font-display);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.16)}
+.band__r{font:600 9.5px/1 var(--font-mono);color:rgba(255,255,255,.86);white-space:nowrap}
+.band--A{background:var(--gA);color:var(--gA)} .band--B{background:var(--gB);color:var(--gB)}
+.band--C{background:var(--gC);color:var(--gC)} .band--D{background:var(--gD);color:var(--gD)}
+.band--F{background:var(--gF);color:var(--gF)}
+.band--D .band__l{color:var(--gDink);text-shadow:none}
+.band--D .band__r{color:var(--gDink);opacity:.78}
+.band:hover{transform:translateY(-2px);box-shadow:var(--sh-sm)}
+.band.is-hit{box-shadow:0 0 0 2px var(--fill),0 0 0 4px currentColor;transform:translateY(-3px)}
+.ladder__marker{position:absolute;top:0;bottom:0;left:0;width:0;transform:translateX(-50%);pointer-events:none;
+  color:var(--band-c,var(--brand))}
+.ladder__marker::before{content:"";position:absolute;top:32px;bottom:0;left:-1px;width:2px;border-radius:2px;
+  background:currentColor}
+.ladder__pill{position:absolute;top:0;left:50%;transform:translateX(-50%);padding:4px 10px;border-radius:9999px;
+  background:var(--band-c,var(--brand));color:#fff;font:700 12px/1.3 var(--font-mono);white-space:nowrap;
+  box-shadow:var(--sh-sm)}
+.ladder__ticks{display:grid;grid-template-columns:repeat(6,1fr);margin-top:9px;text-align:center;
+  font:500 10.5px/1 var(--font-mono);color:var(--faint)}
+.ladder__ticks span:first-child{text-align:left}
+.ladder__ticks span:last-child{text-align:right}
+.ladder__foot{margin:14px 0 0;font:400 12px/1.6 var(--font-display);color:var(--muted)}
+
+/* Kết quả */
+.verdict{position:relative;padding:24px;border-radius:var(--r-lg);overflow:hidden;
+  background:var(--fill);border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 var(--hi)}
+.verdict__idle{position:relative;text-align:center;padding:18px 8px}
+.verdict__idle .empty__ring{margin-bottom:14px}
+.verdict__glow{position:absolute;left:-10%;right:-10%;top:-140px;height:260px;pointer-events:none;
+  filter:blur(38px);opacity:.42;
+  background:radial-gradient(closest-side,var(--band-c,var(--brand-20)),transparent 78%)}
+.verdict__top{position:relative;display:flex;align-items:center;gap:20px}
+.badge{min-width:108px;height:108px;border-radius:var(--r-lg);flex:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  background:var(--band-c,var(--brand));color:#fff;box-shadow:var(--sh-brand)}
+.badge b{font:800 38px/1 var(--font-display);letter-spacing:-.03em}
+.badge span{font:700 9.5px/1 var(--font-display);letter-spacing:.1em;text-transform:uppercase;opacity:.88}
+.verdict__eyebrow{margin:0;font:700 10.5px/1.2 var(--font-display);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted)}
+.verdict__class{margin:6px 0 0;font:800 24px/1.2 var(--font-display);letter-spacing:-.02em;color:var(--strong)}
+.hintbar{display:inline-flex;align-items:center;gap:9px;max-width:100%;margin:12px 0 0;padding:8px 12px;
+  border:1px solid var(--line);border-radius:9999px;background:var(--fill);cursor:pointer;text-align:left;
+  font:600 12.5px/1.4 var(--font-display);color:var(--text);
+  transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease),color var(--fast) var(--ease)}
+.hintbar:hover{background:var(--brand-10);border-color:var(--brand-20);color:var(--strong)}
+.hintbar i{font-size:11px;color:var(--strong);flex:none}
+.hintbar.is-max{cursor:default}
+.hintbar.is-max:hover{background:var(--fill);border-color:var(--line);color:var(--text)}
+.verdict__grid{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.verdict__grid .lbl{margin-bottom:4px}
+.verdict__grid .val{margin:0;font:700 24px/1.1 var(--font-mono);letter-spacing:-.02em;color:var(--text)}
+.verdict__grid .val.is-brand{color:var(--strong)}
+.verdict__acts{position:relative;display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   6. BẢNG
+   ══════════════════════════════════════════════════════════════════════════ */
+.tbl-head{padding:24px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line)}
+.tbl-head__acts{display:flex;gap:10px;flex-wrap:wrap}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;min-width:520px;border-collapse:collapse}
+.tbl thead th{text-align:left;padding:13px 20px;font:700 10.5px/1.2 var(--font-display);
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+  background:var(--brand-06);border-bottom:1px solid var(--brand-25);white-space:nowrap}
+.tbl tbody td{padding:14px 20px;font:400 14px/1.5 var(--font-display);
+  border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr{transition:background var(--fast) var(--ease)}
+.tbl tbody tr:hover{background:var(--fill)}
+.tbl .ctr{text-align:center}
+.tbl .num{font-family:var(--font-mono);font-weight:700;color:var(--strong);font-variant-numeric:tabular-nums}
+.tbl .idx{font-family:var(--font-mono);font-size:12px;color:var(--faint)}
+.tbl .is-hit{background:var(--brand-10)!important;box-shadow:inset 3px 0 0 var(--brand)}
+.tbl-meta{margin:0;padding:14px 26px 20px;font:400 12.5px/1.5 var(--font-display);color:var(--muted);
+  border-top:1px solid var(--line)}
+.tbl--ref{min-width:420px}
+.tbl--ref th:nth-child(1),.tbl--ref td:nth-child(1){width:30%}
+.tbl--ref th:nth-child(2),.tbl--ref td:nth-child(2){width:30%}
+.tbl--ref th:nth-child(3),.tbl--ref td:nth-child(3){width:20%}
+.tbl--ref th:nth-child(4),.tbl--ref td:nth-child(4){width:20%}
+.tbl-meta b{color:var(--strong);font-weight:600}
+.rowacts{display:inline-flex;gap:6px}
+
+/* Badge điểm chữ — ramp đơn sắc (design.md §4.6) */
+.gr{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:30px;padding:0 10px;
+  border-radius:var(--r-sm);font:700 13px/1 var(--font-mono)}
+.gr-A{background:var(--gA);color:#fff} .gr-B{background:var(--gB);color:#fff}
+.gr-C{background:var(--gC);color:#fff} .gr-D{background:var(--gD);color:var(--gDink)}
+.gr-F{background:var(--gF);color:#fff}
+.gname-A{color:var(--gA)} .gname-B{color:var(--gB)} .gname-C{color:var(--gC)}
+.gname-D{color:var(--muted)}   .gname-F{color:var(--gF)}
+
+/* Trạng thái rỗng */
+.empty{padding:48px 24px;text-align:center}
+.empty__ring{width:72px;height:72px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;
+  background:var(--fill);border:1px solid var(--glass-1-br);color:var(--muted);font-size:26px}
+.empty p{margin:0;font:600 14px/1.5 var(--font-display);color:var(--text)}
+.empty span{display:block;margin-top:5px;font:400 12.5px/1.6 var(--font-display);color:var(--muted)}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   7. KPI · PHÂN BỐ · MỐC MỤC TIÊU
+   ══════════════════════════════════════════════════════════════════════════ */
+.kpi{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;
+  border-radius:var(--r-xl);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  transition:transform var(--fast) var(--ease),box-shadow var(--fast) var(--ease)}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi)}
+.kpi__lbl{margin:0;font:700 10.5px/1.2 var(--font-display);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted)}
+.kpi__val{margin:6px 0 0;font:700 26px/1.05 var(--font-mono);letter-spacing:-.02em;color:var(--strong);
+  font-variant-numeric:tabular-nums}
+.kpi__val--sm{font:800 17px/1.3 var(--font-display);letter-spacing:-.01em}
+.kpi__ico{width:42px;height:42px;border-radius:var(--r-md);flex:none;display:grid;place-items:center;
+  background:var(--brand-10);color:var(--strong);font-size:17px}
+
+.dist{display:flex;gap:2px;height:14px;border-radius:9999px;overflow:hidden;
+  background:var(--fill);box-shadow:inset 0 1px 2px var(--line-2)}
+.dist > div{height:100%;width:0;transition:width .45s var(--ease)}
+.dist-A{background:var(--gA)} .dist-B{background:var(--gB)} .dist-C{background:var(--gC)}
+.dist-D{background:var(--gD)} .dist-F{background:var(--gF)}
+.dist-legend{list-style:none;margin:18px 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px}
+.dist-legend li{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:var(--r-sm);
+  background:var(--fill);border:1px solid var(--line)}
+.dist-legend i{width:9px;height:9px;border-radius:50%;flex:none}
+.dist-legend .k{font:700 11px/1 var(--font-display);letter-spacing:.06em;color:var(--muted)}
+.dist-legend b{font:700 13px/1 var(--font-mono);color:var(--text)}
+.dist-legend em{margin-left:auto;font:500 11px/1 var(--font-mono);font-style:normal;color:var(--faint)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.fact{padding:13px 15px;border-radius:var(--r-md);background:var(--fill);border:1px solid var(--line);min-width:0}
+.fact .v{margin:5px 0 0;font:700 14px/1.35 var(--font-display);color:var(--text);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fact .s{margin-left:7px;font:700 13px/1 var(--font-mono);color:var(--strong)}
+
+.target__fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.meter{position:relative;height:12px;margin:18px 0 8px;border-radius:9999px;background:var(--fill);
+  box-shadow:inset 0 1px 2px var(--line-2)}
+.meter__fill{height:100%;border-radius:9999px;background:var(--brand);transition:width .45s var(--ease)}
+.meter__mark{position:absolute;top:-5px;bottom:-5px;left:0;width:2px;border-radius:2px;background:var(--muted);
+  transition:left .45s var(--ease)}
+.meter__cap{display:flex;justify-content:space-between;font:500 10.5px/1 var(--font-mono);color:var(--faint)}
+.target__out{margin:16px 0 0;padding:14px 16px;border-radius:var(--r-md);
+  background:var(--fill);border:1px solid var(--line)}
+.target__out p{margin:0;font:400 13px/1.6 var(--font-display);color:var(--text)}
+.target__out b{font:700 17px/1 var(--font-mono);color:var(--strong);font-variant-numeric:tabular-nums}
+.target__status{margin-top:6px!important;font-size:12.5px!important;color:var(--muted)!important}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   8. HỘP THOẠI + THÔNG BÁO
+   ══════════════════════════════════════════════════════════════════════════ */
+.overlay{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:rgba(3,78,162,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  animation:fade .2s ease-out}
+:root[data-theme="dark"] .overlay{background:rgba(6,10,22,.72)}
+.dialog{position:relative;width:100%;max-width:440px;padding:26px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-lg),inset 0 1px 0 var(--hi);animation:pop var(--base) var(--ease)}
+.dialog__head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+  padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.dialog__head h3{margin:0;display:flex;align-items:center;gap:11px;
+  font:700 17px/1.3 var(--font-display);color:var(--strong)}
+.dialog__head p{margin:6px 0 0;font:400 12.5px/1.6 var(--font-display);color:var(--muted)}
+.x-btn{width:34px;height:34px;flex:none;border:1px solid var(--glass-1-br);border-radius:50%;cursor:pointer;
+  background:var(--fill);color:var(--muted);display:grid;place-items:center;
+  transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
+.x-btn:hover{background:var(--fill-hi);color:var(--strong)}
+.dialog__acts{display:flex;gap:10px;margin-top:22px}
+.dialog__acts .btn{flex:1}
+.danger-flag{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;padding:4px 10px;border-radius:9999px;
+  background:var(--danger-soft);border:1px solid var(--danger);color:var(--danger);
+  font:700 10.5px/1.4 var(--font-display);letter-spacing:.07em;text-transform:uppercase}
+
+.toasts{position:fixed;top:calc(var(--navH) + 16px);right:16px;z-index:70;
+  display:flex;flex-direction:column;gap:10px;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;border-radius:var(--r-md);
+  pointer-events:auto;max-width:340px;box-shadow:var(--sh-lg),inset 0 1px 0 var(--hi);
+  opacity:0;transform:translateX(18px);
+  transition:opacity var(--base) var(--ease),transform var(--base) var(--ease)}
+.toast.in{opacity:1;transform:none}
+.toast__ico{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:13px}
+.toast b{display:block;font:700 13px/1.3 var(--font-display);color:var(--strong)}
+.toast span{display:block;margin-top:2px;font:400 12.5px/1.5 var(--font-display);color:var(--text)}
+.toast--success .toast__ico{background:var(--brand);color:#fff}
+.toast--info .toast__ico{background:var(--brand-10);border:1px solid var(--brand-20);color:var(--strong)}
+.toast--error .toast__ico{background:var(--danger);color:#fff}
+.toast--error b{color:var(--danger)}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   9. CHUYỂN ĐỘNG + RESPONSIVE
+   ══════════════════════════════════════════════════════════════════════════ */
+.animate-slide-up{animation:slideUp .34s var(--ease) both}
+.animate-fade{animation:fade .3s ease-out both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+
+@media (max-width:1080px){
+  .g4,.g5,.g7,.g8{grid-column:span 12}
+  .g3{grid-column:span 6}
+}
+@media (max-width:860px){
+  .sticky-col{position:static}
+}
+@media (max-width:860px){
+  .toolbar{top:calc(var(--navH) + 6px);padding:12px 12px}
+  .tb-title{font-size:15.5px}
+  .tb-push{flex-basis:100%;height:0}
+  .seg{width:100%}
+  .seg__btn{flex:1;justify-content:center;padding:0 8px}
+  .card{padding:20px}
+  .verdict__grid{grid-template-columns:1fr 1fr}
+  .notice{margin:18px}
+}
+@media (max-width:560px){
+  .page{padding:12px 12px 0}
+  .g3{grid-column:span 12}
+  .tb-ico{width:38px;height:38px;font-size:15px}
+  .tb-crumb{display:none}
+  .verdict__top{flex-direction:column;align-items:flex-start;gap:14px}
+  .badge{width:100%;min-width:0;height:auto;flex-direction:row;gap:12px;padding:14px 18px;
+    justify-content:flex-start}
+  .badge b{font-size:30px}
+  .badge span{letter-spacing:.08em}
+  .verdict__grid{grid-template-columns:1fr}
+  .verdict__acts .btn{flex:1 1 100%}
+  .target__fields{grid-template-columns:1fr}
+  .tbl thead th,.tbl tbody td{padding:12px 14px}
+  .tbl-head{padding:20px}
+  .tbl-head__acts{width:100%}
+  .tbl-head__acts .btn{flex:1}
+  .toasts{left:12px;right:12px;top:auto;bottom:12px}
+  .toast{max-width:none}
+  .dialog{border-radius:var(--r-lg)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body data-depth="1">
+
+<div data-ck-nav="features"></div>
+
+<div class="page">
+
+  <header class="toolbar glass g2">
+    <div class="toolbar__main">
+      <div class="tb-id">
+        <div class="tb-ico" aria-hidden="true"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+        <div class="tb-txt">
+          <p class="tb-crumb">CƠ KHÍ HUIT · Công cụ điểm số</p>
+          <h1 class="tb-title">Quy đổi điểm &amp; Quản lý GPA</h1>
+        </div>
+      </div>
+      <div class="tb-push"></div>
+      <div class="seg" role="tablist" aria-label="Chọn công cụ">
+        <button id="tabQuickBtn" type="button" role="tab" aria-selected="true" aria-controls="quickTabSection" class="seg__btn">
+          <i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Quy đổi nhanh</span>
+        </button>
+        <button id="tabGpaBtn" type="button" role="tab" aria-selected="false" aria-controls="gpaTabSection" tabindex="-1" class="seg__btn">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i><span>Tính GPA môn</span>
+        </button>
+      </div>
+    </div>
+
+    <p class="toolbar__lead">
+      Quy đổi điểm thang 10 sang <b>thang 4</b> và <b>điểm chữ</b>, tính
+      <b>GPA tích lũy</b> theo quy chế đào tạo đại học — kết quả lưu tự động trên trình duyệt.
+    </p>
+  </header>
+
+  <section id="quickTabSection" role="tabpanel" aria-labelledby="tabQuickBtn" class="stack" style="margin-top:24px">
+    <div class="grid">
+      <div class="g5">
+        <div class="glass card">
+          <div class="card__head">
+            <h2 class="card__title"><span class="card__ico"><i class="fa-solid fa-sliders"></i></span>Nhập điểm cần quy đổi</h2>
+            <span class="pill">Thang 10</span>
+          </div>
+
+          <div class="field">
+            <label class="lbl" for="score">Điểm số hệ 10</label>
+            <div class="input-wrap scorebox">
+              <i class="fa-solid fa-star lead" aria-hidden="true"></i>
+              <input type="number" id="score" class="input" inputmode="decimal" enterkeyhint="done"
+                     min="0" max="10" step="0.1" placeholder="8.5"
+                     aria-describedby="scoreErrorMsg">
+              <span class="unit" aria-hidden="true">/ 10</span>
+            </div>
+            <p id="scoreErrorMsg" role="alert" class="err-msg">
+              <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+              Vui lòng nhập điểm số hợp lệ từ 0.0 đến 10.0
+            </p>
+          </div>
+
+          <div class="field" style="margin-bottom:14px">
+            <label class="lbl" for="scoreSlider">Kéo để xem điểm tương ứng</label>
+            <input type="range" id="scoreSlider" class="slider" min="0" max="10" step="0.1" value="0"
+                   aria-label="Thanh trượt điểm số hệ 10">
+            <div class="slider-scale" aria-hidden="true"><span>0.0</span><span>2.5</span><span>5.0</span><span>7.5</span><span>10.0</span></div>
+          </div>
+
+          <div class="field" style="margin-bottom:22px">
+            <label class="lbl">Mẫu điểm nhanh</label>
+            <div class="chips" id="presetButtonsGroup">
+              <button type="button" data-score="10.0" class="chipbtn">10.0</button>
+              <button type="button" data-score="9.0"  class="chipbtn">9.0</button>
+              <button type="button" data-score="8.5"  class="chipbtn">8.5</button>
+              <button type="button" data-score="8.0"  class="chipbtn">8.0</button>
+              <button type="button" data-score="7.0"  class="chipbtn">7.0</button>
+              <button type="button" data-score="6.5"  class="chipbtn">6.5</button>
+              <button type="button" data-score="5.0"  class="chipbtn">5.0</button>
+              <button type="button" data-score="3.5"  class="chipbtn">3.5</button>
+            </div>
+          </div>
+
+          <button id="convertBtn" type="button" class="btn btn-primary w-full">
+            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Quy đổi kết quả
+          </button>
+        </div>
+      </div>
+
+      <div class="g7">
+        <div class="glass card">
+          <div class="card__head">
+            <h2 class="card__title"><span class="card__ico"><i class="fa-solid fa-receipt"></i></span>Kết quả quy đổi</h2>
+            <button id="copyQuickResultBtn" type="button" class="btn btn-glass sm" disabled>
+              <i class="fa-solid fa-copy" aria-hidden="true"></i> Sao chép
+            </button>
+          </div>
+
+          <div id="resultContainer" class="verdict" aria-live="polite">
+            <div class="verdict__glow" aria-hidden="true"></div>
+
+            <div id="resultIdle" class="verdict__idle">
+              <div class="empty__ring" aria-hidden="true"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+              <p>Chưa có điểm để quy đổi</p>
+              <span>Nhập điểm hệ 10, bấm một mẫu nhanh hoặc kéo thanh trượt —
+                    kết quả hiện ngay tại đây.</span>
+            </div>
+
+            <div id="resultBody" class="hidden">
+              <div class="verdict__top">
+                <div class="badge">
+                  <b id="letterGrade">A</b>
+                  <span>Điểm chữ</span>
+                </div>
+                <div>
+                  <p class="verdict__eyebrow">Xếp loại học lực</p>
+                  <p class="verdict__class" id="classification">—</p>
+                  <button type="button" id="nextHintBtn" class="hintbar">
+                    <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
+                    <span id="nextHint">—</span>
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="verdict__grid">
+                <div>
+                  <p class="lbl">Điểm hệ 10</p>
+                  <p class="val mono" id="scoreValue">—</p>
+                </div>
+                <div>
+                  <p class="lbl">Thang điểm 4</p>
+                  <p class="val mono is-brand" id="fourScale">—</p>
+                </div>
+              </div>
+              <div class="verdict__acts">
+                <button id="addQuickToGpaBtn" type="button" class="btn btn-tinted sm">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Lưu vào bảng GPA
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass g1 ladder" id="scoreLadder">
+      <div class="ladder__head">
+        <span class="ladder__title">Thang điểm 10 → điểm chữ</span>
+        <span class="ladder__read" id="ladderRead">Nhập điểm để xem vị trí</span>
+      </div>
+      <div class="ladder__track">
+        <div class="ladder__bands" id="ladderBands"></div>
+        <div class="ladder__marker" id="ladderMarker" hidden><span class="ladder__pill mono" id="ladderPill">0.0</span></div>
+      </div>
+      <div class="ladder__ticks" aria-hidden="true">
+        <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+      </div>
+      <p class="ladder__foot">Bấm vào một mức để nhảy thẳng tới điểm thấp nhất của mức đó.</p>
+    </div>
+
+    <div class="glass card card--flush">
+      <div class="tbl-head">
+        <div>
+          <h2 class="card__title"><span class="card__ico"><i class="fa-solid fa-table-list"></i></span>Bảng tham chiếu quy đổi</h2>
+          <p class="card__sub">Chuẩn tín chỉ đại học hiện hành</p>
+        </div>
+        <div class="input-wrap" style="width:230px;max-width:100%">
+          <i class="fa-solid fa-magnifying-glass lead" aria-hidden="true"></i>
+          <input type="text" id="tableFilterInput" placeholder="Lọc theo xếp loại…" aria-label="Lọc bảng tham chiếu quy đổi" class="input">
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl tbl--ref" id="referenceTable">
+          <thead>
+            <tr>
+              <th scope="col">Xếp loại</th>
+              <th scope="col">Khoảng điểm hệ 10</th>
+              <th scope="col" class="ctr">Thang 4</th>
+              <th scope="col" class="ctr">Điểm chữ</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <p class="tbl-meta" id="tableMeta">8 mức xếp loại · điểm được làm tròn 1 chữ số thập phân trước khi đối chiếu.</p>
+
+      <div class="notice">
+        <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+        <p><strong>Lưu ý:</strong> điểm được làm tròn 1 chữ số thập phân trước khi đối chiếu.
+           Hàng tương ứng trong bảng và trên thang điểm sẽ tự động được làm nổi bật.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gpaTabSection" role="tabpanel" aria-labelledby="tabGpaBtn" class="stack hidden" style="margin-top:24px">
+    <div class="grid">
+      <div class="g3"><div class="glass g1 kpi">
+        <div><p class="kpi__lbl">Tổng số tín chỉ</p><p class="kpi__val" id="totalCredits">0</p></div>
+        <div class="kpi__ico" aria-hidden="true"><i class="fa-solid fa-layer-group"></i></div>
+      </div></div>
+      <div class="g3"><div class="glass g1 kpi">
+        <div><p class="kpi__lbl">GPA thang 10</p><p class="kpi__val" id="gpaTen">0.00</p></div>
+        <div class="kpi__ico" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></div>
+      </div></div>
+      <div class="g3"><div class="glass g1 kpi">
+        <div><p class="kpi__lbl">GPA thang 4</p><p class="kpi__val" id="gpaFour">0.00</p></div>
+        <div class="kpi__ico" aria-hidden="true"><i class="fa-solid fa-award"></i></div>
+      </div></div>
+      <div class="g3"><div class="glass g1 kpi">
+        <div><p class="kpi__lbl">Xếp loại chung</p><p class="kpi__val kpi__val--sm" id="gpaClassification">Chưa có dữ liệu</p></div>
+        <div class="kpi__ico" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></div>
+      </div></div>
+    </div>
+
+    <div class="grid">
+      <div class="g7">
+        <div class="glass g1 card">
+          <div class="card__head" style="border:0;padding:0;margin-bottom:18px">
+            <h2 class="card__title"><span class="card__ico"><i class="fa-solid fa-chart-pie"></i></span>Phân bố điểm số học kỳ</h2>
+          </div>
+          <div class="dist" id="gradeDistributionBar">
+            <div class="dist-A"></div><div class="dist-B"></div><div class="dist-C"></div>
+            <div class="dist-D"></div><div class="dist-F"></div>
+          </div>
+          <ul class="dist-legend" id="gradeDistributionLegend">
+            <li><i style="background:var(--gA)"></i><span class="k">A</span><b id="countA">0</b><em id="pctA">0%</em></li>
+            <li><i style="background:var(--gB)"></i><span class="k">B</span><b id="countB">0</b><em id="pctB">0%</em></li>
+            <li><i style="background:var(--gC)"></i><span class="k">C</span><b id="countC">0</b><em id="pctC">0%</em></li>
+            <li><i style="background:var(--gD)"></i><span class="k">D</span><b id="countD">0</b><em id="pctD">0%</em></li>
+            <li><i style="background:var(--gF)"></i><span class="k">F</span><b id="countF">0</b><em id="pctF">0%</em></li>
+          </ul>
+          <div class="facts">
+            <div class="fact">
+              <p class="lbl">Môn điểm cao nhất</p>
+              <p class="v" id="bestSubject">—</p>
+            </div>
+            <div class="fact">
+              <p class="lbl">Môn điểm thấp nhất</p>
+              <p class="v" id="worstSubject">—</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="g5">
+        <div class="glass g1 card">
+          <div class="card__head" style="border:0;padding:0;margin-bottom:18px">
+            <h2 class="card__title"><span class="card__ico"><i class="fa-solid fa-bullseye"></i></span>Dự báo GPA mục tiêu</h2>
+          </div>
+          <div class="target__fields">
+            <div>
+              <label class="lbl" for="targetGpaInput">Mục tiêu thang 4</label>
+              <input type="number" id="targetGpaInput" class="input input--num" min="0" max="4" step="0.1" value="3.2">
+            </div>
+            <div>
+              <label class="lbl" for="remainingCreditsInput">Tín chỉ còn lại</label>
+              <input type="number" id="remainingCreditsInput" class="input input--num" min="1" max="150" step="1" value="15">
+            </div>
+          </div>
+          <div class="meter" aria-hidden="true">
+            <div class="meter__fill" id="targetMeter"></div>
+            <div class="meter__mark" id="targetMark"></div>
+          </div>
+          <div class="meter__cap" aria-hidden="true"><span>0.0</span><span>GPA hiện tại</span><span>4.0</span></div>
+          <div class="target__out">
+            <p>Cần trung bình <b id="requiredGpaVal">—</b>/4.0 ở các môn còn lại.</p>
+            <p class="target__status" id="targetGpaStatus">Thêm ít nhất một môn để xem dự báo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="g4 sticky-col">
+        <div class="glass g1 card">
+          <h2 class="card__title" style="margin-bottom:20px"><span class="card__ico"><i class="fa-solid fa-plus"></i></span>Thêm môn học mới</h2>
+          <form id="addSubjectForm" novalidate>
+            <div class="field">
+              <label class="lbl" for="subjectName">Tên môn học <span style="text-transform:none;letter-spacing:0;color:var(--faint)">(tùy chọn)</span></label>
+              <input type="text" id="subjectName" class="input" placeholder="VD: Lập trình Web" autocomplete="off">
+            </div>
+            <div class="field" style="margin-bottom:8px">
+              <label class="lbl" for="subjectScore">Điểm hệ 10</label>
+              <input type="number" id="subjectScore" class="input input--num" inputmode="decimal" min="0" max="10" step="0.1" placeholder="8.5" required>
+            </div>
+            <div class="field">
+              <label class="lbl" for="subjectCredits">Số tín chỉ</label>
+              <input type="number" id="subjectCredits" class="input input--num" inputmode="numeric" min="1" max="15" step="1" value="3" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-full" style="margin-top:20px">
+              <i class="fa-solid fa-plus" aria-hidden="true"></i> Thêm vào bảng điểm
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="g8">
+        <div class="glass card card--flush">
+          <div class="tbl-head">
+            <h2 class="card__title"><span class="card__ico"><i class="fa-solid fa-list-check"></i></span>Danh sách môn học</h2>
+            <div class="tbl-head__acts">
+              <button id="exportCsvBtn" type="button" class="btn btn-glass sm">
+                <i class="fa-solid fa-file-csv" aria-hidden="true"></i> Xuất CSV
+              </button>
+              <button id="clearAllBtn" type="button" class="btn btn-danger sm">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Xóa tất cả
+              </button>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl" id="subjectsTable">
+              <thead>
+                <tr>
+                  <th scope="col">STT</th>
+                  <th scope="col">Tên môn</th>
+                  <th scope="col" class="ctr">Tín chỉ</th>
+                  <th scope="col" class="ctr">Hệ 10</th>
+                  <th scope="col" class="ctr">Hệ 4</th>
+                  <th scope="col" class="ctr">Điểm chữ</th>
+                  <th scope="col" class="ctr">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="subjectsTableBody"></tbody>
+            </table>
+          </div>
+          <div id="emptySubjectsState" class="empty">
+            <div class="empty__ring" aria-hidden="true"><i class="fa-solid fa-folder-open"></i></div>
+            <p>Chưa có môn học nào</p>
+            <span>Nhập môn học ở khung bên trái để bắt đầu tính điểm GPA.</span>
+          </div>
+          <p class="tbl-meta" id="subjectsMeta">0 môn · 0 tín chỉ</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="page-foot">Hệ thống quy đổi điểm số — Cơ khí HUIT · dữ liệu lưu cục bộ trên trình duyệt của bạn.</p>
+</div>
+
+<div id="editModal" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+  <div class="glass g3 dialog">
+    <div class="dialog__head">
+      <div>
+        <h3 id="editModalTitle"><span class="card__ico"><i class="fa-solid fa-pen"></i></span>Chỉnh sửa môn học</h3>
+        <p>Cập nhật điểm hoặc số tín chỉ, GPA tự tính lại ngay.</p>
+      </div>
+      <button id="closeEditModalBtn" type="button" class="x-btn" aria-label="Đóng">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+    <form id="editSubjectForm" novalidate>
+      <input type="hidden" id="editSubjectId">
+      <div class="field">
+        <label class="lbl" for="editSubjectName">Tên môn học</label>
+        <input type="text" id="editSubjectName" class="input" required autocomplete="off">
+      </div>
+      <div class="target__fields">
+        <div>
+          <label class="lbl" for="editSubjectScore">Điểm hệ 10</label>
+          <input type="number" id="editSubjectScore" class="input input--num" min="0" max="10" step="0.1" required>
+        </div>
+        <div>
+          <label class="lbl" for="editSubjectCredits">Số tín chỉ</label>
+          <input type="number" id="editSubjectCredits" class="input input--num" min="1" max="15" step="1" required>
+        </div>
+      </div>
+      <div class="dialog__acts">
+        <button type="button" id="cancelEditBtn" class="btn btn-ghost sm">Hủy</button>
+        <button type="submit" class="btn btn-primary sm">Cập nhật</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="confirmModal" class="overlay hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+  <div class="glass g3 dialog">
+    <div class="dialog__head">
+      <div>
+        <p class="danger-flag"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Không thể hoàn tác</p>
+        <h3 id="confirmTitle">Xóa toàn bộ bảng điểm?</h3>
+        <p id="confirmText">Toàn bộ môn học đã lưu sẽ bị xóa vĩnh viễn.</p>
+      </div>
+    </div>
+    <div class="dialog__acts">
+      <button id="confirmCancelBtn" type="button" class="btn btn-ghost sm">Giữ lại</button>
+      <button id="confirmAcceptBtn" type="button" class="btn btn-danger sm">Xóa vĩnh viễn</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer" class="toasts" aria-live="polite"></div>
+
+<div data-ck-footer></div>
+<script src="../assets/app.js?v=20261017d"></script>
+<script src="../assets/data.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   GradeApp — toàn bộ nghiệp vụ nằm trong một nguồn sự thật: mảng BANDS.
+   Bảng tham chiếu, thang điểm trực quan, bảng điểm và hàm quy đổi đều
+   dựng từ BANDS nên không thể lệch nhau.
+   ══════════════════════════════════════════════════════════════════════════ */
+const GradeApp = (() => {
+  'use strict';
+
+  const LS_KEY = 'gradeMaster_subjects';
+
+  /* Khoảng điểm chuẩn — thứ tự tăng dần, s4 = điểm thang 4 */
+  const BANDS = [
+    { key:'F', min:0.0, max:3.9, letter:'F',  s4:0.0, name:'Không đạt'       },
+    { key:'D', min:4.0, max:4.9, letter:'D',  s4:1.0, name:'Trung bình yếu'  },
+    { key:'D', min:5.0, max:5.4, letter:'D+', s4:1.5, name:'Trung bình yếu'  },
+    { key:'C', min:5.5, max:6.4, letter:'C',  s4:2.0, name:'Trung bình'     },
+    { key:'C', min:6.5, max:6.9, letter:'C+', s4:2.5, name:'Trung bình'     },
+    { key:'B', min:7.0, max:7.9, letter:'B',  s4:3.0, name:'Khá'            },
+    { key:'B', min:8.0, max:8.4, letter:'B+', s4:3.5, name:'Khá'            },
+    { key:'A', min:8.5, max:10.0,letter:'A',  s4:4.0, name:'Giỏi'           }
+  ];
+
+  const GRADE_ORDER = ['A','B','C','D','F'];
+  const TOAST_ICON = { success:'fa-circle-check', info:'fa-circle-info', error:'fa-circle-exclamation' };
+  const TOAST_TITLE = { success:'Thành công', info:'Thông tin', error:'Cần lưu ý' };
+
+let subjects = loadSubjects();
+  let quickResult = null;
+
+  const $ = id => document.getElementById(id);
+  const el = {};
+  let lastFocused = null;
+
+  /* ─────────────────────────── Tiện ích ─────────────────────────── */
+  function escapeHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function gradeColor(key) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--g' + key).trim();
+    return v || 'var(--brand)';
+  }
+  function rangeText(min, max) {
+    return max >= 10 ? `${min.toFixed(1)} – 10.0` : `${min.toFixed(1)} – ${max.toFixed(1)}`;
+  }
+  function nextId() {
+    return subjects.reduce((m, s) => Math.max(m, Number(s.id) || 0), 0) + 1;
+  }
+
+  /* ──────────────────── Lưu trữ & chuẩn hoá ──────────────────── */
+  function loadSubjects() {
+    let raw = [];
+    try { raw = JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch (e) { raw = []; }
+    if (!Array.isArray(raw)) return [];
+    /* Tính lại các trường dẫn xuất — dữ liệu cũ hoặc nhập tay vẫn đúng */
+    return raw
+      .filter(s => s && !isNaN(parseFloat(s.score10)))
+      .map((s, i) => {
+        const score = parseFloat(s.score10);
+        const c = convertScore(score);
+        const credits = Math.max(1, Math.round(parseInt(s.credits, 10) || 1));
+        return {
+          id: Number(s.id) || (i + 1),
+          name: String(s.name || `Môn học ${i + 1}`),
+          score10: score.toFixed(1),
+          credits: credits,
+          score4: c ? c.scale : '0.0',
+          score4Num: c ? c.scaleNum : 0,
+          letter: c ? c.letter : 'F',
+          key: c ? c.key : 'F',
+          classification: c ? c.name : '—'
+        };
+      });
+  }
+function persist() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(subjects)); } catch (e) {}
+  }
+
+  /* ════════════════ CORE: quy đổi điểm (nguồn sự thật duy nhất) ════════════════ */
+  function convertScore(raw) {
+    const score = Math.round(raw * 10) / 10;
+    const idx = BANDS.findIndex(b => score >= b.min && score <= b.max);
+    if (idx === -1) return null;
+    const b = BANDS[idx];
+    const up = BANDS[idx + 1] || null;
+    return {
+      score: score,
+      name: b.name,
+      letter: b.letter,
+      key: b.key,
+      scale: b.s4.toFixed(1),
+      scaleNum: b.s4,
+      min: b.min,
+      next: up ? { min: up.min, letter: up.letter, name: up.name } : null
+    };
+  }
+
+  /* ─────────────────────── Dựng phần tĩnh ─────────────────────── */
+  function buildLadder() {
+    el.ladderBands.innerHTML = BANDS.map(b => {
+      const grow = b.max - b.min + (b.max >= 10 ? 0 : 0.1); /* giữ tỉ lệ với thang 10 điểm */
+      const slim = grow <= 0.6;
+      return `<button type="button" class="band band--${b.key}" data-min="${b.min}" data-max="${b.max}" style="flex:${grow.toFixed(1)}"
+                title="${escapeHtml(b.name)} · ${rangeText(b.min, b.max)} → ${b.letter} (${b.s4.toFixed(1)})"
+                aria-label="Điểm ${b.letter}, từ ${b.min.toFixed(1)} đến ${b.max.toFixed(1)}">
+                <span class="band__l">${b.letter}</span>
+                <span class="band__r">${slim ? b.s4.toFixed(1) : rangeText(b.min, b.max)}</span>
+              </button>`;
+    }).join('');
+  }
+
+  function buildReferenceTable() {
+    const body = el.referenceTable.querySelector('tbody');
+    let lastName = null;
+    body.innerHTML = BANDS.map(b => {
+      const newGroup = b.name !== lastName;
+      lastName = b.name;
+      return `<tr data-min="${b.min}" data-max="${b.max}">
+          <td class="gname-${b.key}" style="font-weight:600">${newGroup ? escapeHtml(b.name) : ''}</td>
+          <td class="mono">${rangeText(b.min, b.max)}</td>
+          <td class="ctr num">${b.s4.toFixed(1)}</td>
+          <td class="ctr"><span class="gr gr-${b.key}">${b.letter}</span></td>
+        </tr>`;
+    }).join('');
+    el.tableMeta.textContent = `${BANDS.length} mức xếp loại · điểm được làm tròn 1 chữ số thập phân trước khi đối chiếu.`;
+  }
+
+  function refRows() { return el.referenceTable.querySelectorAll('tbody tr'); }
+
+  /* ══════════════════════ TAB 1 — QUY ĐỔI ══════════════════════ */
+  function refreshQuick(silent) {
+    const raw = el.score.value.trim();
+    const score = parseFloat(raw);
+    const invalid = raw === '' || isNaN(score) || score < 0 || score > 10;
+
+    el.score.removeAttribute('aria-invalid');
+    el.scoreError.classList.remove('show');
+
+    if (invalid) {
+      if (!silent) {
+        el.score.setAttribute('aria-invalid', 'true');
+        el.scoreError.classList.add('show');
+        el.score.focus();
+        toast('Điểm phải nằm trong khoảng 0.0 – 10.0.', 'error');
+      }
+      showResult(null);
+      return;
+    }
+
+    showResult(convertScore(score));
+  }
+
+  function showResult(r) {
+    quickResult = r;
+
+    if (!r) {
+      el.resultBody.classList.add('hidden');
+      el.resultIdle.classList.remove('hidden');
+      el.resultContainer.style.removeProperty('--band-c');
+      el.copyBtn.disabled = true;
+      clearHighlight();
+      el.ladderMarker.hidden = true;
+      el.ladderRead.textContent = 'Nhập điểm để xem vị trí';
+      el.slider.style.setProperty('--p', '0%');
+      return;
+    }
+
+    const color = gradeColor(r.key);
+
+    el.scoreValue.textContent = r.score.toFixed(1);
+    el.fourScale.textContent = r.scale;
+    el.classification.textContent = r.name;
+    el.letterGrade.textContent = r.letter;
+    el.resultContainer.style.setProperty('--band-c', color);
+    el.copyBtn.disabled = false;
+
+    /* Gợi ý ngưỡng kế tiếp */
+    if (r.next) {
+      const gap = (r.next.min - r.score).toFixed(1);
+      el.nextHint.textContent = `Cần thêm ${gap} điểm để lên mức ${r.next.letter} (${r.next.min.toFixed(1)})`;
+      el.nextHintBtn.classList.remove('is-max');
+      el.nextHintBtn.disabled = false;
+    } else {
+      el.nextHint.textContent = 'Đã đạt mức cao nhất — điểm A.';
+      el.nextHintBtn.classList.add('is-max');
+      el.nextHintBtn.disabled = true;
+    }
+
+    el.resultIdle.classList.add('hidden');
+    el.resultBody.classList.remove('hidden');
+    el.resultBody.classList.remove('animate-slide-up');
+    void el.resultBody.offsetWidth;
+    el.resultBody.classList.add('animate-slide-up');
+
+    /* Thanh trượt + thang điểm */
+    el.slider.value = r.score;
+    el.slider.style.setProperty('--p', (r.score * 10) + '%');
+    el.ladderRead.textContent = `${r.score.toFixed(1)} / 10 · ${r.letter} · ${r.name}`;
+    el.ladderMarker.hidden = false;
+    /* kẹp vị trí trong [2%,98%] để nhãn luôn nằm trọn trong thang */
+    el.ladderMarker.style.left = Math.min(98, Math.max(2, r.score * 10)) + '%';
+    el.ladderPill.textContent = r.score.toFixed(1);
+    el.scoreLadder.style.setProperty('--band-c', color);
+
+    highlight(r);
+  }
+
+  function highlight(r) {
+    refRows().forEach(row => {
+      row.classList.toggle('is-hit', r.score >= +row.dataset.min && r.score <= +row.dataset.max);
+    });
+    el.ladderBands.querySelectorAll('.band').forEach(band => {
+      band.classList.toggle('is-hit', r.score >= +band.dataset.min && r.score <= +band.dataset.max);
+    });
+  }
+  function clearHighlight() {
+    refRows().forEach(row => row.classList.remove('is-hit'));
+    el.ladderBands.querySelectorAll('.band').forEach(band => band.classList.remove('is-hit'));
+  }
+
+  function filterReference() {
+    const q = el.tableFilter.value.trim().toLowerCase();
+    refRows().forEach(row => {
+      row.style.display = (q === '' || row.textContent.toLowerCase().includes(q)) ? '' : 'none';
+    });
+  }
+
+  /* ══════════════════════ TAB 2 — GPA & MÔN HỌC ══════════════════════ */
+  function renderSubjects() {
+    el.subjectsBody.innerHTML = '';
+    const empty = subjects.length === 0;
+    el.subjectsTable.classList.toggle('hidden', empty);
+    el.emptyState.classList.toggle('hidden', !empty);
+
+    subjects.forEach((s, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        `<td class="idx">${String(i + 1).padStart(2, '0')}</td>` +
+        `<td style="font-weight:600">${escapeHtml(s.name)}</td>` +
+        `<td class="ctr mono" style="font-weight:700">${s.credits}</td>` +
+        `<td class="ctr mono" style="font-weight:700">${s.score10}</td>` +
+        `<td class="ctr num">${s.score4}</td>` +
+        `<td class="ctr"><span class="gr gr-${s.key}">${s.letter}</span></td>` +
+        `<td class="ctr"><span class="rowacts">
+           <button type="button" data-action="edit" data-id="${s.id}" class="icon-btn"
+                   title="Sửa" aria-label="Sửa môn ${escapeHtml(s.name)}">
+             <i class="fa-solid fa-pen" aria-hidden="true"></i></button>
+           <button type="button" data-action="delete" data-id="${s.id}" class="icon-btn icon-btn--danger"
+                   title="Xóa" aria-label="Xóa môn ${escapeHtml(s.name)}">
+             <i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
+         </span></td>`;
+      el.subjectsBody.appendChild(tr);
+    });
+
+    const credits = subjects.reduce((n, s) => n + s.credits, 0);
+    el.subjectsMeta.innerHTML = subjects.length
+      ? `<b>${subjects.length}</b> môn · <b>${credits}</b> tín chỉ · GPA cập nhật theo trọng số tín chỉ`
+      : 'Chưa có dữ liệu — thêm môn học để tính GPA.';
+  }
+
+  function stats() {
+    const counts = { A:0, B:0, C:0, D:0, F:0 };
+    let credits = 0, sum10 = 0, sum4 = 0;
+
+    subjects.forEach(s => {
+      credits += s.credits;
+      sum10 += parseFloat(s.score10) * s.credits;
+      sum4 += s.score4Num * s.credits;
+      const k = (s.letter || 'F').charAt(0);
+      if (counts[k] !== undefined) counts[k]++;
+    });
+
+    return {
+      n: subjects.length,
+      credits: credits,
+      gpa10: credits ? sum10 / credits : 0,
+      gpa4: credits ? sum4 / credits : 0,
+      counts: counts,
+      overall: credits ? convertScore(sum10 / credits) : null
+    };
+  }
+
+  function renderStats() {
+    const s = stats();
+
+    el.totalCredits.textContent = s.credits;
+    el.gpaTen.textContent = s.gpa10.toFixed(2);
+    el.gpaFour.textContent = s.gpa4.toFixed(2);
+
+    if (s.overall) {
+      el.gpaClassification.textContent = s.overall.name;
+      el.gpaClassification.className = 'kpi__val kpi__val--sm gname-' + s.overall.key;
+    } else {
+      el.gpaClassification.textContent = 'Chưa có dữ liệu';
+      el.gpaClassification.className = 'kpi__val kpi__val--sm';
+    }
+
+    /* Phân bố điểm */
+    const total = s.n || 1;
+    GRADE_ORDER.forEach((k, i) => {
+      el.distBar.children[i].style.width = (s.counts[k] / total * 100) + '%';
+      $('count' + k).textContent = s.counts[k];
+      $('pct' + k).textContent = Math.round(s.counts[k] / total * 100) + '%';
+    });
+
+    /* Môn nổi bật */
+    if (s.n) {
+      const sorted = subjects.slice().sort((a, b) => parseFloat(b.score10) - parseFloat(a.score10));
+      const best = sorted[0];
+      const worst = sorted[sorted.length - 1];
+      el.bestSubject.innerHTML = `${escapeHtml(best.name)}<span class="s">${best.score10}</span>`;
+      el.worstSubject.innerHTML = `${escapeHtml(worst.name)}<span class="s">${worst.score10}</span>`;
+    } else {
+      el.bestSubject.textContent = '—';
+      el.worstSubject.textContent = '—';
+    }
+
+    renderTarget(s);
+  }
+
+  function renderTarget(s) {
+    const target = parseFloat(el.targetGpa.value);
+    const remain = parseInt(el.remainingCredits.value, 10);
+
+    const fill = $('targetMeter'), mark = $('targetMark');
+
+    if (!s.n || isNaN(target) || isNaN(remain) || remain <= 0) {
+      el.requiredGpa.textContent = '—';
+      el.targetStatus.textContent = 'Nhập tín chỉ còn lại và thêm ít nhất một môn để xem dự báo.';
+      fill.style.width = '0%'; mark.style.left = '0%';
+      return;
+    }
+
+    const need = (target * (s.credits + remain)) - (s.gpa4 * s.credits);
+    const avg = need / remain;
+
+    el.requiredGpa.textContent = avg > 4 ? '>4.00' : Math.max(0, avg).toFixed(2);
+    fill.style.width = Math.min(100, Math.max(0, avg) / 4 * 100) + '%';
+    mark.style.left = Math.min(100, s.gpa4 / 4 * 100) + '%';
+
+    if (avg > 4) {
+      el.targetStatus.textContent = 'Không khả thi — mục tiêu vượt quá mức tối đa 4.0 của hệ quy đổi.';
+    } else if (avg <= 0) {
+      el.targetStatus.textContent = 'Đã đạt mốc mục tiêu với GPA hiện tại, phần còn lại chỉ cần giữ nguyên.';
+    } else {
+      const gap = (avg - s.gpa4).toFixed(2);
+      el.targetStatus.textContent = `Cần cao hơn GPA hiện tại ${s.gpa4.toFixed(2)} khoảng ${gap} điểm ở các môn còn lại.`;
+    }
+  }
+
+  function saveAndRender() {
+    persist();
+    renderSubjects();
+    renderStats();
+  }
+
+  /* ───────────────────────── Hành động ───────────────────────── */
+  function addSubject(e) {
+    e.preventDefault();
+    const score = parseFloat(el.subjectScore.value);
+    const credits = parseInt(el.subjectCredits.value, 10);
+    const name = el.subjectName.value.trim() || `Môn học ${subjects.length + 1}`;
+
+    if (isNaN(score) || score < 0 || score > 10) { toast('Điểm học phần phải từ 0.0 đến 10.0.', 'error'); el.subjectScore.focus(); return; }
+    if (isNaN(credits) || credits < 1) { toast('Số tín chỉ tối thiểu là 1.', 'error'); el.subjectCredits.focus(); return; }
+
+    const c = convertScore(score);
+    subjects.push({
+      id: nextId(), name: name, score10: c.score.toFixed(1), credits: credits,
+      score4: c.scale, score4Num: c.scaleNum, letter: c.letter, key: c.key, classification: c.name
+    });
+
+    saveAndRender();
+    el.subjectName.value = '';
+    el.subjectScore.value = '';
+    el.subjectScore.focus();
+    toast(`Đã thêm môn “${name}”.`, 'success');
+  }
+
+  function addQuickToGpa() {
+    if (!quickResult) return;
+    const name = `Môn quy đổi ${subjects.length + 1}`;
+    subjects.push({
+      id: nextId(), name: name, score10: quickResult.score.toFixed(1), credits: 3,
+      score4: quickResult.scale, score4Num: quickResult.scaleNum,
+      letter: quickResult.letter, key: quickResult.key, classification: quickResult.name
+    });
+    saveAndRender();
+    toast(`Đã lưu ${quickResult.score.toFixed(1)} vào bảng GPA (mặc định 3 tín chỉ).`, 'success');
+  }
+
+  function removeSubject(id) {
+    const sub = subjects.find(s => s.id === id);
+    if (!sub) return;
+    subjects = subjects.filter(s => s.id !== id);
+    saveAndRender();
+    toast(`Đã xóa môn “${sub.name}”.`, 'info');
+  }
+
+  function openEdit(id) {
+    const sub = subjects.find(s => s.id === id);
+    if (!sub) return;
+    lastFocused = document.activeElement;
+    el.editId.value = sub.id;
+    el.editName.value = sub.name;
+    el.editScore.value = sub.score10;
+    el.editCredits.value = sub.credits;
+    openDialog(el.editModal);
+    el.editName.focus();
+    el.editName.select();
+  }
+
+  function submitEdit(e) {
+    e.preventDefault();
+    const id = parseInt(el.editId.value, 10);
+    const name = el.editName.value.trim();
+    const score = parseFloat(el.editScore.value);
+    const credits = parseInt(el.editCredits.value, 10);
+
+    if (!name) { toast('Tên môn học không được để trống.', 'error'); el.editName.focus(); return; }
+    if (isNaN(score) || score < 0 || score > 10) { toast('Điểm phải từ 0.0 đến 10.0.', 'error'); el.editScore.focus(); return; }
+    if (isNaN(credits) || credits < 1) { toast('Số tín chỉ tối thiểu là 1.', 'error'); el.editCredits.focus(); return; }
+
+    const i = subjects.findIndex(s => s.id === id);
+    if (i === -1) return;
+
+    const c = convertScore(score);
+    subjects[i] = {
+      id: id, name: name, score10: c.score.toFixed(1), credits: credits,
+      score4: c.scale, score4Num: c.scaleNum, letter: c.letter, key: c.key, classification: c.name
+    };
+
+    saveAndRender();
+    closeDialog(el.editModal);
+    toast(`Đã cập nhật môn “${name}”.`, 'success');
+  }
+
+  function clearAll() {
+    askConfirm({
+      title: 'Xóa toàn bộ bảng điểm?',
+      text: `Còn ${subjects.length} môn học trong bảng. Hành động này không thể hoàn tác.`,
+      accept: 'Xóa vĩnh viễn'
+    }).then(ok => {
+      if (!ok) return;
+      subjects = [];
+      saveAndRender();
+      toast('Đã làm sạch bảng điểm.', 'info');
+    });
+  }
+
+  function exportCsv() {
+    if (subjects.length === 0) { toast('Chưa có môn học nào để xuất.', 'error'); return; }
+    const s = stats();
+    const rows = [
+      'STT,Ten Mon Hoc,So Tin Chi,Diem He 10,Diem He 4,Diem Chu,Xep Loai',
+      ...subjects.map((m, i) =>
+        `${i + 1},"${m.name.replace(/"/g, '""')}",${m.credits},${m.score10},${m.score4},${m.letter},${m.classification}`),
+      '',
+      `"TONG","${subjects.length} mon",${s.credits},${s.gpa10.toFixed(2)},${s.gpa4.toFixed(2)},"",${s.overall ? s.overall.name : ''}`
+    ];
+    const blob = new Blob(['\uFEFF' + rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `GradeMaster_GPA_${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast('Đã tải file CSV.', 'success');
+  }
+
+  function copyQuick() {
+    if (!quickResult) return;
+    const text = `Điểm hệ 10: ${quickResult.score.toFixed(1)} | Thang 4: ${quickResult.scale} | Điểm chữ: ${quickResult.letter} | Xếp loại: ${quickResult.name}`;
+    const done = () => toast('Đã sao kết quả vào bộ nhớ tạm.', 'success');
+    const fail = () => toast('Trình duyệt không cho phép sao chép tự động.', 'error');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done, fail));
+    } else {
+      fallbackCopy(text, done, fail);
+    }
+  }
+  function fallbackCopy(text, done, fail) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy') ? done() : fail(); } catch (e) { fail(); }
+    ta.remove();
+  }
+
+  /* ─────────────────────────── Tabs ─────────────────────────── */
+  function switchTab(tab, focus) {
+    const quick = tab === 'quick';
+    el.quickSection.classList.toggle('hidden', !quick);
+    el.gpaSection.classList.toggle('hidden', quick);
+    el.tabQuick.setAttribute('aria-selected', String(quick));
+    el.tabGpa.setAttribute('aria-selected', String(!quick));
+    el.tabQuick.tabIndex = quick ? 0 : -1;
+    el.tabGpa.tabIndex = quick ? -1 : 0;
+    if (focus) (quick ? el.tabQuick : el.tabGpa).focus();
+  }
+  function tabKeys(e) {
+    const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (!keys.includes(e.key)) return;
+    e.preventDefault();
+    const go = e.key === 'ArrowLeft' ? 'quick' : e.key === 'ArrowRight' ? 'gpa'
+             : e.key === 'Home' ? 'quick' : 'gpa';
+    switchTab(go, true);
+  }
+
+  /* ──────────────────── Hộp thoại & xác nhận ──────────────────── */
+  function openDialog(node) {
+    lastFocused = document.activeElement;
+    node.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDialog(node) {
+    node.classList.add('hidden');
+    if (!document.querySelector('.overlay:not(.hidden)')) document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  function askConfirm(opts) {
+    lastFocused = document.activeElement;
+    $('confirmTitle').textContent = opts.title;
+    $('confirmText').textContent = opts.text;
+    $('confirmAcceptBtn').textContent = opts.accept || 'Xác nhận';
+    openDialog(el.confirmModal);
+    $('confirmCancelBtn').focus();
+    return new Promise(resolve => {
+      const done = ok => {
+        el.confirmModal.removeEventListener('click', onClick);
+        document.removeEventListener('keydown', onKey);
+        resolve(ok);
+      };
+      const onClick = ev => {
+        if (ev.target === $('confirmAcceptBtn')) { closeDialog(el.confirmModal); done(true); }
+        else if (ev.target === $('confirmCancelBtn') || ev.target === el.confirmModal) { done(false); }
+      };
+      const onKey = ev => {
+        if (ev.key === 'Escape') { ev.stopPropagation(); closeDialog(el.confirmModal); done(false); }
+        if (ev.key === 'Enter')  { closeDialog(el.confirmModal); done(true); }
+      };
+      el.confirmModal.addEventListener('click', onClick);
+      document.addEventListener('keydown', onKey);
+    });
+  }
+
+  /* ──────────────────────────── Toast ──────────────────────────── */
+  function toast(msg, type) {
+    type = type || 'info';
+    const node = document.createElement('div');
+    node.className = `toast glass g3 toast--${type}`;
+    node.innerHTML =
+      `<span class="toast__ico" aria-hidden="true"><i class="fa-solid ${TOAST_ICON[type] || TOAST_ICON.info}"></i></span>` +
+      `<span><b>${TOAST_TITLE[type] || TOAST_TITLE.info}</b>${escapeHtml(msg)}</span>`;
+    el.toastHost.appendChild(node);
+    requestAnimationFrame(() => node.classList.add('in'));
+    setTimeout(() => {
+      node.classList.remove('in');
+      setTimeout(() => node.remove(), 320);
+    }, 3400);
+  }
+
+  /* ───────────────── Chiều cao thanh điều hướng ───────────────── */
+  function syncNavHeight() {
+    const nav = document.querySelector('.site-nav-inner');
+    if (!nav) return;
+    const h = Math.round(nav.getBoundingClientRect().height + 12);
+    document.documentElement.style.setProperty('--navH', h + 'px');
+  }
+
+  /* ──────────────────────────── Khởi tạo ──────────────────────────── */
+  function cacheDom() {
+    el.tabQuick = $('tabQuickBtn');
+    el.tabGpa = $('tabGpaBtn');
+    el.quickSection = $('quickTabSection');
+    el.gpaSection = $('gpaTabSection');
+
+    el.score = $('score');
+    el.slider = $('scoreSlider');
+    el.scoreError = $('scoreErrorMsg');
+    el.presets = $('presetButtonsGroup');
+    el.convertBtn = $('convertBtn');
+    el.resultContainer = $('resultContainer');
+    el.resultBody = $('resultBody');
+    el.resultIdle = $('resultIdle');
+    el.scoreValue = $('scoreValue');
+    el.fourScale = $('fourScale');
+    el.classification = $('classification');
+    el.letterGrade = $('letterGrade');
+    el.nextHint = $('nextHint');
+    el.nextHintBtn = $('nextHintBtn');
+
+    el.scoreLadder = $('scoreLadder');
+    el.ladderBands = $('ladderBands');
+    el.ladderMarker = $('ladderMarker');
+    el.ladderPill = $('ladderPill');
+    el.ladderRead = $('ladderRead');
+
+    el.referenceTable = $('referenceTable');
+    el.tableFilter = $('tableFilterInput');
+    el.tableMeta = $('tableMeta');
+    el.copyBtn = $('copyQuickResultBtn');
+    el.addQuickBtn = $('addQuickToGpaBtn');
+
+    el.totalCredits = $('totalCredits');
+    el.gpaTen = $('gpaTen');
+    el.gpaFour = $('gpaFour');
+    el.gpaClassification = $('gpaClassification');
+    el.distBar = $('gradeDistributionBar');
+    el.bestSubject = $('bestSubject');
+    el.worstSubject = $('worstSubject');
+
+    el.addForm = $('addSubjectForm');
+    el.subjectName = $('subjectName');
+    el.subjectScore = $('subjectScore');
+    el.subjectCredits = $('subjectCredits');
+    el.subjectsTable = $('subjectsTable');
+    el.subjectsBody = $('subjectsTableBody');
+    el.subjectsMeta = $('subjectsMeta');
+    el.emptyState = $('emptySubjectsState');
+    el.exportBtn = $('exportCsvBtn');
+    el.clearBtn = $('clearAllBtn');
+
+    el.targetGpa = $('targetGpaInput');
+    el.remainingCredits = $('remainingCreditsInput');
+    el.requiredGpa = $('requiredGpaVal');
+    el.targetStatus = $('targetGpaStatus');
+
+    el.editModal = $('editModal');
+    el.editForm = $('editSubjectForm');
+    el.editId = $('editSubjectId');
+    el.editName = $('editSubjectName');
+    el.editScore = $('editSubjectScore');
+    el.editCredits = $('editSubjectCredits');
+    el.closeEditBtn = $('closeEditModalBtn');
+    el.cancelEditBtn = $('cancelEditBtn');
+
+    el.confirmModal = $('confirmModal');
+    el.toastHost = $('toastContainer');
+  }
+
+  function bindEvents() {
+    el.tabQuick.addEventListener('click', () => switchTab('quick'));
+    el.tabGpa.addEventListener('click', () => switchTab('gpa'));
+    el.tabQuick.addEventListener('keydown', tabKeys);
+    el.tabGpa.addEventListener('keydown', tabKeys);
+
+    el.convertBtn.addEventListener('click', () => refreshQuick(false));
+    el.score.addEventListener('input', () => refreshQuick(true));
+    el.score.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); refreshQuick(false); } });
+
+    el.slider.addEventListener('input', () => {
+      el.score.value = el.slider.value;
+      refreshQuick(true);
+    });
+
+    el.presets.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-score]');
+      if (!btn) return;
+      el.score.value = btn.dataset.score;
+      refreshQuick(false);
+    });
+
+    el.ladderBands.addEventListener('click', e => {
+      const band = e.target.closest('.band');
+      if (!band) return;
+      el.score.value = (+band.dataset.min).toFixed(1);
+      refreshQuick(true);
+      el.score.focus();
+    });
+
+    el.nextHintBtn.addEventListener('click', () => {
+      if (!quickResult || !quickResult.next) return;
+      el.score.value = quickResult.next.min.toFixed(1);
+      refreshQuick(true);
+      el.score.focus();
+    });
+
+    el.copyBtn.addEventListener('click', copyQuick);
+    el.addQuickBtn.addEventListener('click', addQuickToGpa);
+    el.tableFilter.addEventListener('input', filterReference);
+
+    el.addForm.addEventListener('submit', addSubject);
+    el.exportBtn.addEventListener('click', exportCsv);
+    el.clearBtn.addEventListener('click', clearAll);
+
+    el.targetGpa.addEventListener('input', () => renderTarget(stats()));
+    el.remainingCredits.addEventListener('input', () => renderTarget(stats()));
+
+    el.subjectsBody.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const id = parseInt(btn.dataset.id, 10);
+      if (btn.dataset.action === 'edit') openEdit(id);
+      else removeSubject(id);
+    });
+
+    el.editForm.addEventListener('submit', submitEdit);
+    [el.closeEditBtn, el.cancelEditBtn].forEach(b => b.addEventListener('click', () => closeDialog(el.editModal)));
+    el.editModal.addEventListener('click', e => { if (e.target === el.editModal) closeDialog(el.editModal); });
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (!el.editModal.classList.contains('hidden')) closeDialog(el.editModal);
+    });
+
+    window.addEventListener('resize', () => {
+      clearTimeout(window.__gmNavT);
+      window.__gmNavT = setTimeout(syncNavHeight, 120);
+    });
+  }
+
+  function init() {
+    cacheDom();
+    buildLadder();
+    buildReferenceTable();
+    bindEvents();
+    saveAndRender();
+    switchTab('quick');
+
+    /* app.js dựng thanh điều hướng ở DOMContentLoaded — đo lại sau khi nó có mặt */
+    [0, 80, 300].forEach(d => setTimeout(syncNavHeight, d));
+    window.addEventListener('load', syncNavHeight);
+
+    if (window.matchMedia('(pointer:fine)').matches) el.score.focus();
+  }
+
+  return { init };
+})();
+
+document.addEventListener('DOMContentLoaded', GradeApp.init);
+</script>
+</body>
+</html>

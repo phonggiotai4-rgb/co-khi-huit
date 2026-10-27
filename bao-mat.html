@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chính sách bảo mật — CƠ KHÍ HUIT</title>
+<meta name="description" content="Chính sách bảo mật CƠ KHÍ HUIT: dữ liệu hồ sơ sinh viên và lịch sử làm bài chỉ nằm trong trình duyệt của bạn (localStorage), không có máy chủ, không theo dõi, không quảng cáo.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css?v=20261017d">
+<style>
+.page-head{margin-bottom:var(--gutter)}
+.page-head .ck-page-sub{max-width:78ch}
+.doc{max-width:920px}
+</style>
+</head>
+<body data-depth="0">
+
+<div data-ck-nav></div>
+
+<main class="ck-wrap">
+
+  <header class="page-head">
+    <h1 class="ck-page-title">Chính sách bảo mật</h1>
+    <p class="ck-page-sub">
+      CƠ KHÍ HUIT không có máy chủ, không có tài khoản và không có mạng quảng cáo.
+      Trang này giải thích chính xác dữ liệu của bạn nằm ở đâu và ai có thể chạm tới nó.
+    </p>
+  </header>
+
+  <article class="doc glass g1">
+    <div class="doc-meta">
+      <span class="ck-pill mid"><i class="dot"></i>Có hiệu lực</span>
+      <span>Phiên bản 1.0 · Cập nhật 17/10/2026</span>
+      <span>Liên hệ: <a href="mailto:phonggiotai4@gmail.com">phonggiotai4@gmail.com</a></span>
+    </div>
+
+    <div class="toc">
+      <b>Tóm tắt</b>
+      <p style="margin:0">
+        Dữ liệu bạn nhập để <strong>ôn tập</strong> <strong>không bao giờ rời khỏi thiết bị của bạn</strong>.
+        Trang không thu thập hành vi người dùng, không đặt cookie quảng cáo, không nhúng
+        mã theo dõi của bên thứ ba và không có nút <em>theo dõi</em> nào.
+      </p>
+    </div>
+
+    <div class="toc">
+      <b>Ngoại lệ: trang Báo lỗi hoặc góp ý</b>
+      <p style="margin:0">
+        Khi bạn <strong>chủ động bấm Gửi</strong> ở trang
+        <a href="bao-loi.html">Báo lỗi hoặc góp ý</a>, nội dung bạn điền sẽ được gửi tới
+        quản trị viên và lưu trong một Google Sheet thuộc quyền sở hữu của họ. Đó là dữ
+        liệu duy nhất của bạn rời khỏi thiết bị — và chỉ xảy ra khi bạn bấm Gửi, không
+        tự động, không nền. Không có mã theo dõi, không có quảng cáo.
+        Chi tiết từng trường ở mục 9.
+      </p>
+    </div>
+
+    <h2 id="muc-1">1. Dữ liệu chúng tôi thu thập</h2>
+    <p>
+      Chúng tôi <strong>không thu thập dữ liệu nào từ máy chủ</strong>, vì máy chủ không tồn tại.
+      Trang chỉ ghi những gì bạn tự nhập vào một kho lưu cục bộ của trình duyệt.
+    </p>
+    <p>Cụ thể, các khoá dưới đây được ghi và đọc lại bằng <code>localStorage</code>:</p>
+
+    <div class="doc-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Khoá lưu trữ</th>
+            <th scope="col">Nội dung</th>
+            <th scope="col">Nơi nhập</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ck-profile-v1</code></td>
+            <td>Hồ sơ sinh viên: họ tên, mã số sinh viên, lớp, năm, ngày sinh, giới tính, nơi sinh, ngành, khoa, email, số điện thoại, ghi chú, mục tiêu GPA, thời điểm lưu gần nhất</td>
+            <td>Trang <a href="ca-nhan.html">Cá nhân</a> — trang PMT-EMS chỉ <em>đọc</em> để điền sẵn thông tin sinh viên</td>
+          </tr>
+          <tr>
+            <td><code>ck-history-v1</code></td>
+            <td>Lịch sử làm bài: môn, đề, điểm, thời gian, số câu đúng</td>
+            <td>Trang <a href="lich-su-lam-bai.html">Lịch sử làm bài</a></td>
+          </tr>
+          <tr>
+            <td><code>gradeMaster_subjects</code></td>
+            <td>Môn đã quy đổi: điểm 10, điểm thang 4, số tín chỉ</td>
+            <td>Trang Quy đổi điểm số</td>
+          </tr>
+          <tr>
+            <td><code>clevo_saved_courses_v2</code></td>
+            <td>Môn đã nhập: điểm tổng kết, điểm thi, hệ mức quy đổi, số tín chỉ</td>
+            <td>Trang Tính điểm học phần</td>
+          </tr>
+          <tr>
+            <td><code>gpa-calculator-courses</code></td>
+            <td>Môn theo hệ mức: học kỳ, số tín chỉ</td>
+            <td>Trang Tính điểm trung bình</td>
+          </tr>
+          <tr>
+            <td><code>ck-pref-v1</code></td>
+            <td>Tuỳ chọn hiển thị, ví dụ đồng hồ 24 giờ hay 12 giờ</td>
+            <td>Trang <a href="ca-nhan.html">Cá nhân</a></td>
+          </tr>
+          <tr>
+            <td><code>huit-set</code></td>
+            <td>Bộ đề đang chọn trong lò ôn luyện</td>
+            <td>Trang chủ — Lò ôn luyện</td>
+          </tr>
+          <tr>
+            <td><code>ck-theme</code></td>
+            <td>Lựa chọn giao diện sáng hoặc tối</td>
+            <td>Nút đổi giao diện trên thanh điều hướng</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      Hồ sơ là thông tin bạn <strong>tự nhập bằng tay</strong>. Trang không tự động lấy
+      danh sách sinh viên, email hay hình ảnh từ bất kỳ nguồn nào của trường.
+      Hồ sơ lưu ở trang <a href="ca-nhan.html">Cá nhân</a> được dùng để điền sẵn màn
+      <strong>Thông tin sinh viên</strong> của trang PMT-EMS; chiều đồng bộ chỉ đi
+      <strong>từ Cá nhân sang PMT-EMS</strong> — PMT-EMS không ghi thay đổi nào vào hồ sơ.
+    </p>
+
+    <h2 id="muc-2">2. Chúng tôi KHÔNG làm gì</h2>
+    <ul>
+      <li><strong>Không có tài khoản người dùng.</strong> Bạn không cần đăng nhập, không có mật khẩu nào bị lưu.</li>
+      <li><strong>Không có máy chủ.</strong> Toàn bộ mã nguồn chạy trong trình duyệt; không có API nhận dữ liệu.</li>
+      <li><strong>Không có mã theo dõi.</strong> Không Google Analytics, không Meta Pixel, không dữ liệu quảng cáo.</li>
+      <li><strong>Không có cookie quảng cáo hay cookie bên thứ ba.</strong> Các khoá ở bảng trên là <em>localStorage</em>, không phải cookie và không hết hạn theo thời gian.</li>
+      <li><strong>Không chia sẻ, không bán, không phân tích hành vi.</strong> Không có dữ liệu nào để chia sẻ — ngoại lệ duy nhất là trang <a href="bao-loi.html">Báo lỗi hoặc góp ý</a>, chỉ gửi khi bạn bấm Gửi (xem mục 9).</li>
+      <li><strong>Không hiển thị quảng cáo</strong> và không yêu cầu đăng nhập để xem nội dung.</li>
+    </ul>
+
+    <h2 id="muc-3">3. Ai có thể đọc dữ liệu của bạn</h2>
+    <ul>
+      <li>Chỉ <strong>bạn</strong>, trên thiết bị và trong trình duyệt mà bạn đang dùng.</li>
+      <li>Bất kỳ ai dùng chung thiết bị hoặc chung tài khoản trình duyệt cũng đọc được — đây là hạn chế cố hữu của mô hình lưu cục bộ.</li>
+      <li>Bất kỳ ai có quyền truy cập vật lý vào thiết bị của bạn cũng có thể mở công cụ kiểm tra kho lưu trữ để đọc dữ liệu.</li>
+    </ul>
+    <p>
+      Vì vậy, đừng nhập thông tin nhạy cảm hơn mức cần thiết — hồ sơ sinh viên chỉ cần
+      mã số và lớp là đủ dùng cho mục đích theo dõi học tập.
+    </p>
+
+    <h2 id="muc-4">4. Mã nguồn bên thứ ba</h2>
+    <p>
+      Trang chỉ tải tài nguyên từ hai nguồn: máy chủ nơi bạn đang mở trang, và
+      <a href="https://fonts.googleapis.com" target="_blank" rel="noopener">Google Fonts</a>
+      cho phông chữ. Các công cụ mô phỏng đăng ký học phần dùng
+      <a href="https://alpinejs.dev" target="_blank" rel="noopener">Alpine.js</a> từ CDN.
+      Không có mã quảng cáo, mã theo dõi hay SDK phân tích nào khác được nạp vào trang.
+    </p>
+
+    <h2 id="muc-5">5. Quyền của bạn với dữ liệu</h2>
+    <p>Bạn luôn có toàn quyền, và không cần liên hệ với chúng tôi để thực hiện:</p>
+    <ul>
+      <li><strong>Xem và sửa</strong> hồ sơ ngay trên trang <a href="ca-nhan.html">Cá nhân</a>.</li>
+      <li><strong>Xoá lịch sử làm bài</strong> bằng nút <em>Xoá lịch sử</em> trên trang <a href="lich-su-lam-bai.html">Lịch sử làm bài</a>.</li>
+      <li><strong>Xoá toàn bộ dữ liệu</strong> bằng nút <em>Xoá toàn bộ dữ liệu</em> trong khu vực <strong>DANGER ZONE</strong> ở cuối trang Cá nhân.</li>
+      <li><strong>Xoá thủ công</strong>: mở DevTools của trình duyệt, chọn Application → Local Storage và xoá các khoá nêu ở mục 1.</li>
+      <li><strong>Khôi phục</strong>: xoá dữ liệu trình duyệt là không thể hoàn tác; bạn cần nhập lại hồ sơ.</li>
+    </ul>
+    <p>
+      Việc xoá này <strong>không thể hoàn tác</strong>. Hãy ghi lại thông tin quan trọng
+      trước khi xoá.
+    </p>
+
+    <h2 id="muc-6">6. Bảo mật</h2>
+    <p>
+      Dữ liệu của bạn không đi qua đường truyền nào nên không có rủi ro bị bắt tay trộn
+      khi truyền tải. Rủi ro chính là ở phía thiết bị: trình duyệt lưu dữ liệu không mã
+      hoá, nên bất kỳ ai mở được trình duyệt trên máy đều đọc được. Chúng tôi khuyến nghị
+      đặt mật khẩu cho tài khoản hệ điều hành và không dùng máy công cộng để nhập hồ sơ.
+    </p>
+
+    <h2 id="muc-7">7. Trẻ em</h2>
+    <p>
+      Trang dành cho sinh viên và không cố ý thu thập dữ liệu của người dưới 13 tuổi.
+      Mọi thông tin bạn nhập đều do bạn chủ động nhập, không có biểu mẫu tự động gửi đi nơi khác.
+    </p>
+
+    <h2 id="muc-8">8. Thay đổi chính sách</h2>
+    <p>
+      Chính sách được cập nhật khi danh sách khoá lưu trữ hoặc tập thư viện thay đổi.
+      Phiên bản hiện hành và ngày cập nhật luôn nằm ở đầu trang này. Việc thay đổi chính
+      sách không ảnh hưởng tới dữ liệu ôn tập đã lưu trên thiết bị bạn.
+    </p>
+
+    <h2 id="muc-9">9. Dữ liệu khi bạn báo lỗi</h2>
+    <p>
+      Đây là phần duy nhất dữ liệu của bạn rời khỏi thiết bị. Chỉ xảy ra khi bạn tự bấm
+      nút <strong>Gửi báo lỗi</strong> ở trang <a href="bao-loi.html">Báo lỗi hoặc góp ý</a> —
+      không có gì được gửi tự động khi bạn chỉ xem trang.
+    </p>
+    <p>Quản trị viên sẽ nhận được đúng các trường sau:</p>
+    <ul>
+      <li><strong>Trang đang gặp lỗi</strong> — đường dẫn trang bạn đang xem, trang này tự ghi sẵn để bạn không phải nhập tay.</li>
+      <li><strong>Loại lỗi</strong> — bạn chọn: sai đáp án, góp ý nội dung, sự cố kỹ thuật hoặc mức khác.</li>
+      <li><strong>Môn / phần</strong> — môn bạn chọn, có thể để trống.</li>
+      <li><strong>Mô tả lỗi</strong> — nội dung bạn tự gõ.</li>
+      <li><strong>Email</strong> — chỉ gửi nếu bạn tự điền; bỏ trống thì không ai biết bạn là ai.</li>
+      <li><strong>Ảnh đính kèm</strong> — tối đa 1 ảnh, đã được thu nhỏ và nén lại trong trình duyệt trước khi gửi. Không gửi ảnh nếu bạn không chọn.</li>
+      <li><strong>Thông tin thiết bị</strong> — loại trình duyệt và kích thước màn hình, để tái hiện lỗi hiển thị.</li>
+    </ul>
+    <p>
+      Dữ liệu này được ghi vào một Google Sheet thuộc quyền sở hữu của quản trị viên, dùng
+      <strong>để sửa lỗi</strong>. Nó không được dùng để quảng cáo, không bán cho bên thứ ba
+      và không đưa vào bất kỳ dịch vụ phân tích nào. Nếu bạn để lại email, địa chỉ đó chỉ
+      dùng để báo cho bạn biết đã sửa xong. Bạn có thể xoá báo lỗi của mình bằng cách nhắn
+      quản trị viên qua email ở mục 10.
+    </p>
+
+    <h2 id="muc-10">10. Liên hệ</h2>
+    <p>
+      Thắc mắc về quyền riêng tư, muốn xoá báo lỗi đã gửi, hoặc báo một vấn đề bảo mật —
+      vui lòng gửi về
+      <a href="mailto:phonggiotai4@gmail.com">phonggiotai4@gmail.com</a>.
+    </p>
+
+    <hr>
+
+    <div class="doc-foot">
+      <a class="ck-btn ghost" href="dieu-khoan.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h8L19 8v12.5H6.5zM14 3.5V8h5M9.5 12.5h6M9.5 16h4"/></svg>
+        Điều khoản sử dụng
+      </a>
+      <a class="ck-btn ghost" href="ca-nhan.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.6a3.6 3.6 0 1 0 0-7.2 3.6 3.6 0 0 0 0 7.2zM4.8 20a7.4 7.4 0 0 1 14.4 0"/></svg>
+        Quản lý dữ liệu của tôi
+      </a>
+    </div>
+  </article>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="assets/app.js?v=20261017d"></script>
+</body>
+</html>

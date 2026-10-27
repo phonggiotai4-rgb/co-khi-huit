@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HỆ THỐNG TRẮC NGHIỆM TRỰC TUYẾN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Trung tính */
+    --white:     #FFFFFF;
+    --off-white: #F7F8FA;
+    --gray-100:  #E8EAEF;
+    --gray-300:  #C9CED8;
+    --gray-400:  #8B94A3;
+    --gray-600:  #4B5563;
+
+    /* Brand — màu nhấn duy nhất */
+    --brand:      #034EA2;
+    --brand-deep: #023A80;
+    --brand-06: rgba(3, 78, 162, .06);
+    --brand-10: rgba(3, 78, 162, .10);
+    --brand-25: rgba(3, 78, 162, .25);
+    --brand-45: rgba(3, 78, 162, .45);
+
+    /* Kính */
+    --glass-1-bg: rgba(255, 255, 255, .55);
+    --glass-2-bg: rgba(255, 255, 255, .70);
+    --glass-3-bg: rgba(255, 255, 255, .85);
+    --glass-1-br: rgba(255, 255, 255, .70);
+    --glass-2-br: rgba(255, 255, 255, .85);
+    --blur-1: 16px;
+    --blur-2: 28px;
+
+    /* Bo góc */
+    --r-sm:  10px;
+    --r-md:  14px;
+    --r-lg:  20px;
+    --r-xl:  28px;
+    --r-full: 9999px;
+
+    /* Chữ */
+    --text-strong: #034EA2;
+    --text:        #4B5563;
+    --text-muted:  #8B94A3;
+    --text-faint:  #AEB5C0;
+    --text-invert: #FFFFFF;
+
+    /* Bóng — luôn pha brand */
+    --sh-xs:    0 1px 2px rgba(3, 78, 162, .05);
+    --sh-sm:    0 1px 2px rgba(3, 78, 162, .04), 0 4px 12px rgba(3, 78, 162, .07);
+    --sh-md:    0 2px 4px rgba(3, 78, 162, .04), 0 12px 28px rgba(3, 78, 162, .10);
+    --sh-float: 0 1px 2px rgba(3, 78, 162, .06), 0 10px 30px rgba(3, 78, 162, .12);
+    --sh-press: 0 1px 2px rgba(3, 78, 162, .14);
+    --sh-focus: 0 0 0 3px rgba(3, 78, 162, .12);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-fast: 140ms;
+    --dur-base: 240ms;
+
+    --font-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-mono: "JetBrains Mono", Consolas, ui-monospace, monospace;
+  }
+
+  html, body { height: 100%; margin: 0; padding: 0; }
+  body {
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Nền: gradient + mesh blob — bắt buộc để kính trắng "thấy" được */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(55% 45% at 14% 10%,  rgba(255,255,255,.85), transparent 70%),
+      radial-gradient(50% 45% at 78% 26%,  rgba(160,172,190,.28), transparent 70%),
+      radial-gradient(50% 45% at 22% 86%,  rgba(255,255,255,.60), transparent 70%),
+      radial-gradient(45% 40% at 92% 82%,  rgba(148,163,184,.22), transparent 70%),
+      linear-gradient(155deg, #F7F8FA, #E4E7ED);
+    filter: blur(90px);
+  }
+
+  *:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+  .app { display: flex; flex-direction: column; height: 100vh; padding: 16px; }
+  .workspace { flex: 1 1 auto; display: flex; gap: 16px; min-height: 0; }
+
+  .pane-main {
+    flex: 1 1 auto; min-width: 0; min-height: 0;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: var(--r-xl);
+    border: 1px solid var(--glass-1-br);
+    background: var(--glass-1-bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      0 1px 2px rgba(3, 78, 162, .04),
+      0 8px 24px rgba(3, 78, 162, .08);
+  }
+  .pane-side {
+    flex: 0 0 372px; width: 372px; min-height: 0;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: var(--r-xl);
+    border: 1px solid var(--glass-2-br);
+    background: var(--glass-2-bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      0 1px 2px rgba(3, 78, 162, .06),
+      0 10px 30px rgba(3, 78, 162, .12);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .pane-main { backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+    .pane-side { backdrop-filter: blur(var(--blur-2)) saturate(120%); }
+  }
+
+  .titlebar {
+    flex: 0 0 auto; padding: 12px 16px; text-align: center;
+    font-size: 20px; font-weight: 800; letter-spacing: .02em; color: var(--text-strong);
+    background: rgba(255, 255, 255, .40);
+    border-bottom: 1px solid var(--brand-06);
+  }
+
+  .bar {
+    flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; padding: 9px 16px;
+    background: rgba(3, 78, 162, .035);
+    border-bottom: 1px solid var(--brand-06);
+    font-size: 13px; color: var(--text); white-space: nowrap; overflow: hidden;
+  }
+  .bar .left  { overflow: hidden; text-overflow: ellipsis; }
+  .bar .right { padding-left: 14px; color: var(--text-muted); }
+  .bar .k { font-weight: 700; color: var(--brand-deep); }
+  .bar .num {
+    color: var(--brand); font-weight: 700; font-size: 15px;
+    font-family: var(--font-mono); letter-spacing: -.01em;
+  }
+
+  .exam {
+    flex: 1 1 auto; min-height: 0; overflow: auto;
+    padding: 20px 24px 24px;
+  }
+  .exam > .q-head, .exam > .options { max-width: 900px; margin-left: auto; margin-right: auto; }
+  .q-head { margin: 0 0 20px; padding: 0; background: transparent; border: 0; }
+
+  .q-num {
+    display: inline-block; margin: 0 8px 0 0; padding: 4px 10px;
+    background: var(--brand-10); border: 0; border-radius: var(--r-full);
+    color: var(--brand-deep); font-family: var(--font-mono);
+    font-weight: 700; font-size: 13px; text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .q-num:hover { background: var(--brand-25); }
+  .q-text { font-size: 18px; font-weight: 500; line-height: 1.55; color: var(--text); }
+
+  .options { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+  .options td {
+    padding: 12px 14px; font-size: 15px; line-height: 1.5; cursor: pointer;
+    vertical-align: middle; color: var(--text);
+    background: rgba(255, 255, 255, .55);
+    border-top: 1px solid var(--glass-1-br);
+    border-bottom: 1px solid var(--glass-1-br);
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .options td.k {
+    width: 48px; text-align: center; color: var(--text-muted); font-weight: 700;
+    border-left: 1px solid var(--glass-1-br);
+    border-radius: var(--r-md) 0 0 var(--r-md);
+  }
+  .options td:last-child {
+    border-right: 1px solid var(--glass-1-br);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+  }
+  .options tr:hover td { background: rgba(255, 255, 255, .78); }
+  .options tr:hover td.k { color: var(--brand); }
+  .options tr.sel td { background: var(--brand-10); color: var(--brand-deep); font-weight: 600; }
+  .options tr.sel td.k {
+    color: var(--text-invert); background: var(--brand);
+    border-color: var(--brand); font-weight: 700;
+  }
+
+  .sec-title {
+    flex: 0 0 auto; padding: 10px 14px;
+    background: rgba(3, 78, 162, .06);
+    border-top: 1px solid var(--brand-06);
+    border-bottom: 1px solid var(--brand-06);
+    border-left: 4px solid var(--brand);
+    font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--brand);
+  }
+  .sec-body { flex: 0 0 auto; }
+
+  .student { padding: 12px; background: rgba(255, 255, 255, .40); border-bottom: 1px solid var(--brand-06); }
+  .student .row { display: flex; gap: 12px; }
+  .avatar {
+    flex: 0 0 auto; width: 64px; height: 72px; overflow: hidden;
+    border: 1px solid var(--brand-10); background: var(--gray-100);
+    border-radius: var(--r-md); box-shadow: var(--sh-xs);
+  }
+  .info { flex: 1 1 auto; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  .info td { padding: 5px 10px; border-bottom: 1px solid var(--brand-06); vertical-align: middle; }
+  .info td.k {
+    width: 82px; background: var(--brand-06); color: var(--brand-deep);
+    white-space: nowrap; font-size: 12px; font-weight: 600;
+    border-radius: var(--r-sm) 0 0 var(--r-sm);
+  }
+  .info td.v {
+    background: rgba(255, 255, 255, .55); color: var(--text); font-weight: 600;
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  }
+
+  .actions { padding: 12px; background: rgba(255, 255, 255, .40); border-top: 1px solid var(--brand-06); }
+  .actions .line2 { display: flex; justify-content: center; align-items: stretch; gap: 10px; }
+
+  .btn {
+    font-family: var(--font-sans); font-size: 14px; font-weight: 700;
+    color: var(--brand); padding: 9px 16px; cursor: pointer;
+    background: rgba(255, 255, 255, .55);
+    border: 1px solid var(--glass-1-br); border-radius: var(--r-md);
+    box-shadow: var(--sh-sm);
+    flex: 1 1 auto; white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .btn:hover:not(:disabled) { background: rgba(255, 255, 255, .80); border-color: var(--brand-25); }
+  .btn:active:not(:disabled) { transform: scale(.98); box-shadow: var(--sh-press); }
+  .btn:disabled { color: var(--text-faint); background: rgba(255, 255, 255, .30); border-color: var(--glass-1-br); box-shadow: none; cursor: default; }
+  .btn .ico { vertical-align: -2px; margin-left: 6px; }
+
+  .btn.on { background: var(--brand); color: var(--text-invert); border-color: var(--brand); }
+  .btn.on:hover:not(:disabled) { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+  .btn#btnSubmit { color: var(--brand); background: transparent; border: 1.5px solid var(--brand); }
+  .btn#btnSubmit:hover:not(:disabled) { background: var(--brand-10); }
+
+  .filter {
+    padding: 10px 12px; border-bottom: 1px solid var(--brand-06);
+    background: rgba(255, 255, 255, .40);
+  }
+  .filter .hint { margin-top: 6px; font-size: 12px; color: var(--text-muted); }
+  .filter label {
+    display: block; margin-bottom: 5px; font-size: 11px; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .filter select {
+    width: 100%; font-family: var(--font-sans); font-size: 14px; color: var(--text);
+    padding: 9px 12px; cursor: pointer;
+    background: rgba(255, 255, 255, .50);
+    border: 1px solid var(--brand-25); border-radius: var(--r-md);
+    box-shadow: var(--sh-xs);
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .filter select:focus { border-color: var(--brand); box-shadow: var(--sh-focus); outline: none; }
+
+  .listwrap {
+    flex: 1 1 auto; min-height: 0; overflow: auto; position: relative;
+    background: rgba(255, 255, 255, .35); padding: 12px;
+  }
+  .qgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+  .qcol {
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    border-radius: var(--r-lg); overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      0 1px 2px rgba(3, 78, 162, .04),
+      0 4px 12px rgba(3, 78, 162, .07);
+  }
+  .colhd, .qrow { display: grid; grid-template-columns: 46px repeat(4, 1fr); align-items: center; }
+  .colhd {
+    height: 30px; background: rgba(3, 78, 162, .035); border-bottom: 1px solid var(--brand-06);
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .colhd span { text-align: center; }
+  .colhd span:first-child { text-align: left; padding-left: 10px; }
+
+  .qrow {
+    height: 34px; border-bottom: 1px solid var(--brand-06); cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .qrow:last-child { border-bottom: 0; }
+  .qrow:hover { background: rgba(255, 255, 255, .60); }
+  .qrow:hover .qno { color: var(--brand); }
+  .qrow.current { background: rgba(255, 255, 255, .90); box-shadow: inset 3px 0 0 var(--brand); }
+  .qrow.current .qno { color: var(--brand); }
+
+  .qcell { display: flex; align-items: stretch; padding-left: 8px; }
+  .qno {
+    flex: 1 1 auto; align-self: stretch; display: flex; align-items: center; padding-left: 2px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-muted);
+    background: none; border: 0; cursor: pointer; line-height: 1;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .qno:hover { text-decoration: underline; }
+
+  .fq {
+    flex: 0 0 auto; align-self: center;
+    font-family: var(--font-sans); font-size: 13px; line-height: 1; color: var(--text-faint);
+    background: none; border: 0; padding: 5px 3px; cursor: pointer; border-radius: var(--r-sm);
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .fq:hover { background: var(--brand-10); color: var(--brand); }
+  .qrow.flagged .fq { color: var(--brand); background: var(--brand-10); }
+
+  .qb {
+    width: 26px; height: 26px; margin: 0 auto; padding: 0; cursor: pointer;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--gray-600);
+    background: rgba(255, 255, 255, .60);
+    border: 1px solid var(--brand-25); border-radius: var(--r-full);
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .qb:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-10); }
+  .qb.on { background: var(--brand); border-color: var(--brand); color: var(--text-invert); font-weight: 700; }
+
+  /* Badge — 3 cấp đều thuộc thang brand */
+  .badge {
+    display: inline-block; padding: 1px 8px; margin-left: 4px;
+    border-radius: var(--r-full); font-size: 11px; font-weight: 700; letter-spacing: .03em;
+  }
+  .badge.mid { background: var(--brand-10); color: var(--brand-deep); }
+  .badge.solid { background: var(--brand); color: var(--text-invert); }
+
+  /* Modal xác nhận — glass-3, blur 44px, overlay brand-45% */
+  .overlay {
+    position: fixed; inset: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background: rgba(3, 78, 162, .45);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  .overlay[hidden] { display: none; }
+
+  .modal {
+    width: 100%; max-width: 460px; overflow: hidden;
+    border-radius: var(--r-xl);
+    background: rgba(255, 255, 255, .92);
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      0 8px 16px rgba(3, 78, 162, .07),
+      0 24px 56px rgba(3, 78, 162, .14);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .modal {
+      background: var(--glass-3-bg);
+      backdrop-filter: blur(44px) saturate(120%);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .modal { animation: modalIn var(--dur-base) var(--ease-out); }
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .modal-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 16px 14px 20px;
+    background: rgba(3, 78, 162, .06);
+    border-bottom: 1px solid var(--brand-06);
+  }
+  .modal-title { font-size: 16px; font-weight: 700; color: var(--brand); }
+  .modal-close {
+    flex: 0 0 auto; width: 32px; height: 32px; padding: 0; cursor: pointer;
+    font-size: 20px; line-height: 1; color: var(--text-muted);
+    background: rgba(255, 255, 255, .55);
+    border: 1px solid var(--glass-1-br); border-radius: var(--r-full);
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .modal-close:hover { background: rgba(255, 255, 255, .90); color: var(--brand); }
+  .modal-body { padding: 22px 20px 18px; }
+  .modal-msg { display: flex; align-items: center; gap: 14px; }
+  .modal-icon {
+    flex: 0 0 auto; width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--brand); color: var(--text-invert);
+    border-radius: var(--r-full);
+    font-family: var(--font-mono); font-size: 20px; font-weight: 700;
+  }
+  .modal-icon.info { font-family: Georgia, serif; font-style: italic; font-size: 22px; }
+
+  .modal-text { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text); font-weight: 600; }
+  .modal-detail { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-muted); }
+
+  .modal-rows { margin: 16px 0 0; display: grid; gap: 6px; }
+  .modal-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, .55);
+    border: 1px solid var(--brand-06); border-radius: var(--r-sm);
+  }
+  .modal-row .k { flex: 1 1 auto; min-width: 0; font-size: 13px; color: var(--text-muted); }
+  .modal-row .v {
+    flex: 0 0 auto; max-width: 60%; font-size: 13px; font-weight: 600;
+    color: var(--text); text-align: right;
+  }
+  .modal-row .v.num { font-family: var(--font-mono); }
+  .modal-row.hi { background: var(--brand-10); border-color: var(--brand-25); box-shadow: var(--sh-xs); }
+  .modal-row.hi .k { color: var(--brand-deep); font-weight: 600; }
+  .modal-row.hi .v { color: var(--brand); font-weight: 700; }
+
+  .modal-foot {
+    display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, .40);
+    border-top: 1px solid var(--brand-06);
+  }
+  .modal-foot .btn { flex: 0 0 auto; min-width: 160px; }
+  .btn.primary { background: var(--brand); color: var(--text-invert); border-color: var(--brand); }
+  .btn.primary:hover:not(:disabled) { background: var(--brand-deep); border-color: var(--brand-deep); }
+  .btn.ghost { background: transparent; color: var(--text); border-color: transparent; box-shadow: none; }
+  .btn.ghost:hover:not(:disabled) { background: rgba(255, 255, 255, .60); border-color: var(--brand-25); }
+
+  .listwrap::-webkit-scrollbar, .exam::-webkit-scrollbar { width: 10px; }
+  .listwrap::-webkit-scrollbar-thumb, .exam::-webkit-scrollbar-thumb {
+    background: var(--gray-300); border-radius: var(--r-full);
+    border: 3px solid transparent; background-clip: content-box;
+  }
+  .listwrap::-webkit-scrollbar-thumb:hover, .exam::-webkit-scrollbar-thumb:hover { background: var(--brand-25); background-clip: content-box; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* Mobile: tắt blur, thay bằng nền đục để giữ hiệu năng */
+  @media (max-width: 768px) {
+    .app { padding: 10px; }
+    .pane-main, .pane-side { background: rgba(255, 255, 255, .92); backdrop-filter: none; }
+    .pane-side { flex-basis: 300px; width: 300px; }
+    .qgrid { grid-template-columns: 1fr; }
+    .exam { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="workspace">
+
+    <div class="pane-main">
+      <div class="titlebar">HỆ THỐNG TRẮC NGHIỆM TRỰC TUYẾN</div>
+
+      <div class="bar">
+        <span class="left"><span class="k">Thông tin kỳ thi</span></span>
+        <span class="right">Thời gian còn lại: &nbsp;<span class="num" id="timer">00 : 09 : 02</span></span>
+      </div>
+
+      <div class="bar">
+        <span class="left">Mã thi: Kỳ kiểm tra phần - Tuần (1 - 2) - Ngày: 22/05/2014 - Phòng: UNA302</span>
+        <span class="right">Số câu trả lời / Tổng số câu: &nbsp;<span class="num" id="answered">0</span> / <span id="total">20</span></span>
+      </div>
+
+      <div class="exam">
+        <div class="q-head">
+          <a href="javascript:void(0)" class="q-num" id="qnum">Câu 6:</a><span class="q-text" id="qtext">Enough testing has been performed when:</span>
+        </div>
+        <table class="options" id="opts"></table>
+      </div>
+    </div>
+
+    <div class="pane-side">
+
+      <div class="sec-title">Thông tin sinh viên</div>
+      <div class="sec-body student">
+        <div class="row">
+          <div class="avatar">
+            <svg width="64" height="72" viewBox="0 0 64 72" xmlns="http://www.w3.org/2000/svg">
+              <rect width="64" height="72" fill="#E8EAEF"/>
+              <circle cx="32" cy="27" r="12.5" fill="#C9CED8"/>
+              <path d="M32 42c-12.5 0-21.6 7.8-23.8 19.5h47.6C53.6 49.8 44.5 42 32 42z" fill="#C9CED8"/>
+            </svg>
+          </div>
+          <table class="info">
+            <tr><td class="k">Họ tên</td>    <td class="v" id="vName"></td></tr>
+            <tr><td class="k">Ngày sinh</td><td class="v">06/12/1993 (Nam)</td></tr>
+            <tr><td class="k">MSSV</td>      <td class="v">1154030094</td></tr>
+            <tr><td class="k">CMND</td>      <td class="v" id="vId"></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="sec-title">Danh sách câu hỏi <span id="flagCount"></span></div>
+      <div class="filter">
+        <label for="filter">Lọc theo</label>
+        <select id="filter" onchange="applyFilter()">
+          <option value="all" selected>Tất cả</option>
+          <option value="todo">Chưa trả lời</option>
+          <option value="done">Đã trả lời</option>
+          <option value="flag">Đã gắn cờ</option>
+        </select>
+        <div class="hint">&#9664; &#9654; chuyển câu &nbsp;·&nbsp; 1&ndash;4 chọn đáp án &nbsp;·&nbsp; F gắn cờ</div>
+      </div>
+
+      <div class="listwrap"><div class="qgrid" id="qlist"></div></div>
+
+      <div class="sec-title">Chức năng</div>
+      <div class="sec-body actions">
+        <div class="line2">
+          <button type="button" class="btn" id="btnFlag" onclick="toggleCurFlag()" title="Đánh dấu câu phân vân / cần xem lại">⚑ Gắn cờ</button>
+          <button type="button" class="btn" id="btnSubmit" onclick="submitExam()">
+            Nộp bài
+            <svg class="ico" width="15" height="14" viewBox="0 0 15 14" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 0.9 14.6 13.1H0.4z" fill="none" stroke="#034EA2" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M7.5 5.1v3.4" stroke="#034EA2" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="7.5" cy="11" r="0.85" fill="#034EA2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mdTitle" aria-describedby="mdText">
+    <div class="modal-head">
+      <span class="modal-title" id="mdTitle">Xác nhận</span>
+      <button type="button" class="modal-close" id="mdClose" title="Đóng" aria-label="Đóng">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-msg">
+        <span class="modal-icon" id="mdIcon" aria-hidden="true">?</span>
+        <p class="modal-text" id="mdText">Bạn muốn nộp bài?</p>
+      </div>
+      <p class="modal-detail" id="mdDetail"></p>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn ghost" id="mdCancel">Không đồng ý nộp</button>
+      <button type="button" class="btn primary" id="mdOk">Đồng ý nộp bài</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/history.js"></script>
+<script>
+var LETTERS = ['A','B','C','D'];
+
+var QUESTIONS = [
+  { q: "Verification is intended to:", a: ["Build the product correctly", "Check that the product is built correctly", "Find the defects", "Test the user interface"] },
+  { q: "Which of the following is NOT a black-box testing technique?", a: ["Equivalence partitioning", "Boundary value analysis", "Path testing", "Use case testing"] },
+  { q: "A bug is best defined as:", a: ["An error in the source code", "A defect that causes the program to fail", "A mistake made by the tester", "A syntax error"] },
+  { q: "Unit testing is usually performed by:", a: ["The customer", "The developer", "An independent test team", "The auditor"] },
+  { q: "Regression testing is performed in order to:", a: ["Check the new features", "Ensure the changes did not break existing behaviour", "Validate the requirements", "Measure the performance"] },
+  { q: "Enough testing has been performed when:", a: ["Time runs out", "No more faults are found", "The users won't find any serious faults", "The required level of confidence has been achieved"] },
+  { q: "Alpha testing is performed:", a: ["In-house by the developers", "By end users at the vendor's site", "By an independent team after release", "Before the coding is finished"] },
+  { q: "Which of the following is a white-box testing technique?", a: ["Equivalence partitioning", "Boundary value analysis", "Code coverage", "Use case testing"] },
+  { q: "In the V-model, each testing stage is associated with:", a: ["A coding stage on the same side", "A development stage on the opposite side", "A module on the same side", "An input file"] },
+  { q: "Smoke testing is used to:", a: ["Test all features in depth", "Check that the build is stable enough for further testing", "Measure memory leaks", "Validate the security"] },
+  { q: "Which one is a non-functional requirement?", a: ["The system shall store the order", "The response time shall be under 2 seconds", "The user shall log in with a password", "The report shall show the totals"] },
+  { q: "Statement coverage requires that:", a: ["All conditions are tested both ways", "Every executable statement is executed at least once", "All decisions are taken both ways", "Every combination of conditions is tested"] },
+  { q: "Testability is highest for:", a: ["Code with many interfaces", "Well modularised code with few dependencies", "Legacy code", "Third party libraries"] },
+  { q: "In exploratory testing, the tester mainly:", a: ["Follows a pre-written script", "Designs and executes the tests at the same time", "Only records the defects", "Runs only the automated tests"] },
+  { q: "A stub used in unit testing:", a: ["Implements the class under test", "Provides a minimal answer to a called class", "Reads the test data", "Prepares the test environment"] },
+  { q: "One main benefit of test driven development is:", a: ["Less code to test", "Design defects are found early", "Integration tests are no longer needed", "Bug-free code is guaranteed"] },
+  { q: "Mutation testing introduces faults into the program in order to:", a: ["Improve the performance", "Evaluate the strength of the test suite", "Test the compiler", "Reduce the size of the code"] },
+  { q: "The main purpose of a test plan is to:", a: ["Record the test results", "Describe the strategy, resources, schedule and exit criteria", "Store the test data", "Report the defects"] },
+  { q: "Sanity testing differs from regression testing because it is:", a: ["Faster and narrower, checking a specific fix", "Performed by the end users", "Performed without any tool", "Limited to the user interface"] },
+  { q: "The factor that mostly affects the cost of testing is:", a: ["The number of programmers", "The number of test cases multiplied by the complexity of the system", "The programming language", "The place of the office"] }
+];
+
+/* Đáp án đúng (chỉ để tính điểm khi nộp bài) */
+var KEY = [1,2,1,1,1,3,1,2,1,1,1,1,1,1,1,1,1,1,0,1];
+
+var answers = {};
+var flags = {};
+var cur = 0;
+var TOTAL = QUESTIONS.length;
+var remain = 9 * 60 + 2;
+
+var elQnum  = document.getElementById('qnum');
+var elQtext = document.getElementById('qtext');
+var elOpts  = document.getElementById('opts');
+var elList  = document.getElementById('qlist');
+var elAns   = document.getElementById('answered');
+var elTotal = document.getElementById('total');
+var elTimer = document.getElementById('timer');
+var elFilter= document.getElementById('filter');
+
+var overlay  = document.getElementById('overlay');
+var elMdTitle  = document.getElementById('mdTitle');
+var elMdText   = document.getElementById('mdText');
+var elMdDetail = document.getElementById('mdDetail');
+var elMdIcon   = document.getElementById('mdIcon');
+var elMdOk     = document.getElementById('mdOk');
+var elMdCancel = document.getElementById('mdCancel');
+var elMdClose  = document.getElementById('mdClose');
+var mdOnOk = null;
+var mdPrevFocus = null;
+
+function openModal(o) {
+  elMdTitle.textContent = o.title;
+  elMdText.textContent = o.message;
+  elMdDetail.textContent = o.detail || '';
+  if (o.rows && o.rows.length) {
+    var h = '';
+    for (var i = 0; i < o.rows.length; i++) {
+      var r = o.rows[i];
+      h += '<div class="modal-row' + (r.hi ? ' hi' : '') + '">' +
+           '<span class="k">' + esc(r.label) + '</span>' +
+           '<span class="v' + (r.num ? ' num' : '') + '">' + esc(r.value) + '</span></div>';
+    }
+    elMdDetail.innerHTML = h;
+    elMdDetail.className = 'modal-rows';
+  } else {
+    elMdDetail.className = 'modal-detail';
+  }
+  elMdDetail.style.display = ((o.rows && o.rows.length) || o.detail) ? '' : 'none';
+  elMdIcon.textContent = o.icon || '?';
+  elMdIcon.className = 'modal-icon' + (o.iconClass ? ' ' + o.iconClass : '');
+  elMdOk.textContent = o.okText;
+  elMdOk.className = 'btn ' + (o.okClass || 'primary');
+  elMdCancel.textContent = o.cancelText || '';
+  elMdCancel.hidden = !o.cancelText;
+  mdOnOk = o.onOk || null;
+  mdPrevFocus = document.activeElement;
+  overlay.hidden = false;
+  (o.cancelText ? elMdCancel : elMdOk).focus();
+}
+
+function closeModal() {
+  if (overlay.hidden) return;
+  overlay.hidden = true;
+  mdOnOk = null;
+  if (mdPrevFocus && mdPrevFocus.focus) mdPrevFocus.focus();
+  mdPrevFocus = null;
+}
+
+elMdOk.addEventListener('click', function () {
+  var fn = mdOnOk;
+  closeModal();
+  if (fn) fn();
+});
+elMdCancel.addEventListener('click', closeModal);
+elMdClose.addEventListener('click', closeModal);
+overlay.addEventListener('mousedown', function (e) {
+  if (e.target === overlay) closeModal();
+});
+
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function rowHtml(i) {
+  var n = i + 1;
+  var pad = (n < 10 ? '0' : '') + n;
+  var h = '<div class="qrow' + (i === cur ? ' current' : '') + (flags[i] ? ' flagged' : '') +
+          '" id="row' + n + '" data-i="' + i + '">';
+  h += '<div class="qcell">' +
+       '<button type="button" class="qno" title="Xem câu ' + n + '">' + pad + '</button>' +
+       '<button type="button" class="fq" data-f="' + i + '" title="Gắn / bỏ cờ câu ' + n + '">&#9873;</button>' +
+       '</div>';
+  for (var j = 0; j < 4; j++) {
+    h += '<button type="button" class="qb' + (answers[i] === j ? ' on' : '') + '"' +
+         ' data-a="' + j + '" aria-pressed="' + (answers[i] === j ? 'true' : 'false') + '"' +
+         ' title="Chọn đáp án ' + LETTERS[j] + ' ở câu ' + n + '">' + LETTERS[j] + '</button>';
+  }
+  return h + '</div>';
+}
+
+function buildList() {
+  var half = Math.ceil(TOTAL / 2);
+  var html = '';
+  for (var c = 0; c < 2; c++) {
+    var from = c * half, to = Math.min(from + half, TOTAL);
+    html += '<div class="qcol"><div class="colhd"><span>Câu</span><span>A</span>' +
+            '<span>B</span><span>C</span><span>D</span></div>';
+    for (var i = from; i < to; i++) html += rowHtml(i);
+    html += '</div>';
+  }
+  elList.innerHTML = html;
+}
+
+elList.addEventListener('click', function (e) {
+  var row = e.target.closest ? e.target.closest('.qrow') : null;
+  if (!row) return;
+  var b = e.target.closest ? e.target.closest('button') : null;
+  if (b && b.dataset.f !== undefined) {
+    var fi = +b.dataset.f;
+    toggleFlag(fi, !flags[fi]);
+    return;
+  }
+  if (b && b.dataset.a !== undefined) {
+    var qi = +row.dataset.i, ai = +b.dataset.a;
+    if (answers[qi] === ai) { delete answers[qi]; } else { answers[qi] = ai; }
+    sync();
+    return;
+  }
+  go(+row.dataset.i);
+});
+
+function step(d) {
+  var n = cur + d;
+  if (n < 0) n = 0;
+  if (n > TOTAL - 1) n = TOTAL - 1;
+  if (n !== cur) go(n);
+}
+
+document.addEventListener('keydown', function (e) {
+  if (!overlay.hidden) {
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(); }
+    else if (e.key === 'Enter') { e.preventDefault(); elMdOk.click(); }
+    return;
+  }
+  var t = e.target.tagName;
+  if (t === 'SELECT' || t === 'INPUT' || t === 'TEXTAREA') return;
+  if (e.key === 'ArrowLeft')       { step(-1); }
+  else if (e.key === 'ArrowRight') { step(1); }
+  else if (e.key === 'ArrowUp')    { step(-1); }
+  else if (e.key === 'ArrowDown')  { step(1); }
+  else if (e.key === 'Home')       { go(0); }
+  else if (e.key === 'End')        { go(TOTAL - 1); }
+  else if (e.key >= '1' && e.key <= '4') { pick(cur, +e.key - 1); }
+  else if (e.key.toLowerCase() === 'f') { toggleCurFlag(); }
+  else return;
+  e.preventDefault();
+});
+
+function toggleFlag(i, on) {
+  if (on) { flags[i] = true; } else { delete flags[i]; }
+  updateRow(i);
+  updateFlagCount();
+  updateFlagButton();
+  applyFilter();
+}
+
+function updateRow(i) {
+  var row = document.getElementById('row' + (i + 1));
+  if (!row) return;
+  row.className = 'qrow' + (i === cur ? ' current' : '') + (flags[i] ? ' flagged' : '');
+  var bs = row.getElementsByClassName('qb');
+  for (var j = 0; j < bs.length; j++) {
+    var on = (answers[i] === j);
+    bs[j].className = on ? 'qb on' : 'qb';
+    bs[j].setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+}
+
+function flaggedCount() {
+  var n = 0;
+  for (var i = 0; i < TOTAL; i++) if (flags[i]) n++;
+  return n;
+}
+
+function updateFlagCount() {
+  var n = flaggedCount();
+  document.getElementById('flagCount').innerHTML = n ? ' <span class="badge mid">' + n + ' cờ</span>' : '';
+}
+
+function toggleCurFlag() {
+  toggleFlag(cur, !flags[cur]);
+}
+
+function updateFlagButton() {
+  var b = document.getElementById('btnFlag');
+  if (!b) return;
+  b.innerHTML = flags[cur] ? '⚑ Bỏ cờ' : '⚑ Gắn cờ';
+  b.title = flags[cur] ? 'Bỏ cờ ở câu ' + (cur + 1) : 'Đánh dấu câu ' + (cur + 1) + ' phân vân / cần xem lại';
+  b.className = flags[cur] ? 'btn on' : 'btn';
+}
+
+function applyFilter() {
+  var mode = elFilter.value;
+  for (var i = 0; i < TOTAL; i++) {
+    var row = document.getElementById('row' + (i + 1));
+    var done = (answers[i] !== undefined);
+    var show = (mode === 'all') || (i === cur) ||
+               (mode === 'todo' && !done) || (mode === 'done' && done) ||
+               (mode === 'flag' && flags[i]);
+    row.classList.toggle('hidden', !show);
+  }
+}
+
+function optionsHtml() {
+  var html = '';
+  for (var j = 0; j < 4; j++) {
+    var sel = (answers[cur] === j) ? ' class="sel"' : '';
+    html += '<tr' + sel + ' onclick="pick(' + cur + ',' + j + ')">' +
+            '<td class="k">' + LETTERS[j] + '.</td>' +
+            '<td class="t">' + esc(QUESTIONS[cur].a[j]) + '</td></tr>';
+  }
+  return html;
+}
+
+function render() {
+  elQnum.innerHTML = 'Câu ' + (cur + 1) + ':';
+  elQtext.innerHTML = esc(QUESTIONS[cur].q);
+  elOpts.innerHTML = optionsHtml();
+  elTotal.innerHTML = TOTAL;
+  elAns.innerHTML = answeredCount();
+
+  for (var i = 0; i < TOTAL; i++) updateRow(i);
+
+  updateFlagButton();
+  applyFilter();
+  scrollRowIntoView();
+}
+
+function answeredCount() {
+  var n = 0;
+  for (var i = 0; i < TOTAL; i++) if (answers[i] !== undefined) n++;
+  return n;
+}
+
+function go(i) { cur = i; render(); }
+
+function pick(qi, ai) {
+  if (answers[qi] === ai) { delete answers[qi]; } else { answers[qi] = ai; }
+  sync();
+}
+
+function sync() {
+  for (var i = 0; i < TOTAL; i++) updateRow(i);
+  elAns.innerHTML = answeredCount();
+  elOpts.innerHTML = optionsHtml();
+  applyFilter();
+}
+
+function scrollRowIntoView() {
+  var lr = document.querySelector('.listwrap');
+  var row = document.getElementById('row' + (cur + 1));
+  if (!lr || !row || row.classList.contains('hidden')) return;
+  var a = row.getBoundingClientRect(), b = lr.getBoundingClientRect();
+  if (a.top < b.top + 2 || a.bottom > b.bottom - 2) {
+    lr.scrollTop += (a.top - b.top) - (lr.clientHeight - a.height) / 2;
+  }
+}
+
+function notify(title, message, detail, okText, onOk) {
+  openModal({
+    title: title,
+    message: message,
+    detail: detail || '',
+    icon: 'i',
+    iconClass: 'info',
+    okText: okText || 'OK',
+    cancelText: null,
+    onOk: onOk
+  });
+}
+
+var submitted = false;
+
+function correctCount() {
+  var n = 0;
+  for (var i = 0; i < TOTAL; i++) {
+    if (answers[i] !== undefined && KEY[i] === answers[i]) n++;
+  }
+  return n;
+}
+
+function fieldValue(id, fallback) {
+  var el = document.getElementById(id);
+  var t = el ? (el.textContent || '').trim() : '';
+  return t || fallback;
+}
+
+function doSubmit() {
+  if (submitted) return;
+  submitted = true;
+  stopTimer();
+  var c = correctCount();
+  var score = (c * 10) / TOTAL;
+  CK.recordHistory({
+    subject: 'Trắc nghiệm trực tuyến',
+    total: TOTAL,
+    correct: c,
+    ratio: TOTAL ? Math.round((c / TOTAL) * 100) : 0,
+    seconds: Math.max(0, (9 * 60 + 2) - remain)
+  });
+  openModal({
+    title: 'Thông báo',
+    message: 'Nộp bài thành công.',
+    icon: 'i',
+    iconClass: 'info',
+    okText: 'OK',
+    cancelText: null,
+    rows: [
+      { label: 'Mã sinh viên',    value: fieldValue('vId', '201800014'), num: true },
+      { label: 'Họ tên',          value: fieldValue('vName', 'Nguyễn Thị Ngọc Giàu') },
+      { label: 'Mã lớp học phần', value: '101700130601', num: true },
+      { label: 'Số câu đúng',     value: c + '/' + TOTAL, hi: true, num: true },
+      { label: 'Điểm',            value: score.toFixed(2) + 'đ', num: true },
+      { label: 'Điểm làm tròn',   value: (Math.round(score * 100) / 100).toFixed(2), num: true }
+    ]
+  });
+}
+
+function timeoutNotice() {
+  notify(
+    'Thông báo',
+    'Đã hết thời gian làm bài!',
+    'Hệ thống sẽ tự động nộp bài thi của bạn.',
+    'OK',
+    doSubmit
+  );
+}
+
+function submitExam(auto) {
+  if (submitted) return;
+  if (auto === true) { doSubmit(); return; }
+  var n = answeredCount();
+  openModal({
+    title: 'Xác nhận',
+    message: 'Bạn muốn nộp bài?',
+    detail: 'Số câu đã trả lời: ' + n + '/' + TOTAL +
+            (TOTAL - n > 0 ? '  ·  Số câu bỏ trống: ' + (TOTAL - n) : '') +
+            '. Hành động này không thể hoàn tác.',
+    okText: 'Đồng ý nộp bài',
+    cancelText: 'Không đồng ý nộp',
+    onOk: doSubmit
+  });
+}
+
+var tick = null;
+function startTimer() {
+  stopTimer();
+  tick = setInterval(function () {
+    remain--;
+    if (remain < 0) { remain = 0; stopTimer(); timeoutNotice(); }
+    elTimer.innerHTML = fmt(remain);
+  }, 1000);
+}
+function stopTimer() { if (tick) { clearInterval(tick); tick = null; } }
+function fmt(s) {
+  var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), q = s % 60;
+  function p(n) { return (n < 10 ? '0' : '') + n; }
+  return p(h) + ' : ' + p(m) + ' : ' + q;
+}
+
+buildList();
+render();
+updateFlagCount();
+elTimer.innerHTML = fmt(remain);
+startTimer();
+</script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 0: KHÁI NIỆM VỀ KỸ THUẬT SỐ | CƠ KHÍ HUIT</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#034EA2', /* Main Brand HUIT Blue */
+              600: '#023c7d',
+              700: '#012c5d',
+              800: '#001d3f',
+              accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom CSS Styling -->
+<style data-purpose="glass-effects">
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .svg-grid-line {
+      stroke: #e2e8f0;
+      stroke-width: 1;
+    }
+    .svg-axis-line {
+      stroke: #1e293b;
+      stroke-width: 1.75;
+    }
+  </style>
+<style data-purpose="typography">
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .math-formula {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+<!-- END: Custom CSS Styling -->
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+<!-- BEGIN: Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<!-- Logo HUIT & Brand Mark -->
+<a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+<div class="flex flex-col">
+
+<span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+              CƠ KHÍ HUIT
+              <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+</span>
+</div>
+</a>
+</div>
+<!-- Navigation & Action -->
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="../index.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span class="">Về danh mục Kỹ thuật số</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: Site Header -->
+<!-- BEGIN: Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+<a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+<span class="">/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+<span class="">/</span>
+<span class="text-slate-800 font-semibold truncate">Chương 0: Khái niệm về kỹ thuật số</span>
+</div>
+</div>
+<!-- END: Breadcrumb Bar -->
+<!-- BEGIN: Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+<!-- BEGIN: Title Banner -->
+<section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center justify-center gap-3 mb-4">
+<span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+<span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">0</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+        KHÁI NIỆM VỀ KỸ THUẬT SỐ
+      </h1>
+<div class="mt-4 flex items-center justify-center gap-2">
+<span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+<span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+<span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+</div>
+</section>
+<!-- END: Title Banner -->
+<!-- BEGIN: Section 0.1 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" data-purpose="content-section-0-1" id="sec-0-1">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3 border-b pb-3 border-slate-200">
+<span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">0.1</span>
+        ĐẠI LƯỢNG TƯƠNG TỰ VÀ ĐẠI LƯỢNG SỐ
+      </h2>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="flex items-start gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+<span class=""><strong>Đại lượng tương tự</strong> (<em>Analogue Quantity</em>) là đại lượng có một tập hợp các giá trị <em>liên tục</em> theo thời gian.</span>
+</p>
+<!-- Ví dụ 0.1 & Hình 0.1 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.1</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.1 -->
+<div class="w-full max-w-2xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.1: Temperature versus time" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfyI65viJtR8rQuoKMWUwZXtjtzlyMlK5aCJJ_QMp71LY4JBuspqk043kQxTzAgyW9509DKrYQDFjcUGSVcdgvyzIdm7odQlKx1jn_Ga_BSfQ0GZYpB7ibk4RP09AeOS56CTsSwNhBMN2QsLNByUtMfIv_PAKKCXXkd4WUSNU9JpH-Pl6j3NLkCg08DOdxCno2ifWadWbqe9Q5QH3sV74XxmMocnu1xlLu9HHptB5F0DHcN_2E1PMF6iaKUnfgTnivrmk"></div>
+<p class="text-xs sm:text-sm text-slate-600 mt-2 text-center">
+<em>Temperature: nhiệt độ; Time: thời gian; Temperature versus time: nhiệt độ theo thời gian</em>
+</p>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-1">Hình 0.1</p>
+</div>
+</div>
+<p class="flex items-start gap-2 pt-2">
+<span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+<span class=""><strong>Đại lượng số</strong> (<em>Digital Quantity</em>) là đại lượng có một tập hợp các giá trị <em>rời rạc</em> theo thời gian.</span>
+</p>
+<!-- Ví dụ 0.2 & Hình 0.2 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.2</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.2 -->
+<div class="w-full max-w-2xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.2: Tín hiệu tương tự và lấy mẫu rời rạc" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA86HwPQRFDG6E4VQWjneXw-T7W0fPJlKhtWRn4YXWLmHG03QARcpEuyD96dLbuFc0hZIDN2b3b8YPwDmWFbWdJ_HaCTMVKnluxGnA7Yv5EOLprErapS7XmLWfjqFgs2Bkow0VcOIq0csojZTFj4ER0E2xrFk-XXpQBmWuwXW8BK9CikanfuLKn25KKny0aeruPWWoOylZ-xHdZrj4xQMC0z-U1jqakSpGPus0mvYrLzFmoKa34HoLbbZng00GdIDSxWy8"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-2">Hình 0.2</p>
+</div>
+</div>
+</div>
+</article>
+<!-- END: Section 0.1 -->
+<!-- BEGIN: Section 0.2 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" data-purpose="content-section-0-2" id="sec-0-2">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+<span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">0.2</span>
+          MỨC LOGIC
+        </h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 8</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="">
+          Hệ thống số nhị phân chỉ gồm có hai ký số là 0 và 1. Chúng được gọi là <em>bit</em>. Trong mạch số, hai mức điện áp khác nhau được sử dụng để diễn tả hai bit này. Giá trị 1 thường được dùng để diễn tả mức điện áp cao (<em>high</em>), và giá trị 0 thường được dùng để diễn tả mức điện áp thấp (<em>low</em>). Tổ hợp các bit được gọi là mã (<em>code</em>), chúng được dùng để diễn tả các đại lượng hoặc giá trị khác nhau trong các ứng dụng số.
+        </p>
+<p class="">
+          Điện áp sử dụng để diễn tả mức 0 và 1 được gọi là <em>mức logic</em>. Trong đó, một mức điện áp diễn tả mức cao, và một mức điện áp khác diễn tả mức thấp. Trong thực tế, một mức logic ứng với một tầm điện áp.
+        </p>
+<!-- Ví dụ 0.3 & Hình 0.3 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.3</p>
+<div class="flex flex-col items-center justify-center py-4">
+<!-- Inline SVG: Hình 0.3 Thang mức điện áp logic -->
+<div class="w-full max-w-xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.3: Dải điện áp logic" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWSTKRL44jMJvyw_mglAmiqNmkTKp49XuDEOMoruGxjaixAXqnujFuDQktifP2GnlWM-usmW_-5MWFZWptgVTQZAmlYGLCLHPWlSc5tmYWA0yL33ecD4TDV0Km8t9dAMdaz2H2KyLSPcKw-XE36qHz1meV2NILVU0wRtG9QQ3NRBSLMgsK6CAWqtZIYsIV1cmTrpTTEHEHLw3ZH22XPv3ERvsNYValDTcOENVkl-yw-kLVMBMMvkQf3BJz2U8rEhVXFak"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-2">Hình 0.3</p>
+</div>
+</div>
+</div>
+</article>
+<!-- END: Section 0.2 -->
+<!-- BEGIN: Section 0.3 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" data-purpose="content-section-0-3" id="sec-0-3">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+<span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">0.3</span>
+          GIẢN ĐỒ XUNG (<em>WAVEFORM</em>)
+        </h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 8 - 9</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="flex items-start gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+<span class=""><strong>Giản đồ xung</strong> là sự biểu diễn sự thay đổi của mức logic theo thời gian.</span>
+</p>
+<!-- Ví dụ 0.4 & Hình 0.4 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.4</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.4 -->
+<div class="w-full max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.4: Dạng sóng số và các cạnh xung lý tưởng" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYu3l2nUn_YkP43hCS66xR_OsuOdseUeiIbPJxlcOyfkcFEnh4gepiUKbinYj93csWdW47qIszcRYDB_doFDBZYg8UmSyXpDxNQamJovfBXc6b1kXkzGmghzp8E0YJPqqIlDyDn4Dayjmnl44l2n3GkdAvSD18c9j1BF-CQRXKGGLyFfh-8VSoOpIwSXF11egK_nmaH1XfCshTvkVnI85E4ioTFXwcQnWWCbj2lp3eJ9kbNdATbZOPJOKKEf1CY0Dc-SY"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-2">Hình 0.4</p>
+</div>
+</div>
+<p class="pt-3">
+          Giản đồ xung ở trên là trường hợp lý tưởng. Hình vẽ sau sẽ biểu diễn một xung không lý tưởng.
+        </p>
+<!-- Ví dụ 0.5 & Hình 0.5 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.5:</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.5 Xung thực tế -->
+<div class="w-full max-w-3xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.5: Dạng xung thực tế" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP9qOxKqrqcnzaf10KGNRfLyPeKEFGqAgmh-v0xdn4Rl9au8gIHF-wG2ahrvS25xcJ5Yij5dJGmCScyBaT-FTAAxLPyRmwIPKkCmqGUAlgEGoCWK0CCalvur5YfbZBHiD9KQ4vx7fFEN2EM_OLSlmxvPnCWV6MQP5jZGON30KnUgQhsyCJY3zKZRQOmReSognhX6h5a7zjMQdvK2xvvRfVkzBnCRCCysq2_XgQ7uve3fXAs8Mh7QzrOCXKfGWQjvK4aj8"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-2">Hình 0.5</p>
+</div>
+</div>
+<p class="pt-2 font-medium">Giản đồ xung có thể phân ra thành hai loại:</p>
+<ul class="list-disc pl-8 space-y-1">
+<li class="">Tuần hoàn (<em>Periodic Waveform</em>)</li>
+<li class="">Không tuần hoàn (<em>Non-Periodic Waveform</em>).</li>
+</ul>
+<!-- Ví dụ 0.6 & Hình 0.6 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.6:</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.6 -->
+<div class="w-full max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.6: So sánh sóng không tuần hoàn và sóng tuần hoàn" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8qzDGejFLYr7CF4FgUfoEf89jjb-vrwoVZfedkubVTO6ooqTjtRpa62yuSTVYMbOlxHYzCzEApAoAxtz3LRfUUdNKf8ZE0XyBTGQlBBaO5WCZ8wZi4eXUxsm_9zsAaTIOlxn2RsJ0Dt3iLDGLvtwQrhfJKCEGVNLAbTsAMsVQvf_IoAY1Upa1oKipTLJQp8F3p1UD38zuq6c48e9g5C9XPmRAhpD8eQ77DWFeA8PIhU9PGFUr15WdZSOVhb6L5PvIdu8"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-1">Hình 0.6</p>
+</div>
+<!-- Equations -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3">
+<div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-center justify-center gap-3">
+<span class="text-base font-semibold text-slate-800">Tần số <em>f</em> được xác định bởi:</span>
+<span class="text-lg font-mono font-bold text-brand-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs">
+                f = <span class="inline-flex flex-col text-center align-middle text-sm"><span class="border-b border-brand-600 px-1 leading-tight">1</span><span class="leading-tight">T</span></span>
+</span>
+</div>
+<div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-center justify-center gap-3">
+<span class="text-base font-semibold text-slate-800">Chu kỳ bổn phận (<em>duty cycle</em>) <em>D</em> được xác định bởi:</span>
+<span class="text-lg font-mono font-bold text-brand-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs">
+                D = <span class="inline-flex flex-col text-center align-middle text-sm"><span class="border-b border-brand-600 px-1 leading-tight">tw</span><span class="leading-tight">T</span></span> · 100%
+              </span>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- END: Section 0.3 -->
+<!-- BEGIN: Section 0.4 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" data-purpose="content-section-0-4" id="sec-0-4">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+<span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">0.4</span>
+          KHÁI NIỆM VỀ VI MẠCH SỐ
+        </h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 9 - 11</span>
+</div>
+<div class="text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="">
+          Các phần tử của mạch số (mạch tổ hợp hoặc mạch tuần tự) thường được chế tạo ở dạng vi mạch (<em>Integrated Circuit - IC</em>). Các vi mạch này được phân loại theo mức độ tích hợp hoặc theo công nghệ chế tạo.
+        </p>
+</div>
+<!-- 1- Mức độ tích hợp vi mạch -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          1- Mức độ tích hợp vi mạch
+        </h3>
+<p class="text-base sm:text-lg text-slate-800">
+          Căn cứ theo mức độ tích hợp (số lượng cổng trên một chip), vi mạch được phân ra các loại sau
+        </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+<span class="font-bold text-brand-600">- Vi mạch SSI</span> (<em>Small-Scale Integration</em>): có mức độ tích hợp nhỏ, gồm từ <strong>1÷11 cổng</strong>, ví dụ như các cổng cơ bản và các flip-flop (FF).
+          </div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+<span class="font-bold text-brand-600">- Vi mạch MSI</span> (<em>Medium-Scale Integration</em>): có mức độ tích hợp trung bình, gồm từ <strong>12÷99 cổng</strong>, ví dụ như các bộ giải mã, bộ mã hóa, bộ chọn kênh, bộ tính toán số học, bộ đếm, thanh ghi, các bộ nhớ nhỏ.
+          </div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+<span class="font-bold text-brand-600">- Vi mạch LSI</span> (<em>Large-Scale Integration</em>): có mức độ tích hợp cao, gồm từ <strong>100÷9.999 cổng</strong>. <em>Ví dụ</em>: các bộ nhớ và các bộ vi xử lý đơn giản.
+          </div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+<span class="font-bold text-brand-600">- Vi mạch VLSI</span> (<em>Very Large-Scale Integration</em>): có mức độ tích hợp rất cao, gồm từ <strong>10.000÷99.999 cổng</strong>, <em>ví dụ</em> như các bộ vi xử lý.
+          </div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs md:col-span-2">
+<span class="font-bold text-brand-600">- Vi mạch ULSI</span> (<em>Ultra Large-Scale Integration</em>): có mức độ tích hợp cực cao, gồm <strong>lớn hơn 100.000 cổng</strong>, ví dụ như các bộ vi xử lý thế hệ mới.
+          </div>
+</div>
+</div>
+<!-- 2- Công nghệ vi mạch -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          2- Công nghệ vi mạch
+        </h3>
+<div class="space-y-3 text-base sm:text-lg text-slate-800">
+<p class="font-semibold text-slate-900">• Hai loại transistor được dùng để chế tạo vi mạch là:</p>
+<ul class="list-disc pl-8 space-y-1">
+<li class=""><strong>BJT</strong> (<em>Bipolar Junction Transistor</em>);</li>
+<li class=""><strong>MOS</strong> (<em>Metal-Oxide Semiconductor</em>) transistor.</li>
+</ul>
+<p class="font-semibold text-slate-900 pt-2">• Hai loại vi mạch sử dụng BJT là:</p>
+<ul class="list-disc pl-8 space-y-1">
+<li class=""><strong>TTL</strong> (<em>Transistor-Transistor Logic</em>);</li>
+<li class=""><strong>ECL</strong> (<em>Emitter-Coupled Logic</em>).</li>
+</ul>
+<p class="pl-4 italic text-slate-700 bg-brand-50/50 p-2.5 rounded-lg border-l-2 border-brand-400">
+            Trong đó, TTL được sử dụng phổ biến hơn do tiêu thụ năng lượng ít hơn mặc dù không nhanh bằng ECL.
+          </p>
+<p class="font-semibold text-slate-900 pt-2">• Ba loại vi mạch sử dụng công nghệ MOS là:</p>
+<ul class="list-disc pl-8 space-y-1">
+<li class=""><strong>CMOS</strong> (<em>Complementary MOS</em>);</li>
+<li class=""><strong>NMOS</strong> (<em>N-channel MOS</em>);</li>
+<li class=""><strong>PMOS</strong> (<em>P-channel MOS</em>).</li>
+</ul>
+<p class="pl-4 italic text-slate-700 bg-brand-50/50 p-2.5 rounded-lg border-l-2 border-brand-400">
+            Trong đó, công nghệ CMOS và NMOS là phổ biến nhất.
+          </p>
+<p class="pt-2">
+            Tất cả các cổng và hàm đều có thể thực hiện bằng các công nghệ kể trên nhưng trên thực tế, công nghệ TTL và CMOS là phổ biến nhất cho các vi mạch SSI và MSI. Công nghệ CMOS cùng với NMOS được dùng cho các vi mạch LSI, VLSI và ULSI do tiêu thụ ít năng lượng và ít tốn chỗ trên chip.
+          </p>
+</div>
+</div>
+<!-- 3- Cách đóng gói vi mạch (IC packaging) -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          3- Cách đóng gói vi mạch (<em>IC packaging</em>)
+        </h3>
+<p class="text-base sm:text-lg text-slate-800">
+          Có nhiều cách đóng gói vi mạch nhưng chủ yếu bao gồm hai dạng là:
+        </p>
+<ul class="list-disc pl-8 space-y-1 text-base sm:text-lg text-slate-800">
+<li class=""><strong>Gắn xuyên lỗ</strong> (<em>through-hole mounted</em>);</li>
+<li class=""><strong>Gắn bề mặt</strong> (<em>surface mounted</em>).</li>
+</ul>
+<p class="text-base sm:text-lg text-slate-800 pt-1">
+          Các dạng đóng gói vi mạch có thể gặp là
+        </p>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 font-mono text-sm">
+<div class="bg-white p-2.5 rounded-lg border border-slate-200 font-semibold text-slate-800">- DIP (Dual-In-Line Package).</div>
+<div class="bg-white p-2.5 rounded-lg border border-slate-200 font-semibold text-slate-800">- SMT (Surface-Mount Technology).</div>
+<div class="bg-white p-2.5 rounded-lg border border-slate-200 font-semibold text-slate-800">- SOIC (Small-Outline IC).</div>
+<div class="bg-white p-2.5 rounded-lg border border-slate-200 font-semibold text-slate-800">- PLCC (Plastic Leaded Chip Carrier).</div>
+<div class="bg-white p-2.5 rounded-lg border border-slate-200 font-semibold text-slate-800">- LCCC (Leadless Ceramic Chip Carrier).</div>
+<div class="bg-white p-2.5 rounded-lg border border-slate-200 font-semibold text-slate-800">- Flat pack.</div>
+</div>
+<!-- Ví dụ 0.7 & Hình 0.7 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4 mt-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.7</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.7 Minh họa gói IC -->
+<div class="w-full max-w-3xl flex justify-center"><img alt="Hình 0.8: Cách xác định chân 1 và quy luật đánh số chân của vi mạch" class="w-full h-auto rounded-lg object-contain shadow-xs border border-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAISN8qkUTaZ1WVCsfCRlr8PSg12aMscTHMW8JhiNpMc6CK3Lp_YoA71xG6nwUGNLkCOsN3H8RJLm5DgXujl2Ygx7sal5zqSfan4FF2QrJdkhpV7U_TIF8ugWjf4H9pIZv8P2YvFYlXqyYN9c-sSgiGLJfa5bQGww8oFYbyM2-hFuy0-3EzHsyWJRmOVuJF62KmRnVPDVgKI9fVPCt0UfVAUgGue94t9c3hTV9n_mns4G4wc89Lbe47oPbV0TVUCP0JzEuNvf438Opsz2Q"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-2">Hình 0.7</p>
+</div>
+</div>
+</div>
+<!-- 4- Cách đánh số chân vi mạch -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          4- Cách đánh số chân vi mạch
+        </h3>
+<!-- Ví dụ 0.8 & Hình 0.8 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<p class="font-bold text-slate-900 text-base">Ví dụ 0.8</p>
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.8 Cách đánh số chân IC -->
+<div class="w-full max-w-3xl flex justify-center"><img alt="Hình 0.7: Các kiểu đóng gói vỏ vi mạch số phổ biến" class="w-full h-auto rounded-lg object-contain shadow-xs border border-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9xJUMuMdC-ForiOXyaZwwstuGHkuScgz_elfp16hzm8M9QViq2Ansh0padNXEyJQVYiMt34ZuwTi8NYsXqIM6iDNhDORwE_Xw681XoZJlRgsPS0abBwS6xLG2gDgIRR78gD4mcYE5sps9T5J_2_r03T1gUaE-KQm5-QKeq2fRT_BrrCTOFqz9Yfrr1WOfso4WO48m24bDHyJMpmIiLFc5N55EFA1fb_dwgWzq0ybd_svdJB3aBVLIHG89ERXcuwmnqh2COVlubGZZls"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-1">Hình 0.8</p>
+</div>
+</div>
+</div>
+</article>
+<!-- END: Section 0.4 -->
+<!-- BEGIN: Section 0.5 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" data-purpose="content-section-0-5" id="sec-0-5">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+<span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">0.5</span>
+          CÁC THÔNG SỐ CỦA VI MẠCH SỐ
+        </h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 11 - 12</span>
+</div>
+<!-- 1- Điện áp và dòng điện -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          1- Điện áp và dòng điện
+        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-base text-slate-800">
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>V<sub>IH</sub> (min)</em></strong>: điện áp vào mức cao tối thiểu. Đây là mức điện áp tối thiểu ở một ngõ vào để có thể xem là mức logic 1.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>V<sub>IL</sub> (max)</em></strong>: điện áp vào mức thấp tối đa. Đây là mức điện áp tối đa ở một ngõ vào để có thể xem là mức logic 0.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>V<sub>OH</sub> (min)</em></strong>: điện áp ra mức cao tối thiểu. Đây là điện áp (thấp nhất) của một ngõ ra khi ngõ ra này đang ở mức logic 1.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>V<sub>OL</sub> (max)</em></strong>: điện áp ra mức thấp tối đa. Đây là điện áp (lớn nhất) của một ngõ ra khi ngõ ra này đang ở mức logic 0.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>I<sub>IH</sub></em></strong> : dòng vào mức cao. Đây là giá trị dòng điện ở một ngõ vào khi điện áp vào được xem là mức logic 1.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>I<sub>IL</sub></em></strong> : dòng vào mức thấp. Đây là giá trị dòng điện ở một ngõ vào khi điện áp vào được xem là mức logic 0.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>I<sub>OH</sub></em></strong> : dòng ra mức cao. Đây là giá trị dòng điện ở một ngõ ra khi ngõ ra này đang ở mức logic 1.
+          </div>
+<div class="bg-white p-3.5 rounded-xl border border-slate-200">
+<strong><em>I<sub>OL</sub></em></strong> : dòng ra mức thấp. Đây là giá trị dòng điện ở một ngõ ra khi ngõ ra này đang ở mức logic 0.
+          </div>
+</div>
+</div>
+<!-- 2- Hệ số kéo tải fan-out -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          2- Hệ số kéo tải <em>fan-out</em>
+</h3>
+<p class="text-base sm:text-lg text-slate-800">
+          Fan-out là số tối đa các ngõ vào logic chuẩn mà một ngõ ra có thể lái trực tiếp.
+        </p>
+<div class="bg-slate-50 border-l-4 border-brand-600 p-4 rounded-r-xl">
+<p class="text-base sm:text-lg text-slate-800">
+<strong>Ví dụ 0.9</strong>: Fan-out của một ngõ ra là 4 TTL nghĩa là ngõ ra này có khả năng nối tối đa đến 4 tải thuộc loại TTL.
+          </p>
+</div>
+</div>
+<!-- 3- Thời gian trì hoãn -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          3- Thời gian trì hoãn
+        </h3>
+<div class="space-y-2 text-base sm:text-lg text-slate-800">
+<p class="flex items-center gap-2">
+<span class="font-mono font-bold text-brand-600">t<sub>PLH</sub></span> : thời gian trễ khi chuyển từ mức logic 0 lên logic 1.
+          </p>
+<p class="flex items-center gap-2">
+<span class="font-mono font-bold text-brand-600">t<sub>PHL</sub></span> : thời gian trễ khi chuyển từ mức logic 1 lên logic 0.
+          </p>
+</div>
+</div>
+<!-- 4- Miền nhiễu (Noise Immunity) -->
+<div class="space-y-4">
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+          4- Miền nhiễu (<em>Noise Immunity</em>)
+        </h3>
+<div class="space-y-3 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="">
+            Các trường từ và điện ký sinh có thể cảm ứng các điện áp trên các dây nối giữa các mạch logic. Các tín hiệu không mong muốn này được gọi là nhiễu (<em>noise</em>) và đôi khi có thể gây điện áp ở các ngõ vào rơi xuống dưới <em>V<sub>IH</sub> (min)</em> hay nâng lên trên <em>V<sub>IL</sub> (max)</em>, do đó có thể sẽ dẫn đến mạch hoạt động sai.
+          </p>
+<p class="">
+            Miễn nhiễu của một mạch logic là khả năng của mạch sửa đổi các điện áp nhiễu lên các ngõ vào của nó. Lượng đo độ miễn nhiễu được gọi là <strong>lề nhiễu</strong> (<em>noise margin</em>).
+          </p>
+</div>
+<!-- Hình 0.9 Tầm điện áp & Lề nhiễu -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+<div class="flex flex-col items-center justify-center py-2">
+<!-- Inline SVG: Hình 0.9 -->
+<div class="w-full max-w-3xl mx-auto p-4 sm:p-6 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center transition-all hover:border-brand-200"><img alt="Hình 0.9: Tầm điện áp ra, vào và biên độ dự trữ chống nhiễu" class="w-full h-auto object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuLAlq-XYqenBjfXgweuqNoqIYtfxl2hIbLBCHBmoXPm2EDMi7BS0mSYe0iwKztCANHgxCS9JoP2nz3sf4KEZKgfUy4Qi-N1FYDpfMRKvXRzlZZk35On5WCJVSDIRawY1mzwHql8JrQR00DlOhvFCZosPK2fduKAOYBj_DHxl_ANrnRzHPcWsHS75kf1rSB_lQEaXlERWJVBBExfkTTDj7CL6UrE4KTjdE9_bRTV0uq73eG3tIO3zF_eOQkyff6Od2Kg4"></div>
+<p class="text-center font-bold text-slate-800 text-sm sm:text-base mt-1">Hình 0.9</p>
+</div>
+<!-- Noise Margin Formulas -->
+<div class="space-y-2 pt-2 border-t border-slate-100">
+<p class="text-center sm:text-left text-base sm:text-lg font-semibold text-slate-900">
+              Lề nhiễu trạng thái cao <span class="font-mono text-brand-600 font-bold bg-slate-50 px-3 py-1 rounded-lg border border-slate-200 inline-block mt-1 sm:mt-0">V<sub>NH</sub> = V<sub>OH</sub> (min) - V<sub>IH</sub> (min)</span>
+</p>
+<p class="text-center sm:text-left text-base sm:text-lg font-semibold text-slate-900">
+              Lề nhiễu trạng thái thấp <span class="font-mono text-brand-600 font-bold bg-slate-50 px-3 py-1 rounded-lg border border-slate-200 inline-block mt-1 sm:mt-0">V<sub>NL</sub> = V<sub>IL</sub> (max) - V<sub>OL</sub> (max)</span>
+</p>
+</div>
+</div>
+</div>
+</article>
+<!-- END: Section 0.5 -->
+<!-- BEGIN: Chapter Navigation Footer -->
+<div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+<div class="text-center sm:text-left">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+<h4 class="text-base font-bold text-slate-800">Kỹ thuật số &amp; Thiết kế vi mạch</h4>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-0-1">
+          Lên đầu trang
+        </a>
+<a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="Chuong1-cac-he-thong-so-dem.html">
+          Tiếp tục: Chương 1 →
+        </a>
+</div>
+</div>
+<!-- END: Chapter Navigation Footer -->
+</main>
+<!-- END: Main Content Area -->
+<!-- BEGIN: Site Footer -->
+
+<!-- END: Site Footer -->
+
+
+</body></html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Đề cương trắc nghiệm — CƠ KHÍ HUIT</title>
+<meta name="description" content="Xem đề cương trắc nghiệm: câu hỏi kèm đáp án đúng và lời giải thích của từng bài thi.">
+<link rel="icon" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css?v=20261017d">
+<style>
+.page-head{margin-bottom:18px}
+.page-head .ck-page-sub{max-width:78ch}
+
+/* ── THANH ĐIỀU KHIỂN ─────────────────────────────────────── */
+.dc-bar{
+  position:sticky;top:calc(var(--ck-nav-h,86px) + 8px);z-index:30;
+  margin-bottom:var(--gutter);padding:16px 18px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);
+}
+.dc-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.dc-row + .dc-row{margin-top:14px;padding-top:14px;border-top:1px solid var(--brand-06)}
+.dc-search{position:relative;flex:1 1 260px;min-width:0}
+.dc-search > svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--text-muted);pointer-events:none}
+.dc-search .ck-input{width:100%;padding-left:38px}
+.dc-sw{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.dc-sw b{font:600 13px/1.3 var(--font-display);color:var(--text);white-space:nowrap}
+.dc-sw .sw{position:relative;width:44px;height:25px;flex:none;border:0;cursor:pointer;
+  border-radius:var(--r-full);background:var(--brand-20);
+  transition:background var(--dur-fast) var(--ease-out)}
+.dc-sw .sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(3,78,162,.3);
+  transition:transform var(--dur-fast) var(--ease-out)}
+.dc-sw .sw[aria-checked="true"]{background:var(--brand)}
+.dc-sw .sw[aria-checked="true"]::after{transform:translateX(19px)}
+.dc-count{margin-left:auto;font:600 12.5px/1 var(--font-mono);color:var(--text-muted)}
+
+.dc-chips{display:flex;gap:8px;flex-wrap:wrap}
+.dc-chip{
+  display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 15px;cursor:pointer;
+  border:1px solid var(--brand-25);border-radius:var(--r-full);
+  background:var(--glass-1-bg);color:var(--text);
+  font:600 12.5px/1 var(--font-display);box-shadow:var(--sh-xs);
+  transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),
+             transform var(--dur-fast) var(--ease-out);
+}
+.dc-chip em{font:600 10.5px/1 var(--font-mono);font-style:normal;color:var(--text-muted)}
+.dc-chip:hover{background:var(--glass-3-bg);transform:translateY(-1px)}
+.dc-chip[aria-pressed="true"]{background:var(--brand);color:var(--text-invert);border-color:transparent}
+.dc-chip[aria-pressed="true"] em{color:rgba(255,255,255,.78)}
+.dc-chip[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ── BẢNG ĐÁP ÁN ──────────────────────────────────────────── */
+.dc-key{margin-bottom:var(--gutter);padding:20px 22px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.dc-key-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.dc-key-head h2{margin:0;font:700 17px/1.3 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.dc-key-head .acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.dc-key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:8px}
+.dc-key-grid button{
+  display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 4px;cursor:pointer;
+  border:1px solid var(--brand-06);border-radius:var(--r-sm);
+  background:var(--glass-1-bg);box-shadow:var(--sh-xs);
+  transition:background var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);
+}
+.dc-key-grid button:hover{background:var(--brand-10);transform:translateY(-1px)}
+.dc-key-grid .n{font:500 10.5px/1 var(--font-mono);color:var(--text-muted)}
+.dc-key-grid .a{font:700 14px/1.1 var(--font-mono);color:var(--text-strong)}
+.dc-key-note{margin:14px 0 0;font-size:12.5px;color:var(--text-muted)}
+
+/* ── DANH SÁCH CÂU HỎI ───────────────────────────────────── */
+.dc-list{display:flex;flex-direction:column;gap:14px}
+.dc-q{
+  padding:20px 22px;border-radius:var(--r-lg);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  content-visibility:auto;contain-intrinsic-size:auto 220px;
+}
+.dc-q-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.dc-q-no{font:700 14px/1 var(--font-display);color:var(--text-strong)}
+.dc-q-code{padding:2px 8px;border-radius:var(--r-sm);background:var(--brand-06);
+  color:var(--text-muted);font:500 11px/1.4 var(--font-mono);letter-spacing:.04em}
+.dc-q-tags{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.dc-q-text{margin:0 0 14px;font:400 14.5px/1.7 var(--font-display);color:var(--text);max-width:86ch}
+.dc-q-text mark,.dc-exp mark{background:var(--brand-10);color:inherit;border-radius:4px;padding:0 2px}
+.dc-opts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.dc-opt{
+  display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border-radius:var(--r-md);
+  background:var(--glass-1-bg);border:1px solid var(--brand-06);
+  font:400 14px/1.55 var(--font-display);color:var(--text);
+}
+.dc-opt .k{width:26px;height:26px;flex:none;border-radius:var(--r-sm);display:grid;place-items:center;
+  background:var(--brand-10);color:var(--text-strong);font:700 12px/1 var(--font-display)}
+.dc-opt .tx{min-width:0;flex:1}
+.dc-opt .mk{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
+  font:600 11.5px/1 var(--font-display);color:var(--text-strong);white-space:nowrap}
+.dc-opt .mk svg{width:15px;height:15px}
+.dc-opt.is-ok{border-color:var(--brand);background:var(--brand-10);box-shadow:inset 0 1px 0 var(--hi)}
+.dc-opt.is-ok .k{background:var(--brand);color:var(--text-invert)}
+
+.dc-exp{margin-top:14px;padding:14px 16px;border-radius:var(--r-md);
+  background:var(--brand-06);border-left:3px solid var(--brand)}
+.dc-exp .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px;
+  font:600 11px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)}
+.dc-exp .hd svg{width:14px;height:14px;color:var(--text-strong)}
+.dc-exp p{margin:0;font-size:13.5px;line-height:1.7;color:var(--text);max-width:82ch}
+.dc-exp.is-empty{background:transparent;border:1px dashed var(--brand-25);
+  border-left:1px dashed var(--brand-25)}
+.dc-exp.is-empty p{color:var(--text-muted);font-style:italic}
+
+.dc-none{padding:44px 20px;text-align:center}
+.dc-none b{display:block;margin-bottom:6px;font:700 16px/1.3 var(--font-display);color:var(--text-strong)}
+.dc-none p{margin:0 0 16px;font-size:14px;color:var(--text-muted)}
+
+@media (max-width:768px){
+  .dc-bar{position:static;padding:14px}
+  .dc-count{margin-left:0;width:100%}
+}
+@media (max-width:560px){
+  .dc-q{padding:16px 15px}
+  .dc-key{padding:16px 15px}
+  .dc-q-tags{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body data-depth="1">
+
+<div data-ck-nav="features"></div>
+
+<main class="ck-wrap">
+
+  <header class="page-head">
+    <h1 class="ck-page-title">Đề cương trắc nghiệm</h1>
+    <p class="ck-page-sub">
+      Toàn bộ câu hỏi của bài thi đã chọn, kèm đáp án đúng và lời giải thích.
+      Dùng để học trước khi thi, hoặc tra lại sau khi làm bài.
+    </p>
+  </header>
+
+  <section class="dc-bar glass g2" aria-label="Bộ lọc đề cương">
+    <div class="dc-row">
+      <a class="ck-btn ghost" id="dcBack" href="../index.html?m=qpan1&mode=sylabus#lb">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Quay lại
+      </a>
+      <label class="dc-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+        <span class="sr-only">Tìm trong câu hỏi, phương án và lời giải thích</span>
+        <input class="ck-input" type="search" id="dcQ" placeholder="Tìm trong câu hỏi, phương án, lời giải…" autocomplete="off">
+      </label>
+      <span class="dc-count" id="dcCount" role="status" aria-live="polite">—</span>
+    </div>
+
+    <div class="dc-row">
+      <label class="dc-sw">
+        <button class="sw" type="button" id="dcAnswer" role="switch" aria-checked="true" aria-labelledby="dcAnswerLb"></button>
+        <b id="dcAnswerLb">Hiện đáp án</b>
+      </label>
+      <label class="dc-sw">
+        <button class="sw" type="button" id="dcExpl" role="switch" aria-checked="false" aria-labelledby="dcExplLb"></button>
+        <b id="dcExplLb">Chỉ câu có lời giải thích</b>
+      </label>
+      <div class="dc-chips" id="dcParts" role="group" aria-label="Chọn bài thi"></div>
+    </div>
+  </section>
+
+  <section class="dc-key glass g2" id="dcKeyBox" aria-labelledby="dcKeyTitle">
+    <div class="dc-key-head">
+      <h2 id="dcKeyTitle">Bảng đáp án nhanh</h2>
+      <span class="ck-pill light" id="dcKeyPill">—</span>
+      <div class="acts">
+        <button class="ck-icon-btn" type="button" id="dcCopy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+          Sao chép
+        </button>
+      </div>
+    </div>
+    <div class="dc-key-grid" id="dcKeyGrid"></div>
+    <p class="dc-key-note">Bấm một ô để nhảy tới câu tương ứng. Bảng này bám theo bộ lọc đang dùng.</p>
+  </section>
+
+  <section class="dc-list" id="dcList" aria-label="Danh sách câu hỏi"></section>
+
+  <div id="dcNone" class="dc-none glass g1" hidden>
+    <b>Không tìm thấy câu hỏi phù hợp</b>
+    <p>Thử từ khóa khác, hoặc bỏ bộ lọc “chỉ câu có lời giải thích”.</p>
+    <button class="ck-btn ghost" type="button" id="dcReset">Xoá tất cả bộ lọc</button>
+  </div>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="../assets/app.js?v=20261017d"></script>
+<script src="../assets/data.js"></script>
+<script src="../assets/quiz-bank.js"></script>
+<script src="../assets/qpan1-explanations.js"></script>
+<script src="../assets/exam-card.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+  var ICON_CHECK = "M5 12.5 10 17.5 19 7";
+  var ICON_BULB = "M9.3 9.2a2.8 2.8 0 1 1 3.5 2.7c-.7.2-1 .8-1 1.5v.6M12 17.4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+
+  var S = { part: "", answer: true, expl: false };
+  var LIST = [];      /* câu hỏi của bài thi đang xem */
+  var PARTS = [];     /* toàn bộ bài thi của môn */
+
+  function subject() { return CK.subjectBySlug("qpan1"); }
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /* Tô sáng từ khoá: so khớp không dấu nhưng giữ đúng vị trí trong chuỗi gốc */
+  function mark(text, term) {
+    var src = String(text == null ? "" : text);
+    var safe = esc(src);
+    var fq = CK.fold(term || "").trim();
+    if (!fq) return safe;
+
+    var folded = "", map = [];
+    for (var i = 0; i < src.length; i++) {
+      var c = CK.fold(src.charAt(i));
+      for (var k = 0; k < c.length; k++) { folded += c.charAt(k); map.push(i); }
+    }
+    var at = folded.indexOf(fq);
+    if (at < 0) return safe;
+
+    var out = "", cur = 0;
+    while (at >= 0) {
+      var s0 = map[at], s1 = map[at + fq.length - 1] + 1;
+      out += esc(src.slice(cur, s0)) + "<mark>" + esc(src.slice(s0, s1)) + "</mark>";
+      cur = s1;
+      at = folded.indexOf(fq, at + fq.length);
+    }
+    return out + esc(src.slice(cur));
+  }
+
+  function filtered() {
+    var fq = CK.fold($("dcQ").value || "").trim();
+    return LIST.filter(function (it) {
+      if (S.expl && !it.e) return false;
+      if (!fq) return true;
+      var hay = CK.fold(it.q + " " + it.o.join(" ") + " " + (it.e || ""));
+      return hay.indexOf(fq) !== -1;
+    });
+  }
+
+  function optHTML(it, i, term) {
+    var right = S.answer && it.a === i;
+    return '<li class="dc-opt' + (right ? " is-ok" : "") + '">' +
+      '<span class="k">' + LETTERS[i] + "</span>" +
+      '<span class="tx">' + mark(it.o[i], term) + "</span>" +
+      (right ? '<span class="mk">' + CK.svg(ICON_CHECK) + "Đáp án đúng</span>" : "") +
+    "</li>";
+  }
+
+  function qHTML(it, term) {
+    var code = CK.exam.code("qpan1:" + S.part);
+    var tags = '<span class="ck-pill light">' + esc(it.partName) + "</span>";
+    if (!it.e) tags += '<span class="ck-pill light">Chưa có lời giải</span>';
+
+    var exp = "";
+    if (S.answer) {
+      exp = it.e
+        ? '<div class="dc-exp"><span class="hd">' + CK.svg(ICON_BULB) + "Lời giải thích</span><p>" + mark(it.e, term) + "</p></div>"
+        : '<div class="dc-exp is-empty"><span class="hd">' + CK.svg(ICON_BULB) + "Lời giải thích</span><p>Câu này chưa có lời giải thích — đang được bổ sung.</p></div>";
+    }
+
+    return '<article class="dc-q glass g1">' +
+      '<div class="dc-q-head">' +
+        '<span class="dc-q-no">Câu ' + it.no + "</span>" +
+        '<span class="dc-q-code">' + code + "</span>" +
+        '<span class="dc-q-tags">' + tags + "</span>" +
+      "</div>" +
+      '<p class="dc-q-text">' + mark(it.q, term) + "</p>" +
+      '<ul class="dc-opts">' + it.o.map(function (_, i) { return optHTML(it, i, term); }).join("") + "</ul>" +
+      exp +
+    "</article>";
+  }
+
+  function renderKey(list) {
+    var grid = $("dcKeyGrid");
+    grid.innerHTML = list.map(function (it, i) {
+      return '<button type="button" data-i="' + i + '">' +
+        '<span class="n">' + (i + 1) + "</span>" +
+        '<span class="a">' + LETTERS[it.a] + "</span>" +
+      "</button>";
+    }).join("");
+    $("dcKeyPill").textContent = list.length + " câu";
+    $("dcKeyBox").hidden = !list.length;
+
+    Array.prototype.forEach.call(grid.querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () {
+        var q = $("dcList").querySelectorAll(".dc-q")[+b.dataset.i];
+        if (!q) return;
+        q.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (q.animate) {
+          q.animate([{ boxShadow: "0 0 0 0 rgba(3,78,162,.35)" }, { boxShadow: "0 0 0 8px rgba(3,78,162,0)" }], 700);
+        }
+      });
+    });
+  }
+
+  function render() {
+    var list = filtered();
+    var term = $("dcQ").value || "";
+
+    $("dcList").innerHTML = list.map(function (it) { return qHTML(it, term); }).join("");
+    $("dcNone").hidden = list.length > 0;
+    $("dcCount").textContent = list.length === LIST.length
+      ? LIST.length + " câu"
+      : list.length + " / " + LIST.length + " câu";
+
+    renderKey(list);
+  }
+
+  /* Nạp câu hỏi của một bài thi. CK.partQuiz trả về mảng rỗng nếu đề chưa có. */
+  function loadPart(partId) {
+    S.part = partId;
+    LIST = CK.partQuiz("qpan1", partId).map(function (x, i) {
+      return { no: i + 1, q: x.q, o: x.o || [], a: x.a, e: x.e || "", partName: partNameOf(partId) };
+    });
+    renderParts();
+    render();
+  }
+
+  function partNameOf(id) {
+    for (var i = 0; i < PARTS.length; i++) if (PARTS[i].id === id) return PARTS[i].name;
+    return id;
+  }
+
+  function renderParts() {
+    var box = $("dcParts");
+    box.innerHTML = PARTS.map(function (p) {
+      var n = CK.partCount("qpan1", p.id);
+      return '<button class="dc-chip" type="button" data-part="' + p.id + '" aria-pressed="' +
+        (p.id === S.part) + '"' + (n ? "" : " disabled") + ">" + esc(p.name) +
+        " <em>" + (n || "đang bổ sung") + "</em></button>";
+    }).join("");
+    Array.prototype.forEach.call(box.querySelectorAll("[data-part]"), function (b) {
+      b.addEventListener("click", function () {
+        if (b.disabled) return;
+        var id = b.dataset.part;
+        if (id === S.part) return;
+        $("dcQ").value = "";
+        loadPart(id);
+        history.replaceState(null, "", location.pathname + "?d=" + encodeURIComponent(id));
+        document.title = "Đề cương " + partNameOf(id) + " — CƠ KHÍ HUIT";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  }
+
+  /* ── SỰ KIỆN ─────────────────────────────────────────── */
+  $("dcQ").addEventListener("input", render);
+
+  $("dcAnswer").addEventListener("click", function () {
+    S.answer = !S.answer;
+    this.setAttribute("aria-checked", String(S.answer));
+    render();
+  });
+
+  $("dcExpl").addEventListener("click", function () {
+    S.expl = !S.expl;
+    this.setAttribute("aria-checked", String(S.expl));
+    render();
+  });
+
+  $("dcReset").addEventListener("click", function () {
+    $("dcQ").value = "";
+    S.answer = true;
+    S.expl = false;
+    $("dcAnswer").setAttribute("aria-checked", "true");
+    $("dcExpl").setAttribute("aria-checked", "false");
+    render();
+  });
+
+  $("dcCopy").addEventListener("click", function () {
+    var list = filtered();
+    var head = "Bảng đáp án — CƠ KHÍ HUIT\nGDQP-AN · " + partNameOf(S.part) + "\n\n" +
+      list.map(function (it, i) { return (i + 1) + ". " + LETTERS[it.a]; }).join("\n");
+    var done = function () { CK.toast("Đã sao chép <b>" + list.length + " câu</b> vào clipboard.", "Sao chép xong"); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(head).then(done, done);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = head;
+      ta.style.cssText = "position:fixed;top:-100px;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      ta.remove();
+      done();
+    }
+  });
+
+  /* ── KHỞI TẠO ───────────────────────────────────────── */
+  (function init() {
+    var s = subject();
+    PARTS = CK.partsOf(s);
+
+    /* Đề mở được: ưu tiên ?d= trên URL, không có thì lấy đề đầu tiên đã có câu hỏi. */
+    var qs = new URLSearchParams(location.search);
+    var want = qs.get("d");
+    var ok = PARTS.filter(function (p) { return CK.partCount("qpan1", p.id) > 0; });
+    if (!want || !ok.some(function (p) { return p.id === want; })) want = ok.length ? ok[0].id : "";
+
+    if (want) {
+      loadPart(want);
+      document.title = "Đề cương " + partNameOf(want) + " — CƠ KHÍ HUIT";
+      if (location.search !== "?d=" + encodeURIComponent(want)) {
+        history.replaceState(null, "", location.pathname + "?d=" + encodeURIComponent(want));
+      }
+    } else {
+      S.part = "";
+      LIST = [];
+      renderParts();
+      $("dcList").innerHTML = "";
+      $("dcCount").textContent = "Chưa có câu hỏi";
+      $("dcKeyBox").hidden = true;
+    }
+  })();
+})();
+</script>
+</body>
+</html>

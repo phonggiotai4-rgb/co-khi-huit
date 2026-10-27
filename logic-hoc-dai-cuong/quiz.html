@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Logic học đại cương — Đề cương | CƠ KHÍ HUIT</title>
+<meta name="description" content="Đề cương trắc nghiệm Logic học đại cương theo từng chương: toàn bộ câu hỏi, đáp án đúng và lời giải thích.">
+<link rel="icon" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css?v=20261017d">
+<style>
+/* ── MÀU ĐÁP ÁN (giống bộ trắc nghiệm QPAN) ─────────────────── */
+:root{
+  --ok:   #12805C;  --ok-06: rgba(18,128,92,.06);  --ok-10: rgba(18,128,92,.10);  --ok-25: rgba(18,128,92,.25);
+  --bad:  #C0271E;  --bad-06:rgba(192,39,30,.06);  --bad-10:rgba(192,39,30,.10);  --bad-25:rgba(192,39,30,.25);
+}
+
+/* ── ĐẦU TRANG ─────────────────────────────────────────────── */
+.qth-head{margin-bottom:18px}
+.qth-head .ck-btn{margin-bottom:14px;text-decoration:none}
+.qth-head .ck-page-sub{max-width:78ch}
+
+/* ── THANH ĐIỀU KHIỂN ─────────────────────────────────────── */
+.qth-bar{
+  position:sticky;top:calc(var(--ck-nav-h,86px) + 8px);z-index:30;
+  margin-bottom:var(--gutter);padding:16px 18px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);
+}
+.qth-bar-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.qth-code{font:500 12.5px/1 var(--font-mono);color:var(--text-muted)}
+.qth-code b{font-weight:700;color:var(--text-strong);letter-spacing:.06em}
+.qth-stat{margin-left:auto;font:600 12.5px/1 var(--font-mono);color:var(--text-muted)}
+.qth-stat b{color:var(--text-strong);font-weight:700}
+
+.qth-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.qth-chip{
+  display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 15px;cursor:pointer;
+  border:1px solid var(--brand-25);border-radius:var(--r-full);
+  background:var(--glass-1-bg);color:var(--text);
+  font:600 12.5px/1 var(--font-display);box-shadow:var(--sh-xs);
+  transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),
+             transform var(--dur-fast) var(--ease-out);
+}
+.qth-chip em{font:600 10.5px/1 var(--font-mono);font-style:normal;color:var(--text-muted)}
+.qth-chip:hover{background:var(--glass-3-bg);transform:translateY(-1px)}
+.qth-chip[aria-pressed="true"]{background:var(--brand);color:var(--text-invert);border-color:transparent}
+.qth-chip[aria-pressed="true"] em{color:rgba(255,255,255,.78)}
+.qth-chip[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ── DANH SÁCH CÂU HỎI ────────────────────────────────────── */
+.qth-list{display:flex;flex-direction:column;gap:14px}
+.qth-q{
+  padding:20px 22px;border-radius:var(--r-lg);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  content-visibility:auto;contain-intrinsic-size:auto 200px;
+}
+.qth-q-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.qth-no{font:700 14px/1 var(--font-display);color:var(--text-strong)}
+.qth-code-tag{padding:2px 8px;border-radius:var(--r-sm);background:var(--brand-06);
+  color:var(--text-muted);font:500 11px/1.4 var(--font-mono);letter-spacing:.04em}
+.qth-q-text{margin:0 0 14px;font:400 14.5px/1.7 var(--font-display);color:var(--text);max-width:86ch}
+.qth-opts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.qth-opt{
+  display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;
+  padding:11px 14px;border-radius:var(--r-md);
+  background:var(--glass-1-bg);border:1px solid var(--brand-06);
+  font:400 14px/1.55 var(--font-display);color:var(--text);
+}
+.qth-opt .k{width:26px;height:26px;flex:none;border-radius:var(--r-sm);display:grid;place-items:center;
+  background:var(--brand-10);color:var(--text-strong);font:700 12px/1 var(--font-display)}
+.qth-opt .tx{min-width:0;flex:1}
+.qth-opt.is-ok{border-color:var(--ok);background:var(--ok-10)}
+.qth-opt.is-ok .k{background:var(--ok);color:#fff}
+.qth-opt.is-dim{opacity:.62}
+
+.qth-exp{margin-top:14px;padding:14px 16px;border-radius:var(--r-md);
+  background:var(--brand-06);border-left:3px solid var(--brand)}
+.qth-exp .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px;
+  font:600 11px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)}
+.qth-exp .hd svg{width:14px;height:14px;color:var(--text-strong)}
+.qth-exp p{margin:0;font-size:13.5px;line-height:1.7;color:var(--text);max-width:82ch}
+.qth-exp.is-empty{background:transparent;border:1px dashed var(--brand-25);border-left:1px dashed var(--brand-25)}
+.qth-exp.is-empty p{color:var(--text-muted);font-style:italic}
+
+.qth-none{padding:44px 20px;text-align:center}
+.qth-none b{display:block;margin-bottom:6px;font:700 16px/1.3 var(--font-display);color:var(--text-strong)}
+.qth-none p{margin:0 0 16px;font-size:14px;color:var(--text-muted)}
+
+@media (max-width:768px){
+  .qth-bar{position:static;padding:14px}
+  .qth-stat{margin-left:0;width:100%}
+}
+@media (max-width:560px){
+  .qth-q{padding:16px 15px}
+}
+</style>
+</head>
+<body data-depth="1">
+
+<div data-ck-nav="features"></div>
+
+<main class="ck-wrap">
+
+  <header class="qth-head">
+    <a class="ck-btn ghost" id="backBtn" href="../index.html?m=logic-hoc-dai-cuong&amp;mode=sylabus#lb">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Quay lại chọn chương
+    </a>
+    <h1 class="ck-page-title" id="pageTitle">LOGIC HỌC ĐẠI CƯƠNG — Đề cương</h1>
+    <p class="ck-page-sub" id="headSub">Toàn bộ câu hỏi kèm đáp án đúng và lời giải thích của từng chương.</p>
+  </header>
+
+  <section class="qth-bar glass g2" aria-label="Chọn chương">
+    <div class="qth-bar-row">
+      <span class="ck-pill light" id="partPill">—</span>
+      <span class="qth-code">Mã đề: <b id="code">—</b></span>
+      <span class="qth-stat" id="stat" role="status" aria-live="polite">—</span>
+    </div>
+    <div class="qth-chips" id="chips" role="group" aria-label="Chọn chương"></div>
+  </section>
+
+  <section class="qth-list" id="list" aria-label="Danh sách câu hỏi"></section>
+
+  <div id="none" class="qth-none glass g1" hidden>
+    <b>Bộ câu hỏi của chương này đang được bổ sung</b>
+    <p>Chọn chương khác ở thanh phía trên, hoặc quay lại Lò ôn luyện để xem các môn khác.</p>
+    <a class="ck-btn ghost" href="../index.html?m=logic-hoc-dai-cuong&amp;mode=sylabus#lb">Quay lại Lò ôn luyện</a>
+  </div>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="../assets/app.js?v=20261017d"></script>
+<script src="../assets/data.js"></script>
+<script src="../assets/quiz-bank.js"></script>
+<script src="../assets/exam-card.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  var SLUG = "logic-hoc-dai-cuong";
+  var LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+  /* Tên chương theo file "LOGIC HỌC ĐẠI CƯƠNG.docx" */
+  var TITLES = {
+    "chuong-1": "Chương 1",
+    "chuong-2": "Chương 2",
+    "chuong-3": "Chương 3",
+    "chuong-4": "Chương 4",
+    "chuong-5": "Chương 5"
+  };
+
+  var ICON_BULB = "M9.3 9.2a2.8 2.8 0 1 1 3.5 2.7c-.7.2-1 .8-1 1.5v.6M12 17.4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+
+  var subject = CK.subjectBySlug(SLUG);
+  var PARTS = CK.partsOf(subject);
+
+  var partId = "";
+  var LIST = [];
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function partNameOf(id) {
+    for (var i = 0; i < PARTS.length; i++) if (PARTS[i].id === id) return PARTS[i].name;
+    return id;
+  }
+
+  /* ── Thanh chọn chương ─────────────────────────────────────── */
+  function renderChips() {
+    var box = $("chips");
+    box.innerHTML = PARTS.map(function (p) {
+      var n = CK.partCount(SLUG, p.id);
+      return '<button class="qth-chip" type="button" data-part="' + p.id + '" aria-pressed="' +
+        (p.id === partId) + '"' + (n ? "" : " disabled") + ">" + esc(p.name) +
+        " <em>" + (n || "đang bổ sung") + "</em></button>";
+    }).join("");
+    Array.prototype.forEach.call(box.querySelectorAll("[data-part]"), function (b) {
+      b.addEventListener("click", function () {
+        if (b.disabled || b.dataset.part === partId) return;
+        loadPart(b.dataset.part);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  }
+
+  /* ── Danh sách câu hỏi: đáp án đúng tô xanh, các đáp án khác mờ đi ── */
+  function qHTML(it, i) {
+    var code = CK.exam.code(SLUG + ":" + partId);
+
+    var opts = it.o.map(function (tx, k) {
+      return '<li><span class="qth-opt ' + (k === it.a ? "is-ok" : "is-dim") + '">' +
+        '<span class="k">' + LETTERS[k] + "</span>" +
+        '<span class="tx">' + esc(tx) + "</span>" +
+      "</span></li>";
+    }).join("");
+
+    var exp = '<div class="qth-exp' + (it.e ? "" : " is-empty") + '">' +
+      '<span class="hd">' + CK.svg(ICON_BULB) + "Lời giải thích</span><p>" +
+      (it.e ? esc(it.e) : "Câu này chưa có lời giải thích — đang được bổ sung.") + "</p></div>";
+
+    return '<article class="qth-q glass g1" data-i="' + i + '">' +
+      '<div class="qth-q-head">' +
+        '<span class="qth-no">Câu ' + (i + 1) + "</span>" +
+        '<span class="qth-code-tag">' + code + "</span>" +
+      "</div>" +
+      '<p class="qth-q-text">' + esc(it.q) + "</p>" +
+      '<ul class="qth-opts">' + opts + "</ul>" +
+      exp +
+    "</article>";
+  }
+
+  function renderList() {
+    $("list").innerHTML = LIST.map(qHTML).join("");
+    $("none").hidden = LIST.length > 0;
+    $("list").hidden = LIST.length === 0;
+    $("stat").innerHTML = LIST.length ? "<b>" + LIST.length + "</b> câu" : "Chưa có câu hỏi";
+  }
+
+  /* ── Nạp một chương ──────────────────────────────────────── */
+  function loadPart(id) {
+    partId = id;
+    LIST = CK.partQuiz(SLUG, id) || [];
+
+    $("partPill").textContent = partNameOf(id);
+    $("code").textContent = CK.exam.code(SLUG + ":" + id);
+    $("headSub").textContent = (TITLES[id] ? TITLES[id] + ". " : "") +
+      "Toàn bộ câu hỏi kèm đáp án đúng và lời giải thích của chương này.";
+    document.title = partNameOf(id) + " — Đề cương Logic học đại cương | CƠ KHÍ HUIT";
+
+    renderChips();
+    renderList();
+
+    var u = location.pathname + "?d=" + encodeURIComponent(id);
+    if (location.search !== u.slice(location.pathname.length)) history.replaceState(null, "", u);
+  }
+
+  /* ── KHỞI TẠI ───────────────────────────────────────────── */
+  (function init() {
+    var qs = new URLSearchParams(location.search);
+
+    var want = qs.get("d") || "";
+    var ok = PARTS.filter(function (p) { return CK.partCount(SLUG, p.id) > 0; });
+    if (!want || !PARTS.some(function (p) { return p.id === want; })) {
+      want = ok.length ? ok[0].id : (PARTS[0] ? PARTS[0].id : "");
+    }
+    if (want) loadPart(want);
+  })();
+})();
+</script>
+</body>
+</html>

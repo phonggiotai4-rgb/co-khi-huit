@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Yến Tiệc Chuột Thử Độc</title>
+  <meta name="description" content="Game giải đố trinh thám nhị phân: Sử dụng 10 chú chuột thông thái để tìm ra chai rượu độc trong 1.000 chai trước giờ đại yến." />
+  <meta property="og:title" content="Yến Tiệc Chuột Thử Độc" />
+  <meta property="og:description" content="Game giải đố trinh thám nhị phân: Sử dụng 10 chú chuột thông thái để tìm ra chai rượu độc trong 1.000 chai trước giờ đại yến." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Header cố định trên cùng -->
+  <header class="app-header">
+    <div class="header-left">
+      <button id="btn-back-home" class="btn-icon" title="Trở về Trang chủ">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </button>
+      <div class="header-titles">
+        <span class="app-badge">CUNG ĐÌNH ALDRIC</span>
+        <h1 class="header-title" id="header-level-title">Yến Tiệc Chuột Thử Độc</h1>
+      </div>
+    </div>
+      <button id="btn-open-scenery" class="btn-pill" title="Chiêm ngưỡng Khung cảnh Đại Yến & Hầm Ngự Tửu">
+        <span class="icon">🏰</span>
+        <span class="label">Đại Yến</span>
+      </button>
+      <button id="btn-open-guide" class="btn-pill highlight-guide" title="Xem Hướng Dẫn Cách Chơi">
+        <span class="icon">📖</span>
+        <span class="label">Hướng Dẫn</span>
+      </button>
+      <button id="btn-open-basket" class="btn-pill" title="Mở Bảng Giỏ Táo Hỗ Trợ">
+        <span class="icon">🍎</span>
+        <span class="label">Giỏ Táo</span>
+      </button>
+      <button id="btn-open-lookup" class="btn-pill" title="Bảng đối chiếu Nhị Phân">
+        <span class="icon">📜</span>
+        <span class="label">Bảng Số</span>
+      </button>
+      <button id="btn-bgm-toggle" class="btn-icon" title="Bật/Tắt Nhạc Nền Cung Đình (BGM)">
+        <span id="bgm-icon">🎵</span>
+      </button>
+      <button id="btn-sound-toggle" class="btn-icon" title="Bật/Tắt Hiệu Ứng Âm Thanh (SFX)">
+        <span id="sound-icon">🔊</span>
+      </button>
+      <button id="btn-open-settings" class="btn-icon" title="Cài Đặt">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Vùng chứa các màn hình ứng dụng -->
+  <main id="app-container">
+    
+    <!-- 1. MÀN HÌNH CHÍNH (TITLE SCREEN) -->
+    <section id="screen-title" class="screen active">
+      <div class="hero-backdrop">
+        <!-- Phong cảnh đồ họa Vector Buổi Đại Yến Cung Đình Hoàng Gia -->
+        <svg class="banquet-scenic-art" viewBox="0 0 1200 480" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="banquet-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#080c1e"/>
+              <stop offset="60%" stop-color="#141836"/>
+              <stop offset="100%" stop-color="#2a1b3d"/>
+            </linearGradient>
+            <linearGradient id="hall-arch-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1e2238"/>
+              <stop offset="50%" stop-color="#151726"/>
+              <stop offset="100%" stop-color="#0a0c16"/>
+            </linearGradient>
+            <linearGradient id="velvet-table" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#881337"/>
+              <stop offset="45%" stop-color="#580c23"/>
+              <stop offset="100%" stop-color="#2d0512"/>
+            </linearGradient>
+            <radialGradient id="candle-glow-radial" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.9"/>
+              <stop offset="35%" stop-color="#f59e0b" stop-opacity="0.4"/>
+              <stop offset="70%" stop-color="#b45309" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="chandelier-halo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.5"/>
+              <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#b45309" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="gold-pillar" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#0f172a"/>
+              <stop offset="30%" stop-color="#334155"/>
+              <stop offset="70%" stop-color="#475569"/>
+              <stop offset="100%" stop-color="#0f172a"/>
+            </linearGradient>
+            <linearGradient id="banner-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#78350f"/>
+              <stop offset="50%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#78350f"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Bầu trời đêm trăng nhìn qua các vòm cửa kính Gothic lộng lẫy -->
+          <rect width="1200" height="480" fill="url(#banquet-sky)"/>
+          
+          <!-- Lâu đài Aldric tráng lệ dưới ánh trăng phía sau cửa sổ vòm -->
+          <g opacity="0.35">
+            <!-- Vầng trăng đêm đại yến -->
+            <circle cx="600" cy="90" r="50" fill="#fef08a" opacity="0.4"/>
+            <!-- Các tháp nhọn lâu đài -->
+            <polygon points="500,220 540,110 580,220" fill="#0f172a"/>
+            <polygon points="560,240 600,80 640,240" fill="#131b2e"/>
+            <polygon points="620,220 660,110 700,220" fill="#0f172a"/>
+            <polygon points="410,230 435,130 460,230" fill="#0b1120"/>
+            <polygon points="740,230 765,130 790,230" fill="#0b1120"/>
+            <!-- Tường thành lâu đài có lỗ châu mai -->
+            <rect x="360" y="210" width="480" height="50" fill="#0f172a"/>
+          </g>
+
+          <!-- Kiến trúc vòm đá Gothic Cung Điện Aldric -->
+          <path d="M0,0 L1200,0 L1200,480 L0,480 Z" fill="none"/>
+          <!-- Vòm trần đá giao nhau (Vaulted ceiling) -->
+          <path d="M0,0 L600,120 L1200,0 L1200,30 L600,140 L0,30 Z" fill="#1c2035"/>
+          <path d="M600,0 L600,140" stroke="#f59e0b" stroke-width="2" opacity="0.3"/>
+          <path d="M300,0 L600,130 L900,0" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.25"/>
+
+          <!-- Các cột đá hoa cương chống đỡ điện Đại Yến -->
+          <rect x="70" y="80" width="48" height="400" fill="url(#gold-pillar)" opacity="0.9"/>
+          <rect x="290" y="90" width="44" height="390" fill="url(#gold-pillar)" opacity="0.95"/>
+          <rect x="866" y="90" width="44" height="390" fill="url(#gold-pillar)" opacity="0.95"/>
+          <rect x="1082" y="80" width="48" height="400" fill="url(#gold-pillar)" opacity="0.9"/>
+
+          <!-- Đầu cột chạm khắc vàng hoàng gia -->
+          <path d="M60,80 L128,80 L122,96 L66,96 Z" fill="url(#banner-gold)"/>
+          <path d="M280,90 L344,90 L338,106 L286,106 Z" fill="url(#banner-gold)"/>
+          <path d="M856,90 L920,90 L914,106 L862,106 Z" fill="url(#banner-gold)"/>
+          <path d="M1072,80 L1140,80 L1134,96 L1078,96 Z" fill="url(#banner-gold)"/>
+
+          <!-- Các vòm Gothic kết nối giữa các cột đá -->
+          <path d="M118,96 Q200,40 290,96" stroke="#2a3352" stroke-width="12" fill="none"/>
+          <path d="M334,96 Q600,-20 866,96" stroke="#334155" stroke-width="18" fill="none"/>
+          <path d="M910,96 Q996,40 1082,96" stroke="#2a3352" stroke-width="12" fill="none"/>
+
+          <!-- Cờ phướn nhung đỏ thêu biểu tượng sư tử vàng & chùm nho hoàng cung -->
+          <g opacity="0.85">
+            <!-- Cờ bên trái -->
+            <polygon points="135,110 200,110 200,280 167,260 135,280" fill="#991b1b" stroke="#f59e0b" stroke-width="2"/>
+            <circle cx="167" cy="160" r="14" fill="#f59e0b" opacity="0.9"/>
+            <text x="167" y="165" font-size="14" text-anchor="middle" fill="#78350f" font-weight="900">👑</text>
+            <text x="167" y="210" font-size="8" text-anchor="middle" fill="#fef08a" font-weight="bold">ALDRIC</text>
+
+            <!-- Cờ bên phải -->
+            <polygon points="1000,110 1065,110 1065,280 1032,260 1000,280" fill="#991b1b" stroke="#f59e0b" stroke-width="2"/>
+            <circle cx="1032" cy="160" r="14" fill="#f59e0b" opacity="0.9"/>
+            <text x="1032" y="165" font-size="14" text-anchor="middle" fill="#78350f" font-weight="900">🍇</text>
+            <text x="1032" y="210" font-size="8" text-anchor="middle" fill="#fef08a" font-weight="bold">ROYAL</text>
+          </g>
+
+          <!-- 2 Đèn chùm nến pha lê & đồng đồ sộ (Grand Chandeliers) -->
+          <!-- Đèn chùm trái (Chandelier Left) -->
+          <g class="chandelier-group left-chandelier">
+            <line x1="390" y1="0" x2="390" y2="120" stroke="#64748b" stroke-width="3"/>
+            <!-- Quầng hào quang nến tỏa sáng -->
+            <circle cx="390" cy="140" r="110" fill="url(#chandelier-halo)"/>
+            <!-- Khung đèn đồng uốn lượn -->
+            <ellipse cx="390" cy="145" rx="75" ry="16" fill="none" stroke="#d97706" stroke-width="4"/>
+            <ellipse cx="390" cy="130" rx="45" ry="10" fill="none" stroke="#f59e0b" stroke-width="3"/>
+            <path d="M390,120 L350,145 M390,120 L430,145 M390,120 L390,150" stroke="#b45309" stroke-width="2"/>
+            <!-- Chuỗi hạt pha lê rủ xuống -->
+            <path d="M330,147 Q360,170 390,175 Q420,170 450,147" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" fill="none" opacity="0.75"/>
+            <!-- Các ngọn nến hoàng gia đang cháy lung linh -->
+            <g class="candle-flames">
+              <rect x="325" y="132" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="327" cy="128" r="6" fill="url(#candle-glow-radial)" class="flame-flicker-1"/>
+              <rect x="355" y="128" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="357" cy="124" r="7" fill="url(#candle-glow-radial)" class="flame-flicker-2"/>
+              <rect x="388" y="115" width="5" height="16" fill="#f8fafc"/>
+              <circle cx="390" cy="110" r="8" fill="url(#candle-glow-radial)" class="flame-flicker-3"/>
+              <rect x="420" y="128" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="422" cy="124" r="7" fill="url(#candle-glow-radial)" class="flame-flicker-1"/>
+              <rect x="450" y="132" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="452" cy="128" r="6" fill="url(#candle-glow-radial)" class="flame-flicker-2"/>
+            </g>
+          </g>
+
+          <!-- Đèn chùm phải (Chandelier Right) -->
+          <g class="chandelier-group right-chandelier">
+            <line x1="810" y1="0" x2="810" y2="120" stroke="#64748b" stroke-width="3"/>
+            <circle cx="810" cy="140" r="110" fill="url(#chandelier-halo)"/>
+            <ellipse cx="810" cy="145" rx="75" ry="16" fill="none" stroke="#d97706" stroke-width="4"/>
+            <ellipse cx="810" cy="130" rx="45" ry="10" fill="none" stroke="#f59e0b" stroke-width="3"/>
+            <path d="M810,120 L770,145 M810,120 L850,145 M810,120 L810,150" stroke="#b45309" stroke-width="2"/>
+            <path d="M750,147 Q780,170 810,175 Q840,170 870,147" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" fill="none" opacity="0.75"/>
+            <g class="candle-flames">
+              <rect x="745" y="132" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="747" cy="128" r="6" fill="url(#candle-glow-radial)" class="flame-flicker-2"/>
+              <rect x="775" y="128" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="777" cy="124" r="7" fill="url(#candle-glow-radial)" class="flame-flicker-3"/>
+              <rect x="808" y="115" width="5" height="16" fill="#f8fafc"/>
+              <circle cx="810" cy="110" r="8" fill="url(#candle-glow-radial)" class="flame-flicker-1"/>
+              <rect x="840" y="128" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="842" cy="124" r="7" fill="url(#candle-glow-radial)" class="flame-flicker-2"/>
+              <rect x="870" y="132" width="5" height="15" fill="#f8fafc"/>
+              <circle cx="872" cy="128" r="6" fill="url(#candle-glow-radial)" class="flame-flicker-3"/>
+            </g>
+          </g>
+
+          <!-- Thùng ủ rượu gỗ sồi hoàng gia 2 bên sảnh tiệc -->
+          <!-- Thùng bên trái -->
+          <g class="oak-barrel-left" opacity="0.85">
+            <ellipse cx="40" cy="380" rx="36" ry="60" fill="#5c2c16" stroke="#2d1307" stroke-width="3"/>
+            <!-- Các đai sắt thùng rượu -->
+            <path d="M10,340 Q40,346 70,340" stroke="#94a3b8" stroke-width="4" fill="none"/>
+            <path d="M8,380 Q40,388 72,380" stroke="#d97706" stroke-width="4" fill="none"/>
+            <path d="M12,420 Q40,426 68,420" stroke="#94a3b8" stroke-width="4" fill="none"/>
+            <!-- Vòi rót rượu bằng đồng mạ vàng -->
+            <rect x="68" y="385" width="14" height="6" fill="#f59e0b"/>
+            <polygon points="80,382 85,385 80,388" fill="#d97706"/>
+            <text x="38" y="384" font-size="9" fill="#fef08a" font-weight="900" font-family="monospace">#1000</text>
+          </g>
+
+          <!-- Thùng bên phải -->
+          <g class="oak-barrel-right" opacity="0.85">
+            <ellipse cx="1160" cy="380" rx="36" ry="60" fill="#5c2c16" stroke="#2d1307" stroke-width="3"/>
+            <path d="M1130,340 Q1160,346 1190,340" stroke="#94a3b8" stroke-width="4" fill="none"/>
+            <path d="M1128,380 Q1160,388 1192,380" stroke="#d97706" stroke-width="4" fill="none"/>
+            <path d="M1132,420 Q1160,426 1188,420" stroke="#94a3b8" stroke-width="4" fill="none"/>
+            <rect x="1118" y="385" width="14" height="6" fill="#f59e0b"/>
+            <text x="1160" y="384" font-size="9" text-anchor="middle" fill="#fef08a" font-weight="900" font-family="monospace">VINTAGE</text>
+          </g>
+
+          <!-- BÀN ĐẠI YẾN CUNG ĐÌNH TRẢI DÀI (The Grand Royal Banquet Table) -->
+          <g class="royal-banquet-table">
+            <!-- Mặt bàn gỗ hồng đào và khăn trải nhung đỏ viền đăng ten vàng -->
+            <polygon points="120,380 1080,380 1140,480 60,480" fill="url(#velvet-table)"/>
+            <!-- Đường viền ruy băng vàng thêu tua rua chạy dọc mép bàn -->
+            <line x1="120" y1="380" x2="1080" y2="380" stroke="#f59e0b" stroke-width="5"/>
+            <line x1="120" y1="388" x2="1080" y2="388" stroke="#fef08a" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+            <!-- Candelabra chân nến bạc 5 ngọn giữa bàn -->
+            <g class="table-candelabra">
+              <path d="M596,380 L604,380 L602,330 L598,330 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+              <ellipse cx="600" cy="380" rx="20" ry="6" fill="#94a3b8"/>
+              <!-- Các nhánh nến cong -->
+              <path d="M600,345 Q580,348 570,332 L570,326" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+              <path d="M600,345 Q620,348 630,332 L630,326" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+              <!-- Ngọn nến lung linh giữa bàn -->
+              <circle cx="570" cy="320" r="9" fill="url(#candle-glow-radial)" class="flame-flicker-1"/>
+              <circle cx="600" cy="310" r="10" fill="url(#candle-glow-radial)" class="flame-flicker-3"/>
+              <circle cx="630" cy="320" r="9" fill="url(#candle-glow-radial)" class="flame-flicker-2"/>
+            </g>
+
+            <!-- Khay bạc bày gà tây quay hoàng kim & trái cây yến tiệc -->
+            <ellipse cx="500" cy="390" rx="34" ry="14" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1.5"/>
+            <path d="M480,388 Q500,370 520,388 Z" fill="#b45309" stroke="#78350f" stroke-width="1"/>
+            <ellipse cx="700" cy="390" rx="34" ry="14" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1.5"/>
+            <!-- Chùm nho tím hoàng gia và táo đỏ -->
+            <circle cx="688" cy="385" r="5" fill="#701a75"/>
+            <circle cx="696" cy="384" r="5" fill="#701a75"/>
+            <circle cx="704" cy="386" r="5" fill="#701a75"/>
+            <circle cx="712" cy="384" r="5.5" fill="#ef4444"/>
+
+            <!-- Các bình chiết rượu pha lê (Crystal Decanters) & Ly rượu vang ngự tửu -->
+            <!-- Bình rượu pha lê 1 -->
+            <path d="M260,395 L272,395 L276,370 L286,355 L286,340 L276,340 L276,352 L266,352 L266,340 L256,340 L256,355 L266,370 Z" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+            <circle cx="271" cy="378" r="8" fill="#e11d48" opacity="0.6"/>
+
+            <!-- Các ly rượu vàng và thủy tinh đặt dọc bàn -->
+            <polygon points="218,390 226,390 223,375 229,362 215,362 221,375" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+            <polygon points="340,390 348,390 345,375 351,362 337,362 343,375" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+            <polygon points="410,390 418,390 415,375 421,362 407,362 413,375" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+            <polygon points="780,390 788,390 785,375 791,362 777,362 783,375" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+            <polygon points="850,390 858,390 855,375 861,362 847,362 853,375" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+            <polygon points="970,390 978,390 975,375 981,362 967,362 973,375" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+
+            <!-- Kệ trưng bày các chai ngự tửu đánh số bí mật trên bàn -->
+            <rect x="300" y="375" width="18" height="2" fill="#d97706"/>
+            <rect x="880" y="375" width="18" height="2" fill="#d97706"/>
+          </g>
+
+          <!-- Bụi sáng vàng lung linh huyền ảo trong đại sảnh tiệc -->
+          <g class="ambient-sparks">
+            <circle cx="240" cy="200" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="480" cy="180" r="2" fill="#fbbf24" opacity="0.7"/>
+            <circle cx="720" cy="190" r="1.8" fill="#f59e0b" opacity="0.75"/>
+            <circle cx="950" cy="210" r="2.2" fill="#fef08a" opacity="0.8"/>
+            <circle cx="360" cy="280" r="1.5" fill="#fef08a" opacity="0.6"/>
+            <circle cx="820" cy="270" r="1.6" fill="#fbbf24" opacity="0.6"/>
+          </g>
+        </svg>
+
+        <div class="lab-light"></div>
+        <div class="floating-binary" id="hero-floating-binary"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-emblem">
+          <svg viewBox="0 0 120 120" class="wine-crown-svg" width="130" height="130">
+            <defs>
+              <linearGradient id="emblem-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fef08a"/>
+                <stop offset="35%" stop-color="#f59e0b"/>
+                <stop offset="85%" stop-color="#b45309"/>
+                <stop offset="100%" stop-color="#78350f"/>
+              </linearGradient>
+              <linearGradient id="emblem-wine" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#e11d48"/>
+                <stop offset="50%" stop-color="#9f1239"/>
+                <stop offset="100%" stop-color="#4c0519"/>
+              </linearGradient>
+              <radialGradient id="emblem-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- Hào quang hoàng kim -->
+            <circle cx="60" cy="60" r="56" fill="url(#emblem-glow)"/>
+            <!-- Vòng nguyệt quế vàng hoàng gia -->
+            <path d="M22,82 C14,64 18,38 34,26 C36,36 30,50 36,64 C38,68 34,76 22,82 Z" fill="url(#emblem-gold)" opacity="0.85"/>
+            <path d="M98,82 C106,64 102,38 86,26 C84,36 90,50 84,64 C82,68 86,76 98,82 Z" fill="url(#emblem-gold)" opacity="0.85"/>
+            <!-- Đế khiên hoàng gia -->
+            <path d="M32,32 L88,32 L82,82 Q60,105 38,82 Z" fill="#0f172a" stroke="url(#emblem-gold)" stroke-width="2.5"/>
+            <!-- Bình rượu pha lê hoàng cung với rượu vang Bordeaux sóng sánh -->
+            <path d="M52,24 L68,24 L68,36 L76,48 L76,80 A6,6 0 0 1 70,86 L50,86 A6,6 0 0 1 44,80 L44,48 L52,36 Z" fill="url(#emblem-wine)" stroke="url(#emblem-gold)" stroke-width="2"/>
+            <!-- Ánh sáng phản quang trên thủy tinh -->
+            <path d="M47,50 L47,78 Q50,82 54,82 L54,54 Z" fill="#ffffff" opacity="0.3"/>
+            <!-- Nhãn phong ấn sáp số 1000 bí mật -->
+            <rect x="50" y="58" width="20" height="14" rx="2" fill="#1e293b" stroke="url(#emblem-gold)" stroke-width="1"/>
+            <text x="60" y="69" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="monospace" font-weight="900">1000</text>
+            <!-- Nắp bình rượu bọc vàng & vương miện hoàng gia trên cổ bình -->
+            <polygon points="46,24 52,10 60,18 68,10 74,24" fill="url(#emblem-gold)" stroke="#78350f" stroke-width="1.5"/>
+            <circle cx="52" cy="10" r="2.5" fill="#ef4444"/>
+            <circle cx="60" cy="18" r="2.5" fill="#38bdf8"/>
+            <circle cx="68" cy="10" r="2.5" fill="#ef4444"/>
+            <!-- Chú chuột dược sư nhỏ ôm lấy đế bình rượu -->
+            <ellipse cx="40" cy="84" rx="11" ry="9" fill="#e2e8f0" stroke="#64748b" stroke-width="1.2"/>
+            <circle cx="34" cy="78" r="4.5" fill="#e2e8f0" stroke="#64748b" stroke-width="1"/>
+            <circle cx="34" cy="78" r="2.5" fill="#fb7185"/>
+            <circle cx="45" cy="78" r="4.5" fill="#e2e8f0" stroke="#64748b" stroke-width="1"/>
+            <circle cx="45" cy="78" r="2.5" fill="#fb7185"/>
+            <circle cx="38" cy="83" r="1.5" fill="#0f172a"/>
+            <circle cx="42" cy="83" r="1.5" fill="#0f172a"/>
+            <polygon points="39.5,86 41.5,86 40.5,88" fill="#f43f5e"/>
+            <!-- Dải băng ruy băng chân huy hiệu -->
+            <path d="M26,96 L40,90 L80,90 L94,96 L88,104 L60,98 L32,104 Z" fill="url(#emblem-gold)" stroke="#78350f" stroke-width="1.5"/>
+            <text x="60" y="96" text-anchor="middle" fill="#0f172a" font-size="7" font-weight="900" letter-spacing="1">ROYAL ALCHEMY</text>
+          </svg>
+        </div>
+
+        <h1 class="hero-title">YẾN TIỆC CHUỘT THỬ ĐỘC</h1>
+        <p class="hero-tagline">1.000 Chai Rượu Hảo Hạng · 1 Kẻ Phản Bội · 10 Chú Chuột · 1 Đêm Định Mệnh</p>
+        
+        <div class="hero-status-card">
+          <div class="status-col">
+            <span class="status-num" id="hero-stars-count">0 / 39</span>
+            <span class="status-txt">⭐ Sao đã thu thập</span>
+          </div>
+          <div class="divider-v"></div>
+          <div class="status-col">
+            <span class="status-num" id="hero-cleared-count">0 / 13</span>
+            <span class="status-txt">🏰 Màn đã hoàn thành</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button id="btn-start-game" class="btn-primary-large pulse-glow">
+            <span class="btn-icon-lead">▶</span>
+            <span class="btn-text">VÀO PHÒNG THÍ NGHIỆM</span>
+          </button>
+          <div class="hero-sub-actions">
+            <button id="btn-hero-scenery" class="btn-secondary highlight-guide">
+              <span class="icon">🏰</span> Chiêm Ngưỡng Đại Yến
+            </button>
+            <button id="btn-hero-guide" class="btn-secondary">
+              <span class="icon">📖</span> Hướng Dẫn Cách Chơi
+            </button>
+            <button id="btn-view-levels" class="btn-secondary">
+              <span class="icon">🗺️</span> Chọn Màn Chơi
+            </button>
+            <button id="btn-hero-basket" class="btn-secondary">
+              <span class="icon">🍎</span> Bảng Giỏ Táo
+            </button>
+            <button id="btn-hero-sandbox" class="btn-secondary">
+              <span class="icon">🧪</span> Chế Độ Thử Nghiệm
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-footer-hint">
+          <span>Khám phá thuật toán tìm kiếm nhị phân thông qua câu đố cung đình kinh điển</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. MÀN HÌNH CHỌN MÀN (LEVEL SELECT) -->
+    <section id="screen-levels" class="screen">
+      <div class="screen-bar">
+        <button class="btn-back" data-target="screen-title">← Trang Chủ</button>
+        <h2 class="section-heading">Bản Đồ Chiến Dịch Cung Đình</h2>
+        <div class="star-badge-total" id="map-total-stars">⭐ 0/39</div>
+      </div>
+      <div class="chapters-container" id="chapters-list">
+        <!-- Render động từ dữ liệu màn chơi -->
+      </div>
+    </section>
+
+    <!-- 3. MÀN HÌNH CHƠI CHÍNH (GAMEPLAY SCREEN) -->
+    <section id="screen-game" class="screen">
+      <!-- Thanh tiến trình 3 pha -->
+      <div class="phase-stepper">
+        <div class="phase-step active" id="step-phase-1">
+          <span class="step-icon">☀️</span>
+          <span class="step-text">1. Lập Kế Hoạch</span>
+        </div>
+        <div class="phase-arrow">➔</div>
+        <div class="phase-step" id="step-phase-2">
+          <span class="step-icon">🌙</span>
+          <span class="step-text">2. Chờ Đêm</span>
+        </div>
+        <div class="phase-arrow">➔</div>
+        <div class="phase-step" id="step-phase-3">
+          <span class="step-icon">🌅</span>
+          <span class="step-text">3. Giải Mã</span>
+        </div>
+      </div>
+
+      <!-- Khung thông tin màn chơi & mục tiêu -->
+      <div class="level-banner">
+        <div class="level-meta">
+          <span class="chapter-tag" id="game-chapter-name">Chương 1</span>
+          <h3 class="level-name" id="game-level-name">Màn 1: Thử Nghiệm Đầu Tiên</h3>
+          <!-- Thanh tiến trình nhỏ 3 pha dạng điểm tròn -->
+          <div class="phase-mini-progress" id="phase-mini-progress" aria-label="Tiến độ 3 pha">
+            <div class="mini-step-dot active" data-phase="1" title="Pha 1: Lập Kế Hoạch">
+              <span class="dot-circle"></span>
+              <span class="dot-label">1. Kế hoạch</span>
+            </div>
+            <div class="mini-line"></div>
+            <div class="mini-step-dot" data-phase="2" title="Pha 2: Chờ Đêm">
+              <span class="dot-circle"></span>
+              <span class="dot-label">2. Chờ đêm</span>
+            </div>
+            <div class="mini-line"></div>
+            <div class="mini-step-dot" data-phase="3" title="Pha 3: Giải Mã">
+              <span class="dot-circle"></span>
+              <span class="dot-label">3. Giải mã</span>
+            </div>
+          </div>
+        </div>
+        <div class="level-targets">
+          <span class="target-chip">
+            <span class="target-icon">🍾</span>
+            <strong id="game-bottles-count">4</strong> Chai
+          </span>
+          <span class="target-chip">
+            <span class="target-icon">🐭</span>
+            <strong id="game-mice-count">2</strong> Chuột
+          </span>
+          <span class="target-chip poison-chip">
+            <span class="target-icon">☠️</span>
+            <strong id="game-poison-count">1</strong> Chai Độc
+          </span>
+        </div>
+      </div>
+
+      <!-- Dải phong cảnh Cung Điện & Hầm Rượu Hoàng Gia (Palace & Cellar Atmosphere Strip) -->
+      <div class="palace-scenic-strip">
+        <div class="scenic-strip-art">
+          <svg viewBox="0 0 900 110" preserveAspectRatio="xMidYMid slice" class="cellar-strip-svg">
+            <defs>
+              <linearGradient id="cellar-bg-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0f172a"/>
+                <stop offset="30%" stop-color="#1e1b4b"/>
+                <stop offset="70%" stop-color="#2a1226"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+              </linearGradient>
+            </defs>
+            <rect width="900" height="110" fill="url(#cellar-bg-grad)"/>
+            <!-- Vòm hầm rượu đá cổ và hàng thùng gỗ sồi -->
+            <path d="M0,110 L0,35 Q150,0 300,35 Q450,0 600,35 Q750,0 900,35 L900,110 Z" fill="#090d16" opacity="0.85"/>
+            <!-- Các thùng rượu ủ gỗ sồi -->
+            <ellipse cx="70" cy="72" rx="26" ry="32" fill="#451a03" stroke="#78350f" stroke-width="2"/>
+            <path d="M48,60 Q70,66 92,60" stroke="#94a3b8" stroke-width="2.5" fill="none"/>
+            <path d="M46,74 Q70,80 94,74" stroke="#d97706" stroke-width="2.5" fill="none"/>
+            <ellipse cx="160" cy="72" rx="26" ry="32" fill="#451a03" stroke="#78350f" stroke-width="2"/>
+            <path d="M138,60 Q160,66 182,60" stroke="#94a3b8" stroke-width="2.5" fill="none"/>
+            <path d="M136,74 Q160,80 184,74" stroke="#d97706" stroke-width="2.5" fill="none"/>
+            <ellipse cx="740" cy="72" rx="26" ry="32" fill="#451a03" stroke="#78350f" stroke-width="2"/>
+            <ellipse cx="830" cy="72" rx="26" ry="32" fill="#451a03" stroke="#78350f" stroke-width="2"/>
+            <!-- Kệ rượu cổ và hàng chai vang hoàng cung -->
+            <rect x="230" y="60" width="440" height="6" fill="#78350f"/>
+            <rect x="250" y="32" width="10" height="28" fill="#881337" stroke="#fbbf24" stroke-width="1"/>
+            <rect x="270" y="35" width="9" height="25" fill="#047857" stroke="#34d399" stroke-width="1"/>
+            <rect x="290" y="30" width="12" height="30" fill="#881337" stroke="#fbbf24" stroke-width="1"/>
+            <rect x="310" y="34" width="10" height="26" fill="#1e1b4b" stroke="#818cf8" stroke-width="1"/>
+            <rect x="580" y="32" width="10" height="28" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+            <rect x="600" y="35" width="9" height="25" fill="#881337" stroke="#fbbf24" stroke-width="1"/>
+            <rect x="620" y="30" width="12" height="30" fill="#451a03" stroke="#d97706" stroke-width="1"/>
+            <rect x="640" y="34" width="10" height="26" fill="#881337" stroke="#fbbf24" stroke-width="1"/>
+            <!-- Bình cầu giả kim phát quang khói xanh ở trung tâm -->
+            <circle cx="450" cy="65" r="20" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+            <circle cx="450" cy="62" r="10" fill="#10b981" opacity="0.6"/>
+            <rect x="446" y="35" width="8" height="15" fill="#047857"/>
+            <!-- Đèn dầu treo bập bùng ánh vàng -->
+            <circle cx="210" cy="35" r="7" fill="#fbbf24" opacity="0.75"/>
+            <circle cx="690" cy="35" r="7" fill="#fbbf24" opacity="0.75"/>
+          </svg>
+        </div>
+        <div class="scenic-strip-info">
+          <div class="scenic-strip-tag">🏰 KHÔNG GIAN HOÀNG GIA</div>
+          <span class="scenic-strip-title">Hầm Ngự Tửu & Bàn Thử Độc Cung Đình</span>
+          <span class="scenic-strip-desc">1.000 chai ngự tửu đã được chuyển vào vị trí thử độc. Chuột uống mẫu theo trọng số nhị phân.</span>
+        </div>
+        <button id="btn-strip-view-scenery" class="btn-pill" title="Mở Toàn Cảnh Đại Yến">
+          <span class="icon">🏰</span>
+          <span class="label">Toàn Cảnh</span>
+        </button>
+      </div>
+
+      <!-- VÙNG 1: DÃY CHUỘT THỬ ĐỘC (Mice Podiums) -->
+      <div class="mice-stage-card">
+        <div class="stage-header">
+          <div class="stage-title-wrap">
+            <span class="stage-title">Đội Ngũ Chuột Thí Nghiệm</span>
+            <span class="stage-sub">Mỗi chú chuột ứng với một lũy thừa của 2 (trọng số bit nhị phân)</span>
+          </div>
+          <button id="btn-toggle-mice-view" class="btn-micro" title="Thu gọn / Mở rộng">Thu gọn</button>
+        </div>
+        <div class="mice-grid" id="mice-display-list">
+          <!-- Render danh sách chuột động -->
+        </div>
+      </div>
+
+      <!-- VÙNG 2: NỘI DUNG TỪNG PHA -->
+      <div class="phase-container">
+        
+        <!-- PHA 1: LẬP KẾ HOẠCH (Phân phối chai rượu cho chuột uống) -->
+        <div id="phase-planning-view" class="phase-view active">
+          <div class="controls-toolbar">
+            <div class="toolbar-left">
+              <span class="toolbar-label">Thao tác nhanh:</span>
+              <button id="btn-auto-binary" class="btn-tool highlight" title="Tự động phân phối các chai theo chuẩn nhị phân (n & 2^k)">
+                ✨ Tự Điền Chuẩn Nhị Phân
+              </button>
+              <button id="btn-clear-plan" class="btn-tool" title="Xóa toàn bộ phân phối hiện tại">
+                🗑️ Xoá Chọn
+              </button>
+            </div>
+            <div class="toolbar-right">
+              <button id="btn-phase-guide" class="btn-tool" title="Xem Hướng Dẫn Cách Chơi">
+                📖 Cách Chơi
+              </button>
+              <button id="btn-hint-dialog" class="btn-tool hint-btn" title="Xem gợi ý của Lão Toán Sư">
+                💡 Gợi Ý (<span id="hint-level-count">3</span>)
+              </button>
+            </div>
+          </div>
+
+          <!-- Khu vực xem/gán ma trận (cho màn nhỏ) hoặc phân phối danh sách (màn lớn) -->
+          <div class="distribution-workbench" id="workbench-area">
+            <!-- Nội dung sẽ render tùy số lượng chai -->
+          </div>
+
+          <!-- Nút hành động xác nhận khoá kế hoạch -->
+          <div class="confirm-planning-bar">
+            <div class="plan-summary" id="plan-summary-text">
+              Đã gán nước thử cho lũ chuột. Bạn chỉ được xác nhận 1 lần duy nhất trước khi màn đêm buông xuống!
+            </div>
+            <button id="btn-confirm-night" class="btn-confirm-action pulse-glow">
+              <span class="btn-icon-lead">🍷</span>
+              <span>XÁC NHẬN & ĐƯA CHUỘT VÀO ĐÊM</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PHA 2: CHỜ ĐÊM (Hoạt ảnh đêm tối, tích tắc, chuột uống và phát tác) -->
+        <div id="phase-night-view" class="phase-view">
+          <div class="night-sky">
+            <svg class="night-sky-art" viewBox="0 0 1000 360" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="night-sky-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#0b0f2a"/>
+                  <stop offset="50%" stop-color="#1e1b4b"/>
+                  <stop offset="100%" stop-color="#090518"/>
+                </linearGradient>
+                <radialGradient id="moon-halo-grad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fef08a" stop-opacity="0.8"/>
+                  <stop offset="40%" stop-color="#fef08a" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#fef08a" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="1000" height="360" fill="url(#night-sky-grad)"/>
+              <!-- Vầng trăng lưỡi liềm vàng rực rỡ & quầng trăng -->
+              <circle cx="880" cy="70" r="60" fill="url(#moon-halo-grad)"/>
+              <path d="M880,40 A30,30 0 1 1 855,95 A24,24 0 1 0 880,40 Z" fill="#fef08a" filter="drop-shadow(0 0 12px rgba(254, 240, 138, 0.8))"/>
+              <!-- Các chòm sao lấp lánh trên bầu trời đêm hoàng cung -->
+              <g class="twinkle-stars" fill="#fff">
+                <circle cx="120" cy="45" r="1.5" opacity="0.8"/>
+                <circle cx="210" cy="80" r="1.2" opacity="0.6"/>
+                <circle cx="340" cy="35" r="2" opacity="0.9"/>
+                <circle cx="480" cy="65" r="1.5" opacity="0.7"/>
+                <circle cx="620" cy="40" r="1.8" opacity="0.85"/>
+                <circle cx="750" cy="85" r="1.2" opacity="0.6"/>
+                <polygon points="340,31 342,34 345,35 342,36 340,39 338,36 335,35 338,34" fill="#fef08a" opacity="0.9"/>
+                <polygon points="620,36 622,39 625,40 622,41 620,44 618,41 615,40 618,39" fill="#fef08a" opacity="0.9"/>
+              </g>
+              <!-- Lâu đài Gothic và tháp canh hoàng gia bóng đen với cửa kính vàng thắp nến -->
+              <g class="castle-backdrop" fill="#030712">
+                <!-- Tháp canh xa xa -->
+                <polygon points="60,360 80,240 100,240 120,360"/>
+                <polygon points="75,240 90,200 105,240" fill="#020617"/>
+                <polygon points="220,360 240,220 270,220 290,360"/>
+                <polygon points="235,220 255,170 275,220" fill="#020617"/>
+                <rect x="250" y="240" width="10" height="18" rx="5" fill="#f59e0b" opacity="0.7"/>
+                <!-- Tường thành chính & vọng lâu -->
+                <path d="M0,360 L0,290 L40,290 L40,300 L60,300 L60,290 L160,290 L160,300 L180,300 L180,290 L380,290 L400,250 L440,250 L460,290 L600,290 L600,300 L620,300 L620,290 L780,290 L800,210 L840,210 L860,290 L1000,290 L1000,360 Z"/>
+                <!-- Cửa sổ tháp sáng ánh đuốc lung linh -->
+                <rect x="415" y="270" width="10" height="16" rx="5" fill="#fbbf24" opacity="0.85"/>
+                <rect x="815" y="235" width="10" height="18" rx="5" fill="#fbbf24" opacity="0.85"/>
+                <circle cx="820" cy="242" r="3" fill="#ef4444" opacity="0.6"/>
+              </g>
+            </svg>
+          </div>
+          <div class="night-animation-stage">
+            <div class="clock-dial">
+              <div class="clock-roman-marks">
+                <span class="c-mark c-xii">XII</span>
+                <span class="c-mark c-iii">III</span>
+                <span class="c-mark c-vi">VI</span>
+                <span class="c-mark c-ix">IX</span>
+              </div>
+              <div class="clock-hand" id="night-clock-hand"></div>
+              <div class="clock-center"></div>
+              <span class="clock-label">24 GIỜ TRÔI QUA</span>
+            </div>
+            <p class="night-status-text" id="night-narrative">
+              Trời tối dần trong hầm rượu hoàng gia... Lũ chuột đang uống mẫu rượu...
+            </p>
+            <div class="drinking-rats-showcase" id="night-rats-showcase">
+              <!-- Render hoạt ảnh chuột ngủ hoặc trúng độc -->
+            </div>
+          </div>
+        </div>
+
+        <!-- PHA 3: GIẢI MÃ (Quan sát chuột sống/gục, đọc nhị phân và chỉ ra chai độc) -->
+        <div id="phase-decode-view" class="phase-view">
+          <div class="decode-card">
+            <div class="decode-header">
+              <h4>Bình Minh Đã Lên - Đọc Dấu Vết Nhị Phân</h4>
+              <p>Chuột gục = bit <strong class="neon-one">1</strong> (Độc tác phát) · Chuột bình an = bit <strong class="neon-zero">0</strong> (An toàn)</p>
+            </div>
+
+            <!-- Bảng đọc nhị phân tương tác -->
+            <div class="binary-decoder-strip" id="decode-strip">
+              <!-- Render từng bit theo chuột -->
+            </div>
+
+            <div class="formula-box">
+              <span class="formula-label">Công thức cộng dồn:</span>
+              <span class="formula-math" id="decode-formula">0</span>
+              <span class="formula-equal">=</span>
+              <span class="formula-sum" id="decode-calculated-sum">0</span>
+            </div>
+
+            <!-- Form nộp đáp án -->
+            <div class="answer-submission-box">
+              <label for="input-suspect-bottle" class="sub-label">Chai rượu bị tẩm độc là chai số:</label>
+              <div class="input-row">
+                <input type="number" id="input-suspect-bottle" class="bottle-num-input" placeholder="Nhập số chai..." min="1" max="1024" />
+                <button id="btn-fill-from-bits" class="btn-secondary" title="Điền số tính được từ công thức">
+                  ⚡ Lấy số cộng dồn
+                </button>
+              </div>
+
+              <!-- Dành cho màn 2 chai độc ở Chương 5 -->
+              <div id="second-bottle-row" class="input-row hidden">
+                <label for="input-suspect-bottle-2" class="sub-label">Chai độc thứ hai:</label>
+                <input type="number" id="input-suspect-bottle-2" class="bottle-num-input" placeholder="Chai thứ 2..." min="1" max="1024" />
+              </div>
+
+              <div class="submit-actions">
+                <button id="btn-submit-answer" class="btn-primary-large">
+                  👑 BÁO CÁO LÊN NHÀ VUA ALDRIC
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODAL HƯỚNG DẪN CÁCH CHƠI (TUTORIAL & GUIDE) -->
+    <div id="modal-guide" class="modal-overlay">
+      <div class="modal-window large-modal">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">CẨM NANG THỬ ĐỘC SƯ</span>
+            <h3>Hướng Dẫn Cách Chơi & Bí Quyết Phá Án</h3>
+          </div>
+          <button class="btn-close-modal" data-close="modal-guide">✕</button>
+        </div>
+        <div class="modal-body guide-modal-body">
+          <!-- Thanh chọn các tab hướng dẫn -->
+          <div class="guide-tabs-nav">
+            <button class="guide-tab-btn active" data-tab="guide-overview">📖 Tổng Quan</button>
+            <button class="guide-tab-btn" data-tab="guide-phases">⏳ Quy Trình 3 Pha</button>
+            <button class="guide-tab-btn" data-tab="guide-math">🧮 Bí Quyết Nhị Phân</button>
+            <button class="guide-tab-btn highlight-tab" data-tab="guide-demo">🔬 Bấm Thử Mô Phỏng</button>
+            <button class="guide-tab-btn" data-tab="guide-stars">⭐ Mẹo Đạt 3 Sao</button>
+          </div>
+
+          <!-- TAB 1: TỔNG QUAN & BỐI CẢNH -->
+          <div id="tab-guide-overview" class="guide-tab-pane active">
+            <div class="guide-card-intro">
+              <div class="guide-intro-icon">🏰</div>
+              <div>
+                <h4 class="guide-section-title">Đại Yến Cung Đình & Vụ Án 1.000 Chai Rượu</h4>
+                <p>Nhà vua tổ chức đại lễ 20 năm trị vì. Hầm rượu có <strong>1.000 chai</strong> hảo hạng, nhưng mật thám báo rằng có <strong>đúng 1 chai bị tẩm kịch độc</strong> phát tác sau đúng <strong>24 giờ (1 đêm)</strong>.</p>
+              </div>
+            </div>
+
+            <div class="guide-qa-list">
+              <div class="guide-qa-item">
+                <strong class="qa-q">❓ Tại sao không thử từng chai một?</strong>
+                <p class="qa-a">Vì chất độc phát tác sau 24 giờ! Nếu thử từng chai lần lượt, bạn sẽ mất tới 1.000 ngày (gần 3 năm), trong khi yến tiệc sẽ diễn ra ngay sáng mai.</p>
+              </div>
+
+              <div class="guide-qa-item">
+                <strong class="qa-q">❓ Trong tay bạn có những gì?</strong>
+                <p class="qa-a">Bạn chỉ có <strong>10 chú chuột thí nghiệm</strong> và <strong>đúng 1 đêm duy nhất</strong> để tìm ra chính xác chai nào có độc.</p>
+              </div>
+
+              <div class="guide-qa-item">
+                <strong class="qa-q">❓ Bí mật chiến thắng là gì?</strong>
+                <p class="qa-a">Mỗi chú chuột không chỉ uống 1 chai, mà uống <strong>nhiều chai cùng lúc</strong> theo quy tắc của <strong>hệ nhị phân (cơ số 2)</strong>. Sáng hôm sau, dãy chuột gục sẽ ghép lại thành con số của chai độc!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: QUY TRÌNH 3 PHA -->
+          <div id="tab-guide-phases" class="guide-tab-pane">
+            <h4 class="guide-section-title">Mỗi màn chơi diễn ra qua đúng 3 bước:</h4>
+            
+            <div class="guide-steps-vertical">
+              <div class="guide-step-card">
+                <div class="step-num-badge">1</div>
+                <div class="step-card-content">
+                  <h5>Pha 1: Lập Kế Hoạch ☀️ (Ban ngày)</h5>
+                  <p>Bạn sắp xếp xem <strong>mỗi chú chuột sẽ uống những chai nào</strong>.</p>
+                  <ul>
+                    <li>Bấm trực tiếp vào các ô ma trận để bật/tắt (✓).</li>
+                    <li>Hoặc bấm nút <strong>✨ Tự Điền Chuẩn Nhị Phân</strong> để hệ thống tự động gán theo thuật toán tối ưu.</li>
+                    <li><em>Lưu ý quan trọng:</em> Bạn chỉ được bấm <strong>"XÁC NHẬN & ĐƯA CHUỘT VÀO ĐÊM"</strong> đúng 1 lần duy nhất! Sau khi chuột uống, kế hoạch sẽ bị khóa hoàn toàn.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="guide-step-card">
+                <div class="step-num-badge">2</div>
+                <div class="step-card-content">
+                  <h5>Pha 2: Chờ Đêm 🌙 (24 giờ trôi qua)</h5>
+                  <p>Màn đêm buông xuống hầm rượu. Tiếng kim đồng hồ tích tắc trôi qua.</p>
+                  <ul>
+                    <li>Lũ chuột uống các mẫu rượu đã gán và chìm vào giấc ngủ.</li>
+                    <li>Chuột nào <strong>uống trúng chai độc</strong> sẽ bị trúng độc và gục xuống (hiện biểu tượng đầu lâu xanh neon, không máu me).</li>
+                    <li>Chuột chỉ uống rượu an toàn sẽ ngủ ngon và thức dậy khỏe mạnh.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="guide-step-card">
+                <div class="step-num-badge">3</div>
+                <div class="step-card-content">
+                  <h5>Pha 3: Giải Mã 🌅 (Bình minh ló rạng)</h5>
+                  <p>Nhìn vào hàng chuột thử độc khi trời sáng:</p>
+                  <ul>
+                    <li>Chuột gục = <strong class="neon-one">Bit 1</strong> (độc phát tác).</li>
+                    <li>Chuột sống = <strong class="neon-zero">Bit 0</strong> (bình an).</li>
+                    <li><strong>Cộng trọng số của tất cả các chuột gục lại</strong>: Tổng số đó chính là số chai rượu bị tẩm độc!</li>
+                    <li>Nhập số chai vào ô dự đoán và báo cáo lên nhà vua.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: BÍ QUYẾT NHỊ PHÂN -->
+          <div id="tab-guide-math" class="guide-tab-pane">
+            <h4 class="guide-section-title">10 Chú Chuột = 10 Lũy Thừa Của 2</h4>
+            <p>Mỗi chú chuột đảm nhận một "vị trí bit" tương ứng với một lũy thừa của 2:</p>
+            
+            <div class="mice-powers-table">
+              <div class="m-pow-row header-row">
+                <span>Vị trí</span><span>Tên chuột</span><span>Lũy thừa</span><span>Trọng số thập phân</span>
+              </div>
+              <div class="m-pow-row"><span>Bit 0</span><strong>Mimi</strong><span>2⁰</span><span class="weight-tag">1</span></div>
+              <div class="m-pow-row"><span>Bit 1</span><strong>Bo</strong><span>2¹</span><span class="weight-tag">2</span></div>
+              <div class="m-pow-row"><span>Bit 2</span><strong>Zú</strong><span>2²</span><span class="weight-tag">4</span></div>
+              <div class="m-pow-row"><span>Bit 3</span><strong>Kẹo</strong><span>2³</span><span class="weight-tag">8</span></div>
+              <div class="m-pow-row"><span>Bit 4</span><strong>Bông</strong><span>2⁴</span><span class="weight-tag">16</span></div>
+              <div class="m-pow-row"><span>Bit 5</span><strong>Tí</strong><span>2⁵</span><span class="weight-tag">32</span></div>
+              <div class="m-pow-row"><span>Bit 6</span><strong>Mực</strong><span>2⁶</span><span class="weight-tag">64</span></div>
+              <div class="m-pow-row"><span>Bit 7</span><strong>Mỡ</strong><span>2⁷</span><span class="weight-tag">128</span></div>
+              <div class="m-pow-row"><span>Bit 8</span><strong>Sóc</strong><span>2⁸</span><span class="weight-tag">256</span></div>
+              <div class="m-pow-row"><span>Bit 9</span><strong>Hạt Dẻ</strong><span>2⁹</span><span class="weight-tag">512</span></div>
+            </div>
+
+            <div class="example-box-callout">
+              <h5>Ví dụ minh họa thực tế trong game:</h5>
+              <p>• <strong>Chai số 3:</strong> 3 = 2 + 1 ➔ Chuột Bo (2) và Mimi (1) cùng uống. Nếu sáng hôm sau cả hai cùng gục ➔ 2 + 1 = 3 (Chai độc là #3).</p>
+              <p>• <strong>Chai số 5:</strong> 5 = 4 + 1 ➔ Chuột Zú (4) và Mimi (1) cùng gục ➔ 4 + 1 = 5 (Chai độc là #5).</p>
+              <p>• <strong>Chai số 295 (Chương 4):</strong> 295 = 256 + 32 + 4 + 2 + 1. Chuột Sóc (256), Tí (32), Zú (4), Bo (2) và Mimi (1) sẽ gục. Cộng các số này lại ta biết ngay chai độc là #295!</p>
+              <p>• <strong>Tổng tối đa:</strong> 1 + 2 + 4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 = <strong>1.023</strong> (Đủ sức tìm ra bất kỳ chai nào trong 1.000 chai!).</p>
+            </div>
+          </div>
+
+          <!-- TAB 4: THỬ NGHIỆM MÔ PHỎNG TRỰC TIẾP (LIVE DEMO) -->
+          <div id="tab-guide-demo" class="guide-tab-pane">
+            <h4 class="guide-section-title">Bấm Thử Chuột Gục Để Thấy Kết Quả Tức Thì!</h4>
+            <p>Hãy bấm vào các chú chuột bên dưới để chuyển đổi trạng thái <strong>Sống (0)</strong> hoặc <strong>Gục (1)</strong>. Bạn sẽ thấy máy tính lập tức giải mã ra con số chai độc:</p>
+
+            <div class="guide-live-demo-box">
+              <div class="demo-mice-strip" id="demo-guide-mice-strip">
+                <!-- Render 10 nút bấm chuột tương tác -->
+              </div>
+
+              <div class="demo-result-card">
+                <div class="demo-metric">
+                  <span class="d-label">Dãy nhị phân:</span>
+                  <span class="d-val font-mono" id="demo-binary-val">0000000000</span>
+                </div>
+                <div class="demo-metric">
+                  <span class="d-label">Phép tính cộng dồn:</span>
+                  <span class="d-val" id="demo-calc-val">Chưa có chuột nào gục</span>
+                </div>
+                <div class="demo-metric primary-metric">
+                  <span class="d-label">Chai độc suy ra:</span>
+                  <span class="d-val highlight-gold font-mono" id="demo-bottle-val">Chai #0</span>
+                </div>
+              </div>
+
+              <div class="demo-quick-buttons">
+                <span style="font-size: 12px; color: var(--text-dim);">Thử nhanh các mẫu đặc biệt:</span>
+                <button class="btn-micro demo-quick-btn" data-preset="1">Chai #1</button>
+                <button class="btn-micro demo-quick-btn" data-preset="3">Chai #3 (1+2)</button>
+                <button class="btn-micro demo-quick-btn" data-preset="7">Chai #7 (1+2+4)</button>
+                <button class="btn-micro demo-quick-btn" data-preset="295">Chai #295</button>
+                <button class="btn-micro demo-quick-btn" data-preset="999">Chai #999</button>
+                <button class="btn-micro demo-quick-btn" data-preset="1000">Chai #1000</button>
+                <button class="btn-micro demo-quick-btn reset-btn" id="btn-demo-reset">Xoá hết</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: MẸO ĐẠT 3 SAO -->
+          <div id="tab-guide-stars" class="guide-tab-pane">
+            <h4 class="guide-section-title">Tiêu Chí Chấm Điểm & Bí Quyết Đạt 3 Sao ⭐⭐⭐</h4>
+            
+            <div class="star-rules-list">
+              <div class="star-rule-card">
+                <div class="star-icon-wrap">⭐</div>
+                <div class="star-info">
+                  <strong>1 Sao: Tìm Đúng Chai Độc</strong>
+                  <p>Chỉ cần báo cáo chính xác số hiệu của chai độc cho nhà vua là bạn đã qua màn thành công.</p>
+                </div>
+              </div>
+
+              <div class="star-rule-card">
+                <div class="star-icon-wrap">⭐⭐</div>
+                <div class="star-info">
+                  <strong>2 Sao: Phân Bổ Chuột Tối Ưu</strong>
+                  <p>Không dùng thừa chuột vô ích! Số lượng chuột dùng phải đúng bằng số chuột tối thiểu toán học yêu cầu (ceil(log2(N))).</p>
+                </div>
+              </div>
+
+              <div class="star-rule-card">
+                <div class="star-icon-wrap">⭐⭐⭐</div>
+                <div class="star-info">
+                  <strong>3 Sao: Thử Độc Sư Xuất Chúng</strong>
+                  <p>Giải đúng ngay trong lượt đầu tiên mà <strong>không sử dụng gợi ý cấp 2 và cấp 3</strong> của Lão Toán Sư!</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-expert-tip">
+              💡 <strong>Mẹo chuyên gia:</strong> Bạn luôn có thể mở <strong>Bảng Giỏ Táo (🍎)</strong> và <strong>Bảng Đối Chiếu (📜)</strong> trên thanh tiêu đề bất cứ lúc nào để tra cứu mà <em>không hề bị trừ sao</em>!
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer" style="padding: 12px 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end;">
+          <button class="btn-primary-large btn-close-modal" data-close="modal-guide" style="min-height: 40px; padding: 8px 20px; font-size: 14px;">
+            ĐÃ HIỂU CÁCH CHƠI ➔
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. MODAL HỘI THOẠI CỐT TRUYỆN (VISUAL NOVEL) -->
+    <div id="modal-dialogue" class="modal-overlay">
+      <div class="vn-dialogue-box">
+        <div class="vn-character-stage">
+          <div class="vn-avatar-frame" id="vn-avatar-container">
+            <!-- Render SVG Avatar của nhân vật -->
+          </div>
+        </div>
+        <div class="vn-content-wrap">
+          <div class="vn-header-row">
+            <span class="vn-char-name" id="vn-char-name">Lão Toán Sư</span>
+            <span class="vn-char-role" id="vn-char-role">Cố vấn Hoàng gia</span>
+            <button id="btn-skip-dialogue" class="btn-skip">Bỏ qua ❯❯</button>
+          </div>
+          <div class="vn-speech-text" id="vn-speech-text">
+            Này người thử độc trẻ tuổi! Hãy nhớ rằng 10 chú chuột không chỉ để uống rượu... Chúng chính là chiếc chìa khóa nhị phân!
+          </div>
+          <div class="vn-footer-row">
+            <span class="vn-hint-key">Nhấn để tiếp tục</span>
+            <button id="btn-next-dialogue" class="btn-vn-next">Tiếp Theo ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. MODAL BẢNG GIỎ TÁO (APPLE BASKETS SANDBOX) -->
+    <div id="modal-basket" class="modal-overlay">
+      <div class="modal-window large-modal">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">CÔNG CỤ HỌC NHỊ PHÂN</span>
+            <h3>Bảng Giỏ Táo - Trực Quan Hóa Lũy Thừa 2</h3>
+          </div>
+          <button class="btn-close-modal" data-close="modal-basket">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-desc">
+            Lão Toán Sư giải thích: <em>"Mỗi giỏ táo chỉ có 2 trạng thái: ĐẶT TÁO (1) hoặc KHÔNG ĐẶT (0). Khi cộng các giỏ có táo lại với nhau, bạn có thể tạo thành BẤT KỲ con số nào từ 1 đến 1.023!"</em>
+          </p>
+
+          <div class="basket-total-card">
+            <div class="total-metric">
+              <span class="metric-label">Tổng số thập phân tạo thành:</span>
+              <span class="metric-value" id="basket-decimal-total">0</span>
+            </div>
+            <div class="total-metric">
+              <span class="metric-label">Dãy nhị phân tương ứng:</span>
+              <span class="metric-binary font-mono" id="basket-binary-string">0000000000</span>
+            </div>
+          </div>
+
+          <!-- Các giỏ táo tương ứng 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 -->
+          <div class="baskets-grid" id="baskets-grid-interactive">
+            <!-- Render động 10 giỏ táo -->
+          </div>
+
+          <div class="basket-presets">
+            <span class="preset-label">Thử nhanh các con số đặc biệt trong kịch bản:</span>
+            <button class="btn-chip" data-num="5">Số 5 (4+1)</button>
+            <button class="btn-chip" data-num="27">Số 27 (16+8+2+1)</button>
+            <button class="btn-chip" data-num="295">Chai 295 (256+32+4+2+1)</button>
+            <button class="btn-chip" data-num="999">Chai 999 (512+256+128+64+32+4+2+1)</button>
+            <button class="btn-chip" data-num="1000">Chai 1.000</button>
+            <button class="btn-chip reset-chip" id="btn-reset-basket">Xoá sạch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. MODAL BẢNG ĐỐI CHIẾU (LOOKUP TABLE) -->
+    <div id="modal-lookup" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">TRA CỨU NHANH</span>
+            <h3>Bảng Đối Chiếu Thập Phân & Nhị Phân</h3>
+          </div>
+          <button class="btn-close-modal" data-close="modal-lookup">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="lookup-search-bar">
+            <input type="number" id="lookup-search-input" placeholder="Tìm kiếm số chai (1 - 1000)..." min="1" max="1000" />
+            <span class="search-tip">Nhập số để cuộn nhanh đến dòng đó</span>
+          </div>
+          <div class="table-scroll-container">
+            <table class="lookup-table">
+              <thead>
+                <tr>
+                  <th>Số Chai</th>
+                  <th>Dãy Nhị Phân (10 bit)</th>
+                  <th>Các Chuột Phụ Trách (Trọng số 2^k)</th>
+                </tr>
+              </thead>
+              <tbody id="lookup-table-body">
+                <!-- Render động -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. MODAL GỢI Ý 3 CẤP (HINTS) -->
+    <div id="modal-hints" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">GỢI Ý TỪ LÃO TOÁN SƯ</span>
+            <h3>Lời Chỉ Dẫn Của Thầy Giáo Cổ Điển</h3>
+          </div>
+          <button class="btn-close-modal" data-close="modal-hints">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="hint-warning">
+            ⚠️ <em>Lưu ý: Dùng gợi ý cấp 2 và 3 sẽ làm giảm số sao đánh giá (chỉ tối đa 2 hoặc 1 sao).</em>
+          </p>
+
+          <div class="hint-tier-card" id="hint-tier-1">
+            <div class="tier-header">
+              <span class="tier-badge">CẤP 1 (Miễn phí)</span>
+              <strong>Lời nhắc nhở tư duy</strong>
+            </div>
+            <p class="tier-body" id="hint-text-1">
+              "Mỗi chú chuột chỉ có hai kết cục sau đêm: SỐNG (0) hoặc GỤC (1). Đúng như một công tắc bóng đèn!"
+            </p>
+          </div>
+
+          <div class="hint-tier-card" id="hint-tier-2">
+            <div class="tier-header">
+              <span class="tier-badge">CẤP 2 (Trừ 1 sao)</span>
+              <strong>Phân tích giỏ táo cho số lượng chai này</strong>
+            </div>
+            <div class="tier-body" id="hint-content-2">
+              <button id="btn-unlock-hint-2" class="btn-secondary">Mở khoá gợi ý cấp 2</button>
+              <div id="hint-text-2" class="hint-unlocked hidden"></div>
+            </div>
+          </div>
+
+          <div class="hint-tier-card" id="hint-tier-3">
+            <div class="tier-header">
+              <span class="tier-badge">CẤP 3 (Trừ 2 sao)</span>
+              <strong>Giải mẫu & Tự điền bảng phân phối chuẩn</strong>
+            </div>
+            <div class="tier-body" id="hint-content-3">
+              <button id="btn-unlock-hint-3" class="btn-secondary">Mở khoá gợi ý cấp 3 & Điền mẫu</button>
+              <div id="hint-text-3" class="hint-unlocked hidden"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. MODAL KẾT QUẢ MÀN CHƠI (RESULT MODAL) -->
+    <div id="modal-result" class="modal-overlay">
+      <div class="modal-window result-card">
+        <!-- Vùng chứa hiệu ứng pháo hoa ăn mừng chiến thắng -->
+        <div class="fireworks-container" id="fireworks-container" aria-hidden="true"></div>
+        <div class="result-banner" id="result-banner-color">
+          <div class="result-emblem" id="result-icon">🎉</div>
+          <h2 class="result-title" id="result-title">XUẤT SẮC! ĐÃ TÌM RA CHAI ĐỘC</h2>
+          <p class="result-subtitle" id="result-message">Bạn đã cứu được triều đình khỏi một thảm kịch đầu độc kinh hoàng!</p>
+        </div>
+
+        <div class="result-stars" id="result-stars-display">
+          <span class="star-item">⭐</span>
+          <span class="star-item">⭐</span>
+          <span class="star-item">⭐</span>
+        </div>
+
+        <div class="result-stats-grid">
+          <div class="res-stat">
+            <span class="label">Chai độc thực tế</span>
+            <strong class="val val-poison" id="res-poison-actual">Chai #295</strong>
+          </div>
+          <div class="res-stat">
+            <span class="label">Dự đoán của bạn</span>
+            <strong class="val" id="res-poison-user">Chai #295</strong>
+          </div>
+          <div class="res-stat">
+            <span class="label">Chuột gục</span>
+            <strong class="val" id="res-mice-dead">5 chú chuột</strong>
+          </div>
+          <div class="res-stat">
+            <span class="label">Hiệu quả phân bổ</span>
+            <strong class="val" id="res-efficiency">Hoàn hảo</strong>
+          </div>
+        </div>
+
+        <div class="result-details" id="result-explanation">
+          <!-- Chi tiết toán học giải thích tại sao đúng/sai -->
+        </div>
+
+        <div class="result-actions">
+          <button id="btn-retry-level" class="btn-secondary">
+            🔄 Chơi Lại Màn Này
+          </button>
+          <button id="btn-next-level" class="btn-primary-large">
+            TIẾP TỤC HÀNH TRÌNH ➔
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. MODAL CÀI ĐẶT (SETTINGS) -->
+    <div id="modal-settings" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">TÙY CHỈNH</span>
+            <h3>Cài Đặt Trò Chơi</h3>
+          </div>
+          <button class="btn-close-modal" data-close="modal-settings">✕</button>
+        </div>
+        <div class="modal-body settings-body">
+          <div class="setting-item">
+            <div class="setting-info">
+              <strong>Nhạc Nền Cung Đình (Royal Court BGM)</strong>
+              <span>Giai điệu đàn Lute & Harpsichord êm dịu, hồi hộp tạo không khí yến tiệc</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-bgm" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <strong>Hiệu Ứng Âm Thanh (SFX Chuột & Rượu)</strong>
+              <span>Tiếng chuột uống thử ('rat drinking'), rót ngự tửu, đồng hồ tích tắc, chuông khải hoàn</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-sound" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <strong>Chế Độ Chuyên Gia (Ẩn Bảng Hỗ Trợ)</strong>
+              <span>Dành cho người đã hiểu rõ nhị phân, muốn tự tính toán toàn bộ</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-expert" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <strong>Chạy Kiểm Thử Hệ Thống (Self-Test)</strong>
+              <span>Xác minh tự động thuật toán với mọi chai từ 1 đến N</span>
+            </div>
+            <button id="btn-run-selftest" class="btn-secondary">▶ Chạy Self-Test</button>
+          </div>
+
+          <div class="setting-danger-zone">
+            <p>Xoá toàn bộ tiến trình chơi và đưa số sao về 0:</p>
+            <button id="btn-reset-progress" class="btn-danger">⚠️ Đặt Lại Toàn Bộ Tiến Trình</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. MODAL CHIÊM NGƯỠNG ĐẠI YẾN & PHONG CẢNH HOÀNG GIA -->
+    <div id="modal-scenery" class="modal-overlay">
+      <div class="modal-window modal-window-large">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">KHÔNG GIAN CUNG ĐÌNH</span>
+            <h3>Bản Đồ Mỹ Cảnh Đại Yến & Hầm Ngự Tửu</h3>
+          </div>
+          <button class="btn-close-modal" data-close="modal-scenery">✕</button>
+        </div>
+        <div class="scenery-nav-tabs">
+          <button class="scenery-tab-btn active" data-tab="scenery-banquet">
+            <span class="icon">🏰</span> Đại Điện Yến Tiệc
+          </button>
+          <button class="scenery-tab-btn" data-tab="scenery-cellar">
+            <span class="icon">🍷</span> Hầm Rượu & Xưởng Giả Kim
+          </button>
+          <button class="scenery-tab-btn" data-tab="scenery-tower">
+            <span class="icon">🌙</span> Vọng Lâu Canh Ba
+          </button>
+        </div>
+        <div class="modal-body scenery-body">
+          <!-- TAB 1: ĐẠI ĐIỆN YẾN TIỆC -->
+          <div class="scenery-tab-panel active" id="scenery-banquet">
+            <div class="scenery-art-frame">
+              <svg viewBox="0 0 1000 450" class="scenery-svg-display">
+                <defs>
+                  <linearGradient id="sc-banq-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#0a0e24"/>
+                    <stop offset="50%" stop-color="#1e1838"/>
+                    <stop offset="100%" stop-color="#2a0d18"/>
+                  </linearGradient>
+                  <radialGradient id="sc-chandelier-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#fef08a" stop-opacity="0.7"/>
+                    <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#78350f" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="sc-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="50%" stop-color="#f59e0b"/>
+                    <stop offset="100%" stop-color="#b45309"/>
+                  </linearGradient>
+                </defs>
+                <rect width="1000" height="450" fill="url(#sc-banq-bg)"/>
+                <!-- Cửa sổ Gothic hoa hồng và cửa vòm hướng ra bầu trời đêm -->
+                <circle cx="500" cy="110" r="65" fill="#0f172a" stroke="#d97706" stroke-width="3"/>
+                <circle cx="500" cy="110" r="50" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,4"/>
+                <path d="M500,45 L500,175 M435,110 L565,110 M454,64 L546,156 M454,156 L546,64" stroke="#d97706" stroke-width="2"/>
+                <!-- Ánh trăng chiếu qua cửa sổ hoa hồng -->
+                <circle cx="500" cy="110" r="40" fill="#fef08a" opacity="0.3"/>
+
+                <!-- Cột đá cẩm thạch La Mã và vòm cung đình -->
+                <rect x="80" y="60" width="40" height="390" fill="#1e293b"/>
+                <rect x="240" y="70" width="36" height="380" fill="#1e293b"/>
+                <rect x="724" y="70" width="36" height="380" fill="#1e293b"/>
+                <rect x="880" y="60" width="40" height="390" fill="#1e293b"/>
+
+                <!-- Vòm trần uốn lượn -->
+                <path d="M120,80 Q240,10 360,70 Q500,0 640,70 Q760,10 880,80" stroke="#f59e0b" stroke-width="6" fill="none" opacity="0.6"/>
+
+                <!-- Đèn chùm nến pha lê đồ sộ -->
+                <line x1="320" y1="0" x2="320" y2="100" stroke="#94a3b8" stroke-width="2"/>
+                <circle cx="320" cy="120" r="75" fill="url(#sc-chandelier-glow)"/>
+                <ellipse cx="320" cy="120" rx="50" ry="12" fill="none" stroke="#f59e0b" stroke-width="3"/>
+                <circle cx="280" cy="110" r="6" fill="#fef08a" class="flame-flicker-1"/>
+                <circle cx="320" cy="100" r="7" fill="#fef08a" class="flame-flicker-2"/>
+                <circle cx="360" cy="110" r="6" fill="#fef08a" class="flame-flicker-3"/>
+
+                <line x1="680" y1="0" x2="680" y2="100" stroke="#94a3b8" stroke-width="2"/>
+                <circle cx="680" cy="120" r="75" fill="url(#sc-chandelier-glow)"/>
+                <ellipse cx="680" cy="120" rx="50" ry="12" fill="none" stroke="#f59e0b" stroke-width="3"/>
+                <circle cx="640" cy="110" r="6" fill="#fef08a" class="flame-flicker-2"/>
+                <circle cx="680" cy="100" r="7" fill="#fef08a" class="flame-flicker-1"/>
+                <circle cx="720" cy="110" r="6" fill="#fef08a" class="flame-flicker-3"/>
+
+                <!-- Bàn tiệc đại yến trải nhung đỏ -->
+                <polygon points="100,320 900,320 960,450 40,450" fill="#580c23" stroke="#b45309" stroke-width="3"/>
+                <!-- Ruy băng vàng viền bàn tiệc -->
+                <line x1="100" y1="320" x2="900" y2="320" stroke="#f59e0b" stroke-width="6"/>
+                <line x1="100" y1="328" x2="900" y2="328" stroke="#fef08a" stroke-width="2" stroke-dasharray="5,5"/>
+
+                <!-- Chân nến bạc 5 ngọn trên bàn -->
+                <path d="M495,320 L505,320 L502,260 L498,260 Z" fill="#cbd5e1"/>
+                <circle cx="470" cy="250" r="7" fill="#fbbf24" class="flame-flicker-1"/>
+                <circle cx="500" cy="240" r="8" fill="#fbbf24" class="flame-flicker-2"/>
+                <circle cx="530" cy="250" r="7" fill="#fbbf24" class="flame-flicker-3"/>
+
+                <!-- Mâm cỗ hoàng kim & ly ngọc ngự tửu -->
+                <ellipse cx="380" cy="340" rx="40" ry="14" fill="#94a3b8" stroke="#f59e0b" stroke-width="2"/>
+                <path d="M355,338 Q380,315 405,338 Z" fill="#b45309"/>
+                <ellipse cx="620" cy="340" rx="40" ry="14" fill="#94a3b8" stroke="#f59e0b" stroke-width="2"/>
+                <!-- Trái cây hoàng cung: nho & táo -->
+                <circle cx="605" cy="334" r="5" fill="#701a75"/>
+                <circle cx="615" cy="332" r="5" fill="#701a75"/>
+                <circle cx="625" cy="334" r="5" fill="#701a75"/>
+                <circle cx="635" cy="333" r="6" fill="#ef4444"/>
+
+                <!-- Các ly ngọc vàng và bình chiết rượu pha lê -->
+                <polygon points="280,340 290,340 286,322 294,305 276,305 284,322" fill="#f59e0b"/>
+                <polygon points="720,340 730,340 726,322 734,305 716,305 724,322" fill="#f59e0b"/>
+                <!-- Bình chiết pha lê chứa rượu ngự tửu -->
+                <path d="M430,345 L445,345 L450,315 L460,295 L460,280 L448,280 L448,295 L435,295 L435,280 L420,280 L420,295 L430,315 Z" fill="#881337" stroke="#f59e0b" stroke-width="2"/>
+                <circle cx="440" cy="325" r="9" fill="#e11d48" opacity="0.65"/>
+              </svg>
+            </div>
+            <div class="scenery-narrative">
+              <h4>Đại Điện Yến Tiệc Aldric — Nơi 500 Quý Tộc Tụ Họp</h4>
+              <p>Đại sảnh đường được thắp sáng rực rỡ bởi hàng trăm ngọn nến thơm và những bộ đèn chùm pha lê từ phương Đông. Trên bàn tiệc trải nhung Bordeaux viền vàng, những chiếc ly bạc và đĩa thức ăn hoàng gia đã sẵn sàng. Nhưng không một ai dám nhấp một ngụm rượu trước khi Thử Độc Sư công bố kết quả xét nghiệm nhị phân từ 10 chú chuột thông thái!</p>
+            </div>
+          </div>
+
+          <!-- TAB 2: HẦM RƯỢU & XƯỞNG GIẢ KIM -->
+          <div class="scenery-tab-panel" id="scenery-cellar">
+            <div class="scenery-art-frame">
+              <svg viewBox="0 0 1000 450" class="scenery-svg-display">
+                <defs>
+                  <linearGradient id="cellar-vault-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#0b1120"/>
+                    <stop offset="50%" stop-color="#1e1b4b"/>
+                    <stop offset="100%" stop-color="#030712"/>
+                  </linearGradient>
+                  <radialGradient id="poison-alembic-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#34d399" stop-opacity="0.8"/>
+                    <stop offset="50%" stop-color="#10b981" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#064e3b" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="1000" height="450" fill="url(#cellar-vault-grad)"/>
+                <!-- Vòm đá hầm rượu ngầm sâu 20 mét dưới chân lâu đài -->
+                <path d="M0,450 L0,120 Q250,20 500,120 Q750,20 1000,120 L1000,450 Z" fill="#090d16" opacity="0.9"/>
+                <!-- Các dãy thùng gỗ sồi ủ rượu cổ thụ kích thước lớn -->
+                <g class="cellar-barrels">
+                  <!-- Hàng thùng bên trái -->
+                  <ellipse cx="120" cy="300" rx="60" ry="85" fill="#451a03" stroke="#78350f" stroke-width="4"/>
+                  <path d="M70,250 Q120,265 170,250" stroke="#94a3b8" stroke-width="5" fill="none"/>
+                  <path d="M64,300 Q120,318 176,300" stroke="#d97706" stroke-width="5" fill="none"/>
+                  <path d="M70,350 Q120,365 170,350" stroke="#94a3b8" stroke-width="5" fill="none"/>
+                  <text x="120" y="305" font-size="16" fill="#fef08a" font-weight="900" text-anchor="middle" font-family="monospace">#1000 BOTTLES</text>
+
+                  <!-- Hàng thùng bên phải -->
+                  <ellipse cx="880" cy="300" rx="60" ry="85" fill="#451a03" stroke="#78350f" stroke-width="4"/>
+                  <path d="M830,250 Q880,265 930,250" stroke="#94a3b8" stroke-width="5" fill="none"/>
+                  <path d="M824,300 Q880,318 936,300" stroke="#d97706" stroke-width="5" fill="none"/>
+                  <path d="M830,350 Q880,365 930,350" stroke="#94a3b8" stroke-width="5" fill="none"/>
+                  <text x="880" y="305" font-size="16" fill="#fef08a" font-weight="900" text-anchor="middle" font-family="monospace">VINTAGE RESERVE</text>
+                </g>
+
+                <!-- Kệ để rượu bằng gỗ sồi chứa hàng trăm chai rượu đánh số nhị phân -->
+                <rect x="230" y="160" width="540" height="12" fill="#78350f"/>
+                <rect x="230" y="240" width="540" height="12" fill="#78350f"/>
+                <rect x="230" y="320" width="540" height="14" fill="#78350f"/>
+
+                <!-- Dãy chai rượu cổ trên kệ -->
+                <!-- Hàng 1 -->
+                <rect x="260" y="105" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="290" y="105" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="320" y="105" width="16" height="55" fill="#047857" stroke="#34d399" stroke-width="1.5"/>
+                <rect x="350" y="105" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="620" y="105" width="16" height="55" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+                <rect x="650" y="105" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="680" y="105" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="710" y="105" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+
+                <!-- Hàng 2 -->
+                <rect x="260" y="185" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="290" y="185" width="16" height="55" fill="#451a03" stroke="#d97706" stroke-width="1.5"/>
+                <rect x="320" y="185" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="620" y="185" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="650" y="185" width="16" height="55" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+                <rect x="680" y="185" width="16" height="55" fill="#881337" stroke="#f59e0b" stroke-width="1.5"/>
+
+                <!-- Bàn làm việc của Nhà Giả Kim ở trung tâm hầm -->
+                <polygon points="340,334 660,334 700,450 300,450" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <line x1="340" y1="334" x2="660" y2="334" stroke="#f59e0b" stroke-width="4"/>
+
+                <!-- Bình chưng cất giả kim phát ánh sáng độc xanh neon bí ẩn -->
+                <circle cx="500" cy="310" r="60" fill="url(#poison-alembic-glow)"/>
+                <circle cx="500" cy="310" r="32" fill="#064e3b" stroke="#34d399" stroke-width="3"/>
+                <circle cx="500" cy="305" r="16" fill="#10b981" opacity="0.75"/>
+                <rect x="494" y="255" width="12" height="25" fill="#047857" stroke="#34d399" stroke-width="1.5"/>
+                <ellipse cx="500" cy="255" rx="10" ry="4" fill="#34d399"/>
+                <!-- Ống thủy tinh ngưng tụ hơi độc -->
+                <path d="M500,255 Q560,220 580,290" stroke="#38bdf8" stroke-width="4" fill="none"/>
+                <circle cx="580" cy="295" r="12" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+
+                <!-- Khay thử rượu chứa 10 chén ngọc nhỏ dành cho 10 chú chuột -->
+                <g class="alchemist-cups">
+                  <ellipse cx="400" cy="360" rx="10" ry="5" fill="#f59e0b"/>
+                  <ellipse cx="425" cy="360" rx="10" ry="5" fill="#f59e0b"/>
+                  <ellipse cx="450" cy="360" rx="10" ry="5" fill="#f59e0b"/>
+                  <ellipse cx="550" cy="360" rx="10" ry="5" fill="#f59e0b"/>
+                  <ellipse cx="575" cy="360" rx="10" ry="5" fill="#f59e0b"/>
+                  <ellipse cx="600" cy="360" rx="10" ry="5" fill="#f59e0b"/>
+                </g>
+              </svg>
+            </div>
+            <div class="scenery-narrative">
+              <h4>Hầm Ngự Tửu & Bàn Giả Kim Thuật — Trái Tim Của Cuộc Điều Tra</h4>
+              <p>Sâu dưới nền đá lâu đài là hầm rượu cổ lưu trữ 1.000 chai vang hảo hạng được chuyển từ Bordeaux về dâng lên nhà vua. Bàn thí nghiệm của Lão Giả Kim Sư Vesper được trang bị đầy đủ dụng cụ chiết tách mẫu rượu, cân tiểu ly và 10 chén ngọc tương ứng 10 bit nhị phân để phân bổ nước thử cho đàn chuột.</p>
+            </div>
+          </div>
+
+          <!-- TAB 3: VỌNG LÂU CANH BA -->
+          <div class="scenery-tab-panel" id="scenery-tower">
+            <div class="scenery-art-frame">
+              <svg viewBox="0 0 1000 450" class="scenery-svg-display">
+                <defs>
+                  <linearGradient id="tower-night-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#020617"/>
+                    <stop offset="50%" stop-color="#0f172a"/>
+                    <stop offset="100%" stop-color="#1e1b4b"/>
+                  </linearGradient>
+                  <radialGradient id="tower-moon-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#fef08a" stop-opacity="0.9"/>
+                    <stop offset="40%" stop-color="#fef08a" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#fef08a" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="1000" height="450" fill="url(#tower-night-grad)"/>
+
+                <!-- Mặt trăng vĩ đại chiếu sáng vương quốc trong đêm canh ba -->
+                <circle cx="820" cy="120" r="90" fill="url(#tower-moon-glow)"/>
+                <path d="M820,60 A60,60 0 1 1 780,170 A50,50 0 1 0 820,60 Z" fill="#fef08a" filter="drop-shadow(0 0 16px rgba(254, 240, 138, 0.8))"/>
+
+                <!-- Các vì sao lấp lánh -->
+                <circle cx="120" cy="60" r="2" fill="#fff"/>
+                <circle cx="280" cy="40" r="2.5" fill="#fef08a"/>
+                <circle cx="450" cy="70" r="2" fill="#fff"/>
+                <circle cx="600" cy="50" r="1.8" fill="#38bdf8"/>
+                <circle cx="220" cy="110" r="1.5" fill="#fff"/>
+                <circle cx="360" cy="130" r="2" fill="#fff"/>
+                <circle cx="520" cy="100" r="2.2" fill="#fef08a"/>
+
+                <!-- Núi non xa xa và các tháp canh lâu đài Aldric -->
+                <polygon points="0,320 200,180 400,320" fill="#090d16" opacity="0.6"/>
+                <polygon points="250,320 480,150 700,320" fill="#090d16" opacity="0.7"/>
+
+                <!-- Ban công vọng lâu bằng đá với các cột lan can điêu khắc -->
+                <polygon points="0,300 1000,300 1000,450 0,450" fill="#0f172a" stroke="#1e293b" stroke-width="3"/>
+                <!-- Các trụ lan can tháp canh -->
+                <g class="balustrades" fill="#1e293b" stroke="#334155" stroke-width="1.5">
+                  <rect x="60" y="240" width="22" height="60" rx="3"/>
+                  <rect x="150" y="240" width="22" height="60" rx="3"/>
+                  <rect x="240" y="240" width="22" height="60" rx="3"/>
+                  <rect x="330" y="240" width="22" height="60" rx="3"/>
+                  <rect x="420" y="240" width="22" height="60" rx="3"/>
+                  <rect x="510" y="240" width="22" height="60" rx="3"/>
+                  <rect x="600" y="240" width="22" height="60" rx="3"/>
+                  <rect x="690" y="240" width="22" height="60" rx="3"/>
+                  <rect x="780" y="240" width="22" height="60" rx="3"/>
+                  <rect x="870" y="240" width="22" height="60" rx="3"/>
+                  <!-- Thanh tay vịn lan can -->
+                  <rect x="30" y="230" width="940" height="14" rx="4" fill="#334155" stroke="#475569" stroke-width="2"/>
+                </g>
+
+                <!-- Ngọn đuốc hoàng gia thắp sáng ban công -->
+                <polygon points="90,210 110,210 105,250 95,250" fill="#78350f"/>
+                <circle cx="100" cy="195" r="16" fill="#fbbf24" opacity="0.7" class="flame-flicker-1"/>
+                <polygon points="890,210 910,210 905,250 895,250" fill="#78350f"/>
+                <circle cx="900" cy="195" r="16" fill="#fbbf24" opacity="0.7" class="flame-flicker-3"/>
+
+                <!-- 10 Chú chuột nhỏ thông thái đang quây quần bên các chén rượu dưới trăng -->
+                <g class="watchtower-mice">
+                  <!-- Biểu tượng các chú chuột canh đêm -->
+                  <ellipse cx="460" cy="380" rx="20" ry="14" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+                  <circle cx="448" cy="372" r="5" fill="#fda4af"/>
+                  <ellipse cx="520" cy="380" rx="20" ry="14" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+                  <circle cx="532" cy="372" r="5" fill="#fda4af"/>
+                </g>
+              </svg>
+            </div>
+            <div class="scenery-narrative">
+              <h4>Vọng Lâu Canh Ba — Nơi Đêm Định Mệnh Trôi Qua</h4>
+              <p>Tại đỉnh cao nhất của lâu đài hoàng gia, cách biệt hoàn toàn khỏi tiệc rượu ồn ào, 10 chú chuột sau khi uống các chén rượu hỗn hợp được đặt an toàn trong các lồng vàng sưởi ấm. Khi kim đồng hồ điểm canh ba, chất độc sẽ kích hoạt và giải phóng bí mật định mệnh của kẻ phản bội!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. TOAST THÔNG BÁO -->
+    <div id="toast-message" class="toast hidden"></div>
+
+  </main>
+
+  </main>
+
+  <script src="./game.js"></script>
+</body>
+</html>

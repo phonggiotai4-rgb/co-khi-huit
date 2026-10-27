@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tính năng — CƠ KHÍ HUIT</title>
+<meta name="description" content="Các công cụ hỗ trợ việc học: robot widget, quy đổi điểm số, tính điểm học phần, GPA tích lũy, mô phỏng đăng ký học phần, tính học phí và danh sách giảng viên.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css?v=20261017d">
+<style>
+.page-head{margin-bottom:var(--gutter)}
+.page-head .ck-page-sub{max-width:78ch}
+
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.tool{
+  position:relative;display:flex;flex-direction:column;gap:12px;
+  padding:24px;border-radius:var(--r-xl);text-decoration:none;color:inherit;
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);
+  transition:transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out),
+             background var(--dur-fast) var(--ease-out);
+}
+.tool:hover{transform:translateY(-3px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);background:var(--glass-3-bg)}
+.tool .ico{
+  width:52px;height:52px;flex:none;border-radius:var(--r-md);
+  background:var(--brand);color:#fff;display:grid;place-items:center;
+  box-shadow:0 6px 18px rgba(3,78,162,.28);
+}
+.tool .ico svg{width:24px;height:24px}
+.tool h3{
+  margin:0;font:700 16.5px/1.35 var(--font-display);letter-spacing:.01em;color:var(--text-strong);
+}
+.tool p{margin:0;font-size:14px;line-height:1.6;flex:1}
+.tool .meta{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:12px;border-top:1px solid var(--brand-06)}
+.tool .open{
+  display:inline-flex;align-items:center;gap:7px;
+  font:600 13px/1 var(--font-display);color:var(--text-strong);text-decoration:none;
+}
+.tool .open svg{width:15px;height:15px;transition:transform var(--dur-fast) var(--ease-out)}
+.tool:hover .open svg{transform:translateX(3px)}
+.tool .num{font:700 11px/1 var(--font-mono);color:var(--text-faint);letter-spacing:.06em}
+
+.group-head{display:flex;align-items:baseline;gap:14px;margin:34px 0 18px}
+.group-head h2{margin:0;font:700 20px/1.3 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.group-head .bar{flex:1 1 auto;height:1px;background:var(--brand-06)}
+
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.quick a{
+  display:flex;gap:12px;align-items:center;padding:15px 17px;border-radius:var(--r-lg);
+  background:var(--glass-1-bg);border:1px solid var(--glass-1-br);
+  box-shadow:var(--sh-xs),inset 0 1px 0 var(--hi);text-decoration:none;
+  transition:background var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);
+}
+@supports (backdrop-filter:blur(1px)){
+  .quick a{backdrop-filter:blur(var(--blur-1)) saturate(120%);-webkit-backdrop-filter:blur(var(--blur-1)) saturate(120);}
+}
+.quick a:hover{background:var(--glass-3-bg);transform:translateY(-2px)}
+.quick .qi{
+  width:38px;height:38px;flex:none;border-radius:var(--r-md);
+  background:var(--brand-10);color:var(--text-strong);display:grid;place-items:center;
+}
+.quick .qi svg{width:18px;height:18px}
+.quick b{display:block;font:600 13.5px/1.35 var(--font-display);color:var(--text-strong)}
+.quick span{display:block;font:400 12px/1.45 var(--font-display);color:var(--text-muted);margin-top:2px}
+@media (max-width:768px){.quick a{background:rgba(255,255,255,.88);backdrop-filter:none}}
+/* ══ ROBOT WIDGET — nhúng trực tiếp, luôn chạy trên trang này ══ */
+.lab{margin-bottom:var(--gutter);padding:18px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-md),inset 0 1px 0 var(--hi);scroll-margin-top:96px}
+.lab-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  justify-content:flex-end;padding:4px 6px 16px}
+.lab-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.lab-frame{position:relative;aspect-ratio:16/10;min-height:440px;
+  border-radius:var(--r-lg);overflow:hidden;background:#E9ECF3;
+  border:1px solid var(--brand-06);box-shadow:inset 0 1px 3px var(--brand-06)}
+.lab-frame iframe{display:block;width:100%;height:100%;border:0;background:#E9ECF3}
+.lab-frame:fullscreen{aspect-ratio:auto;height:100vh;min-height:100vh;border:0;border-radius:0}
+
+.lab-loader{position:absolute;inset:0;z-index:2;display:grid;place-items:center;align-content:center;
+  gap:12px;padding:18px;text-align:center;background:rgba(255,255,255,.72);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font:600 13.5px/1.5 var(--font-display);color:var(--text-strong)}
+.lab-loader[hidden]{display:none}
+.lab-loader svg{width:28px;height:28px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media (max-width:768px){
+  .lab{padding:12px;border-radius:var(--r-lg)}
+  .lab-head{padding:2px 2px 12px;gap:10px}
+  .lab-acts{width:100%}
+  .lab-frame{aspect-ratio:auto;height:68vh;min-height:460px}
+}
+</style>
+</head>
+<body data-depth="0">
+
+<div data-ck-nav="features"></div>
+
+<main class="ck-wrap">
+
+  <header class="page-head">
+    <h1 class="ck-page-title">Tính năng</h1>
+    <p class="ck-page-sub">
+      Những công cụ hỗ trợ việc học cho anh em — mô phỏng robot, quy đổi điểm, tính GPA,
+      xếp lịch đăng ký học phần, học phí và tra cứu giảng viên.
+      Tất cả chạy ngay trong trình duyệt, không cần cài đặt, không thu phí.
+    </p>
+  </header>
+
+  <section class="lab glass g2" id="robot-widget" aria-label="Phòng thí nghiệm robot 6 trục — HUIT">
+    <div class="lab-head">
+      <div class="lab-acts">
+        <span class="ck-pill mid" id="labPill"><i class="dot"></i><span id="labPillText">Đang tải</span></span>
+        <button class="ck-icon-btn" id="labToggle" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M9.5 9v6M14.5 9v6"/></svg>
+          Tạm dừng
+        </button>
+        <button class="ck-icon-btn" id="labFs" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3.5H4.5a1 1 0 0 0-1 1V8M16 3.5h3.5a1 1 0 0 1 1 1V8M8 20.5H4.5a1 1 0 0 1-1-1V16M16 20.5h3.5a1 1 0 0 0 1-1V16"/></svg>
+          Toàn màn hình
+        </button>
+        <a class="ck-icon-btn" href="tools/lab-robot.html" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg>
+          Mở tab riêng
+        </a>
+      </div>
+    </div>
+    <div class="lab-frame" id="labFrame">
+      <div class="lab-loader" id="labLoader">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg>
+        <span id="labMsg">Đang nạp phòng thí nghiệm…</span>
+      </div>
+      <iframe id="labFrameEl" src="tools/lab-robot.html" title="Phòng thí nghiệm robot — HUIT"
+              loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section aria-labelledby="g1">
+    <div class="group-head">
+      <h2 id="g1">NHỮNG CÔNG CỤ HỖ TRỢ VIỆC HỌC CHO ANH EM</h2>
+      <span class="bar"></span>
+      <span class="ck-pill solid" id="toolCount">—</span>
+    </div>
+    <div class="tool-grid" id="tools"></div>
+  </section>
+
+  <section aria-labelledby="g2">
+    <div class="group-head">
+      <h2 id="g2">DÙNG NHANH</h2>
+      <span class="bar"></span>
+    </div>
+    <div class="quick">
+      <a href="index.html">
+        <span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg></span>
+        <span><b>Trang chủ</b><span>Widget thời gian biểu &amp; lò ôn luyện</span></span>
+      </a>
+      <a href="lich-su-lam-bai.html">
+        <span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3.2 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></span>
+        <span><b>Lịch sử làm bài</b><span>Xem lại mọi phiên đã làm</span></span>
+      </a>
+      <a href="ca-nhan.html">
+        <span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.6a3.6 3.6 0 1 0 0-7.2 3.6 3.6 0 0 0 0 7.2zM4.8 20a7.4 7.4 0 0 1 14.4 0"/></svg></span>
+        <span><b>Cá nhân</b><span>Hồ sơ sinh viên &amp; mục tiêu GPA</span></span>
+      </a>
+      <a href="index.html#lb">
+        <span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h14v15H5zM8.5 9h7M8.5 12.5h7M8.5 16h4"/></svg></span>
+        <span><b>Ôn tập nhanh</b><span>Lò ôn luyện, thông tin đề theo môn</span></span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="assets/app.js?v=20261017d"></script>
+<script>
+(function () {
+  "use strict";
+  /* ROBOT không có thẻ: phòng thí nghiệm đã nhúng chạy thẳng trên trang này,
+     bấm vào thẻ chỉ cuộn xuống chỗ vốn đã hiện → thừa. */
+  var LIST = CK.TOOLS.filter(function (t) { return t.id !== "robot"; });
+  document.getElementById("toolCount").textContent = LIST.length + " công cụ";
+
+  document.getElementById("tools").innerHTML = LIST.map(function (t, i) {
+    return '<a class="tool glass g1" href="' + t.href + '">' +
+      '<span class="ico">' + CK.svg(t.icon) + '</span>' +
+      '<h3>' + t.label + '</h3>' +
+      '<p>' + t.desc + '</p>' +
+      '<span class="meta">' +
+        '<span class="open">Mở công cụ ' + CK.svg("M5 12h13m-5-5 5 5-5 5") + '</span>' +
+        '<span class="num">' + CK.pad(i + 1) + '</span>' +
+      '</span>' +
+    '</a>';
+  }).join("");
+
+  /* ══ Phòng thí nghiệm — luôn chạy, chỉ tạm dừng khi người dùng yêu cầu ══ */
+  var LAB = "tools/lab-robot.html";
+  var frame  = document.getElementById("labFrameEl");
+  var box    = document.getElementById("labFrame");
+  var loader = document.getElementById("labLoader");
+  var msg    = document.getElementById("labMsg");
+  var pill   = document.getElementById("labPill");
+  var pillTx = document.getElementById("labPillText");
+  var toggle = document.getElementById("labToggle");
+  var fsBtn  = document.getElementById("labFs");
+
+  var ICON_STOP  = CK.svg("M9.5 9v6M14.5 9v6");
+  var ICON_PLAY  = CK.svg("M8 5.5v13l11-6.5z");
+  var running = true;
+  var ready   = false;
+
+  function setPill(text, level) {
+    pillTx.textContent = text;
+    pill.className = "ck-pill " + level;
+  }
+
+  /* ── Sẵn sàng ────────────────────────────────────────────────────────
+     iframe có src sẵn trong HTML nên có thể nạp xong TRƯỚC khi script này chạy,
+     lúc đó sự kiện "load" đã nổ xong và không bắt được. Vì vậy kiểm tra trực tiếp
+     trạng thái tài liệu con, thay vì chỉ trông vào sự kiện.                      */
+  function markReady() {
+    if (ready) return;
+    ready = true;
+    loader.hidden = true;
+    running = true;
+    setPill("Đang chạy", "solid");
+    toggle.innerHTML = ICON_STOP + "Tạm dừng";
+    toggle.setAttribute("aria-pressed", "false");
+  }
+
+  function labReady() {
+    try {
+      var d = frame.contentDocument;
+      return !!(d && d.querySelector(".mr-root"));
+    } catch (e) { return false; }
+  }
+
+  var t0 = Date.now();
+  (function poll() {
+    if (labReady()) { markReady(); return; }
+    /* Hết giờ thì cứ bỏ lớp đè — nội dung đã tương tác được */
+    if (Date.now() - t0 > 15000) { markReady(); return; }
+    setTimeout(poll, 200);
+  })();
+
+  frame.addEventListener("load", function () {
+    var src = frame.getAttribute("src") || "";
+    if (src.indexOf("lab-robot") !== -1) markReady();
+  });
+
+  function pauseLab() {
+    if (!running) return;
+    frame.setAttribute("src", "about:blank");   /* dừng vòng lặp render, trả CPU về nền */
+    running = false;
+    ready = false;
+    msg.textContent = "Đã tạm dừng. Bấm “Tiếp tục” để chạy lại phòng thí nghiệm.";
+    loader.hidden = false;
+    setPill("Đã tạm dừng", "light");
+    toggle.innerHTML = ICON_PLAY + "Tiếp tục";
+    toggle.setAttribute("aria-pressed", "true");
+  }
+
+  function resumeLab() {
+    if (running) return;
+    msg.textContent = "Đang nạp phòng thí nghiệm…";
+    loader.hidden = false;
+    setPill("Đang tải", "mid");
+    toggle.innerHTML = ICON_STOP + "Tạm dừng";
+    toggle.setAttribute("aria-pressed", "false");
+    frame.setAttribute("src", LAB);
+    t0 = Date.now();
+    (function poll() {
+      if (labReady()) { markReady(); return; }
+      if (Date.now() - t0 > 15000) { markReady(); return; }
+      setTimeout(poll, 200);
+    })();
+  }
+
+  toggle.addEventListener("click", function () { running ? pauseLab() : resumeLab(); });
+
+  fsBtn.addEventListener("click", function () {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (box.requestFullscreen) box.requestFullscreen().catch(function () {
+      CK.toast("Trình duyệt không cho phép toàn màn hình ở đây.");
+    });
+    else CK.toast("Trình duyệt của bạn không hỗ trợ toàn màn hình.");
+  });
+
+  /* Rời khỏi tab thì dừng lab cho đỡ tốn CPU */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden && running) pauseLab();
+  });
+})();
+</script>
+</body>
+</html>

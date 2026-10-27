@@ -1,0 +1,6 @@
+{
+  "name": "Yến Tiệc Chuột Thử Độc",
+  "description": "Game giải đố trinh thám nhị phân: Sử dụng 10 chú chuột thông thái để tìm ra chai rượu độc trong 1.000 chai trước giờ đại yến.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

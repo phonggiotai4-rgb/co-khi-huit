@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 2: ĐẠI SỐ BOOLE VÀ CÁC CỔNG LOGIC | CƠ KHÍ HUIT</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#034EA2',
+              600: '#023c7d',
+              700: '#012c5d',
+              800: '#001d3f',
+              accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .overline-bar {
+      text-decoration: overline;
+    }
+    .unknown-badge {
+      display: inline-block;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #854d0e;
+      background-color: #fef9c3;
+      border: 1px solid #fde047;
+      border-radius: 0.375rem;
+    }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+
+<!-- BEGIN: Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+  CƠ KHÍ HUIT
+  <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+</span>
+</div>
+</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="../index.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span>Về danh mục Kỹ thuật số</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: Site Header -->
+
+<!-- BEGIN: Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+<a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+<span>/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+<span>/</span>
+<span class="text-slate-800 font-semibold truncate">Chương 2: Đại số Boole và các cổng logic</span>
+</div>
+</div>
+<!-- END: Breadcrumb Bar -->
+
+<!-- BEGIN: Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+<!-- BEGIN: Title Banner -->
+<section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center justify-center gap-3 mb-4">
+<span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+<span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">2</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+  ĐẠI SỐ BOOLE VÀ CÁC CỔNG LOGIC
+</h1>
+<div class="mt-4 flex items-center justify-center gap-2">
+<span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+<span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+<span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+</div>
+</section>
+<!-- END: Title Banner -->
+
+<!-- BEGIN: Section 2.1 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-1">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.1</span>
+  CẤU TRÚC ĐẠI SỐ BOOLE
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 27 - 28</span>
+</div>
+
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p>Cho một tập hợp X hữu hạn. Trong X, người ta trang bị hai toán tử nhị phân là cộng (+) và nhân (&sdot;).</p>
+<p class="font-semibold">Các phép toán cộng và nhân kín trong X</p>
+<div class="font-mono text-base pl-6 space-y-1">
+  <p>&forall;A, B &isin; X : A + B &isin; X</p>
+  <p>&forall;A, B &isin; X : A &sdot; B &isin; X</p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3 mt-4">Các tiên đề của đại số Boole</h3>
+
+<div class="space-y-4 pl-2">
+  <div>
+    <p class="font-bold text-slate-900">1- Giao hoán</p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>A + B = B + A</p>
+      <p>A &sdot; B = B &sdot; A</p>
+    </div>
+  </div>
+
+  <div>
+    <p class="font-bold text-slate-900">2- Phối hợp</p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>A + (B + C) = (A + B) + C</p>
+      <p>A &sdot; (B &sdot; C) = (A &sdot; B) &sdot; C</p>
+    </div>
+  </div>
+
+  <div>
+    <p class="font-bold text-slate-900">3- Phân bố</p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>A &sdot; (B + C) = A &sdot; B + A &sdot; C</p>
+      <p>A + (B &sdot; C) = (A + B) &sdot; (A + C)</p>
+    </div>
+  </div>
+
+  <div>
+    <p class="font-bold text-slate-900">4- &exist; hai phần tử trung hòa được ký hiệu là 0 và 1</p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>A + 0 = A</p>
+      <p>A &sdot; 1 = A</p>
+    </div>
+  </div>
+
+  <div>
+    <p class="font-bold text-slate-900">5- &forall; A &isin; X, &exist; phần tử bù của A, được ký hiệu là <span class="overline-bar">A</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>A + <span class="overline-bar">A</span> = 1</p>
+      <p>A &sdot; <span class="overline-bar">A</span> = 0</p>
+    </div>
+  </div>
+</div>
+
+<div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+  <p class="text-slate-800"><em>Ghi chú:</em> Ngoài ký hiệu <span class="font-mono font-bold overline-bar">A</span>, còn có thể dùng ký hiệu <span class="font-mono font-bold">A'</span> để diễn tả phần tử A bù.</p>
+</div>
+
+<p>Tập (X, +, &sdot;, 0, 1, <span class="overline-bar">&nbsp;&nbsp;</span>) thỏa 5 tiên đề sẽ hình thành nên cấu trúc đại số Boole.</p>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Đại số Boole với 2 biến</h3>
+<p>Đại số Boole với 2 biến có các quy tắc cho 2 toán tử + và &sdot; như sau</p>
+
+<!-- 3 Bảng chân trị toán tử cơ bản -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+  <div class="overflow-x-auto">
+    <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+      <thead>
+        <tr class="bg-slate-100 font-bold border-b border-slate-300">
+          <th class="p-2 border-r border-slate-300">A</th>
+          <th class="p-2 border-r border-slate-300">B</th>
+          <th class="p-2">A + B</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200">
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+      <thead>
+        <tr class="bg-slate-100 font-bold border-b border-slate-300">
+          <th class="p-2 border-r border-slate-300">A</th>
+          <th class="p-2 border-r border-slate-300">B</th>
+          <th class="p-2">A &sdot; B</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200">
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+      <thead>
+        <tr class="bg-slate-100 font-bold border-b border-slate-300">
+          <th class="p-2 border-r border-slate-300">A</th>
+          <th class="p-2"><span class="overline-bar">A</span></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200">
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<p class="pt-2">Phép toán + còn được gọi là phép toán OR.</p>
+<p>Phép toán &sdot; còn được gọi là phép toán AND.</p>
+<p>Phép lấy bù còn được gọi là phép toán NOT.</p>
+</div>
+</article>
+<!-- END: Section 2.1 -->
+
+<!-- BEGIN: Section 2.2 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-2">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.2</span>
+  CÁC ĐỊNH LÝ
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 28 - 29</span>
+</div>
+
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- Định lý 1 -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Định lý 1 (Định lý đối ngẫu)</h3>
+  <p>Một mệnh đề được gọi là đối ngẫu với một mệnh đề khác khi ta thay thế 0 &rarr; 1, 1 &rarr; 0, + &rarr; &sdot;, &sdot; &rarr; +</p>
+  <p><em>Phát biểu định lý:</em> Khi một mệnh đề đúng thì mệnh đề đối ngẫu của nó cũng đúng.</p>
+
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 2.1: <span class="font-normal font-sans">Hai mệnh đề sau là đối ngẫu</span></p>
+    <p class="pl-4">A + <span class="overline-bar">A</span> = 1</p>
+    <p class="pl-4">A &sdot; <span class="overline-bar">A</span> = 0</p>
+  </div>
+</div>
+
+<!-- Định lý 2 -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Định lý 2 (Định lý DeMorgan)</h3>
+  <div class="space-y-1">
+    <p><em>Phát biểu định lý:</em></p>
+    <p class="pl-6 italic">Bù của một tổng bằng tích các bù.</p>
+    <p class="pl-6 italic">Bù của một tích bằng tổng các bù.</p>
+  </div>
+  <div class="font-mono text-base pl-6 space-y-1 font-bold">
+    <p><span class="overline-bar">A + B</span> = <span class="overline-bar">A</span> &sdot; <span class="overline-bar">B</span></p>
+    <p><span class="overline-bar">A &sdot; B</span> = <span class="overline-bar">A</span> + <span class="overline-bar">B</span></p>
+  </div>
+  <p class="font-semibold pt-1">Tổng quát</p>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p><span class="overline-bar">A + B + C + ...</span> = <span class="overline-bar">A</span> &sdot; <span class="overline-bar">B</span> &sdot; <span class="overline-bar">C</span> ...</p>
+    <p><span class="overline-bar">A &sdot; B &sdot; C ...</span> = <span class="overline-bar">A</span> + <span class="overline-bar">B</span> + <span class="overline-bar">C</span> + ...</p>
+  </div>
+</div>
+
+<!-- Định lý 3 -->
+<div class="space-y-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Định lý 3</h3>
+  <div class="font-mono text-base pl-6 font-bold">
+    <p><span style="text-decoration: overline; border-top: 1px solid black; padding-top: 1px;"><span class="overline-bar">A</span></span> = A</p>
+  </div>
+</div>
+
+<!-- Định lý 4 -->
+<div class="space-y-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Định lý 4</h3>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p>A + 1 = 1</p>
+    <p>A &sdot; 0 = 0</p>
+  </div>
+  <p class="font-semibold">Tổng quát</p>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p>A + B + C + ... + 1 = 1</p>
+    <p>A &sdot; B &sdot; C &sdot; ... &sdot; 0 = 0</p>
+  </div>
+</div>
+
+<!-- Định lý 5 -->
+<div class="space-y-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Định lý 5</h3>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p>A + A = A</p>
+    <p>A &sdot; A = A</p>
+  </div>
+  <p class="font-semibold">Tổng quát</p>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p>A + A + A + ... = A</p>
+    <p>A &sdot; A &sdot; A &sdot; ... = A</p>
+  </div>
+</div>
+
+<!-- Định lý 6 -->
+<div class="space-y-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Định lý 6 (Định lý hấp thu)</h3>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p>A + (A &sdot; B) = A</p>
+    <p>A &sdot; (A + B) = A</p>
+  </div>
+</div>
+
+<!-- Ví dụ 2.2 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.2: <span class="font-normal font-sans">Chứng minh rằng</span></p>
+  <p class="font-mono pl-4 font-semibold text-brand-600">(A + B)(<span class="overline-bar">A</span> + C) = AC + <span class="overline-bar">A</span>B</p>
+  <p class="font-bold text-slate-900 text-base pt-1">Giải: <span class="font-mono font-normal">(A + B)(<span class="overline-bar">A</span> + C) = A<span class="overline-bar">A</span> + AC + <span class="overline-bar">A</span>B + BC</span></p>
+  <div class="font-mono text-base pl-12 space-y-1">
+    <p>= AC + <span class="overline-bar">A</span> B + BC</p>
+    <p>= AC + <span class="overline-bar">A</span> B + BC (A + <span class="overline-bar">A</span>)</p>
+    <p>= AC + <span class="overline-bar">A</span> B + ABC + <span class="overline-bar">A</span> BC</p>
+    <p>= (AC + ABC) + (<span class="overline-bar">A</span> B + <span class="overline-bar">A</span> BC)</p>
+    <p class="font-bold text-brand-600">= AC + <span class="overline-bar">A</span> B</p>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.2 -->
+
+<!-- BEGIN: Section 2.3 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" id="sec-2-3">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.3</span>
+  CÁC PHƯƠNG PHÁP BIỂU DIỄN HÀM BOOLE
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 29 - 34</span>
+</div>
+
+<div class="space-y-8 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Phương pháp đại số -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Phương pháp đại số</h3>
+  <p>Hàm Boole là một biểu thức được tạo ra bởi các biến Boole (biến nhị phân), hai toán tử nhị phân + (<em>OR</em>) và &sdot; (<em>AND</em>), phép lấy bù (<em>NOT</em>), các dấu ngoặc và dấu bằng.</p>
+  <p>Với các giá trị cho trước của các biến, hàm Boole có thể có giá trị 0 hay 1.</p>
+
+  <!-- Ví dụ 2.3 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 2.3: <span class="font-mono font-normal">F(A,B,C) = AC + <span class="overline-bar">A</span> B</span></p>
+  </div>
+</div>
+
+<!-- 2- Phương pháp bảng chân trị -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Phương pháp bảng chân trị (<em>Truth Table</em>)</h3>
+  <p>Để biểu diễn một hàm Boole bằng bảng chân trị, ta liệt kê một danh sách 2<sup>n</sup> tổ hợp các 0 và 1 của các biến Boole và một cột chỉ ra giá trị của hàm.</p>
+
+  <!-- Ví dụ 2.4 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.4: <span class="font-normal font-sans">Ta có thể biểu diễn hàm <span class="font-mono">F (A,B,C) = AC + <span class="overline-bar">A</span> B</span> bằng bảng chân trị như sau</span></p>
+    <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2">F</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 3- Phương pháp dạng chuẩn 1 -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Phương pháp dạng chuẩn 1</h3>
+  <p><strong>Minterm (tích chuẩn):</strong> là tích số của đầy đủ các biến, ở dạng bù hay không bù. Nếu giá trị của biến là 0 thì biến sẽ ở dạng bù, còn nếu giá trị của biến là 1 thì biến sẽ ở dạng không bù.</p>
+  <p>Với n biến có thể tạo ra 2<sup>n</sup> minterm.</p>
+  <p>Minterm được ký hiệu là <strong>m<sub>i</sub></strong> với i là giá trị của tổ hợp nhị phân tạo bởi giá trị các biến.</p>
+
+  <!-- Ví dụ 2.5 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.5: <span class="font-normal font-sans">Các minterm cho 3 biến</span></p>
+    <div class="overflow-x-auto max-w-md mx-auto sm:mx-0">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2 border-r border-slate-300 font-sans">Biểu thức</th>
+            <th class="p-2 font-sans">Ký hiệu</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> <span class="overline-bar">B</span> <span class="overline-bar">C</span></td><td class="p-1.5">m0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> <span class="overline-bar">B</span> C</td><td class="p-1.5">m1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> B <span class="overline-bar">C</span></td><td class="p-1.5">m2</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> B C</td><td class="p-1.5">m3</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">A <span class="overline-bar">B</span> <span class="overline-bar">C</span></td><td class="p-1.5">m4</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">A <span class="overline-bar">B</span> C</td><td class="p-1.5">m5</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">A B <span class="overline-bar">C</span></td><td class="p-1.5">m6</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">A B C</td><td class="p-1.5">m7</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>Dạng chuẩn 1:</strong> là dạng tổng các minterm, mà ở đó hàm có giá trị bằng 1.</p>
+  <div class="bg-slate-50 border border-slate-300 p-4 rounded-xl max-w-sm mx-auto sm:mx-0">
+    <p class="font-bold text-slate-900 text-sm mb-1">Tổng quát:</p>
+    <div class="font-mono text-base font-bold text-brand-600 pl-4">
+      F = &sum;<sub>i=0</sub><sup>2<sup>n</sup> - 1</sup> m<sub>i</sub> &sdot; F<sub>i</sub>
+    </div>
+    <div class="text-sm text-slate-700 mt-2 space-y-1">
+      <p>với: m<sub>i</sub> là minterm thứ i,</p>
+      <p>F<sub>i</sub> là giá trị của hàm F tương ứng với minterm thứ i.</p>
+    </div>
+  </div>
+
+  <p>Dạng chuẩn 1 còn được gọi là dạng tổng các tích chuẩn (<em>Standard SOP &ndash; Standard Sum-Of-Products</em>). Dạng chuẩn 1 có thể được tạo ra dễ dàng từ dạng tổng các tích (SOP).</p>
+
+  <!-- Ví dụ 2.6 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 2.6: <span class="font-normal font-sans">Hàm F sau được viết ở dạng chuẩn 1</span></p>
+    <p class="pl-4">F (A,B,C,D) = A B C D + A B <span class="overline-bar">C</span> <span class="overline-bar">D</span> + <span class="overline-bar">A</span> B <span class="overline-bar">C</span> D</p>
+  </div>
+
+  <p>Dạng chuẩn 1 có thể có nhiều cách biểu diễn khác nhau.</p>
+
+  <!-- Ví dụ 2.7 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 2.7: <span class="font-normal font-sans">Các cách biểu diễn hàm ở dạng chuẩn 1.</span></p>
+    <p class="pl-4">F (A,B,C,D) = A <span class="overline-bar">B</span> C D + A <span class="overline-bar">B</span> <span class="overline-bar">C</span> D + A B C <span class="overline-bar">D</span> + <span class="overline-bar">A</span> B C <span class="overline-bar">D</span></p>
+    <p class="pl-4">= 1011 + 1001 + 1110 + 0110</p>
+    <p class="pl-4">= m11 + m9 + m14 + m6</p>
+    <p class="pl-4 font-bold text-brand-600">= &sum;<sub>ABCD</sub> (6, 9, 11, 14)</p>
+  </div>
+
+  <p>Bất kỳ một hàm Boole nào cũng có thể biểu diễn ở dạng chuẩn 1</p>
+
+  <!-- Ví dụ 2.8 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.8: <span class="font-normal font-sans">Hãy biểu diễn hàm F sau dưới dạng chuẩn 1</span></p>
+    <p class="font-mono pl-4">F (A,B,C) = AC + <span class="overline-bar">A</span> B</p>
+    <p class="font-bold text-slate-900 text-base pt-1">Giải: <span class="font-mono font-normal">F (A,B,C) = AC + <span class="overline-bar">A</span> B</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= AC (B+ <span class="overline-bar">B</span>) + <span class="overline-bar">A</span> B (C+ <span class="overline-bar">C</span>) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(áp dụng tiên đề 4 và 5)</p>
+      <p>= ABC + A <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> BC + <span class="overline-bar">A</span> B <span class="overline-bar">C</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(áp dụng tiên đề phân bố)</p>
+      <p>= 111 + 101 + 011 + 010</p>
+      <p>= m7 + m5 + m3 + m2</p>
+      <p class="font-bold text-brand-600">= &sum; (2, 3, 5, 7)</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 2.9 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.9: <span class="font-normal font-sans">Hãy biểu diễn hàm sau dưới dạng chuẩn 1</span></p>
+    <p class="font-mono pl-4">F (A,B,C) = (A + <span class="overline-bar">B</span>) (<span class="overline-bar">A</span> + C)</p>
+    <p class="font-bold text-slate-900 text-base pt-1">Giải: <span class="font-mono font-normal">F (A,B,C) = (A + <span class="overline-bar">B</span>) (<span class="overline-bar">A</span> + C)</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= A <span class="overline-bar">A</span> + AC + <span class="overline-bar">A</span> <span class="overline-bar">B</span> + <span class="overline-bar">B</span> C</p>
+      <p>= AC (B + <span class="overline-bar">B</span>) + <span class="overline-bar">A</span> <span class="overline-bar">B</span> (C + <span class="overline-bar">C</span>) + <span class="overline-bar">B</span> C (A + <span class="overline-bar">A</span>)</p>
+      <p>= ABC + A <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> <span class="overline-bar">B</span> <span class="overline-bar">C</span> + A <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> <span class="overline-bar">B</span> C</p>
+      <p>= ABC + A <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> <span class="overline-bar">B</span> <span class="overline-bar">C</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(áp dụng định lý 5)</p>
+      <p>= 111 + 101 + 001 + 000</p>
+      <p>= m7 + m5 + m1 + m0</p>
+      <p class="font-bold text-brand-600">= &sum; (0, 1, 5, 7)</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 2.10 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.10: <span class="font-normal font-sans">Hãy viết dạng biểu thức của hàm <span class="font-mono">F(A,B,C) = &sum; (1, 4, 5, 6)</span></span></p>
+    <p class="font-bold text-slate-900 text-base">Giải: <span class="font-mono font-normal">F(A,B,C) = &sum; (1, 4, 5, 6)</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= 001 + 100 + 101 + 110</p>
+      <p class="font-bold text-brand-600">= <span class="overline-bar">A</span> <span class="overline-bar">B</span> C + A <span class="overline-bar">B</span> <span class="overline-bar">C</span> + A <span class="overline-bar">B</span> C + AB <span class="overline-bar">C</span></p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 2.11 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.11: <span class="font-normal font-sans">Hãy viết dạng biểu thức của hàm <span class="font-mono">F(A,B,C,D) = &sum; (1, 4, 5, 6)</span></span></p>
+    <p class="font-bold text-slate-900 text-base">Giải: <span class="font-mono font-normal">F(A,B,C,D) = &sum; (1, 4, 5, 6)</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= 0001 + 0100 + 0101 + 0110</p>
+      <p class="font-bold text-brand-600">= <span class="overline-bar">A</span> <span class="overline-bar">B</span> <span class="overline-bar">C</span> D + <span class="overline-bar">A</span> B <span class="overline-bar">C</span> <span class="overline-bar">D</span> + <span class="overline-bar">A</span> B <span class="overline-bar">C</span> D + <span class="overline-bar">A</span> BC <span class="overline-bar">D</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- 4- Phương pháp dạng chuẩn 2 -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Phương pháp dạng chuẩn 2</h3>
+  <p><strong>Maxterm (tổng chuẩn):</strong> là tổng số của đầy đủ các biến, ở dạng bù hay không bù. Nếu giá trị của biến là 1 thì biến sẽ ở dạng bù, còn nếu giá trị của biến là 0 thì biến sẽ ở dạng không bù.</p>
+  <p>Với n biến có thể tạo ra 2<sup>n</sup> maxterm.</p>
+  <p>Maxterm được ký hiệu là <strong>M<sub>i</sub></strong> với i là giá trị của tổ hợp nhị phân tạo bởi giá trị các biến.</p>
+
+  <!-- Ví dụ 2.12 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.12: <span class="font-normal font-sans">Các maxterm cho 3 biến</span></p>
+    <div class="overflow-x-auto max-w-md mx-auto sm:mx-0">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2 border-r border-slate-300 font-sans">Biểu thức</th>
+            <th class="p-2 font-sans">Ký hiệu</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">A + B + C</td><td class="p-1.5">M0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">A + B + <span class="overline-bar">C</span></td><td class="p-1.5">M1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">A + <span class="overline-bar">B</span> + C</td><td class="p-1.5">M2</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">A + <span class="overline-bar">B</span> + <span class="overline-bar">C</span></td><td class="p-1.5">M3</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> + B + C</td><td class="p-1.5">M4</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> + B + <span class="overline-bar">C</span></td><td class="p-1.5">M5</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> + <span class="overline-bar">B</span> + C</td><td class="p-1.5">M6</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300"><span class="overline-bar">A</span> + <span class="overline-bar">B</span> + <span class="overline-bar">C</span></td><td class="p-1.5">M7</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>Dạng chuẩn 2:</strong> là dạng tích các maxterm, mà ở đó hàm có giá trị bằng 0.</p>
+  <div class="bg-slate-50 border border-slate-300 p-4 rounded-xl max-w-sm mx-auto sm:mx-0">
+    <p class="font-bold text-slate-900 text-sm mb-1">Tổng quát:</p>
+    <div class="font-mono text-base font-bold text-brand-600 pl-4">
+      F = &prod;<sub>i=0</sub><sup>2<sup>n</sup> - 1</sup> (M<sub>i</sub> + F<sub>i</sub>)
+    </div>
+    <div class="text-sm text-slate-700 mt-2 space-y-1">
+      <p>với: M<sub>i</sub> là maxterm thứ i,</p>
+      <p>F<sub>i</sub> là giá trị của hàm F tương ứng với maxterm thứ i.</p>
+    </div>
+  </div>
+
+  <p>Dạng chuẩn 2 còn được gọi là dạng tích các tổng chuẩn (<em>Standard POS &ndash; Standard Product-Of-Sums</em>). Dạng chuẩn 2 có thể được tạo ra dễ dàng từ dạng tích các tổng (POS).</p>
+
+  <!-- Ví dụ 2.13 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 2.13: <span class="font-normal font-sans">Hàm F sau được viết ở dạng chuẩn 2</span></p>
+    <p class="pl-4">F (A,B,C,D) = (<span class="overline-bar">A</span> + B + C + <span class="overline-bar">D</span>)(A + B + <span class="overline-bar">C</span> + <span class="overline-bar">D</span>)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + <span class="overline-bar">C</span> + D)(A + <span class="overline-bar">B</span> + <span class="overline-bar">C</span> + D)</p>
+  </div>
+
+  <p>Dạng chuẩn 2 có thể có nhiều cách biểu diễn khác nhau.</p>
+
+  <!-- Ví dụ 2.14 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 2.14: <span class="font-normal font-sans">Các cách biểu diễn hàm ở dạng chuẩn 2.</span></p>
+    <p class="pl-4">F (A,B,C,D) = (<span class="overline-bar">A</span> + B + C + <span class="overline-bar">D</span>)(A + B + <span class="overline-bar">C</span> + <span class="overline-bar">D</span>)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + <span class="overline-bar">C</span> + D)(A + <span class="overline-bar">B</span> + <span class="overline-bar">C</span> + D)</p>
+    <p class="pl-4">= 1001 &sdot; 0011 &sdot; 1110 &sdot; 0110</p>
+    <p class="pl-4">= M9 &sdot; M3 &sdot; M14 &sdot; M6</p>
+    <p class="pl-4 font-bold text-brand-600">= &prod;<sub>ABCD</sub> (3, 6, 9, 14)</p>
+  </div>
+
+  <p>Bất kỳ một hàm Boole nào cũng có thể biểu diễn ở dạng chuẩn 2</p>
+
+  <!-- Ví dụ 2.15 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.15: <span class="font-normal font-sans">Hãy biểu diễn hàm F sau dưới dạng chuẩn 2</span></p>
+    <p class="font-mono pl-4">F (A,B,C) = (A + <span class="overline-bar">B</span>)(<span class="overline-bar">A</span> + C)</p>
+    <p class="font-bold text-slate-900 text-base pt-1">Giải: <span class="font-mono font-normal">F (A,B,C) = (A + <span class="overline-bar">B</span>)(<span class="overline-bar">A</span> + C)</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= (A + <span class="overline-bar">B</span> + C<span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + B<span class="overline-bar">B</span> + C) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(áp dụng tiên đề 4 và 5)</p>
+      <p>= (A + <span class="overline-bar">B</span> + C)(A + <span class="overline-bar">B</span> + <span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + B + C)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + C) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(tiên đề phân bố)</p>
+      <p>= 010 &sdot; 011 &sdot; 100 &sdot; 110</p>
+      <p>= M2 &sdot; M3 &sdot; M4 &sdot; M6</p>
+      <p class="font-bold text-brand-600">= &prod; (2, 3, 4, 6)</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 2.16 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.16: <span class="font-normal font-sans">Hãy biểu diễn hàm F sau dưới dạng chuẩn 2</span></p>
+    <p class="font-mono pl-4">F (A,B,C) = AC + <span class="overline-bar">A</span> B</p>
+    <p class="font-bold text-slate-900 text-base pt-1">Giải: <span class="font-mono font-normal">F (A,B,C) = AC + <span class="overline-bar">A</span> B</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= (A + <span class="overline-bar">A</span>)(A + B)(<span class="overline-bar">A</span> + C)(B + C)</p>
+      <p>= (A + B)(<span class="overline-bar">A</span> + C)(B + C)</p>
+      <p>= (A + B + C<span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + C + B<span class="overline-bar">B</span>)(B + C + A<span class="overline-bar">A</span>)</p>
+      <p>= (A + B + C)(A + B + <span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + B + C)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + C)(A + B + C)(<span class="overline-bar">A</span> + B + C)</p>
+      <p>= (A + B + C)(A + B + <span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + B + C)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + C)</p>
+      <p>= 000 &sdot; 001 &sdot; 100 &sdot; 110</p>
+      <p>= M0 &sdot; M1 &sdot; M4 &sdot; M6</p>
+      <p class="font-bold text-brand-600">= &prod; (0, 1, 4, 6)</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 2.17 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.17: <span class="font-normal font-sans">Hãy viết dạng biểu thức của hàm <span class="font-mono">F (A,B,C) = &prod; (0, 2, 3 ,7)</span></span></p>
+    <p class="font-bold text-slate-900 text-base">Giải: <span class="font-mono font-normal">F (A,B,C) = &prod; (0, 2, 3 ,7)</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= 000 &sdot; 010 &sdot; 011 &sdot; 111</p>
+      <p class="font-bold text-brand-600">= (A + B + C) (A + <span class="overline-bar">B</span> + C)(A + <span class="overline-bar">B</span> + <span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + <span class="overline-bar">C</span>)</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 2.18 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.18: <span class="font-normal font-sans">Hãy viết dạng biểu thức của hàm <span class="font-mono">F (A,B,C,D) = &prod; (0, 2, 3 ,7)</span></span></p>
+    <p class="font-bold text-slate-900 text-base">Giải: <span class="font-mono font-normal">F (A,B,C,D) = &prod; (0, 2, 3 ,7)</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= 0000 &sdot; 0010 &sdot; 0011 &sdot; 0111</p>
+      <p class="font-bold text-brand-600">= (A + B + C + D)(A + B + <span class="overline-bar">C</span> + D) (A + B + <span class="overline-bar">C</span> + <span class="overline-bar">D</span>)(A + <span class="overline-bar">B</span> + <span class="overline-bar">C</span> + <span class="overline-bar">D</span>)</p>
+    </div>
+  </div>
+
+  <!-- Nhận xét và Chuyển đổi chuẩn -->
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-3">
+    <p class="font-bold text-slate-900 not-italic">Nhận xét:</p>
+    <p class="text-slate-800">1- Bù của minterm là maxterm và ngược lại</p>
+    <p class="font-mono pl-6 font-bold"><span class="overline-bar">m<sub>i</sub></span> = M<sub>i</sub> &hArr; <span class="overline-bar">M<sub>i</sub></span> = m<sub>i</sub></p>
+    <p class="text-slate-800 pt-1">2- Chuyển đổi giữa hai dạng chuẩn</p>
+  </div>
+
+  <!-- Ví dụ 2.19 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.19: <span class="font-normal font-sans">Hãy đổi hàm F sau thành dạng chuẩn 2</span></p>
+    <p class="font-mono pl-4">F (A,B,C) = &sum; (0, 2, 3, 7)</p>
+    <p class="font-bold text-slate-900 text-base pt-1">Giải: <span class="font-mono font-normal"><span class="overline-bar">F</span> (A,B,C) = &sum; (1, 4, 5, 6) = m1 + m4 + m5 + m6</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>F (A,B,C) = <span style="text-decoration: overline; border-top: 1px solid black; padding-top: 1px;"><span class="overline-bar">F</span> (A,B,C)</span> = <span class="overline-bar">m1 + m4 + m5 + m6</span> = <span class="overline-bar">m1</span> &sdot; <span class="overline-bar">m4</span> &sdot; <span class="overline-bar">m5</span> &sdot; <span class="overline-bar">m6</span></p>
+      <p class="pl-16 font-bold text-brand-600">= M1 &sdot; M4 &sdot; M5 &sdot; M6 = &prod; (1, 4, 5, 6)</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.3 -->
+
+<!-- BEGIN: Section 2.4 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" id="sec-2-4">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.4</span>
+  CÁCH CHUYỂN ĐỔI DẠNG ĐẠI SỐ VÀ DẠNG BẢNG CHÂN TRỊ
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 34 - 36</span>
+</div>
+
+<div class="space-y-8 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Chuyển từ dạng đại số sang dạng bảng chân trị -->
+<div class="space-y-6">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Chuyển từ dạng đại số sang dạng bảng chân trị</h3>
+  
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>a) Chuyển từ dạng biểu thức bất kỳ về dạng chuẩn 1 rồi điền các giá trị 1 vào các hàng có tổ hợp nhị phân bằng với các chỉ số minterm của biểu thức, các hàng còn lại sẽ có giá trị F = 0.</span>
+  </p>
+
+  <!-- Ví dụ 2.20 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.20: <span class="font-normal font-sans">Viết bảng chân trị của hàm <span class="font-mono">F(A,B,C) = AC + <span class="overline-bar">A</span> B</span></span></p>
+    <p class="font-bold text-slate-900 text-base">Giải: <span class="font-mono font-normal">F(A,B,C) = AC + <span class="overline-bar">A</span> B</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= AC (B + <span class="overline-bar">B</span>) + <span class="overline-bar">A</span> B (C + <span class="overline-bar">C</span>)</p>
+      <p>= ABC + A<span class="overline-bar">B</span>C + <span class="overline-bar">A</span>BC + <span class="overline-bar">A</span>B<span class="overline-bar">C</span></p>
+      <p class="font-bold text-brand-600">= &sum; (2, 3, 5, 7)</p>
+    </div>
+    <p class="font-semibold text-slate-800">&rarr; Điền 1 vào các hàng có giá trị 2, 3, 5, 7 và điền 0 vào các hàng còn lại.</p>
+
+    <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0 pt-1">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2">F</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="flex items-start gap-2 pt-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>b) Chuyển từ dạng biểu thức bất kỳ về dạng chuẩn 2 rồi điền các giá trị 0 vào các hàng có tổ hợp nhị phân bằng với các chỉ số maxterm của biểu thức, các hàng còn lại sẽ có giá trị F = 1.</span>
+  </p>
+
+  <!-- Ví dụ 2.21 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.21: <span class="font-normal font-sans">Viết bảng chân trị của hàm <span class="font-mono">F (A,B,C) = AC + <span class="overline-bar">A</span> B</span></span></p>
+    <p class="font-bold text-slate-900 text-base">Giải: <span class="font-mono font-normal">F (A,B,C) = AC + <span class="overline-bar">A</span> B</span></p>
+    <div class="font-mono text-base pl-6 space-y-1">
+      <p>= (A + <span class="overline-bar">A</span>)(A + B)(<span class="overline-bar">A</span> + C)(B + C)</p>
+      <p>= (A + B)(<span class="overline-bar">A</span> + C)(B + C)</p>
+      <p>= (A + B + C<span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + C + B<span class="overline-bar">B</span>)(B + C + A<span class="overline-bar">A</span>)</p>
+      <p>= (A + B + C)(A + B + <span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + B + C)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + C)(A + B + C)(<span class="overline-bar">A</span> + B + C)</p>
+      <p>= (A + B + C)(A + B + <span class="overline-bar">C</span>)(<span class="overline-bar">A</span> + B + C)(<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + C)</p>
+      <p class="font-bold text-brand-600">= &prod; (0, 1, 4, 6)</p>
+    </div>
+    <p class="font-semibold text-slate-800">&rarr; Điền 0 vào các hàng có giá trị 0, 1, 4, 6 và điền 1 vào các hàng còn lại.</p>
+
+    <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0 pt-1">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2">F</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Chuyển từ dạng bảng chân trị sang dạng đại số -->
+<div class="space-y-6">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Chuyển từ dạng bảng chân trị sang dạng đại số</h3>
+
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>a) Từ bảng chân trị, hàm Boole có thể tạo ra bằng cách lấy tổng các minterm ứng với các tổ hợp nhị phân cho F = 1.</span>
+  </p>
+
+  <!-- Ví dụ 2.22 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.22: <span class="font-normal font-sans">Viết dạng đại số của hàm F cho trong bảng sau</span></p>
+    <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2">F</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="space-y-1 pt-2 font-mono text-base">
+      <p class="font-bold text-slate-900 font-sans">Giải: <span class="font-mono font-normal">F(A,B,C) = &sum; (0, 1, 3, 5, 6)</span></p>
+      <p class="pl-12">= m0 + m1 + m3 + m5 + m6</p>
+      <p class="pl-12 font-bold text-brand-600">= <span class="overline-bar">A</span> <span class="overline-bar">B</span> <span class="overline-bar">C</span> + <span class="overline-bar">A</span> <span class="overline-bar">B</span> C + <span class="overline-bar">A</span> B C + A <span class="overline-bar">B</span> C + AB <span class="overline-bar">C</span></p>
+    </div>
+  </div>
+
+  <p class="flex items-start gap-2 pt-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>b) Từ bảng chân trị, hàm Boole có thể tạo ra bằng cách lấy tích các maxterm ứng với các tổ hợp nhị phân cho F = 0.</span>
+  </p>
+
+  <!-- Ví dụ 2.23 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 2.23: <span class="font-normal font-sans">Viết dạng đại số của hàm F cho trong bảng sau</span></p>
+    <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 font-bold border-b border-slate-300">
+            <th class="p-2 border-r border-slate-300">A</th>
+            <th class="p-2 border-r border-slate-300">B</th>
+            <th class="p-2 border-r border-slate-300">C</th>
+            <th class="p-2">F</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="space-y-1 pt-2 font-mono text-base">
+      <p class="font-bold text-slate-900 font-sans">Giải: <span class="font-mono font-normal">F (A,B,C) = &prod; (2, 4, 7)</span></p>
+      <p class="pl-12">= M2 &sdot; M4 &sdot; M7</p>
+      <p class="pl-12 font-bold text-brand-600">= (A + <span class="overline-bar">B</span> + C) (<span class="overline-bar">A</span> + B + C) (<span class="overline-bar">A</span> + <span class="overline-bar">B</span> + <span class="overline-bar">C</span>)</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.4 -->
+
+<!-- BEGIN: Section 2.5 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-2-5">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">2.5</span>
+  TRƯỜNG HỢP TÙY ĐỊNH
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 37</span>
+</div>
+
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+<p>Trong thực tế có những trường hợp một vài tổ hợp nhị phân của các biến là không xảy ra. Do đó, giá trị của hàm tương ứng với những tổ hợp nhị phân này có thể là 0 hay 1 đều được, người ta gọi đó là những trường hợp tùy định (<em>don't care</em>, viết tắt là d). Khi điền vào bảng chân trị những trường hợp tùy định, ta dùng ký hiệu X.</p>
+
+<!-- Ví dụ 2.24 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.24: <span class="font-normal font-sans">Viết bảng chân trị của hàm</span></p>
+  <p class="font-mono pl-4">F (A,B,C) = &sum; (1, 2, 4, 5) + d (0, 6)</p>
+  <p class="font-bold text-slate-900 text-base">Giải</p>
+
+  <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0">
+    <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+      <thead>
+        <tr class="bg-slate-100 font-bold border-b border-slate-300">
+          <th class="p-2 border-r border-slate-300">A</th>
+          <th class="p-2 border-r border-slate-300">B</th>
+          <th class="p-2 border-r border-slate-300">C</th>
+          <th class="p-2">F</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200">
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-amber-600">X</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-brand-600">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-amber-600">X</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Ví dụ 2.25 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 2.25: <span class="font-normal font-sans">Viết bảng chân trị của hàm</span></p>
+  <p class="font-mono pl-4">F(A,B,C) = &prod; (0, 2, 6) &sdot; d(1, 3, 7)</p>
+  <p class="font-bold text-slate-900 text-base">Giải</p>
+
+  <div class="overflow-x-auto max-w-xs mx-auto sm:mx-0">
+    <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+      <thead>
+        <tr class="bg-slate-100 font-bold border-b border-slate-300">
+          <th class="p-2 border-r border-slate-300">A</th>
+          <th class="p-2 border-r border-slate-300">B</th>
+          <th class="p-2 border-r border-slate-300">C</th>
+          <th class="p-2">F</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200">
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-amber-600">X</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-amber-600">X</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5">1</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 font-bold text-red-600">0</td></tr>
+        <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 font-bold text-amber-600">X</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 2.5 -->
+
+<!-- BEGIN: Chapter Navigation Footer -->
+<div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+<div class="text-center sm:text-left">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+<h4 class="text-base font-bold text-slate-800">Kỹ thuật số & Thiết kế vi mạch</h4>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-2-1">
+  Lên đầu trang
+</a>
+<a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="Chuong2-dai-so-boole-va-cac-cong-locgic-phan2.html">
+  Tiếp tục: Phần 2 (Mục 2.6 - 2.9) &rarr;
+</a>
+</div>
+</div>
+<!-- END: Chapter Navigation Footer -->
+
+</main>
+<!-- END: Main Content Area -->
+
+</body>
+</html>

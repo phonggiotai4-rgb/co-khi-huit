@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 1: CÁC HỆ THỐNG SỐ ĐẾM | CƠ KHÍ HUIT</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#034EA2',
+              600: '#023c7d',
+              700: '#012c5d',
+              800: '#001d3f',
+              accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .calc-table td, .calc-table th {
+      padding: 0.15rem 0.4rem;
+    }
+    .unknown-badge {
+      display: inline-block;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #854d0e;
+      background-color: #fef9c3;
+      border: 1px solid #fde047;
+      border-radius: 0.375rem;
+    }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+
+<!-- BEGIN: Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+  CƠ KHÍ HUIT
+  <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+</span>
+</div>
+</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="../index.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span>Về danh mục Kỹ thuật số</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: Site Header -->
+
+<!-- BEGIN: Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+<a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+<span>/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+<span>/</span>
+<span class="text-slate-800 font-semibold truncate">Chương 1: Các hệ thống số đếm</span>
+</div>
+</div>
+<!-- END: Breadcrumb Bar -->
+
+<!-- BEGIN: Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+<!-- BEGIN: Title Banner -->
+<section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center justify-center gap-3 mb-4">
+<span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+<span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">1</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+  CÁC HỆ THỐNG SỐ ĐẾM
+</h1>
+<div class="mt-4 flex items-center justify-center gap-2">
+<span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+<span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+<span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+</div>
+</section>
+<!-- END: Title Banner -->
+
+<!-- BEGIN: Section 1.1 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-1">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.1</span>
+  HỆ THỐNG SỐ THẬP PHÂN (<em>DECIMAL</em>)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 13</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="flex items-start gap-2">
+  <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+  <span>Hệ thập phân có cơ số (<em>Radix</em>) là 10, sử dụng 10 ký số (<em>Digit</em>) là 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.</span>
+</p>
+<p>Một số trong hệ thống số được tạo ra từ một hay nhiều ký số, có thể bao gồm hai phần: phần nguyên và phần lẻ, được phân cách nhau bằng dấu chấm cơ số. Trọng số (<em>Weight</em>) của mỗi ký số phụ thuộc vào vị trí của ký số đó.</p>
+
+<div class="flex justify-center my-2">
+  <div class="border border-slate-700 bg-white px-6 py-2 rounded font-semibold text-slate-900 shadow-xs font-mono">
+    Trọng số = Cơ số <sup>Vị trí</sup>
+  </div>
+</div>
+
+<p>Vị trí của ký số được đánh thứ tự từ 0 cho ký số hàng đơn vị, thứ tự này được tăng lên 1 cho ký số bên trái và giảm đi 1 cho ký số bên phải.</p>
+
+<!-- Ví dụ 1.1 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.1: <span class="font-normal">Số 87,5 được tạo ra từ 3 ký số (2 ký số thuộc phần nguyên và 1 ký số thuộc phần lẻ)</span></p>
+  <ul class="list-disc pl-6 space-y-1 font-mono text-base">
+    <li>ký số 7 có vị trí là 0 và có trọng số là 10<sup>0</sup> = 1</li>
+    <li>ký số 8 có vị trí là 1 và có trọng số là 10<sup>1</sup> = 10</li>
+    <li>ký số 5 có vị trí là -1 và có trọng số là 10<sup>-1</sup> = 0.1</li>
+  </ul>
+</div>
+
+<p>Giá trị của số được tính bằng tổng của các tích trọng số với ký số</p>
+<div class="flex justify-center my-1">
+  <div class="bg-slate-50 border border-slate-300 px-5 py-2 rounded font-mono font-bold text-brand-600">
+    Giá trị = &sum; Ký số &times; Trọng số
+  </div>
+</div>
+
+<!-- Ví dụ 1.2 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.2: <span class="font-normal">Giá trị của số 123,4 là 1 &times; 10<sup>2</sup> + 2 &times; 10<sup>1</sup> + 3 &times; 10<sup>0</sup> + 4 &times; 10<sup>-1</sup></span></p>
+  <p class="font-mono text-center sm:text-left pl-4 font-semibold text-brand-600">= 1 &times; 100 + 2 &times; 10 + 3 &times; 1 + 4 &times; 0.1 = 123,4</p>
+</div>
+
+<p>Ký số ở tận cùng bên trái được gọi là ký số có trọng số lớn nhất (<em>Most Significant Digit</em>), ký số ở tận cùng bên phải được gọi là ký số có trọng số nhỏ nhất (<em>Least Significant Digit</em>).</p>
+
+<div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+  <p class="text-slate-800"><em>Chú ý:</em> Để phân biệt số thập phân với số của các hệ thống số khác, ta thêm ký hiệu D (<em>Decimal</em>) hoặc 10 ở dạng chỉ số dưới vào đằng sau.</p>
+</div>
+
+<!-- Ví dụ 1.3 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.3: <span class="font-mono font-normal">123,4D hoặc 123,4<sub>10</sub></span></p>
+</div>
+</div>
+</article>
+<!-- END: Section 1.1 -->
+
+<!-- BEGIN: Section 1.2 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-2">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.2</span>
+  HỆ THỐNG SỐ NHỊ PHÂN (<em>BINARY</em>)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 14 - 15</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="flex items-start gap-2">
+  <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+  <span>Hệ nhị phân có cơ số là 2, sử dụng 2 ký số là 0 và 1.</span>
+</p>
+<p>Nguyên tắc tạo ra số nhị phân, cách tính trọng số và giá trị của số nhị phân tương tự với cách đã thực hiện đối với số thập phân.</p>
+<p>Số nhị phân được ký hiệu bởi ký tự B (<em>Binary</em>) hoặc số 2 ở dạng chỉ số dưới.</p>
+
+<!-- Ví dụ 1.4 -->
+<div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.4: <span class="font-mono font-normal">1101B hoặc 1101<sub>2</sub></span></p>
+</div>
+
+<p>Mỗi ký số trong hệ nhị phân được gọi là một bit (<em>Binary Digit</em>).</p>
+<p>Bit nằm tận cùng bên trái được gọi là bit có trọng số lớn nhất (<em>MSB - Most Significant Bit</em>).</p>
+<p>Bit nằm tận cùng bên phải được gọi là bit có trọng số nhỏ nhất (<em>LSB - Least Significant Bit</em>).</p>
+<p>Số nhị phân được dùng để biểu diễn các tín hiệu trong các mạch số (<em>digital</em>).</p>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ nhị phân sang hệ thập phân</h3>
+<p>Tính giá trị của số nhị phân cần chuyển.</p>
+
+<!-- Ví dụ 1.5 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.5: <span class="font-normal">Đổi số 1011,01 sang hệ thập phân</span></p>
+  <div class="font-mono text-base pl-4 space-y-1 overflow-x-auto">
+    <p>1011,01B = 1 &times; 2<sup>3</sup> + 0 &times; 2<sup>2</sup> + 1 &times; 2<sup>1</sup> + 1 &times; 2<sup>0</sup> + 0 &times; 2<sup>-1</sup> + 1 &times; 2<sup>-2</sup></p>
+    <p class="pl-16">= 1 &times; 8 + 0 &times; 4 + 1 &times; 2 + 1 &times; 1 + 0 &times; 0,5 + 1 &times; 0,25</p>
+    <p class="pl-16 font-bold text-brand-600">= 11,25D</p>
+  </div>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ thập phân sang hệ nhị phân</h3>
+<p class="flex items-start gap-2">
+  <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+  <span><em>Trường hợp là số nguyên:</em> chia liên tiếp cho 2 đến khi có kết quả là 0 rồi lấy các số dư theo thứ tự từ dưới lên trên.</span>
+</p>
+
+<!-- Ví dụ 1.6 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.6: <span class="font-normal">Đổi số 19D sang hệ nhị phân.</span></p>
+  <div class="flex flex-col items-center justify-center p-3 overflow-x-auto">
+    <!-- Bậc thang chia 2 -->
+    <div class="relative font-mono text-base inline-block">
+      <table class="border-collapse text-left font-mono">
+        <tr><td class="pr-4 py-1">19</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">2</td><td></td><td></td><td></td></tr>
+        <tr><td class="text-red-600 font-bold pr-4 py-1">1</td><td class="pr-4 py-1">9</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">2</td><td></td><td></td></tr>
+        <tr><td></td><td class="text-red-600 font-bold pr-4 py-1">1</td><td class="pr-4 py-1">4</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">2</td><td></td></tr>
+        <tr><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">0</td><td class="pr-4 py-1">2</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">2</td></tr>
+        <tr><td></td><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">0</td><td class="pr-4 py-1">1</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">2</td></tr>
+        <tr><td></td><td></td><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">1</td><td class="font-bold px-3 py-1">0</td></tr>
+      </table>
+      <div class="text-xs text-slate-500 font-sans italic mt-2 text-center">&uarr; Chiều mũi tên đọc số dư từ dưới lên: 1 0 0 1 1</div>
+    </div>
+  </div>
+  <p class="font-bold text-slate-900 text-base">Kết quả: 19D = 10011B</p>
+</div>
+
+<p class="flex items-start gap-2">
+  <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+  <span><em>Trường hợp là số <span class="unknown-badge" title="Chỗ bị mờ trong nguồn">[?]</span> :</em> nhân liên tiếp với 2, sau mỗi lần nhân lấy đi số phần nguyên, tiếp tục cho đến khi kết quả là 0 hoặc đến khi đạt độ chính xác cần thiết. Kết quả là các số lấy đi theo thứ tự từ trên xuống.</span>
+</p>
+
+<!-- Ví dụ 1.7 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.7: <span class="font-normal">Đổi số 0,8125D sang hệ nhị phân.</span></p>
+  <div class="font-mono text-base pl-4 space-y-1">
+    <p>0,8125 &times; 2 = 1,625 &rarr; lấy bit 1</p>
+    <p>0,625 &times; 2 = 1,2 &rarr; lay bit 1</p>
+    <p>0,25 &times; 2 = 0,5 &rarr; lấy bit 0</p>
+    <p>0,5 &times; 2 = 1,0 &rarr; lay bit 1</p>
+  </div>
+  <p class="font-bold text-slate-900 text-base pt-1">Kết quả: 0,8125D = 0,1101B</p>
+</div>
+
+<!-- Ví dụ 1.8 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.8: <span class="font-normal">Đổi số 12,69D sang hệ nhị phân.</span></p>
+  <div class="font-mono text-base pl-4 space-y-1">
+    <p class="font-bold">12D = 1100B</p>
+    <p>0,69 &times; 2 = 1,38</p>
+    <p>0,38 &times; 2 = 0,76</p>
+    <p>0,76 &times; 2 = 1,52</p>
+    <p>0,52 &times; 2 = 1,04</p>
+    <p>0,04 &times; 2 = 0,08</p>
+    <p class="pt-1 font-bold text-brand-600">&rarr; 0,69D &approx; 0,10110B</p>
+  </div>
+  <p class="font-bold text-slate-900 text-base pt-1">Kết quả: 12,69D &approx; 1100,10110B</p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Một số tính chất của số nhị phân</h3>
+<ul class="list-disc pl-6 space-y-1">
+  <li>Số nhị phân n bit có tầm giá trị từ 0 &divide; 2<sup>n</sup> - 1</li>
+  <li>Số nhị phân chẵn (chia hết cho 2) có LSB = 0</li>
+  <li>Số nhị phân lẻ (không chia hết cho 2) có LSB = 1</li>
+  <li>Để biểu diễn số có dấu, xin xem mục 1.6</li>
+  <li>Bit còn được dùng làm đơn vị đo lường thông tin.</li>
+</ul>
+
+<p class="font-semibold pt-1">Các bội số của bit là:</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-sm">
+  <div class="bg-white p-2.5 rounded-lg border border-slate-200">1 byte = 8 bit</div>
+  <div class="bg-white p-2.5 rounded-lg border border-slate-200">1 KB = 2<sup>10</sup> byte = 1024 byte</div>
+  <div class="bg-white p-2.5 rounded-lg border border-slate-200">1 MB = 2<sup>10</sup> KB</div>
+  <div class="bg-white p-2.5 rounded-lg border border-slate-200">1 GB = 2<sup>10</sup> MB</div>
+</div>
+</div>
+</article>
+<!-- END: Section 1.2 -->
+
+<!-- BEGIN: Section 1.3 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-3">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.3</span>
+  HỆ THỐNG SỐ THẬP LỤC PHÂN (<em>HEXADECIMAL - HEX</em>)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 16 - 17</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="flex items-start gap-2">
+  <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+  <span>Hệ thập lục phân có cơ số là 16, sử dụng 16 ký số là 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F. Các ký số A, B, C, D, E, F có giá trị tương ứng là 10, 11, 12, 13, 14, 15.</span>
+</p>
+<p>Hệ thập lục phân được ký hiệu bởi ký tự H hoặc số 16 ở dạng chỉ số dưới.</p>
+
+<!-- Ví dụ 1.9 -->
+<div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.9: <span class="font-mono font-normal">35BH hoặc 35B<sub>16</sub></span></p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ thập lục phân sang hệ thập phân</h3>
+<p>Tính giá trị của số thập lục phân cần chuyển.</p>
+
+<!-- Ví dụ 1.10 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.10: <span class="font-normal">Đổi số 2A9H sang hệ thập phân.</span></p>
+  <div class="font-mono text-base pl-4 space-y-1">
+    <p>2A9H = 2 &times; 16<sup>2</sup> + 10 &times; 16<sup>1</sup> + 9 &times; 16<sup>0</sup></p>
+    <p class="pl-12">= 2 &times; 256 + 10 &times; 16 + 9 &times; 1</p>
+    <p class="pl-12 font-bold text-brand-600">= 681D</p>
+  </div>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ thập phân sang hệ thập lục phân</h3>
+<p>Chia liên tiếp cho 16 cho đến khi có kết quả là 0 rồi lấy các số dư theo thứ tự từ dưới lên trên.</p>
+
+<!-- Ví dụ 1.11 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.11: <span class="font-normal">Đổi số 11512D sang hệ thập lục phân</span></p>
+  <div class="flex flex-col items-center justify-center p-3 overflow-x-auto">
+    <table class="border-collapse font-mono text-base text-left">
+      <tr><td class="pr-4 py-1">11512</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">16</td><td></td><td></td><td></td></tr>
+      <tr><td class="text-red-600 font-bold pr-4 py-1">8</td><td class="pr-4 py-1">719</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">16</td><td></td><td></td></tr>
+      <tr><td></td><td class="text-red-600 font-bold pr-4 py-1">15</td><td class="pr-4 py-1">44</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">16</td><td></td></tr>
+      <tr><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">12</td><td class="pr-4 py-1">2</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">16</td></tr>
+      <tr><td></td><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">2</td><td class="font-bold px-3 py-1">0</td></tr>
+    </table>
+    <div class="text-xs text-slate-500 font-sans italic mt-2 text-center">&uarr; Số dư: 8, 15 (F), 12 (C), 2 &rarr; đọc ngược từ dưới lên: 2 C F 8</div>
+  </div>
+  <p class="font-bold text-slate-900 text-base">Kết quả: 11512D = 2CF8H</p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ thập lục phân sang hệ nhị phân</h3>
+<p>Một ký số trong hệ thập lục phân tương đương với 4 bit trong hệ nhị phân.</p>
+
+<!-- Ví dụ 1.12 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.12: <span class="font-normal">Đổi số 4B7DH sang hệ nhị phân.</span></p>
+  <p class="font-mono text-lg font-bold text-brand-600 pl-4">4B7DH = 0100 1011 0111 1101 B</p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ nhị phân sang hệ thập lục phân</h3>
+<p>Nhóm các bit của số nhị phân theo từng nhóm 4 bit từ bit hàng đơn vị, rồi chuyển sang digit thập lục phân tương ứng.</p>
+
+<!-- Ví dụ 1.13 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.13: <span class="font-normal">Đổi số 10010111000110B sang hệ thập lục phân.</span></p>
+  <div class="font-mono text-base pl-4 space-y-1">
+    <p>10010111000110B = 10 0101 1100 0110 B</p>
+    <p class="pl-28">= 2 &nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;C &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;H</p>
+    <p class="font-bold text-brand-600 pl-28">= 25C6H</p>
+  </div>
+</div>
+
+<div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+  <p class="text-slate-800"><em>Chú ý:</em> Hệ thập lục phân thường được dùng để biểu diễn "ngắn gọn" các số nhị phân.</p>
+</div>
+</div>
+</article>
+<!-- END: Section 1.3 -->
+
+<!-- BEGIN: Section 1.4 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-4">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.4</span>
+  HỆ THỐNG SỐ BÁT PHÂN (<em>OCTAL</em>)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 17 - 18</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="flex items-start gap-2">
+  <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+  <span>Hệ bát phân có cơ số là 8, sử dụng 8 ký số là 0, 1, 2, 3, 4, 5, 6, 7.</span>
+</p>
+<p>Hệ bát phân được ký hiệu bởi ký tự O hoặc số 8 ở dạng chỉ số dưới.</p>
+
+<!-- Ví dụ 1.14 -->
+<div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.14: <span class="font-mono font-normal">367 O hoặc 367<sub>8</sub></span></p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ bát phân sang hệ thập phân</h3>
+<p>Tính giá trị của số thập lục phân cần chuyển.</p>
+
+<!-- Ví dụ 1.15 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.15: <span class="font-normal">Đổi số 273<sub>8</sub> sang hệ thập phân.</span></p>
+  <div class="font-mono text-base pl-4 space-y-1">
+    <p>273<sub>8</sub> = 2 &times; 8<sup>2</sup> + 7 &times; 8<sup>1</sup> + 3 &times; 8<sup>0</sup> = 2 &times; 64 + 7 &times; 8 + 3 &times; 1</p>
+    <p class="font-bold text-brand-600 pl-10">= 187D</p>
+  </div>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ thập phân sang hệ bát phân</h3>
+<p>Chia liên tiếp cho 8 cho đến khi có kết quả là 0 rồi lấy các số dư theo thứ tự từ dưới lên trên.</p>
+
+<!-- Ví dụ 1.16 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.16: <span class="font-normal">Đổi số 572D sang hệ bát phân</span></p>
+  <div class="flex flex-col items-center justify-center p-3 overflow-x-auto">
+    <table class="border-collapse font-mono text-base text-left">
+      <tr><td class="pr-4 py-1">572</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">8</td><td></td><td></td><td></td></tr>
+      <tr><td class="text-red-600 font-bold pr-4 py-1">4</td><td class="pr-4 py-1">71</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">8</td><td></td><td></td></tr>
+      <tr><td></td><td class="text-red-600 font-bold pr-4 py-1">7</td><td class="pr-4 py-1">8</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">8</td><td></td></tr>
+      <tr><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">0</td><td class="pr-4 py-1">1</td><td class="border-l-2 border-b-2 border-slate-900 px-3 py-1 font-bold">8</td></tr>
+      <tr><td></td><td></td><td></td><td class="text-red-600 font-bold pr-4 py-1">1</td><td class="font-bold px-3 py-1">0</td></tr>
+    </table>
+    <div class="text-xs text-slate-500 font-sans italic mt-2 text-center">&uarr; Số dư lấy ngược từ dưới lên: 1 0 7 4</div>
+  </div>
+  <p class="font-bold text-slate-900 text-base">Kết quả: 572D = 1074<sub>8</sub></p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ bát phân sang hệ nhị phân</h3>
+<p>Một ký số trong hệ bát phân tương đương với 3 bit trong hệ nhị phân.</p>
+
+<!-- Ví dụ 1.17 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.17: <span class="font-normal">Đổi số 723<sub>8</sub> sang hệ nhị phân.</span></p>
+  <p class="font-mono text-lg font-bold text-brand-600 pl-4">723<sub>8</sub> = 111 010 011 B</p>
+</div>
+
+<h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Chuyển từ hệ nhị phân sang hệ bát phân</h3>
+<p>Nhóm các bit của số nhị phân theo từng nhóm 3 bit từ bit hàng đơn vị, rồi chuyển sang digit bát phân tương ứng.</p>
+
+<!-- Ví dụ 1.18 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+  <p class="font-bold text-slate-900 text-base">Ví dụ 1.18: <span class="font-normal">Đổi số 10010111000110B sang hệ bát phân.</span></p>
+  <div class="font-mono text-base pl-4 space-y-1">
+    <p>10010111000110B = 10 010 111 000 110 B</p>
+    <p class="pl-28">= 2 &nbsp;2 &nbsp;&nbsp;7 &nbsp;&nbsp;0 &nbsp;&nbsp;6 &nbsp;&nbsp;O</p>
+    <p class="font-bold text-brand-600 pl-28">= 22706<sub>8</sub></p>
+  </div>
+</div>
+
+<div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+  <p class="text-slate-800"><em>Chú ý:</em> Hệ bát phân cũng được dùng để biểu diễn "ngắn gọn" các số nhị phân.</p>
+</div>
+</div>
+</article>
+<!-- END: Section 1.4 -->
+
+<!-- BEGIN: Section 1.5 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-5">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.5</span>
+  CÁC PHÉP TOÁN TRÊN SỐ NHỊ PHÂN
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 18 - 19</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Phép cộng -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Phép cộng</h3>
+  <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl max-w-sm">
+    <p class="font-bold text-slate-900 text-sm mb-2">Bảng phép cộng</p>
+    <div class="font-mono text-base space-y-1">
+      <p>0 + 0 = 0</p>
+      <p>0 + 1 = 1</p>
+      <p>1 + 0 = 1</p>
+      <p>1 + 1 = 0 nhớ 1</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 1.19 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.19: <span class="font-normal font-mono">Tính 1011B + 0111B</span></p>
+    <div class="font-mono text-lg pl-6 inline-block">
+      <table class="text-right">
+        <tr><td class="pr-2"></td><td>1011</td></tr>
+        <tr class="border-b-2 border-slate-900"><td class="pr-2 text-left">+</td><td>0111</td></tr>
+        <tr><td class="pr-2"></td><td class="font-bold text-brand-600 pt-1">10010</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Phép trừ -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Phép trừ</h3>
+  <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl max-w-sm">
+    <p class="font-bold text-slate-900 text-sm mb-2">Bảng phép trừ</p>
+    <div class="font-mono text-base space-y-1">
+      <p>0 - 0 = 0</p>
+      <p>0 - 1 = 1 mượn 1</p>
+      <p>1 - 0 = 1</p>
+      <p>1 - 1 = 0</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 1.20 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.20: <span class="font-normal font-mono">Tính 10001B - 111B</span></p>
+    <div class="font-mono text-lg pl-6 inline-block">
+      <table class="text-right">
+        <tr><td class="pr-2"></td><td>10001</td></tr>
+        <tr class="border-b-2 border-slate-900"><td class="pr-2 text-left">-</td><td>111</td></tr>
+        <tr><td class="pr-2"></td><td class="font-bold text-brand-600 pt-1">1010</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 3- Phép nhân -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Phép nhân</h3>
+  <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl max-w-sm">
+    <p class="font-bold text-slate-900 text-sm mb-2">Bảng phép nhân</p>
+    <div class="font-mono text-base space-y-1">
+      <p>0 &times; 0 = 0</p>
+      <p>0 &times; 1 = 0</p>
+      <p>1 &times; 0 = 0</p>
+      <p>1 &times; 1 = 1</p>
+    </div>
+  </div>
+
+  <!-- Ví dụ 1.21 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.21: <span class="font-normal font-mono">Tính 1010B &times; 1100B</span></p>
+    <div class="font-mono text-lg pl-6 inline-block">
+      <table class="text-right">
+        <tr><td class="pr-2"></td><td>1010</td></tr>
+        <tr class="border-b border-slate-900"><td class="pr-2 text-left">&times;</td><td>1100</td></tr>
+        <tr><td></td><td>0000</td></tr>
+        <tr><td></td><td>0000</td></tr>
+        <tr><td></td><td>1010</td></tr>
+        <tr class="border-b-2 border-slate-900"><td></td><td>1010</td></tr>
+        <tr><td class="pr-2 text-left font-bold">&sum;</td><td class="font-bold text-brand-600 pt-1">1111000</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 4- Phép chia -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Phép chia</h3>
+  <!-- Ví dụ 1.22 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.22: <span class="font-normal font-mono">Tính 11011B / 101B</span></p>
+    <div class="font-mono text-lg pl-6 inline-block">
+      <table>
+        <tr>
+          <td class="pr-3 text-right">110' 11</td>
+          <td class="border-l-2 border-b-2 border-slate-900 px-3 font-bold">101</td>
+        </tr>
+        <tr>
+          <td class="pr-3 text-right border-b border-slate-500">101 &darr;&darr;</td>
+          <td class="border-l-2 border-slate-900 px-3 font-bold text-brand-600">101</td>
+        </tr>
+        <tr>
+          <td class="pr-3 text-right">001 11</td>
+          <td class="border-l-2 border-slate-900 px-3"></td>
+        </tr>
+        <tr>
+          <td class="pr-3 text-right border-b border-slate-500">1 01</td>
+          <td class="border-l-2 border-slate-900 px-3"></td>
+        </tr>
+        <tr>
+          <td class="pr-3 text-right font-bold text-red-600">0 10</td>
+          <td class="border-l-2 border-slate-900 px-3"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 1.5 -->
+
+<!-- BEGIN: Section 1.6 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-6">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.6</span>
+  SỐ CÓ DẤU VÀ SỐ KHÔNG CÓ DẤU
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 19 - 22</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Bù cơ số trừ 1 -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Bù cơ số trừ 1</h3>
+  <p>Cho trước một số N gồm n ký số trong hệ cơ số r, bù cơ số trừ 1 của N được định nghĩa là <strong>r<sup>n</sup> - 1 - N</strong>. Số N và bù cơ số trừ 1 của N phải có cùng số ký số.</p>
+
+  <!-- Ví dụ 1.23 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.23:</p>
+    <p class="pl-4">Bù 9 của 123D là 10<sup>3</sup> - 1 - 123 = 999 - 123 = 876D</p>
+    <p class="pl-4">Bù 1 của 1100B là 2<sup>4</sup> - 1 - 1100B = 1111B - 1100B = 0011B</p>
+    <p class="pl-4">Bù 15 của 2CH là 16<sup>2</sup> - 1 - 2CH = FFH - 2CH = D3H</p>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+    <p class="text-slate-800"><em>Nhận xét:</em> Để tính bù 9 của một số thập phân, ta chỉ việc lấy 9 trừ đi cho từng ký số.</p>
+  </div>
+
+  <!-- Ví dụ 1.24 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.24: <span class="font-normal font-mono">Tính bù 9 của 01234D</span></p>
+    <div class="font-mono text-lg pl-6 inline-block">
+      <table class="text-right">
+        <tr><td class="pr-2"></td><td>99999</td></tr>
+        <tr class="border-b-2 border-slate-900"><td class="pr-2 text-left">-</td><td>01234</td></tr>
+        <tr><td class="pr-2"></td><td class="font-bold text-brand-600 pt-1">98765</td></tr>
+      </table>
+    </div>
+    <p class="font-bold text-slate-900 text-base pt-1">Kết quả: bù 9 của 01234 là 98765.</p>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+    <p class="text-slate-800"><em>Nhận xét:</em> Để tính bù 1 của một số nhị phân, ta chỉ việc đổi bit 1 thành 0 và đổi bit 0 thành 1.</p>
+  </div>
+
+  <!-- Ví dụ 1.25 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.25: <span class="font-normal font-mono">Bù 1 của 1100110B là 0011001B.</span></p>
+  </div>
+</div>
+
+<!-- 2- Bù cơ số -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Bù cơ số</h3>
+  <p>Cho trước một số N gồm n ký số trong hệ cơ số r, bù cơ số của N được định nghĩa là:</p>
+  <div class="font-mono text-base pl-6 space-y-1">
+    <p><strong>r<sup>n</sup> - N</strong> &nbsp;&nbsp;&nbsp;&nbsp;với N &ne; 0</p>
+    <p><strong>0</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;với N = 0</p>
+  </div>
+  <p>Số N và bù cơ số của N phải có cùng số ký số.</p>
+
+  <!-- Ví dụ 1.26 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.26:</p>
+    <p class="pl-4">Bù 10 của 123D là 10<sup>3</sup> - 123 = 1000 - 123 = 877D</p>
+    <p class="pl-4">Bù 2 của 1100B là 2<sup>4</sup> - 1100B = 10000B - 1100B = 0100B</p>
+    <p class="pl-4">Bù 16 của 2CH là 16<sup>2</sup> - 2CH = 100H - 2CH = D4H</p>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500">
+    <p class="text-slate-800"><em>Nhận xét:</em> Bù cơ số có thể được suy ra từ bù cơ số trừ 1 bằng cách cộng thêm 1.</p>
+  </div>
+
+  <!-- Ví dụ 1.27 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.27: <span class="font-normal font-sans">Tính bù 10 của 456D.</span></p>
+    <p class="pl-4">Ta có bù 9 của 456D là 543D.</p>
+    <p class="pl-4 font-bold text-brand-600">Suy ra bù 10 của 456D là 543 + 1 = 544D.</p>
+  </div>
+
+  <!-- Ví dụ 1.28 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.28: <span class="font-normal font-sans">Tính bù 2 của 1011B.</span></p>
+    <p class="pl-4">Ta có bù 1 của 1011B là 0100B.</p>
+    <p class="pl-4 font-bold text-brand-600">Suy ra bù 2 của 1011B là 0100B + 1 = 0101B.</p>
+  </div>
+
+  <!-- Ví dụ 1.29 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.29: <span class="font-normal font-sans">Tính bù 2 của 1000B</span></p>
+    <p class="pl-4">Ta có bù 1 của 1000B là 0111B.</p>
+    <p class="pl-4 font-bold text-brand-600">Suy ra bù 2 của 1000B là 0111B + 1 = 1000B.</p>
+  </div>
+</div>
+
+<!-- 3- Số không dấu -->
+<div class="space-y-2">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Số không dấu</h3>
+  <p>Số không dấu có giá trị lớn hơn hay bằng không.</p>
+  <p>Một số nhị phân n bit không dấu diễn tả một tầm giá trị từ <strong>0 đến 2<sup>n</sup> - 1</strong></p>
+</div>
+
+<!-- 4- Số có dấu -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Số có dấu</h3>
+  <p>Có 2 cách để diễn tả số có dấu</p>
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span><strong>Hệ thống độ lớn có dấu</strong> (<em>Signed-Magnitude System</em>): Một số trong hệ thống độ lớn có dấu bao gồm hai phần là ký hiệu chỉ dấu và độ lớn.</span>
+  </p>
+
+  <!-- Ví dụ 1.30 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.30: <span class="font-normal font-mono">+12; -87,25; +0; -0</span></p>
+  </div>
+
+  <p>Trong hệ nhị phân, MSB của một chuỗi bit là ký hiệu chỉ dấu (0 = cộng, 1 = trừ).</p>
+
+  <!-- Ví dụ 1.31 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base space-y-1">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.31:</p>
+    <p class="pl-4">0110B = +6D</p>
+    <p class="pl-4">1110B = -6D</p>
+  </div>
+
+  <p>Trong hệ thống độ lớn có dấu, một số nhị phân n bit nằm trong tầm giá trị từ <strong>-(2<sup>n-1</sup> - 1) đến 2<sup>n-1</sup> - 1</strong>, trong đó số không có thể được biểu diễn bằng hai cách.</p>
+
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span><strong>Hệ thống bù cơ số</strong> (<em>Radix Complement System</em>): Đây là hệ thống được sử dụng rộng rãi nhất để biểu diễn số có dấu đối với hệ thống điện tử số, nhất là đối với số nhị phân.</span>
+  </p>
+
+  <p>Trong hệ nhị phân có dấu, <span class="unknown-badge" title="Chỗ bị mờ/hỏng trong nguồn">[?]</span> số dương được biểu diễn như dạng nhị phân thông thường nhưng MSB phải là 0, còn số âm được tạo ra bằng cách lấy bù 2 của số dương tương ứng.</p>
+
+  <!-- Ví dụ 1.32 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.32: <span class="font-normal font-mono">0110B = +6D</span></p>
+    <p class="pl-4">Bù 2 của 0110B là 1010B nên 1010B = -6D</p>
+  </div>
+
+  <!-- Ví dụ 1.33 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.33: <span class="font-normal font-sans">Đổi -14D sang hệ nhị phân có dấu.</span></p>
+    <p class="pl-4">+14D = 01110B</p>
+    <p class="pl-4">Bù 2 của 01110B là 10010B</p>
+    <p class="pl-4 font-bold text-brand-600">&rarr; -14D = 10010B</p>
+  </div>
+
+  <!-- Ví dụ 1.34 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.34: <span class="font-normal font-sans">Đổi số nhị phân có dấu 11101B sang hệ thập phân.</span></p>
+    <p class="pl-4">Bù 2 của 11101B là 00011B = +3D</p>
+    <p class="pl-4 font-bold text-brand-600">&rarr; 11101B = -3D</p>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-2">
+    <p class="font-bold text-slate-900 not-italic">Nhận xét</p>
+    <p class="text-slate-800">- Số âm trong hệ nhị phân có dấu luôn có MSB = 1.</p>
+    <p class="text-slate-800">- Đối với số dương, việc thêm các bit 0 vào bên trái (nghĩa là trước MSB) không làm thay đổi giá trị. Còn đối với số âm, việc thêm các bit 1 vào bên trái (nghĩa là trước MSB) không làm thay đổi giá trị.</p>
+    <p class="text-slate-800">- Trong hệ thống bù cơ số, một số nhị phân có dấu n bit có tầm giá trị là <strong>-2<sup>n-1</sup> &divide; 2<sup>n-1</sup> - 1</strong></p>
+    <p class="text-slate-800 pl-4 font-semibold">&rArr; số nhị phân có dấu 8 bit có tầm giá trị từ -128 đến 127.</p>
+    <p class="text-slate-800">- Một số trường hợp đặc biệt đối với nhị phân có dấu:</p>
+    <p class="font-mono text-slate-900 pl-6 font-bold">01.. 1B = 2<sup>n-1</sup> - 1</p>
+  </div>
+
+  <!-- Ví dụ 1.35 -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm font-mono text-base space-y-1">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.35:</p>
+    <p class="pl-4">0110B = 00110B = 000110B = ... = +6D</p>
+    <p class="pl-4">1010B = 11010B = 111010B = ... = -6D</p>
+  </div>
+</div>
+
+<!-- 5- Phép trừ sử dụng số bù -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">5- Phép trừ sử dụng số bù</h3>
+  <p>Phép toán trừ hai số không dấu M - N (gồm n ký số) ở cơ số r được thực hiện như sau</p>
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>Cộng số bị trừ M với bù cơ số của số trừ N:</span>
+  </p>
+  <div class="flex justify-center">
+    <div class="bg-slate-50 border border-slate-300 px-5 py-2 rounded font-mono font-bold text-slate-900">
+      M + (r<sup>n</sup> - N) = M - N + r<sup>n</sup>
+    </div>
+  </div>
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>Nếu M &ge; N, tổng sẽ tạo ra số nhớ cuối và số nhớ này được bỏ qua. Kết quả là số dương.</span>
+  </p>
+  <p class="font-mono pl-6 text-slate-700">(M - N + r<sup>n</sup>) - r<sup>n</sup> = M - N (số nhớ cuối chính là r<sup>n</sup>)</p>
+
+  <p class="flex items-start gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-500 mt-2.5 shrink-0"></span>
+    <span>Nếu M &lt; N, tổng sẽ không tạo ra số nhớ cuối và bằng r<sup>n</sup> - (N - M). Đó chính là bù r của (N - M). Để có được kết quả, lấy bù r của tổng và đặt dấu trừ đằng trước. Kết quả là số âm.</span>
+  </p>
+
+  <!-- Ví dụ 1.36 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.36: <span class="font-normal">Dùng bù 10 để thực hiện 67543 - 2465</span></p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr><td></td><td class="text-right">02465</td></tr>
+        <tr><td class="pr-3">Bù 10 của 02465 =</td><td class="text-right border-b-2 border-slate-900">+ 32457</td></tr>
+        <tr><td></td><td class="text-right font-bold text-brand-600 pt-1">34922</td></tr>
+      </table>
+    </div>
+    <p class="font-semibold text-slate-800">Bỏ qua số nhớ cuối: 65078</p>
+    <p class="font-bold text-slate-900 text-base">Kết quả: 67543 - 2465 = 65078</p>
+  </div>
+
+  <!-- Ví dụ 1.37 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.37: <span class="font-normal">Dùng bù 10 để thực hiện 2465 - 67543</span></p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr><td></td><td class="text-right">02465</td></tr>
+        <tr><td class="pr-3">Bù 10 của 67543 =</td><td class="text-right border-b-2 border-slate-900">+ 32457</td></tr>
+        <tr><td></td><td class="text-right font-bold text-brand-600 pt-1">34922</td></tr>
+      </table>
+    </div>
+    <p class="font-semibold text-slate-800">Không có số nhớ cuối. Tính bù 10 của 34922 là -65078</p>
+    <p class="font-bold text-slate-900 text-base">Kết quả: 2465 - 67543 = - 65078</p>
+  </div>
+
+  <!-- Ví dụ 1.38 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.38: <span class="font-normal font-mono">Dùng bù 2 để thực hiện 111001B - 1010B</span></p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr><td></td><td class="text-right">111001B</td></tr>
+        <tr><td class="pr-3">Bù 2 của 001010B =</td><td class="text-right border-b-2 border-slate-900">+ 110110B</td></tr>
+        <tr><td></td><td class="text-right font-bold text-brand-600 pt-1">1101111B</td></tr>
+      </table>
+    </div>
+    <p class="font-semibold text-slate-800">Bỏ qua số nhớ cuối.</p>
+    <p class="font-bold text-slate-900 text-base">Kết quả: 111001B - 1010B = 101111B</p>
+  </div>
+
+  <!-- Ví dụ 1.39 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.39: <span class="font-normal font-mono">Dùng bù 2 để thực hiện 1010B - 111001B</span></p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr><td></td><td class="text-right">001010B</td></tr>
+        <tr><td class="pr-3">Bù 2 của 111001B =</td><td class="text-right border-b-2 border-slate-900">+ 000111B</td></tr>
+        <tr><td></td><td class="text-right font-bold text-brand-600 pt-1">010001B</td></tr>
+      </table>
+    </div>
+    <p class="font-semibold text-slate-800">Không có số nhớ cuối. Tính bù 2 của 010001 là 101111</p>
+    <p class="font-bold text-slate-900 text-base">Kết quả: 1010B - 111001B = -101111B</p>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 1.6 -->
+
+<!-- BEGIN: Section 1.7 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-7">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.7</span>
+  CÁC LOẠI MÃ NHỊ PHÂN
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 23 - 25</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- Bảng so sánh mã nhị phân -->
+<div class="overflow-x-auto">
+  <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+    <thead>
+      <tr class="bg-slate-100 text-slate-900 font-bold border-b border-slate-300">
+        <th class="p-2.5 border-r border-slate-300 font-sans">Ký số thập phân</th>
+        <th class="p-2.5 border-r border-slate-300 font-sans">Mã BCD (8421)</th>
+        <th class="p-2.5 border-r border-slate-300 font-sans">Mã BCD 2421</th>
+        <th class="p-2.5 border-r border-slate-300 font-sans">Mã quá 3 (Excess 3-XS3)</th>
+        <th class="p-2.5 font-sans">Mã 1 trong n</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200">
+      <tr><td class="p-2 border-r border-slate-300 font-bold">0</td><td class="p-2 border-r border-slate-300">0000</td><td class="p-2 border-r border-slate-300">0000</td><td class="p-2 border-r border-slate-300">0011</td><td class="p-2">0000000001</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">1</td><td class="p-2 border-r border-slate-300">0001</td><td class="p-2 border-r border-slate-300">0001</td><td class="p-2 border-r border-slate-300">0100</td><td class="p-2">0000000010</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">2</td><td class="p-2 border-r border-slate-300">0010</td><td class="p-2 border-r border-slate-300">0010</td><td class="p-2 border-r border-slate-300">0101</td><td class="p-2">0000000100</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">3</td><td class="p-2 border-r border-slate-300">0011</td><td class="p-2 border-r border-slate-300">0011</td><td class="p-2 border-r border-slate-300">0110</td><td class="p-2">0000001000</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">4</td><td class="p-2 border-r border-slate-300">0100</td><td class="p-2 border-r border-slate-300">0100</td><td class="p-2 border-r border-slate-300">0111</td><td class="p-2">0000010000</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">5</td><td class="p-2 border-r border-slate-300">0101</td><td class="p-2 border-r border-slate-300">1011</td><td class="p-2 border-r border-slate-300">1000</td><td class="p-2">0000100000</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">6</td><td class="p-2 border-r border-slate-300">0110</td><td class="p-2 border-r border-slate-300">1100</td><td class="p-2 border-r border-slate-300">1001</td><td class="p-2">0001000000</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">7</td><td class="p-2 border-r border-slate-300">0111</td><td class="p-2 border-r border-slate-300">1101</td><td class="p-2 border-r border-slate-300">1010</td><td class="p-2">0010000000</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">8</td><td class="p-2 border-r border-slate-300">1000</td><td class="p-2 border-r border-slate-300">1110</td><td class="p-2 border-r border-slate-300">1011</td><td class="p-2">0100000000</td></tr>
+      <tr><td class="p-2 border-r border-slate-300 font-bold">9</td><td class="p-2 border-r border-slate-300">1001</td><td class="p-2 border-r border-slate-300">1111</td><td class="p-2 border-r border-slate-300">1100</td><td class="p-2">1000000000</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 1- Mã BCD -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Mã BCD (<em>Binary-Coded-Decimal</em>)</h3>
+  <p>Mã BCD còn được gọi là mã 8421 được dùng để mã hóa các ký số của một số thập phân. Để chuyển một số thập phân sang mã BCD, ta thay thế từng ký số thành 4 bit nhị phân tương đương.</p>
+
+  <!-- Ví dụ 1.40 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.40: <span class="font-normal">Đổi số 253,86 D sang mã BCD.</span></p>
+    <p class="font-mono text-base font-bold text-brand-600 pl-4">253,86 D = 0010 1010 0011, 1000 0110 (BCD)</p>
+  </div>
+
+  <p>Mã BCD chỉ bao gồm các tổ hợp nhị phân từ 0000 đến 1001. Còn các tổ hợp nhị phân từ 1010 đến 1111 không phải là mã BCD.</p>
+</div>
+
+<!-- 2- Mã BCD 2421 -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Mã BCD 2421</h3>
+  <p>Mã BCD 2421 cũng là một dạng mã BCD, nghĩa là mã BCD 2421 được dùng để biểu diễn một số thập phân. Mã BCD 2421 là một tổ hợp nhị phân 4 bit có trọng số 2-4-2-1.</p>
+  <p>Mã 2421 có tính tự bù (bù cơ số).</p>
+
+  <!-- Ví dụ 1.41 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.41:</p>
+    <p class="pl-4">Số 0 có mã 2421 là 0000, bù với số 9 có mã 2421 là 1111.</p>
+    <p class="pl-4">Số 3 có mã 2421 là 0011, bù với số 6 có mã 2421 là 1100.</p>
+  </div>
+
+  <p>Mã BCD 2421 không bao gồm các tổ hợp nhị phân từ 0101 đến 1010.</p>
+  <p>Để biểu diễn một ký số thập phân, ngoài mã BCD (BCD 8421) và mã BCD 2421, còn có các loại mã tương tự như: mã BCD 4221, mã BCD 5421, ...</p>
+</div>
+
+<!-- 3- Mã quá 3 -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Mã quá 3 (<em>Excess 3 - XS3</em>)</h3>
+  <p>Mã quá 3 được tạo ra từ mã 8421 bằng cách cộng thêm 3. Mã quá 3 là loại mã không có trọng số. Mã quá 3 cũng có thể dùng để diễn tả một ký số thập phân. Mã quá 3 cũng có tính tự bù.</p>
+
+  <!-- Ví dụ 1.42 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-1 font-mono text-base">
+    <p class="font-bold text-slate-900 font-sans text-base">Ví dụ 1.42:</p>
+    <p class="pl-4">Số 0 có mã quá 3 là 0011, bù với số 9 có mã quá 3 là 1100.</p>
+    <p class="pl-4">Số 4 có mã quá 3 là 0111, bù với số 5 có mã quá 3 là 1000.</p>
+  </div>
+</div>
+
+<!-- 4- Mã Gray -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Mã Gray</h3>
+  <p>Mã Gray không là mã BCD. Mã Gray là loại mã không có trọng số, được tạo ra từ mã nhị phân theo nguyên tắc sau</p>
+  <ul class="list-disc pl-6 space-y-1">
+    <li>MSB của số mã Gray và số nhị phân là giống nhau.</li>
+    <li>Cộng MSB của số nhị phân vào bit bên phải và ghi tổng (bỏ qua số nhớ). Chú ý: cộng và bỏ qua số nhớ chính là phép EXOR (xem mục 2.7.7).</li>
+    <li>Tiếp tục như vậy cho đến LSB.</li>
+    <li>Số mã Gray luôn luôn cùng số bit với số nhị phân.</li>
+  </ul>
+
+  <!-- Ví dụ 1.43 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.43: <span class="font-normal">Đổi 11010 nhị phân sang mã Gray.</span></p>
+    <div class="flex justify-center p-3">
+      <!-- Sơ đồ mũi tên chuyển đổi sang mã Gray -->
+      <div class="font-mono text-lg inline-block">
+        <div class="flex items-center gap-4">
+          <span class="font-sans font-semibold text-sm w-24"></span>
+          <span class="text-xs text-slate-400">+</span>
+          <span class="tracking-[1.2rem]">1 1 0 1</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="font-sans font-semibold text-sm w-24">Số nhị phân</span>
+          <span class="font-bold tracking-[1.4rem] pl-2">1 1 0 1 0</span>
+        </div>
+        <div class="flex items-center gap-4 my-1">
+          <span class="w-24"></span>
+          <span class="text-brand-500 tracking-[1.3rem] pl-2">&darr; &nearr; &nearr; &nearr; &nearr;</span>
+        </div>
+        <div class="flex items-center gap-4 border-t border-slate-300 pt-1">
+          <span class="font-sans font-semibold text-sm w-24">Mã Gray</span>
+          <span class="font-bold text-brand-600 tracking-[1.4rem] pl-2">1 0 1 1 1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ví dụ 1.44 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.44: <span class="font-normal">Đổi 10011 (mã Gray) sang số nhị phân</span></p>
+    <div class="flex justify-center p-3 overflow-x-auto">
+      <div class="font-mono text-base inline-block">
+        <table class="border-collapse text-center">
+          <tr>
+            <td class="font-sans text-left pr-4 font-semibold text-sm">Mã Gray</td>
+            <td class="px-3 font-bold">1</td>
+            <td class="px-3 font-bold">0</td>
+            <td class="px-3 font-bold">0</td>
+            <td class="px-3 font-bold">1</td>
+            <td class="px-3 font-bold">1</td>
+          </tr>
+          <tr>
+            <td class="font-sans text-left pr-4 text-xs text-slate-400">cộng chéo (+)</td>
+            <td class="py-2 text-brand-500 font-bold">&darr;</td>
+            <td class="py-2 text-brand-500 font-bold">&rdsh;</td>
+            <td class="py-2 text-brand-500 font-bold">&rdsh;</td>
+            <td class="py-2 text-brand-500 font-bold">&rdsh;</td>
+            <td class="py-2 text-brand-500 font-bold">&rdsh;</td>
+          </tr>
+          <tr class="border-t-2 border-slate-900">
+            <td class="font-sans text-left pr-4 font-semibold text-sm">Số nhị phân</td>
+            <td class="px-3 font-bold text-brand-600">1</td>
+            <td class="px-3 font-bold text-brand-600">1</td>
+            <td class="px-3 font-bold text-brand-600">1</td>
+            <td class="px-3 font-bold text-brand-600">0</td>
+            <td class="px-3 font-bold text-brand-600">1</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-1">
+    <p class="font-bold text-slate-900 not-italic">Nhận xét:</p>
+    <p class="text-slate-800">Có thể tạo ra mã Gray từ mã nhị phân theo cách sau: tính từ bên trái, bit đi sau bit 0 (của số nhị phân) được giữ nguyên, bit đi sau bit 1 (của số nhị phân) thì bị đảo.</p>
+  </div>
+
+  <!-- Bảng mã Gray -->
+  <div class="space-y-3 pt-2">
+    <h4 class="font-bold text-slate-900 text-center sm:text-left text-base">Bảng mã Gray</h4>
+    <div class="overflow-x-auto max-w-md mx-auto sm:mx-0">
+      <table class="w-full text-center border-collapse border border-slate-300 font-mono text-sm bg-white rounded-xl shadow-xs">
+        <thead>
+          <tr class="bg-slate-100 text-slate-900 font-bold border-b border-slate-300 font-sans">
+            <th class="p-2 border-r border-slate-300">Thập phân</th>
+            <th class="p-2 border-r border-slate-300">Nhị phân</th>
+            <th class="p-2">Gray</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr><td class="p-1.5 border-r border-slate-300">0</td><td class="p-1.5 border-r border-slate-300">0000</td><td class="p-1.5">0000</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">1</td><td class="p-1.5 border-r border-slate-300">0001</td><td class="p-1.5">0001</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">2</td><td class="p-1.5 border-r border-slate-300">0010</td><td class="p-1.5">0011</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">3</td><td class="p-1.5 border-r border-slate-300">0011</td><td class="p-1.5">0010</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">4</td><td class="p-1.5 border-r border-slate-300">0100</td><td class="p-1.5">0110</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">5</td><td class="p-1.5 border-r border-slate-300">0101</td><td class="p-1.5">0111</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">6</td><td class="p-1.5 border-r border-slate-300">0110</td><td class="p-1.5">0101</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">7</td><td class="p-1.5 border-r border-slate-300">0111</td><td class="p-1.5">0100</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">8</td><td class="p-1.5 border-r border-slate-300">1000</td><td class="p-1.5">1100</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">9</td><td class="p-1.5 border-r border-slate-300">1001</td><td class="p-1.5">1101</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">10</td><td class="p-1.5 border-r border-slate-300">1010</td><td class="p-1.5">1111</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">11</td><td class="p-1.5 border-r border-slate-300">1011</td><td class="p-1.5">1110</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">12</td><td class="p-1.5 border-r border-slate-300">1100</td><td class="p-1.5">1010</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">13</td><td class="p-1.5 border-r border-slate-300">1101</td><td class="p-1.5">1011</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">14</td><td class="p-1.5 border-r border-slate-300">1110</td><td class="p-1.5">1001</td></tr>
+          <tr><td class="p-1.5 border-r border-slate-300">15</td><td class="p-1.5 border-r border-slate-300">1111</td><td class="p-1.5">1000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-1">
+    <p class="font-bold text-slate-900 not-italic">Tính chất của mã Gray</p>
+    <p class="text-slate-800">Hai giá trị mã Gray liên tiếp luôn luôn chỉ khác nhau tại 1 bit.</p>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 1.7 -->
+
+<!-- BEGIN: Section 1.8 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-1-8">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">1.8</span>
+  PHÉP CỘNG SỐ BCD
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 25 - 26</span>
+</div>
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- Tổng hai ký số nhỏ hơn hay bằng 9 -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Tổng hai ký số nhỏ hơn hay bằng 9</h3>
+  <p>Thực hiện phép cộng như trong hệ nhị phân. Vì tổng hai ký số nhỏ hơn hay bằng 9 nên không có số nhớ tạo ra.</p>
+
+  <!-- Ví dụ 1.45 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.45</p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr>
+          <td class="pr-4 text-right">6</td>
+          <td class="pr-4">&rarr;</td>
+          <td></td>
+          <td class="text-right">0110</td>
+          <td class="pl-2 font-sans text-sm text-slate-600">(Mã BCD)</td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right">+ 2</td>
+          <td class="pr-4">&rarr;</td>
+          <td class="pr-1">+</td>
+          <td class="text-right border-b-2 border-slate-900">0010</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right font-bold pt-1">8</td>
+          <td class="pr-4 pt-1">&larr;</td>
+          <td></td>
+          <td class="text-right font-bold text-brand-600 pt-1">1000</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Ví dụ 1.46 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.46</p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr>
+          <td class="pr-4 text-right">43</td>
+          <td class="pr-4">&rarr;</td>
+          <td></td>
+          <td class="text-right">0110 0011</td>
+          <td class="pl-2 font-sans text-sm text-slate-600">(Mã BCD)</td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right">+ 25</td>
+          <td class="pr-4">&rarr;</td>
+          <td class="pr-1">+</td>
+          <td class="text-right border-b-2 border-slate-900">0010 0101</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right font-bold pt-1">68</td>
+          <td class="pr-4 pt-1">&larr;</td>
+          <td></td>
+          <td class="text-right font-bold text-brand-600 pt-1">0110 1000</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Tổng hai ký số lớn hơn 9 -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Tổng hai ký số lớn hơn 9</h3>
+  <p>Khi tổng hai ký số lớn hơn 9, mã sinh ra không còn là mã BCD nữa. Để có mã BCD đúng, kết quả phải được sửa sai bằng cách cộng thêm 0110 (6D). Khi đó, luôn luôn có số nhớ cho ký số kế tiếp.</p>
+  <p>Việc sửa sai này được gọi là <em>hiệu chỉnh thập phân</em>.</p>
+
+  <!-- Ví dụ 1.47 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.47</p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr>
+          <td class="pr-4 text-right">7</td>
+          <td class="pr-4">&rarr;</td>
+          <td></td>
+          <td class="text-right">0111</td>
+          <td class="pl-2 font-sans text-sm text-slate-600">(Mã BCD)</td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right">+ 5</td>
+          <td class="pr-4">&rarr;</td>
+          <td class="pr-1">+</td>
+          <td class="text-right border-b border-slate-500">0101</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-right font-bold text-red-600">1100</td>
+          <td class="pl-2 font-sans text-sm text-red-600">Mã sai (không là BCD)</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="pr-1">+</td>
+          <td class="text-right border-b-2 border-slate-900">0110</td>
+          <td class="pl-2 font-sans text-sm text-slate-700">Cộng 6 để hiệu chỉnh thập phân</td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right font-bold pt-1">12</td>
+          <td class="pr-4 pt-1">&larr;</td>
+          <td></td>
+          <td class="text-right font-bold text-brand-600 pt-1">10010</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Ví dụ 1.48 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 1.48</p>
+    <div class="font-mono text-base pl-6 inline-block">
+      <table>
+        <tr>
+          <td class="pr-4 text-right">36</td>
+          <td class="pr-4">&rarr;</td>
+          <td></td>
+          <td class="text-right">0011 0110</td>
+          <td class="pl-2 font-sans text-sm text-slate-600">(Mã BCD)</td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right">+ 24</td>
+          <td class="pr-4">&rarr;</td>
+          <td class="pr-1">+</td>
+          <td class="text-right border-b border-slate-500">0010 0100</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-right font-bold text-red-600">0101 1010</td>
+          <td class="pl-2 font-sans text-sm text-red-600">Mã sai</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="pr-1">+</td>
+          <td class="text-right border-b-2 border-slate-900">0110</td>
+          <td class="pl-2 font-sans text-sm text-slate-700">Hiệu chỉnh thập phân</td>
+        </tr>
+        <tr>
+          <td class="pr-4 text-right font-bold pt-1">60</td>
+          <td class="pr-4 pt-1">&larr;</td>
+          <td></td>
+          <td class="text-right font-bold text-brand-600 pt-1">0110 0000</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-2">
+    <p class="font-bold text-slate-900 not-italic">Kết luận: Khi thực hiện phép cộng hai số BCD, tiến hành cộng từng cặp hai ký số.</p>
+    <p class="text-slate-800">- Nếu kết quả nhỏ hơn hay bằng 9 thì là kết quả đúng.</p>
+    <p class="text-slate-800">- Nếu kết quả lớn hơn 9 thì hiệu chỉnh BCD bằng cách cộng thêm 0110 (6D) và tạo ra số nhớ cho ký số kế tiếp.</p>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 1.8 -->
+
+<!-- BEGIN: Chapter Navigation Footer -->
+<div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+<div class="text-center sm:text-left">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+<h4 class="text-base font-bold text-slate-800">Kỹ thuật số & Thiết kế vi mạch</h4>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-1-1">
+  Lên đầu trang
+</a>
+<a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="Chuong2-dai-so-boole-va-cac-cong-locgic-phan2.html">
+  Tiếp tục: Chương 2 &rarr;
+</a>
+</div>
+</div>
+<!-- END: Chapter Navigation Footer -->
+
+</main>
+<!-- END: Main Content Area -->
+
+</body>
+</html>

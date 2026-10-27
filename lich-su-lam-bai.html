@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lịch sử làm bài — CƠ KHÍ HUIT</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css?v=20261017d">
+<style>
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:var(--gutter)}
+
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:var(--gutter)}
+.kpi{padding:16px 18px;border-radius:var(--r-lg);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.kpi p{margin:0}
+.kpi .l{font:600 11px/1.3 var(--font-display);letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
+.kpi .v{font:700 26px/1.15 var(--font-mono);color:var(--text-strong);letter-spacing:-.02em;margin-top:2px}
+.kpi .v small{font:500 12px/1 var(--font-display);color:var(--text-muted)}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+.cols{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+@media (max-width:1000px){.cols{grid-template-columns:1fr}}
+
+.panel{padding:22px 24px;border-radius:var(--r-xl);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.panel h2{margin:0 0 4px;font:700 18px/1.3 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.panel .sub{margin:0 0 18px;font-size:13.5px;color:var(--text-muted)}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.toolbar input[type=search]{flex:1 1 220px;min-width:0}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl thead th{
+  text-align:left;padding:11px 16px;font:600 11px/1.2 var(--font-display);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);
+  background:var(--brand-06);border-bottom:1px solid var(--brand-06);white-space:nowrap;
+}
+.tbl tbody td{padding:14px 16px;border-bottom:1px solid var(--brand-06);vertical-align:middle}
+.tbl tbody tr{transition:background var(--dur-fast) var(--ease-out)}
+.tbl tbody tr:hover{background:var(--glass-1-bg)}
+.tbl .c-subj{font-weight:600;color:var(--text-strong)}
+.tbl .c-subj small{display:block;font:400 11.5px/1.4 var(--font-display);color:var(--text-muted);font-weight:400;margin-top:2px}
+.tbl .c-subj .tag-part{
+  display:inline-block;margin-left:6px;padding:2px 8px;border-radius:var(--r-full);
+  background:var(--brand-10);color:var(--text-strong);
+  font:600 11px/1.4 var(--font-display);vertical-align:1px;
+}
+.tbl .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl .c-act{text-align:right}
+.link-del{
+  border:0;background:transparent;cursor:pointer;color:var(--brand);
+  font:600 13px/1 var(--font-display);padding:8px;border-radius:var(--r-sm);
+}
+.link-del:hover{background:var(--brand-10)}
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--brand-06)}
+
+/* biểu đồ cột 7 ngày */
+.chart{display:flex;align-items:stretch;gap:10px;height:150px;padding:6px 0 0}
+.chart .col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%}
+/* vùng cột co giãn: trần cột = 100% vùng này, không bao giờ đẩy nhãn ra ngoài */
+.chart .bar-wrap{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.chart .bar{width:100%;max-width:34px;border-radius:8px 8px 4px 4px;background:var(--brand);
+  min-height:4px;box-shadow:0 2px 8px rgba(3,78,162,.22);position:relative}
+.chart .bar.empty{background:var(--gray-300);box-shadow:none}
+.chart .v{font:600 11px/1 var(--font-mono);color:var(--text-muted)}
+.chart .lb{font:500 10.5px/1 var(--font-display);color:var(--text-muted)}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--text-muted)}
+.chart-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+.rank{list-style:none;margin:0;padding:0}
+.rank li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--brand-06)}
+.rank li:last-child{border-bottom:0}
+.rank .n{
+  width:24px;height:24px;flex:none;border-radius:var(--r-sm);display:grid;place-items:center;
+  font:700 11px/1 var(--font-mono);background:var(--brand-10);color:var(--text-strong);
+}
+.rank .nm{flex:1;min-width:0;font-size:13.5px;font-weight:600;color:var(--text-strong);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .pc{font:700 13px/1 var(--font-mono);color:var(--text-strong);flex:none}
+
+.empty{padding:40px 20px;text-align:center}
+.empty b{display:block;font:700 16px/1.3 var(--font-display);color:var(--text-strong);margin-bottom:6px}
+.empty p{margin:0 0 16px;color:var(--text-muted);font-size:14px}
+
+/* DANGER ZONE — không dùng đỏ, bù bằng 4 tín hiệu: viền · nhãn · copy · icon */
+.danger{margin-top:20px;padding:20px 22px;border-radius:var(--r-xl);border:1.5px solid var(--brand-25);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.danger h3{margin:0 0 4px;font:600 11px/1.3 var(--font-display);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-strong)}
+.danger p{margin:0 0 14px;font-size:13px;color:var(--text)}
+.btn-danger{
+  display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;cursor:pointer;
+  background:transparent;border:1.5px solid var(--brand);border-radius:var(--r-md);
+  color:var(--text-strong);font:600 13.5px/1 var(--font-display);
+  transition:background var(--dur-fast) var(--ease-out);
+}
+.btn-danger:hover{background:var(--brand-10)}
+.btn-danger svg{width:16px;height:16px}
+.btn-danger:disabled{opacity:.45;cursor:not-allowed}
+</style>
+</head>
+<body data-depth="0">
+
+<div data-ck-nav="history"></div>
+
+<main class="ck-wrap">
+
+  <header class="page-head">
+    <div>
+      <h1 class="ck-page-title">Lịch sử làm bài</h1>
+      <p class="ck-page-sub">Mọi phiên ôn tập bạn làm trên máy này đều được ghi lại tự động.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="ck-btn ghost" id="btnExport" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>
+        Xuất Ảnh
+      </button>
+      <a class="ck-btn" href="index.html#lb">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h14v15H5zM8.5 9h7M8.5 12.5h7M8.5 16h4"/></svg>
+        Ôn tập ngay
+      </a>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Tổng quan"></section>
+
+  <div class="cols">
+    <section class="panel glass g2" aria-labelledby="tbTitle">
+      <h2 id="tbTitle">Danh sách phiên</h2>
+      <p class="sub">Mới nhất nằm trên cùng. Bấm một dòng để xem lại thông tin đề của môn đó.</p>
+
+      <div class="toolbar">
+        <input class="ck-input" type="search" id="q" placeholder="Tìm theo tên môn…" autocomplete="off">
+        <select class="ck-input" id="cat" aria-label="Lọc theo nhóm môn"><option value="">Tất cả nhóm môn</option></select>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Môn học</th><th>Nhóm</th><th>Điểm</th><th>Số câu</th>
+              <th>Độ đúng</th><th>Thời gian</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="empty glass g1" id="empty" hidden>
+        <b>Chưa có phiên làm bài nào</b>
+        <p>Hãy vào <a href="index.html#lb" style="color:var(--text-strong);font-weight:600">Lò ôn luyện</a> chọn một môn để xem thông tin đề thi.</p>
+        <a class="ck-btn" href="index.html#lb">Chọn môn ôn tập</a>
+      </div>
+    </section>
+
+    <aside style="display:flex;flex-direction:column;gap:20px">
+      <section class="panel glass g1" aria-labelledby="chTitle">
+        <h2 id="chTitle">Hoạt động 7 ngày</h2>
+        <p class="sub">Số câu đã làm mỗi ngày.</p>
+        <div class="chart" id="chart" role="img" aria-label="Biểu đồ cột số câu đã làm trong 7 ngày qua"></div>
+        <div class="chart-legend">
+          <span><i style="background:var(--brand)"></i>Đã làm</span>
+          <span><i style="background:var(--gray-300)"></i>Chưa làm</span>
+        </div>
+      </section>
+
+      <section class="panel glass g1" aria-labelledby="rkTitle">
+        <h2 id="rkTitle">Môn đã làm nhiều nhất</h2>
+        <p class="sub">Xếp theo tỉ lệ đúng ở lần làm tốt nhất.</p>
+        <ol class="rank" id="rank"></ol>
+      </section>
+
+      <section class="danger glass g1">
+        <h3>DANGER ZONE</h3>
+        <p>Hành động này không thể hoàn tác. Toàn bộ lịch sử làm bài trên thiết bị này sẽ bị xoá vĩnh viễn.</p>
+        <button class="btn-danger" id="btnClear" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4m0 4h.01"/></svg>
+          Xoá toàn bộ lịch sử
+        </button>
+      </section>
+    </aside>
+  </div>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="assets/app.js?v=20261017d"></script>
+<script src="assets/data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var query = "", cat = "";
+
+  /* Tìm slug của môn theo tên — cho các phiên cũ chưa lưu slug */
+  function slugOf(name) {
+    for (var i = 0; i < CK.SUBJECTS.length; i++) if (CK.SUBJECTS[i].name === name) return CK.SUBJECTS[i].slug;
+    return "";
+  }
+
+  function badge(pct) {
+    var lvl = pct >= 80 ? "solid" : pct >= 50 ? "mid" : "light";
+    var lbl = pct >= 80 ? "Tốt" : pct >= 50 ? "Khá" : "Cần ôn";
+    return '<span class="ck-pill ' + lvl + '"><i class="dot"></i>' + pct + "% · " + lbl + '</span>';
+  }
+
+  function render() {
+    var list = CK.history.all();
+    var totalQ = 0, totalC = 0;
+    list.forEach(function (e) { totalQ += e.total || 0; totalC += e.correct || 0; });
+
+    /* --- KPI --- */
+    $("kpis").innerHTML = [
+      { l: "Tổng phiên", v: list.length, u: "phiên" },
+      { l: "Tổng câu đã làm", v: totalQ, u: "câu" },
+      { l: "Độ đúng trung bình", v: totalQ ? Math.round(totalC / totalQ * 100) : 0, u: "%" },
+      { l: "Môn đã làm", v: CK.history.bySubject().length, u: "môn" },
+      { l: "Chuỗi ngày ôn", v: CK.history.streak(), u: "ngày" }
+    ].map(function (k) {
+      return '<div class="kpi glass g1"><p class="l">' + k.l + '</p><p class="v">' + k.v +
+             ' <small>' + k.u + '</small></p></div>';
+    }).join("");
+
+    /* --- Bộ lọc nhóm môn --- */
+    if (!$("cat").options.length) {
+      CK.CATS.forEach(function (c) {
+        var o = document.createElement("option");
+        o.value = c.title; o.textContent = c.name;
+        $("cat").appendChild(o);
+      });
+    }
+
+    /* --- Bảng --- */
+    var rows = list.filter(function (e) {
+      if (cat && e.cat !== cat) return false;
+      if (query && (e.subject || "").toLowerCase().indexOf(query) === -1) return false;
+      return true;
+    });
+    $("rows").innerHTML = rows.map(function (e) {
+      var sl = e.slug || slugOf(e.subject || "");
+      var nf = sl && CK.navFile && CK.navFile(sl);
+      var href = nf ? CK.url(nf) : (sl ? CK.subjectUrl(sl, e.part) : "#");
+      var subj = (e.subject || "—") +
+        (e.partName ? ' <span class="tag-part">' + e.partName + '</span>' : "");
+      return '<tr>' +
+        '<td class="c-subj"><a href="' + href + '" style="color:inherit;text-decoration:none">' + subj + '</a>' +
+          '<small>' + CK.fmtTime(e.ts) + ' · ' + CK.fmtDate(e.ts) + '</small></td>' +
+        '<td style="font-size:12.5px;color:var(--text-muted)">' + (e.catName || "—") + '</td>' +
+        '<td>' + badge(e.pct || 0) + '</td>' +
+        '<td class="mono">' + (e.correct || 0) + "/" + (e.total || 0) + '</td>' +
+        '<td class="mono">' + Math.round((e.sec || 0) / 60) + " phút</td>" +
+        '<td class="mono" style="color:var(--text-muted);font-size:12.5px">' + CK.fmtAgo(e.ts) + '</td>' +
+        '<td class="c-act"><button class="link-del" type="button" data-id="' + e.id + '" aria-label="Xoá phiên này">Xoá</button></td>' +
+      '</tr>';
+    }).join("");
+    $("empty").hidden = rows.length > 0;
+    $("empty").style.display = rows.length ? "none" : "block";
+
+    /* --- Biểu đồ 7 ngày --- */
+    var days = [], base = new Date(); base.setHours(0, 0, 0, 0);
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date(base); d.setDate(d.getDate() - i);
+      days.push(d);
+    }
+    var counts = days.map(function (d) {
+      return list.filter(function (e) {
+        var t = new Date(e.ts);
+        return t.getFullYear() === d.getFullYear() && t.getMonth() === d.getMonth() && t.getDate() === d.getDate();
+      }).reduce(function (s, e) { return s + (e.total || 0); }, 0);
+    });
+    var max = Math.max(1, Math.max.apply(null, counts));
+    $("chart").innerHTML = days.map(function (d, i) {
+      var h = Math.round(counts[i] / max * 100);
+      var lb = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()];
+      return '<div class="col">' +
+        '<span class="v">' + (counts[i] || "") + '</span>' +
+        '<div class="bar-wrap"><div class="bar' + (counts[i] ? "" : " empty") + '" style="height:' + (counts[i] ? Math.max(8, h) : 3) + '%"></div></div>' +
+        '<span class="lb">' + lb + '</span>' +
+      '</div>';
+    }).join("");
+
+    /* --- Xếp hạng môn --- */
+    var rank = CK.history.bySubject().slice(0, 7);
+    $("rank").innerHTML = rank.length ? rank.map(function (r, i) {
+      var pct = r.total ? Math.round(r.correct / r.total * 100) : 0;
+      return '<li><span class="n">' + (i + 1) + '</span>' +
+        '<span class="nm" title="' + r.subject + '">' + r.subject + '</span>' +
+        '<span class="pc">' + pct + '%</span></li>';
+    }).join("") : '<li style="color:var(--text-muted);font-size:13px">Chưa có dữ liệu.</li>';
+  }
+
+  $("q").addEventListener("input", function () { query = this.value.trim().toLowerCase(); render(); });
+  $("cat").addEventListener("change", function () { cat = this.value; render(); });
+
+  $("rows").addEventListener("click", function (e) {
+    var b = e.target.closest(".link-del");
+    if (!b) return;
+    CK.history.remove(b.dataset.id);
+    CK.toast("Đã xoá 1 phiên khỏi lịch sử.");
+    render();
+  });
+
+  $("btnExport").addEventListener("click", function () {
+    if (!CK.history.all().length) return CK.toast("Lịch sử đang trống, không có gì để xuất.");
+    var target = document.querySelector("main.ck-wrap");
+    CK.toast("Đang xuất ảnh...");
+    var makeUrl = function (blob) {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "co-khi-huit-lich-su-" + CK.fmtDate(Date.now()).replace(/\//g, "-") + ".png";
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    };
+    /* Dùng html2canvas nếu đã có; nếu không thì fallback canvas + SVG */
+    if (window.html2canvas) {
+      window.html2canvas(target, { backgroundColor: null, scale: 2, useCORS: true })
+        .then(function (c) { c.toBlob(makeUrl, "image/png"); CK.toast("Đã tải ảnh lịch sử làm bài."); });
+      return;
+    }
+    /* Fallback: vẽ khung đơn giản bằng canvas */
+    var c = document.createElement("canvas");
+    c.width = 1200; c.height = 600;
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.fillStyle = "#034EA2"; ctx.font = "bold 28px sans-serif";
+    ctx.fillText("Lịch sử làm bài — CƠ KHÍ HUIT", 40, 60);
+    ctx.fillStyle = "#4B5563"; ctx.font = "16px sans-serif";
+    var y = 100;
+    CK.history.all().slice(0, 12).forEach(function (e) {
+      ctx.fillText(CK.fmtDate(e.ts) + " · " + (e.subject || "—") + " · " + (e.pct || 0) + "% · " +
+        (e.correct || 0) + "/" + (e.total || 0), 40, y);
+      y += 26;
+    });
+    c.toBlob(makeUrl, "image/png");
+    CK.toast("Đã tải ảnh lịch sử làm bài.");
+  });
+
+  $("btnClear").addEventListener("click", function () {
+    if (!CK.history.all().length) return CK.toast("Lịch sử đang trống, không có gì để xoá.");
+    if (!confirm("Xoá toàn bộ " + CK.history.all().length + " phiên làm bài?\nHành động này không thể hoàn tác.")) return;
+    CK.history.clear();
+    CK.toast("Đã xoá toàn bộ lịch sử làm bài.");
+    render();
+  });
+
+  document.addEventListener("ck:history", render);
+  /* Cùng một máy, nhiều tab: tab khác vừa ghi lịch sử -> vẽ lại ngay */
+  window.addEventListener("storage", function (e) {
+    if (e.key === CK.HISTORY_KEY) render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

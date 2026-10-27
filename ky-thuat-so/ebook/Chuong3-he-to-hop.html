@@ -1,0 +1,1077 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 3: HỆ TỔ HỢP | CƠ KHÍ HUIT</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe',
+              500: '#034EA2', 600: '#023c7d', 700: '#012c5d', 800: '#001d3f', accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .overline-bar {
+      text-decoration: overline;
+    }
+    .k-map-table {
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0 auto;
+    }
+    .k-map-table th, .k-map-table td {
+      border: 1.5px solid #1e293b;
+      min-width: 2.25rem;
+      height: 2.25rem;
+      text-align: center;
+      vertical-align: middle;
+      padding: 0.15rem;
+      font-size: 0.9rem;
+    }
+    .k-map-table th.no-border, .k-map-table td.no-border {
+      border: none;
+    }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+
+<!-- Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+  CƠ KHÍ HUIT
+  <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+</span>
+</div>
+</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="../index.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span class="">Về danh mục Kỹ thuật số</span>
+</a>
+</div>
+</div>
+</header>
+
+<!-- Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+<a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+<span class="">/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+<span class="">/</span>
+<span class="text-slate-800 font-semibold truncate">Chương 3: Hệ tổ hợp</span>
+</div>
+</div>
+
+<!-- Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+<!-- Title Banner -->
+<section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center justify-center gap-3 mb-4">
+<span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+<span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">3</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+  HỆ TỔ HỢP
+</h1>
+<div class="mt-4 flex items-center justify-center gap-2">
+<span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+<span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+<span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+</div>
+</section>
+
+<!-- Mục 3.1 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-3-1">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">3.1</span>
+  GIỚI THIỆU
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 51</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="">Mạch số được chia làm hai loại là <em>mạch tổ hợp</em> (<em>Combinational Circuit</em>) và <em>mạch tuần tự</em> (<em>Sequential Circuit</em>). Mạch tổ hợp là mạch mà các ngõ ra chỉ phụ thuộc vào các ngõ vào hiện thời.</p>
+</div>
+</article>
+
+<!-- Mục 3.2 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6" id="sec-3-2">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">3.2</span>
+  CÁCH THIẾT KẾ HỆ TỔ HỢP
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 51</span>
+</div>
+<div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-800">
+<p class="font-bold text-slate-900">Các bước thiết kế một mạch tổ hợp như sau</p>
+<div class="space-y-3 pl-2">
+  <p class=""><span class="font-bold text-slate-900">1-</span> Phát biểu bài toán.</p>
+  <p class=""><span class="font-bold text-slate-900">2-</span> Xác định các ngõ vào và các ngõ ra.</p>
+  <p class="pl-6">Các ngõ vào được xem là các biến, các ngõ ra được xem là các hàm.</p>
+  <p class="pl-6">Vẽ sơ đồ khối của mạch.</p>
+  <p class=""><span class="font-bold text-slate-900">3-</span> Lập bảng chân trị nêu lên mối quan hệ giữa các ngõ ra và các ngõ vào theo yêu cầu của bài toán.</p>
+  <p class="pl-6">Bảng chân trị bao gồm 2<sup>n</sup> tổ hợp nhị phân cho n biến ngõ vào. Các giá trị nhị phân của các ngõ ra được xác định từ phát biểu bài toán. Nếu tổ hợp nhị phân của các ngõ vào là hợp lệ thì ngõ ra có thể bằng 0 hoặc 1, còn nếu tổ hợp nhị phân của các ngõ vào rơi vào trường hợp không xảy ra thì ngõ ra sẽ là tùy định.</p>
+  <p class=""><span class="font-bold text-slate-900">4-</span> Xác định hàm Boole được đơn giản hóa cho các hàm ngõ ra.</p>
+  <p class="pl-6">Các hàm Boole của các ngõ ra được xác định từ bảng chân trị bằng phương pháp đại số hoặc phương pháp bìa Karnaugh</p>
+  <p class=""><span class="font-bold text-slate-900">5-</span> Vẽ sơ đồ logic.</p>
+</div>
+</div>
+</article>
+
+<!-- Mục 3.3 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-10" id="sec-3-3">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">3.3</span>
+  CÁC MẠCH TỔ HỢP THÔNG DỤNG
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 52 - 68</span>
+</div>
+
+<div class="space-y-10 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Mạch giải mã -->
+<div class="space-y-6">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">1- Mạch giải mã (Decoder)</h3>
+  <p class="">Mạch giải mã thông dụng nhất là mạch giải mã từ n sang 2<sup>n</sup> hay còn gọi là mạch giải mã nhị phân (<em>Binary Decoder</em>).</p>
+  <p class="">Mạch có n ngõ vào, 2<sup>n</sup> ngõ ra và còn có thể có 1 số ngõ vào cho phép (<em>Enable</em>). Khi tất cả các ngõ vào cho phép đồng thời tích cực (<em>Active</em>) thì mạch giải mã được phép hoạt động. Khi đó, chỉ tồn tại 1 (trong số 2<sup>n</sup>) ngõ ra là tích cực, ngõ ra tích cực là ngõ ra có chỉ số được xác định bởi tổ hợp nhị phân của các ngõ vào.</p>
+
+  <!-- Ví dụ 3.1 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.1: Mạch giải mã từ 2 sang 4, ngõ ra tích cực cao (Active high).</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">X1</th>
+              <th class="p-1 px-3 border-r border-slate-300">X0</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y3</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y2</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y1</th>
+              <th class="p-1 px-3">Y0</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td><td class="">0</td><td class="">0</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">1</td><td class="">0</td><td class="">0</td><td class="">0</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-3"><div class="">— X0</div><div class="">— X1</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">2 to 4<br>DECODER</div>
+            <div class="space-y-1 text-right"><div class="">Y0 —</div><div class="">Y1 —</div><div class="">Y2 —</div><div class="">Y3 —</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">Y0 = <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span></p>
+        <p class="">Y1 = <span class="overline-bar">X1</span> · X0</p>
+        <p class="">Y2 = X1 · <span class="overline-bar">X0</span></p>
+        <p class="">Y3 = X1 · X0</p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 250" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ mạch logic (Active-High 2-to-4 Decoder dùng AND)</text><line x1="60" y1="60" x2="130" y2="60" stroke="#034EA2" stroke-width="2"></line><text x="30" y="64" fill="#1e293b" font-weight="bold">X1</text><line x1="60" y1="100" x2="130" y2="100" stroke="#034EA2" stroke-width="2"></line><text x="30" y="104" fill="#1e293b" font-weight="bold">X0</text><path d="M130,50 L155,60 L130,70 Z" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></path><circle cx="160" cy="60" r="4" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><line x1="164" y1="60" x2="220" y2="60" stroke="#034EA2" stroke-width="1.5"></line><text x="175" y="54" fill="#64748b" font-size="10">/X1</text><path d="M130,90 L155,100 L130,110 Z" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></path><circle cx="160" cy="100" r="4" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><line x1="164" y1="100" x2="220" y2="100" stroke="#034EA2" stroke-width="1.5"></line><text x="175" y="94" fill="#64748b" font-size="10">/X0</text><g stroke="#034EA2" stroke-width="1.5" fill="#ffffff"><rect x="280" y="45" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="298" y="67" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">AND</text><line x1="345" y1="62" x2="430" y2="62" stroke="#034EA2" stroke-width="2"></line><text x="438" y="66" fill="#034EA2" font-weight="bold" stroke="none">Y0 = /X1·/X0</text><rect x="280" y="95" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="298" y="117" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">AND</text><line x1="345" y1="112" x2="430" y2="112" stroke="#034EA2" stroke-width="2"></line><text x="438" y="116" fill="#034EA2" font-weight="bold" stroke="none">Y1 = /X1·X0</text><rect x="280" y="145" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="298" y="167" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">AND</text><line x1="345" y1="162" x2="430" y2="162" stroke="#034EA2" stroke-width="2"></line><text x="438" y="166" fill="#034EA2" font-weight="bold" stroke="none">Y2 = X1·/X0</text><rect x="280" y="195" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="298" y="217" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">AND</text><line x1="345" y1="212" x2="430" y2="212" stroke="#034EA2" stroke-width="2"></line><text x="438" y="216" fill="#034EA2" font-weight="bold" stroke="none">Y3 = X1·X0</text></g><path d="M200,60 L200,55 L280,55" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M210,100 L210,70 L280,70" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M200,60 L200,105 L280,105" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,100 L80,120 L280,120" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,60 L80,155 L280,155" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M210,100 L210,170 L280,170" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,60 L80,205 L280,205" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,100 L80,220 L280,220" stroke="#94a3b8" stroke-width="1.5" fill="none"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ví dụ 3.2 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.2: Mạch giải mã từ 2 sang 4, ngõ ra tích cực thấp (Active low).</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">X1</th>
+              <th class="p-1 px-3 border-r border-slate-300">X0</th>
+              <th class="p-1 px-3 border-r border-slate-300"><span class="overline-bar">Y3</span></th>
+              <th class="p-1 px-3 border-r border-slate-300"><span class="overline-bar">Y2</span></th>
+              <th class="p-1 px-3 border-r border-slate-300"><span class="overline-bar">Y1</span></th>
+              <th class="p-1 px-3"><span class="overline-bar">Y0</span></th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">0</td><td class="">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">1</td><td class="font-bold text-brand-600">0</td><td class="">1</td><td class="">1</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">0</td><td class="">1</td><td class="">1</td><td class="">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-3"><div class="">— X0</div><div class="">— X1</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">2 to 4<br>DECODER</div>
+            <div class="space-y-1 text-right"><div class="">Y0 —o</div><div class="">Y1 —o</div><div class="">Y2 —o</div><div class="">Y3 —o</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class=""><span class="overline-bar">Y0</span> = X1 + X0 = <span class="overline-bar">X1 · X0</span></p>
+        <p class=""><span class="overline-bar">Y1</span> = X1 + <span class="overline-bar">X0</span> = <span class="overline-bar"><span class="overline-bar">X1</span> · X0</span></p>
+        <p class=""><span class="overline-bar">Y2</span> = <span class="overline-bar">X1</span> + X0 = <span class="overline-bar">X1 · <span class="overline-bar">X0</span></span></p>
+        <p class=""><span class="overline-bar">Y3</span> = <span class="overline-bar">X1</span> + <span class="overline-bar">X0</span> = <span class="overline-bar">X1 · X0</span></p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 250" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ mạch logic (Active-Low 2-to-4 Decoder dùng NAND)</text><line x1="60" y1="60" x2="130" y2="60" stroke="#034EA2" stroke-width="2"></line><text x="30" y="64" fill="#1e293b" font-weight="bold">X1</text><line x1="60" y1="100" x2="130" y2="100" stroke="#034EA2" stroke-width="2"></line><text x="30" y="104" fill="#1e293b" font-weight="bold">X0</text><path d="M130,50 L155,60 L130,70 Z" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></path><circle cx="160" cy="60" r="4" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><line x1="164" y1="60" x2="220" y2="60" stroke="#034EA2" stroke-width="1.5"></line><text x="175" y="54" fill="#64748b" font-size="10">/X1</text><path d="M130,90 L155,100 L130,110 Z" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></path><circle cx="160" cy="100" r="4" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><line x1="164" y1="100" x2="220" y2="100" stroke="#034EA2" stroke-width="1.5"></line><text x="175" y="94" fill="#64748b" font-size="10">/X0</text><g stroke="#034EA2" stroke-width="1.5" fill="#ffffff"><rect x="280" y="45" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="295" y="67" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">NAND</text><line x1="345" y1="62" x2="430" y2="62" stroke="#034EA2" stroke-width="2"></line><text x="438" y="66" fill="#034EA2" font-weight="bold" stroke="none">/Y0</text><rect x="280" y="95" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="295" y="117" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">NAND</text><line x1="345" y1="112" x2="430" y2="112" stroke="#034EA2" stroke-width="2"></line><text x="438" y="116" fill="#034EA2" font-weight="bold" stroke="none">/Y1</text><rect x="280" y="145" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="295" y="167" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">NAND</text><line x1="345" y1="162" x2="430" y2="162" stroke="#034EA2" stroke-width="2"></line><text x="438" y="166" fill="#034EA2" font-weight="bold" stroke="none">/Y2</text><rect x="280" y="195" width="65" height="35" rx="6" fill="#eff6ff"></rect><text x="295" y="217" fill="#034EA2" font-size="11" font-weight="bold" stroke="none">NAND</text><line x1="345" y1="212" x2="430" y2="212" stroke="#034EA2" stroke-width="2"></line><text x="438" y="216" fill="#034EA2" font-weight="bold" stroke="none">/Y3</text></g><path d="M200,60 L200,55 L280,55" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M210,100 L210,70 L280,70" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M200,60 L200,105 L280,105" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,100 L80,120 L280,120" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,60 L80,155 L280,155" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M210,100 L210,170 L280,170" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,60 L80,205 L280,205" stroke="#94a3b8" stroke-width="1.5" fill="none"></path><path d="M80,100 L80,220 L280,220" stroke="#94a3b8" stroke-width="1.5" fill="none"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ví dụ 3.3 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.3: Mạch giải mã từ 2 sang 4, ngõ ra tích cực thấp (Active low), có 1 ngõ vào cho phép tích cực thấp.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-2 border-r border-slate-300">G</th>
+              <th class="p-1 px-2 border-r border-slate-300">X1</th>
+              <th class="p-1 px-2 border-r border-slate-300">X0</th>
+              <th class="p-1 px-2 border-r border-slate-300"><span class="overline-bar">Y3</span></th>
+              <th class="p-1 px-2 border-r border-slate-300"><span class="overline-bar">Y2</span></th>
+              <th class="p-1 px-2 border-r border-slate-300"><span class="overline-bar">Y1</span></th>
+              <th class="p-1 px-2"><span class="overline-bar">Y0</span></th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">0</td><td class="">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="font-bold text-brand-600">0</td><td class="">1</td><td class="">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">0</td><td class="">1</td><td class="">1</td><td class="">1</td></tr>
+            <tr><td class="">1</td><td class="">x</td><td class="">x</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-2"><div class="">— X0</div><div class="">— X1</div><div class="">—o G</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">2 to 4<br>DECODER</div>
+            <div class="space-y-1 text-right"><div class="">Y0 —o</div><div class="">Y1 —o</div><div class="">Y2 —o</div><div class="">Y3 —o</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class=""><span class="overline-bar">Y0</span> = <span class="overline-bar"><span class="overline-bar">G</span> · <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span></span></p>
+        <p class=""><span class="overline-bar">Y1</span> = <span class="overline-bar"><span class="overline-bar">G</span> · <span class="overline-bar">X1</span> · X0</span></p>
+        <p class=""><span class="overline-bar">Y2</span> = <span class="overline-bar"><span class="overline-bar">G</span> · X1 · <span class="overline-bar">X0</span></span></p>
+        <p class=""><span class="overline-bar">Y3</span> = <span class="overline-bar"><span class="overline-bar">G</span> · X1 · X0</span></p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ vi mạch Decoder 74LS139 (Dual 2-to-4) &amp; Cổng Cho Phép</text><rect x="40" y="45" width="180" height="150" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="85" y="72" font-weight="bold" fill="#034EA2" font-size="12">1/2 74LS139</text><line x1="15" y1="85" x2="40" y2="85" stroke="#034EA2" stroke-width="1.5"></line><circle cx="22" cy="85" r="3.5" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="2" y="88" fill="#034EA2" font-size="10">/1G</text><line x1="15" y1="120" x2="40" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="3" y="124" fill="#334155" font-size="10">1A</text><line x1="15" y1="155" x2="40" y2="155" stroke="#034EA2" stroke-width="1.5"></line><text x="3" y="159" fill="#334155" font-size="10">1B</text><line x1="220" y1="80" x2="255" y2="80" stroke="#034EA2" stroke-width="1.5"></line><circle cx="230" cy="80" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="260" y="84" fill="#034EA2" font-size="10">/1Y0</text><line x1="220" y1="110" x2="255" y2="110" stroke="#034EA2" stroke-width="1.5"></line><circle cx="230" cy="110" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="260" y="114" fill="#034EA2" font-size="10">/1Y1</text><line x1="220" y1="140" x2="255" y2="140" stroke="#034EA2" stroke-width="1.5"></line><circle cx="230" cy="140" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="260" y="144" fill="#034EA2" font-size="10">/1Y2</text><line x1="220" y1="170" x2="255" y2="170" stroke="#034EA2" stroke-width="1.5"></line><circle cx="230" cy="170" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="260" y="174" fill="#034EA2" font-size="10">/1Y3</text><rect x="310" y="45" width="180" height="150" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="365" y="72" font-weight="bold" fill="#034EA2" font-size="12">74LS138</text><text x="335" y="90" fill="#64748b" font-size="10">3-to-8 DECODER</text><line x1="285" y1="110" x2="310" y2="110" stroke="#034EA2" stroke-width="1.5"></line><text x="270" y="114" fill="#334155" font-size="10">A,B,C</text><line x1="285" y1="150" x2="310" y2="150" stroke="#034EA2" stroke-width="1.5"></line><text x="260" y="154" fill="#334155" font-size="9">G1,/G2A,/G2B</text><line x1="490" y1="115" x2="512" y2="115" stroke="#034EA2" stroke-width="1.5"></line><text x="452" y="119" fill="#034EA2" font-size="10">/Y0 - /Y7</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Giới thiệu vi mạch giải mã -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+    <p class=""><strong>74LS139: gồm 2 mạch giải mã 2 sang 4</strong></p>
+    <p class=""><strong>74LS138: mạch giải mã 3 sang 8</strong></p>
+    <p class=""><strong>74LS154: mạch giải mã 4 sang 16</strong></p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 500 240" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ chân vi mạch giải mã 74LS154 (4 sang 16 DIP-24)</text><rect x="140" y="45" width="220" height="175" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><path d="M235,45 A15,15 0 0,0 265,45" fill="none" stroke="#034EA2" stroke-width="2"></path><text x="215" y="135" font-weight="bold" fill="#034EA2" font-size="15">74LS154</text><text x="190" y="155" fill="#64748b" font-size="10">4-LINE TO 16-LINE</text><line x1="85" y1="75" x2="140" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="40" y="79" fill="#334155">A,B,C,D (Ngõ vào)</text><line x1="85" y1="170" x2="140" y2="170" stroke="#034EA2" stroke-width="1.5"></line><circle cx="120" cy="170" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="40" y="174" fill="#034EA2">/G1, /G2 (Cho phép)</text><line x1="360" y1="85" x2="410" y2="85" stroke="#034EA2" stroke-width="1.5"></line><circle cx="375" cy="85" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="418" y="89" fill="#034EA2">/Y0 - /Y7</text><line x1="360" y1="155" x2="410" y2="155" stroke="#034EA2" stroke-width="1.5"></line><circle cx="375" cy="155" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="418" y="159" fill="#034EA2">/Y8 - /Y15</text></svg>
+    </div>
+  </div>
+
+  <!-- Kết nối nhiều mạch giải mã -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Kết nối nhiều mạch giải mã</h4>
+    <p class="">Hai mạch giải mã n sang 2<sup>n</sup> có thể kết nối với nhau để tạo ra 1 mạch giải mã (n+1) sang 2<sup>n+1</sup>.</p>
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+      <p class="font-bold text-slate-900 text-base">Ví dụ 3.4: Thực hiện mạch giải mã 4 sang 16 dùng 74138</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 540 240" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Kết nối 2 vi mạch 74LS138 tạo mạch giải mã 4 sang 16</text><rect x="180" y="45" width="150" height="80" rx="6" fill="#ffffff" stroke="#034EA2" stroke-width="1.8"></rect><text x="215" y="80" font-weight="bold" fill="#034EA2" font-size="12">74LS138 (1)</text><text x="200" y="98" fill="#64748b" font-size="10">Xuất /Y0 - /Y7</text><rect x="180" y="145" width="150" height="80" rx="6" fill="#ffffff" stroke="#034EA2" stroke-width="1.8"></rect><text x="215" y="180" font-weight="bold" fill="#034EA2" font-size="12">74LS138 (2)</text><text x="200" y="198" fill="#64748b" font-size="10">Xuất /Y8 - /Y15</text><line x1="40" y1="75" x2="180" y2="75" stroke="#034EA2" stroke-width="1.5"></line><line x1="40" y1="175" x2="180" y2="175" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="128" fill="#1e293b" font-weight="bold">A, B, C</text><path d="M90,75 L90,175" stroke="#034EA2" stroke-width="1.5"></path><line x1="40" y1="55" x2="180" y2="55" stroke="#dc2626" stroke-width="1.5"></line><circle cx="165" cy="55" r="3" fill="#fff" stroke="#dc2626" stroke-width="1.5"></circle><text x="10" y="58" fill="#dc2626" font-weight="bold">D (MSB)</text><path d="M70,55 L70,155 L180,155" stroke="#dc2626" stroke-width="1.5" fill="none"></path><line x1="330" y1="85" x2="430" y2="85" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="89" fill="#034EA2" font-weight="bold">/Y0 - /Y7</text><line x1="330" y1="185" x2="430" y2="185" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="189" fill="#034EA2" font-weight="bold">/Y8 - /Y15</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dùng mạch giải mã để thực hiện hàm Boole -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Dùng mạch giải mã để thực hiện hàm Boole</h4>
+    <p class="">Mỗi ngõ ra của mạch giải mã n sang 2<sup>n</sup> (ngõ ra tích cực cao) là 1 minterm n biến. Nếu ngõ ra tích cực thấp thì mỗi ngõ ra là 1 maxterm. Do đó, 1 mạch giải mã n sang 2<sup>n</sup> kết hợp với các cổng logic có thể được dùng để thực hiện 1 hoặc nhiều hàm Boole n biến.</p>
+    
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+      <p class="font-bold text-slate-900 text-base">Ví dụ 3.5: Dùng 74LS138 và các cổng logic cần thiết để thực hiện các hàm sau</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">F<sub>1</sub> (x,y,z) = ∑ (0,1,3)</p>
+        <p class="">F<sub>2</sub> (x,y,z) = Π (1,4,5)</p>
+        <p class="">F<sub>3</sub> (x,y,z) = ∑ (0,2,4,5,6)</p>
+      </div>
+      <p class="font-bold text-slate-900 text-base pt-1">Viết lại các hàm</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">F<sub>1</sub> (x, y, z) = m0 + m1 + m3 = <span class="overline-bar"><span class="overline-bar">m0 + m1 + m3</span></span> = <span class="overline-bar"><span class="overline-bar">m0</span> · <span class="overline-bar">m1</span> · <span class="overline-bar">m3</span></span> = <span class="overline-bar">M0 · M1 · M3</span></p>
+        <p class="">F<sub>2</sub> (x,y,z) = M1 · M4 · M5</p>
+        <p class="">F<sub>3</sub> (x,y,z) = Π (1,3,7) = M1 · M3 · M7</p>
+      </div>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Thực hiện hàm Boole dùng 74LS138 và cổng NAND</text><rect x="40" y="50" width="140" height="145" rx="6" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="75" y="80" font-weight="bold" fill="#034EA2" font-size="12">74LS138</text><text x="10" y="110" fill="#334155">x, y, z →</text><line x1="180" y1="70" x2="240" y2="70" stroke="#034EA2" stroke-width="1.5"></line><text x="185" y="65" fill="#64748b" font-size="10">/Y0</text><line x1="180" y1="90" x2="240" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="185" y="85" fill="#64748b" font-size="10">/Y1</text><line x1="180" y1="110" x2="240" y2="110" stroke="#034EA2" stroke-width="1.5"></line><text x="185" y="105" fill="#64748b" font-size="10">/Y3</text><rect x="280" y="60" width="65" height="55" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></rect><text x="295" y="92" font-weight="bold" fill="#034EA2">NAND</text><line x1="345" y1="87" x2="440" y2="87" stroke="#034EA2" stroke-width="2"></line><text x="448" y="91" font-weight="bold" fill="#034EA2">F1 = ∑(0,1,3)</text><line x1="240" y1="70" x2="280" y2="70" stroke="#034EA2" stroke-width="1.5"></line><line x1="240" y1="90" x2="280" y2="87" stroke="#034EA2" stroke-width="1.5"></line><line x1="240" y1="110" x2="280" y2="105" stroke="#034EA2" stroke-width="1.5"></line><rect x="280" y="135" width="65" height="55" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></rect><text x="298" y="167" font-weight="bold" fill="#034EA2">AND</text><line x1="345" y1="162" x2="440" y2="162" stroke="#034EA2" stroke-width="2"></line><text x="448" y="166" font-weight="bold" fill="#034EA2">F2 = Π(1,4,5)</text><line x1="180" y1="145" x2="280" y2="145" stroke="#034EA2" stroke-width="1.5"></line><line x1="180" y1="165" x2="280" y2="162" stroke="#034EA2" stroke-width="1.5"></line><line x1="180" y1="180" x2="280" y2="180" stroke="#034EA2" stroke-width="1.5"></line></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Mạch mã hóa -->
+<div class="space-y-6 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">2- Mạch mã hóa (Encoder)</h3>
+  <p class="">Mạch mã hóa là mạch hoạt động ngược lại với mạch giải mã. Mạch mã hóa có 2<sup>n</sup> (hoặc ít hơn) ngõ vào và n ngõ ra. Trong số 2<sup>n</sup> ngõ vào chỉ tồn tại 1 ngõ tích cực tại 1 thời điểm. Chỉ số của ngõ vào tích cực sẽ tạo ra tổ hợp nhị phân ở ngõ ra.</p>
+
+  <!-- Ví dụ 3.6 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.6: Mạch mã hóa 4 sang 2.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">X3</th>
+              <th class="p-1 px-3 border-r border-slate-300">X2</th>
+              <th class="p-1 px-3 border-r border-slate-300">X1</th>
+              <th class="p-1 px-3 border-r border-slate-300">X0</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y1</th>
+              <th class="p-1 px-3">Y0</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td></tr>
+            <tr><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-1"><div class="">X0 —</div><div class="">X1 —</div><div class="">X2 —</div><div class="">X3 —</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">4 to 2<br>ENCODER</div>
+            <div class="space-y-3 text-right"><div class="">— Y0</div><div class="">— Y1</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">Y1 = X3 · <span class="overline-bar">X2</span> · <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span> + <span class="overline-bar">X3</span> · X2 · <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span> = X2 + X3</p>
+        <p class="">Y0 = X3 · <span class="overline-bar">X2</span> · <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span> + <span class="overline-bar">X3</span> · <span class="overline-bar">X2</span> · X1 · <span class="overline-bar">X0</span> = X1 + X3</p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 500 200" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ cổng logic Mạch mã hóa 4 sang 2</text><line x1="40" y1="55" x2="240" y2="55" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="59" fill="#1e293b" font-weight="bold">X3</text><line x1="40" y1="85" x2="240" y2="85" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="89" fill="#1e293b" font-weight="bold">X2</text><line x1="40" y1="115" x2="240" y2="115" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="119" fill="#1e293b" font-weight="bold">X1</text><line x1="40" y1="145" x2="100" y2="145" stroke="#94a3b8" stroke-width="1.5"></line><text x="15" y="149" fill="#64748b">X0</text><rect x="260" y="50" width="70" height="45" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="282" y="77" font-weight="bold" fill="#034EA2">OR</text><line x1="330" y1="72" x2="420" y2="72" stroke="#034EA2" stroke-width="2"></line><text x="428" y="76" font-weight="bold" fill="#034EA2">Y1 = X2 + X3</text><rect x="260" y="110" width="70" height="45" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="282" y="137" font-weight="bold" fill="#034EA2">OR</text><line x1="330" y1="132" x2="420" y2="132" stroke="#034EA2" stroke-width="2"></line><text x="428" y="136" font-weight="bold" fill="#034EA2">Y0 = X1 + X3</text><path d="M120,55 L120,120 L260,120" stroke="#034EA2" stroke-width="1.5" fill="none"></path><circle cx="120" cy="55" r="3" fill="#034EA2"></circle><line x1="180" y1="85" x2="260" y2="85" stroke="#034EA2" stroke-width="1.5"></line><line x1="180" y1="140" x2="260" y2="140" stroke="#034EA2" stroke-width="1.5"></line><path d="M180,115 L180,140" stroke="#034EA2" stroke-width="1.5"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mạch mã hóa ưu tiên -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Mạch mã hóa ưu tiên (Priority Encoder)</h4>
+    <p class="">Mạch mã hóa ưu tiên là mạch mã hóa có chức năng ưu tiên. Trong trường hợp có 2 hay nhiều hơn ngõ vào tích cực đồng thời thì ngõ vào nào ưu tiên cao nhất sẽ tác động đến ngõ ra.</p>
+
+    <!-- Ví dụ 3.7 -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+      <p class="font-bold text-slate-900 text-base">Ví dụ 3.7: Mạch mã hóa ưu tiên 4 sang 2. Thứ tự ưu tiên giảm dần từ X3 đến X0.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <div>
+          <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+          <div class="overflow-x-auto">
+            <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+              <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+                <th class="p-1 px-3 border-r border-slate-300">X3</th>
+                <th class="p-1 px-3 border-r border-slate-300">X2</th>
+                <th class="p-1 px-3 border-r border-slate-300">X1</th>
+                <th class="p-1 px-3 border-r border-slate-300">X0</th>
+                <th class="p-1 px-3 border-r border-slate-300">Y1</th>
+                <th class="p-1 px-3">Y0</th>
+              </tr>
+              <tr class="border-b border-slate-200"><td class="">x</td><td class="">x</td><td class="">x</td><td class="">1</td><td class="">0</td><td class="">0</td></tr>
+              <tr class="border-b border-slate-200"><td class="">x</td><td class="">x</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td></tr>
+              <tr class="border-b border-slate-200"><td class="">x</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td></tr>
+              <tr><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div>
+          <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+          <div class="flex justify-center">
+            <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+              <div class="space-y-1"><div class="">X0 —</div><div class="">X1 —</div><div class="">X2 —</div><div class="">X3 —</div></div>
+              <div class="font-bold font-sans text-xs text-center px-1">PRIORITY<br>ENCODER</div>
+              <div class="space-y-3 text-right"><div class="">— Y0</div><div class="">— Y1</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-1 pt-2">
+        <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+        <div class="font-mono text-base pl-4 space-y-1">
+          <p class="">Y1 = X2 · <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span> + X3 · X2 · <span class="overline-bar">X1</span> · <span class="overline-bar">X0</span></p>
+          <p class="">Y0 = X1 · <span class="overline-bar">X0</span> + X3 · X2 · <span class="overline-bar">X1</span> · X0</p>
+        </div>
+      </div>
+      <div>
+        <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+        <div class="flex justify-center p-2 overflow-x-auto">
+          <svg viewBox="0 0 500 200" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ logic Mạch mã hóa ưu tiên 4 sang 2</text><rect x="130" y="50" width="200" height="120" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="160" y="85" font-weight="bold" fill="#034EA2" font-size="13">PRIORITY ENCODER</text><text x="180" y="105" fill="#64748b" font-size="11">(X3 &gt; X2 &gt; X1 &gt; X0)</text><line x1="40" y1="70" x2="130" y2="70" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="74" fill="#1e293b" font-weight="bold">X3</text><line x1="40" y1="95" x2="130" y2="95" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="99" fill="#1e293b" font-weight="bold">X2</text><line x1="40" y1="120" x2="130" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="124" fill="#1e293b" font-weight="bold">X1</text><line x1="40" y1="145" x2="130" y2="145" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="149" fill="#1e293b" font-weight="bold">X0</text><line x1="330" y1="85" x2="410" y2="85" stroke="#034EA2" stroke-width="2"></line><text x="418" y="89" font-weight="bold" fill="#034EA2">Y1 = X2 + X3</text><line x1="330" y1="135" x2="410" y2="135" stroke="#034EA2" stroke-width="2"></line><text x="418" y="139" font-weight="bold" fill="#034EA2">Y0 = X3 + X1·/X2</text></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Giới thiệu vi mạch 74LS148 -->
+    <div class="space-y-3 pt-2">
+      <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+      <p class=""><strong>74LS148: mạch mã hóa ưu tiên 8 sang 3.</strong></p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Vi mạch 74LS148 - Mã hóa ưu tiên 8 sang 3</text><rect x="130" y="45" width="240" height="155" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><path d="M235,45 A15,15 0 0,0 265,45" fill="none" stroke="#034EA2" stroke-width="2"></path><text x="215" y="110" font-weight="bold" fill="#034EA2" font-size="15">74LS148</text><text x="165" y="130" fill="#64748b" font-size="10">8-to-3 PRIORITY ENCODER</text><line x1="60" y1="80" x2="130" y2="80" stroke="#034EA2" stroke-width="1.5"></line><circle cx="115" cy="80" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="25" y="84" fill="#1e293b">/0 - /7</text><line x1="60" y1="150" x2="130" y2="150" stroke="#034EA2" stroke-width="1.5"></line><circle cx="115" cy="150" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="25" y="154" fill="#034EA2">/EI (Cho phép)</text><line x1="370" y1="85" x2="430" y2="85" stroke="#034EA2" stroke-width="1.5"></line><circle cx="385" cy="85" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="438" y="89" fill="#034EA2">/A2, /A1, /A0</text><line x1="370" y1="145" x2="430" y2="145" stroke="#034EA2" stroke-width="1.5"></line><circle cx="385" cy="145" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="438" y="149" fill="#64748b">/EO, /GS</text></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3- Mạch dồn kênh (Multiplexer - Mux) -->
+<div class="space-y-6 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">3- Mạch dồn kênh (Multiplexer - Mux)</h3>
+  <p class="">Mạch dồn kênh gồm 2<sup>n</sup> ngõ vào, 1 ngõ ra và n ngõ điều khiển (còn gọi là ngõ lựa chọn). Tại một thời điểm, ngõ ra được kết nối với một ngõ vào, đó là ngõ vào có chỉ số được xác định bởi số nhị phân n bit tạo ra bởi n ngõ điều khiển.</p>
+
+  <!-- Ví dụ 3.8 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.8: Mạch dồn kênh 4 sang 1</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">B</th>
+              <th class="p-1 px-3 border-r border-slate-300">A</th>
+              <th class="p-1 px-3">Y</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="font-bold">D0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="font-bold">D1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="font-bold">D2</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="font-bold">D3</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-1"><div class="">D0 —</div><div class="">D1 —</div><div class="">D2 —</div><div class="">D3 —</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">4 to 1<br>MUX</div>
+            <div class="space-y-2 text-right"><div class="">— Y</div><div class="text-xs text-slate-500">A, B ←</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Hàm ngõ ra</p>
+      <p class="font-mono text-base pl-4">Y = <span class="overline-bar">B</span> · <span class="overline-bar">A</span> · D0 + <span class="overline-bar">B</span> · A · D1 + B · <span class="overline-bar">A</span> · D2 + B · A · D3</p>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ logic Mạch dồn kênh 4 sang 1 (MUX 4:1)</text><g stroke="#034EA2" stroke-width="1.5" fill="#ffffff"><rect x="240" y="45" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="65" fill="#034EA2" stroke="none">AND</text><rect x="240" y="85" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="105" fill="#034EA2" stroke="none">AND</text><rect x="240" y="125" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="145" fill="#034EA2" stroke="none">AND</text><rect x="240" y="165" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="185" fill="#034EA2" stroke="none">AND</text><rect x="360" y="90" width="65" height="60" rx="6" fill="#eff6ff"></rect><text x="380" y="125" font-weight="bold" fill="#034EA2" stroke="none">OR</text></g><line x1="50" y1="60" x2="240" y2="60" stroke="#034EA2" stroke-width="1.5"></line><text x="25" y="64" fill="#1e293b" font-weight="bold">D0</text><line x1="50" y1="100" x2="240" y2="100" stroke="#034EA2" stroke-width="1.5"></line><text x="25" y="104" fill="#1e293b" font-weight="bold">D1</text><line x1="50" y1="140" x2="240" y2="140" stroke="#034EA2" stroke-width="1.5"></line><text x="25" y="144" fill="#1e293b" font-weight="bold">D2</text><line x1="50" y1="180" x2="240" y2="180" stroke="#034EA2" stroke-width="1.5"></line><text x="25" y="184" fill="#1e293b" font-weight="bold">D3</text><line x1="305" y1="60" x2="360" y2="100" stroke="#034EA2" stroke-width="1.5"></line><line x1="305" y1="100" x2="360" y2="115" stroke="#034EA2" stroke-width="1.5"></line><line x1="305" y1="140" x2="360" y2="130" stroke="#034EA2" stroke-width="1.5"></line><line x1="305" y1="180" x2="360" y2="145" stroke="#034EA2" stroke-width="1.5"></line><line x1="425" y1="120" x2="480" y2="120" stroke="#034EA2" stroke-width="2"></line><text x="488" y="124" font-weight="bold" fill="#034EA2">Y</text></svg>
+      </div>
+    </div>
+    <p class="font-semibold text-slate-800 pt-2">Tổng quát: Hàm ngõ ra của mux 2<sup>n</sup> sang 1 là</p>
+    <p class="font-mono text-base pl-4 font-bold text-brand-600">Y = ∑<sub>i=0</sub><sup>2<sup>n</sup> - 1</sup> m<sub>i</sub> · D<sub>i</sub></p>
+    <p class="text-sm text-slate-700 pl-4">với: m<sub>i</sub> là minterm thứ i; D<sub>i</sub> là ngõ vào thứ i.</p>
+  </div>
+
+  <!-- Giới thiệu vi mạch MUX -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+    <p class=""><strong>74LS157: gồm 4 mạch dồn kênh 2 sang 1</strong></p>
+    <p class=""><strong>74LS153: gồm 2 mạch dồn kênh 4 sang 1</strong></p>
+    <p class=""><strong>74LS151: mạch dồn kênh 8 sang 1</strong></p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 520 200" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Vi mạch dồn kênh 74LS151 (8 sang 1)</text><rect x="150" y="45" width="200" height="140" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="215" y="95" font-weight="bold" fill="#034EA2" font-size="14">74LS151</text><text x="190" y="115" fill="#64748b" font-size="11">8-to-1 MUX</text><line x1="60" y1="75" x2="150" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="79" fill="#1e293b">D0 - D7</text><line x1="60" y1="120" x2="150" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="124" fill="#334155">A, B, C (Lựa chọn)</text><line x1="60" y1="155" x2="150" y2="155" stroke="#034EA2" stroke-width="1.5"></line><circle cx="135" cy="155" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="15" y="159" fill="#034EA2">/S (Cho phép)</text><line x1="350" y1="90" x2="430" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="94" font-weight="bold" fill="#034EA2">Y</text><line x1="350" y1="135" x2="430" y2="135" stroke="#034EA2" stroke-width="1.5"></line><circle cx="365" cy="135" r="3" fill="#fff" stroke="#034EA2" stroke-width="1.5"></circle><text x="438" y="139" font-weight="bold" fill="#034EA2">/W (Y bù)</text></svg>
+    </div>
+  </div>
+
+  <!-- Dùng Mux để thực hiện hàm Boole -->
+  <div class="space-y-4 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Dùng Mux để thực hiện hàm Boole</h4>
+    <p class="">Một mạch dồn kênh 2<sup>n</sup> sang 1 có thể được dùng để tạo một hàm Boole n biến hoặc (n-1) biến bất kỳ.</p>
+    
+    <p class="font-bold text-slate-900 pl-2">a) Dùng Mux 2<sup>n</sup> sang 1 thực hiện hàm Boole n biến</p>
+    <p class="pl-4">Ta có hàm ngõ ra của mux 2<sup>n</sup> sang 1 là: Y = ∑<sub>i=0</sub><sup>2<sup>n</sup>-1</sup> m<sub>i</sub> · D<sub>i</sub></p>
+    <p class="pl-4">Mà ta có dạng tổng quát của một hàm Boole n biến là: F = ∑<sub>i=0</sub><sup>2<sup>n</sup>-1</sup> m<sub>i</sub> · F<sub>i</sub></p>
+    <p class="pl-4">Vậy ta có thể tạo ra hàm F từ ngõ ra Y của Mux, n biến của hàm Boole được đưa vào n ngõ điều khiển của Mux, và đưa các giá trị 0 (tương đương với việc nối xuống Gnd) hoặc giá trị 1 (tương đương với việc nối lên Vcc) vào các ngõ vào D<sub>i</sub> tương ứng với các giá trị F<sub>i</sub>.</p>
+
+    <!-- Ví dụ 3.9 -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+      <p class="font-bold text-slate-900 text-base">Ví dụ 3.9: Dùng 74LS 151 để thực hiện hàm f(x,y,z) = ∑ (0,1,4,7)</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Thực hiện f(x,y,z) = ∑(0,1,4,7) dùng 74LS151</text><rect x="180" y="45" width="180" height="155" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="235" y="90" font-weight="bold" fill="#034EA2" font-size="14">74LS151</text><line x1="60" y1="65" x2="180" y2="65" stroke="#16a34a" stroke-width="1.5"></line><text x="10" y="69" fill="#16a34a" font-weight="bold">Vcc (+5V)</text><text x="80" y="60" fill="#64748b" font-size="10">Nối D0, D1, D4, D7 = 1</text><line x1="60" y1="115" x2="180" y2="115" stroke="#475569" stroke-width="1.5"></line><text x="10" y="119" fill="#475569" font-weight="bold">GND (0V)</text><text x="80" y="110" fill="#64748b" font-size="10">Nối D2, D3, D5, D6, /S = 0</text><line x1="60" y1="165" x2="180" y2="165" stroke="#034EA2" stroke-width="1.5"></line><text x="10" y="169" fill="#034EA2" font-weight="bold">x, y, z</text><text x="80" y="160" fill="#64748b" font-size="10">Đưa vào A, B, C</text><line x1="360" y1="110" x2="440" y2="110" stroke="#034EA2" stroke-width="2"></line><text x="448" y="114" font-weight="bold" fill="#034EA2">f(x,y,z) (Y ngõ ra)</text></svg>
+      </div>
+    </div>
+
+    <p class="font-bold text-slate-900 pl-2 pt-2">b) Dùng Mux 2<sup>n</sup> sang 1 thực hiện hàm Boole (n+1) biến</p>
+    <!-- Ví dụ 3.10 -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+      <p class="font-bold text-slate-900 text-base">Ví dụ 3.10: Dùng 74LS153 để thực hiện hàm f(x,y,z) = ∑ (0,1,5,6)</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <div>
+          <p class="text-center font-bold text-slate-800 text-sm mb-1">Ta có bảng chân trị</p>
+          <div class="overflow-x-auto">
+            <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+              <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+                <th class="p-1 px-3 border-r border-slate-300">x</th>
+                <th class="p-1 px-3 border-r border-slate-300">y</th>
+                <th class="p-1 px-3 border-r border-slate-300">z</th>
+                <th class="p-1 px-3">f</th>
+              </tr>
+              <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+              <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="font-bold text-brand-600">1</td></tr>
+              <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td></tr>
+              <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">1</td><td class="">0</td></tr>
+              <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td></tr>
+              <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">1</td><td class="font-bold text-brand-600">1</td></tr>
+              <tr class="border-b border-slate-200"><td class="">1</td><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+              <tr><td class="">1</td><td class="">1</td><td class="">1</td><td class="">0</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div>
+          <p class="text-center font-bold text-slate-800 text-sm mb-1">Bảng chân trị này có thể được trình bày lại như sau</p>
+          <div class="overflow-x-auto">
+            <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+              <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+                <th class="p-1 px-3 border-r border-slate-300">x</th>
+                <th class="p-1 px-3 border-r border-slate-300">y</th>
+                <th class="p-1 px-3">f</th>
+              </tr>
+              <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+              <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td></tr>
+              <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">z</td></tr>
+              <tr><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600"><span class="overline-bar">z</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="font-bold text-slate-900 text-base mb-2">Mạch thực hiện</p>
+        <div class="flex justify-center p-2 overflow-x-auto">
+          <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Mạch thực hiện f(x,y,z) = ∑(0,1,5,6) dùng 1/2 74LS153</text><rect x="170" y="45" width="180" height="155" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="210" y="85" font-weight="bold" fill="#034EA2" font-size="13">1/2 74LS153</text><text x="200" y="105" fill="#64748b" font-size="10">Dual 4-to-1 MUX</text><line x1="60" y1="60" x2="170" y2="60" stroke="#16a34a" stroke-width="1.5"></line><text x="20" y="64" fill="#16a34a" font-weight="bold">1 (Vcc) → 1C0</text><line x1="60" y1="90" x2="170" y2="90" stroke="#475569" stroke-width="1.5"></line><text x="20" y="94" fill="#475569" font-weight="bold">0 (GND) → 1C1</text><line x1="60" y1="120" x2="170" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="124" fill="#034EA2" font-weight="bold">z → 1C2</text><line x1="60" y1="150" x2="170" y2="150" stroke="#dc2626" stroke-width="1.5"></line><text x="20" y="154" fill="#dc2626" font-weight="bold">/z (Inverter) → 1C3</text><line x1="60" y1="180" x2="170" y2="180" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="184" fill="#1e293b" font-weight="bold">x, y → B, A</text><line x1="350" y1="115" x2="430" y2="115" stroke="#034EA2" stroke-width="2"></line><text x="438" y="119" font-weight="bold" fill="#034EA2">f(x,y,z)</text></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4- Mạch phân kênh (Demultiplexer - Demux) -->
+<div class="space-y-6 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">4- Mạch phân kênh (Demultiplexer - Demux)</h3>
+  <p class="">Mạch phân kênh gồm 1 ngõ vào, 2<sup>n</sup> ngõ ra và n ngõ điều khiển (còn gọi là ngõ lựa chọn). Tại một thời điểm, ngõ vào được kết nối với một ngõ ra, đó là ngõ ra có chỉ số được xác định bởi số nhị phân n bit tạo ra bởi n ngõ điều khiển.</p>
+  <p class="font-semibold text-slate-800">Mạch phân kênh hoạt động ngược với mạch dồn kênh.</p>
+
+  <!-- Ví dụ 3.11 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.11: Mạch phân kênh 1 sang 4</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">B</th>
+              <th class="p-1 px-3 border-r border-slate-300">A</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y0</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y1</th>
+              <th class="p-1 px-3 border-r border-slate-300">Y2</th>
+              <th class="p-1 px-3">Y3</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="font-bold">D</td><td class="">0</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="font-bold">D</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold">D</td><td class="">0</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold">D</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-2"><div class="">D —</div><div class="text-xs text-slate-500">A, B ←</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">1 to 4<br>DEMUX</div>
+            <div class="space-y-1 text-right"><div class="">— Y0</div><div class="">— Y1</div><div class="">— Y2</div><div class="">— Y3</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">Y0 = <span class="overline-bar">B</span> · <span class="overline-bar">A</span> · D</p>
+        <p class="">Y1 = <span class="overline-bar">B</span> · A · D</p>
+        <p class="">Y2 = B · <span class="overline-bar">A</span> · D</p>
+        <p class="">Y3 = B · A · D</p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 220" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ logic Phân kênh DEMUX 1 sang 4</text><line x1="40" y1="110" x2="240" y2="110" stroke="#034EA2" stroke-width="2"></line><text x="15" y="114" font-weight="bold" fill="#034EA2">Data D</text><g stroke="#034EA2" stroke-width="1.5" fill="#ffffff"><rect x="240" y="45" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="65" fill="#034EA2" stroke="none">AND</text><rect x="240" y="85" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="105" fill="#034EA2" stroke="none">AND</text><rect x="240" y="125" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="145" fill="#034EA2" stroke="none">AND</text><rect x="240" y="165" width="65" height="30" rx="5" fill="#eff6ff"></rect><text x="258" y="185" fill="#034EA2" stroke="none">AND</text></g><path d="M140,110 L140,60 L240,60" stroke="#034EA2" stroke-width="1.5" fill="none"></path><path d="M160,110 L160,100 L240,100" stroke="#034EA2" stroke-width="1.5" fill="none"></path><path d="M160,110 L160,140 L240,140" stroke="#034EA2" stroke-width="1.5" fill="none"></path><path d="M140,110 L140,180 L240,180" stroke="#034EA2" stroke-width="1.5" fill="none"></path><line x1="305" y1="60" x2="430" y2="60" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="64" font-weight="bold" fill="#034EA2">Y0 = /B·/A·D</text><line x1="305" y1="100" x2="430" y2="100" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="104" font-weight="bold" fill="#034EA2">Y1 = /B·A·D</text><line x1="305" y1="140" x2="430" y2="140" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="144" font-weight="bold" fill="#034EA2">Y2 = B·/A·D</text><line x1="305" y1="180" x2="430" y2="180" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="184" font-weight="bold" fill="#034EA2">Y3 = B·A·D</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Giới thiệu vi mạch DEMUX -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+    <p class=""><strong>74LS155: gồm 2 mạch phân kênh 1 sang 4</strong></p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 520 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Vi mạch 74LS155 (Gồm 2 bộ DEMUX 1 sang 4)</text><rect x="160" y="40" width="200" height="125" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><path d="M245,40 A15,15 0 0,0 275,40" fill="none" stroke="#034EA2" stroke-width="2"></path><text x="225" y="95" font-weight="bold" fill="#034EA2" font-size="14">74LS155</text><text x="190" y="115" fill="#64748b" font-size="10">DUAL 1-TO-4 DEMUX</text><line x1="70" y1="75" x2="160" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="79" fill="#334155">A, B (Select)</text><line x1="70" y1="120" x2="160" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="124" fill="#034EA2">1C, 2C (Data)</text><line x1="360" y1="75" x2="430" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="79" fill="#034EA2">1Y0 - 1Y3</text><line x1="360" y1="120" x2="430" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="124" fill="#034EA2">2Y0 - 2Y3</text></svg>
+    </div>
+  </div>
+</div>
+
+<!-- 5- Mạch cộng (Adder) -->
+<div class="space-y-6 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">5- Mạch cộng (Adder)</h3>
+  
+  <p class="font-bold text-slate-900 pl-2">a) Mạch cộng bán phần (Half Adder - HA)</p>
+  <p class="pl-4">Mạch cộng bán phần là mạch cộng 2 số nhị phân 1 bit A và B, mạch tạo ra 1 bit tổng S (<em>sum</em>) và 1 bit nhớ C (<em>carry</em>).</p>
+
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">A</th>
+              <th class="p-1 px-3 border-r border-slate-300">B</th>
+              <th class="p-1 px-3 border-r border-slate-300">C</th>
+              <th class="p-1 px-3">S</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">1</td><td class="">0</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-44 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-3"><div class="">A —</div><div class="">B —</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">HALF<br>ADDER</div>
+            <div class="space-y-3 text-right"><div class="">— S</div><div class="">— C</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">S = <span class="overline-bar">A</span> · B + A · <span class="overline-bar">B</span> = A ⊕ B</p>
+        <p class="">C = A · B</p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 480 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ mạch Half Adder (Cổng XOR &amp; AND)</text><line x1="40" y1="55" x2="220" y2="55" stroke="#034EA2" stroke-width="1.8"></line><text x="20" y="59" font-weight="bold" fill="#1e293b">A</text><line x1="40" y1="85" x2="220" y2="85" stroke="#034EA2" stroke-width="1.8"></line><text x="20" y="89" font-weight="bold" fill="#1e293b">B</text><rect x="220" y="45" width="70" height="45" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="240" y="72" font-weight="bold" fill="#034EA2">XOR</text><line x1="290" y1="67" x2="390" y2="67" stroke="#034EA2" stroke-width="2"></line><text x="398" y="71" font-weight="bold" fill="#034EA2">S = A ⊕ B</text><rect x="220" y="110" width="70" height="45" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="240" y="137" font-weight="bold" fill="#034EA2">AND</text><line x1="290" y1="132" x2="390" y2="132" stroke="#034EA2" stroke-width="2"></line><text x="398" y="136" font-weight="bold" fill="#034EA2">C = A · B</text><path d="M110,55 L110,120 L220,120" stroke="#034EA2" stroke-width="1.5" fill="none"></path><circle cx="110" cy="55" r="3" fill="#034EA2"></circle><path d="M150,85 L150,140 L220,140" stroke="#034EA2" stroke-width="1.5" fill="none"></path><circle cx="150" cy="85" r="3" fill="#034EA2"></circle></svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="font-bold text-slate-900 pl-2 pt-2">b) Mạch cộng toàn phần (Full Adder - FA)</p>
+  <p class="pl-4">Mạch cộng toàn phần là mạch cộng 2 số nhị phân 1 bit A<sub>n</sub> và B<sub>n</sub> với 1 bit nhớ được tạo ra từ bit thấp hơn C<sub>n-1</sub>, mạch tạo ra 1 bit tổng S<sub>n</sub> (<em>sum</em>) và 1 bit nhớ C<sub>n</sub> (<em>carry</em>). Mạch này chính là mạch cộng 3 số nhị phân 1 bit (A<sub>n</sub>, B<sub>n</sub> và C<sub>n-1</sub>) và tạo ra 1 số nhị phân 2 bit C<sub>n</sub>S<sub>n</sub>.</p>
+
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-2 border-r border-slate-300">C<sub>n-1</sub></th>
+              <th class="p-1 px-2 border-r border-slate-300">A<sub>n</sub></th>
+              <th class="p-1 px-2 border-r border-slate-300">B<sub>n</sub></th>
+              <th class="p-1 px-2 border-r border-slate-300">C<sub>n</sub></th>
+              <th class="p-1 px-2">S<sub>n</sub></th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">1</td><td class="font-bold text-brand-600">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td><td class="">0</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">1</td><td class="font-bold text-brand-600">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-2"><div class="">C<sub>n-1</sub> —</div><div class="">A<sub>n</sub> —</div><div class="">B<sub>n</sub> —</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">FULL<br>ADDER</div>
+            <div class="space-y-3 text-right"><div class="">— C<sub>n</sub></div><div class="">— S<sub>n</sub></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">S<sub>n</sub> = <span class="overline-bar">C<sub>n-1</sub></span> · <span class="overline-bar">A<sub>n</sub></span> · B<sub>n</sub> + <span class="overline-bar">C<sub>n-1</sub></span> · A<sub>n</sub> · <span class="overline-bar">B<sub>n</sub></span> + C<sub>n-1</sub> · <span class="overline-bar">A<sub>n</sub></span> · <span class="overline-bar">B<sub>n</sub></span> + C<sub>n-1</sub> · A<sub>n</sub> · B<sub>n</sub></p>
+        <p class="">S<sub>n</sub> = C<sub>n-1</sub> ⊕ A<sub>n</sub> ⊕ B<sub>n</sub></p>
+        <p class="pt-1">C<sub>n</sub> = C<sub>n-1</sub> · A<sub>n</sub> + A<sub>n</sub> · B<sub>n</sub> + C<sub>n-1</sub> · B<sub>n</sub></p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 540 210" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ mạch Full Adder ghép từ 2 Half Adder &amp; Cổng OR</text><rect x="110" y="50" width="100" height="80" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="138" y="85" font-weight="bold" fill="#034EA2">HA 1</text><text x="122" y="105" fill="#64748b" font-size="10">S1, C1</text><rect x="260" y="50" width="100" height="80" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="288" y="85" font-weight="bold" fill="#034EA2">HA 2</text><text x="272" y="105" fill="#64748b" font-size="10">Sn, C2</text><rect x="410" y="120" width="60" height="45" rx="6" fill="#ffffff" stroke="#034EA2" stroke-width="1.8"></rect><text x="428" y="147" font-weight="bold" fill="#034EA2">OR</text><line x1="40" y1="70" x2="110" y2="70" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="74" font-weight="bold">An</text><line x1="40" y1="100" x2="110" y2="100" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="104" font-weight="bold">Bn</text><line x1="210" y1="70" x2="260" y2="70" stroke="#034EA2" stroke-width="1.5"></line><line x1="40" y1="150" x2="260" y2="100" stroke="#034EA2" stroke-width="1.5"></line><text x="10" y="154" font-weight="bold" fill="#034EA2">Cn-1</text><line x1="360" y1="70" x2="470" y2="70" stroke="#034EA2" stroke-width="2"></line><text x="480" y="74" font-weight="bold" fill="#034EA2">Sn</text><line x1="210" y1="110" x2="410" y2="135" stroke="#034EA2" stroke-width="1.5"></line><line x1="360" y1="110" x2="410" y2="150" stroke="#034EA2" stroke-width="1.5"></line><line x1="470" y1="142" x2="510" y2="142" stroke="#034EA2" stroke-width="2"></line><text x="515" y="146" font-weight="bold" fill="#034EA2">Cn</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="font-bold text-slate-900 pl-2 pt-2">c) Mạch cộng song song (Parallel Adder - PA)</p>
+  <p class="pl-4">Mạch cộng song song n bit là mạch cộng 2 số nhị phân n bit, có 1 bit nhớ ngõ vào, tạo ra tổng là một số nhị phân n bit và 1 bit nhớ ngõ ra.</p>
+  <p class="pl-4">Mạch cộng song song n bit được tạo ra từ n mạch cộng toàn phần (FA) mắc nối tiếp, bit nhớ ra từ một FA được nối đến bit nhớ vào của FA có trọng số cao hơn.</p>
+
+  <!-- Ví dụ 3.12 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.12: Mạch cộng song song 4 bit.</p>
+    <div>
+      <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối và Sơ đồ kết nối</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 540 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ ghép nối mạch cộng song song 4 bit (4 FA ghép nối tiếp)</text><g stroke="#034EA2" stroke-width="1.8" fill="#ffffff"><rect x="410" y="50" width="80" height="80" rx="6" fill="#eff6ff"></rect><text x="435" y="95" font-weight="bold" fill="#034EA2" stroke="none">FA 0</text><rect x="290" y="50" width="80" height="80" rx="6" fill="#eff6ff"></rect><text x="315" y="95" font-weight="bold" fill="#034EA2" stroke="none">FA 1</text><rect x="170" y="50" width="80" height="80" rx="6" fill="#eff6ff"></rect><text x="195" y="95" font-weight="bold" fill="#034EA2" stroke="none">FA 2</text><rect x="50" y="50" width="80" height="80" rx="6" fill="#eff6ff"></rect><text x="75" y="95" font-weight="bold" fill="#034EA2" stroke="none">FA 3</text></g><line x1="520" y1="90" x2="490" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="500" y="82" fill="#034EA2">C-1</text><line x1="410" y1="90" x2="370" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="380" y="82" fill="#64748b" font-size="10">C0</text><line x1="290" y1="90" x2="250" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="260" y="82" fill="#64748b" font-size="10">C1</text><line x1="170" y1="90" x2="130" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="140" y="82" fill="#64748b" font-size="10">C2</text><line x1="50" y1="90" x2="15" y2="90" stroke="#034EA2" stroke-width="2"></line><text x="10" y="82" font-weight="bold" fill="#034EA2">C3</text><line x1="450" y1="130" x2="450" y2="160" stroke="#034EA2" stroke-width="1.8"></line><text x="445" y="173" font-weight="bold" fill="#034EA2">S0</text><line x1="330" y1="130" x2="330" y2="160" stroke="#034EA2" stroke-width="1.8"></line><text x="325" y="173" font-weight="bold" fill="#034EA2">S1</text><line x1="210" y1="130" x2="210" y2="160" stroke="#034EA2" stroke-width="1.8"></line><text x="205" y="173" font-weight="bold" fill="#034EA2">S2</text><line x1="90" y1="130" x2="90" y2="160" stroke="#034EA2" stroke-width="1.8"></line><text x="85" y="173" font-weight="bold" fill="#034EA2">S3</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Giới thiệu vi mạch 74LS83 -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+    <p class=""><strong>74LS83: Mạch cộng song song 4 bit.</strong></p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 500 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Vi mạch 74LS83 (4-Bit Binary Full Adder)</text><rect x="150" y="45" width="200" height="115" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><text x="215" y="95" font-weight="bold" fill="#034EA2" font-size="15">74LS83</text><text x="180" y="115" fill="#64748b" font-size="10">4-BIT PARALLEL ADDER</text><line x1="60" y1="75" x2="150" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="79" fill="#1e293b">A1 - A4, B1 - B4</text><line x1="60" y1="120" x2="150" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="124" fill="#034EA2">C0 (Carry In)</text><line x1="350" y1="75" x2="430" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="79" font-weight="bold" fill="#034EA2">S1 - S4</text><line x1="350" y1="120" x2="430" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="124" font-weight="bold" fill="#034EA2">C4 (Carry Out)</text></svg>
+    </div>
+  </div>
+</div>
+
+<!-- 6- Mạch so sánh (Comparator) -->
+<div class="space-y-6 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">6- Mạch so sánh (Comparator)</h3>
+
+  <p class="font-bold text-slate-900 pl-2">a) Mạch so sánh 2 số 1 bit</p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">A</th>
+              <th class="p-1 px-3 border-r border-slate-300">B</th>
+              <th class="p-1 px-3 border-r border-slate-300">(A&gt;B)</th>
+              <th class="p-1 px-3 border-r border-slate-300">(A&lt;B)</th>
+              <th class="p-1 px-3">(A=B)</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td><td class="">0</td><td class="">0</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-48 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-3"><div class="">A —</div><div class="">B —</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">COMP</div>
+            <div class="space-y-1 text-right"><div class="">— A&gt;B</div><div class="">— A&lt;B</div><div class="">— A=B</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">(A &gt; B) = A · <span class="overline-bar">B</span></p>
+        <p class="">(A &lt; B) = <span class="overline-bar">A</span> · B</p>
+        <p class="">(A = B) = <span class="overline-bar">A</span> · <span class="overline-bar">B</span> + A · B = <span class="overline-bar">A ⊕ B</span></p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 500 200" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ logic mạch so sánh 2 số 1 bit (Comparator 1-bit)</text><line x1="40" y1="65" x2="220" y2="65" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="69" font-weight="bold">A</text><line x1="40" y1="120" x2="220" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="20" y="124" font-weight="bold">B</text><rect x="220" y="45" width="75" height="35" rx="5" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></rect><text x="240" y="67" font-weight="bold" fill="#034EA2">AND</text><line x1="295" y1="62" x2="400" y2="62" stroke="#034EA2" stroke-width="2"></line><text x="408" y="66" font-weight="bold" fill="#034EA2">(A &gt; B) = A·/B</text><rect x="220" y="95" width="75" height="35" rx="5" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></rect><text x="235" y="117" font-weight="bold" fill="#034EA2">XNOR</text><line x1="295" y1="112" x2="400" y2="112" stroke="#034EA2" stroke-width="2"></line><text x="408" y="116" font-weight="bold" fill="#034EA2">(A = B) = /A⊕B</text><rect x="220" y="145" width="75" height="35" rx="5" fill="#eff6ff" stroke="#034EA2" stroke-width="1.5"></rect><text x="240" y="167" font-weight="bold" fill="#034EA2">AND</text><line x1="295" y1="162" x2="400" y2="162" stroke="#034EA2" stroke-width="2"></line><text x="408" y="166" font-weight="bold" fill="#034EA2">(A &lt; B) = /A·B</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="font-bold text-slate-900 pl-2 pt-2">b) Mạch so sánh 2 số 1 bit có ngõ vào điều khiển</p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-xs sm:text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 border-r border-slate-300">(A&gt;B)<sub>i</sub></th>
+              <th class="p-1 border-r border-slate-300">(A&lt;B)<sub>i</sub></th>
+              <th class="p-1 border-r border-slate-300">(A=B)<sub>i</sub></th>
+              <th class="p-1 border-r border-slate-300">A</th>
+              <th class="p-1 border-r border-slate-300">B</th>
+              <th class="p-1 border-r border-slate-300">(A&gt;B)<sub>o</sub></th>
+              <th class="p-1 border-r border-slate-300">(A&lt;B)<sub>o</sub></th>
+              <th class="p-1">(A=B)<sub>o</sub></th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="">x</td><td class="">x</td><td class="font-bold">1</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="">x</td><td class="">x</td><td class="">0</td><td class="font-bold">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="font-bold">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="font-bold">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="font-bold">1</td><td class="">0</td><td class="">0</td></tr>
+            <tr><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <svg viewBox="0 0 320 160" class="w-full max-w-sm bg-slate-50 border border-slate-200 rounded-lg p-2 font-mono text-xs shadow-xs mx-auto" xmlns="http://www.w3.org/2000/svg"><rect x="80" y="25" width="160" height="110" rx="6" fill="#ffffff" stroke="#034EA2" stroke-width="1.8"></rect><text x="110" y="70" font-weight="bold" fill="#034EA2" font-size="12">COMP 1-BIT</text><text x="100" y="90" fill="#64748b" font-size="10">Có Cascade In</text><line x1="15" y1="45" x2="80" y2="45" stroke="#034EA2" stroke-width="1.5"></line><text x="18" y="40" fill="#334155" font-size="10">(A&gt;B)i</text><line x1="15" y1="75" x2="80" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="18" y="70" fill="#334155" font-size="10">(A&lt;B)i</text><line x1="15" y1="105" x2="80" y2="105" stroke="#034EA2" stroke-width="1.5"></line><text x="18" y="100" fill="#334155" font-size="10">(A=B)i</text><line x1="240" y1="45" x2="305" y2="45" stroke="#034EA2" stroke-width="1.5"></line><text x="245" y="40" fill="#034EA2" font-size="10">(A&gt;B)o</text><line x1="240" y1="75" x2="305" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="245" y="70" fill="#034EA2" font-size="10">(A&lt;B)o</text><line x1="240" y1="105" x2="305" y2="105" stroke="#034EA2" stroke-width="1.5"></line><text x="245" y="100" fill="#034EA2" font-size="10">(A=B)o</text></svg>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Các hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">(A &gt; B)<sub>o</sub> = (A &gt; B)<sub>i</sub> + (A = B)<sub>i</sub> · A · <span class="overline-bar">B</span></p>
+        <p class="">(A &lt; B)<sub>o</sub> = (A &lt; B)<sub>i</sub> + (A = B)<sub>i</sub> · <span class="overline-bar">A</span> · B</p>
+        <p class="">(A = B)<sub>o</sub> = (A = B)<sub>i</sub> · <span class="overline-bar">A</span> · <span class="overline-bar">B</span> + (A = B)<sub>i</sub> · A · B = (A = B)<sub>i</sub> · (<span class="overline-bar">A ⊕ B</span>)</p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 520 190" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ logic mạch so sánh 1 bit có Cascade Inputs</text><rect x="200" y="45" width="120" height="125" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="215" y="100" font-weight="bold" fill="#034EA2">LOGIC BLOCK</text><text x="225" y="120" fill="#64748b" font-size="10">AND-OR-XNOR</text><line x1="60" y1="60" x2="200" y2="60" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="64">A, B</text><line x1="60" y1="95" x2="200" y2="95" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="99">(A&gt;B)i</text><line x1="60" y1="125" x2="200" y2="125" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="129">(A=B)i</text><line x1="60" y1="155" x2="200" y2="155" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="159">(A&lt;B)i</text><line x1="320" y1="70" x2="430" y2="70" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="74" font-weight="bold" fill="#034EA2">(A&gt;B)o</text><line x1="320" y1="110" x2="430" y2="110" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="114" font-weight="bold" fill="#034EA2">(A=B)o</text><line x1="320" y1="150" x2="430" y2="150" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="154" font-weight="bold" fill="#034EA2">(A&lt;B)o</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="font-bold text-slate-900 pl-2 pt-2">c) Mạch so sánh 2 số n bit</p>
+  <p class="pl-4">Mạch so sánh 2 số n bit được tạo ra từ n mạch so sánh 2 số 1 bit có ngõ vào điều khiển.</p>
+
+  <!-- Ví dụ 3.13 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.13: Mạch so sánh 2 số 4 bit</p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 520 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ ghép nối mạch so sánh 4 bit từ 4 khối 1-bit</text><g stroke="#034EA2" stroke-width="1.5" fill="#ffffff"><rect x="50" y="45" width="85" height="100" rx="6" fill="#eff6ff"></rect><text x="68" y="95" font-weight="bold" fill="#034EA2" stroke="none">Bit 3</text><rect x="165" y="45" width="85" height="100" rx="6" fill="#eff6ff"></rect><text x="183" y="95" font-weight="bold" fill="#034EA2" stroke="none">Bit 2</text><rect x="280" y="45" width="85" height="100" rx="6" fill="#eff6ff"></rect><text x="298" y="95" font-weight="bold" fill="#034EA2" stroke="none">Bit 1</text><rect x="395" y="45" width="85" height="100" rx="6" fill="#eff6ff"></rect><text x="413" y="95" font-weight="bold" fill="#034EA2" stroke="none">Bit 0</text></g><line x1="135" y1="95" x2="165" y2="95" stroke="#034EA2" stroke-width="1.5"></line><line x1="250" y1="95" x2="280" y2="95" stroke="#034EA2" stroke-width="1.5"></line><line x1="365" y1="95" x2="395" y2="95" stroke="#034EA2" stroke-width="1.5"></line><line x1="15" y1="95" x2="50" y2="95" stroke="#034EA2" stroke-width="1.5"></line><text x="10" y="90" font-size="9" fill="#64748b">MSB In</text><line x1="480" y1="95" x2="510" y2="95" stroke="#034EA2" stroke-width="2"></line><text x="475" y="85" font-weight="bold" fill="#034EA2" font-size="10">Ngõ ra</text></svg>
+    </div>
+  </div>
+
+  <!-- Giới thiệu vi mạch so sánh -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+    <p class=""><strong>74LS85: mạch so sánh 4 bit</strong></p>
+    <p class=""><strong>74LS682: mạch so sánh 8 bit</strong></p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 520 200" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Vi mạch so sánh 74LS85 (4-bit) &amp; 74LS682 (8-bit)</text><rect x="40" y="45" width="190" height="135" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="1.8"></rect><text x="105" y="80" font-weight="bold" fill="#034EA2" font-size="13">74LS85</text><text x="75" y="98" fill="#64748b" font-size="10">4-BIT COMPARATOR</text><text x="50" y="125" fill="#334155" font-size="9">Inputs: A0-A3, B0-B3</text><text x="50" y="142" fill="#334155" font-size="9">Cascade In: &lt;, =, &gt;</text><text x="50" y="160" fill="#034EA2" font-size="9" font-weight="bold">Outputs: A&gt;B, A=B, A&lt;B</text><rect x="280" y="45" width="190" height="135" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="1.8"></rect><text x="345" y="80" font-weight="bold" fill="#034EA2" font-size="13">74LS682</text><text x="315" y="98" fill="#64748b" font-size="10">8-BIT COMPARATOR</text><text x="290" y="125" fill="#334155" font-size="9">Inputs: P0-P7, Q0-Q7</text><text x="290" y="145" fill="#034EA2" font-size="9" font-weight="bold">Outputs: /P=Q, /P&gt;Q</text></svg>
+    </div>
+  </div>
+</div>
+
+<!-- 7- Mạch tạo và kiểm tra chẵn lẻ -->
+<div class="space-y-6 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">7- Mạch tạo và kiểm tra chẵn lẻ (Parity Generator &amp; Checker)</h3>
+  <p class="">Phương pháp chẵn lẻ là phương pháp đơn giản nhất và phổ biến nhất để phát hiện lỗi khi truyền các thông tin số từ một nơi phát đến một nơi thu. Tại nơi phát, ngoài các bit data cần truyền đi, người ta còn tạo và truyền đi một bit parity. Bit parity này có giá trị tùy thuộc vào các bit data. Có hai phương pháp để tạo bit parity là parity chẵn và parity lẻ.</p>
+  <p class="">Ở phương pháp parity chẵn, bit parity sẽ được tạo ra sao cho tổng số các bit 1 trong các bit data và kể cả bit parity phải là một số chẵn.</p>
+  <p class="">Ngược lại, ở phương pháp parity lẻ, bit parity sẽ được tạo ra sao cho tổng số các bit 1 trong các bit data và kể cả bit parity phải là một số lẻ.</p>
+  <p class="">Tại nơi thu, người ta sẽ kiểm tra các bit data và bit parity nhận được. Nếu tổng số các bit 1 là chẵn (đối với phương pháp parity chẵn) hoặc nếu tổng số các bit 1 là lẻ (đối với phương pháp parity lẻ) thì việc truyền thông tin là chính xác. Còn trường hợp ngược lại thì việc truyền đã bị lỗi.</p>
+
+  <!-- Ví dụ 3.14 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.14: Mạch tạo parity chẵn 3 bit</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Bảng chân trị</p>
+        <div class="overflow-x-auto">
+          <table class="border-collapse border border-slate-300 font-mono text-sm mx-auto text-center">
+            <tbody><tr class="bg-slate-100 font-bold border-b border-slate-300">
+              <th class="p-1 px-3 border-r border-slate-300">A</th>
+              <th class="p-1 px-3 border-r border-slate-300">B</th>
+              <th class="p-1 px-3 border-r border-slate-300">C</th>
+              <th class="p-1 px-3">P</th>
+            </tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">0</td><td class="">1</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">0</td><td class="">1</td><td class="">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">0</td><td class="font-bold text-brand-600">1</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">0</td><td class="">1</td><td class="">0</td></tr>
+            <tr class="border-b border-slate-200"><td class="">1</td><td class="">1</td><td class="">0</td><td class="">0</td></tr>
+            <tr><td class="">1</td><td class="">1</td><td class="">1</td><td class="font-bold text-brand-600">1</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div>
+        <p class="text-center font-bold text-slate-800 text-sm mb-2">Sơ đồ khối</p>
+        <div class="flex justify-center">
+          <div class="w-44 p-4 border-2 border-slate-800 rounded bg-slate-50 flex items-center justify-between font-mono text-sm">
+            <div class="space-y-2"><div class="">A —</div><div class="">B —</div><div class="">C —</div></div>
+            <div class="font-bold font-sans text-xs text-center px-1">EVEN<br>PARITY</div>
+            <div class="text-right"><div class="">— P</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-1 pt-2">
+      <p class="font-bold text-slate-900 text-base">Hàm ngõ ra</p>
+      <div class="font-mono text-base pl-4 space-y-1">
+        <p class="">P = <span class="overline-bar">A</span> · <span class="overline-bar">B</span> · C + <span class="overline-bar">A</span> · B · <span class="overline-bar">C</span> + A · <span class="overline-bar">B</span> · <span class="overline-bar">C</span> + A · B · C</p>
+        <p class="">⇔ P = <span class="overline-bar">A</span>(B · <span class="overline-bar">C</span> + <span class="overline-bar">B</span> · C) + A(B · C + <span class="overline-bar">B</span> · <span class="overline-bar">C</span>)</p>
+        <p class="">⇔ P = <span class="overline-bar">A</span> · (B ⊕ C) + A · (<span class="overline-bar">B ⊕ C</span>)</p>
+        <p class="font-bold text-brand-600">⇔ P = A ⊕ B ⊕ C</p>
+      </div>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 text-base mb-2">Sơ đồ mạch</p>
+      <div class="flex justify-center p-2 overflow-x-auto">
+        <svg viewBox="0 0 480 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Sơ đồ mạch tạo Parity chẵn 3 bit (Cổng XOR 2 tầng)</text><line x1="40" y1="55" x2="160" y2="55" stroke="#034EA2" stroke-width="1.8"></line><text x="20" y="59" font-weight="bold" fill="#1e293b">A</text><line x1="40" y1="85" x2="160" y2="85" stroke="#034EA2" stroke-width="1.8"></line><text x="20" y="89" font-weight="bold" fill="#1e293b">B</text><rect x="160" y="45" width="70" height="45" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="180" y="72" font-weight="bold" fill="#034EA2">XOR</text><line x1="230" y1="67" x2="310" y2="67" stroke="#034EA2" stroke-width="1.5"></line><text x="240" y="60" fill="#64748b" font-size="10">A ⊕ B</text><line x1="40" y1="125" x2="310" y2="95" stroke="#034EA2" stroke-width="1.8"></line><text x="20" y="129" font-weight="bold" fill="#1e293b">C</text><rect x="310" y="65" width="70" height="45" rx="6" fill="#eff6ff" stroke="#034EA2" stroke-width="1.8"></rect><text x="330" y="92" font-weight="bold" fill="#034EA2">XOR</text><line x1="380" y1="87" x2="450" y2="87" stroke="#034EA2" stroke-width="2"></line><text x="458" y="91" font-weight="bold" fill="#034EA2">P = A ⊕ B ⊕ C</text></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ví dụ 3.15 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">Ví dụ 3.15: Mạch kiểm tra parity chẵn 3 bit.</p>
+    <p class="">Ta có thể dùng mạch tạo parity chẵn 3 bit để dùng làm mạch kiểm tra parity chẵn 3 bit bằng cách đưa 3 bit cần kiểm tra vào mạch tạo parity. Nếu tổng số các bit 1 trong 3 bit đó là chẵn (nghĩa là không có lỗi) thì mạch sẽ tạo ra bit P = 0. Ngược lại, nếu tổng số các bit 1 trong 3 bit đó là lẻ (nghĩa là có lỗi) thì mạch sẽ tạo ra bit P = 1.</p>
+    <p class="font-semibold text-slate-800">Do đó, ta căn cứ vào bit P để biết được là có lỗi hay không có lỗi.</p>
+  </div>
+
+  <!-- Giới thiệu vi mạch 74LS280 -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-base sm:text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">Giới thiệu vi mạch</h4>
+    <p class=""><strong>74LS280: mạch tạo parity chẵn/lẻ 9 bit</strong></p>
+    <div class="flex justify-center p-2 overflow-x-auto">
+      <svg viewBox="0 0 500 180" class="w-full max-w-lg bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs shadow-xs" xmlns="http://www.w3.org/2000/svg"><text x="20" y="25" font-size="13" font-weight="bold" fill="#034EA2">Vi mạch 74LS280 - Tạo và kiểm tra Parity 9 bit</text><rect x="150" y="45" width="200" height="115" rx="8" fill="#ffffff" stroke="#034EA2" stroke-width="2"></rect><path d="M235,45 A15,15 0 0,0 265,45" fill="none" stroke="#034EA2" stroke-width="2"></path><text x="215" y="95" font-weight="bold" fill="#034EA2" font-size="15">74LS280</text><text x="175" y="115" fill="#64748b" font-size="10">9-BIT PARITY GEN/CHECK</text><line x1="60" y1="90" x2="150" y2="90" stroke="#034EA2" stroke-width="1.5"></line><text x="15" y="94" fill="#1e293b">A - I (9 Data In)</text><line x1="350" y1="75" x2="430" y2="75" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="79" font-weight="bold" fill="#034EA2">∑ EVEN (Chẵn)</text><line x1="350" y1="120" x2="430" y2="120" stroke="#034EA2" stroke-width="1.5"></line><text x="438" y="124" font-weight="bold" fill="#034EA2">∑ ODD (Lẻ)</text></svg>
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+
+<!-- Chapter Navigation Footer -->
+<div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+<div class="text-center sm:text-left">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+<h4 class="text-base font-bold text-slate-800">Kỹ thuật số &amp; Thiết kế vi mạch</h4>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="Chuong2-dai-so-boole-va-cac-cong-locgic-phan2.html">
+  ← Về Chương 2
+</a>
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-3-1">
+  Lên đầu trang
+</a>
+<a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="Chuong4-he-tuan-tu-&-fipl-flop-phan1.html">
+  Tiếp tục: Chương 4 →
+</a>
+</div>
+</div>
+
+</main>
+
+
+
+</body></html>

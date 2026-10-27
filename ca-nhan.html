@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cá nhân — CƠ KHÍ HUIT</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css?v=20261017d">
+<style>
+.cols{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+@media (max-width:960px){.cols{grid-template-columns:1fr}}
+
+.card-head{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.avatar{
+  width:76px;height:76px;flex:none;border-radius:50%;
+  background:var(--brand);color:var(--text-invert);display:grid;place-items:center;
+  font:800 26px/1 var(--font-display);letter-spacing:-.02em;
+  box-shadow:0 6px 20px rgba(3,78,162,.30);
+}
+/* Tối: --brand thành xanh nhạt nên chữ phải tối để đủ tương phản */
+:root[data-theme="dark"] .avatar,
+:root:not([data-theme="light"]) .avatar{color:var(--bg)}
+.card-head h2{margin:0 0 2px;font:700 19px/1.25 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.card-head p{margin:0;font-size:13px;color:var(--text-muted)}
+
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+
+.panel{padding:22px 24px;border-radius:var(--r-xl);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi);margin-bottom:20px}
+.panel:last-child{margin-bottom:0}
+.panel h3{margin:0 0 4px;font:700 17px/1.3 var(--font-display);color:var(--text-strong);letter-spacing:-.01em}
+.panel .sub{margin:0 0 18px;font-size:13.5px;color:var(--text-muted)}
+.panel .sub a{color:var(--brand);font-weight:600;text-underline-offset:3px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid2 .full{grid-column:1/-1}
+@media (max-width:600px){.grid2{grid-template-columns:1fr}}
+.field label{display:block;font:600 12.5px/1.4 var(--font-display);color:var(--text);margin-bottom:6px}
+.field .ck-input{width:100%}
+textarea.ck-input{min-height:96px;padding:12px 14px;line-height:1.6;resize:vertical;font-family:var(--font-display)}
+.field .hint{margin:5px 0 0;font-size:12px;color:var(--text-muted)}
+.goal-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.goal-num{font:700 34px/1 var(--font-mono);color:var(--text-strong);letter-spacing:-.02em}
+.bar{height:8px;border-radius:var(--r-full);background:rgba(255,255,255,.5);overflow:hidden;
+  box-shadow:inset 0 1px 2px var(--brand-06);flex:1 1 200px;min-width:160px}
+.bar i{display:block;height:100%;border-radius:var(--r-full);background:var(--brand);
+  transition:width .5s var(--ease-out);box-shadow:0 0 8px rgba(3,78,162,.35)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:14px 16px;border-radius:var(--r-lg);background:rgba(255,255,255,.5);
+  border:1px solid var(--brand-06);box-shadow:var(--sh-xs)}
+.stat p{margin:0}
+.stat .l{font:600 10.5px/1.3 var(--font-display);letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
+.stat .v{font:700 22px/1.2 var(--font-mono);color:var(--text-strong);margin-top:2px}
+
+.switchrow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;
+  border-bottom:1px solid var(--brand-06)}
+.switchrow:last-child{border-bottom:0}
+.switchrow b{display:block;font:600 14px/1.4 var(--font-display);color:var(--text)}
+.switchrow span{display:block;font-size:12.5px;color:var(--text-muted)}
+.sw{position:relative;width:44px;height:25px;flex:none;border:0;cursor:pointer;border-radius:var(--r-full);
+  background:var(--brand-20);transition:background var(--dur-fast) var(--ease-out)}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(3,78,162,.3);transition:transform var(--dur-fast) var(--ease-out)}
+.sw[aria-checked="true"]{background:var(--brand)}
+.sw[aria-checked="true"]::after{transform:translateX(19px)}
+
+.savebar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:22px;
+  padding-top:18px;border-top:1px solid var(--brand-06)}
+.savebar .sp{margin-left:auto;font-size:12.5px;color:var(--text-muted)}
+
+.danger{padding:20px 22px;border-radius:var(--r-xl);border:1.5px solid var(--brand-25);
+  box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.danger h4{margin:0 0 4px;font:600 11px/1.3 var(--font-display);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-strong)}
+.danger p{margin:0 0 14px;font-size:13px;color:var(--text)}
+.btn-danger{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;cursor:pointer;
+  background:transparent;border:1.5px solid var(--brand);border-radius:var(--r-md);
+  color:var(--text-strong);font:600 13.5px/1 var(--font-display);transition:background var(--dur-fast) var(--ease-out)}
+.btn-danger:hover{background:var(--brand-10)}
+.btn-danger svg{width:16px;height:16px}
+
+.about{font-size:13.5px;line-height:1.75}
+.about li{margin-bottom:6px;color:var(--text)}
+.about b{color:var(--text-strong)}
+</style>
+</head>
+<body data-depth="0">
+
+<div data-ck-nav="profile"></div>
+
+<main class="ck-wrap">
+
+  <header style="margin-bottom:var(--gutter)">
+    <h1 class="ck-page-title">Cá nhân</h1>
+    <p class="ck-page-sub">Hồ sơ lưu ngay trên trình duyệt này — không tải lên đâu cả.</p>
+  </header>
+
+  <div class="cols">
+
+    <aside>
+      <section class="panel glass g2" style="text-align:center">
+        <div class="card-head" style="justify-content:center;flex-direction:column;gap:14px">
+          <div class="avatar" id="av">SV</div>
+          <div style="text-align:center">
+            <h2 id="pvName">Chưa đặt tên</h2>
+            <p id="pvSub">Chưa cập nhật hồ sơ</p>
+          </div>
+        </div>
+        <div class="tags" style="justify-content:center" id="pvTags"></div>
+      </section>
+
+      <section class="panel glass g1">
+        <h3>Mục tiêu GPA</h3>
+        <p class="sub" id="goalSub">Đặt mục tiêu để theo dõi tiến bộ.</p>
+        <div class="goal-row">
+          <span class="goal-num" id="goalNow">0.00</span>
+          <span class="bar"><i id="goalBar" style="width:0"></i></span>
+          <span class="ck-label" id="goalTarget">/ 4.00</span>
+        </div>
+        <div class="field" style="margin-top:18px">
+          <label for="goalRange">Mục tiêu GPA tích lũy: <b id="goalLabel">3.50</b></label>
+          <input type="range" id="goalRange" min="2" max="4" step="0.05" value="3.5" style="width:100%">
+        </div>
+      </section>
+
+      <section class="panel glass g1">
+        <h3>Tóm tắt hoạt động</h3>
+        <p class="sub">Tính từ lịch sử làm bài.</p>
+        <div class="stats" id="stats"></div>
+      </section>
+    </aside>
+
+    <div>
+      <form class="panel glass g2" id="form" autocomplete="off">
+        <h3>Thông tin sinh viên</h3>
+        <p class="sub">Dùng để ghi nhớ khi tính điểm, GPA và học phí. Trang
+          <a href="pmt-ems/pmt-ems.html" target="_blank" rel="noopener">PMT-EMS</a> đọc hồ sơ này
+          để điền sẵn thông tin sinh viên.</p>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="f-name">Họ và tên</label>
+            <input class="ck-input" id="f-name" type="text" placeholder="VD: Nguyễn Văn A">
+          </div>
+          <div class="field">
+            <label for="f-mssv">Mã số sinh viên</label>
+            <input class="ck-input" id="f-mssv" type="text" placeholder="VD: 225101234" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="f-lop">Lớp</label>
+            <input class="ck-input" id="f-lop" type="text" placeholder="VD: CKK6A">
+          </div>
+          <div class="field">
+            <label for="f-nam">Năm học</label>
+            <input class="ck-input" id="f-nam" type="text" placeholder="VD: 2025 - 2026">
+          </div>
+          <div class="field">
+            <label for="f-ngaysinh">Ngày sinh</label>
+            <input class="ck-input" id="f-ngaysinh" type="text" placeholder="VD: 09/01/1994">
+          </div>
+          <div class="field">
+            <label for="f-gioitinh">Giới tính</label>
+            <input class="ck-input" id="f-gioitinh" type="text" placeholder="VD: Nam">
+          </div>
+          <div class="field full">
+            <label for="f-noisinh">Nơi sinh</label>
+            <input class="ck-input" id="f-noisinh" type="text" placeholder="VD: Hà Nội">
+          </div>
+          <div class="field">
+            <label for="f-nganh">Ngành</label>
+            <input class="ck-input" id="f-nganh" type="text" placeholder="Cơ khí">
+          </div>
+          <div class="field">
+            <label for="f-khoa">Khoa</label>
+            <input class="ck-input" id="f-khoa" type="text" placeholder="Khoa Công nghệ Cơ khí">
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input class="ck-input" id="f-email" type="email" placeholder="ten@student.huit.edu.vn">
+          </div>
+          <div class="field">
+            <label for="f-phone">Điện thoại</label>
+            <input class="ck-input" id="f-phone" type="tel" placeholder="09xx xxx xxx">
+          </div>
+          <div class="field full">
+            <label for="f-note">Ghi chú</label>
+            <textarea class="ck-input" id="f-note" placeholder="VD: Mục tiêu học kỳ tới, môn cần chú ý…"></textarea>
+            <p class="hint">Chỉ lưu trong trình duyệt của bạn.</p>
+          </div>
+        </div>
+
+        <div class="savebar">
+          <button class="ck-btn" type="submit">Lưu hồ sơ</button>
+          <button class="ck-btn ghost" type="button" id="btnReset">Khôi phục mặc định</button>
+          <span class="sp" id="savedAt"></span>
+        </div>
+      </form>
+
+      <section class="panel glass g1">
+        <h3>Tùy chọn hiển thị</h3>
+        <p class="sub">Áp dụng cho toàn bộ trang của website.</p>
+        <div class="switchrow">
+          <div><b>Giao diện tối</b><span>Khi bật, nền và kính chuyển sang bản tối.</span></div>
+          <button class="sw" id="swTheme" role="switch" type="button" aria-checked="false" aria-label="Giao diện tối"></button>
+        </div>
+        <div class="switchrow">
+          <div><b>Đồng hồ 24 giờ</b><span>Giờ hiển thị ở widget thời gian biểu và lịch thi. Tắt sẽ dùng 12 giờ kèm SA/CH.</span></div>
+          <button class="sw" id="sw24" role="switch" type="button" aria-checked="true" aria-label="Đồng hồ 24 giờ"></button>
+        </div>
+      </section>
+
+      <section class="panel glass g1">
+        <h3>Về CƠ KHÍ HUIT</h3>
+        <p class="sub">Nền tảng học tập dành cho sinh viên Khoa Công nghệ Cơ khí.</p>
+        <ul class="about">
+          <li><b>Trang chủ</b> — widget thời gian biểu và lò ôn luyện theo nhóm môn.</li>
+          <li><b>Tính năng</b> — 8 công cụ: robot widget, quy đổi điểm số, tính điểm học phần,
+              GPA tích lũy, mô phỏng đăng ký học phần, tính học phí, danh sách giảng viên, thời gian biểu.</li>
+          <li><b>Lịch sử làm bài</b> — lưu tự động mọi phiên ôn tập trên máy này.</li>
+          <li><b>Cá nhân</b> — hồ sơ sinh viên và mục tiêu GPA.</li>
+          <li>Dữ liệu chỉ nằm trong trình duyệt của bạn (localStorage), không gửi đi đâu.</li>
+        </ul>
+      </section>
+
+      <section class="danger glass g1">
+        <h4>DANGER ZONE</h4>
+        <p>Xoá toàn bộ hồ sơ, lịch sử làm bài, dữ liệu GPA và danh sách môn đã lưu ở các công cụ tính điểm. Hành động này không thể hoàn tác.</p>
+        <button class="btn-danger" id="btnWipe" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4m0 4h.01"/></svg>
+          Xoá toàn bộ dữ liệu
+        </button>
+      </section>
+    </div>
+  </div>
+
+</main>
+
+<div data-ck-footer></div>
+
+<script src="assets/app.js?v=20261017d"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var FIELDS = ["name", "mssv", "lop", "nam", "ngaysinh", "gioitinh", "noisinh",
+                "nganh", "khoa", "email", "phone", "note"];
+
+  /* Tuỳ chọn hiển thị do CK.prefs trong app.js quản lý — trang này chỉ giao diện. */
+
+  /* ── Hồ sơ ── */
+  function paint(p) {
+    FIELDS.forEach(function (k) { $("f-" + k).value = p[k] || ""; });
+
+    var nm = (p.name || "").trim();
+    $("pvName").textContent = nm || "Chưa đặt tên";
+
+    /* Chữ cái đầu + chữ cái cuối: "Nguyễn Văn A" -> "NA" */
+    var words = nm ? nm.split(/\s+/).filter(Boolean) : [];
+    $("av").textContent = words.length
+      ? (words[0].charAt(0) + (words.length > 1 ? words[words.length - 1].charAt(0) : "")).toUpperCase()
+      : "SV";
+
+    var sub = [p.lop, p.mssv ? "MSSV " + p.mssv : "", p.nam].filter(Boolean).join(" · ");
+    $("pvSub").textContent = sub || "Chưa cập nhật hồ sơ";
+
+    /* Thẻ thông tin — dựng bằng textContent để dữ liệu hồ sơ không bao giờ
+       bị hiểu là HTML. */
+    var tags = [];
+    if (p.nganh) tags.push({ t: p.nganh, c: "solid" });
+    if (p.khoa)  tags.push({ t: p.khoa, c: "mid" });
+    if (p.email) tags.push({ t: p.email, c: "light" });
+    if (p.phone) tags.push({ t: p.phone, c: "light" });
+
+    var host = $("pvTags");
+    host.textContent = "";
+    if (!tags.length) {
+      var hint = document.createElement("span");
+      hint.className = "ck-label";
+      hint.textContent = "Thêm thông tin ở ô bên cạnh";
+      host.appendChild(hint);
+    } else {
+      tags.forEach(function (x) {
+        var el = document.createElement("span");
+        el.className = "ck-pill " + x.c;
+        el.textContent = x.t;
+        host.appendChild(el);
+      });
+    }
+
+    paintSavedAt(p);
+  }
+
+  function paintSavedAt(p) {
+    $("savedAt").textContent = p.savedAt
+      ? "Đã lưu " + CK.fmtTime(p.savedAt) + " ngày " + CK.fmtDate(p.savedAt)
+      : "";
+  }
+
+  function readForm() {
+    var p = CK.profile.get();
+    FIELDS.forEach(function (k) { p[k] = $("f-" + k).value.trim(); });
+    p.goal = parseFloat($("goalRange").value);
+    return p;
+  }
+
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var p = readForm();
+    p.savedAt = Date.now();
+    CK.profile.save(p);
+    paint(p);
+    paintGoal(p);
+    CK.toast("Đã lưu hồ sơ sinh viên của bạn.");
+  });
+
+  $("btnReset").addEventListener("click", function () {
+    if (!confirm("Khôi phục hồ sơ về giá trị mặc định?")) return;
+    CK.profile.save(JSON.parse(JSON.stringify(CK.DEFAULT_PROFILE)));
+    paint(CK.profile.get());
+    paintGoal(CK.profile.get());
+    CK.toast("Đã khôi phục hồ sơ mặc định.");
+  });
+
+  /* ── Mục tiêu GPA ── */
+  function paintGoal(p) {
+    var g = CK.gpa.get();
+    var subs = g.subjects || [];
+    var cr = subs.reduce(function (s, x) { return s + (+x.credits || 0); }, 0);
+    var gp = subs.reduce(function (s, x) { return s + (+x.credits || 0) * (+x.gpa4 || 0); }, 0);
+    var now = cr ? gp / cr : 0;
+    var goal = p.goal || 3.5;
+
+    $("goalNow").textContent = now.toFixed(2);
+    $("goalTarget").textContent = "/ " + goal.toFixed(2);
+    $("goalLabel").textContent = goal.toFixed(2);
+    $("goalRange").value = goal;
+    $("goalBar").style.width = Math.min(100, now / 4 * 100) + "%";
+
+    $("goalSub").textContent = !cr
+      ? "Chưa có môn nào trong kho GPA. Thêm môn ở Tính điểm học phần, Quy đổi điểm số hoặc Tính điểm trung bình (mục Tính năng)."
+      : "Tích lũy " + cr + " tín chỉ · còn thiếu " + Math.max(0, (goal * cr - gp)).toFixed(1) +
+        " điểm GPA để chạm mục tiêu." +
+        (g.sources.length ? " · gộp từ " + g.sources.join(", ") + "." : "");
+  }
+  $("goalRange").addEventListener("input", function () { $("goalLabel").textContent = parseFloat(this.value).toFixed(2); });
+  $("goalRange").addEventListener("change", function () {
+    /* Chỉ ghi đúng trường goal — không đụng tới tên/email đang gõ dở. */
+    var p = CK.profile.get();
+    p.goal = parseFloat(this.value);
+    p.savedAt = Date.now();
+    CK.profile.save(p);
+    paintGoal(p);
+    paintSavedAt(p);
+    CK.toast("Đã cập nhật mục tiêu GPA.");
+  });
+
+  /* ── Thống kê ── */
+  function paintStats() {
+    var hist = CK.history.all();
+    var tq = hist.reduce(function (s, e) { return s + (e.total || 0); }, 0);
+    var tc = hist.reduce(function (s, e) { return s + (e.correct || 0); }, 0);
+    $("stats").innerHTML = [
+      { l: "Phiên ôn", v: hist.length },
+      { l: "Câu đã làm", v: tq },
+      { l: "Độ đúng", v: (tq ? Math.round(tc / tq * 100) : 0) + "%" },
+      { l: "Chuỗi ngày", v: CK.history.streak() }
+    ].map(function (k) {
+      return '<div class="stat"><p class="l">' + k.l + '</p><p class="v">' + k.v + '</p></div>';
+    }).join("");
+  }
+
+  /* ── Công tắc ── */
+  /* Giao diện sáng/tối: nguồn sự thật là CK.theme (ck-theme), KHÔNG phải
+     ck-pref-v1. Nếu lưu vào pref thì đổi theme bằng nút trên thanh điều
+     hướng sẽ không cập nhật công tắc này. */
+  function paintTheme(on) { $("swTheme").setAttribute("aria-checked", on ? "true" : "false"); }
+
+  paintTheme(CK.theme.current() === "dark");
+  $("swTheme").addEventListener("click", function () { CK.theme.toggle(); });
+  /* Nghe thay đổi từ mọi nơi khác (nút nav, trang khác trong cùng tab) */
+  document.addEventListener("ck:theme", function (e) { paintTheme(e.detail === "dark"); });
+
+  $("sw24").setAttribute("aria-checked", CK.prefs.h24() ? "true" : "false");
+  $("sw24").addEventListener("click", function () {
+    var wasOn = this.getAttribute("aria-checked") === "true";
+    this.setAttribute("aria-checked", wasOn ? "false" : "true");
+    CK.prefs.set({ h24: wasOn });   /* đảo trạng thái */
+  });
+
+  /* ── Xoá toàn bộ dữ liệu ── */
+  /* Mọi khoá dữ liệu của website. Khoá giao diện CK.theme (ck-theme) và các
+     khoá theme riêng của từng trang là lựa chọn hiển thị nên giữ lại. */
+  var WIPE_KEYS = [
+    CK.HISTORY_KEY, CK.PROFILE_KEY, CK.PREF_KEY,
+    CK.GPA_KEY,
+    "huit-set",
+    "gradeMaster_subjects",
+    "clevo_saved_courses_v2",
+    "gpa-calculator-courses"
+  ];
+
+  $("btnWipe").addEventListener("click", function () {
+    if (!confirm("Xoá hồ sơ, lịch sử làm bài, dữ liệu GPA và danh sách môn đã lưu?\nHành động này không thể hoàn tác.")) return;
+    try {
+      WIPE_KEYS.forEach(function (k) { localStorage.removeItem(k); });
+    } catch (e) {}
+    CK.toast("Đã xoá toàn bộ dữ liệu. Đang tải lại trang…");
+    setTimeout(function () { location.reload(); }, 900);
+  });
+
+  document.addEventListener("ck:history", paintStats);
+
+  paint(CK.profile.get());
+  paintGoal(CK.profile.get());
+  paintStats();
+})();
+</script>
+</body>
+</html>

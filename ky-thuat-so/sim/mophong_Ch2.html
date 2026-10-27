@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô Phỏng Đại Số Boole & Cổng Logic - Chương 2</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js & OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- MathJax for nice formula rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono-code { font-family: 'Fira Code', monospace; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        .glow-cyan { box-shadow: 0 0 15px rgba(6, 182, 212, 0.35); }
+        .glow-emerald { box-shadow: 0 0 15px rgba(16, 185, 129, 0.35); }
+        .glow-purple { box-shadow: 0 0 15px rgba(168, 85, 247, 0.35); }
+        .glow-amber { box-shadow: 0 0 15px rgba(245, 158, 11, 0.35); }
+
+        .kmap-cell {
+            transition: all 0.15s ease-in-out;
+            user-select: none;
+        }
+        .kmap-cell:hover {
+            transform: scale(1.04);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+
+    
+    <header class="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 rounded-xl text-slate-950 font-bold text-xl shadow-lg">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-white leading-tight flex items-center gap-2">
+                        <span>Đại Số Boole & Cổng Logic</span>
+                        <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-full font-normal">Chương 2</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Bìa Karnaugh 4 Biến, Tối Ưu Hàm & Vi Mạch Họ 74LS (2D & 3D)</p>
+                </div>
+            
+                
+        </div>
+
+            <!-- VIEW MODE TABS -->
+            <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                <button id="tab-2d-btn" onclick="switchViewMode('2d')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center space-x-2 bg-cyan-500 text-slate-950 shadow-md">
+                    <i class="fa-solid fa-table-cells"></i>
+                    <span>2D Interactive</span>
+                </button>
+                <button id="tab-3d-btn" onclick="switchViewMode('3d')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>3D Three.js Lab</span>
+                </button>
+                <button id="tab-dual-btn" onclick="switchViewMode('dual')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-columns"></i>
+                    <span>Song Song (Dual View)</span>
+                </button>
+                <button id="tab-theory-btn" onclick="switchViewMode('theory')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Tóm Tắt Lý Thuyết</span>
+                </button>
+            </div>
+        
+                <a href="../index.html" class="group shrink-0 inline-flex items-center gap-1.5 rounded-full border border-slate-600/50 bg-slate-800/70 px-3 py-1.5 text-xs font-semibold text-slate-300 shadow-sm transition-all duration-200 hover:-translate-y-px hover:border-cyan-500/60 hover:bg-cyan-500/10 hover:text-cyan-300 hover:shadow-cyan-500/20 active:translate-y-0" title="Về trang chủ Kỹ thuật số">
+              <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+              Quay lại
+            </a>
+        </div>            
+        
+    
+
+                
+    
+
+    </header>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- ================= SECTION 2D INTERACTIVE ================= -->
+        <div id="view-2d" class="space-y-6">
+            
+            <!-- SUB-NAVIGATION 2D: K-MAP vs LOGIC GATES STUDIO -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex space-x-2">
+                    <button id="sub-kmap-btn" onclick="switch2DSubTab('kmap')" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-cyan-400 border border-cyan-500/30">
+                        <i class="fa-solid fa-border-all mr-1.5"></i> 1. Bộ Giải Bìa Karnaugh 4 Biến
+                    </button>
+                    <button id="sub-gates-btn" onclick="switch2DSubTab('gates')" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 text-slate-400 border border-slate-800 hover:text-white">
+                        <i class="fa-solid fa-diagram-project mr-1.5"></i> 2. Mô Phỏng Cổng Logic & Sơ Đồ Cấu Trúc
+                    </button>
+                </div>
+
+                <!-- PRESETS DROPDOWN FOR K-MAP -->
+                <div id="kmap-presets-wrapper" class="flex items-center space-x-2">
+                    <span class="text-xs text-slate-400"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>Mẫu Ví Dụ Sách:</span>
+                    <select id="kmap-preset-select" onchange="loadKMapPreset(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-cyan-500 font-medium">
+                        <option value="custom">-- Chọn Ví Dụ --</option>
+                        <option value="ex_2_37">Ví Dụ 2.37: Σ(0,1,4,5,6,7,14,15)</option>
+                        <option value="ex_2_39">Ví Dụ 2.39: Σ(0,1,2,3,11) + d(6,7,9)</option>
+                        <option value="ex_2_40">Ví Dụ 2.40: Σ(0,1,2,4,5,6,8,9,12,13,14)</option>
+                        <option value="xor_parity">Mẫu 4: Cổng XOR 4-bit Parity</option>
+                        <option value="clear">Xóa Sạch (Đặt tất cả = 0)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 2D PANEL 1: KARNAUGH MAP SOLVER -->
+            <div id="panel-2d-kmap" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- K-Map Grid Area (7 cols) -->
+                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-bold text-white text-base flex items-center gap-2">
+                                <i class="fa-solid fa-table text-cyan-400"></i>
+                                Bìa Karnaugh 4 Biến (A, B, C, D)
+                            </h2>
+                            <div class="flex items-center space-x-3 text-xs">
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-slate-800 border border-slate-700 inline-block"></span> 0</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> 1</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> X (Don't care)</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">
+                            Nhấp trực tiếp vào bất kỳ ô nào để xoay vòng giá trị: <b class="text-slate-200">0 $\rightarrow$ 1 $\rightarrow$ X $\rightarrow$ 0</b>.
+                            Trật tự các hàng và cột được sắp xếp theo chuẩn **Mã Gray** (chỉ khác nhau 1 bit giữa 2 ô kề).
+                        </p>
+
+                        <!-- K-MAP GRID CONTAINER -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 overflow-x-auto flex justify-center">
+                            <div class="inline-block">
+                                <!-- Header Row for AB -->
+                                <div class="grid grid-cols-5 gap-2 text-center text-xs font-mono-code font-bold mb-2">
+                                    <div class="p-2 text-cyan-400 flex items-center justify-center border-b-2 border-r-2 border-slate-800">
+                                        CD \ AB
+                                    </div>
+                                    <div class="p-2 bg-slate-900 rounded-lg text-slate-300 border border-slate-800">00</div>
+                                    <div class="p-2 bg-slate-900 rounded-lg text-slate-300 border border-slate-800">01</div>
+                                    <div class="p-2 bg-slate-900 rounded-lg text-slate-300 border border-slate-800">11</div>
+                                    <div class="p-2 bg-slate-900 rounded-lg text-slate-300 border border-slate-800">10</div>
+                                </div>
+
+                                <!-- 4 Rows for CD -->
+                                <div id="kmap-grid-cells" class="space-y-2 font-mono-code">
+                                    <!-- Dynamic K-Map Cells Inserted by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400"><i class="fa-solid fa-circle-info text-cyan-400 mr-1"></i>Ô góc & mép kế cận nhau do tính xuyến!</span>
+                        <button onclick="toggleAllKMapCells()" class="text-cyan-400 hover:text-cyan-300 font-semibold">
+                            <i class="fa-solid fa-rotate mr-1"></i> Đảo Tất Cả Giá Trị
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Solver Output & Expressions Area (5 cols) -->
+                <div class="lg:col-span-5 space-y-4">
+                    
+                    <!-- Minimized Expression Result Card -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 glow-cyan">
+                        <div class="text-xs text-cyan-400 font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
+                            <span>Biểu Thức Tối Ưu SOP ($F_{min}$)</span>
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div id="sop-result-display" class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono-code text-lg text-emerald-400 font-bold min-h-[60px] flex items-center">
+                            F = A'C' + BD
+                        </div>
+                        <p id="sop-explanation" class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Thuật toán đã gom các nhóm ô kế cận $2^n$ ($16, 8, 4, 2, 1$) để triệt tiêu các biến đổi dấu.
+                        </p>
+                    </div>
+
+                    <!-- Canonical Forms & Groups Breakdown -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider border-b border-slate-800 pb-2">
+                            Dạng Chuẩn & Nhóm Tối Ưu Dùng Đơn Vị
+                        </h3>
+
+                        <!-- Standard Form 1 (Minterms) -->
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
+                            <div class="text-slate-400 font-medium mb-1">Dạng Chuẩn 1 ($\Sigma m$ - Minterms):</div>
+                            <div id="minterm-list-display" class="font-mono-code text-cyan-300 font-semibold">
+                                Σ(0, 1, 4, 5, 6, 7, 14, 15)
+                            </div>
+                        </div>
+
+                        <!-- Standard Form 2 (Maxterms) -->
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
+                            <div class="text-slate-400 font-medium mb-1">Dạng Chuẩn 2 ($\prod M$ - Maxterms):</div>
+                            <div id="maxterm-list-display" class="font-mono-code text-purple-300 font-semibold">
+                                Π(2, 3, 8, 9, 10, 11, 12, 13)
+                            </div>
+                        </div>
+
+                        <!-- Group implicants detected -->
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
+                            <div class="text-slate-400 font-medium mb-1">Các nhóm khoanh vùng chính:</div>
+                            <div id="groups-list-display" class="font-mono-code text-amber-300 space-y-1">
+                                <!-- Groups Rendered Here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 2D PANEL 2: LOGIC GATES STUDIO & EQUIVALENT STRUCTURES -->
+            <div id="panel-2d-gates" class="hidden space-y-6">
+                
+                <!-- Interactive Logic Gate Tester -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- Control & Gate Selector (4 cols) -->
+                    <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+                        <h2 class="font-bold text-white text-base flex items-center gap-2 border-b border-slate-800 pb-3">
+                            <i class="fa-solid fa-sliders text-cyan-400"></i>
+                            Thử Nghệ Cổng Logic
+                        </h2>
+
+                        <!-- Gate Type Selection Buttons -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs text-slate-400 font-medium">Chọn loại cổng:</label>
+                            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                                <button onclick="selectGateType('AND')" id="gate-btn-AND" class="p-2 rounded-lg border bg-cyan-500/20 border-cyan-500 text-cyan-300">AND</button>
+                                <button onclick="selectGateType('NAND')" id="gate-btn-NAND" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">NAND</button>
+                                <button onclick="selectGateType('OR')" id="gate-btn-OR" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">OR</button>
+                                <button onclick="selectGateType('NOR')" id="gate-btn-NOR" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">NOR</button>
+                                <button onclick="selectGateType('XOR')" id="gate-btn-XOR" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">XOR (EXOR)</button>
+                                <button onclick="selectGateType('XNOR')" id="gate-btn-XNOR" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">XNOR</button>
+                                <button onclick="selectGateType('NOT')" id="gate-btn-NOT" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">NOT (Inverter)</button>
+                                <button onclick="selectGateType('BUFFER')" id="gate-btn-BUFFER" class="p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300">BUFFER</button>
+                            </div>
+                        </div>
+
+                        <!-- Toggle Inputs -->
+                        <div class="pt-3 border-t border-slate-800 space-y-3">
+                            <label class="text-xs text-slate-400 font-medium">Đầu vào tín hiệu:</label>
+                            
+                            <div class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <span class="text-xs font-bold text-slate-300">Đầu vào A:</span>
+                                <button id="input-a-btn" onclick="toggleGateInput('A')" class="px-4 py-1.5 rounded-lg font-mono-code font-bold text-xs bg-slate-800 text-slate-400 border border-slate-700">0 (LOW)</button>
+                            </div>
+
+                            <div id="input-b-wrapper" class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <span class="text-xs font-bold text-slate-300">Đầu vào B:</span>
+                                <button id="input-b-btn" onclick="toggleGateInput('B')" class="px-4 py-1.5 rounded-lg font-mono-code font-bold text-xs bg-slate-800 text-slate-400 border border-slate-700">0 (LOW)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Schematic Diagram & Output (8 cols) -->
+                    <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                                <h3 class="font-bold text-white text-sm">Sơ Đồ Mạch Cổng & Bảng Chân Trị</h3>
+                                <span id="gate-formula-badge" class="text-xs font-mono-code text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-full border border-cyan-500/20">F = A · B</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                                <!-- Gate Canvas / SVG Diagram -->
+                                <div id="gate-svg-container" class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 min-h-[180px] flex items-center justify-center">
+                                    <!-- Dynamic SVG Gate Rendered Here -->
+                                </div>
+
+                                <!-- Live Truth Table -->
+                                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+                                    <div class="text-xs text-slate-400 font-semibold mb-2 text-center">Bảng Chân Trị (Truth Table)</div>
+                                    <table class="w-full text-center text-xs font-mono-code">
+                                        <thead>
+                                            <tr class="text-slate-400 border-b border-slate-800">
+                                                <th class="py-1">A</th>
+                                                <th id="th-b-col" class="py-1">B</th>
+                                                <th class="py-1 text-cyan-400">Output F</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="truth-table-body" class="divide-y divide-slate-800/60">
+                                            <!-- Dynamic Rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Output Status LED Banner -->
+                        <div id="gate-output-banner" class="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div id="led-indicator" class="w-4 h-4 rounded-full bg-slate-700 transition"></div>
+                                <span class="text-xs font-bold text-slate-300">Kết Quả Đầu Ra (Output F):</span>
+                            </div>
+                            <span id="gate-output-value" class="font-mono-code text-sm font-bold text-slate-400">0 (LOW)</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- EQUIVALENT LOGIC STRUCTURE CONVERTER (DeMorgan) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                        <div>
+                            <h3 class="font-bold text-white text-base flex items-center gap-2">
+                                <i class="fa-solid fa-arrows-rotate text-purple-400"></i>
+                                Chuyển Đổi Cấu Trúc Tương Đương (Định Lý DeMorgan)
+                            </h3>
+                            <p class="text-xs text-slate-400">Chuyển đổi mạch AND-OR sang NAND-NAND hoặc OR-AND sang NOR-NOR để tối ưu vi mạch thực tế.</p>
+                        </div>
+                        <select id="equiv-struct-select" onchange="renderEquivalentStructure()" class="bg-slate-950 text-xs border border-slate-700 text-purple-300 rounded-lg px-3 py-1.5 focus:outline-none">
+                            <option value="and_or">AND-OR ↔ NAND-NAND (Tổng Các Tích - SOP)</option>
+                            <option value="or_and">OR-AND ↔ NOR-NOR (Tích Các Tổng - POS)</option>
+                        </select>
+                    </div>
+
+                    <div id="equiv-struct-container" class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono-code text-xs space-y-3">
+                        <!-- Dynamic Equivalent Diagrams & Equations -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= SECTION 3D THREE.JS LAB ================= -->
+        <div id="view-3d" class="hidden space-y-4">
+            
+            <!-- 3D TOOLBAR CONTROLS -->
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-slate-400 font-semibold">Mô Hình 3D:</span>
+                    <button onclick="switch3DSubScene('torus')" id="btn-3d-torus" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                        1. Bìa Karnaugh Hình Xuyến (3D Torus)
+                    </button>
+                    <button onclick="switch3DSubScene('ic')" id="btn-3d-ic" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white">
+                        2. Vi Mạch 3D Họ 74LS (Breadboard)
+                    </button>
+                </div>
+
+                <div id="ic-selector-wrapper" class="hidden flex items-center space-x-2">
+                    <span class="text-xs text-slate-400">Chọn Vi Mạch:</span>
+                    <select id="ic-chip-select" onchange="change3DICChip(this.value)" class="bg-slate-950 border border-slate-700 text-xs text-cyan-300 rounded-lg px-2.5 py-1 focus:outline-none">
+                        <option value="74LS08">74LS08 (Quad 2-Input AND)</option>
+                        <option value="74LS00">74LS00 (Quad 2-Input NAND)</option>
+                        <option value="74LS32">74LS32 (Quad 2-Input OR)</option>
+                        <option value="74LS86">74LS86 (Quad 2-Input XOR)</option>
+                        <option value="74LS04">74LS04 (Hex Inverter NOT)</option>
+                    </select>
+                </div>
+
+                <div class="text-xs text-slate-400 flex items-center gap-1">
+                    <i class="fa-solid fa-hand-pointer text-cyan-400"></i> Xoay chuột để quay góc nhìn 3D. Click vào đối tượng để tương tác!
+                </div>
+            </div>
+
+            <!-- THREE.JS CANVAS CONTAINER -->
+            <div class="relative w-full h-[520px] bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                <div id="three-canvas-container" class="w-full h-full"></div>
+
+                <!-- 3D OVERLAY INFO CARD -->
+                <div class="absolute top-4 left-4 bg-slate-900/90 border border-slate-800 backdrop-blur-md p-4 rounded-xl max-w-sm shadow-xl space-y-1">
+                    <div id="3d-overlay-title" class="text-xs font-bold text-cyan-400 uppercase tracking-wider">
+                        Bìa Karnaugh Trên Mặt Xuyến 3D (Torus Topology)
+                    </div>
+                    <p id="3d-overlay-desc" class="text-xs text-slate-300 leading-relaxed">
+                        Giải thích lý do tại sao các ô cạnh mép (AB=00 và AB=10, CD=00 và CD=10) lại kế cận nhau. 
+                        Mặt xuyến nối liền cả 4 mép bìa K trong không gian 3 chiều!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION DUAL SPLIT VIEW ================= -->
+        <div id="view-dual" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left: 2D K-Map -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between">
+                    <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">Bìa K 2D Tương Tác</div>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-center">
+                        <div id="dual-kmap-grid" class="inline-block font-mono-code text-xs">
+                            <!-- Cloned/Rendered Dual Grid -->
+                        </div>
+                    </div>
+                    <div id="dual-sop-result" class="mt-3 p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs font-mono-code font-bold text-emerald-400">
+                        F = ...
+                    </div>
+                </div>
+
+                <!-- Right: 3D View Duplicate Canvas Container -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col">
+                    <div class="text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">Không Gian 3D Đồng Bộ Real-time</div>
+                    <div id="dual-three-container" class="w-full h-[360px] bg-slate-950 rounded-xl overflow-hidden border border-slate-800"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION THEORY SUMMARY ================= -->
+        <div id="view-theory" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-cyan-400 mb-1">Chương 2: Tóm Tắt Đại Số Boole & Cổng Logic</h2>
+                    <p class="text-xs text-slate-400">Tóm tắt các tiên đề, định lý cơ bản và danh mục vi mạch chuẩn trong giáo trình digital electronics.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Axioms & Postulates -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h3 class="text-sm font-bold text-emerald-400">1. Các Tiên Đề Đại Số Boole</h3>
+                        <ul class="text-xs text-slate-300 space-y-1 list-disc list-inside">
+                            <li><b>Giao hoán:</b> $A+B = B+A$; $A \cdot B = B \cdot A$</li>
+                            <li><b>Phân bố:</b> $A(B+C) = AB + AC$; $A + BC = (A+B)(A+C)$</li>
+                            <li><b>Phần tử trung hòa:</b> $A + 0 = A$; $A \cdot 1 = A$</li>
+                            <li><b>Phần tử bù:</b> $A + \overline{A} = 1$; $A \cdot \overline{A} = 0$</li>
+                        </ul>
+                    </div>
+
+                    <!-- DeMorgan & Absorption Laws -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h3 class="text-sm font-bold text-purple-400">2. Định Lý DeMorgan & Hấp Thu</h3>
+                        <ul class="text-xs text-slate-300 space-y-1 list-disc list-inside">
+                            <li><b>DeMorgan 1:</b> $\overline{A + B} = \overline{A} \cdot \overline{B}$ (Bù của tổng bằng tích bù)</li>
+                            <li><b>DeMorgan 2:</b> $\overline{A \cdot B} = \overline{A} + \overline{B}$ (Bù của tích bằng tổng bù)</li>
+                            <li><b>Định lý Hấp thu:</b> $A + AB = A$; $A(A + B) = A$</li>
+                            <li><b>Định lý Bù kép:</b> $\overline{\overline{A}} = A$</li>
+                        </ul>
+                    </div>
+
+                    <!-- K-Map Rules -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h3 class="text-sm font-bold text-amber-400">3. Quy Tắc Rút Gọn Bìa Karnaugh</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Hai ô kế cận chỉ khác nhau ở 1 biến nhị phân. Khi gom $2^n$ ô kế cận ($1, 2, 4, 8, 16$ ô), ta loại bỏ được đúng $n$ biến đổi dấu.
+                            Các trường hợp tùy định (Don't care - $X$) có thể chọn là 0 hoặc 1 tùy thuộc lợi ích mở rộng nhóm.
+                        </p>
+                    </div>
+
+                    <!-- IC 74LS Series List -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h3 class="text-sm font-bold text-pink-400">4. Vi Mạch Số Họ 74LS Thông Dụng</h3>
+                        <div class="grid grid-cols-2 gap-1 text-xs font-mono-code text-slate-300">
+                            <div>• 74LS00: 4 Cổng NAND 2 ngõ</div>
+                            <div>• 74LS02: 4 Cổng NOR 2 ngõ</div>
+                            <div>• 74LS04: 6 Cổng NOT</div>
+                            <div>• 74LS08: 4 Cổng AND 2 ngõ</div>
+                            <div>• 74LS32: 4 Cổng OR 2 ngõ</div>
+                            <div>• 74LS86: 4 Cổng XOR 2 ngõ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+        Mô Phỏng Đại Số Boole & Cổng Logic &copy; 2026. Phát triển với Three.js & Tailwind CSS.
+    </footer>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        // ================= GLOBAL STATE =================
+        let kmapState = [
+            0, 0, 0, 0, // row 0 (CD=00): m0, m4, m12, m8
+            0, 0, 0, 0, // row 1 (CD=01): m1, m5, m13, m9
+            0, 0, 0, 0, // row 2 (CD=11): m3, m7, m15, m11
+            0, 0, 0, 0  // row 3 (CD=10): m2, m6, m14, m10
+        ];
+
+        // Gray code index mapping for 4x4 matrix
+        // rowOrder: CD -> 00 (0), 01 (1), 11 (3), 10 (2)
+        // colOrder: AB -> 00 (0), 01 (1), 11 (3), 10 (2)
+        const rowGrayVal = [0, 1, 3, 2];
+        const colGrayVal = [0, 1, 3, 2];
+
+        // Map from minterm index (0..15) to grid cell index (0..15)
+        function mintermToGridIdx(m) {
+            const A = (m >> 3) & 1;
+            const B = (m >> 2) & 1;
+            const C = (m >> 1) & 1;
+            const D = m & 1;
+
+            const AB = (A << 1) | B;
+            const CD = (C << 1) | D;
+
+            const col = colGrayVal.indexOf(AB);
+            const row = rowGrayVal.indexOf(CD);
+
+            return row * 4 + col;
+        }
+
+        // Map grid cell index (0..15) to minterm index (0..15)
+        function gridIdxToMinterm(gridIdx) {
+            const row = Math.floor(gridIdx / 4);
+            const col = gridIdx % 4;
+
+            const CD = rowGrayVal[row];
+            const AB = colGrayVal[col];
+
+            const A = (AB >> 1) & 1;
+            const B = AB & 1;
+            const C = (CD >> 1) & 1;
+            const D = CD & 1;
+
+            return (A << 3) | (B << 2) | (C << 1) | D;
+        }
+
+        let currentActiveTab = '2d'; // '2d', '3d', 'dual', 'theory'
+        let current2DSubTab = 'kmap'; // 'kmap', 'gates'
+        let current3DSubScene = 'torus'; // 'torus', 'ic'
+        let selectedGateType = 'AND';
+        let gateInputA = 0;
+        let gateInputB = 0;
+        let selectedICChip = '74LS08';
+
+        // ================= INITIALIZATION =================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Default preset Ex 2.37
+            loadKMapPreset('ex_2_37');
+            render2DKMapGrid();
+            renderGatePlayground();
+            renderEquivalentStructure();
+            initThreeJS();
+        });
+
+        // ================= VIEW MODE SWITCHING =================
+        function switchViewMode(mode) {
+            currentActiveTab = mode;
+            document.getElementById('view-2d').classList.add('hidden');
+            document.getElementById('view-3d').classList.add('hidden');
+            document.getElementById('view-dual').classList.add('hidden');
+            document.getElementById('view-theory').classList.add('hidden');
+
+            const btn2d = document.getElementById('tab-2d-btn');
+            const btn3d = document.getElementById('tab-3d-btn');
+            const btnDual = document.getElementById('tab-dual-btn');
+            const btnTheory = document.getElementById('tab-theory-btn');
+
+            const inactiveClass = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-white";
+            const activeClass = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center space-x-2 bg-cyan-500 text-slate-950 shadow-md";
+
+            btn2d.className = inactiveClass;
+            btn3d.className = inactiveClass;
+            btnDual.className = inactiveClass;
+            btnTheory.className = inactiveClass;
+
+            if (mode === '2d') {
+                document.getElementById('view-2d').classList.remove('hidden');
+                btn2d.className = activeClass;
+            } else if (mode === '3d') {
+                document.getElementById('view-3d').classList.remove('hidden');
+                btn3d.className = activeClass;
+                onWindowResize();
+                update3DSceneData();
+            } else if (mode === 'dual') {
+                document.getElementById('view-dual').classList.remove('hidden');
+                btnDual.className = activeClass;
+                renderDualKMapGrid();
+                onWindowResize();
+                update3DSceneData();
+            } else if (mode === 'theory') {
+                document.getElementById('view-theory').classList.remove('hidden');
+                btnTheory.className = activeClass;
+            }
+        }
+
+        function switch2DSubTab(sub) {
+            current2DSubTab = sub;
+            const pKmap = document.getElementById('panel-2d-kmap');
+            const pGates = document.getElementById('panel-2d-gates');
+            const presets = document.getElementById('kmap-presets-wrapper');
+
+            const btnKmap = document.getElementById('sub-kmap-btn');
+            const btnGates = document.getElementById('sub-gates-btn');
+
+            if (sub === 'kmap') {
+                pKmap.classList.remove('hidden');
+                pGates.classList.add('hidden');
+                presets.classList.remove('hidden');
+                btnKmap.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-cyan-400 border border-cyan-500/30";
+                btnGates.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 text-slate-400 border border-slate-800 hover:text-white";
+            } else {
+                pKmap.classList.add('hidden');
+                pGates.classList.remove('hidden');
+                presets.classList.add('hidden');
+                btnGates.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-cyan-400 border border-cyan-500/30";
+                btnKmap.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 text-slate-400 border border-slate-800 hover:text-white";
+            }
+        }
+
+        // ================= K-MAP SOLVER & ALGORITHMS =================
+        function toggleKMapCell(gridIdx) {
+            // Cycle 0 -> 1 -> 'X' -> 0
+            const current = kmapState[gridIdx];
+            if (current === 0) kmapState[gridIdx] = 1;
+            else if (current === 1) kmapState[gridIdx] = 'X';
+            else kmapState[gridIdx] = 0;
+
+            render2DKMapGrid();
+            solveKMap();
+            update3DSceneData();
+        }
+
+        function toggleAllKMapCells() {
+            for (let i = 0; i < 16; i++) {
+                if (kmapState[i] === 0) kmapState[i] = 1;
+                else if (kmapState[i] === 1) kmapState[i] = 'X';
+                else kmapState[i] = 0;
+            }
+            render2DKMapGrid();
+            solveKMap();
+            update3DSceneData();
+        }
+
+        function loadKMapPreset(preset) {
+            kmapState.fill(0);
+
+            if (preset === 'ex_2_37') {
+                // F(A,B,C,D) = Σ(0,1,4,5,6,7,14,15)
+                [0, 1, 4, 5, 6, 7, 14, 15].forEach(m => {
+                    kmapState[mintermToGridIdx(m)] = 1;
+                });
+            } else if (preset === 'ex_2_39') {
+                // F(A,B,C,D) = Σ(0,1,2,3,11) + d(6,7,9)
+                [0, 1, 2, 3, 11].forEach(m => kmapState[mintermToGridIdx(m)] = 1);
+                [6, 7, 9].forEach(m => kmapState[mintermToGridIdx(m)] = 'X');
+            } else if (preset === 'ex_2_40') {
+                // F(A,B,C,D) = Σ(0,1,2,4,5,6,8,9,12,13,14)
+                [0, 1, 2, 4, 5, 6, 8, 9, 12, 13, 14].forEach(m => kmapState[mintermToGridIdx(m)] = 1);
+            } else if (preset === 'xor_parity') {
+                [1, 2, 4, 7, 8, 11, 13, 14].forEach(m => kmapState[mintermToGridIdx(m)] = 1);
+            }
+
+            render2DKMapGrid();
+            solveKMap();
+            update3DSceneData();
+        }
+
+        function render2DKMapGrid() {
+            const container = document.getElementById('kmap-grid-cells');
+            let html = '';
+
+            for (let r = 0; r < 4; r++) {
+                const cdLabel = r === 0 ? '00' : r === 1 ? '01' : r === 2 ? '11' : '10';
+                html += `<div class="grid grid-cols-5 gap-2 items-center text-center">`;
+                html += `<div class="p-2.5 bg-slate-900 rounded-lg text-slate-300 font-bold border border-slate-800 text-xs">${cdLabel}</div>`;
+
+                for (let c = 0; c < 4; c++) {
+                    const gridIdx = r * 4 + c;
+                    const val = kmapState[gridIdx];
+                    const minterm = gridIdxToMinterm(gridIdx);
+
+                    let bgStyle = "bg-slate-900 text-slate-400 border-slate-800";
+                    if (val === 1) bgStyle = "bg-emerald-500 text-slate-950 border-emerald-400 font-bold glow-emerald";
+                    else if (val === 'X') bgStyle = "bg-amber-500 text-slate-950 border-amber-400 font-bold glow-amber";
+
+                    html += `
+                        <button onclick="toggleKMapCell(${gridIdx})" class="kmap-cell relative p-3 rounded-xl border text-sm font-mono-code ${bgStyle} flex flex-col items-center justify-center">
+                            <span>${val}</span>
+                            <span class="text-[9px] opacity-70 font-normal">m${minterm}</span>
+                        </button>
+                    `;
+                }
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function renderDualKMapGrid() {
+            const dualContainer = document.getElementById('dual-kmap-grid');
+            if (!dualContainer) return;
+            let html = '';
+
+            for (let r = 0; r < 4; r++) {
+                const cdLabel = r === 0 ? '00' : r === 1 ? '01' : r === 2 ? '11' : '10';
+                html += `<div class="grid grid-cols-5 gap-1.5 items-center text-center my-1">`;
+                html += `<div class="p-1.5 bg-slate-900 rounded text-slate-400 font-bold border border-slate-800 text-[10px]">${cdLabel}</div>`;
+
+                for (let c = 0; c < 4; c++) {
+                    const gridIdx = r * 4 + c;
+                    const val = kmapState[gridIdx];
+                    let bgStyle = "bg-slate-900 text-slate-500 border-slate-800";
+                    if (val === 1) bgStyle = "bg-emerald-500 text-slate-950 font-bold";
+                    else if (val === 'X') bgStyle = "bg-amber-500 text-slate-950 font-bold";
+
+                    html += `
+                        <button onclick="toggleKMapCell(${gridIdx})" class="p-2 rounded border text-xs font-mono-code ${bgStyle}">
+                            ${val}
+                        </button>
+                    `;
+                }
+                html += `</div>`;
+            }
+
+            dualContainer.innerHTML = html;
+        }
+
+        // Quine-McCluskey / K-Map Minimization Solver Algorithm
+        function solveKMap() {
+            const ones = [];
+            const dontCares = [];
+            const zeroes = [];
+
+            for (let m = 0; m < 16; m++) {
+                const val = kmapState[mintermToGridIdx(m)];
+                if (val === 1) ones.push(m);
+                else if (val === 'X') dontCares.push(m);
+                else zeroes.push(m);
+            }
+
+            // Minterms display
+            const mintermDisplay = document.getElementById('minterm-list-display');
+            mintermDisplay.innerText = ones.length > 0 ? `Σ(${ones.join(', ')})` + (dontCares.length > 0 ? ` + d(${dontCares.join(', ')})` : '') : "Không có minterm (F = 0)";
+
+            // Maxterms display
+            const maxtermDisplay = document.getElementById('maxterm-list-display');
+            maxtermDisplay.innerText = zeroes.length > 0 ? `Π(${zeroes.join(', ')})` : "Không có maxterm (F = 1)";
+
+            // Check trivial cases
+            const sopDisplay = document.getElementById('sop-result-display');
+            const groupsDisplay = document.getElementById('groups-list-display');
+            const dualSop = document.getElementById('dual-sop-result');
+
+            if (ones.length === 0) {
+                sopDisplay.innerText = "F = 0";
+                groupsDisplay.innerHTML = "<div>Không có nhóm khoanh nào.</div>";
+                if (dualSop) dualSop.innerText = "F = 0";
+                return;
+            }
+
+            if (ones.length + dontCares.length === 16) {
+                sopDisplay.innerText = "F = 1";
+                groupsDisplay.innerHTML = "<div class='text-emerald-400'>1 nhóm 16 ô bao phủ toàn bộ bìa K.</div>";
+                if (dualSop) dualSop.innerText = "F = 1";
+                return;
+            }
+
+            // Find prime implicants from valid groupings (sizes 8, 4, 2, 1)
+            const primeImplicants = findPrimeImplicants(ones, dontCares);
+            const essentialImplicants = selectEssentialImplicants(primeImplicants, ones);
+
+            // Format expression string
+            const exprTerms = essentialImplicants.map(implicantToSOPTerm);
+            const finalExpr = "F = " + exprTerms.join(" + ");
+
+            sopDisplay.innerText = finalExpr;
+            if (dualSop) dualSop.innerText = finalExpr;
+
+            // Render groups list
+            let groupsHtml = '';
+            essentialImplicants.forEach((imp, i) => {
+                const term = implicantToSOPTerm(imp);
+                groupsHtml += `<div>• Nhóm ${i+1} (${imp.minterms.length} ô): <strong class="text-cyan-300">${term}</strong> [Minterms: ${imp.minterms.join(', ')}]</div>`;
+            });
+            groupsDisplay.innerHTML = groupsHtml;
+        }
+
+        // Helper to generate groups on 4x4 K-map torus grid
+        function findPrimeImplicants(ones, dontCares) {
+            const allAllowed = new Set([...ones, ...dontCares]);
+            const primeImplicants = [];
+
+            // Group sizes: 8, 4, 2, 1
+            // Check 8-cell groups
+            const groups8 = getPossibleGroupsOfSize(8);
+            groups8.forEach(grp => {
+                if (grp.every(m => allAllowed.has(m)) && grp.some(m => ones.includes(m))) {
+                    primeImplicants.push({ minterms: grp, termMask: getTermMaskFromGroup(grp) });
+                }
+            });
+
+            // Check 4-cell groups
+            const groups4 = getPossibleGroupsOfSize(4);
+            groups4.forEach(grp => {
+                if (grp.every(m => allAllowed.has(m)) && grp.some(m => ones.includes(m))) {
+                    // Only add if not subset of existing larger group
+                    if (!primeImplicants.some(p => grp.every(m => p.minterms.includes(m)))) {
+                        primeImplicants.push({ minterms: grp, termMask: getTermMaskFromGroup(grp) });
+                    }
+                }
+            });
+
+            // Check 2-cell groups
+            const groups2 = getPossibleGroupsOfSize(2);
+            groups2.forEach(grp => {
+                if (grp.every(m => allAllowed.has(m)) && grp.some(m => ones.includes(m))) {
+                    if (!primeImplicants.some(p => grp.every(m => p.minterms.includes(m)))) {
+                        primeImplicants.push({ minterms: grp, termMask: getTermMaskFromGroup(grp) });
+                    }
+                }
+            });
+
+            // Single cells
+            ones.forEach(m => {
+                if (!primeImplicants.some(p => p.minterms.includes(m))) {
+                    primeImplicants.push({ minterms: [m], termMask: getTermMaskFromGroup([m]) });
+                }
+            });
+
+            return primeImplicants;
+        }
+
+        function getPossibleGroupsOfSize(size) {
+            const groups = [];
+
+            if (size === 8) {
+                // Half maps (rows or cols)
+                for (let r = 0; r < 4; r++) {
+                    const r2 = (r + 1) % 4;
+                    const mList = [];
+                    for (let c = 0; c < 4; c++) {
+                        mList.push(gridIdxToMinterm(r * 4 + c));
+                        mList.push(gridIdxToMinterm(r2 * 4 + c));
+                    }
+                    groups.push(mList);
+                }
+                for (let c = 0; c < 4; c++) {
+                    const c2 = (c + 1) % 4;
+                    const mList = [];
+                    for (let r = 0; r < 4; r++) {
+                        mList.push(gridIdxToMinterm(r * 4 + c));
+                        mList.push(gridIdxToMinterm(r * 4 + c2));
+                    }
+                    groups.push(mList);
+                }
+            } else if (size === 4) {
+                // Entire row / column
+                for (let r = 0; r < 4; r++) {
+                    groups.push([0, 1, 2, 3].map(c => gridIdxToMinterm(r * 4 + c)));
+                }
+                for (let c = 0; c < 4; c++) {
+                    groups.push([0, 1, 2, 3].map(r => gridIdxToMinterm(r * 4 + c)));
+                }
+                // 2x2 squares (including wrapped corners)
+                for (let r = 0; r < 4; r++) {
+                    for (let c = 0; c < 4; c++) {
+                        const r2 = (r + 1) % 4;
+                        const c2 = (c + 1) % 4;
+                        groups.push([
+                            gridIdxToMinterm(r * 4 + c),
+                            gridIdxToMinterm(r * 4 + c2),
+                            gridIdxToMinterm(r2 * 4 + c),
+                            gridIdxToMinterm(r2 * 4 + c2)
+                        ]);
+                    }
+                }
+            } else if (size === 2) {
+                // Adjacent pairs horizontally and vertically
+                for (let r = 0; r < 4; r++) {
+                    for (let c = 0; c < 4; c++) {
+                        const c2 = (c + 1) % 4;
+                        const r2 = (r + 1) % 4;
+                        groups.push([gridIdxToMinterm(r * 4 + c), gridIdxToMinterm(r * 4 + c2)]);
+                        groups.push([gridIdxToMinterm(r * 4 + c), gridIdxToMinterm(r2 * 4 + c)]);
+                    }
+                }
+            }
+
+            return groups;
+        }
+
+        function getTermMaskFromGroup(mintermList) {
+            // Returns 4-char string like "1-0-" where '-' means eliminated variable
+            const vars = ['-', '-', '-', '-'];
+            for (let bit = 0; bit < 4; bit++) {
+                const firstVal = (mintermList[0] >> (3 - bit)) & 1;
+                const isConstant = mintermList.every(m => ((m >> (3 - bit)) & 1) === firstVal);
+                if (isConstant) {
+                    vars[bit] = firstVal.toString();
+                }
+            }
+            return vars.join('');
+        }
+
+        function implicantToSOPTerm(imp) {
+            const mask = imp.termMask;
+            const varNames = ['A', 'B', 'C', 'D'];
+            let term = '';
+            for (let i = 0; i < 4; i++) {
+                if (mask[i] === '1') term += varNames[i];
+                else if (mask[i] === '0') term += varNames[i] + "'";
+            }
+            return term === '' ? '1' : term;
+        }
+
+        function selectEssentialImplicants(primeImplicants, ones) {
+            const covered = new Set();
+            const selected = [];
+
+            // Simple greedy covering
+            while (covered.size < ones.length) {
+                let bestImp = null;
+                let maxNewCover = -1;
+
+                primeImplicants.forEach(imp => {
+                    const newCount = imp.minterms.filter(m => ones.includes(m) && !covered.has(m)).length;
+                    if (newCount > maxNewCover) {
+                        maxNewCover = newCount;
+                        bestImp = imp;
+                    }
+                });
+
+                if (!bestImp || maxNewCover <= 0) break;
+
+                selected.push(bestImp);
+                bestImp.minterms.forEach(m => {
+                    if (ones.includes(m)) covered.add(m);
+                });
+            }
+
+            return selected;
+        }
+
+        // ================= LOGIC GATES STUDIO & DEMORGAN =================
+        function selectGateType(gate) {
+            selectedGateType = gate;
+            const gates = ['AND', 'NAND', 'OR', 'NOR', 'XOR', 'XNOR', 'NOT', 'BUFFER'];
+            gates.forEach(g => {
+                const btn = document.getElementById(`gate-btn-${g}`);
+                if (btn) {
+                    if (g === gate) btn.className = "p-2 rounded-lg border bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold";
+                    else btn.className = "p-2 rounded-lg border bg-slate-800 border-slate-700 text-slate-300 font-bold";
+                }
+            });
+
+            document.getElementById('input-b-wrapper').style.display = (gate === 'NOT' || gate === 'BUFFER') ? 'none' : 'flex';
+            document.getElementById('th-b-col').style.display = (gate === 'NOT' || gate === 'BUFFER') ? 'none' : 'table-cell';
+
+            renderGatePlayground();
+        }
+
+        function toggleGateInput(pin) {
+            if (pin === 'A') gateInputA = gateInputA === 0 ? 1 : 0;
+            if (pin === 'B') gateInputB = gateInputB === 0 ? 1 : 0;
+
+            const btnA = document.getElementById('input-a-btn');
+            const btnB = document.getElementById('input-b-btn');
+
+            if (btnA) {
+                btnA.innerText = gateInputA === 1 ? "1 (HIGH)" : "0 (LOW)";
+                btnA.className = gateInputA === 1 ? "px-4 py-1.5 rounded-lg font-mono-code font-bold text-xs bg-emerald-500 text-slate-950 glow-emerald" : "px-4 py-1.5 rounded-lg font-mono-code font-bold text-xs bg-slate-800 text-slate-400 border border-slate-700";
+            }
+            if (btnB) {
+                btnB.innerText = gateInputB === 1 ? "1 (HIGH)" : "0 (LOW)";
+                btnB.className = gateInputB === 1 ? "px-4 py-1.5 rounded-lg font-mono-code font-bold text-xs bg-emerald-500 text-slate-950 glow-emerald" : "px-4 py-1.5 rounded-lg font-mono-code font-bold text-xs bg-slate-800 text-slate-400 border border-slate-700";
+            }
+
+            renderGatePlayground();
+        }
+
+        function calculateGateOutput(gate, a, b) {
+            if (gate === 'AND') return a & b;
+            if (gate === 'NAND') return (a & b) === 1 ? 0 : 1;
+            if (gate === 'OR') return a | b;
+            if (gate === 'NOR') return (a | b) === 1 ? 0 : 1;
+            if (gate === 'XOR') return a ^ b;
+            if (gate === 'XNOR') return (a ^ b) === 1 ? 0 : 1;
+            if (gate === 'NOT') return a === 1 ? 0 : 1;
+            if (gate === 'BUFFER') return a;
+            return 0;
+        }
+
+        function renderGatePlayground() {
+            const outVal = calculateGateOutput(selectedGateType, gateInputA, gateInputB);
+
+            // Update badge formula
+            const badge = document.getElementById('gate-formula-badge');
+            const formulaMap = {
+                'AND': 'F = A · B',
+                'NAND': 'F = (A · B)\'',
+                'OR': 'F = A + B',
+                'NOR': 'F = (A + B)\'',
+                'XOR': 'F = A ⊕ B',
+                'XNOR': 'F = (A ⊕ B)\'',
+                'NOT': 'F = A\'',
+                'BUFFER': 'F = A'
+            };
+            badge.innerText = formulaMap[selectedGateType];
+
+            // Output Banner LED
+            const led = document.getElementById('led-indicator');
+            const outTxt = document.getElementById('gate-output-value');
+
+            if (outVal === 1) {
+                led.className = "w-4 h-4 rounded-full bg-emerald-400 glow-emerald";
+                outTxt.innerText = "1 (HIGH)";
+                outTxt.className = "font-mono-code text-sm font-bold text-emerald-400";
+            } else {
+                led.className = "w-4 h-4 rounded-full bg-slate-700";
+                outTxt.innerText = "0 (LOW)";
+                outTxt.className = "font-mono-code text-sm font-bold text-slate-500";
+            }
+
+            // Render SVG Schematic
+            renderGateSVG(selectedGateType, outVal);
+
+            // Render Truth Table
+            renderTruthTable(selectedGateType);
+        }
+
+        function renderGateSVG(gate, outVal) {
+            const container = document.getElementById('gate-svg-container');
+            const strokeColor = outVal === 1 ? "#10b981" : "#38bdf8";
+
+            let svgHtml = `<svg width="220" height="110" viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">`;
+            
+            // Inputs Wires
+            svgHtml += `<line x1="10" y1="35" x2="60" y2="35" stroke="${gateInputA === 1 ? '#10b981' : '#64748b'}" stroke-width="3" />`;
+            svgHtml += `<text x="2" y="38" fill="#94a3b8" font-size="12" font-family="monospace">A</text>`;
+
+            if (gate !== 'NOT' && gate !== 'BUFFER') {
+                svgHtml += `<line x1="10" y1="75" x2="60" y2="75" stroke="${gateInputB === 1 ? '#10b981' : '#64748b'}" stroke-width="3" />`;
+                svgHtml += `<text x="2" y="78" fill="#94a3b8" font-size="12" font-family="monospace">B</text>`;
+            }
+
+            // Gate Symbol Body
+            svgHtml += `<g transform="translate(60, 20)">`;
+            if (gate === 'AND' || gate === 'NAND') {
+                svgHtml += `<path d="M0,0 L40,0 A35,35 0 0,1 40,70 L0,70 Z" fill="#0f172a" stroke="${strokeColor}" stroke-width="3"/>`;
+                if (gate === 'NAND') svgHtml += `<circle cx="78" cy="35" r="5" fill="#0f172a" stroke="${strokeColor}" stroke-width="2"/>`;
+            } else if (gate === 'OR' || gate === 'NOR') {
+                svgHtml += `<path d="M0,0 Q25,35 0,70 Q50,70 75,35 Q50,0 0,0 Z" fill="#0f172a" stroke="${strokeColor}" stroke-width="3"/>`;
+                if (gate === 'NOR') svgHtml += `<circle cx="82" cy="35" r="5" fill="#0f172a" stroke="${strokeColor}" stroke-width="2"/>`;
+            } else if (gate === 'XOR' || gate === 'XNOR') {
+                svgHtml += `<path d="M-8,0 Q17,35 -8,70" fill="none" stroke="${strokeColor}" stroke-width="3"/>`;
+                svgHtml += `<path d="M0,0 Q25,35 0,70 Q50,70 75,35 Q50,0 0,0 Z" fill="#0f172a" stroke="${strokeColor}" stroke-width="3"/>`;
+                if (gate === 'XNOR') svgHtml += `<circle cx="82" cy="35" r="5" fill="#0f172a" stroke="${strokeColor}" stroke-width="2"/>`;
+            } else if (gate === 'NOT' || gate === 'BUFFER') {
+                svgHtml += `<polygon points="0,0 60,35 0,70" fill="#0f172a" stroke="${strokeColor}" stroke-width="3"/>`;
+                if (gate === 'NOT') svgHtml += `<circle cx="66" cy="35" r="5" fill="#0f172a" stroke="${strokeColor}" stroke-width="2"/>`;
+            }
+            svgHtml += `</g>`;
+
+            // Output Wire
+            const outXStart = (gate === 'NAND' || gate === 'NOR' || gate === 'XNOR') ? 145 : (gate === 'NOT' ? 132 : 135);
+            svgHtml += `<line x1="${outXStart}" y1="55" x2="200" y2="55" stroke="${outVal === 1 ? '#10b981' : '#64748b'}" stroke-width="3" />`;
+            svgHtml += `<circle cx="205" cy="55" r="6" fill="${outVal === 1 ? '#10b981' : '#334155'}" />`;
+
+            svgHtml += `</svg>`;
+            container.innerHTML = svgHtml;
+        }
+
+        function renderTruthTable(gate) {
+            const tbody = document.getElementById('truth-table-body');
+            let html = '';
+
+            if (gate === 'NOT' || gate === 'BUFFER') {
+                [0, 1].forEach(a => {
+                    const out = calculateGateOutput(gate, a, 0);
+                    const isCurrent = (a === gateInputA);
+                    const rowBg = isCurrent ? "bg-cyan-500/20 text-cyan-300 font-bold" : "text-slate-300";
+                    html += `
+                        <tr class="${rowBg}">
+                            <td class="py-1">${a}</td>
+                            <td class="py-1 ${out === 1 ? 'text-emerald-400 font-bold' : ''}">${out}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                const combinations = [[0,0], [0,1], [1,0], [1,1]];
+                combinations.forEach(([a, b]) => {
+                    const out = calculateGateOutput(gate, a, b);
+                    const isCurrent = (a === gateInputA && b === gateInputB);
+                    const rowBg = isCurrent ? "bg-cyan-500/20 text-cyan-300 font-bold" : "text-slate-300";
+                    html += `
+                        <tr class="${rowBg}">
+                            <td class="py-1">${a}</td>
+                            <td class="py-1">${b}</td>
+                            <td class="py-1 ${out === 1 ? 'text-emerald-400 font-bold' : ''}">${out}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            tbody.innerHTML = html;
+        }
+
+        function renderEquivalentStructure() {
+            const type = document.getElementById('equiv-struct-select').value;
+            const container = document.getElementById('equiv-struct-container');
+
+            if (type === 'and_or') {
+                container.innerHTML = `
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="text-amber-400 font-bold text-sm">Cấu trúc AND-OR (SOP):</div>
+                        <div>Biểu thức gốc: <span class="text-cyan-300">F = A·B' + B·C·D'</span></div>
+                        <div class="text-slate-400 text-[11px]">Áp dụng bù hai lần và Định lý DeMorgan:</div>
+                        <div class="bg-slate-950 p-2 rounded text-emerald-400 border border-slate-800">
+                            F = ((A·B')' · (B·C·D')')'  <strong class="text-pink-400">⟶ Sơ đồ toàn Cổng NAND-NAND!</strong>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="text-purple-400 font-bold text-sm">Cấu trúc OR-AND (POS):</div>
+                        <div>Biểu thức gốc: <span class="text-cyan-300">F = (B + C) · (A + C + D')</span></div>
+                        <div class="text-slate-400 text-[11px]">Áp dụng bù hai lần và Định lý DeMorgan:</div>
+                        <div class="bg-slate-950 p-2 rounded text-emerald-400 border border-slate-800">
+                            F = ((B + C)' + (A + C + D')')'  <strong class="text-pink-400">⟶ Sơ đồ toàn Cổng NOR-NOR!</strong>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ================= THREE.JS 3D GRAPHICS LAB =================
+        let scene, camera, renderer, controls;
+        let torusGroup, icGroup;
+        let torusCellMeshes = [];
+        let raycaster, mouse;
+
+        function initThreeJS() {
+            const container = document.getElementById('three-canvas-container');
+            const width = container.clientWidth || 800;
+            const height = container.clientHeight || 520;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x030712);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 8, 16);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // Lights
+            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambient);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(10, 20, 10);
+            scene.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0x06b6d4, 1.5, 40);
+            pointLight.position.set(0, 6, 6);
+            scene.add(pointLight);
+
+            // Grid
+            const grid = new THREE.GridHelper(24, 24, 0x1e293b, 0x0f172a);
+            grid.position.y = -3;
+            scene.add(grid);
+
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            // Build Sub-scenes
+            build3DTorusScene();
+            build3DICBreadboardScene();
+
+            renderer.domElement.addEventListener('pointerdown', on3DCanvasClick);
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        // 1. 3D TORUS KARNAUGH MAP TOPOLOGY
+        function build3DTorusScene() {
+            torusGroup = new THREE.Group();
+            torusGroup.name = "torusGroup";
+
+            // Translucent Glass Torus Base Ring
+            const torusGeo = new THREE.TorusGeometry(4, 1.5, 24, 48);
+            const torusMat = new THREE.MeshStandardMaterial({
+                color: 0x1e293b,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.25
+            });
+            const baseTorus = new THREE.Mesh(torusGeo, torusMat);
+            torusGroup.add(baseTorus);
+
+            // Create 16 3D Patch Cubes around torus (4 cols x 4 rows)
+            const mainR = 4;
+            const tubeR = 1.6;
+
+            for (let r = 0; r < 4; r++) { // CD rows
+                for (let c = 0; c < 4; c++) { // AB cols
+                    const gridIdx = r * 4 + c;
+                    const u = (c / 4) * Math.PI * 2; // Col angle
+                    const v = (r / 4) * Math.PI * 2; // Row angle
+
+                    // Torus Parametric Equations
+                    const x = (mainR + tubeR * Math.cos(v)) * Math.cos(u);
+                    const y = tubeR * Math.sin(v);
+                    const z = (mainR + tubeR * Math.cos(v)) * Math.sin(u);
+
+                    const boxGeo = new THREE.BoxGeometry(0.7, 0.7, 0.7);
+                    const boxMat = new THREE.MeshStandardMaterial({
+                        color: 0x334155,
+                        roughness: 0.3,
+                        metalness: 0.5
+                    });
+                    const patchMesh = new THREE.Mesh(boxGeo, boxMat);
+                    patchMesh.position.set(x, y, z);
+                    patchMesh.userData = { gridIdx: gridIdx, isTorusCell: true };
+
+                    torusGroup.add(patchMesh);
+                    torusCellMeshes.push(patchMesh);
+                }
+            }
+
+            scene.add(torusGroup);
+        }
+
+        // 2. 3D DIP-14 IC & BREADBOARD
+        function build3DICBreadboardScene() {
+            icGroup = new THREE.Group();
+            icGroup.name = "icGroup";
+            icGroup.visible = false;
+
+            // Breadboard Base
+            const boardGeo = new THREE.BoxGeometry(10, 0.4, 6);
+            const boardMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.6 });
+            const board = new THREE.Mesh(boardGeo, boardMat);
+            board.position.y = -1;
+            icGroup.add(board);
+
+            // DIP-14 IC Body
+            const chipGeo = new THREE.BoxGeometry(5, 0.8, 2);
+            const chipMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2 });
+            const chip = new THREE.Mesh(chipGeo, chipMat);
+            chip.position.y = 0;
+            icGroup.add(chip);
+
+            // Pins (7 on each side)
+            for (let i = 0; i < 7; i++) {
+                const px = -1.8 + i * 0.6;
+                const pinGeo = new THREE.BoxGeometry(0.12, 0.8, 0.4);
+                const pinMat = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.9, roughness: 0.1 });
+
+                const pin1 = new THREE.Mesh(pinGeo, pinMat);
+                pin1.position.set(px, -0.4, 1.1);
+                icGroup.add(pin1);
+
+                const pin2 = new THREE.Mesh(pinGeo, pinMat);
+                pin2.position.set(px, -0.4, -1.1);
+                icGroup.add(pin2);
+            }
+
+            scene.add(icGroup);
+        }
+
+        function switch3DSubScene(type) {
+            current3DSubScene = type;
+            if (torusGroup) torusGroup.visible = (type === 'torus');
+            if (icGroup) icGroup.visible = (type === 'ic');
+
+            document.getElementById('ic-selector-wrapper').classList.toggle('hidden', type !== 'ic');
+
+            document.getElementById('btn-3d-torus').className = type === 'torus' ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40" : "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white";
+            document.getElementById('btn-3d-ic').className = type === 'ic' ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40" : "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white";
+
+            const title = document.getElementById('3d-overlay-title');
+            const desc = document.getElementById('3d-overlay-desc');
+
+            if (type === 'torus') {
+                title.innerText = "Bìa Karnaugh Trên Mặt Xuyến 3D (Torus Topology)";
+                desc.innerText = "Giải thích lý do tại sao các ô cạnh mép (trái-phải, trên-dưới) lại kế cận nhau. Mặt xuyến nối liền cả 4 mép bìa K trong không gian 3 chiều!";
+                camera.position.set(0, 8, 16);
+            } else {
+                title.innerText = "Mô Hình Vi Mạch DIP-14 3D (Họ 74LS Series)";
+                desc.innerText = "Vi mạch thực tế chuẩn chân cắm DIP-14 tích hợp 4 cổng logic bên trong (Quad Gates). Click vào chip để thử tín hiệu!";
+                camera.position.set(0, 6, 10);
+            }
+        }
+
+        function change3DICChip(val) {
+            selectedICChip = val;
+            // Refresh 3D model text/label
+        }
+
+        function update3DSceneData() {
+            if (!torusCellMeshes || torusCellMeshes.length === 0) return;
+
+            torusCellMeshes.forEach((mesh) => {
+                const idx = mesh.userData.gridIdx;
+                const val = kmapState[idx];
+
+                if (val === 1) {
+                    mesh.material.color.setHex(0x10b981); // Emerald
+                    mesh.scale.set(1.2, 1.2, 1.2);
+                } else if (val === 'X') {
+                    mesh.material.color.setHex(0xf59e0b); // Amber
+                    mesh.scale.set(1.2, 1.2, 1.2);
+                } else {
+                    mesh.material.color.setHex(0x334155); // Slate
+                    mesh.scale.set(1.0, 1.0, 1.0);
+                }
+            });
+        }
+
+        function on3DCanvasClick(event) {
+            if (currentActiveTab !== '3d' || current3DSubScene !== 'torus') return;
+
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(torusCellMeshes);
+
+            if (intersects.length > 0) {
+                const clickedMesh = intersects[0].object;
+                const gridIdx = clickedMesh.userData.gridIdx;
+
+                toggleKMapCell(gridIdx);
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('three-canvas-container');
+            if (!container || !renderer || !camera) return;
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (torusGroup && current3DSubScene === 'torus') {
+                torusGroup.rotation.y += 0.003;
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
+```

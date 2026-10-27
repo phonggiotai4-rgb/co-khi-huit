@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CHƯƠNG 4: HỆ TUẦN TỰ (PHẦN 2) | CƠ KHÍ HUIT</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#034EA2',
+              600: '#023c7d',
+              700: '#012c5d',
+              800: '#001d3f',
+              accent: '#EAB308',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -10px rgba(3, 78, 162, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .technical-paper {
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(3, 78, 162, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 0% 100%, rgba(3, 78, 162, 0.03) 0%, transparent 25%);
+    }
+    .text-title-display {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      letter-spacing: -0.02em;
+    }
+    .karnaugh-table td, .karnaugh-table th {
+      border: 1px solid #334155;
+      text-align: center;
+      padding: 0.35rem 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .truth-table td, .truth-table th {
+      border: 1px solid #cbd5e1;
+      padding: 0.35rem 0.55rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .truth-table th {
+      background-color: #f1f5f9;
+      font-weight: 700;
+    }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white technical-paper min-h-screen flex flex-col justify-between">
+
+<!-- BEGIN: Site Header -->
+<header class="sticky top-0 z-50 glass-header border-b border-slate-200 transition-all shadow-sm">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<a class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg" href="../index.html">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-extrabold text-brand-500 tracking-tight flex items-center gap-1.5">
+  CƠ KHÍ HUIT
+  <span class="text-[10px] bg-brand-50 text-brand-700 font-bold px-1.5 py-0.5 rounded border border-brand-200">KTS</span>
+</span>
+</div>
+</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 transition border border-slate-200 shadow-xs" href="Chuong4-he-tuan-tu-&-fipl-flop-phan1.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span>Về Phần 1 (Mục 4.1 – 4.2)</span>
+</a>
+<a class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 hover:text-brand-700 transition border border-brand-200/80 shadow-xs" href="../index.html">
+<span>Danh mục KTS</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: Site Header -->
+
+<!-- BEGIN: Breadcrumb Bar -->
+<div class="bg-white/80 border-b border-slate-200/60 backdrop-blur-xs">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+<a class="hover:text-brand-500 transition" href="../index.html">Trang chủ</a>
+<span>/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Kỹ thuật số</a>
+<span>/</span>
+<a class="hover:text-brand-500 transition" href="../index.html">Chương 4: Hệ tuần tự</a>
+<span>/</span>
+<span class="text-slate-800 font-semibold truncate">Phần 2: Mạch đếm, Thiết kế mạch tuần tự, Thanh ghi dịch</span>
+</div>
+</div>
+<!-- END: Breadcrumb Bar -->
+
+<!-- BEGIN: Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+<!-- BEGIN: Title Banner -->
+<section class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-brand-100 shadow-xl" data-purpose="hero-title">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-500/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center justify-center gap-3 mb-4">
+<span class="text-3xl sm:text-4xl font-black text-brand-600 italic tracking-wider">Chương</span>
+<span class="text-5xl sm:text-6xl font-black text-brand-500 font-mono italic">4</span>
+<span class="text-lg sm:text-xl font-bold text-slate-500 self-end mb-2">(Phần 2)</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-title-display">
+  MẠCH ĐẾM & THANH GHI DỊCH
+</h1>
+<p class="mt-3 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
+  Mạch đếm nối tiếp (bất đồng bộ), mạch đếm song song (đồng bộ), thiết kế mạch tổng quát theo giản đồ trạng thái Mealy/Moore và thanh ghi dịch (Shift Register).
+</p>
+<div class="mt-4 flex items-center justify-center gap-2">
+<span class="h-1 w-12 bg-brand-500 rounded-full"></span>
+<span class="h-1 w-3 bg-brand-200 rounded-full"></span>
+<span class="h-1 w-1.5 bg-brand-100 rounded-full"></span>
+</div>
+</section>
+<!-- END: Title Banner -->
+
+<!-- BEGIN: Section 4.3 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" id="sec-4-3">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.3</span>
+  MẠCH ĐẾM NỐI TIẾP (ĐẾM BẤT ĐỒNG BỘ)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 75 - 81</span>
+</div>
+
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+<p>
+  Mạch đếm nối tiếp còn được gọi là mạch đếm bất đồng bộ hay mạch đếm gợn (<em>ripple</em>).
+</p>
+
+<!-- 1- Mạch đếm nối tiếp mod 2^n -->
+<div class="space-y-4">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    1- Mạch đếm nối tiếp mod 2<sup>n</sup>
+  </h3>
+  <p>
+    Mod (<em>modulus</em>) của mạch đếm là số trạng thái trong một chu kỳ đếm. Mạch đếm mod 2<sup>n</sup> là mạch đếm có 2<sup>n</sup> trạng thái. Mạch đếm mod 2<sup>n</sup> còn được gọi là mạch đếm chia 2<sup>n</sup> vì có thể dùng mạch đếm này để chia tần số cho 2<sup>n</sup> hay còn được gọi là mạch đếm n bit vì nó có n bit ngõ ra.
+  </p>
+  <p>
+    Mạch đếm nối tiếp mod 2<sup>n</sup> được tạo ra từ n T-FF (với T = 1) hoặc tương đương, mắc với nhau theo kiểu xâu chuỗi, ngõ ra Q (hoặc <span class="border-t border-slate-800 inline-block px-0.5">Q</span>) của một FF được nối đến ngõ CK của FF tiếp theo.
+  </p>
+  <p>
+    Tùy vào trạng thái nhị phân của các ngõ ra mạch đếm có giá trị tăng dần hay giảm dần mà ta có mạch đếm lên hay đếm xuống.
+  </p>
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-2 text-sm sm:text-base">
+    <p class="font-semibold text-slate-900">Quy tắc kết nối theo loại cạnh xung CK:</p>
+    <ul class="list-disc pl-5 space-y-1.5">
+      <li>Với FF có CK kích khởi <strong>cạnh xuống</strong>: mạch đếm lên được tạo ra bằng cách nối ngõ <strong>Q</strong> đến ngõ CK của FF tiếp theo; mạch đếm xuống được tạo ra bằng cách nối ngõ <strong><span class="border-t border-slate-800 inline-block px-0.5">Q</span></strong> đến ngõ CK của FF tiếp theo.</li>
+      <li>Với FF có CK kích khởi <strong>cạnh lên</strong>: mạch đếm lên được tạo ra bằng cách nối ngõ <strong><span class="border-t border-slate-800 inline-block px-0.5">Q</span></strong> đến ngõ CK của FF tiếp theo; mạch đếm xuống được tạo ra bằng cách nối ngõ <strong>Q</strong> đến ngõ CK của FF tiếp theo.</li>
+    </ul>
+  </div>
+
+  <!-- Ví dụ 4.4 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.4: <span class="font-normal">Thiết kế mạch đếm nối tiếp đếm lên mod 8 dùng T-FF có ngõ CK kích khởi cạnh xuống.</span>
+    </p>
+    <div class="space-y-4">
+      <p class="font-semibold text-slate-900 text-sm sm:text-base">• Sơ đồ khối:</p>
+      <div class="flex justify-center p-3">
+        <svg class="w-full max-w-sm h-auto" viewBox="0 0 280 100" fill="none" stroke="currentColor">
+          <rect x="70" y="10" width="140" height="80" stroke="#034EA2" stroke-width="2" fill="#f8fafc" rx="4"/>
+          <line x1="20" y1="50" x2="70" y2="50" stroke="#034EA2" stroke-width="2"/>
+          <text x="35" y="45" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">CK</text>
+          <line x1="210" y1="25" x2="260" y2="25" stroke="#034EA2" stroke-width="2"/>
+          <text x="225" y="20" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">Q₀</text>
+          <line x1="210" y1="50" x2="260" y2="50" stroke="#034EA2" stroke-width="2"/>
+          <text x="225" y="45" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">Q₁</text>
+          <line x1="210" y1="75" x2="260" y2="75" stroke="#034EA2" stroke-width="2"/>
+          <text x="225" y="70" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">Q₂</text>
+        </svg>
+      </div>
+
+      <p class="font-semibold text-slate-900 text-sm sm:text-base">• Sơ đồ mạch (T-FF mắc nối tiếp, T=1, CK kích khởi cạnh xuống):</p>
+      <div class="flex justify-center p-3 overflow-x-auto">
+        <svg class="w-full max-w-2xl h-auto" viewBox="0 0 620 150" fill="none" stroke="currentColor">
+          <!-- FF0 -->
+          <rect x="70" y="30" width="80" height="90" stroke="#034EA2" stroke-width="2" fill="#ffffff" rx="4"/>
+          <text x="78" y="55" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">T</text>
+          <text x="125" y="55" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">Q</text>
+          <path d="M 62 80 L 70 75 L 70 85 Z" fill="#0f172a"/>
+          <text x="78" y="83" font-family="'JetBrains Mono'" font-size="10" fill="#0f172a">CK</text>
+          <text x="125" y="105" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">Q̄</text>
+          <!-- FF1 -->
+          <rect x="250" y="30" width="80" height="90" stroke="#034EA2" stroke-width="2" fill="#ffffff" rx="4"/>
+          <text x="258" y="55" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">T</text>
+          <text x="305" y="55" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">Q</text>
+          <path d="M 242 80 L 250 75 L 250 85 Z" fill="#0f172a"/>
+          <text x="258" y="83" font-family="'JetBrains Mono'" font-size="10" fill="#0f172a">CK</text>
+          <text x="305" y="105" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">Q̄</text>
+          <!-- FF2 -->
+          <rect x="430" y="30" width="80" height="90" stroke="#034EA2" stroke-width="2" fill="#ffffff" rx="4"/>
+          <text x="438" y="55" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">T</text>
+          <text x="485" y="55" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">Q</text>
+          <path d="M 422 80 L 430 75 L 430 85 Z" fill="#0f172a"/>
+          <text x="438" y="83" font-family="'JetBrains Mono'" font-size="10" fill="#0f172a">CK</text>
+          <text x="485" y="105" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a">Q̄</text>
+
+          <!-- Đường T nối 1 -->
+          <line x1="20" y1="50" x2="70" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="25" y="45" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">1</text>
+          <line x1="200" y1="50" x2="250" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="205" y="45" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">1</text>
+          <line x1="380" y1="50" x2="430" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="385" y="45" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">1</text>
+
+          <!-- CK vào FF0 -->
+          <line x1="20" y1="80" x2="70" y2="80" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="25" y="75" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">CK</text>
+
+          <!-- Q0 nối CK1 và kéo lên ngõ ra -->
+          <line x1="150" y1="50" x2="190" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+          <circle cx="190" cy="50" r="3" fill="#0f172a"/>
+          <line x1="190" y1="50" x2="190" y2="15" stroke="#0f172a" stroke-width="1.8"/>
+          <line x1="190" y1="15" x2="190" y2="10" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="170" y="8" font-family="'JetBrains Mono'" font-size="11" fill="#034EA2" font-weight="bold">Q₀ (LSB)</text>
+          <line x1="190" y1="50" x2="190" y2="80" stroke="#0f172a" stroke-width="1.8"/>
+          <line x1="190" y1="80" x2="250" y2="80" stroke="#0f172a" stroke-width="1.8"/>
+
+          <!-- Q1 nối CK2 và kéo lên ngõ ra -->
+          <line x1="330" y1="50" x2="370" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+          <circle cx="370" cy="50" r="3" fill="#0f172a"/>
+          <line x1="370" y1="50" x2="370" y2="10" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="365" y="8" font-family="'JetBrains Mono'" font-size="11" fill="#034EA2" font-weight="bold">Q₁</text>
+          <line x1="370" y1="50" x2="370" y2="80" stroke="#0f172a" stroke-width="1.8"/>
+          <line x1="370" y1="80" x2="430" y2="80" stroke="#0f172a" stroke-width="1.8"/>
+
+          <!-- Q2 ra ngoài -->
+          <line x1="510" y1="50" x2="550" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+          <line x1="550" y1="50" x2="550" y2="10" stroke="#0f172a" stroke-width="1.8"/>
+          <text x="535" y="8" font-family="'JetBrains Mono'" font-size="11" fill="#034EA2" font-weight="bold">Q₂ (MSB)</text>
+        </svg>
+      </div>
+
+      <p class="font-semibold text-slate-900 text-sm sm:text-base">• Giản đồ xung:</p>
+      <div class="flex justify-center p-3 overflow-x-auto">
+        <svg class="w-full max-w-xl h-auto" viewBox="0 0 540 180" fill="none" stroke="currentColor">
+          <text x="10" y="32" font-family="'JetBrains Mono'" font-size="12" fill="#0f172a" font-weight="bold">CK</text>
+          <path d="M 60 40 L 60 20 L 90 20 L 90 40 L 120 40 L 120 20 L 150 20 L 150 40 L 180 40 L 180 20 L 210 20 L 210 40 L 240 40 L 240 20 L 270 20 L 270 40 L 300 40 L 300 20 L 330 20 L 330 40 L 360 40 L 360 20 L 390 20 L 390 40 L 420 40 L 420 20 L 450 20 L 450 40 L 480 40" stroke="#0f172a" stroke-width="1.8"/>
+          <!-- Falling edge arrows on CK -->
+          <line x1="90" y1="20" x2="90" y2="35" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="150" y1="20" x2="150" y2="35" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="210" y1="20" x2="210" y2="35" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="270" y1="20" x2="270" y2="35" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="330" y1="20" x2="330" y2="35" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="390" y1="20" x2="390" y2="35" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="450" y1="20" x2="450" y2="35" stroke="#ef4444" stroke-width="1.5"/>
+
+          <text x="10" y="75" font-family="'JetBrains Mono'" font-size="12" fill="#034EA2" font-weight="bold">Q₀</text>
+          <path d="M 60 80 L 90 80 L 90 60 L 150 60 L 150 80 L 210 80 L 210 60 L 270 60 L 270 80 L 330 80 L 330 60 L 390 60 L 390 80 L 450 80 L 450 60 L 480 60" stroke="#034EA2" stroke-width="2"/>
+
+          <text x="10" y="115" font-family="'JetBrains Mono'" font-size="12" fill="#034EA2" font-weight="bold">Q₁</text>
+          <path d="M 60 120 L 150 120 L 150 100 L 270 100 L 270 120 L 390 120 L 390 100 L 480 100" stroke="#034EA2" stroke-width="2"/>
+
+          <text x="10" y="155" font-family="'JetBrains Mono'" font-size="12" fill="#034EA2" font-weight="bold">Q₂</text>
+          <path d="M 60 160 L 270 160 L 270 140 L 480 140" stroke="#034EA2" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <p class="text-sm sm:text-base">
+        Giả sử trạng thái đầu của dãy đếm là Q₂Q₁Q₀ là 000. Dãy đếm:
+      </p>
+      <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg font-mono text-sm sm:text-base text-brand-600 font-bold overflow-x-auto text-center">
+        Q₂Q₁Q₀ = 000 → 001 → 010 → 011 → 100 → 101 → 110 → 111 → 000 → ...
+      </div>
+    </div>
+  </div>
+
+  <!-- Ví dụ 4.5 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.5: <span class="font-normal">Thiết kế mạch đếm nối tiếp đếm xuống mod 8 dùng JK-FF có ngõ CK kích khởi cạnh xuống.</span>
+    </p>
+    <p class="text-sm sm:text-base">
+      Vì đếm xuống và ngõ CK kích khởi cạnh xuống nên nối ngõ <span class="border-t border-slate-800 inline-block px-0.5">Q</span> của FF trước đến ngõ CK của FF tiếp theo (hoặc lấy ngõ ra tại <span class="border-t border-slate-800 inline-block px-0.5">Q</span>). Cả hai ngõ J và K của mỗi FF đều nối lên mức 1 để hoạt động ở chế độ đảo (Toggle).
+    </p>
+    <p class="text-sm sm:text-base font-semibold">Dãy đếm:</p>
+    <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg font-mono text-sm sm:text-base text-brand-600 font-bold overflow-x-auto text-center">
+      Q₂Q₁Q₀ = 000 → 111 → 110 → 101 → 100 → 011 → 010 → 001 → 000 → ...
+    </div>
+  </div>
+
+  <!-- Ví dụ 4.6 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.6: <span class="font-normal">Thiết kế mạch đếm nối tiếp đếm lên mod 8 dùng D-FF có ngõ CK kích khởi cạnh lên.</span>
+    </p>
+    <p class="text-sm sm:text-base">
+      D-FF được chuyển thành T-FF (với T = 1) bằng cách nối ngõ ra <span class="border-t border-slate-800 inline-block px-0.5">Q</span> về ngõ vào D. Vì ngõ CK kích khởi cạnh lên, để tạo mạch đếm lên ta nối ngõ <span class="border-t border-slate-800 inline-block px-0.5">Q</span> của FF trước đến ngõ CK của FF tiếp theo.
+    </p>
+    <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg font-mono text-sm sm:text-base text-brand-600 font-bold overflow-x-auto text-center">
+      Q₂Q₁Q₀ = 000 → 001 → 010 → 011 → 100 → 101 → 110 → 111 → 000 → ...
+    </div>
+  </div>
+</div>
+
+<!-- 2- Mạch đếm nối tiếp mod < 2^n -->
+<div class="space-y-4 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    2- Mạch đếm nối tiếp mod &lt; 2<sup>n</sup>
+  </h3>
+  <p>
+    Mạch đếm nối tiếp mod &lt; 2<sup>n</sup> được tạo ra từ mạch đếm mod 2<sup>n</sup>, rồi tạo một xung điều khiển đưa về ngõ Preset hoặc Clear để tạo ra mod mong muốn.
+  </p>
+
+  <!-- Ví dụ 4.7 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.7: <span class="font-normal">Thiết kế mạch đếm nối tiếp đếm lên mod 5 dùng T-FF có ngõ CK kích khởi cạnh xuống và có các ngõ Preset và Clear tích cực thấp.</span>
+    </p>
+    <p class="text-sm sm:text-base">
+      Ban đầu ta thiết kế mạch đếm nối tiếp đếm lên mod 8 (đã làm ở ví dụ 4.4).
+    </p>
+    <div class="font-mono text-xs sm:text-sm pl-4 space-y-1">
+      <p>Ta có dãy đếm của mạch đếm mod 8 là: 000 → 001 → 010 → 011 → 100 → 101 → 110 → 111 → 000 → ...</p>
+      <p>Và dãy đếm của mạch đếm mod 5 là: <strong>000 → 001 → 010 → 011 → 100 → 000 → ...</strong></p>
+    </div>
+    <p class="text-sm sm:text-base">
+      Do đó, khi mạch đếm đến trạng thái <strong>101</strong> thì tạo ra một xung điều khiển ĐK để xóa cả 3 FF để có trạng thái mong muốn là 000. Do ngõ Clear của các FF tích cực thấp nên xung điều khiển ĐK cần tạo ra phải là mức thấp.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-2">
+      <div>
+        <table class="truth-table w-full text-xs sm:text-sm">
+          <tr><th>Q₂</th><th>Q₁</th><th>Q₀</th><th>ĐK</th></tr>
+          <tr><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+          <tr><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+          <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+          <tr class="bg-red-50 font-bold"><td>1</td><td>0</td><td>1</td><td class="text-red-600">0</td></tr>
+          <tr><td>1</td><td>1</td><td>0</td><td>x</td></tr>
+          <tr><td>1</td><td>1</td><td>1</td><td>x</td></tr>
+        </table>
+      </div>
+      <div class="space-y-2">
+        <p class="font-semibold text-sm">Bìa Karnaugh rút gọn cho ĐK:</p>
+        <div class="font-mono text-sm bg-slate-50 p-3 rounded-lg border border-slate-200">
+          Suy ra: <strong>ĐK = <span class="border-t border-slate-800 inline-block px-0.5">Q₂</span> + <span class="border-t border-slate-800 inline-block px-0.5">Q₀</span> = <span class="border-t border-slate-800 inline-block px-0.5">Q₂ · Q₀</span></strong>
+        </div>
+        <p class="text-xs text-slate-600 italic">
+          &rarr; Dùng một cổng NAND 2 ngõ vào lấy tín hiệu từ Q₂ và Q₀ để tạo xung ĐK đưa về ngõ Clear của các FF.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ví dụ 4.8 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.8: <span class="font-normal">Thiết kế mạch đếm nối tiếp đếm lên mod 10 dùng JK-FF có ngõ CK kích khởi cạnh xuống và có các ngõ Preset và Clear tích cực cao.</span>
+    </p>
+    <p class="text-sm sm:text-base">
+      Ban đầu ta thiết kế mạch đếm nối tiếp đếm lên mod 16 (4 bit Q₃Q₂Q₁Q₀). Dãy đếm mod 10 cần đạt là từ 0000 đến 1001 rồi quay về 0000.
+    </p>
+    <p class="text-sm sm:text-base">
+      Do đó, khi mạch đếm đến trạng thái <strong>1010</strong> thì tạo ra một xung điều khiển ĐK để xóa cả 4 FF để có trạng thái mong muốn là 0000. Do ngõ Clear của các FF tích cực cao nên xung điều khiển ĐK cần tạo ra phải là mức cao.
+    </p>
+    <div class="p-3 bg-brand-50/70 border border-brand-200 rounded-lg font-mono text-sm sm:text-base text-brand-700 font-bold text-center">
+      Suy ra: ĐK = Q₃ · Q₁
+    </div>
+    <p class="text-xs sm:text-sm text-slate-600">
+      &rarr; Sử dụng một cổng AND 2 ngõ vào kết nối Q₃ và Q₁ rồi nối đến ngõ Clear của 4 FF.
+    </p>
+  </div>
+</div>
+</div>
+</article>
+<!-- END: Section 4.3 -->
+
+<!-- BEGIN: Section 4.4 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" id="sec-4-4">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.4</span>
+  MẠCH ĐẾM SONG SONG (ĐẾM ĐỒNG BỘ)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 81 - 95</span>
+</div>
+
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+<p>
+  Mạch đếm song song còn được gọi là <strong>mạch đếm đồng bộ</strong>. Mạch đếm song song mod 2<sup>n</sup> được tạo ra từ n FF với các ngõ CK được nối chung, nghĩa là tất cả các FF được kích khởi đồng thời bằng một nguồn xung nhịp vào.
+</p>
+
+<!-- 1- Nguyên tắc thiết kế mạch đếm song song -->
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+  <h3 class="text-lg font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    1- Nguyên tắc thiết kế mạch đếm song song (dùng bảng kích thích)
+  </h3>
+  <ol class="list-decimal pl-6 space-y-1.5 text-sm sm:text-base">
+    <li><strong>Xác định số FF cần sử dụng:</strong> Số FF cần sử dụng chính là số bit cần có.</li>
+    <li><strong>Xác định dãy đếm:</strong> Dãy đếm được xác định từ yêu cầu hoặc từ giản đồ trạng thái.</li>
+    <li><strong>Lập bảng trạng thái:</strong> Bảng trạng thái bao gồm trạng thái hiện tại, trạng thái kế và các ngõ vào FF. Ở cột trạng thái hiện tại, ta ghi tất cả các tổ hợp nhị phân có thể có (với n bit thì sẽ có 2<sup>n</sup> tổ hợp nhị phân). Các trạng thái kế được xác định từ trạng thái hiện tại tương ứng và từ dãy đếm. Sau đó, từ trạng thái hiện tại và trạng thái kế, ta suy ra giá trị của các ngõ vào FF tương ứng dựa vào <em>bảng kích thích</em> của FF được sử dụng.</li>
+    <li><strong>Xác định các hàm cho các ngõ vào của các FF:</strong> Các ngõ vào của các FF là hàm theo các biến là trạng thái hiện tại. Rút gọn các hàm này và dùng mạch tổ hợp để thực hiện.</li>
+    <li><strong>Vẽ sơ đồ mạch.</strong></li>
+  </ol>
+  <p class="text-xs sm:text-sm text-slate-600 italic pt-1">
+    <em>Chú ý:</em> Trong thiết kế mạch đếm song song, không phân biệt loại kích khởi của CK.
+  </p>
+</div>
+
+<!-- Ví dụ 4.9 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+  <p class="font-bold text-slate-900 text-base">
+    Ví dụ 4.9: <span class="font-normal">Thiết kế mạch đếm song song đếm lên mod 8 dùng JK-FF.</span>
+  </p>
+  <div class="font-mono text-xs sm:text-sm pl-4">
+    Dãy đếm: 000 → 001 → 010 → 011 → 100 → 101 → 110 → 111 → 000 → ...
+  </div>
+  
+  <p class="font-semibold text-sm sm:text-base text-slate-900">• Lập bảng trạng thái:</p>
+  <div class="overflow-x-auto">
+    <table class="truth-table w-full text-xs sm:text-sm">
+      <thead>
+        <tr>
+          <th colspan="3">TT hiện tại</th>
+          <th colspan="3">TT kế</th>
+          <th colspan="6">Các ngõ vào</th>
+        </tr>
+        <tr>
+          <th>Q₂</th><th>Q₁</th><th>Q₀</th>
+          <th>Q₂⁺</th><th>Q₁⁺</th><th>Q₀⁺</th>
+          <th>J₂</th><th>K₂</th><th>J₁</th><th>K₁</th><th>J₀</th><th>K₀</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>x</td><td>0</td><td>x</td><td>1</td><td>x</td></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>x</td><td>1</td><td>x</td><td>x</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>x</td><td>x</td><td>0</td><td>1</td><td>x</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>x</td><td>x</td><td>1</td><td>x</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>x</td><td>0</td><td>0</td><td>x</td><td>1</td><td>x</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>x</td><td>0</td><td>1</td><td>x</td><td>x</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>x</td><td>0</td><td>x</td><td>0</td><td>1</td><td>x</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>x</td><td>1</td><td>x</td><td>1</td><td>x</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="font-semibold text-sm sm:text-base text-slate-900">• Xác định các hàm ngõ vào qua bìa Karnaugh:</p>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-sm">
+    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+      <p class="font-bold text-brand-600">J₂ = Q₁ · Q₀</p>
+      <p class="font-bold text-brand-600">K₂ = Q₁ · Q₀</p>
+    </div>
+    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+      <p class="font-bold text-brand-600">J₁ = Q₀</p>
+      <p class="font-bold text-brand-600">K₁ = Q₀</p>
+    </div>
+    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+      <p class="font-bold text-brand-600">J₀ = 1</p>
+      <p class="font-bold text-brand-600">K₀ = 1</p>
+    </div>
+  </div>
+</div>
+
+<!-- Ví dụ 4.10 -->
+<div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+  <p class="font-bold text-slate-900 text-base">
+    Ví dụ 4.10: <span class="font-normal">Thiết kế mạch đếm song song đếm xuống mod 8 dùng JK-FF.</span>
+  </p>
+  <p class="text-sm sm:text-base">Dãy đếm: 000 → 111 → 110 → 101 → 100 → 011 → 010 → 001 → 000 → ...</p>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-sm pt-1">
+    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+      <p class="font-bold text-brand-600">J₂ = <span class="border-t border-brand-600 inline-block px-0.5">Q₁</span> · <span class="border-t border-brand-600 inline-block px-0.5">Q₀</span> = <span class="border-t border-brand-600 inline-block px-0.5">Q₁ + Q₀</span></p>
+      <p class="font-bold text-brand-600">K₂ = <span class="border-t border-brand-600 inline-block px-0.5">Q₁</span> · <span class="border-t border-brand-600 inline-block px-0.5">Q₀</span> = <span class="border-t border-brand-600 inline-block px-0.5">Q₁ + Q₀</span></p>
+    </div>
+    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+      <p class="font-bold text-brand-600">J₁ = <span class="border-t border-brand-600 inline-block px-0.5">Q₀</span></p>
+      <p class="font-bold text-brand-600">K₁ = <span class="border-t border-brand-600 inline-block px-0.5">Q₀</span></p>
+    </div>
+    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+      <p class="font-bold text-brand-600">J₀ = 1</p>
+      <p class="font-bold text-brand-600">K₀ = 1</p>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Thiết kế mạch đếm song song dùng hàm đặc tính -->
+<div class="space-y-4 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    2- Thiết kế mạch đếm song song dùng hàm đặc tính
+  </h3>
+  <p class="text-sm sm:text-base">
+    Phương pháp này không cần lập bảng kích thích. Thay vào đó, sau khi lập bảng trạng thái để tìm trạng thái kế Q<sub>n</sub>⁺, ta rút gọn các hàm trạng thái kế theo định dạng của hàm đặc tính FF sử dụng.
+  </p>
+  <div class="bg-brand-50/60 p-4 rounded-xl border border-brand-200 font-mono text-sm sm:text-base space-y-1">
+    <p>Ví dụ, nếu dùng JK-FF thì dạng như sau: <strong>Q<sub>n</sub>⁺ = A · Q<sub>n</sub> + B · <span class="border-t border-slate-800 inline-block px-0.5">Q<sub>n</sub></span></strong></p>
+    <p>Đồng nhất với hàm đặc tính <strong>Q<sub>n</sub>⁺ = <span class="border-t border-slate-800 inline-block px-0.5">K<sub>n</sub></span> · Q<sub>n</sub> + J<sub>n</sub> · <span class="border-t border-slate-800 inline-block px-0.5">Q<sub>n</sub></span></strong></p>
+    <p class="text-brand-700 font-bold">⇒ <span class="border-t border-brand-700 inline-block px-0.5">K<sub>n</sub></span> = A ⇔ K<sub>n</sub> = <span class="border-t border-brand-700 inline-block px-0.5">A</span>, &nbsp;&nbsp; J<sub>n</sub> = B</p>
+  </div>
+
+  <!-- Ví dụ 4.13 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-2">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.13: <span class="font-normal">Làm lại ví dụ 4.12 theo phương pháp dùng hàm đặc tính.</span>
+    </p>
+    <p class="text-sm text-slate-600">
+      Thu được kết quả các ngõ vào hoàn toàn tương tự với phương pháp dùng bảng kích thích.
+    </p>
+  </div>
+</div>
+
+<!-- Giới thiệu vi mạch đếm họ 74LS -->
+<div class="space-y-4 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    Giới thiệu các vi mạch đếm thông dụng họ 74LS
+  </h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-2">
+      <span class="font-bold text-brand-600 text-base">74LS163:</span> Mạch đếm nhị phân 4 bit đồng bộ (Synchronous 4-bit Binary Counter). Có các ngõ vào nạp song song (A, B, C, D), ngõ điều khiển đếm ENP, ENT, xóa đồng bộ CLR, và ngõ báo tràn RCO = ENT · QA · QB · QC · QD.
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-2">
+      <span class="font-bold text-brand-600 text-base">74LS193:</span> Mạch đếm lên/xuống đồng bộ nhị phân 4 bit (Presettable Synchronous 4-bit Up/Down Counter). Có 2 ngõ CK riêng biệt: UP (đếm lên) và DN (đếm xuống), ngõ mượn BO và ngõ nhớ CO.
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-2">
+      <span class="font-bold text-brand-600 text-base">74LS90:</span> Gồm 2 bộ đếm: mod 2 và mod 5 (chia 10 - Decade Counter).
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-2">
+      <span class="font-bold text-brand-600 text-base">74LS93:</span> Gồm 2 bộ đếm: mod 2 và mod 8 (chia 16 - 4-bit Binary Counter).
+    </div>
+  </div>
+</div>
+
+<!-- 3- Thiết kế mạch tuần tự đồng bộ tổng quát -->
+<div class="space-y-4 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    3- Thiết kế mạch tuần tự đồng bộ tổng quát
+  </h3>
+  <p class="text-sm sm:text-base">
+    Mạch tuần tự đồng bộ tổng quát ngoài trạng thái của mạch, còn có thêm các ngõ vào và ngõ ra. Việc thiết kế cũng tương tự với việc thiết kế mạch đếm song song, nhưng trong bảng trạng thái có thêm các cột cho các ngõ vào và ngõ ra.
+  </p>
+
+  <div class="bg-brand-50/60 p-4 rounded-xl border-l-4 border-brand-500 space-y-2 text-sm sm:text-base">
+    <p class="font-bold text-slate-900">Giản đồ trạng thái: có hai dạng là giản đồ Mealy và giản đồ Moore</p>
+    <ul class="list-disc pl-5 space-y-1">
+      <li><strong>Giản đồ Mealy:</strong> dùng để biểu diễn một hệ tuần tự mà các ngõ ra vừa phụ thuộc vào các ngõ vào, vừa phụ thuộc vào trạng thái hiện tại của mạch (ký hiệu trên nhánh chuyển: <em>ngõ vào / ngõ ra</em>).</li>
+      <li><strong>Giản đồ Moore:</strong> dùng để biểu diễn một hệ tuần tự mà các ngõ ra chỉ phụ thuộc vào trạng thái hiện tại của mạch (ngõ ra được ghi kèm bên trong vòng tròn trạng thái: <em>trạng thái / ngõ ra</em>).</li>
+    </ul>
+  </div>
+
+  <!-- Ví dụ 4.16 -->
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.16: <span class="font-normal">Thiết kế mạch tuần tự đồng bộ dùng D-FF hoạt động theo giản đồ trạng thái sau:</span>
+    </p>
+    <p class="text-xs sm:text-sm text-slate-600">
+      Giả sử mạch có 4 trạng thái là 00, 01, 10 và 11 (ký hiệu Y₁Y₀), 1 ngõ vào X và 1 ngõ ra Z.
+    </p>
+
+    <p class="font-semibold text-sm sm:text-base text-slate-900">• Bảng trạng thái:</p>
+    <div class="overflow-x-auto">
+      <table class="truth-table w-full text-xs sm:text-sm">
+        <thead>
+          <tr>
+            <th colspan="2">TT hiện tại</th>
+            <th>Ngõ vào</th>
+            <th colspan="2">TT kế</th>
+            <th>Ngõ ra</th>
+            <th colspan="2">Ngõ vào của FF</th>
+          </tr>
+          <tr>
+            <th>Y₁</th><th>Y₀</th><th>X</th><th>Y₁⁺</th><th>Y₀⁺</th><th>Z</th><th>D₁</th><th>D₀</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+          <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+          <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="font-semibold text-sm sm:text-base text-slate-900">• Rút gọn các hàm bằng bìa Karnaugh:</p>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-sm">
+      <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+        <p class="font-bold text-brand-600">D₁ = Y₀ · <span class="border-t border-brand-600 inline-block px-0.5">X</span> + Y₁ · <span class="border-t border-brand-600 inline-block px-0.5">Y₀</span></p>
+      </div>
+      <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+        <p class="font-bold text-brand-600">D₀ = <span class="border-t border-brand-600 inline-block px-0.5">Y₁</span> · X + <span class="border-t border-brand-600 inline-block px-0.5">Y₀</span> · X + Y₁ · Y₀ · <span class="border-t border-brand-600 inline-block px-0.5">X</span></p>
+      </div>
+      <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+        <p class="font-bold text-brand-600">Z = <span class="border-t border-brand-600 inline-block px-0.5">Y₁</span> · <span class="border-t border-brand-600 inline-block px-0.5">Y₀</span> · X + Y₁ · <span class="border-t border-brand-600 inline-block px-0.5">Y₀</span> · X = <span class="border-t border-brand-600 inline-block px-0.5">Y₀</span> · X</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 4.4 -->
+
+<!-- BEGIN: Section 4.5 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" id="sec-4-5">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.5</span>
+  THANH GHI DỊCH (SHIFT REGISTER)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 95 - 98</span>
+</div>
+
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+<p>
+  Một FF có khả năng lưu trữ 1 bit dữ liệu. Một thanh ghi (<em>Register</em>) được tạo ra từ n FF để lưu trữ n bit. Thanh ghi dịch là một thanh ghi có khả năng dịch dữ liệu sang phải hoặc sang trái khi có xung nhịp CK.
+</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- 1- SISO -->
+  <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-xs space-y-3">
+    <h3 class="font-bold text-brand-600 text-base sm:text-lg">
+      1- Thanh ghi nhập nối tiếp - xuất nối tiếp (SISO)
+    </h3>
+    <p class="text-xs sm:text-sm text-slate-600">
+      <em>Serial-In Serial-Out:</em> Tín hiệu vào ngõ SER sẽ được dịch vào sau mỗi xung CK. Với thanh ghi 4 bit, tín hiệu này sẽ xuất hiện ở SER-OUT sau 4 xung CK.
+    </p>
+    <div class="p-2.5 bg-brand-50 rounded-lg text-xs font-mono text-brand-700">
+      Ứng dụng: Mạch thanh ghi nhập nối tiếp - xuất nối tiếp n bit có thể được dùng để trì hoãn (Delay) một tín hiệu n xung CK.
+    </div>
+  </div>
+
+  <!-- 2- SIPO -->
+  <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-xs space-y-3">
+    <h3 class="font-bold text-brand-600 text-base sm:text-lg">
+      2- Thanh ghi nhập nối tiếp - xuất song song (SIPO)
+    </h3>
+    <p class="text-xs sm:text-sm text-slate-600">
+      <em>Serial-In Parallel-Out:</em> Thanh ghi có ngõ ra cho tất cả các FF (Q₁, Q₂, Q₃, Q₄). Với thanh ghi 4 bit, chuỗi dữ liệu nối tiếp ngõ vào sẽ tạo ra dữ liệu song song ở ngõ ra sau 4 xung CK.
+    </p>
+    <div class="p-2.5 bg-brand-50 rounded-lg text-xs font-mono text-brand-700">
+      Ứng dụng: Dùng để chuyển đổi dữ liệu nối tiếp thành song song.
+    </div>
+  </div>
+
+  <!-- 3- PISO -->
+  <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-xs space-y-3">
+    <h3 class="font-bold text-brand-600 text-base sm:text-lg">
+      3- Thanh ghi nhập song song - xuất nối tiếp (PISO)
+    </h3>
+    <p class="text-xs sm:text-sm text-slate-600">
+      <em>Parallel-In Serial-Out:</em> Khi LD/<span class="border-t border-slate-600 inline-block px-0.5">SH</span> = 1 và có tác động xung CK, dữ liệu từ các ngõ vào D1, D2, D3, D4 được nhập vào các FF. Khi LD/<span class="border-t border-slate-600 inline-block px-0.5">SH</span> = 0, dữ liệu từ SER được dịch qua từng FF.
+    </p>
+    <div class="p-2.5 bg-brand-50 rounded-lg text-xs font-mono text-brand-700">
+      Ứng dụng: Dùng để chuyển đổi dữ liệu song song thành nối tiếp.
+    </div>
+  </div>
+
+  <!-- 4- PIPO -->
+  <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-xs space-y-3">
+    <h3 class="font-bold text-brand-600 text-base sm:text-lg">
+      4- Thanh ghi nhập song song - xuất song song (PIPO)
+    </h3>
+    <p class="text-xs sm:text-sm text-slate-600">
+      <em>Parallel-In Parallel-Out:</em> Tương tự với thanh ghi nhập song song - xuất nối tiếp nhưng có thêm các ngõ ra cho mỗi FF. Dữ liệu nạp song song và xuất song song có thể được dùng làm một <strong>bộ chốt (latch) dữ liệu</strong>.
+    </p>
+    <div class="p-2.5 bg-brand-50 rounded-lg text-xs font-mono text-brand-700">
+      Ứng dụng: Lưu trữ và chốt bus dữ liệu đa bit.
+    </div>
+  </div>
+</div>
+
+<!-- Giới thiệu vi mạch thanh ghi dịch -->
+<div class="space-y-4 pt-4 border-t border-slate-200">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    Giới thiệu các vi mạch thanh ghi dịch thông dụng
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+      <span class="font-bold text-brand-600 text-base">74LS174:</span> Thanh ghi dịch PIPO (gồm 6 D-FF có xung CK và ngõ CLR chung).
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+      <span class="font-bold text-brand-600 text-base">74LS164:</span> Thanh ghi dịch 8 bit SIPO (ngõ vào nối tiếp dạng AND: A và B).
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+      <span class="font-bold text-brand-600 text-base">74LS165:</span> Thanh ghi dịch 8 bit PISO (ngõ vào điều khiển dịch SH/LD).
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-1.5 sm:col-span-3">
+      <span class="font-bold text-brand-600 text-base">74LS194:</span> Thanh ghi dịch 4 bit vạn năng (Universal Shift Register: dịch trái, dịch phải, nạp song song PIPO qua 2 ngõ chọn chế độ S0, S1).
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 4.5 -->
+
+<!-- BEGIN: Section 4.6 & 4.7 -->
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8" id="sec-4-6">
+<div class="flex items-center justify-between border-b pb-3 border-slate-200">
+<h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+  <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.6</span>
+  MẠCH ĐẾM DÙNG THANH GHI DỊCH (SHIFT-REGISTER COUNTER)
+</h2>
+<span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 99 - 100</span>
+</div>
+
+<div class="space-y-6 text-base sm:text-lg leading-relaxed text-slate-800">
+
+<!-- 1- Mạch đếm vòng (Ring Counter) -->
+<div class="space-y-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    1- Mạch đếm vòng (Ring Counter)
+  </h3>
+  <p>
+    Mạch đếm vòng được tạo ra từ một thanh ghi dịch bằng cách nối ngõ ra của thanh ghi dịch quay về ngõ vào.
+  </p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.17: Mạch đếm vòng 4 bit (dùng 4 D-FF nối vòng từ Q₀ về D₃)
+    </p>
+    <p class="text-sm">
+      Giả sử trạng thái ban đầu của bộ đếm là <strong>Q₃Q₂Q₁Q₀ = 1000</strong>. Trạng thái này có thể tạo ra bằng cách tác động một xung tích cực vào ngõ Preset của FF3 và ngõ Clear của các FF2, FF1 và FF0.
+    </p>
+    <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg font-mono text-sm text-center">
+      Bảng chuyển trạng thái sau mỗi xung CK:<br>
+      <span class="font-bold text-brand-600">CK 0: 1000 &nbsp;→&nbsp; CK 1: 0100 &nbsp;→&nbsp; CK 2: 0010 &nbsp;→&nbsp; CK 3: 0001 &nbsp;→&nbsp; CK 4: 1000</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2- Mạch đếm vòng xoắn (Twisted-ring Counter / Johnson Counter) -->
+<div class="space-y-3 pt-3">
+  <h3 class="text-lg sm:text-xl font-bold text-slate-900 border-l-4 border-brand-500 pl-3">
+    2- Mạch đếm vòng xoắn (Twisted-ring Counter / Johnson Counter)
+  </h3>
+  <p>
+    Mạch đếm vòng xoắn còn được gọi là <strong>mạch đếm Johnson</strong>. Mạch đếm vòng xoắn được tạo ra từ một thanh ghi dịch bằng cách nối <strong>ngõ ra đảo</strong> của thanh ghi dịch quay về ngõ vào.
+  </p>
+  <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
+    <p class="font-bold text-slate-900 text-base">
+      Ví dụ 4.18: Mạch đếm vòng xoắn 3 bit (dùng 3 D-FF nối từ <span class="border-t border-slate-800 inline-block px-0.5">Q₀</span> về D₂)
+    </p>
+    <p class="text-sm">
+      Giả sử trạng thái ban đầu của mạch đếm là <strong>Q₂Q₁Q₀ = 000</strong>. Trạng thái này có thể tạo ra bằng cách tác động một xung tích cực vào ngõ Clear của tất cả các FF.
+    </p>
+    <div class="overflow-x-auto max-w-sm mx-auto">
+      <table class="truth-table w-full text-xs sm:text-sm">
+        <tr><th>Xung CK</th><th>Q₂</th><th>Q₁</th><th>Q₀</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>2</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>3</td><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>4</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>5</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>6</td><td>0</td><td>0</td><td>0</td></tr>
+      </table>
+    </div>
+    <p class="text-xs text-slate-600 text-center italic">
+      Mạch đếm Johnson n bit có số trạng thái là 2n (với n = 3 bit thì có 6 trạng thái trong một chu kỳ).
+    </p>
+  </div>
+</div>
+
+<!-- 4.7 ỨNG DỤNG CỦA MẠCH ĐẾM -->
+<div class="space-y-4 pt-6 border-t border-slate-200" id="sec-4-7">
+  <div class="flex items-center justify-between border-b pb-3 border-slate-200">
+    <h2 class="text-xl sm:text-2xl font-bold text-brand-600 flex items-center gap-3">
+      <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white text-base font-mono font-bold">4.7</span>
+      ỨNG DỤNG CỦA MẠCH ĐẾM
+    </h2>
+    <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Trang 100</span>
+  </div>
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm sm:text-base">
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs flex items-start gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-500 mt-2 shrink-0"></span>
+      <div>
+        <strong class="text-slate-900">Mạch đếm nhị phân:</strong>
+        <p class="text-slate-600 text-sm mt-0.5">Cung cấp các tổ hợp nhị phân tăng dần hay giảm dần.</p>
+      </div>
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs flex items-start gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-500 mt-2 shrink-0"></span>
+      <div>
+        <strong class="text-slate-900">Mạch chia tần số:</strong>
+        <p class="text-slate-600 text-sm mt-0.5">Một mạch đếm mod n có thể được dùng để chia tần số của một tín hiệu cho n.</p>
+      </div>
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs flex items-start gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-500 mt-2 shrink-0"></span>
+      <div>
+        <strong class="text-slate-900">Mạch đếm tần số:</strong>
+        <p class="text-slate-600 text-sm mt-0.5">Đo và hiển thị tần số của một tín hiệu.</p>
+      </div>
+    </div>
+    <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-xs flex items-start gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-500 mt-2 shrink-0"></span>
+      <div>
+        <strong class="text-slate-900">Mạch đồng hồ số:</strong>
+        <p class="text-slate-600 text-sm mt-0.5">Hiển thị giờ, phút, giây.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</article>
+<!-- END: Section 4.6 & 4.7 -->
+
+<!-- BEGIN: Chapter Navigation Footer -->
+<div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200">
+<div class="text-center sm:text-left">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Học phần</span>
+<h4 class="text-base font-bold text-slate-800">Kỹ thuật số & Thiết kế vi mạch — Chương 4</h4>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="Chuong4-he-tuan-tu-&-fipl-flop-phan1.html">
+  &larr; Về Phần 1 (Mục 4.1 – 4.2)
+</a>
+<a class="flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition" href="#sec-4-3">
+  Lên đầu trang
+</a>
+<a class="flex-1 sm:flex-initial text-center px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm shadow-md shadow-brand-500/25 transition" href="../index.html">
+  Hoàn tất Chương 4 &check;
+</a>
+</div>
+</div>
+<!-- END: Chapter Navigation Footer -->
+
+</main>
+<!-- END: Main Content Area -->
+
+</body>
+</html>

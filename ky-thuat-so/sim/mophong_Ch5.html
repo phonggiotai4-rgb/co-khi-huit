@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương 5: Giao Tiếp Giữa Các Họ Vi Mạch Số (TTL & CMOS)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js & OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            user-select: none;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        
+        .glow-green { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        .glow-orange { box-shadow: 0 0 15px rgba(249, 115, 22, 0.5); }
+        .glow-purple { box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+        .glow-red { box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+        
+        /* Pulse Animation for Particles */
+        @keyframes pulse-fast {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.9); }
+        }
+        .animate-pulse-fast { animation: pulse-fast 1s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden bg-slate-950 text-slate-100">
+
+    <!-- TOP HEADER / NAVBAR -->
+    
+        <header class="h-14 bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md px-4 lg:px-6 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 min-w-0">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-cyan-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 shrink-0">
+                <i class="fa-solid fa-microchip text-lg"></i>
+            </div>
+            <div class="min-w-0">
+                <h1 class="font-bold text-sm sm:text-base tracking-wide bg-gradient-to-r from-cyan-400 via-sky-200 to-indigo-300 bg-clip-text text-transparent truncate">
+                    GIAO TIẾP HỌ VI MẠCH SỐ (CHƯƠNG 5: TTL &amp; CMOS)
+                </h1>
+                <p class="text-[10px] sm:text-xs text-slate-400 -mt-0.5 truncate">Mô phỏng chuyển mạch logic &amp; tương thích mức tín hiệu</p>
+            </div>
+        </div>
+
+        <!-- LAB SELECTOR DROPDOWN -->
+        <div class="flex items-center gap-2">
+            <label class="text-xs text-slate-400 font-medium hidden md:inline"><i class="fa-solid fa-vial mr-1 text-cyan-400"></i> Bài Thí Nghiệm:</label>
+            <select id="labSelect" onchange="changeLab()" class="bg-slate-800 text-sky-300 border border-slate-700 rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all cursor-pointer max-w-[280px] sm:max-w-md">
+                <option value="lab1">Lab 1: So sánh Thông Số & Dải Lề Nhiễu (Noise Margin)</option>
+                <option value="lab2" selected>Lab 2: TTL (5V) Lái CMOS (5V) & Điện Trở Kéo Lên (R_pullup)</option>
+                <option value="lab3">Lab 3: TTL (5V) Lái CMOS (12V) qua Cổng Đệm 7407 Cực Thu Hở</option>
+                <option value="lab4">Lab 4: CMOS 4000B (5V) Lái TTL (5V) & Đệm Nâng Dòng 4050B</option>
+                <option value="lab5">Lab 5: CMOS (12V) Lái TTL (5V) & Đệm Chuyển Mức Áp 4050B</option>
+            </select>
+        </div>
+
+        <!-- VIEW MODE SWITCHER -->
+        <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700">
+            <button id="btn2D" onclick="setViewMode('2d')" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all bg-cyan-600 text-white shadow">
+                <i class="fa-solid fa-diagram-project"></i> <span>Sơ đồ 2D</span>
+            </button>
+            <button id="btn3D" onclick="setViewMode('3d')" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all text-slate-400 hover:text-white">
+                <i class="fa-solid fa-cube"></i> <span>Mô hình 3D</span>
+            </button>
+            <button id="btnSplit" onclick="setViewMode('split')" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all text-slate-400 hover:text-white hidden lg:flex">
+                <i class="fa-solid fa-columns"></i> <span>Song Song</span>
+            </button>
+        </div>
+
+        <a href="../index.html" class="group shrink-0 inline-flex items-center gap-1.5 rounded-full border border-slate-600/50 bg-slate-800/70 px-3 py-1.5 text-xs font-semibold text-slate-300 shadow-sm transition-all duration-200 hover:-translate-y-px hover:border-cyan-500/60 hover:bg-cyan-500/10 hover:text-cyan-300 hover:shadow-cyan-500/20 active:translate-y-0" title="Về trang chủ Kỹ thuật số">
+            <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <span>Quay lại</span>
+        </a>
+    </header>
+    </header>
+
+        <!-- LAB INTERACTIVE CONTROL BAR -->
+    <section class="h-12 bg-slate-900/90 border-b border-slate-800 px-4 flex items-center justify-between text-xs gap-4 shrink-0 z-10 backdrop-blur-md">
+        <!-- Input Logic Switch -->
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">
+                <span class="text-slate-400 font-medium">Tín hiệu ngõ vào (V_IN):</span>
+                <button id="btnToggleInput" onclick="toggleInputLogic()" class="px-3 py-0.5 rounded text-xs font-bold transition bg-emerald-600 text-white glow-green flex items-center gap-1">
+                    <i class="fa-solid fa-toggle-on"></i> <span id="textInputLogic">MỨC HIGH (1)</span>
+                </button>
+            </div>
+
+            <!-- Lab Specific Controls Container -->
+            <div id="dynamicLabControls" class="flex items-center gap-3">
+                <!-- Dynamically injected controls -->
+            </div>
+        </div>
+
+        <!-- Global Voltage Legend Indicator -->
+        <div class="hidden xl:flex items-center gap-3 text-[11px] font-mono">
+            <span class="text-slate-400 font-sans">Mức Áp:</span>
+            <span class="flex items-center gap-1 text-emerald-400"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 5V (HIGH)</span>
+            <span class="flex items-center gap-1 text-purple-400"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 12V (HIGH)</span>
+            <span class="flex items-center gap-1 text-blue-400"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 0V (GND)</span>
+            <span class="flex items-center gap-1 text-orange-400"><span class="w-2.5 h-2.5 rounded-full bg-orange-500 animate-pulse"></span> 2.7V (Bất Định)</span>
+        </div>
+    </section>
+
+    <!-- MAIN SIMULATION WORKSPACE -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+
+        <!-- VIEWPORTS AREA (2D CANVAS & 3D THREE.JS CONTAINER) -->
+        <div id="viewportParent" class="flex-1 flex flex-col relative overflow-hidden bg-slate-950">
+            
+            <!-- 2D / 3D CANVAS CONTAINERS -->
+            <div class="flex-1 relative flex overflow-hidden">
+                <!-- 2D Schematic Canvas -->
+                <div id="container2D" class="w-full h-full relative transition-all duration-300">
+                    <canvas id="canvas2D" class="w-full h-full block cursor-crosshair"></canvas>
+                    <div class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2 shadow">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                        <span>Sơ Đồ Nguyên Lý & Que Đo Điện Áp 2D</span>
+                    </div>
+                </div>
+
+                <!-- 3D Three.js WebGL Container -->
+                <div id="container3D" class="w-full h-full relative transition-all duration-300 hidden">
+                    <div id="webglOutput" class="w-full h-full"></div>
+                    <div class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2 shadow">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Mô Hình Breadboard, IC DIP & Dòng Dẫn 3D</span>
+                    </div>
+                    <!-- 3D Camera Controls Hint -->
+                    <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] text-slate-400 border border-slate-800">
+                        <i class="fa-solid fa-hand-pointer text-cyan-400 mr-1"></i> Xoay: Chuột trái | Zoom: Cuộn chuột | Di chuyển: Chuột phải
+                    </div>
+                </div>
+            </div>
+
+            <!-- OSCILLOSCOPE & PROBE MONITORING PANEL -->
+            <div class="h-44 bg-slate-900 border-t border-slate-800 flex flex-col shrink-0 relative">
+                <div class="px-3 py-1 bg-slate-800/80 text-[11px] font-bold text-slate-300 flex justify-between items-center border-b border-slate-700/60">
+                    <span class="flex items-center gap-2 text-cyan-400">
+                        <i class="fa-solid fa-wave-square"></i> GIẢN ĐỒ DẠNG SÓNG THỜI GIAN THỰC (DIGITAL OSCILLOSCOPE)
+                    </span>
+                    <div id="liveProbeReadings" class="flex items-center gap-4 text-[10px] mono">
+                        <!-- Probe live voltage and current values -->
+                    </div>
+                </div>
+                <div class="flex-1 relative overflow-hidden bg-slate-950/90 p-1">
+                    <canvas id="scopeCanvas" class="w-full h-full block"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR: PARAMETERS, COMPATIBILITY & THEORY -->
+        <aside class="w-full lg:w-96 bg-slate-900 border-t lg:border-t-0 lg:border-l border-slate-800 flex flex-col overflow-y-auto shrink-0 z-10">
+            
+            <!-- SECTION 1: COMPATIBILITY STATUS BANNER -->
+            <div class="p-4 border-b border-slate-800">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-cyan-400"></i> Đánh Giá Tương Thích Mức Logic
+                </h3>
+                <div id="compatibilityStatusCard" class="p-3 rounded-xl border transition-all duration-300 flex flex-col gap-2">
+                    <!-- Dynamic Compatibility Badge & Warning -->
+                </div>
+            </div>
+
+            <!-- SECTION 2: NOISE MARGIN GAUGE (DẢI LỀ CHỐNG NHIỄU) -->
+            <div class="p-4 border-b border-slate-800 bg-slate-950/40">
+                <h3 class="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-3 flex items-center justify-between">
+                    <span><i class="fa-solid fa-chart-bar mr-1"></i> Dải Lề Chống Nhiễu (Noise Margin)</span>
+                </h3>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-1">
+                            <span class="text-slate-400">Mức Cao (NM_H = V_OH - V_IH):</span>
+                            <span id="nmhValText" class="mono font-bold text-emerald-400">+1.40 V</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <div id="nmhBar" class="bg-emerald-500 h-full transition-all duration-300" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-1">
+                            <span class="text-slate-400">Mức Thấp (NM_L = V_IL - V_OL):</span>
+                            <span id="nmlValText" class="mono font-bold text-sky-400">+0.30 V</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <div id="nmlBar" class="bg-sky-500 h-full transition-all duration-300" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: SPECIFICATION COMPARISON MATRIX (BẢNG THÔNG SỐ) -->
+            <div class="p-4 border-b border-slate-800">
+                <h3 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+                    <span><i class="fa-solid fa-table-cells mr-1"></i> Thông Số Vi Mạch Đang Xét</span>
+                    <span id="fanOutText" class="text-[10px] text-cyan-300 font-mono bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">Fan-Out: N=10</span>
+                </h3>
+                <div class="overflow-x-auto rounded-lg border border-slate-800 text-[11px] mono">
+                    <table class="w-full text-center">
+                        <thead class="bg-slate-800/80 text-slate-300 border-b border-slate-700">
+                            <tr>
+                                <th class="p-1.5 text-left font-sans">Thông số</th>
+                                <th class="p-1.5 text-cyan-400" id="thDriverName">Lái (Driver)</th>
+                                <th class="p-1.5 text-purple-400" id="thReceiverName">Tải (Receiver)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="specTableBody" class="divide-y divide-slate-800 text-slate-300">
+                            <!-- Dynamic Specification Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 4: TEXTBOOK THEORY NOTES (CHƯƠNG 5) -->
+            <div class="p-4 flex-1 bg-slate-950/60">
+                <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Lý Thuyết Trích Giáo Trình (Chương 5)
+                </h3>
+                <div id="theoryNoteBox" class="text-xs text-slate-300 leading-relaxed space-y-2 bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+                    <!-- Injected Chapter 5 Theory -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- MAIN SIMULATION LOGIC SCRIPT -->
+    <script>
+        /* ==========================================================================
+           1. DATA STRUCTURES & IC SPECIFICATIONS (CHAPTER 5 TABLE 5.3)
+           ========================================================================== */
+        const IC_SPECS = {
+            '74': {
+                name: 'TTL 74 (Thường)',
+                vcc: 5.0,
+                vih: 2.0, vil: 0.8,
+                voh: 2.4, vol: 0.4,
+                iih: 40,  iil: 1.6,  // uA, mA
+                ioh: 0.4, iol: 16.0  // mA, mA
+            },
+            '74LS': {
+                name: 'TTL 74LS (Low-power Schottky)',
+                vcc: 5.0,
+                vih: 2.0, vil: 0.8,
+                voh: 2.7, vol: 0.5,
+                iih: 20,  iil: 0.4,  // uA, mA
+                ioh: 0.4, iol: 8.0   // mA, mA
+            },
+            '4000B': {
+                name: 'CMOS 4000B (Nguồn 5V)',
+                vcc: 5.0,
+                vih: 3.5, vil: 1.5,
+                voh: 4.95, vol: 0.05,
+                iih: 1,   iil: 0.001, // uA, mA
+                ioh: 0.4, iol: 0.4    // mA, mA
+            },
+            '4000B_12V': {
+                name: 'CMOS 4000B (Nguồn 12V)',
+                vcc: 12.0,
+                vih: 8.4, vil: 3.6,
+                voh: 11.9, vol: 0.1,
+                iih: 1,   iil: 0.001, // uA, mA
+                ioh: 1.5, iol: 1.5    // mA, mA
+            },
+            '74HC': {
+                name: 'CMOS 74HC (Nguồn 5V)',
+                vcc: 5.0,
+                vih: 3.5, vil: 1.0,
+                voh: 4.9, vol: 0.1,
+                iih: 1,   iil: 0.001, // uA, mA
+                ioh: 4.0, iol: 4.0    // mA, mA
+            },
+            '74HCT': {
+                name: 'CMOS 74HCT (Tương thích TTL)',
+                vcc: 5.0,
+                vih: 2.0, vil: 0.8,
+                voh: 4.9, vol: 0.1,
+                iih: 1,   iil: 0.001, // uA, mA
+                ioh: 4.0, iol: 4.0    // mA, mA
+            }
+        };
+
+        // Application Global State
+        let state = {
+            activeLab: 'lab2',
+            viewMode: '2d',
+            inputLogic: 1,           // 1 = HIGH, 0 = LOW
+            pullUpEnabled: false,    // Lab 2 Pullup switch
+            pullUpRes: 10,           // kOhm
+            bufferEnabled: true,     // Lab 4 & Lab 5 Buffer switch
+            driverType: '74LS',      // Lab 1 Driver
+            receiverType: '4000B',   // Lab 1 Receiver
+            lab4TargetLoad: '74',    // Lab 4 target TTL family ('74' or '74LS')
+            probes: {
+                vIn: 5.0,
+                vNode: 2.7,
+                vOut: 0.0,
+                iSink: 0.0
+            }
+        };
+
+        // Scope Waveform Buffer
+        const SCOPE_MAX_SAMPLES = 100;
+        let scopeHistory = [];
+
+        /* ==========================================================================
+           2. THREE.JS 3D ENVIRONMENT SETUP
+           ========================================================================== */
+        let scene3D, camera3D, renderer3D, controls3D;
+        let breadboardMesh, icGroup, wireGroup, particleGroup, ledMeshes = [];
+
+        function init3D() {
+            const container = document.getElementById('webglOutput');
+            const width = container.clientWidth || 600;
+            const height = container.clientHeight || 400;
+
+            scene3D = new THREE.Scene();
+            scene3D.background = new THREE.Color(0x050811);
+
+            camera3D = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera3D.position.set(0, 16, 20);
+
+            renderer3D = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer3D.setSize(width, height);
+            renderer3D.shadowMap.enabled = true;
+            container.appendChild(renderer3D.domElement);
+
+            controls3D = new THREE.OrbitControls(camera3D, renderer3D.domElement);
+            controls3D.enableDamping = true;
+            controls3D.dampingFactor = 0.05;
+            controls3D.maxPolarAngle = Math.PI / 2 - 0.05;
+
+            // Lighting
+            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+            scene3D.add(ambient);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(12, 20, 15);
+            dirLight.castShadow = true;
+            scene3D.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0x38bdf8, 1.2, 30);
+            pointLight.position.set(0, 10, 0);
+            scene3D.add(pointLight);
+
+            // Construct Breadboard
+            createBreadboard3D();
+
+            // Build Initial 3D Scene Components
+            build3DSceneForLab();
+
+            window.addEventListener('resize', onWindowResize);
+            animate3D();
+        }
+
+        function createBreadboard3D() {
+            // Main PCB Plate
+            const pcbGeo = new THREE.BoxGeometry(24, 0.8, 15);
+            const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0f291e, roughness: 0.4, metalness: 0.2 });
+            const pcb = new THREE.Mesh(pcbGeo, pcbMat);
+            pcb.position.y = -0.4;
+            scene3D.add(pcb);
+
+            // Breadboard Body
+            const bbGeo = new THREE.BoxGeometry(22, 0.6, 13);
+            const bbMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.7 });
+            breadboardMesh = new THREE.Mesh(bbGeo, bbMat);
+            breadboardMesh.position.y = 0.3;
+            scene3D.add(breadboardMesh);
+
+            // Decorative pin holes grid
+            const holeGeo = new THREE.BoxGeometry(0.12, 0.1, 0.12);
+            const holeMat = new THREE.MeshBasicMaterial({ color: 0x1e293b });
+            const holesMesh = new THREE.InstancedMesh(holeGeo, holeMat, 240);
+            let idx = 0;
+            const matrix = new THREE.Matrix4();
+            for (let x = -9; x <= 9; x += 0.8) {
+                for (let z = -5; z <= 5; z += 0.7) {
+                    if (Math.abs(z) < 1.0) continue; // Center divider
+                    matrix.setPosition(x, 0.61, z);
+                    holesMesh.setMatrixAt(idx++, matrix);
+                }
+            }
+            scene3D.add(holesMesh);
+        }
+
+        function build3DSceneForLab() {
+            if (icGroup) scene3D.remove(icGroup);
+            if (wireGroup) scene3D.remove(wireGroup);
+            if (particleGroup) scene3D.remove(particleGroup);
+
+            icGroup = new THREE.Group();
+            wireGroup = new THREE.Group();
+            particleGroup = new THREE.Group();
+            ledMeshes = [];
+
+            // Add Driver IC
+            let driverChipName = '74LS00';
+            let receiverChipName = 'CD4000';
+
+            if (state.activeLab === 'lab3') { driverChipName = '74LS00'; receiverChipName = '7407 (OC)'; }
+            else if (state.activeLab === 'lab4') { driverChipName = 'CD4000'; receiverChipName = state.bufferEnabled ? '4050B' : '74LS00'; }
+            else if (state.activeLab === 'lab5') { driverChipName = 'CD4000 (12V)'; receiverChipName = state.bufferEnabled ? '4050B' : '74LS00'; }
+
+            createDIPChip3D(-5, driverChipName, 14);
+            createDIPChip3D(4, receiverChipName, 16);
+
+            // Resistor 3D (Pull-up resistor for Lab 2 & 3)
+            if ((state.activeLab === 'lab2' && state.pullUpEnabled) || state.activeLab === 'lab3') {
+                createResistor3D(-0.5, 0.6, -2, 10); // 10k Resistor
+            }
+
+            // Output LEDs
+            createLED3D(9, 0, 3, 0x10b981, 'LED Output');
+
+            // Wire connections
+            update3DWiresAndParticles();
+
+            scene3D.add(icGroup);
+            scene3D.add(wireGroup);
+            scene3D.add(particleGroup);
+        }
+
+        function createDIPChip3D(posX, chipLabel, pinCount = 14) {
+            const length = pinCount === 14 ? 5.5 : 6.2;
+            const bodyGeo = new THREE.BoxGeometry(length, 1.1, 2.5);
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.3 });
+            const chip = new THREE.Mesh(bodyGeo, bodyMat);
+            chip.position.set(posX, 1.1, 0);
+            icGroup.add(chip);
+
+            // Pin 1 Notch
+            const notchGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16, 1, false, 0, Math.PI);
+            const notchMat = new THREE.MeshBasicMaterial({ color: 0x374151 });
+            const notch = new THREE.Mesh(notchGeo, notchMat);
+            notch.rotation.x = Math.PI / 2;
+            notch.position.set(posX - length/2 + 0.3, 1.66, 0);
+            icGroup.add(notch);
+
+            // Chip Top Label Texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 256; canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#111827'; ctx.fillRect(0,0,256,64);
+            ctx.fillStyle = '#cbd5e1'; ctx.font = 'bold 26px monospace';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(chipLabel, 128, 32);
+
+            const tex = new THREE.CanvasTexture(canvas);
+            const labelGeo = new THREE.PlaneGeometry(length - 1, 1.1);
+            const labelMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
+            const label = new THREE.Mesh(labelGeo, labelMat);
+            label.rotation.x = -Math.PI / 2;
+            label.position.set(posX, 1.66, 0);
+            icGroup.add(label);
+
+            // Metal Pins
+            const pinGeo = new THREE.BoxGeometry(0.18, 0.7, 0.35);
+            const pinMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.8 });
+            const pinsPerSide = pinCount / 2;
+            for (let i = 0; i < pinsPerSide; i++) {
+                const px = posX - (length/2 - 0.6) + i * 0.75;
+                const pinL = new THREE.Mesh(pinGeo, pinMat);
+                pinL.position.set(px, 0.7, -1.35);
+                icGroup.add(pinL);
+                const pinR = new THREE.Mesh(pinGeo, pinMat);
+                pinR.position.set(px, 0.7, 1.35);
+                icGroup.add(pinR);
+            }
+        }
+
+        function createResistor3D(x, y, z, valueK = 10) {
+            const resGroup = new THREE.Group();
+            const bodyGeo = new THREE.CylinderGeometry(0.3, 0.3, 1.6, 16);
+            bodyGeo.rotateZ(Math.PI / 2);
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xdbeafe, roughness: 0.5 });
+            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            resGroup.add(body);
+
+            // Color bands for 10k (Brown, Black, Orange, Gold)
+            const bandGeo = new THREE.CylinderGeometry(0.31, 0.31, 0.15, 16);
+            bandGeo.rotateZ(Math.PI / 2);
+
+            const colors = [0x78350f, 0x000000, 0xeab308, 0xd97706]; // Brown, Black, Orange, Gold
+            const offsets = [-0.5, -0.2, 0.1, 0.5];
+            colors.forEach((col, i) => {
+                const bandMat = new THREE.MeshBasicMaterial({ color: col });
+                const band = new THREE.Mesh(bandGeo, bandMat);
+                band.position.x = offsets[i];
+                resGroup.add(band);
+            });
+
+            resGroup.position.set(x, y + 0.3, z);
+            icGroup.add(resGroup);
+        }
+
+        function createLED3D(x, y, z, colorHex, label) {
+            const ledGroup = new THREE.Group();
+            const baseMat = new THREE.MeshStandardMaterial({ color: 0x334155 });
+            const base = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.45, 0.3, 16), baseMat);
+            base.position.y = 0.75;
+            ledGroup.add(base);
+
+            const domeMat = new THREE.MeshStandardMaterial({
+                color: colorHex, emissive: 0x000000, transparent: true, opacity: 0.85
+            });
+            const dome = new THREE.Mesh(new THREE.SphereGeometry(0.4, 16, 16, 0, Math.PI*2, 0, Math.PI/2), domeMat);
+            dome.position.y = 0.9;
+            ledGroup.add(dome);
+
+            const pLight = new THREE.PointLight(colorHex, 0, 4);
+            pLight.position.y = 1.2;
+            ledGroup.add(pLight);
+
+            ledGroup.position.set(x, y, z);
+            icGroup.add(ledGroup);
+
+            ledMeshes.push({ domeMat, pLight, colorHex });
+        }
+
+        function update3DWiresAndParticles() {
+            // Clear existing wires
+            wireGroup.clear();
+            particleGroup.clear();
+
+            // Wire color helper
+            const getColorHex = (volts) => {
+                if (volts >= 11) return 0xa855f7; // 12V Purple
+                if (volts >= 4.5) return 0x10b981; // 5V Green
+                if (volts >= 2.0 && volts < 4.5) return 0xf97316; // 2.7V Orange Warning
+                return 0x3b82f6; // 0V Blue
+            };
+
+            const vNode = state.probes.vNode;
+            const vOut = state.probes.vOut;
+
+            // Wire 1: Input to Driver Chip
+            create3DWire(new THREE.Vector3(-8, 0.6, 0), new THREE.Vector3(-6.5, 0.6, 0), getColorHex(state.probes.vIn));
+
+            // Wire 2: Driver Output to Receiver Node
+            create3DWire(new THREE.Vector3(-3.5, 0.6, 0), new THREE.Vector3(2.5, 0.6, 0), getColorHex(vNode));
+
+            // Wire 3: Receiver Output to LED
+            create3DWire(new THREE.Vector3(5.5, 0.6, 0), new THREE.Vector3(9, 0.6, 2.6), getColorHex(vOut));
+
+            // Create Animated Electron Particles along Wire 2
+            const curve = new THREE.LineCurve3(new THREE.Vector3(-3.5, 0.8, 0), new THREE.Vector3(2.5, 0.8, 0));
+            const pGeo = new THREE.SphereGeometry(0.12, 8, 8);
+            const pMat = new THREE.MeshBasicMaterial({ color: getColorHex(vNode) });
+
+            for (let i = 0; i < 5; i++) {
+                const pMesh = new THREE.Mesh(pGeo, pMat);
+                pMesh.userData = { t: i / 5 };
+                particleGroup.add(pMesh);
+            }
+        }
+
+        function create3DWire(p1, p2, colorHex) {
+            const mid = p1.clone().add(p2).multiplyScalar(0.5);
+            mid.y += 1.2; // Arc curve height
+            const curve = new THREE.QuadraticBezierCurve3(p1, mid, p2);
+            const tubeGeo = new THREE.TubeGeometry(curve, 20, 0.08, 8, false);
+            const tubeMat = new THREE.MeshStandardMaterial({ color: colorHex, roughness: 0.4 });
+            const wire = new THREE.Mesh(tubeGeo, tubeMat);
+            wireGroup.add(wire);
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            if (controls3D) controls3D.update();
+
+            // Animate electron particles along wires
+            if (particleGroup) {
+                const time = Date.now() * 0.002;
+                particleGroup.children.forEach((p, idx) => {
+                    let progress = (p.userData.t + time * 0.5) % 1;
+                    p.position.x = -3.5 + progress * 6.0;
+                    p.position.y = 0.8 + Math.sin(progress * Math.PI) * 0.6;
+                });
+            }
+
+            // Update LED light intensity
+            if (ledMeshes.length > 0) {
+                const isLit = state.probes.vOut >= 2.4;
+                ledMeshes[0].domeMat.emissive.setHex(isLit ? ledMeshes[0].colorHex : 0x000000);
+                ledMeshes[0].pLight.intensity = isLit ? 1.8 : 0;
+            }
+
+            if (renderer3D && scene3D && camera3D) {
+                renderer3D.render(scene3D, camera3D);
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('webglOutput');
+            if (!container || !renderer3D) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            camera3D.aspect = w / h;
+            camera3D.updateProjectionMatrix();
+            renderer3D.setSize(w, h);
+        }
+
+        /* ==========================================================================
+           3. SIMULATION MATHEMATICS & PARAMETER COMPUTATION
+           ========================================================================== */
+        function computeSimulationState() {
+            let vIn = state.inputLogic === 1 ? 5.0 : 0.0;
+            let vNode = 0.0;
+            let vOut = 0.0;
+            let iSink = 0.0;
+
+            switch (state.activeLab) {
+                case 'lab1': {
+                    const drv = IC_SPECS[state.driverType];
+                    const rcv = IC_SPECS[state.receiverType];
+                    vNode = state.inputLogic === 1 ? drv.voh : drv.vol;
+                    vOut = vNode >= rcv.vih ? rcv.vcc : 0.0;
+                    iSink = state.inputLogic === 0 ? rcv.iil : 0.0;
+                    break;
+                }
+                case 'lab2': {
+                    // TTL (74LS) -> CMOS 4000B (5V)
+                    if (state.inputLogic === 1) {
+                        // High Output
+                        vNode = state.pullUpEnabled ? 4.95 : 2.7; // 2.7V is V_OH(min) of 74LS
+                        vOut = vNode >= 3.5 ? 5.0 : 0.0; // CMOS 5V needs V_IH >= 3.5V
+                    } else {
+                        // Low Output
+                        vNode = 0.4; // 74LS V_OL
+                        vOut = 0.0;
+                    }
+                    iSink = state.inputLogic === 0 ? 0.001 : 0.0; // CMOS has tiny input current
+                    break;
+                }
+                case 'lab3': {
+                    // TTL (74LS) -> 7407 Open Collector Buffer -> CMOS (12V)
+                    vIn = state.inputLogic === 1 ? 5.0 : 0.0;
+                    if (state.inputLogic === 1) {
+                        // OC Transistor OFF -> Pulled up to 12V rail
+                        vNode = 11.9;
+                        vOut = 12.0;
+                    } else {
+                        // OC Transistor ON -> Sinks current to GND
+                        vNode = 0.4;
+                        vOut = 0.0;
+                    }
+                    iSink = state.inputLogic === 0 ? 1.2 : 0.0; // mA through pull-up
+                    break;
+                }
+                case 'lab4': {
+                    // CMOS 4000B (5V) -> TTL (74 or 74LS)
+                    const ttlLoad = state.lab4TargetLoad; // '74' (I_IL=1.6mA) or '74LS' (I_IL=0.4mA)
+                    const requiredIil = ttlLoad === '74' ? 1.6 : 0.4;
+
+                    if (state.inputLogic === 1) {
+                        vNode = 4.95;
+                        vOut = 5.0;
+                    } else {
+                        if (state.bufferEnabled) {
+                            // Using 4050B Buffer (I_OL = 4mA) -> Handles sink current easily
+                            vNode = 0.1;
+                            vOut = 0.0;
+                            iSink = requiredIil;
+                        } else {
+                            // Direct connection! CMOS 4000B I_OL(max) = 0.4mA
+                            // Overload! Node voltage rises due to output impedance
+                            vNode = requiredIil > 0.4 ? 1.8 : 0.4; // 1.8V Invalid LOW level for TTL!
+                            vOut = vNode <= 0.8 ? 0.0 : 5.0; // TTL fails to recognize LOW
+                            iSink = 0.4; // Saturated
+                        }
+                    }
+                    break;
+                }
+                case 'lab5': {
+                    // CMOS (12V) -> TTL (5V)
+                    vIn = state.inputLogic === 1 ? 12.0 : 0.0;
+                    if (state.inputLogic === 1) {
+                        if (state.bufferEnabled) {
+                            // 4050B Level Shifter powered at 5V converts 12V to safe 5V
+                            vNode = 4.9;
+                            vOut = 5.0;
+                        } else {
+                            // Direct 12V into 5V TTL input -> OVERVOLTAGE DAMAGE HAZARD!
+                            vNode = 12.0;
+                            vOut = 5.0; // Overvoltage hazard
+                        }
+                    } else {
+                        vNode = 0.1;
+                        vOut = 0.0;
+                    }
+                    break;
+                }
+            }
+
+            state.probes.vIn = vIn;
+            state.probes.vNode = vNode;
+            state.probes.vOut = vOut;
+            state.probes.iSink = iSink;
+
+            recordWaveformSample();
+        }
+
+        /* ==========================================================================
+           4. 2D SCHEMATIC CANVAS RENDERING
+           ========================================================================== */
+        function render2DSchematic() {
+            const canvas = document.getElementById('canvas2D');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            const w = canvas.width, h = canvas.height;
+
+            // Clear Background
+            ctx.fillStyle = '#050811';
+            ctx.fillRect(0, 0, w, h);
+
+            // Grid background
+            ctx.strokeStyle = '#111827';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x < w; x += 30) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+            for (let y = 0; y < h; y += 30) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+            ctx.stroke();
+
+            const cy = h / 2 - 10;
+            const xDriver = w * 0.22;
+            const xBuffer = w * 0.50;
+            const xReceiver = w * 0.78;
+
+            // Helper to get signal wire color
+            const getWireColor = (volts) => {
+                if (volts >= 11.0) return '#a855f7'; // 12V Purple
+                if (volts >= 4.5) return '#10b981';  // 5V Green
+                if (volts >= 2.0 && volts < 4.5) return '#f97316'; // 2.7V Orange Warning
+                return '#3b82f6'; // 0V Blue
+            };
+
+            // 1. Draw Driver IC Box
+            drawGateSymbol(ctx, xDriver, cy, 'Driver IC', state.activeLab === 'lab5' ? 'CMOS (12V)' : 'TTL 74LS');
+
+            // 2. Wire from Input Switch to Driver
+            drawWire2D(ctx, xDriver - 90, cy, xDriver - 35, cy, getWireColor(state.probes.vIn), 'V_IN');
+
+            // 3. Render Lab Specific Gates & Nodes
+            if (state.activeLab === 'lab2') {
+                // TTL -> CMOS 5V with R_pullup
+                drawWire2D(ctx, xDriver + 35, cy, xReceiver - 35, cy, getWireColor(state.probes.vNode), 'V_NODE');
+
+                if (state.pullUpEnabled) {
+                    // Pull-up Resistor to +5V
+                    const rx = (xDriver + xReceiver) / 2;
+                    drawResistorSymbol2D(ctx, rx, cy - 80, rx, cy, 'R_pullup (10kΩ)');
+                    drawPowerRail2D(ctx, rx, cy - 80, '+5V');
+                }
+            } else if (state.activeLab === 'lab3') {
+                // TTL -> 7407 OC Buffer -> CMOS 12V
+                drawWire2D(ctx, xDriver + 35, cy, xBuffer - 35, cy, getWireColor(5.0));
+                drawOpenCollectorBuffer2D(ctx, xBuffer, cy, '7407 (OC)');
+                drawWire2D(ctx, xBuffer + 35, cy, xReceiver - 35, cy, getWireColor(state.probes.vNode), 'V_NODE');
+
+                // Pullup to +12V
+                drawResistorSymbol2D(ctx, xBuffer + 70, cy - 80, xBuffer + 70, cy, 'R_pullup (1kΩ)');
+                drawPowerRail2D(ctx, xBuffer + 70, cy - 80, '+12V', '#a855f7');
+            } else if (state.activeLab === 'lab4' || state.activeLab === 'lab5') {
+                if (state.bufferEnabled) {
+                    drawWire2D(ctx, xDriver + 35, cy, xBuffer - 35, cy, getWireColor(state.probes.vIn));
+                    drawBufferSymbol2D(ctx, xBuffer, cy, '4050B Buffer');
+                    drawWire2D(ctx, xBuffer + 35, cy, xReceiver - 35, cy, getWireColor(state.probes.vNode), 'V_NODE');
+                } else {
+                    drawWire2D(ctx, xDriver + 35, cy, xReceiver - 35, cy, getWireColor(state.probes.vNode), 'Trực Tiếp');
+                }
+            } else {
+                drawWire2D(ctx, xDriver + 35, cy, xReceiver - 35, cy, getWireColor(state.probes.vNode), 'V_NODE');
+            }
+
+            // 4. Receiver IC Box
+            drawGateSymbol(ctx, xReceiver, cy, 'Receiver IC', state.activeLab === 'lab3' ? 'CMOS (12V)' : 'CMOS 4000B');
+
+            // 5. Output Wire & LED Probe
+            drawWire2D(ctx, xReceiver + 35, cy, xReceiver + 90, cy, getWireColor(state.probes.vOut), 'V_OUT');
+            drawLED2D(ctx, xReceiver + 110, cy, state.probes.vOut >= 2.4);
+
+            // 6. Draw Voltmeter Probe Badges
+            drawProbeBadge2D(ctx, xDriver - 60, cy - 25, `${state.probes.vIn.toFixed(1)}V`, '#38bdf8');
+            drawProbeBadge2D(ctx, (xDriver + xReceiver)/2, cy + 30, `${state.probes.vNode.toFixed(2)}V`, getWireColor(state.probes.vNode));
+            drawProbeBadge2D(ctx, xReceiver + 60, cy - 25, `${state.probes.vOut.toFixed(1)}V`, getWireColor(state.probes.vOut));
+        }
+
+        function drawWire2D(ctx, x1, y1, x2, y2, color, label) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Animated signal flow dots
+            const time = Date.now() * 0.003;
+            const progress = (time % 1);
+            const px = x1 + (x2 - x1) * progress;
+            const py = y1 + (y2 - y1) * progress;
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI*2); ctx.fill();
+
+            if (label) {
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '10px JetBrains Mono';
+                ctx.fillText(label, (x1 + x2)/2 - 15, y1 - 8);
+            }
+        }
+
+        function drawGateSymbol(ctx, x, y, title, subtitle) {
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.roundRect(x - 35, y - 40, 70, 80, 8);
+            ctx.fill(); ctx.stroke();
+
+            ctx.fillStyle = '#e2e8f0';
+            ctx.font = 'bold 11px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText(title, x, y - 10);
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText(subtitle, x, y + 12);
+        }
+
+        function drawBufferSymbol2D(ctx, x, y, label) {
+            ctx.fillStyle = '#1e1b4b';
+            ctx.strokeStyle = '#818cf8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x - 30, y - 30);
+            ctx.lineTo(x + 30, y);
+            ctx.lineTo(x - 30, y + 30);
+            ctx.closePath();
+            ctx.fill(); ctx.stroke();
+
+            ctx.fillStyle = '#c7d2fe';
+            ctx.font = '10px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, x - 5, y + 45);
+        }
+
+        function drawOpenCollectorBuffer2D(ctx, x, y, label) {
+            drawBufferSymbol2D(ctx, x, y, label);
+            // Diamond underline symbol for Open Collector
+            ctx.strokeStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(x - 5, y + 10); ctx.lineTo(x, y + 5);
+            ctx.lineTo(x + 5, y + 10); ctx.lineTo(x, y + 15);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawResistorSymbol2D(ctx, x1, y1, x2, y2, label) {
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x1, y1 + 20);
+
+            // Zigzag
+            let currY = y1 + 20;
+            for (let i = 0; i < 5; i++) {
+                ctx.lineTo(x1 + (i % 2 === 0 ? 8 : -8), currY + 6);
+                currY += 6;
+            }
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = '10px Inter';
+            ctx.textAlign = 'left';
+            ctx.fillText(label, x1 + 12, (y1 + y2)/2);
+        }
+
+        function drawPowerRail2D(ctx, x, y, label, color = '#10b981') {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI*2); ctx.stroke();
+            ctx.fillStyle = color;
+            ctx.font = 'bold 10px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, x, y - 10);
+        }
+
+        function drawLED2D(ctx, x, y, isOn) {
+            ctx.fillStyle = isOn ? '#10b981' : '#1e293b';
+            ctx.strokeStyle = isOn ? '#6ee7b7' : '#475569';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+
+            if (isOn) {
+                ctx.shadowColor = '#10b981';
+                ctx.shadowBlur = 12;
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 10px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('ON', x, y + 3);
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function drawProbeBadge2D(ctx, x, y, text, color) {
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1.5;
+            ctx.roundRect(x - 22, y - 10, 44, 20, 4);
+            ctx.fill(); ctx.stroke();
+
+            ctx.fillStyle = color;
+            ctx.font = 'bold 10px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, x, y + 3);
+        }
+
+        /* ==========================================================================
+           5. OSCILLOSCOPE WAVEFORM RECORDING & RENDERING
+           ========================================================================== */
+        function recordWaveformSample() {
+            scopeHistory.push({
+                vIn: state.probes.vIn,
+                vNode: state.probes.vNode,
+                vOut: state.probes.vOut
+            });
+            if (scopeHistory.length > SCOPE_MAX_SAMPLES) {
+                scopeHistory.shift();
+            }
+        }
+
+        function renderOscilloscope() {
+            const canvas = document.getElementById('scopeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            const w = canvas.width, h = canvas.height;
+
+            ctx.fillStyle = '#020617';
+            ctx.fillRect(0, 0, w, h);
+
+            // Scope Grid Lines
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x < w; x += 40) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+            for (let y = 0; y < h; y += 25) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+            ctx.stroke();
+
+            if (scopeHistory.length < 2) return;
+
+            const maxVoltage = state.activeLab === 'lab3' || state.activeLab === 'lab5' ? 14.0 : 6.0;
+            const stepX = w / SCOPE_MAX_SAMPLES;
+
+            const channels = [
+                { key: 'vIn', name: 'V_IN', color: '#38bdf8' },
+                { key: 'vNode', name: 'V_NODE', color: '#f59e0b' },
+                { key: 'vOut', name: 'V_OUT', color: '#10b981' }
+            ];
+
+            channels.forEach((ch, idx) => {
+                ctx.strokeStyle = ch.color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                for (let i = 0; i < scopeHistory.length; i++) {
+                    const x = i * stepX;
+                    const val = scopeHistory[i][ch.key];
+                    const y = h - (val / maxVoltage) * (h - 20) - 10;
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
+            // Update Header Probe Readings
+            document.getElementById('liveProbeReadings').innerHTML = `
+                <span class="text-sky-400">V_IN = ${state.probes.vIn.toFixed(1)}V</span> |
+                <span class="text-amber-400">V_NODE = ${state.probes.vNode.toFixed(2)}V</span> |
+                <span class="text-emerald-400">V_OUT = ${state.probes.vOut.toFixed(1)}V</span> |
+                <span class="text-rose-400">I_SINK = ${state.probes.iSink.toFixed(2)}mA</span>
+            `;
+        }
+
+        /* ==========================================================================
+           6. UI CONTROLS, COMPATIBILITY BANNER & THEORY UPDATER
+           ========================================================================== */
+        function updateUI() {
+            computeSimulationState();
+
+            // Render Canvases
+            render2DSchematic();
+            renderOscilloscope();
+
+            // Render 3D Visuals
+            update3DWiresAndParticles();
+
+            // Render Sidebar
+            updateCompatibilityBanner();
+            updateNoiseMarginGauges();
+            updateSpecificationTable();
+            updateTheoryNotes();
+        }
+
+        function changeLab() {
+            state.activeLab = document.getElementById('labSelect').value;
+            renderDynamicControls();
+            build3DSceneForLab();
+            updateUI();
+        }
+
+        function renderDynamicControls() {
+            const container = document.getElementById('dynamicLabControls');
+            container.innerHTML = '';
+
+            if (state.activeLab === 'lab1') {
+                container.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-400">Lái:</span>
+                        <select onchange="state.driverType=this.value; updateUI();" class="bg-slate-800 text-cyan-300 font-bold px-2 py-1 rounded border border-slate-700 cursor-pointer">
+                            <option value="74LS">74LS</option>
+                            <option value="74">74 Thường</option>
+                            <option value="4000B">CMOS 4000B</option>
+                        </select>
+                        <span class="text-slate-400">Tải:</span>
+                        <select onchange="state.receiverType=this.value; updateUI();" class="bg-slate-800 text-purple-300 font-bold px-2 py-1 rounded border border-slate-700 cursor-pointer">
+                            <option value="4000B" selected>CMOS 4000B</option>
+                            <option value="74HC">74HC</option>
+                            <option value="74HCT">74HCT</option>
+                            <option value="74LS">74LS</option>
+                        </select>
+                    </div>
+                `;
+            } else if (state.activeLab === 'lab2') {
+                container.innerHTML = `
+                    <button onclick="state.pullUpEnabled=!state.pullUpEnabled; updateUI(); renderDynamicControls();" 
+                        class="px-3 py-1 rounded text-xs font-bold transition flex items-center gap-1.5 ${state.pullUpEnabled ? 'bg-indigo-600 text-white glow-purple' : 'bg-slate-800 text-slate-400 border border-slate-700'}">
+                        <i class="fa-solid fa-bolt"></i> <span>R_pullup (10kΩ lên +5V): ${state.pullUpEnabled ? 'ĐANG BẬT' : 'TẮT'}</span>
+                    </button>
+                `;
+            } else if (state.activeLab === 'lab4') {
+                container.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <label class="flex items-center gap-1 text-slate-300 cursor-pointer">
+                            <input type="checkbox" ${state.bufferEnabled?'checked':''} onchange="state.bufferEnabled=this.checked; updateUI();" class="accent-cyan-400">
+                            <span>Sử dụng Bộ Đệm 4050B</span>
+                        </label>
+                        <span class="text-slate-400">Tải TTL:</span>
+                        <select onchange="state.lab4TargetLoad=this.value; updateUI();" class="bg-slate-800 text-cyan-300 font-bold px-2 py-1 rounded border border-slate-700 cursor-pointer">
+                            <option value="74">TTL 74 (I_IL=1.6mA)</option>
+                            <option value="74LS">TTL 74LS (I_IL=0.4mA)</option>
+                        </select>
+                    </div>
+                `;
+            } else if (state.activeLab === 'lab5') {
+                container.innerHTML = `
+                    <label class="flex items-center gap-1.5 text-slate-300 cursor-pointer">
+                        <input type="checkbox" ${state.bufferEnabled?'checked':''} onchange="state.bufferEnabled=this.checked; updateUI();" class="accent-cyan-400">
+                        <span>Qua Đệm Chuyển Mức 4050B (+5V)</span>
+                    </label>
+                `;
+            }
+        }
+
+        function toggleInputLogic() {
+            state.inputLogic = state.inputLogic === 1 ? 0 : 1;
+            const btn = document.getElementById('btnToggleInput');
+            const txt = document.getElementById('textInputLogic');
+
+            if (state.inputLogic === 1) {
+                btn.className = 'px-3 py-0.5 rounded text-xs font-bold transition bg-emerald-600 text-white glow-green flex items-center gap-1';
+                txt.innerText = 'MỨC HIGH (1)';
+            } else {
+                btn.className = 'px-3 py-0.5 rounded text-xs font-bold transition bg-blue-600 text-white flex items-center gap-1';
+                txt.innerText = 'MỨC LOW (0)';
+            }
+            updateUI();
+        }
+
+        function updateCompatibilityBanner() {
+            const card = document.getElementById('compatibilityStatusCard');
+            const vNode = state.probes.vNode;
+
+            if (state.activeLab === 'lab2' && state.inputLogic === 1 && !state.pullUpEnabled) {
+                card.className = 'p-3 rounded-xl border bg-rose-950/60 border-rose-700 text-rose-200 glow-red';
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-xs">
+                        <i class="fa-solid fa-triangle-exclamation text-rose-400 text-base"></i>
+                        <span>KHÔNG TƯƠNG THÍCH MỨC HIGH (VÙNG BẤT ĐỊNH)</span>
+                    </div>
+                    <p class="text-[11px] leading-tight text-rose-300/90">
+                        Áp ra 74LS (V_OH = 2.7V) nhỏ hơn mức vào tối thiểu của CMOS 5V (V_IH = 3.5V). CMOS không hiểu đây là mức 1! Hãy BẬT R_pullup.
+                    </p>
+                `;
+            } else if (state.activeLab === 'lab4' && state.inputLogic === 0 && !state.bufferEnabled && state.lab4TargetLoad === '74') {
+                card.className = 'p-3 rounded-xl border bg-amber-950/60 border-amber-700 text-amber-200 glow-orange';
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-xs">
+                        <i class="fa-solid fa-radiation text-amber-400 text-base"></i>
+                        <span>QUÁ TẢI DÒNG RÚT (SINK CURRENT OVERLOAD)</span>
+                    </div>
+                    <p class="text-[11px] leading-tight text-amber-300/90">
+                        CMOS 4000B I_OL(max) = 0.4mA không đủ sức kéo dòng I_IL = 1.6mA của TTL 74. Áp V_OL vọt lên 1.8V gây lỗi logic!
+                    </p>
+                `;
+            } else if (state.activeLab === 'lab5' && state.inputLogic === 1 && !state.bufferEnabled) {
+                card.className = 'p-3 rounded-xl border bg-purple-950/60 border-purple-700 text-purple-200 glow-purple';
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-xs text-purple-300">
+                        <i class="fa-solid fa-skull-crossbones text-rose-400 text-base"></i>
+                        <span>CẢNH BÁO CÓ THỂ NỔ/HỎNG VI MẠCH TTL!</span>
+                    </div>
+                    <p class="text-[11px] leading-tight text-purple-200/90">
+                        Cấp thẳng tín hiệu 12V vào cổng TTL 5V sẽ làm đánh thủng p-n junction ngõ vào. BẮT BUỘC dùng đệm chuyển mức 4050B!
+                    </p>
+                `;
+            } else {
+                card.className = 'p-3 rounded-xl border bg-emerald-950/50 border-emerald-800 text-emerald-200';
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-xs text-emerald-400">
+                        <i class="fa-solid fa-circle-check text-base"></i>
+                        <span>MẠCH HOẠT ĐỘNG HOÀN HẢO & TƯƠNG THÍCH</span>
+                    </div>
+                    <p class="text-[11px] leading-tight text-emerald-300/80">
+                        Điện áp và dòng điện đạt chuẩn tương thích theo thông số kỹ thuật Chapter 5. Tín hiệu truyền an toàn.
+                    </p>
+                `;
+            }
+        }
+
+        function updateNoiseMarginGauges() {
+            let voh = 2.7, vih = 3.5, vol = 0.5, vil = 1.5;
+            if (state.activeLab === 'lab1') {
+                const drv = IC_SPECS[state.driverType];
+                const rcv = IC_SPECS[state.receiverType];
+                voh = drv.voh; vih = rcv.vih;
+                vol = drv.vol; vil = rcv.vil;
+            } else if (state.activeLab === 'lab2') {
+                voh = state.pullUpEnabled ? 4.9 : 2.7;
+                vih = 3.5; vol = 0.5; vil = 1.5;
+            }
+
+            const nmh = voh - vih;
+            const nml = vil - vol;
+
+            document.getElementById('nmhValText').innerText = `${nmh >= 0 ? '+' : ''}${nmh.toFixed(2)} V`;
+            document.getElementById('nmlValText').innerText = `${nml >= 0 ? '+' : ''}${nml.toFixed(2)} V`;
+
+            const nmhWidth = Math.max(0, Math.min(100, (nmh / 3.0) * 100));
+            const nmlWidth = Math.max(0, Math.min(100, (nml / 3.0) * 100));
+
+            const nmhBar = document.getElementById('nmhBar');
+            nmhBar.style.width = `${nmhWidth}%`;
+            nmhBar.className = nmh < 0 ? 'bg-rose-500 h-full' : 'bg-emerald-500 h-full';
+
+            const nmlBar = document.getElementById('nmlBar');
+            nmlBar.style.width = `${nmlWidth}%`;
+            nmlBar.className = nml < 0 ? 'bg-rose-500 h-full' : 'bg-sky-500 h-full';
+        }
+
+        function updateSpecificationTable() {
+            let drv = IC_SPECS['74LS'];
+            let rcv = IC_SPECS['4000B'];
+
+            if (state.activeLab === 'lab1') {
+                drv = IC_SPECS[state.driverType];
+                rcv = IC_SPECS[state.receiverType];
+            } else if (state.activeLab === 'lab3') {
+                rcv = IC_SPECS['4000B_12V'];
+            }
+
+            document.getElementById('thDriverName').innerText = drv.name.split(' ')[0];
+            document.getElementById('thReceiverName').innerText = rcv.name.split(' ')[0];
+
+            // Calculate Fanout N
+            const nHigh = Math.floor((drv.ioh * 1000) / drv.iih);
+            const nLow = Math.floor(drv.iol / drv.iil);
+            const fanout = Math.min(nHigh, nLow);
+            document.getElementById('fanOutText').innerText = `Fan-Out: N=${fanout}`;
+
+            const tbody = document.getElementById('specTableBody');
+            tbody.innerHTML = `
+                <tr><td class="p-1 text-left font-sans text-slate-400">V_OH (min) / V_IH (min)</td><td class="text-cyan-300 font-bold">${drv.voh}V</td><td class="text-purple-300 font-bold">${rcv.vih}V</td></tr>
+                <tr><td class="p-1 text-left font-sans text-slate-400">V_OL (max) / V_IL (max)</td><td class="text-cyan-300">${drv.vol}V</td><td class="text-purple-300">${rcv.vil}V</td></tr>
+                <tr><td class="p-1 text-left font-sans text-slate-400">I_OH (max) / I_IH (max)</td><td class="text-cyan-300">${drv.ioh}mA</td><td class="text-purple-300">${rcv.iih}µA</td></tr>
+                <tr><td class="p-1 text-left font-sans text-slate-400">I_OL (max) / I_IL (max)</td><td class="text-cyan-300">${drv.iol}mA</td><td class="text-purple-300">${rcv.iil}mA</td></tr>
+            `;
+        }
+
+        function updateTheoryNotes() {
+            const box = document.getElementById('theoryNoteBox');
+            let content = '';
+
+            switch (state.activeLab) {
+                case 'lab1':
+                    content = `
+                        <p class="font-bold text-cyan-300">5.3 Các Thông Số Của Họ TTL & CMOS:</p>
+                        <p>Dải lề chống nhiễu (Noise Margin) xác định khả năng chịu nhiễu của mạch:</p>
+                        <p class="mono text-emerald-400 font-bold">NM_H = V_OH(min) - V_IH(min)</p>
+                        <p class="mono text-sky-400 font-bold">NM_L = V_IL(max) - V_OL(max)</p>
+                        <p>Nếu NM < 0V, mạch rơi vào vùng bất định và hoạt động sai hỏng!</p>
+                    `;
+                    break;
+                case 'lab2':
+                    content = `
+                        <p class="font-bold text-cyan-300">5.4.1 TTL Lái CMOS Cấp Điện 5V:</p>
+                        <p>Họ TTL 74LS có áp ra mức cao <span class="mono font-bold text-amber-300">V_OH(min) = 2.7V</span>. Ngõ vào CMOS 5V yêu cầu <span class="mono font-bold text-emerald-400">V_IH(min) = 3.5V</span>.</p>
+                        <p>Do $2.7V < 3.5V$, ngõ vào CMOS không nhận diện được mức HIGH. Giải pháp là dùng <span class="font-bold text-purple-300">Điện trở kéo lên R_pullup (10kΩ)</span> lên nguồn +5V để nâng áp lên ~4.9V.</p>
+                    `;
+                    break;
+                case 'lab3':
+                    content = `
+                        <p class="font-bold text-cyan-300">5.4.2 TTL Lái CMOS Cấp Điện > 5V (Nguồn 12V):</p>
+                        <p>Khi vi mạch CMOS dùng nguồn +12V, ngõ vào yêu cầu $V_{IH} \approx 8.4V$. Vi mạch TTL 5V không thể cấp áp này.</p>
+                        <p>Giải pháp: Sử dụng cổng đệm không đảo cực thu hở (Open Collector) như <span class="mono font-bold text-cyan-300">7407</span> kết hợp điện trở kéo lên nối vào nguồn +12V.</p>
+                    `;
+                    break;
+                case 'lab4':
+                    content = `
+                        <p class="font-bold text-cyan-300">5.5.1 CMOS 4000B Lái TTL:</p>
+                        <p>Dòng ra mức thấp của CMOS 4000B chỉ đạt <span class="mono font-bold text-amber-300">I_OL(max) = 0.4mA</span>. Ngõ vào TTL 74 thường hút dòng rút tới <span class="mono font-bold text-rose-400">I_IL = 1.6mA</span>.</p>
+                        <p>Do bị quá tải dòng kéo, CMOS bị dâng áp $V_{OL} > 0.8V$. Giải pháp là thêm bộ đệm nâng dòng như <span class="mono font-bold text-emerald-400">4050B</span> hoặc <span class="mono font-bold text-emerald-400">74LS125</span>.</p>
+                    `;
+                    break;
+                case 'lab5':
+                    content = `
+                        <p class="font-bold text-cyan-300">5.5.2 CMOS Cấp Điện > 5V (12V) Lái TTL (5V):</p>
+                        <p>Tín hiệu mức cao 12V từ CMOS vượt quá điện áp đánh thủng ngõ vào của TTL 5V ($V_{IN(max)} \approx 5.5V$).</p>
+                        <p>Bắt buộc sử dụng bộ đệm đóng vai trò chuyển mức áp như <span class="mono font-bold text-purple-300">4050B</span> cấp nguồn +5V để hạ điện áp an toàn trước khi vào TTL.</p>
+                    `;
+                    break;
+            }
+            box.innerHTML = content;
+        }
+
+        function setViewMode(mode) {
+            state.viewMode = mode;
+            const c2D = document.getElementById('container2D');
+            const c3D = document.getElementById('container3D');
+
+            document.getElementById('btn2D').className = `px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all ${mode==='2d'? 'bg-cyan-600 text-white shadow':'text-slate-400 hover:text-white'}`;
+            document.getElementById('btn3D').className = `px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all ${mode==='3d'? 'bg-emerald-600 text-white shadow':'text-slate-400 hover:text-white'}`;
+            document.getElementById('btnSplit').className = `px-3 py-1 rounded-md text-xs font-semibold items-center gap-1.5 transition-all ${mode==='split'? 'bg-indigo-600 text-white shadow':'text-slate-400 hover:text-white'} hidden lg:flex`;
+
+            if (mode === '2d') {
+                c2D.classList.remove('hidden', 'w-1/2'); c2D.classList.add('w-full');
+                c3D.classList.add('hidden');
+            } else if (mode === '3d') {
+                c2D.classList.add('hidden');
+                c3D.classList.remove('hidden', 'w-1/2'); c3D.classList.add('w-full');
+                onWindowResize();
+            } else if (mode === 'split') {
+                c2D.classList.remove('hidden', 'w-full'); c2D.classList.add('w-1/2');
+                c3D.classList.remove('hidden', 'w-full'); c3D.classList.add('w-1/2');
+                onWindowResize();
+            }
+            render2DSchematic();
+        }
+
+        /* ==========================================================================
+           7. INITIALIZATION ON WINDOW LOAD
+           ========================================================================== */
+        window.onload = function () {
+            // Initialize 3D Engine
+            init3D();
+
+            // Initialize Controls & UI
+            renderDynamicControls();
+            updateUI();
+
+            // Continuous animation loop for 2D Canvas & Oscilloscope
+            setInterval(() => {
+                render2DSchematic();
+                renderOscilloscope();
+            }, 50);
+        };
+    </script>
+</body>
+</html>

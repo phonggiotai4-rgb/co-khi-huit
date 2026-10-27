@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô Phỏng Hệ Tuần Tự 2D & 3D - Chương 4</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js & OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            user-select: none;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        /* Glowing neon utilities */
+        .glow-blue {
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+        .glow-green {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+        .glow-red {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+        .glow-yellow {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+        }
+        /* Mode switch transition */
+        .viewport-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden bg-slate-950 text-slate-100">
+
+    
+    <header class="h-14 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between z-20 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
+                <i class="fa-solid fa-microchip text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-base tracking-wide bg-gradient-to-r from-cyan-400 via-sky-200 to-indigo-300 bg-clip-text text-transparent">
+                    PHÒNG THÍ NGHIỆM HỆ TUẦN TỰ (CHƯƠNG 4)
+                </h1>
+                <p class="text-[10px] text-slate-400 -mt-0.5">Mô phỏng tương tác Luân phiên 2D Sơ đồ &amp; 3D Vi mạch Three.js</p>
+            </div>
+        </div>
+
+        <!-- MODULE SELECTOR DROPDOWN -->
+        <div class="flex items-center gap-3">
+            <label class="text-xs text-slate-400 font-medium hidden sm:inline"><i class="fa-solid fa-list-check mr-1"></i> Bài học / Chủ đề:</label>
+            <select id="topicSelect" onchange="changeTopic()" class="bg-slate-800 text-sky-300 border border-slate-700 rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all cursor-pointer max-w-[280px] sm:max-w-xs">
+                <option value="d_ff" selected>D Flip-Flop (FF D)</option>
+                <option value="jk_ff">JK Flip-Flop (FF JK)</option>
+                <option value="t_ff">T Flip-Flop (FF T)</option>
+                <option value="sr_ff">SR Flip-Flop (FF SR)</option>
+                <option value="async_mod8_up">Đếm Nối Tiếp Mod 8 Tăng (3-bit)</option>
+                <option value="async_mod8_down">Đếm Nối Tiếp Mod 8 Giảm (3-bit)</option>
+                <option value="async_mod5">Đếm Nối Tiếp Mod 5 (Xóa tự động bằng NAND)</option>
+                <option value="sync_mod8_up">Đếm Đồng Bộ Mod 8 Tăng</option>
+                <option value="fsm_counter">Mạch Trạng Thái FSM (Đếm Tùy Biến)</option>
+                <option value="shift_sipo">Thanh Ghi Dịch SIPO (4-bit)</option>
+                <option value="ring_counter">Mạch Đếm Vòng Ring Counter (4-bit)</option>
+                <option value="johnson_counter">Mạch Đếm Vòng Xoắn Johnson (4-bit)</option>
+                <option value="ic_74ls74">IC 74LS74 (Dual D Flip-Flop)</option>
+                <option value="ic_74ls163">IC 74LS163 (Đếm Đồng Bộ 4-bit Binary)</option>
+            </select>
+        </div>
+
+        <!-- VIEW MODE TOGGLE BUTTONS (2D / 3D / BOTH) -->
+        <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700">
+            <button id="btn2D" onclick="setViewMode('2d')" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all bg-cyan-600 text-white shadow">
+                <i class="fa-solid fa-diagram-project"></i> <span>Sơ đồ 2D</span>
+            </button>
+            <button id="btn3D" onclick="setViewMode('3d')" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all text-slate-400 hover:text-white">
+                <i class="fa-solid fa-cube"></i> <span>Vi mạch 3D</span>
+            </button>
+            <button id="btnSplit" onclick="setViewMode('split')" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all text-slate-400 hover:text-white hidden lg:flex">
+                <i class="fa-solid fa-columns"></i> <span>Song Song</span>
+            </button>
+        </div>
+
+        <a href="../index.html" class="group shrink-0 inline-flex items-center gap-1.5 rounded-full border border-slate-600/50 bg-slate-800/70 px-3 py-1.5 text-xs font-semibold text-slate-300 shadow-sm transition-all duration-200 hover:-translate-y-px hover:border-cyan-500/60 hover:bg-cyan-500/10 hover:text-cyan-300 hover:shadow-cyan-500/20 active:translate-y-0" title="Về trang chủ Kỹ thuật số">
+            <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <span>Quay lại</span>
+        </a>
+    </header>
+
+    <!-- CONTROL BAR / CLOCK GENERATOR -->
+    <section class="h-12 bg-slate-900/90 border-b border-slate-800 px-4 flex items-center justify-between text-xs gap-4 shrink-0 z-10 backdrop-blur-md">
+        <!-- Clock Controls -->
+        <div class="flex items-center gap-3">
+            <span class="font-semibold text-slate-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-wave-square text-cyan-400"></i> Xung Nhịp (Clock):
+            </span>
+            <button id="btnAutoClock" onclick="toggleAutoClock()" class="px-3 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-1">
+                <i id="clockIcon" class="fa-solid fa-play"></i> <span id="clockStatusText">Tự Động</span>
+            </button>
+            <button onclick="stepClockPulse()" class="px-3 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 font-semibold transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-forward-step"></i> Tác Động 1 Xung
+            </button>
+            <div class="flex items-center gap-2 ml-2">
+                <span class="text-slate-400">Tần số:</span>
+                <input type="range" id="clockSpeedSlider" min="0.5" max="5" step="0.5" value="1.5" oninput="updateClockSpeed()" class="w-20 accent-cyan-400 cursor-pointer">
+                <span id="speedValueText" class="mono text-cyan-400 font-semibold w-10">1.5 Hz</span>
+            </div>
+        </div>
+
+        <!-- Global Logic Reset & Trigger Mode -->
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-slate-950 px-2.5 py-1 rounded border border-slate-800">
+                <span class="text-slate-400">Kích khởi CK:</span>
+                <select id="edgeModeSelect" onchange="updateEdgeMode()" class="bg-transparent text-cyan-300 font-bold focus:outline-none cursor-pointer">
+                    <option value="falling">Cạnh Xuống (Falling Edge ꜜ)</option>
+                    <option value="rising">Cạnh Lên (Rising Edge ꜛ)</option>
+                </select>
+            </div>
+            <button onclick="resetCircuitState()" class="px-3 py-1 rounded-md bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-700/50 font-semibold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-left"></i> Reset Trạng Thái
+            </button>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT WORKSPACE -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+
+        <!-- VIEWPORTS AREA (2D CANVAS & 3D THREE.JS CANVAS) -->
+        <div id="viewportParent" class="flex-1 flex flex-col relative overflow-hidden bg-slate-950">
+            
+            <!-- 2D / 3D CANVAS CONTAINERS -->
+            <div class="flex-1 relative flex overflow-hidden">
+                <!-- 2D Canvas Viewport -->
+                <div id="container2D" class="w-full h-full relative transition-all duration-300">
+                    <canvas id="canvas2D" class="w-full h-full block cursor-crosshair"></canvas>
+                    <div class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2 shadow">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                        <span>Sơ Đồ Mạch Mô Phỏng Logic 2D</span>
+                    </div>
+                </div>
+
+                <!-- 3D Canvas Viewport -->
+                <div id="container3D" class="w-full h-full relative transition-all duration-300 hidden">
+                    <div id="webglOutput" class="w-full h-full"></div>
+                    <div class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2 shadow">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Mô Hình Vi Mạch DIP & Breadboard 3D (Three.js)</span>
+                    </div>
+                    <!-- 3D Camera Controls Hint -->
+                    <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] text-slate-400 border border-slate-800">
+                        <i class="fa-solid fa-hand-pointer text-cyan-400 mr-1"></i> Xoay: Chuột trái | Thu phóng: Cuộn chuột | Di chuyển: Chuột phải
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIGITAL OSCILLOSCOPE / WAVEFORM PANEL (GIẢN ĐỒ XUNG) -->
+            <div class="h-44 bg-slate-900 border-t border-slate-800 flex flex-col shrink-0 relative">
+                <div class="px-3 py-1 bg-slate-800/80 text-[11px] font-bold text-slate-300 flex justify-between items-center border-b border-slate-700/60">
+                    <span class="flex items-center gap-2 text-cyan-400">
+                        <i class="fa-solid fa-chart-line"></i> GIẢN ĐỒ XUNG THỜI GIAN THỰC (DIGITAL OSCILLOSCOPE)
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-normal">Mức 1: Cao (Vcc) | Mức 0: Thấp (GND)</span>
+                </div>
+                <div class="flex-1 relative overflow-hidden bg-slate-950/90 p-1">
+                    <canvas id="scopeCanvas" class="w-full h-full block"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR: CONTROLS, EXCITATION TABLES & THEORY -->
+        <aside class="w-full lg:w-96 bg-slate-900 border-t lg:border-t-0 lg:border-l border-slate-800 flex flex-col overflow-y-auto shrink-0 z-10">
+            
+            <!-- SECTION 1: LOGIC INPUT CONTROLS -->
+            <div class="p-4 border-b border-slate-800 bg-slate-900/50">
+                <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> Tín Hiệu Đầu Vào Tương Tác
+                </h3>
+                <div id="dynamicInputsContainer" class="grid grid-cols-2 gap-2">
+                    <!-- Dynamic inputs generated by JS based on active topic -->
+                </div>
+            </div>
+
+            <!-- SECTION 2: CURRENT STATE MONITOR -->
+            <div class="p-4 border-b border-slate-800 bg-slate-950/60">
+                <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-binary text-emerald-400"></i> Trạng Thái Ngõ Ra Hiện Tại
+                </h3>
+                <div class="flex items-center justify-around bg-slate-900 p-3 rounded-xl border border-slate-800 shadow-inner">
+                    <div class="text-center">
+                        <div class="text-[10px] text-slate-500 font-bold mb-1">DẠNG NHỊ PHÂN</div>
+                        <div id="binaryStateText" class="mono text-2xl font-bold text-emerald-400 tracking-widest">0000</div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-800"></div>
+                    <div class="text-center">
+                        <div class="text-[10px] text-slate-500 font-bold mb-1">THẬP PHÂN</div>
+                        <div id="decimalStateText" class="mono text-2xl font-bold text-cyan-400">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: EXCITATION & CHARACTERISTIC TABLE -->
+            <div class="p-4 border-b border-slate-800">
+                <h3 class="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-table-list"></i> Bảng Đặc Tính & Kích Thích
+                </h3>
+                <div id="truthTableContainer" class="overflow-x-auto rounded-lg border border-slate-800">
+                    <!-- Dynamic Truth Table rendered here -->
+                </div>
+            </div>
+
+            <!-- SECTION 4: LESSON THEORY & FORMULAS (FROM CHAPTER 4 PDF) -->
+            <div class="p-4 flex-1 bg-slate-900/30">
+                <h3 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Lý Thuyết Tóm Tắt (Chương 4)
+                </h3>
+                <div id="theoryTextContainer" class="text-xs text-slate-300 leading-relaxed space-y-2 bg-slate-950/80 p-3 rounded-lg border border-slate-800">
+                    <!-- Dynamic theory notes rendered here -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- MAIN SIMULATION SCRIPT -->
+    <script>
+        /* ==========================================================================
+           1. GLOBAL STATE & CONFIGURATION
+           ========================================================================== */
+        let currentTopic = 'd_ff';
+        let viewMode = '2d'; // '2d', '3d', 'split'
+        let clockState = 0; // 0 (Low) or 1 (High)
+        let isAutoClock = false;
+        let clockInterval = null;
+        let clockSpeedHz = 1.5;
+        let edgeMode = 'falling'; // 'falling' or 'rising'
+        let stepCount = 0;
+
+        // Circuit State Registers (up to 4 bits Q3 Q2 Q1 Q0)
+        let state = {
+            Q: [0, 0, 0, 0],       // Active state outputs
+            inputs: {              // Interactive user inputs
+                D: 0, T: 1, J: 1, K: 1, S: 0, R: 0,
+                PR: 1, CLR: 1, SER: 1, LOAD: 0, UP: 1
+            }
+        };
+
+        // Scope Waveform Buffer (History)
+        const SCOPE_MAX_SAMPLES = 80;
+        let scopeHistory = [];
+
+        /* ==========================================================================
+           2. THREE.JS 3D ENVIRONMENT SETUP
+           ========================================================================== */
+        let scene3D, camera3D, renderer3D, controls3D;
+        let icMeshGroup, ledMeshes = [], wireGroup, clockLedMesh;
+
+        function init3D() {
+            const container = document.getElementById('webglOutput');
+            const width = container.clientWidth || 600;
+            const height = container.clientHeight || 400;
+
+            scene3D = new THREE.Scene();
+            scene3D.background = new THREE.Color(0x070a12);
+
+            camera3D = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera3D.position.set(0, 18, 22);
+
+            renderer3D = new THREE.WebGLRenderer({ antialias: true });
+            renderer3D.setSize(width, height);
+            renderer3D.shadowMap.enabled = true;
+            container.appendChild(renderer3D.domElement);
+
+            controls3D = new THREE.OrbitControls(camera3D, renderer3D.domElement);
+            controls3D.enableDamping = true;
+            controls3D.dampingFactor = 0.05;
+            controls3D.maxPolarAngle = Math.PI / 2 - 0.05;
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene3D.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(10, 20, 15);
+            dirLight.castShadow = true;
+            scene3D.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0x38bdf8, 1, 30);
+            pointLight.position.set(0, 10, 0);
+            scene3D.add(pointLight);
+
+            // Create Electronic Breadboard Base
+            createBreadboard();
+
+            // Create Dynamic 3D Chips & Components
+            build3DSceneForTopic();
+
+            // Window resize handler
+            window.addEventListener('resize', onWindowResize);
+
+            // Start 3D Render Loop
+            animate3D();
+        }
+
+        function createBreadboard() {
+            // Base PCB
+            const pcbGeo = new THREE.BoxGeometry(22, 0.8, 14);
+            const pcbMat = new THREE.MeshStandardMaterial({ color: 0x0f3822, roughness: 0.4, metalness: 0.2 });
+            const pcb = new THREE.Mesh(pcbGeo, pcbMat);
+            pcb.position.y = -0.4;
+            scene3D.add(pcb);
+
+            // Breadboard Plastic
+            const bbGeo = new THREE.BoxGeometry(20, 0.6, 12);
+            const bbMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.8 });
+            const bb = new THREE.Mesh(bbGeo, bbMat);
+            bb.position.y = 0.3;
+            scene3D.add(bb);
+
+            // Decorative grid holes
+            const holeGeo = new THREE.BoxGeometry(0.12, 0.1, 0.12);
+            const holeMat = new THREE.MeshBasicMaterial({ color: 0x1e293b });
+            const instancedHoles = new THREE.InstancedMesh(holeGeo, holeMat, 200);
+            let idx = 0;
+            const matrix = new THREE.Matrix4();
+            for (let x = -8; x <= 8; x += 0.9) {
+                for (let z = -4.5; z <= 4.5; z += 0.8) {
+                    if (Math.abs(x) < 3.5 && Math.abs(z) < 2) continue; // space for IC
+                    matrix.setPosition(x, 0.61, z);
+                    instancedHoles.setMatrixAt(idx++, matrix);
+                }
+            }
+            scene3D.add(instancedHoles);
+        }
+
+        function build3DSceneForTopic() {
+            // Remove previous ICs and wires
+            if (icMeshGroup) scene3D.remove(icMeshGroup);
+            if (wireGroup) scene3D.remove(wireGroup);
+
+            icMeshGroup = new THREE.Group();
+            wireGroup = new THREE.Group();
+            ledMeshes = [];
+
+            // DIP IC Package
+            const chipBodyGeo = new THREE.BoxGeometry(6, 1.2, 2.6);
+            const chipBodyMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.3 });
+            const chip = new THREE.Mesh(chipBodyGeo, chipBodyMat);
+            chip.position.set(0, 1.2, 0);
+            icMeshGroup.add(chip);
+
+            // IC Pin 1 notch indicator
+            const notchGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16, 1, false, 0, Math.PI);
+            const notchMat = new THREE.MeshBasicMaterial({ color: 0x374151 });
+            const notch = new THREE.Mesh(notchGeo, notchMat);
+            notch.rotation.x = Math.PI / 2;
+            notch.position.set(-2.8, 1.81, 0);
+            icMeshGroup.add(notch);
+
+            // Label text on Chip
+            const canvas = document.createElement('canvas');
+            canvas.width = 256; canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#111827'; ctx.fillRect(0,0,256,64);
+            ctx.fillStyle = '#94a3b8'; ctx.font = 'bold 28px monospace';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            let icName = '74LS74';
+            if (currentTopic.includes('async') || currentTopic.includes('sync')) icName = '74LS163';
+            if (currentTopic.includes('shift') || currentTopic.includes('ring')) icName = '74LS164';
+            ctx.fillText(icName, 128, 32);
+            const tex = new THREE.CanvasTexture(canvas);
+            const labelGeo = new THREE.PlaneGeometry(4.5, 1.2);
+            const labelMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
+            const label = new THREE.Mesh(labelGeo, labelMat);
+            label.rotation.x = -Math.PI / 2;
+            label.position.set(0, 1.81, 0);
+            icMeshGroup.add(label);
+
+            // IC Metal Pins
+            const pinGeo = new THREE.BoxGeometry(0.2, 0.8, 0.4);
+            const pinMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
+            for (let i = 0; i < 7; i++) {
+                const px = -2.2 + i * 0.75;
+                const pinL = new THREE.Mesh(pinGeo, pinMat);
+                pinL.position.set(px, 0.8, -1.4);
+                icMeshGroup.add(pinL);
+
+                const pinR = new THREE.Mesh(pinGeo, pinMat);
+                pinR.position.set(px, 0.8, 1.4);
+                icMeshGroup.add(pinR);
+            }
+
+            // Output LEDs (Q0, Q1, Q2, Q3)
+            const ledColors = [0x10b981, 0x38bdf8, 0xf59e0b, 0xec4899];
+            for (let i = 0; i < 4; i++) {
+                const ledGroup = new THREE.Group();
+                const baseGeo = new THREE.CylinderGeometry(0.4, 0.45, 0.3, 16);
+                const baseMat = new THREE.MeshStandardMaterial({ color: 0x334155 });
+                const base = new THREE.Mesh(baseGeo, baseMat);
+                base.position.y = 0.75;
+                ledGroup.add(base);
+
+                const domeGeo = new THREE.SphereGeometry(0.4, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+                const domeMat = new THREE.MeshStandardMaterial({
+                    color: ledColors[i],
+                    emissive: 0x000000,
+                    transparent: true,
+                    opacity: 0.85,
+                    roughness: 0.1
+                });
+                const dome = new THREE.Mesh(domeGeo, domeMat);
+                dome.position.y = 0.9;
+                ledGroup.add(dome);
+
+                // Point light inside LED
+                const pLight = new THREE.PointLight(ledColors[i], 0, 4);
+                pLight.position.y = 1.2;
+                ledGroup.add(pLight);
+
+                ledGroup.position.set(-3 + i * 2, 0, 4.2);
+                icMeshGroup.add(ledGroup);
+
+                ledMeshes.push({ domeMat, pLight, color: ledColors[i] });
+
+                // Connect wires from IC to LEDs
+                createWire(new THREE.Vector3(-2 + i * 0.8, 0.6, 1.4), new THREE.Vector3(-3 + i * 2, 0.8, 3.8), ledColors[i]);
+            }
+
+            // Clock Indicator LED
+            const ckLedGroup = new THREE.Group();
+            const ckDomeMat = new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0x000000, roughness: 0.1 });
+            const ckDome = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16, 0, Math.PI*2, 0, Math.PI/2), ckDomeMat);
+            ckDome.position.y = 0.8;
+            ckLedGroup.add(ckDome);
+            const ckPLight = new THREE.PointLight(0xef4444, 0, 3);
+            ckPLight.position.y = 1.0;
+            ckLedGroup.add(ckPLight);
+            ckLedGroup.position.set(-6, 0, -3.5);
+            icMeshGroup.add(ckLedGroup);
+            clockLedMesh = { domeMat: ckDomeMat, pLight: ckPLight };
+
+            // Wire from Clock LED to IC
+            createWire(new THREE.Vector3(-5.7, 0.6, -3.5), new THREE.Vector3(-2.2, 0.6, -1.4), 0xef4444);
+
+            scene3D.add(icMeshGroup);
+            scene3D.add(wireGroup);
+        }
+
+        function createWire(p1, p2, colorHex) {
+            const mid = p1.clone().add(p2).multiplyScalar(0.5);
+            mid.y += 1.8; // Wire arc height
+            const curve = new THREE.QuadraticBezierCurve3(p1, mid, p2);
+            const tubeGeo = new THREE.TubeGeometry(curve, 20, 0.08, 8, false);
+            const tubeMat = new THREE.MeshStandardMaterial({ color: colorHex, roughness: 0.5 });
+            const wire = new THREE.Mesh(tubeGeo, tubeMat);
+            wireGroup.add(wire);
+        }
+
+        function update3DVisuals() {
+            if (!scene3D) return;
+
+            // Update Output LEDs state
+            for (let i = 0; i < 4; i++) {
+                if (ledMeshes[i]) {
+                    const isHigh = state.Q[i] === 1;
+                    ledMeshes[i].domeMat.emissive.setHex(isHigh ? ledMeshes[i].color : 0x000000);
+                    ledMeshes[i].pLight.intensity = isHigh ? 1.5 : 0;
+                }
+            }
+
+            // Update Clock LED state
+            if (clockLedMesh) {
+                const isCkHigh = clockState === 1;
+                clockLedMesh.domeMat.emissive.setHex(isCkHigh ? 0xef4444 : 0x000000);
+                clockLedMesh.pLight.intensity = isCkHigh ? 1.2 : 0;
+            }
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            if (controls3D) controls3D.update();
+            if (renderer3D && scene3D && camera3D) {
+                renderer3D.render(scene3D, camera3D);
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('webglOutput');
+            if (!container || !renderer3D) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            camera3D.aspect = w / h;
+            camera3D.updateProjectionMatrix();
+            renderer3D.setSize(w, h);
+        }
+
+        /* ==========================================================================
+           3. SIMULATION LOGIC & STATE MACHINE
+           ========================================================================== */
+        function triggerClockEdge(fromState, toState) {
+            const isFalling = (fromState === 1 && toState === 0);
+            const isRising = (fromState === 0 && toState === 1);
+            const activeEdge = (edgeMode === 'falling' && isFalling) || (edgeMode === 'rising' && isRising);
+
+            if (activeEdge) {
+                computeNextSequentialState();
+            } else {
+                // Check asynchronous Preset / Clear inputs
+                applyAsynchronousInputs();
+            }
+
+            recordWaveformSample();
+            updateUI();
+        }
+
+        function applyAsynchronousInputs() {
+            // PR and CLR are active low (0 = active)
+            if (state.inputs.PR === 0 && state.inputs.CLR === 1) {
+                state.Q[0] = 1;
+            } else if (state.inputs.PR === 1 && state.inputs.CLR === 0) {
+                state.Q[0] = 0;
+            } else if (state.inputs.PR === 0 && state.inputs.CLR === 0) {
+                state.Q[0] = 1; // Invalid state in standard FF
+            }
+        }
+
+        function computeNextSequentialState() {
+            // Apply Async inputs first
+            if (state.inputs.PR === 0 || state.inputs.CLR === 0) {
+                applyAsynchronousInputs();
+                return;
+            }
+
+            let q0 = state.Q[0], q1 = state.Q[1], q2 = state.Q[2], q3 = state.Q[3];
+
+            switch (currentTopic) {
+                // --- 1. FLIP-FLOPS ---
+                case 'd_ff':
+                case 'ic_74ls74':
+                    state.Q[0] = state.inputs.D;
+                    break;
+
+                case 't_ff':
+                    if (state.inputs.T === 1) state.Q[0] = state.Q[0] === 0 ? 1 : 0;
+                    break;
+
+                case 'jk_ff':
+                    const j = state.inputs.J, k = state.inputs.K;
+                    if (j === 0 && k === 0) { /* No change */ }
+                    else if (j === 0 && k === 1) state.Q[0] = 0;
+                    else if (j === 1 && k === 0) state.Q[0] = 1;
+                    else if (j === 1 && k === 1) state.Q[0] = state.Q[0] === 0 ? 1 : 0;
+                    break;
+
+                case 'sr_ff':
+                    const s = state.inputs.S, r = state.inputs.R;
+                    if (s === 0 && r === 0) { /* No change */ }
+                    else if (s === 0 && r === 1) state.Q[0] = 0;
+                    else if (s === 1 && r === 0) state.Q[0] = 1;
+                    else if (s === 1 && r === 1) state.Q[0] = 1; // Invalid state warning
+                    break;
+
+                // --- 2. ASYNCHRONOUS COUNTERS ---
+                case 'async_mod8_up':
+                    let valUp = (q2 * 4 + q1 * 2 + q0 + 1) % 8;
+                    state.Q[0] = valUp & 1;
+                    state.Q[1] = (valUp >> 1) & 1;
+                    state.Q[2] = (valUp >> 2) & 1;
+                    break;
+
+                case 'async_mod8_down':
+                    let valDn = (q2 * 4 + q1 * 2 + q0 - 1 + 8) % 8;
+                    state.Q[0] = valDn & 1;
+                    state.Q[1] = (valDn >> 1) & 1;
+                    state.Q[2] = (valDn >> 2) & 1;
+                    break;
+
+                case 'async_mod5':
+                    let valMod5 = (q2 * 4 + q1 * 2 + q0 + 1);
+                    if (valMod5 >= 5) valMod5 = 0; // NAND Gate clears circuit at 101 (5)
+                    state.Q[0] = valMod5 & 1;
+                    state.Q[1] = (valMod5 >> 1) & 1;
+                    state.Q[2] = (valMod5 >> 2) & 1;
+                    break;
+
+                // --- 3. SYNCHRONOUS COUNTERS ---
+                case 'sync_mod8_up':
+                case 'ic_74ls163':
+                    let valSync = (q2 * 4 + q1 * 2 + q0 + 1) % 8;
+                    state.Q[0] = valSync & 1;
+                    state.Q[1] = (valSync >> 1) & 1;
+                    state.Q[2] = (valSync >> 2) & 1;
+                    break;
+
+                case 'fsm_counter':
+                    // Custom FSM sequence: 000 -> 010 -> 011 -> 100 -> 110 -> 000
+                    const currDec = q2 * 4 + q1 * 2 + q0;
+                    let nextDec = 0;
+                    if (currDec === 0) nextDec = 2;
+                    else if (currDec === 2) nextDec = 3;
+                    else if (currDec === 3) nextDec = 4;
+                    else if (currDec === 4) nextDec = 6;
+                    else if (currDec === 6) nextDec = 0;
+                    else nextDec = 0; // Self-correcting
+                    state.Q[0] = nextDec & 1;
+                    state.Q[1] = (nextDec >> 1) & 1;
+                    state.Q[2] = (nextDec >> 2) & 1;
+                    break;
+
+                // --- 4. SHIFT REGISTERS & RING COUNTERS ---
+                case 'shift_sipo':
+                    state.Q[3] = state.Q[2];
+                    state.Q[2] = state.Q[1];
+                    state.Q[1] = state.Q[0];
+                    state.Q[0] = state.inputs.SER;
+                    break;
+
+                case 'ring_counter':
+                    // 1000 -> 0100 -> 0010 -> 0001 -> 1000
+                    let lastRing = state.Q[3];
+                    state.Q[3] = state.Q[2];
+                    state.Q[2] = state.Q[1];
+                    state.Q[1] = state.Q[0];
+                    state.Q[0] = (state.Q[0]===0 && state.Q[1]===0 && state.Q[2]===0 && state.Q[3]===0) ? 1 : lastRing;
+                    break;
+
+                case 'johnson_counter':
+                    // Twisted ring: Q0_next = NOT(Q3)
+                    let notQ3 = state.Q[3] === 0 ? 1 : 0;
+                    state.Q[3] = state.Q[2];
+                    state.Q[2] = state.Q[1];
+                    state.Q[1] = state.Q[0];
+                    state.Q[0] = notQ3;
+                    break;
+            }
+        }
+
+        /* ==========================================================================
+           4. 2D SCHEMATIC RENDERING (HTML5 CANVAS)
+           ========================================================================== */
+        function render2DSchematic() {
+            const canvas = document.getElementById('canvas2D');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            // Handle DPI Scaling
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Clear Background
+            ctx.fillStyle = '#070a13';
+            ctx.fillRect(0, 0, w, h);
+
+            // Draw Background Grid
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x < w; x += 30) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+            for (let y = 0; y < h; y += 30) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+            ctx.stroke();
+
+            // Draw Topic Diagram
+            if (currentTopic.includes('ff') || currentTopic === 'ic_74ls74') {
+                drawSingleFFSchematic(ctx, w, h);
+            } else if (currentTopic.includes('async') || currentTopic.includes('sync')) {
+                drawCounterSchematic(ctx, w, h);
+            } else if (currentTopic.includes('shift') || currentTopic.includes('ring') || currentTopic.includes('johnson')) {
+                drawShiftRegisterSchematic(ctx, w, h);
+            } else {
+                drawGenericBlockDiagram(ctx, w, h);
+            }
+        }
+
+        function drawSingleFFSchematic(ctx, w, h) {
+            const cx = w / 2 - 60;
+            const cy = h / 2 - 20;
+            const boxW = 140, boxH = 180;
+
+            // FF Box
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 3;
+            ctx.roundRect(cx, cy - boxH/2, boxW, boxH, 12);
+            ctx.fill();
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = 'bold 18px Inter';
+            ctx.textAlign = 'center';
+            let title = 'D FLIP-FLOP';
+            if (currentTopic === 'jk_ff') title = 'JK FLIP-FLOP';
+            if (currentTopic === 't_ff') title = 'T FLIP-FLOP';
+            if (currentTopic === 'sr_ff') title = 'SR FLIP-FLOP';
+            ctx.fillText(title, cx + boxW/2, cy - boxH/2 + 30);
+
+            // Inputs / Outputs pins text
+            ctx.font = '14px JetBrains Mono';
+            ctx.fillStyle = '#38bdf8';
+            ctx.textAlign = 'left';
+
+            if (currentTopic === 'd_ff' || currentTopic === 'ic_74ls74') {
+                ctx.fillText('D', cx + 15, cy - 30);
+                drawWireWithSignal(ctx, cx - 80, cy - 30, cx, cy - 30, state.inputs.D, 'D');
+            } else if (currentTopic === 't_ff') {
+                ctx.fillText('T', cx + 15, cy - 30);
+                drawWireWithSignal(ctx, cx - 80, cy - 30, cx, cy - 30, state.inputs.T, 'T');
+            } else if (currentTopic === 'jk_ff') {
+                ctx.fillText('J', cx + 15, cy - 40);
+                ctx.fillText('K', cx + 15, cy + 40);
+                drawWireWithSignal(ctx, cx - 80, cy - 40, cx, cy - 40, state.inputs.J, 'J');
+                drawWireWithSignal(ctx, cx - 80, cy + 40, cx, cy + 40, state.inputs.K, 'K');
+            } else if (currentTopic === 'sr_ff') {
+                ctx.fillText('S', cx + 15, cy - 40);
+                ctx.fillText('R', cx + 15, cy + 40);
+                drawWireWithSignal(ctx, cx - 80, cy - 40, cx, cy - 40, state.inputs.S, 'S');
+                drawWireWithSignal(ctx, cx - 80, cy + 40, cx, cy + 40, state.inputs.R, 'R');
+            }
+
+            // Clock Input
+            ctx.fillText('CK', cx + 15, cy);
+            drawClockBubble(ctx, cx, cy, edgeMode === 'falling');
+            drawWireWithSignal(ctx, cx - 80, cy, cx - (edgeMode==='falling'? 12 : 0), cy, clockState, 'CK');
+
+            // Asynchronous PR and CLR
+            ctx.textAlign = 'center';
+            ctx.fillText('PR', cx + boxW/2, cy - boxH/2 + 55);
+            drawWireWithSignal(ctx, cx + boxW/2, cy - boxH/2 - 40, cx + boxW/2, cy - boxH/2, state.inputs.PR, 'PR');
+
+            ctx.fillText('CLR', cx + boxW/2, cy + boxH/2 - 15);
+            drawWireWithSignal(ctx, cx + boxW/2, cy + boxH/2 + 40, cx + boxW/2, cy + boxH/2, state.inputs.CLR, 'CLR');
+
+            // Outputs Q and Q_bar
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#10b981';
+            ctx.fillText('Q', cx + boxW - 15, cy - 40);
+            drawWireWithSignal(ctx, cx + boxW, cy - 40, cx + boxW + 80, cy - 40, state.Q[0], 'Q');
+
+            ctx.fillStyle = '#f43f5e';
+            ctx.fillText('Q̄', cx + boxW - 15, cy + 40);
+            drawWireWithSignal(ctx, cx + boxW, cy + 40, cx + boxW + 80, cy + 40, state.Q[0] === 0 ? 1 : 0, 'Q̄');
+        }
+
+        function drawCounterSchematic(ctx, w, h) {
+            const numFF = 3;
+            const startX = w / 2 - 220;
+            const cy = h / 2 - 10;
+            const boxW = 90, boxH = 130;
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = 'bold 16px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText(`SƠ ĐỒ MẠCH ĐẾM 3-BIT (${currentTopic.toUpperCase().replace('_', ' ')})`, w/2, cy - 120);
+
+            for (let i = 0; i < numFF; i++) {
+                const cx = startX + i * 160;
+
+                // FF Block
+                ctx.fillStyle = '#0f172a';
+                ctx.strokeStyle = '#38bdf8';
+                ctx.lineWidth = 2;
+                ctx.roundRect(cx, cy - boxH/2, boxW, boxH, 8);
+                ctx.fill();
+                ctx.stroke();
+
+                // FF Title
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 12px Inter';
+                ctx.fillText(`FF ${i} (Q${i})`, cx + boxW/2, cy - boxH/2 + 20);
+
+                // Output Q
+                ctx.fillStyle = '#10b981';
+                ctx.font = '12px JetBrains Mono';
+                ctx.textAlign = 'right';
+                ctx.fillText('Q', cx + boxW - 10, cy - 25);
+                drawWireWithSignal(ctx, cx + boxW, cy - 25, cx + boxW + 40, cy - 25, state.Q[i], `Q${i}`);
+
+                // Cascade Wires for Asynchronous
+                if (currentTopic.includes('async')) {
+                    if (i < numFF - 1) {
+                        const nextCx = startX + (i + 1) * 160;
+                        // Connect Q_i to CK_(i+1)
+                        drawWireWithSignal(ctx, cx + boxW + 20, cy - 25, cx + boxW + 20, cy + 10, state.Q[i]);
+                        drawWireWithSignal(ctx, cx + boxW + 20, cy + 10, nextCx, cy + 10, state.Q[i]);
+                    }
+                }
+            }
+
+            // Common Clock for Synchronous Counters
+            if (currentTopic.includes('sync')) {
+                const busY = cy + 90;
+                drawWireWithSignal(ctx, startX - 40, busY, startX + 340, busY, clockState, 'CK Bus');
+                for (let i = 0; i < numFF; i++) {
+                    const cx = startX + i * 160;
+                    drawWireWithSignal(ctx, cx + 15, busY, cx + 15, cy + boxH/2, clockState);
+                }
+            } else {
+                // Main Clock to FF0
+                drawWireWithSignal(ctx, startX - 40, cy + 10, startX, cy + 10, clockState, 'CK');
+            }
+
+            // Feedback Reset Logic Gate (NAND Gate for Mod 5)
+            if (currentTopic === 'async_mod5') {
+                const gateX = startX + 160;
+                const gateY = cy - 100;
+                ctx.fillStyle = '#1e1b4b';
+                ctx.strokeStyle = '#818cf8';
+                ctx.beginPath();
+                ctx.arc(gateX, gateY, 20, -Math.PI/2, Math.PI/2);
+                ctx.closePath();
+                ctx.fill(); ctx.stroke();
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = '10px Inter';
+                ctx.fillText('NAND (101)', gateX - 5, gateY + 3);
+            }
+        }
+
+        function drawShiftRegisterSchematic(ctx, w, h) {
+            const numBits = 4;
+            const startX = w / 2 - 260;
+            const cy = h / 2 - 10;
+            const boxW = 85, boxH = 120;
+
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 16px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText(`THANH GHI DỊCH 4-BIT (${currentTopic.toUpperCase()})`, w/2, cy - 110);
+
+            for (let i = 0; i < numBits; i++) {
+                const cx = startX + i * 140;
+
+                ctx.fillStyle = '#0f172a';
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 2;
+                ctx.roundRect(cx, cy - boxH/2, boxW, boxH, 8);
+                ctx.fill(); ctx.stroke();
+
+                ctx.fillStyle = '#cbd5e1';
+                ctx.font = 'bold 11px Inter';
+                ctx.fillText(`BIT ${i} (Q${i})`, cx + boxW/2, cy - boxH/2 + 18);
+
+                // Shift chain connections
+                if (i < numBits - 1) {
+                    drawWireWithSignal(ctx, cx + boxW, cy - 20, cx + 140, cy - 20, state.Q[i]);
+                }
+            }
+
+            // Feedback loop for Ring / Johnson Counter
+            if (currentTopic === 'ring_counter' || currentTopic === 'johnson_counter') {
+                const loopY = cy + 80;
+                const lastX = startX + 3 * 140 + boxW;
+                drawWireWithSignal(ctx, lastX, cy - 20, lastX + 20, cy - 20, state.Q[3]);
+                drawWireWithSignal(ctx, lastX + 20, cy - 20, lastX + 20, loopY, state.Q[3]);
+                drawWireWithSignal(ctx, lastX + 20, loopY, startX - 30, loopY, state.Q[3]);
+                drawWireWithSignal(ctx, startX - 30, loopY, startX - 30, cy - 20, state.Q[3]);
+                drawWireWithSignal(ctx, startX - 30, cy - 20, startX, cy - 20, currentTopic==='johnson_counter'? (state.Q[3]===0?1:0) : state.Q[3]);
+
+                if (currentTopic === 'johnson_counter') {
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.font = '10px Inter';
+                    ctx.fillText('ĐẢO (NOT)', startX - 30, loopY + 15);
+                }
+            }
+        }
+
+        function drawGenericBlockDiagram(ctx, w, h) {
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '14px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText('Sơ đồ mô phỏng vi mạch IC tổng quát đang hoạt động...', w/2, h/2);
+        }
+
+        function drawWireWithSignal(ctx, x1, y1, x2, y2, signalVal, label) {
+            const isHigh = signalVal === 1;
+            ctx.strokeStyle = isHigh ? '#10b981' : '#475569';
+            ctx.lineWidth = isHigh ? 3 : 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Glowing moving dots if high
+            if (isHigh) {
+                const time = Date.now() * 0.003;
+                const dx = x2 - x1, dy = y2 - y1;
+                const len = Math.sqrt(dx*dx + dy*dy);
+                if (len > 0) {
+                    const progress = (time % 1);
+                    const px = x1 + dx * progress;
+                    const py = y1 + dy * progress;
+                    ctx.fillStyle = '#6ee7b7';
+                    ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI*2); ctx.fill();
+                }
+            }
+
+            if (label) {
+                ctx.fillStyle = '#e2e8f0';
+                ctx.font = '11px JetBrains Mono';
+                ctx.fillText(label, x1 - 15, y1 - 5);
+            }
+        }
+
+        function drawClockBubble(ctx, x, y, isNegative) {
+            if (isNegative) {
+                ctx.strokeStyle = '#38bdf8';
+                ctx.fillStyle = '#0f172a';
+                ctx.beginPath();
+                ctx.arc(x - 6, y, 5, 0, Math.PI*2);
+                ctx.fill(); ctx.stroke();
+            }
+        }
+
+        /* ==========================================================================
+           5. OSCILLOSCOPE WAVEFORM RECORDING & DRAWING
+           ========================================================================== */
+        function recordWaveformSample() {
+            scopeHistory.push({
+                ck: clockState,
+                q0: state.Q[0],
+                q1: state.Q[1],
+                q2: state.Q[2],
+                q3: state.Q[3]
+            });
+            if (scopeHistory.length > SCOPE_MAX_SAMPLES) {
+                scopeHistory.shift();
+            }
+        }
+
+        function renderOscilloscope() {
+            const canvas = document.getElementById('scopeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            ctx.fillStyle = '#020617';
+            ctx.fillRect(0, 0, w, h);
+
+            // Time division grid
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x < w; x += 40) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+            for (let y = 0; y < h; y += 25) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+            ctx.stroke();
+
+            if (scopeHistory.length < 2) return;
+
+            const channels = [
+                { name: 'CK', key: 'ck', color: '#ef4444', row: 0 },
+                { name: 'Q0', key: 'q0', color: '#10b981', row: 1 },
+                { name: 'Q1', key: 'q1', color: '#38bdf8', row: 2 },
+                { name: 'Q2', key: 'q2', color: '#f59e0b', row: 3 },
+                { name: 'Q3', key: 'q3', color: '#ec4899', row: 4 }
+            ];
+
+            const rowHeight = h / 5;
+            const stepX = w / SCOPE_MAX_SAMPLES;
+
+            channels.forEach(ch => {
+                const baseLineY = (ch.row + 0.8) * rowHeight;
+                const highLineY = (ch.row + 0.2) * rowHeight;
+
+                // Channel Label
+                ctx.fillStyle = ch.color;
+                ctx.font = 'bold 10px JetBrains Mono';
+                ctx.fillText(ch.name, 8, baseLineY - 5);
+
+                ctx.strokeStyle = ch.color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                for (let i = 0; i < scopeHistory.length; i++) {
+                    const x = i * stepX;
+                    const val = scopeHistory[i][ch.key];
+                    const y = val === 1 ? highLineY : baseLineY;
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else {
+                        const prevVal = scopeHistory[i - 1][ch.key];
+                        const prevY = prevVal === 1 ? highLineY : baseLineY;
+                        ctx.lineTo(x, prevY); // Vertical step transition
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+            });
+        }
+
+        /* ==========================================================================
+           6. UI UPDATE & DYNAMIC CONTENT GENERATION
+           ========================================================================== */
+        function updateUI() {
+            // Update Decimal and Binary State Displays
+            const binStr = `${state.Q[3]}${state.Q[2]}${state.Q[1]}${state.Q[0]}`;
+            const decVal = state.Q[3]*8 + state.Q[2]*4 + state.Q[1]*2 + state.Q[0];
+
+            document.getElementById('binaryStateText').innerText = binStr;
+            document.getElementById('decimalStateText').innerText = decVal;
+
+            // Render Canvases
+            render2DSchematic();
+            renderOscilloscope();
+
+            // Update 3D LEDs
+            update3DVisuals();
+        }
+
+        function changeTopic() {
+            currentTopic = document.getElementById('topicSelect').value;
+            resetCircuitState();
+            renderInputsForTopic();
+            renderTheoryAndTruthTable();
+            build3DSceneForTopic();
+            updateUI();
+        }
+
+        function renderInputsForTopic() {
+            const container = document.getElementById('dynamicInputsContainer');
+            container.innerHTML = '';
+
+            const createToggle = (label, key, defaultVal = 0) => {
+                if (state.inputs[key] === undefined) state.inputs[key] = defaultVal;
+                const isChecked = state.inputs[key] === 1;
+
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-slate-950 p-2 rounded-lg border border-slate-800';
+                div.innerHTML = `
+                    <span class="mono text-xs font-bold text-slate-300">${label}:</span>
+                    <button onclick="toggleInput('${key}')" class="px-2.5 py-0.5 rounded text-xs font-bold transition ${isChecked ? 'bg-emerald-600 text-white glow-green' : 'bg-slate-800 text-slate-400'}">
+                        ${isChecked ? 'HIGH (1)' : 'LOW (0)'}
+                    </button>
+                `;
+                container.appendChild(div);
+            };
+
+            // Generate contextual input switches
+            if (currentTopic === 'd_ff' || currentTopic === 'ic_74ls74') {
+                createToggle('Đầu vào D', 'D', 1);
+                createToggle('Preset (PR)', 'PR', 1);
+                createToggle('Clear (CLR)', 'CLR', 1);
+            } else if (currentTopic === 't_ff') {
+                createToggle('Đầu vào T', 'T', 1);
+            } else if (currentTopic === 'jk_ff') {
+                createToggle('Ngõ vào J', 'J', 1);
+                createToggle('Ngõ vào K', 'K', 1);
+            } else if (currentTopic === 'sr_ff') {
+                createToggle('Set (S)', 'S', 0);
+                createToggle('Reset (R)', 'R', 0);
+            } else if (currentTopic === 'shift_sipo') {
+                createToggle('Dữ liệu SER', 'SER', 1);
+            } else {
+                container.innerHTML = '<p class="text-[11px] text-slate-500 italic col-span-2">Mạch tự động đếm theo xung nhịp Clock.</p>';
+            }
+        }
+
+        function toggleInput(key) {
+            state.inputs[key] = state.inputs[key] === 1 ? 0 : 1;
+            applyAsynchronousInputs();
+            renderInputsForTopic();
+            updateUI();
+        }
+
+        function renderTheoryAndTruthTable() {
+            const theoryContainer = document.getElementById('theoryTextContainer');
+            const tableContainer = document.getElementById('truthTableContainer');
+
+            let theoryHTML = '';
+            let tableHTML = '';
+
+            switch (currentTopic) {
+                case 'd_ff':
+                    theoryHTML = `
+                        <p class="font-bold text-cyan-300">FF D (Delay Flip-Flop):</p>
+                        <p>Có 1 ngõ vào D. Trạng thái kế <span class="mono font-bold text-emerald-400">Q⁺ = D</span> khi có tác động xung nhịp CK.</p>
+                        <p class="text-slate-400">Dùng lưu trữ dữ liệu 1 bit hoặc tạo thanh ghi dịch.</p>
+                    `;
+                    tableHTML = `
+                        <table class="w-full text-center text-[11px] mono">
+                            <thead class="bg-slate-800 text-slate-300">
+                                <tr><th class="p-1">D</th><th class="p-1">Q (Hiện tại)</th><th class="p-1 text-emerald-400">Q⁺ (Kế)</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr><td>0</td><td>X</td><td class="text-emerald-400 font-bold">0</td></tr>
+                                <tr><td>1</td><td>X</td><td class="text-emerald-400 font-bold">1</td></tr>
+                            </tbody>
+                        </table>
+                    `;
+                    break;
+
+                case 'jk_ff':
+                    theoryHTML = `
+                        <p class="font-bold text-cyan-300">FF JK (Jack-Kilby):</p>
+                        <p>Hàm đặc tính: <span class="mono font-bold text-emerald-400">Q⁺ = J·Q̄ + K̄·Q</span></p>
+                        <p>Khi J=1, K=1: Flip-flop hoạt động ở chế độ đảo trạng thái (Toggle mode).</p>
+                    `;
+                    tableHTML = `
+                        <table class="w-full text-center text-[11px] mono">
+                            <thead class="bg-slate-800 text-slate-300">
+                                <tr><th class="p-1">J</th><th class="p-1">K</th><th class="p-1 text-emerald-400">Q⁺ (Kế)</th><th class="p-1">Chức năng</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr><td>0</td><td>0</td><td class="text-emerald-400">Q</td><td>Giữ nguyên</td></tr>
+                                <tr><td>0</td><td>1</td><td class="text-emerald-400">0</td><td>Reset</td></tr>
+                                <tr><td>1</td><td>0</td><td class="text-emerald-400">1</td><td>Set</td></tr>
+                                <tr><td>1</td><td>1</td><td class="text-emerald-400">Q̄</td><td>Đảo (Toggle)</td></tr>
+                            </tbody>
+                        </table>
+                    `;
+                    break;
+
+                case 'async_mod8_up':
+                    theoryHTML = `
+                        <p class="font-bold text-cyan-300">Mạch Đếm Nối Tiếp Mod 8 Tăng:</p>
+                        <p>Gồm 3 T-FF (với T=1) mắc nối tiếp. Ngõ ra Q của FF trước nối vào xung CK của FF sau.</p>
+                        <p>Chu kỳ đếm: <span class="mono font-bold text-yellow-300">000 → 001 → 010 → 011 → 100 → 101 → 110 → 111 → 000</span></p>
+                    `;
+                    tableHTML = `
+                        <div class="p-2 text-[11px] mono text-slate-300">
+                            Số trạng thái Modulus = 2³ = 8 states.<br>
+                            Tần số ngõ ra Q₂ = f_CK / 8 (Chia tần số cho 8).
+                        </div>
+                    `;
+                    break;
+
+                default:
+                    theoryHTML = `
+                        <p class="font-bold text-cyan-300">Khái niệm Hệ Tuần Tự (Chương 4):</p>
+                        <p>Mạch tuần tự là mạch có ngõ ra phụ thuộc vào ngõ vào và trạng thái hiện tại của các phần tử nhớ (Flip-Flops).</p>
+                    `;
+                    tableHTML = `<div class="p-2 text-[11px] text-slate-400 italic">Bảng tra cứu trạng thái logic tương tác.</div>`;
+                    break;
+            }
+
+            theoryContainer.innerHTML = theoryHTML;
+            tableContainer.innerHTML = tableHTML;
+        }
+
+        /* ==========================================================================
+           7. CLOCK GENERATOR & VIEW MODE TOGGLE
+           ========================================================================== */
+        function toggleAutoClock() {
+            isAutoClock = !isAutoClock;
+            const btn = document.getElementById('btnAutoClock');
+            const icon = document.getElementById('clockIcon');
+            const text = document.getElementById('clockStatusText');
+
+            if (isAutoClock) {
+                btn.className = 'px-3 py-1 rounded-md bg-rose-600 hover:bg-rose-500 text-white font-bold transition flex items-center gap-1 glow-red';
+                icon.className = 'fa-solid fa-pause';
+                text.innerText = 'Dừng Xung';
+
+                const intervalMs = 1000 / clockSpeedHz;
+                clockInterval = setInterval(() => {
+                    const prevCk = clockState;
+                    clockState = clockState === 0 ? 1 : 0;
+                    triggerClockEdge(prevCk, clockState);
+                }, intervalMs);
+            } else {
+                btn.className = 'px-3 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-1';
+                icon.className = 'fa-solid fa-play';
+                text.innerText = 'Tự Động';
+                if (clockInterval) clearInterval(clockInterval);
+            }
+        }
+
+        function stepClockPulse() {
+            if (isAutoClock) toggleAutoClock(); // Pause auto mode
+            // Toggle clock High then Low
+            const prevCk = clockState;
+            clockState = 1;
+            triggerClockEdge(prevCk, 1);
+
+            setTimeout(() => {
+                clockState = 0;
+                triggerClockEdge(1, 0);
+            }, 200);
+        }
+
+        function updateClockSpeed() {
+            clockSpeedHz = parseFloat(document.getElementById('clockSpeedSlider').value);
+            document.getElementById('speedValueText').innerText = `${clockSpeedHz} Hz`;
+            if (isAutoClock) {
+                toggleAutoClock();
+                toggleAutoClock(); // Restart with new speed
+            }
+        }
+
+        function updateEdgeMode() {
+            edgeMode = document.getElementById('edgeModeSelect').value;
+        }
+
+        function resetCircuitState() {
+            state.Q = [0, 0, 0, 0];
+            clockState = 0;
+            scopeHistory = [];
+            recordWaveformSample();
+            updateUI();
+        }
+
+        function setViewMode(mode) {
+            viewMode = mode;
+            const c2D = document.getElementById('container2D');
+            const c3D = document.getElementById('container3D');
+
+            document.getElementById('btn2D').className = `px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all ${mode==='2d'? 'bg-cyan-600 text-white shadow':'text-slate-400 hover:text-white'}`;
+            document.getElementById('btn3D').className = `px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all ${mode==='3d'? 'bg-emerald-600 text-white shadow':'text-slate-400 hover:text-white'}`;
+            document.getElementById('btnSplit').className = `px-3 py-1 rounded-md text-xs font-semibold items-center gap-1.5 transition-all ${mode==='split'? 'bg-indigo-600 text-white shadow':'text-slate-400 hover:text-white'} hidden lg:flex`;
+
+            if (mode === '2d') {
+                c2D.classList.remove('hidden', 'w-1/2'); c2D.classList.add('w-full');
+                c3D.classList.add('hidden');
+            } else if (mode === '3d') {
+                c2D.classList.add('hidden');
+                c3D.classList.remove('hidden', 'w-1/2'); c3D.classList.add('w-full');
+                onWindowResize();
+            } else if (mode === 'split') {
+                c2D.classList.remove('hidden', 'w-full'); c2D.classList.add('w-1/2');
+                c3D.classList.remove('hidden', 'w-full'); c3D.classList.add('w-1/2');
+                onWindowResize();
+            }
+            render2DSchematic();
+        }
+
+        /* ==========================================================================
+           8. INITIALIZATION ON WINDOW LOAD
+           ========================================================================== */
+        window.onload = function () {
+            // Initialize Three.js 3D Lab
+            init3D();
+
+            // Initialize Controls & UI
+            renderInputsForTopic();
+            renderTheoryAndTruthTable();
+            recordWaveformSample();
+            updateUI();
+        };
+    </script>
+</body>
+</html>

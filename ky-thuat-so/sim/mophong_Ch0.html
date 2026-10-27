@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô phỏng Kỹ thuật Số - Chương 0: Khái niệm Cơ bản</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#034EA2', // primary accent
+                            600: '#023A80'   // brand deep
+                        },
+                        digital: '#10b981',
+                        analog: '#38bdf8',
+                        warning: '#f59e0b',
+                        danger: '#f43f5e'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js & OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        code, .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Glassmorphism custom styling */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        /* Slider styling */
+        input[type=range] {
+            accent-color: #38bdf8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-100">
+
+    <!-- HEADER / NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-700/50 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-microchip text-xl text-slate-950"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-300 bg-clip-text text-transparent">
+                        MÔ PHỎNG KỸ THUẬT SỐ
+                    </h1>
+                    <p class="text-xs text-slate-400">Chương 0: Đại lượng, Mức Logic, Xung & Vi mạch (IC)</p>
+                </div>
+            
+                
+        </div>
+
+            <!-- TAB NAVIGATION BUTTONS -->
+            <nav class="flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800 text-xs sm:text-sm font-medium">
+                <button id="tab-btn-1" onclick="switchTab(1)" class="tab-btn px-3 py-2 rounded-lg flex items-center gap-2 transition-all bg-cyan-600 text-white shadow">
+                    <i class="fa-solid fa-wave-square"></i>
+                    <span>Mod 1: Sóng & Xung</span>
+                </button>
+                <button id="tab-btn-2" onclick="switchTab(2)" class="tab-btn px-3 py-2 rounded-lg flex items-center gap-2 transition-all text-slate-400 hover:text-slate-200">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Mod 2: Mức Logic & Nhiễu</span>
+                </button>
+                <button id="tab-btn-3" onclick="switchTab(3)" class="tab-btn px-3 py-2 rounded-lg flex items-center gap-2 transition-all text-slate-400 hover:text-slate-200">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>Mod 3: Đóng gói IC & Chân</span>
+                </button>
+            </nav>
+                
+        
+                <a href="../index.html" class="group shrink-0 inline-flex items-center gap-1.5 rounded-full border border-slate-600/50 bg-slate-800/70 px-3 py-1.5 text-xs font-semibold text-slate-300 shadow-sm transition-all duration-200 hover:-translate-y-px hover:border-cyan-500/60 hover:bg-cyan-500/10 hover:text-cyan-300 hover:shadow-cyan-500/20 active:translate-y-0" title="Về trang chủ Kỹ thuật số">
+              <svg class="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+              Quay lại
+            </a>
+        </div>            
+        
+    
+
+                
+    
+
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6">
+
+        <!-- ========================================================================================= -->
+        <!-- MODULE 1: ANALOG VS DIGITAL & WAVEFORM PARAMETERS -->
+        <!-- ========================================================================================= -->
+        <section id="module-1" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- 2D Canvas Waveform Display -->
+                <div class="lg:col-span-7 glass-panel rounded-2xl p-5 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-cyan-400"></i>
+                            <h2 class="font-semibold text-slate-200">2D: Sóng Analog vs Lấy Mẫu Digital</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">Real-time Canvas</span>
+                    </div>
+
+                    <!-- 2D Wave Canvas -->
+                    <div class="relative w-full h-72 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                        <canvas id="canvas2d-mod1" class="w-full h-full block"></canvas>
+                    </div>
+
+                    <!-- Formula & Theory Summary -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                        <div class="glass-card p-3 rounded-xl">
+                            <p class="text-slate-400">Chu kỳ T</p>
+                            <p id="val-T" class="text-base font-bold font-mono text-cyan-400">10.0 ms</p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl">
+                            <p class="text-slate-400">Tần số f = 1/T</p>
+                            <p id="val-f" class="text-base font-bold font-mono text-emerald-400">100 Hz</p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl">
+                            <p class="text-slate-400">Độ rộng xung t<sub>w</sub></p>
+                            <p id="val-tw" class="text-base font-bold font-mono text-amber-400">5.0 ms</p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl">
+                            <p class="text-slate-400">Duty Cycle D</p>
+                            <p id="val-D" class="text-base font-bold font-mono text-teal-400">50 %</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Oscilloscope View -->
+                <div class="lg:col-span-5 glass-panel rounded-2xl p-5 flex flex-col justify-between gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-eye text-emerald-400"></i>
+                            <h2 class="font-semibold text-slate-200">3D: Máy Hiện Sóng & Dải Electron</h2>
+                        </div>
+                        <button onclick="resetCameraMod1()" class="text-xs text-slate-400 hover:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-rotate-left mr-1"></i>Reset Camera
+                        </button>
+                    </div>
+
+                    <!-- 3D Canvas -->
+                    <div id="container3d-mod1" class="w-full h-72 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden relative">
+                        <div class="absolute bottom-2 left-2 z-10 text-[10px] text-slate-400 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">
+                            <i class="fa-solid fa-hand-pointer mr-1"></i>Xoay 3D bằng chuột
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Mô hình 3D trực quan hóa xung tín hiệu lan truyền dưới dạng ribbon ánh sáng và các hạt electron dao động theo thời gian trong không gian 3 chiều.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- CONTROLS & THEORY PANEL -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Sliders Control Panel -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-5 space-y-4">
+                    <h3 class="font-semibold text-sm text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Bảng Điều Chỉnh Tín Hiệu & Xung
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <!-- Frequency slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label class="text-slate-300">Tần số f (Hz):</label>
+                                <span id="lbl-f" class="font-mono text-cyan-400">100 Hz</span>
+                            </div>
+                            <input type="range" id="slider-f" min="20" max="200" step="5" value="100" class="w-full">
+                        </div>
+
+                        <!-- Duty Cycle slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label class="text-slate-300">Duty Cycle D (%):</label>
+                                <span id="lbl-duty" class="font-mono text-teal-400">50 %</span>
+                            </div>
+                            <input type="range" id="slider-duty" min="10" max="90" step="5" value="50" class="w-full">
+                        </div>
+
+                        <!-- Sampling Rate slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label class="text-slate-300">Tần số Lấy Mẫu (Digital):</label>
+                                <span id="lbl-fs" class="font-mono text-emerald-400">12 Mẫu/Chu kỳ</span>
+                            </div>
+                            <input type="range" id="slider-fs" min="4" max="32" step="2" value="12" class="w-full">
+                        </div>
+
+                        <!-- Non-ideal Rise/Fall time slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label class="text-slate-300">Sườn Lên/Xuống (Rise/Fall t<sub>r</sub>):</label>
+                                <span id="lbl-tr" class="font-mono text-amber-400">1.0 ms</span>
+                            </div>
+                            <input type="range" id="slider-tr" min="0.1" max="3.0" step="0.1" value="1.0" class="w-full">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theory Explanation Card -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-5 space-y-3 text-xs leading-relaxed">
+                    <h3 class="font-semibold text-sm text-emerald-400 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> Tóm Tắt Lý Thuyết (Hình 0.1 - 0.6)
+                    </h3>
+                    <ul class="space-y-2 text-slate-300 list-disc list-inside">
+                        <li><strong class="text-cyan-300">Đại lượng Tương tự (Analog):</strong> Có tập hợp các giá trị liên tục theo thời gian (ví dụ: Nhiệt độ môi trường, Điện áp liên tục).</li>
+                        <li><strong class="text-emerald-300">Đại lượng Số (Digital):</strong> Là các giá trị rời rạc theo thời gian, đại diện bởi các mã nhị phân (0 và 1).</li>
+                        <li><strong class="text-amber-300">Giản đồ xung thực tế (Non-ideal):</strong>
+                            Không thể lên/xuống ngay lập tức mà cần thời gian sườn lên <em>t<sub>r</sub></em> (Rise time 10% &rarr; 90%) và sườn xuống <em>t<sub>f</sub></em> (Fall time 90% &rarr; 10%).
+                        </li>
+                        <li><strong class="text-teal-300">Công thức Duty Cycle:</strong> $D = \frac{t_w}{T} \times 100\%$ biểu diễn tỉ lệ phần trăm thời gian xung ở mức Cao.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================================= -->
+        <!-- MODULE 2: LOGIC LEVELS & NOISE MARGIN -->
+        <!-- ========================================================================================= -->
+        <section id="module-2" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- 2D Logic Levels & Noise Margin Diagram -->
+                <div class="lg:col-span-7 glass-panel rounded-2xl p-5 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                            <h2 class="font-semibold text-slate-200">2D: Sơ Đồ Mức Điện Áp & Lề Nhiễu (Noise Margin)</h2>
+                        </div>
+                        <!-- Preset selectors -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="setLogicStandard('TTL')" id="btn-ttl" class="px-2.5 py-1 rounded text-xs bg-cyan-600 text-white font-semibold">TTL (5V)</button>
+                            <button onclick="setLogicStandard('CMOS')" id="btn-cmos" class="px-2.5 py-1 rounded text-xs bg-slate-800 text-slate-400 hover:text-white">CMOS (5V)</button>
+                        </div>
+                    </div>
+
+                    <!-- 2D Diagram Canvas -->
+                    <div class="relative w-full h-80 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                        <canvas id="canvas2d-mod2" class="w-full h-full block"></canvas>
+                    </div>
+
+                    <!-- Calculated Margins Card -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                        <div class="glass-card p-3 rounded-xl border-l-4 border-emerald-500">
+                            <p class="text-slate-400">Lề nhiễu mức Cao V<sub>NH</sub></p>
+                            <p id="val-VNH" class="text-base font-bold font-mono text-emerald-400">0.40 V</p>
+                            <p class="text-[10px] text-slate-500">V<sub>OH(min)</sub> - V<sub>IH(min)</sub></p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl border-l-4 border-cyan-500">
+                            <p class="text-slate-400">Lề nhiễu mức Thấp V<sub>NL</sub></p>
+                            <p id="val-VNL" class="text-base font-bold font-mono text-cyan-400">0.40 V</p>
+                            <p class="text-[10px] text-slate-500">V<sub>IL(max)</sub> - V<sub>OL(max)</sub></p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl border-l-4 border-amber-500">
+                            <p class="text-slate-400">Điện áp vào + Nhiễu</p>
+                            <p id="val-VinNoise" class="text-base font-bold font-mono text-amber-400">5.00 V</p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl border-l-4 border-rose-500">
+                            <p class="text-slate-400">Trạng Thái Logic Ngõ Vào</p>
+                            <p id="val-LogicState" class="text-base font-bold font-mono text-emerald-400">HIGH (1)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Circuit Testbed View -->
+                <div class="lg:col-span-5 glass-panel rounded-2xl p-5 flex flex-col justify-between gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-microchip text-emerald-400"></i>
+                            <h2 class="font-semibold text-slate-200">3D: Mạch Thử Logic & Đèn Báo LED</h2>
+                        </div>
+                        <button onclick="resetCameraMod2()" class="text-xs text-slate-400 hover:text-cyan-400">
+                            <i class="fa-solid fa-rotate-left mr-1"></i>Reset Camera
+                        </button>
+                    </div>
+
+                    <!-- 3D Canvas -->
+                    <div id="container3d-mod2" class="w-full h-80 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden relative">
+                        <!-- LED State overlay -->
+                        <div class="absolute top-3 right-3 z-10 glass-card px-3 py-1.5 rounded-lg flex items-center gap-2 border border-slate-700">
+                            <div id="led-indicator" class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50 animate-pulse"></div>
+                            <span id="led-text" class="text-xs font-semibold text-emerald-400">Logic HIGH (1)</span>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Mô phỏng 3D thể hiện dòng electron truyền từ nguồn qua IC cổng logic tới LED chỉ thị. LED đổi màu Xanh (Logic 1), Đỏ (Logic 0), hoặc Vàng nhấp nháy (Vùng không xác định).
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- CONTROLS & THEORY -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Noise & Voltage Sliders -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-5 space-y-4">
+                    <h3 class="font-semibold text-sm text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Tiêm Điện Áp & Nhiễu Đường Truyền
+                    </h3>
+
+                    <div class="space-y-4 text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label class="text-slate-300">Điện áp ngõ ra ban đầu (V<sub>out</sub>):</label>
+                                <span id="lbl-vout" class="font-mono text-cyan-400">5.00 V</span>
+                            </div>
+                            <input type="range" id="slider-vout" min="0" max="5.0" step="0.05" value="5.0" class="w-full">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label class="text-slate-300">Tiêm Điện áp Nhiễu (+/- V<sub>noise</sub>):</label>
+                                <span id="lbl-vnoise" class="font-mono text-amber-400">0.00 V</span>
+                            </div>
+                            <input type="range" id="slider-vnoise" min="-2.5" max="2.5" step="0.05" value="0.0" class="w-full">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theoretical Noise Explanation -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-5 space-y-3 text-xs leading-relaxed">
+                    <h3 class="font-semibold text-sm text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> Lề Nhiễu Là Gì? (Hình 0.3 & 0.9)
+                    </h3>
+                    <p class="text-slate-300">
+                        Nhiễu (Noise) do từ trường, điện trường ký sinh trên đường dây kết nối có thể làm sai lệch điện áp ngõ vào mạch logic.
+                    </p>
+                    <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                        <li><strong class="text-emerald-400">V<sub>NH</sub> (Noise Margin High):</strong> Khoảng cách an toàn mức cao: $V_{NH} = V_{OH(min)} - V_{IH(min)}$.</li>
+                        <li><strong class="text-cyan-400">V<sub>NL</sub> (Noise Margin Low):</strong> Khoảng cách an toàn mức thấp: $V_{NL} = V_{IL(max)} - V_{OL(max)}$.</li>
+                        <li><strong class="text-amber-400">Vùng không xác định (Invalid):</strong> Nằm giữa $V_{IL(max)}$ và $V_{IH(min)}$. Nếu điện áp rơi vào đây, mạch logic sẽ hoạt động sai hoặc bất định!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================================= -->
+        <!-- MODULE 3: IC PACKAGING & PIN NUMBERING INSPECTOR -->
+        <!-- ========================================================================================= -->
+        <section id="module-3" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- 3D Interactive IC Inspector -->
+                <div class="lg:col-span-7 glass-panel rounded-2xl p-5 flex flex-col justify-between gap-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-cubes text-cyan-400"></i>
+                            <h2 class="font-semibold text-slate-200">3D IC Inspector - Soi Chi Tiết Vỏ Vi Mạch</h2>
+                        </div>
+                        
+                        <!-- IC Package Selector -->
+                        <div class="flex items-center gap-1.5 bg-slate-900/90 p-1 rounded-lg border border-slate-800 text-xs">
+                            <button onclick="changeICPackage('DIP')" id="pkg-dip" class="px-2.5 py-1 rounded bg-cyan-600 text-white font-semibold">DIP-16</button>
+                            <button onclick="changeICPackage('SOIC')" id="pkg-soic" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">SOIC-16</button>
+                            <button onclick="changeICPackage('PLCC')" id="pkg-plcc" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">PLCC-20</button>
+                        </div>
+                    </div>
+
+                    <!-- 3D Canvas -->
+                    <div id="container3d-mod3" class="w-full h-80 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden relative cursor-pointer">
+                        <div class="absolute bottom-3 left-3 z-10 text-[11px] bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300 space-y-0.5">
+                            <p><i class="fa-solid fa-mouse-pointer text-cyan-400 mr-1.5"></i>Rê chuột lên chân IC để xem số thứ tự & phát sáng</p>
+                            <p><i class="fa-solid fa-arrows-spin text-emerald-400 mr-1.5"></i>Xoay 360° để quan sát Vết Lõm (Notch) & Dấu Chân 1</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2D Pinout Diagram & Probe Reader -->
+                <div class="lg:col-span-5 glass-panel rounded-2xl p-5 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-vial text-emerald-400"></i>
+                            <h2 class="font-semibold text-slate-200">2D Pinout & Đo Que Logic Probe</h2>
+                        </div>
+                        <span id="ic-title-badge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">74LS00 (Quad NAND)</span>
+                    </div>
+
+                    <!-- Active Hovered Pin Info Card -->
+                    <div class="glass-card p-4 rounded-xl border-l-4 border-cyan-400 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400">Chân IC Đang Chọn:</span>
+                            <span id="pin-number-display" class="font-mono text-base font-bold text-cyan-400">CHÂN #1</span>
+                        </div>
+                        <p id="pin-function-display" class="text-xs text-slate-200 font-medium">Chức năng: Ngõ vào A cổng NAND 1 (1A)</p>
+                        <div class="flex justify-between items-center text-xs pt-1 border-t border-slate-800">
+                            <span class="text-slate-400">Mức Logic Đo Được:</span>
+                            <span id="pin-voltage-display" class="font-mono font-bold text-emerald-400">5.0 V (HIGH - 1)</span>
+                        </div>
+                    </div>
+
+                    <!-- 2D Interactive IC Schematic -->
+                    <div class="relative w-full h-52 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center p-3">
+                        <canvas id="canvas2d-mod3" class="w-full h-full block"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- THEORY ON IC INTEGRATION & PACKAGING -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Rule of Pin Numbering -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-5 space-y-3 text-xs leading-relaxed">
+                    <h3 class="font-semibold text-sm text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-rotate-left"></i> Quy Tắc Đánh Số Chân Vi Mạch (Hình 0.7 & 0.8)
+                    </h3>
+                    <ul class="space-y-2 text-slate-300 list-disc list-inside">
+                        <li><strong class="text-cyan-300">Định vị Vết lõm (Notch) / Chấm tròn:</strong> Đặt IC sao cho vết lõm quay lên phía TRÊN (hoặc bên TRÁI). Chấm tròn thể hiện vị trí <strong>Chân 1 (Pin 1 Identifier)</strong>.</li>
+                        <li><strong class="text-emerald-300">Chiều đánh số:</strong> Đánh số bắt đầu từ Chân 1 đếm xuôi xuống theo <strong>NGƯỢC CHIỀU KIM ĐỒNG HỒ</strong> quanh thân chip.</li>
+                        <li><strong class="text-amber-300">Vỏ DIP / SOIC:</strong> Chân 1 ở góc trên bên trái, chân cuối cùng ở góc trên bên phải.</li>
+                        <li><strong class="text-teal-300">Vỏ PLCC / LCCC:</strong> Có chân ở cả 4 cạnh, chân 1 thường ở giữa cạnh trên hoặc góc vát.</li>
+                    </ul>
+                </div>
+
+                <!-- Integration Levels Table -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-5 space-y-3 text-xs">
+                    <h3 class="font-semibold text-sm text-emerald-400 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group"></i> Mức Độ Tích Hợp Vi Mạch Số
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-700 text-slate-400">
+                                    <th class="py-1.5 px-2">Loại Vi Mạch</th>
+                                    <th class="py-1.5 px-2">Số Cổng Cơ Bản</th>
+                                    <th class="py-1.5 px-2">Ví Dụ Ứng Dụng</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-slate-300">
+                                <tr>
+                                    <td class="py-1.5 px-2 font-semibold text-cyan-400">SSI (Small-Scale)</td>
+                                    <td class="py-1.5 px-2">1 &divide; 11 cổng</td>
+                                    <td class="py-1.5 px-2">Cổng cơ bản (NAND, NOR), Flip-Flop</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 px-2 font-semibold text-emerald-400">MSI (Medium-Scale)</td>
+                                    <td class="py-1.5 px-2">12 &divide; 99 cổng</td>
+                                    <td class="py-1.5 px-2">Bộ đếm, Thanh ghi, Bộ giải mã</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 px-2 font-semibold text-amber-400">LSI (Large-Scale)</td>
+                                    <td class="py-1.5 px-2">100 &divide; 9,999 cổng</td>
+                                    <td class="py-1.5 px-2">Bộ nhớ nhỏ, Vi xử lý đơn giản</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 px-2 font-semibold text-teal-400">VLSI / ULSI</td>
+                                    <td class="py-1.5 px-2">&gt; 10,000 cổng</td>
+                                    <td class="py-1.5 px-2">CPU, GPU, Chip Smartphone</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-slate-800 py-4 px-6 text-center text-xs text-slate-400 mt-8">
+        <p>Ứng dụng Mô Phỏng Học Tập Kỹ Thuật Số 3D & 2D &bull; Giáo Trình Kỹ Thuật Số - Chương 0</p>
+    </footer>
+
+    <!-- ========================================================================================= -->
+    <!-- JAVASCRIPT SIMULATION CORE LOGIC -->
+    <!-- ========================================================================================= -->
+    <script>
+        // --- TAB SWITCHING SYSTEM ---
+        let currentTab = 1;
+        function switchTab(tabIndex) {
+            currentTab = tabIndex;
+            document.querySelectorAll('.tab-content').forEach((el, idx) => {
+                el.classList.toggle('hidden', idx !== tabIndex - 1);
+            });
+            document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+                if (idx === tabIndex - 1) {
+                    btn.className = "tab-btn px-3 py-2 rounded-lg flex items-center gap-2 transition-all bg-cyan-600 text-white shadow";
+                } else {
+                    btn.className = "tab-btn px-3 py-2 rounded-lg flex items-center gap-2 transition-all text-slate-400 hover:text-slate-200";
+                }
+            });
+            // Trigger resize for Three.js renderers
+            onWindowResize();
+        }
+
+        // =========================================================================================
+        // MODULE 1: 2D WAVEFORM & 3D OSCILLOSCOPE SIMULATION
+        // =========================================================================================
+        const sliderF = document.getElementById('slider-f');
+        const sliderDuty = document.getElementById('slider-duty');
+        const sliderFs = document.getElementById('slider-fs');
+        const sliderTr = document.getElementById('slider-tr');
+
+        let mod1State = {
+            f: 100, // Hz
+            duty: 50, // %
+            fs: 12, // samples per cycle
+            tr: 1.0 // ms
+        };
+
+        function updateMod1Params() {
+            mod1State.f = parseFloat(sliderF.value);
+            mod1State.duty = parseFloat(sliderDuty.value);
+            mod1State.fs = parseInt(sliderFs.value);
+            mod1State.tr = parseFloat(sliderTr.value);
+
+            const T = 1000 / mod1State.f; // Period in ms
+            const tw = (mod1State.duty / 100) * T;
+
+            document.getElementById('lbl-f').innerText = `${mod1State.f} Hz`;
+            document.getElementById('lbl-duty').innerText = `${mod1State.duty} %`;
+            document.getElementById('lbl-fs').innerText = `${mod1State.fs} Mẫu/Chu kỳ`;
+            document.getElementById('lbl-tr').innerText = `${mod1State.tr.toFixed(1)} ms`;
+
+            document.getElementById('val-T').innerText = `${T.toFixed(1)} ms`;
+            document.getElementById('val-f').innerText = `${mod1State.f} Hz`;
+            document.getElementById('val-tw').innerText = `${tw.toFixed(1)} ms`;
+            document.getElementById('val-D').innerText = `${mod1State.duty} %`;
+        }
+
+        sliderF.addEventListener('input', updateMod1Params);
+        sliderDuty.addEventListener('input', updateMod1Params);
+        sliderFs.addEventListener('input', updateMod1Params);
+        sliderTr.addEventListener('input', updateMod1Params);
+
+        // --- 2D CANVAS WAVEFORM RENDERER ---
+        const canvasMod1 = document.getElementById('canvas2d-mod1');
+        const ctxMod1 = canvasMod1.getContext('2d');
+
+        function draw2DMod1Waveform(time) {
+            if (currentTab !== 1) return;
+            const width = canvasMod1.width = canvasMod1.parentElement.clientWidth;
+            const height = canvasMod1.height = canvasMod1.parentElement.clientHeight;
+
+            ctxMod1.clearRect(0, 0, width, height);
+
+            // Grid background
+            ctxMod1.strokeStyle = 'rgba(51, 65, 85, 0.4)';
+            ctxMod1.lineWidth = 1;
+            const gridSpacing = 30;
+            for (let x = 0; x < width; x += gridSpacing) {
+                ctxMod1.beginPath();
+                ctxMod1.moveTo(x, 0); ctxMod1.lineTo(x, height); ctxMod1.stroke();
+            }
+            for (let y = 0; y < height; y += gridSpacing) {
+                ctxMod1.beginPath();
+                ctxMod1.moveTo(0, y); ctxMod1.lineTo(width, y); ctxMod1.stroke();
+            }
+
+            // Axes
+            const midY1 = height * 0.3; // Analog wave center
+            const midY2 = height * 0.75; // Digital wave baseline
+            const waveAmp = 35;
+
+            ctxMod1.strokeStyle = '#475569';
+            ctxMod1.beginPath();
+            ctxMod1.moveTo(0, midY1); ctxMod1.lineTo(width, midY1);
+            ctxMod1.moveTo(0, midY2); ctxMod1.lineTo(width, midY2);
+            ctxMod1.stroke();
+
+            // Labels
+            ctxMod1.fillStyle = '#38bdf8';
+            ctxMod1.font = '11px Inter';
+            ctxMod1.fillText('Tín Hiệu Tương Tự (Analog)', 10, 20);
+
+            ctxMod1.fillStyle = '#10b981';
+            ctxMod1.fillText('Tín Hiệu Số (Digital Pulse & Sampling)', 10, midY1 + 45);
+
+            // Draw Analog Wave (Sine/Continuous)
+            ctxMod1.strokeStyle = '#38bdf8';
+            ctxMod1.lineWidth = 2.5;
+            ctxMod1.beginPath();
+            const freqFactor = (mod1State.f / 100) * 0.02;
+            for (let x = 0; x < width; x++) {
+                const y = midY1 - Math.sin((x * freqFactor) - (time * 0.003)) * waveAmp;
+                if (x === 0) ctxMod1.moveTo(x, y);
+                else ctxMod1.lineTo(x, y);
+            }
+            ctxMod1.stroke();
+
+            // Draw Digital Waveform with Rise/Fall time
+            const cyclePixels = 120 / (mod1State.f / 100);
+            const highPixels = cyclePixels * (mod1State.duty / 100);
+            const risePixels = Math.min(20, cyclePixels * 0.1 * (mod1State.tr));
+
+            ctxMod1.strokeStyle = '#10b981';
+            ctxMod1.lineWidth = 2.5;
+            ctxMod1.beginPath();
+
+            const shiftX = (time * 0.1) % cyclePixels;
+            let currentX = 0;
+
+            ctxMod1.moveTo(0, midY2);
+            while (currentX < width + cyclePixels) {
+                const x0 = currentX - shiftX;
+                const xRiseEnd = x0 + risePixels;
+                const xFallStart = x0 + highPixels;
+                const xFallEnd = xFallStart + risePixels;
+                const xCycleEnd = x0 + cyclePixels;
+
+                // Low phase
+                ctxMod1.lineTo(Math.max(0, x0), midY2);
+                // Rise
+                ctxMod1.lineTo(Math.max(0, xRiseEnd), midY2 - waveAmp);
+                // High phase
+                ctxMod1.lineTo(Math.max(0, xFallStart), midY2 - waveAmp);
+                // Fall
+                ctxMod1.lineTo(Math.max(0, xFallEnd), midY2);
+                // Low end
+                ctxMod1.lineTo(Math.max(0, xCycleEnd), midY2);
+
+                currentX += cyclePixels;
+            }
+            ctxMod1.stroke();
+
+            // Draw Discrete Sampling Points on Analog wave
+            const sampleStep = cyclePixels / mod1State.fs;
+            ctxMod1.fillStyle = '#f59e0b';
+            ctxMod1.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+            ctxMod1.lineWidth = 1;
+
+            for (let sx = 0; sx < width; sx += sampleStep) {
+                const sy = midY1 - Math.sin((sx * freqFactor) - (time * 0.003)) * waveAmp;
+                // Stem line
+                ctxMod1.beginPath();
+                ctxMod1.moveTo(sx, midY1);
+                ctxMod1.lineTo(sx, sy);
+                ctxMod1.stroke();
+                // Sample Dot
+                ctxMod1.beginPath();
+                ctxMod1.arc(sx, sy, 3.5, 0, Math.PI * 2);
+                ctxMod1.fill();
+            }
+        }
+
+        // --- 3D THREE.JS OSCILLOSCOPE SCENE ---
+        let scene1, camera1, renderer1, controls1, ribbonMesh1, particles1;
+
+        function init3DMod1() {
+            const container = document.getElementById('container3d-mod1');
+            scene1 = new THREE.Scene();
+            scene1.fog = new THREE.FogExp2(0x0f172a, 0.02);
+
+            camera1 = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera1.position.set(0, 5, 12);
+
+            renderer1 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer1.setSize(container.clientWidth, container.clientHeight);
+            renderer1.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer1.domElement);
+
+            controls1 = new THREE.OrbitControls(camera1, renderer1.domElement);
+            controls1.enableDamping = true;
+            controls1.dampingFactor = 0.05;
+
+            // Oscilloscope Grid Frame
+            const gridHelper = new THREE.GridHelper(12, 12, 0x38bdf8, 0x1e293b);
+            gridHelper.position.y = -2;
+            scene1.add(gridHelper);
+
+            // Ambient & Point Lights
+            const ambLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene1.add(ambLight);
+
+            const pointLight = new THREE.PointLight(0x38bdf8, 1.5, 20);
+            pointLight.position.set(0, 4, 4);
+            scene1.add(pointLight);
+
+            // Dynamic Wave Ribbon Mesh
+            const ribbonGeo = new THREE.PlaneGeometry(12, 2, 80, 1);
+            const ribbonMat = new THREE.MeshPhongMaterial({
+                color: 0x10b981,
+                emissive: 0x047857,
+                side: THREE.DoubleSide,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.85
+            });
+            ribbonMesh1 = new THREE.Mesh(ribbonGeo, ribbonMat);
+            scene1.add(ribbonMesh1);
+
+            // Floating Electron Particles
+            const pCount = 150;
+            const pGeo = new THREE.BufferGeometry();
+            const pPos = new Float32Array(pCount * 3);
+            for (let i = 0; i < pCount * 3; i += 3) {
+                pPos[i] = (Math.random() - 0.5) * 12;
+                pPos[i + 1] = (Math.random() - 0.5) * 4;
+                pPos[i + 2] = (Math.random() - 0.5) * 4;
+            }
+            pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+            const pMat = new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.15, transparent: true, opacity: 0.8 });
+            particles1 = new THREE.Points(pGeo, pMat);
+            scene1.add(particles1);
+        }
+
+        function animate3DMod1(time) {
+            if (ribbonMesh1) {
+                const pos = ribbonMesh1.geometry.attributes.position;
+                const freq = mod1State.f / 50;
+                for (let i = 0; i < pos.count; i++) {
+                    const x = pos.getX(i);
+                    // Generate pulse wave formula in 3D
+                    const val = Math.sin((x * freq) + (time * 0.003));
+                    const pulse = val > 0 ? 1.5 : -1.5;
+                    pos.setY(i, pulse);
+                }
+                pos.needsUpdate = true;
+            }
+
+            if (particles1) {
+                const pPos = particles1.geometry.attributes.position;
+                for (let i = 0; i < pPos.count; i++) {
+                    let x = pPos.getX(i);
+                    x += 0.04;
+                    if (x > 6) x = -6;
+                    pPos.setX(i, x);
+                }
+                pPos.needsUpdate = true;
+            }
+
+            if (controls1) controls1.update();
+            if (renderer1 && scene1 && camera1) renderer1.render(scene1, camera1);
+        }
+
+        function resetCameraMod1() {
+            camera1.position.set(0, 5, 12);
+            camera1.lookAt(0, 0, 0);
+        }
+
+
+        // =========================================================================================
+        // MODULE 2: LOGIC LEVELS & NOISE MARGIN SIMULATION
+        // =========================================================================================
+        let logicStandards = {
+            TTL: { VOH: 2.7, VIH: 2.0, VIL: 0.8, VOL: 0.4, VCC: 5.0 },
+            CMOS: { VOH: 4.4, VIH: 3.5, VIL: 1.5, VOL: 0.33, VCC: 5.0 }
+        };
+        let currentStandard = 'TTL';
+
+        let mod2State = {
+            vout: 5.0,
+            vnoise: 0.0
+        };
+
+        const sliderVout = document.getElementById('slider-vout');
+        const sliderVnoise = document.getElementById('slider-vnoise');
+
+        function setLogicStandard(std) {
+            currentStandard = std;
+            document.getElementById('btn-ttl').className = std === 'TTL' ? 'px-2.5 py-1 rounded text-xs bg-cyan-600 text-white font-semibold' : 'px-2.5 py-1 rounded text-xs bg-slate-800 text-slate-400 hover:text-white';
+            document.getElementById('btn-cmos').className = std === 'CMOS' ? 'px-2.5 py-1 rounded text-xs bg-cyan-600 text-white font-semibold' : 'px-2.5 py-1 rounded text-xs bg-slate-800 text-slate-400 hover:text-white';
+            updateMod2();
+        }
+
+        function updateMod2() {
+            mod2State.vout = parseFloat(sliderVout.value);
+            mod2State.vnoise = parseFloat(sliderVnoise.value);
+
+            document.getElementById('lbl-vout').innerText = `${mod2State.vout.toFixed(2)} V`;
+            document.getElementById('lbl-vnoise').innerText = `${mod2State.vnoise >= 0 ? '+' : ''}${mod2State.vnoise.toFixed(2)} V`;
+
+            const std = logicStandards[currentStandard];
+            const VNH = std.VOH - std.VIH;
+            const VNL = std.VIL - std.VOL;
+            const vinTotal = mod2State.vout + mod2State.vnoise;
+
+            document.getElementById('val-VNH').innerText = `${VNH.toFixed(2)} V`;
+            document.getElementById('val-VNL').innerText = `${VNL.toFixed(2)} V`;
+            document.getElementById('val-VinNoise').innerText = `${vinTotal.toFixed(2)} V`;
+
+            // Logic State Assessment
+            const stateEl = document.getElementById('val-LogicState');
+            const ledIndicator = document.getElementById('led-indicator');
+            const ledText = document.getElementById('led-text');
+
+            if (vinTotal >= std.VIH) {
+                stateEl.innerText = "HIGH (1)";
+                stateEl.className = "text-base font-bold font-mono text-emerald-400";
+                ledIndicator.className = "w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50 animate-pulse";
+                ledText.innerText = "Logic HIGH (1)";
+                ledText.className = "text-xs font-semibold text-emerald-400";
+                if (mod2LedMesh) mod2LedMesh.material.color.setHex(0x10b981);
+            } else if (vinTotal <= std.VIL) {
+                stateEl.innerText = "LOW (0)";
+                stateEl.className = "text-base font-bold font-mono text-rose-400";
+                ledIndicator.className = "w-3.5 h-3.5 rounded-full bg-rose-500 shadow-lg shadow-rose-500/50";
+                ledText.innerText = "Logic LOW (0)";
+                ledText.className = "text-xs font-semibold text-rose-400";
+                if (mod2LedMesh) mod2LedMesh.material.color.setHex(0xf43f5e);
+            } else {
+                stateEl.innerText = "KHÔNG XÁC ĐỊNH";
+                stateEl.className = "text-base font-bold font-mono text-amber-400 animate-pulse";
+                ledIndicator.className = "w-3.5 h-3.5 rounded-full bg-amber-500 shadow-lg shadow-amber-500/50 animate-ping";
+                ledText.innerText = "VÙNG BẤT ĐỊNH!";
+                ledText.className = "text-xs font-semibold text-amber-400";
+                if (mod2LedMesh) mod2LedMesh.material.color.setHex(0xf59e0b);
+            }
+        }
+
+        sliderVout.addEventListener('input', updateMod2);
+        sliderVnoise.addEventListener('input', updateMod2);
+
+        // --- 2D VOLTAGE BARS CANVAS ---
+        const canvasMod2 = document.getElementById('canvas2d-mod2');
+        const ctxMod2 = canvasMod2.getContext('2d');
+
+        function draw2DMod2Diagram() {
+            if (currentTab !== 2) return;
+            const width = canvasMod2.width = canvasMod2.parentElement.clientWidth;
+            const height = canvasMod2.height = canvasMod2.parentElement.clientHeight;
+
+            ctxMod2.clearRect(0, 0, width, height);
+
+            const std = logicStandards[currentStandard];
+            const maxV = 5.5;
+            const scaleY = (height - 60) / maxV;
+            const mapY = (v) => height - 30 - (v * scaleY);
+
+            // Columns positions
+            const col1X = width * 0.25; // Output Voltage Spectrum
+            const col2X = width * 0.75; // Input Voltage Spectrum
+            const colWidth = 70;
+
+            // Header labels
+            ctxMod2.fillStyle = '#f8fafc';
+            ctxMod2.font = '12px Inter';
+            ctxMod2.textAlign = 'center';
+            ctxMod2.fillText('Tầm Điện Áp Ra (Output)', col1X, 20);
+            ctxMod2.fillText('Tầm Điện Áp Vào (Input)', col2X, 20);
+
+            // Voltage axis scale
+            ctxMod2.strokeStyle = '#334155';
+            ctxMod2.lineWidth = 1;
+            for (let v = 0; v <= 5; v++) {
+                const y = mapY(v);
+                ctxMod2.beginPath(); ctxMod2.moveTo(40, y); ctxMod2.lineTo(width - 20, y); ctxMod2.stroke();
+                ctxMod2.fillStyle = '#64748b';
+                ctxMod2.font = '10px Fira Code';
+                ctxMod2.textAlign = 'right';
+                ctxMod2.fillText(`${v}.0V`, 35, y + 3);
+            }
+
+            // Draw Output Spectrum Bar
+            // HIGH zone (VOH to VCC)
+            ctxMod2.fillStyle = 'rgba(16, 185, 129, 0.25)';
+            ctxMod2.fillRect(col1X - colWidth/2, mapY(std.VCC), colWidth, mapY(std.VOH) - mapY(std.VCC));
+            ctxMod2.strokeStyle = '#10b981';
+            ctxMod2.strokeRect(col1X - colWidth/2, mapY(std.VCC), colWidth, mapY(std.VOH) - mapY(std.VCC));
+
+            // LOW zone (0 to VOL)
+            ctxMod2.fillStyle = 'rgba(244, 63, 94, 0.25)';
+            ctxMod2.fillRect(col1X - colWidth/2, mapY(std.VOL), colWidth, mapY(0) - mapY(std.VOL));
+            ctxMod2.strokeStyle = '#f43f5e';
+            ctxMod2.strokeRect(col1X - colWidth/2, mapY(std.VOL), colWidth, mapY(0) - mapY(std.VOL));
+
+            // Draw Input Spectrum Bar
+            // HIGH Input (VIH to VCC)
+            ctxMod2.fillStyle = 'rgba(16, 185, 129, 0.3)';
+            ctxMod2.fillRect(col2X - colWidth/2, mapY(std.VCC), colWidth, mapY(std.VIH) - mapY(std.VCC));
+            ctxMod2.strokeStyle = '#10b981';
+            ctxMod2.strokeRect(col2X - colWidth/2, mapY(std.VCC), colWidth, mapY(std.VIH) - mapY(std.VCC));
+
+            // INVALID Zone (VIL to VIH)
+            ctxMod2.fillStyle = 'rgba(245, 158, 11, 0.35)';
+            ctxMod2.fillRect(col2X - colWidth/2, mapY(std.VIH), colWidth, mapY(std.VIL) - mapY(std.VIH));
+            ctxMod2.strokeStyle = '#f59e0b';
+            ctxMod2.strokeRect(col2X - colWidth/2, mapY(std.VIH), colWidth, mapY(std.VIL) - mapY(std.VIH));
+
+            // LOW Input (0 to VIL)
+            ctxMod2.fillStyle = 'rgba(244, 63, 94, 0.3)';
+            ctxMod2.fillRect(col2X - colWidth/2, mapY(std.VIL), colWidth, mapY(0) - mapY(std.VIL));
+            ctxMod2.strokeStyle = '#f43f5e';
+            ctxMod2.strokeRect(col2X - colWidth/2, mapY(std.VIL), colWidth, mapY(0) - mapY(std.VIL));
+
+            // Labels inside bars
+            ctxMod2.fillStyle = '#f8fafc';
+            ctxMod2.font = '10px Inter';
+            ctxMod2.textAlign = 'center';
+            ctxMod2.fillText(`VOH(min)=${std.VOH}V`, col1X, mapY(std.VOH) - 5);
+            ctxMod2.fillText(`VOL(max)=${std.VOL}V`, col1X, mapY(std.VOL) + 12);
+
+            ctxMod2.fillText(`VIH(min)=${std.VIH}V`, col2X, mapY(std.VIH) - 5);
+            ctxMod2.fillText(`K.XÁC ĐỊNH`, col2X, (mapY(std.VIH) + mapY(std.VIL)) / 2 + 3);
+            ctxMod2.fillText(`VIL(max)=${std.VIL}V`, col2X, mapY(std.VIL) + 12);
+
+            // Draw Transmission Line with Noise Arrow
+            const vinTotal = mod2State.vout + mod2State.vnoise;
+            const yOut = mapY(mod2State.vout);
+            const yIn = mapY(Math.min(maxV, Math.max(0, vinTotal)));
+
+            ctxMod2.strokeStyle = '#38bdf8';
+            ctxMod2.lineWidth = 3;
+            ctxMod2.beginPath();
+            ctxMod2.moveTo(col1X + colWidth/2, yOut);
+            ctxMod2.lineTo(col2X - colWidth/2, yIn);
+            ctxMod2.stroke();
+
+            // Point dot on Input
+            ctxMod2.fillStyle = '#38bdf8';
+            ctxMod2.beginPath();
+            ctxMod2.arc(col2X - colWidth/2, yIn, 5, 0, Math.PI*2);
+            ctxMod2.fill();
+        }
+
+        // --- 3D LOGIC GATE TESTBED SCENE ---
+        let scene2, camera2, renderer2, controls2, mod2LedMesh, flowParticles2;
+
+        function init3DMod2() {
+            const container = document.getElementById('container3d-mod2');
+            scene2 = new THREE.Scene();
+
+            camera2 = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera2.position.set(0, 6, 10);
+
+            renderer2 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer2.setSize(container.clientWidth, container.clientHeight);
+            renderer2.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer2.domElement);
+
+            controls2 = new THREE.OrbitControls(camera2, renderer2.domElement);
+            controls2.enableDamping = true;
+
+            // Lights
+            scene2.add(new THREE.AmbientLight(0xffffff, 0.7));
+            const pLight = new THREE.PointLight(0xffffff, 1, 20);
+            pLight.position.set(2, 5, 5);
+            scene2.add(pLight);
+
+            // PCB Circuit Board Base
+            const boardGeo = new THREE.BoxGeometry(8, 0.3, 5);
+            const boardMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.4 });
+            const board = new THREE.Mesh(boardGeo, boardMat);
+            board.position.y = -0.5;
+            scene2.add(board);
+
+            // IC Logic Chip Box
+            const icGeo = new THREE.BoxGeometry(2, 0.6, 2);
+            const icMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8 });
+            const icMesh = new THREE.Mesh(icGeo, icMat);
+            icMesh.position.set(-1, 0, 0);
+            scene2.add(icMesh);
+
+            // LED Bulb indicator
+            const ledGeo = new THREE.SphereGeometry(0.6, 32, 32);
+            const ledMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.2, emissive: 0x047857 });
+            mod2LedMesh = new THREE.Mesh(ledGeo, ledMat);
+            mod2LedMesh.position.set(2.5, 0.4, 0);
+            scene2.add(mod2LedMesh);
+
+            // LED Base Socket
+            const socketGeo = new THREE.CylinderGeometry(0.7, 0.7, 0.3, 32);
+            const socketMat = new THREE.MeshStandardMaterial({ color: 0x334155 });
+            const socket = new THREE.Mesh(socketGeo, socketMat);
+            socket.position.set(2.5, 0, 0);
+            scene2.add(socket);
+        }
+
+        function resetCameraMod2() {
+            camera2.position.set(0, 6, 10);
+            camera2.lookAt(0, 0, 0);
+        }
+
+        function animate3DMod2() {
+            if (controls2) controls2.update();
+            if (renderer2 && scene2 && camera2) renderer2.render(scene2, camera2);
+        }
+
+
+        // =========================================================================================
+        // MODULE 3: 3D IC PACKAGING INSPECTOR & PINOUT PROBE
+        // =========================================================================================
+        let currentICPackage = 'DIP';
+        let scene3, camera3, renderer3, controls3, icGroup3;
+        let raycaster3, mouse3, hoveredPinIndex = null;
+
+        const pinData74LS00 = [
+            { num: 1, name: "1A", func: "Ngõ vào A cổng NAND 1", type: "Input" },
+            { num: 2, name: "1B", func: "Ngõ vào B cổng NAND 1", type: "Input" },
+            { num: 3, name: "1Y", func: "Ngõ ra Y cổng NAND 1", type: "Output" },
+            { num: 4, name: "2A", func: "Ngõ vào A cổng NAND 2", type: "Input" },
+            { num: 5, name: "2B", func: "Ngõ vào B cổng NAND 2", type: "Input" },
+            { num: 6, name: "2Y", func: "Ngõ ra Y cổng NAND 2", type: "Output" },
+            { num: 7, name: "GND", func: "Chân Nối Đất (0V)", type: "Power" },
+            { num: 8, name: "3Y", func: "Ngõ ra Y cổng NAND 3", type: "Output" },
+            { num: 9, name: "3A", func: "Ngõ vào A cổng NAND 3", type: "Input" },
+            { num: 10, name: "3B", func: "Ngõ vào B cổng NAND 3", type: "Input" },
+            { num: 11, name: "4Y", func: "Ngõ ra Y cổng NAND 4", type: "Output" },
+            { num: 12, name: "4A", func: "Ngõ vào A cổng NAND 4", type: "Input" },
+            { num: 13, name: "4B", func: "Ngõ vào B cổng NAND 4", type: "Input" },
+            { num: 14, name: "VCC", func: "Nguồn Cấp Dương (+5V)", type: "Power" },
+            { num: 15, name: "NC", func: "Chân Không Kết Nối (No Connect)", type: "NC" },
+            { num: 16, name: "NC", func: "Chân Không Kết Nối (No Connect)", type: "NC" },
+            { num: 17, name: "NC", func: "Chân Không Kết Nối (No Connect)", type: "NC" },
+            { num: 18, name: "NC", func: "Chân Không Kết Nối (No Connect)", type: "NC" },
+            { num: 19, name: "NC", func: "Chân Không Kết Nối (No Connect)", type: "NC" },
+            { num: 20, name: "NC", func: "Chân Không Kết Nối (No Connect)", type: "NC" }
+        ];
+
+        function changeICPackage(pkg) {
+            currentICPackage = pkg;
+            document.getElementById('pkg-dip').className = pkg === 'DIP' ? 'px-2.5 py-1 rounded bg-cyan-600 text-white font-semibold' : 'px-2.5 py-1 rounded text-slate-400 hover:text-white';
+            document.getElementById('pkg-soic').className = pkg === 'SOIC' ? 'px-2.5 py-1 rounded bg-cyan-600 text-white font-semibold' : 'px-2.5 py-1 rounded text-slate-400 hover:text-white';
+            document.getElementById('pkg-plcc').className = pkg === 'PLCC' ? 'px-2.5 py-1 rounded bg-cyan-600 text-white font-semibold' : 'px-2.5 py-1 rounded text-slate-400 hover:text-white';
+
+            build3DICMesh();
+        }
+
+        function init3DMod3() {
+            const container = document.getElementById('container3d-mod3');
+            scene3 = new THREE.Scene();
+
+            camera3 = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera3.position.set(0, 8, 12);
+
+            renderer3 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer3.setSize(container.clientWidth, container.clientHeight);
+            renderer3.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer3.domElement);
+
+            controls3 = new THREE.OrbitControls(camera3, renderer3.domElement);
+            controls3.enableDamping = true;
+            controls3.autoRotate = true;
+            controls3.autoRotateSpeed = 1.0;
+
+            scene3.add(new THREE.AmbientLight(0xffffff, 0.8));
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(5, 10, 7);
+            scene3.add(dirLight);
+
+            raycaster3 = new THREE.Raycaster();
+            mouse3 = new THREE.Vector2();
+
+            container.addEventListener('mousemove', onRaycastMove);
+
+            build3DICMesh();
+        }
+
+        function build3DICMesh() {
+            if (icGroup3) scene3.remove(icGroup3);
+            icGroup3 = new THREE.Group();
+
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.3, metalness: 0.5 });
+            const pinMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.2 });
+
+            if (currentICPackage === 'DIP' || currentICPackage === 'SOIC') {
+                // DIP-16 or SOIC-16 Rectangular Body
+                const bodyGeo = new THREE.BoxGeometry(3.6, 0.8, 6.0);
+                const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
+                icGroup3.add(bodyMesh);
+
+                // Top Notch Cutout
+                const notchGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.9, 16, 1, false, Math.PI, Math.PI);
+                const notchMesh = new THREE.Mesh(notchGeo, bodyMat);
+                notchMesh.position.set(0, 0, -3.0);
+                icGroup3.add(notchMesh);
+
+                // Pin 1 Indicator Dot
+                const dotGeo = new THREE.SphereGeometry(0.15, 16, 16);
+                const dotMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+                const dotMesh = new THREE.Mesh(dotGeo, dotMat);
+                dotMesh.position.set(-1.2, 0.42, -2.4);
+                icGroup3.add(dotMesh);
+
+                // Generate 16 Pins (8 on Left, 8 on Right in Counter-Clockwise Order)
+                for (let i = 0; i < 8; i++) {
+                    const zPos = -2.4 + (i * 0.7);
+                    
+                    // Left Pin (Pins 1 to 8)
+                    const pLeftGeo = new THREE.BoxGeometry(0.8, 0.15, 0.3);
+                    const pLeft = new THREE.Mesh(pLeftGeo, pinMat.clone());
+                    pLeft.position.set(-2.1, -0.2, zPos);
+                    pLeft.userData = { pinIndex: i + 1 };
+                    icGroup3.add(pLeft);
+
+                    // Right Pin (Pins 16 down to 9)
+                    const pRightGeo = new THREE.BoxGeometry(0.8, 0.15, 0.3);
+                    const pRight = new THREE.Mesh(pRightGeo, pinMat.clone());
+                    pRight.position.set(2.1, -0.2, zPos);
+                    pRight.userData = { pinIndex: 16 - i };
+                    icGroup3.add(pRight);
+                }
+            } else if (currentICPackage === 'PLCC') {
+                // PLCC-20 Square Chip Body
+                const bodyGeo = new THREE.BoxGeometry(5.0, 0.8, 5.0);
+                const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
+                icGroup3.add(bodyMesh);
+
+                // Pin 1 Chamfer Corner
+                const dotGeo = new THREE.SphereGeometry(0.2, 16, 16);
+                const dotMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+                const dotMesh = new THREE.Mesh(dotGeo, dotMat);
+                dotMesh.position.set(0, 0.42, -2.0);
+                icGroup3.add(dotMesh);
+
+                // Generate 20 J-Lead Pins around 4 edges
+                let pinCounter = 1;
+                // Top Edge (Pins 1..5)
+                for (let i = -2; i <= 2; i++) {
+                    const pin = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.6), pinMat.clone());
+                    pin.position.set(i * 0.8, -0.2, -2.7);
+                    pin.userData = { pinIndex: pinCounter++ };
+                    icGroup3.add(pin);
+                }
+            }
+
+            scene3.add(icGroup3);
+        }
+
+        function onRaycastMove(event) {
+            const rect = renderer3.domElement.getBoundingClientRect();
+            mouse3.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse3.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster3.setFromCamera(mouse3, camera3);
+            const intersects = raycaster3.intersectObjects(icGroup3.children);
+
+            let foundPin = null;
+            for (let obj of intersects) {
+                if (obj.object.userData && obj.object.userData.pinIndex) {
+                    foundPin = obj.object.userData.pinIndex;
+                    break;
+                }
+            }
+
+            if (foundPin !== hoveredPinIndex) {
+                hoveredPinIndex = foundPin;
+                if (hoveredPinIndex) {
+                    updateActivePinUI(hoveredPinIndex);
+                }
+            }
+        }
+
+        function updateActivePinUI(pinNum) {
+            const data = pinData74LS00.find(p => p.num === pinNum) || { name: `PIN-${pinNum}`, func: "Tín hiệu Logic", type: "General" };
+            document.getElementById('pin-number-display').innerText = `CHÂN #${data.num} (${data.name})`;
+            document.getElementById('pin-function-display').innerText = `Chức năng: ${data.func}`;
+
+            let vText = "5.0 V (HIGH - 1)";
+            if (data.name === 'GND' || data.type === 'NC') vText = "0.0 V (LOW - 0)";
+            document.getElementById('pin-voltage-display').innerText = vText;
+        }
+
+        function animate3DMod3() {
+            if (controls3) controls3.update();
+            if (renderer3 && scene3 && camera3) renderer3.render(scene3, camera3);
+        }
+
+        // --- 2D PINOUT DIAGRAM CANVAS ---
+        const canvasMod3 = document.getElementById('canvas2d-mod3');
+        const ctxMod3 = canvasMod3.getContext('2d');
+
+        function draw2DMod3Pinout() {
+            if (currentTab !== 3) return;
+            const width = canvasMod3.width = canvasMod3.parentElement.clientWidth;
+            const height = canvasMod3.height = canvasMod3.parentElement.clientHeight;
+
+            ctxMod3.clearRect(0, 0, width, height);
+
+            // Draw 2D Chip Outline
+            const chipW = 120;
+            const chipH = 170;
+            const cx = (width - chipW) / 2;
+            const cy = (height - chipH) / 2;
+
+            // Body
+            ctxMod3.fillStyle = '#1e293b';
+            ctxMod3.strokeStyle = '#475569';
+            ctxMod3.lineWidth = 2;
+            ctxMod3.beginPath();
+            ctxMod3.roundRect(cx, cy, chipW, chipH, 8);
+            ctxMod3.fill();
+            ctxMod3.stroke();
+
+            // Top Notch
+            ctxMod3.fillStyle = '#0f172a';
+            ctxMod3.beginPath();
+            ctxMod3.arc(cx + chipW/2, cy, 12, 0, Math.PI);
+            ctxMod3.fill();
+            ctxMod3.stroke();
+
+            // Pin 1 Dot
+            ctxMod3.fillStyle = '#38bdf8';
+            ctxMod3.beginPath();
+            ctxMod3.arc(cx + 20, cy + 20, 4, 0, Math.PI*2);
+            ctxMod3.fill();
+
+            // Chip Label
+            ctxMod3.fillStyle = '#94a3b8';
+            ctxMod3.font = 'bold 11px Fira Code';
+            ctxMod3.textAlign = 'center';
+            ctxMod3.fillText('74LS00', cx + chipW/2, cy + chipH/2);
+            ctxMod3.font = '9px Inter';
+            ctxMod3.fillText('DIP-14 Package', cx + chipW/2, cy + chipH/2 + 15);
+
+            // Draw Pins 1..7 (Left) and 14..8 (Right)
+            ctxMod3.font = '10px Fira Code';
+            for (let i = 0; i < 7; i++) {
+                const py = cy + 20 + (i * 20);
+
+                // Left pin
+                const isHoveredL = (hoveredPinIndex === (i + 1));
+                ctxMod3.fillStyle = isHoveredL ? '#38bdf8' : '#64748b';
+                ctxMod3.fillRect(cx - 15, py - 4, 15, 8);
+
+                ctxMod3.fillStyle = isHoveredL ? '#38bdf8' : '#f8fafc';
+                ctxMod3.textAlign = 'right';
+                ctxMod3.fillText(`${i + 1}`, cx - 18, py + 3);
+
+                // Right pin
+                const pinRNum = 14 - i;
+                const isHoveredR = (hoveredPinIndex === pinRNum);
+                ctxMod3.fillStyle = isHoveredR ? '#38bdf8' : '#64748b';
+                ctxMod3.fillRect(cx + chipW, py - 4, 15, 8);
+
+                ctxMod3.fillStyle = isHoveredR ? '#38bdf8' : '#f8fafc';
+                ctxMod3.textAlign = 'left';
+                ctxMod3.fillText(`${pinRNum}`, cx + chipW + 18, py + 3);
+            }
+        }
+
+
+        // =========================================================================================
+        // INITIALIZATION & GLOBAL ANIMATION LOOP
+        // =========================================================================================
+        function onWindowResize() {
+            // Resize Mod 1
+            const c1 = document.getElementById('container3d-mod1');
+            if (c1 && camera1 && renderer1) {
+                camera1.aspect = c1.clientWidth / c1.clientHeight;
+                camera1.updateProjectionMatrix();
+                renderer1.setSize(c1.clientWidth, c1.clientHeight);
+            }
+            // Resize Mod 2
+            const c2 = document.getElementById('container3d-mod2');
+            if (c2 && camera2 && renderer2) {
+                camera2.aspect = c2.clientWidth / c2.clientHeight;
+                camera2.updateProjectionMatrix();
+                renderer2.setSize(c2.clientWidth, c2.clientHeight);
+            }
+            // Resize Mod 3
+            const c3 = document.getElementById('container3d-mod3');
+            if (c3 && camera3 && renderer3) {
+                camera3.aspect = c3.clientWidth / c3.clientHeight;
+                camera3.updateProjectionMatrix();
+                renderer3.setSize(c3.clientWidth, c3.clientHeight);
+            }
+        }
+
+        window.addEventListener('resize', onWindowResize);
+
+        window.onload = function () {
+            // Init Three.js Scenes
+            init3DMod1();
+            init3DMod2();
+            init3DMod3();
+
+            // Set initial params
+            updateMod1Params();
+            updateMod2();
+            updateActivePinUI(1);
+
+            // Start Master Animation Loop
+            function masterAnimate(time) {
+                requestAnimationFrame(masterAnimate);
+
+                // Render current active module 2D canvas & 3D scene
+                if (currentTab === 1) {
+                    draw2DMod1Waveform(time);
+                    animate3DMod1(time);
+                } else if (currentTab === 2) {
+                    draw2DMod2Diagram();
+                    animate3DMod2();
+                } else if (currentTab === 3) {
+                    draw2DMod3Pinout();
+                    animate3DMod3();
+                }
+            }
+
+            masterAnimate(0);
+        };
+    </script>
+</body>
+</html>

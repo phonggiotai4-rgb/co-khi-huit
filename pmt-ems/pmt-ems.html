@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PMT-EMS EDUCATION — Hệ thống thi trắc nghiệm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* =====================================================================
+     TOKEN DÙNG CHUNG
+     ===================================================================== */
+  :root {
+    --white:     #FFFFFF;
+    --off-white: #F7F8FA;
+    --gray-100:  #E8EAEF;
+    --gray-300:  #C9CED8;
+    --gray-400:  #8B94A3;
+    --gray-600:  #4B5563;
+
+    --brand:      #034EA2;
+    --brand-deep: #023A80;
+    --brand-06: rgba(3, 78, 162, .06);
+    --brand-10: rgba(3, 78, 162, .10);
+    --brand-25: rgba(3, 78, 162, .25);
+
+    --glass-1-bg: rgba(255, 255, 255, .55);
+    --glass-2-bg: rgba(255, 255, 255, .70);
+    --glass-3-bg: rgba(255, 255, 255, .85);
+    --glass-1-br: rgba(255, 255, 255, .70);
+    --glass-2-br: rgba(255, 255, 255, .85);
+    --blur-1: 16px;
+
+    --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-full: 9999px;
+
+    --text-strong: #034EA2;
+    --text:        #4B5563;
+    --text-muted:  #8B94A3;
+    --text-faint:  #AEB5C0;
+    --text-invert: #FFFFFF;
+
+    --sh-sm:    0 1px 2px rgba(3,78,162,.04), 0 4px 12px rgba(3,78,162,.07);
+    --sh-md:    0 2px 4px rgba(3,78,162,.04), 0 12px 28px rgba(3,78,162,.10);
+    --sh-float: 0 1px 2px rgba(3,78,162,.06), 0 10px 30px rgba(3,78,162,.12);
+    --sh-press: 0 1px 2px rgba(3,78,162,.14);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-fast: 140ms;
+    --dur-base: 240ms;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    overflow: hidden;
+    color: var(--text);
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  [hidden] { display: none !important; }
+
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* =====================================================================
+     NỀN THEO MÀN HIỂN THỊ (điều khiển bằng data-screen trên <body>)
+     ===================================================================== */
+
+  /* ---- Màn 1: đăng nhập — nền ảnh OMR ---- */
+  body[data-screen="login"] {
+    background-color: #FFFFFF;
+    background-image: url("bg-omr.jpg");
+    background-size: cover;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  /* ---- Màn 2: thông tin sinh viên — nền gradient ---- */
+  body[data-screen="info"] {
+    position: relative;
+    background: linear-gradient(155deg, var(--off-white), #E4E7ED);
+  }
+
+  /* Mesh blob — điều kiện để kính trắng "thấy" */
+  body[data-screen="login"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 14% 10%, rgba(255,255,255,.42), transparent 70%),
+      radial-gradient(50% 45% at 78% 26%, rgba(160,172,190,.18), transparent 70%),
+      radial-gradient(50% 45% at 22% 86%, rgba(255,255,255,.32), transparent 70%),
+      radial-gradient(45% 40% at 92% 82%, rgba(148,163,184,.16), transparent 70%);
+    filter: blur(96px);
+  }
+
+  body[data-screen="info"]::before {
+    content: "";
+    position: fixed;
+    inset: -10%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 14% 10%, rgba(255,255,255,.85), transparent 70%),
+      radial-gradient(50% 45% at 78% 26%, rgba(160,172,190,.28), transparent 70%),
+      radial-gradient(50% 45% at 22% 86%, rgba(255,255,255,.60), transparent 70%),
+      radial-gradient(45% 40% at 92% 82%, rgba(148,163,184,.22), transparent 70%);
+    filter: blur(100px);
+  }
+
+  /* Lớp phủ: giữ texture bên trái, làm sạch vùng form bên phải (chỉ màn 1) */
+  .veil {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(96deg,
+      rgba(255,255,255,.06) 0%,
+      rgba(255,255,255,.28) 34%,
+      rgba(255,255,255,.68) 50%,
+      rgba(255,255,255,.86) 100%);
+  }
+
+  /* =====================================================================
+     MÀN 1 — ĐĂNG NHẬP
+     ===================================================================== */
+
+  /* Viền brand trên / dưới */
+  .edge {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 28px;
+    z-index: 2;
+    background: var(--brand);
+  }
+  .edge::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,.30);
+  }
+  .edge--top { top: 0; }
+  .edge--top::after { bottom: 0; }
+  .edge--bottom { bottom: 0; }
+  .edge--bottom::after { top: 0; }
+
+  /* Khung trang */
+  .login {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1240px;
+    height: 100vh;
+    margin: 0 auto;
+    padding: clamp(28px, 4vh, 56px) clamp(24px, 4vw, 48px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(16px, 2.4vh, 30px);
+  }
+
+  /* Header */
+  .login__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .brand__name {
+    font-size: clamp(40px, 5.2vw, 76px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--brand);
+  }
+
+  .brand__suffix {
+    font-size: clamp(24px, 3.1vw, 46px);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: var(--brand);
+    opacity: .85;
+  }
+
+  .brand__version {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(12px, 1.05vw, 16px);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--brand);
+    padding: 6px 12px;
+    border-radius: var(--r-full);
+    background: rgba(255,255,255,.65);
+    border: 1px solid var(--brand-25);
+    white-space: nowrap;
+  }
+
+  .tagline {
+    font-size: clamp(17px, 1.9vw, 28px);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand);
+    text-align: right;
+  }
+
+  .rule {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(90deg, transparent, rgba(3,78,162,.25) 18%, rgba(3,78,162,.25));
+  }
+
+  /* Body 2 cột: minh họa (nền) | form */
+  .login__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: center;
+  }
+
+  .login__spacer {
+    display: grid;
+    place-items: center;
+  }
+
+  .hand {
+    width: clamp(180px, 23vw, 340px);
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    opacity: .92;
+  }
+
+  /* Khung kính chứa form */
+  .panel {
+    width: 100%;
+    max-width: 560px;
+    justify-self: end;
+    padding: clamp(20px, 2vw, 28px);
+    border-radius: var(--r-lg);
+    border: 1px solid var(--glass-1-br);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      inset 0 -1px 0 var(--brand-06),
+      0 1px 2px var(--brand-06),
+      0 8px 24px rgba(3,78,162,.08);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .panel {
+      background: var(--glass-1-bg);
+      backdrop-filter: blur(var(--blur-1)) saturate(120%);
+    }
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .panel { background: rgba(255,255,255,.92); }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Field dạng hàng: nhãn | control */
+  .login .field {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .login .field__label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-600);
+    text-align: right;
+  }
+
+  .login .field.is-error input,
+  .login .field.is-error select {
+    border-color: var(--brand-deep);
+    border-bottom-width: 2px;
+  }
+
+  .control {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .control input,
+  .control select {
+    width: 100%;
+    height: 44px;
+    padding: 0 16px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--gray-600);
+    background: rgba(255,255,255,.72);
+    border: 1px solid rgba(3,78,162,.14);
+    border-radius: var(--r-md);
+    box-shadow: 0 1px 2px rgba(3,78,162,.05);
+    transition: border-color var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) var(--ease-out);
+    appearance: none;
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .control input,
+    .control select { backdrop-filter: blur(var(--blur-1)); }
+  }
+
+  .control select {
+    padding-right: 44px;
+    cursor: pointer;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--brand) 50%),
+      linear-gradient(135deg, var(--brand) 50%, transparent 50%);
+    background-position:
+      calc(100% - 20px) 20px,
+      calc(100% - 14px) 20px;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+  }
+
+  .control input::placeholder { color: var(--text-faint); }
+  .control input:hover,
+  .control select:hover { background-color: rgba(255,255,255,.85); }
+
+  .control input:focus,
+  .control select:focus {
+    outline: none;
+    background-color: rgba(255,255,255,.95);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(3,78,162,.12);
+  }
+
+  .control--password input { padding-right: 48px; }
+
+  .toggle-pass {
+    position: absolute;
+    right: 6px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    color: var(--gray-400);
+    background: transparent;
+    border: 0;
+    border-radius: var(--r-full);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) var(--ease-out);
+  }
+  .toggle-pass:hover { color: var(--brand); background: var(--brand-06); }
+
+  /* Actions màn 1 */
+  .login .actions {
+    display: flex;
+    gap: 14px;
+    margin: 4px 0 0 174px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 28px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .btn--primary {
+    color: var(--text-invert);
+    background: var(--brand);
+    border: 1px solid var(--brand);
+    box-shadow: var(--sh-sm);
+  }
+  .btn--primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+  .btn--glass {
+    color: var(--brand);
+    background: var(--glass-1-bg);
+    border: 1px solid rgba(255,255,255,.80);
+    box-shadow: var(--sh-sm);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .btn--glass { backdrop-filter: blur(var(--blur-1)) saturate(120%); }
+  }
+  .btn--glass:hover { background: rgba(255,255,255,.72); color: var(--brand-deep); }
+
+  .btn:active { transform: scale(.98); box-shadow: var(--sh-press); }
+
+  /* Footer */
+  .login__foot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+    margin-top: clamp(12px, 2.6vh, 30px);
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.55);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--brand);
+  }
+  .logo span:nth-child(2) { color: var(--gray-600); }
+
+  .copyright { font-size: 14px; color: var(--gray-600); }
+  .copyright a { color: var(--brand); font-weight: 600; text-decoration: none; }
+  .copyright a:hover { text-decoration: underline; }
+
+  /* =====================================================================
+     MÀN 2 — THÔNG TIN SINH VIÊN
+     ===================================================================== */
+  .info {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Glass */
+  .glass {
+    position: relative;
+    background: var(--glass-2-bg);
+    border: 1px solid var(--glass-2-br);
+    border-radius: var(--r-lg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      0 1px 2px rgba(3, 78, 162, .04),
+      0 8px 24px rgba(3, 78, 162, .08);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .glass {
+      background: var(--glass-2-bg);
+      backdrop-filter: blur(28px) saturate(120%);
+    }
+    .glass-1 { background: var(--glass-1-bg); backdrop-filter: blur(16px) saturate(120%); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .glass, .btn, input, select {
+      transition: background var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-fast) var(--ease-out),
+                  transform var(--dur-fast) var(--ease-out);
+    }
+  }
+
+  /* Card */
+  .card {
+    z-index: 10;
+    --pad: 20px;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--pad);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      0 1px 2px rgba(3, 78, 162, .04),
+      0 4px 12px rgba(3, 78, 162, .07);
+  }
+
+  .card + .card { flex: 0 0 auto; }
+
+  /* Thanh tiêu đề: chữ trắng trên nền brand */
+  .card-head {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: calc(var(--pad) * -1) calc(var(--pad) * -1) var(--pad);
+    padding: 14px var(--pad);
+    background: var(--brand);
+    color: var(--text-invert);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28);
+  }
+
+  .card-head h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    line-height: 1.3;
+    color: var(--text-invert);
+  }
+
+  .card-head .hint {
+    margin-left: auto;
+    font-size: 12px;
+    color: rgba(255, 255, 255, .75);
+    text-align: right;
+  }
+
+  .card-head .hint a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Avatar */
+  .profile {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .avatar {
+    flex: 0 0 auto;
+    width: 132px;
+    aspect-ratio: 3 / 4;
+    align-self: center;
+    max-height: 100%;
+    border-radius: var(--r-lg);
+    border: 2px solid var(--brand-25);
+    background: var(--glass-3-bg);
+    box-shadow: var(--sh-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
+    color: var(--text-muted);
+  }
+
+  .avatar .face {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--r-full);
+    background: var(--brand);
+    color: var(--text-invert);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: .02em;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 12%;
+    display: block;
+  }
+
+  .avatar .cap { font-size: 12px; color: var(--text-muted); }
+
+  /* Fields dạng cột: nhãn trên, control dưới */
+  .info .fields {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: space-evenly;
+    gap: 12px 24px;
+  }
+
+  .info .field.span-2 { grid-column: 1 / -1; }
+
+  .info .field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .info input[type="text"],
+  .info select {
+    width: 100%;
+    height: 44px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: rgba(255, 255, 255, .50);
+    border: 1px solid rgba(3, 78, 162, .14);
+    border-radius: var(--r-md);
+    box-shadow: var(--sh-sm);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .info input::placeholder { color: var(--text-faint); }
+  .info input:hover, .info select:hover { background: rgba(255, 255, 255, .72); }
+
+  .info input:focus, .info select:focus {
+    background: var(--white);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, .12), var(--sh-sm);
+  }
+
+  .info input.mono {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .info select {
+    padding-right: 44px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B94A3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+  }
+
+  .info select option { color: var(--text); background: var(--white); }
+
+  /* Thanh chọn lịch thi: nhãn ngang bên trái, khung chọn giữa card */
+  .card-exam .field {
+    width: 100%;
+    max-width: 900px;
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+  }
+
+  .card-exam .field label {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+  }
+
+  .card-exam .note {
+    flex: 1 0 100%;
+    justify-content: flex-start;
+  }
+
+  /* Lịch thi là giá trị CỐ ĐỊNH do lớp học phần ở màn 1 quyết định — hiện dạng
+     ô đọc, không bấm được, có biểu tượng ổ khóa để thấy rõ là không chọn nữa. */
+  #lichthe {
+    flex: 1 1 320px;
+    display: flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 38px 0 38px;
+    font-family: inherit;
+    font-size: 13.5px;
+    line-height: 1.35;
+    text-align: left;
+    color: var(--text);
+    background-color: rgba(255, 255, 255, .72);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23034EA2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 13px center;
+    background-size: 16px;
+    border: 1px solid rgba(3, 78, 162, .14);
+    border-radius: var(--r-md);
+    box-shadow: var(--sh-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+
+  /* Chưa có lớp học phần / môn chưa có lịch thi — làm mờ để thấy đây là chờ */
+  #lichthe[data-empty] {
+    color: var(--text-faint);
+    background-image: none;
+    padding-left: 14px;
+  }
+
+  .note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .note .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--r-full);
+    background: var(--brand);
+    flex: 0 0 auto;
+  }
+
+  /* Actions màn 2 */
+  .info .actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .info .btn {
+    display: inline-flex;
+    padding: 0 20px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    text-transform: none;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--brand);
+    color: var(--text-invert);
+    border-color: var(--brand) !important;
+    box-shadow: var(--sh-sm);
+  }
+  .btn-primary:hover { background: var(--brand-deep); border-color: var(--brand-deep) !important; }
+
+  .btn-ghost { background: transparent; color: var(--text); }
+  .btn-ghost:hover { background: rgba(255, 255, 255, .55); }
+
+  /* =====================================================================
+     RESPONSIVE DÙNG CHUNG
+     ===================================================================== */
+
+  /* Màn 1 */
+  @media (max-width: 1023px) {
+    .veil { background: linear-gradient(180deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,.80) 45%); }
+    .tagline { text-align: left; }
+    .login__foot { justify-content: center; flex-wrap: wrap; }
+    .login__body { grid-template-columns: 1fr; gap: 28px; }
+    .panel { justify-self: stretch; max-width: none; }
+  }
+
+  /* Màn 2 */
+  @media (max-width: 860px) {
+    .info { padding: 14px; gap: 14px; }
+    .card { --pad: 14px; }
+    .profile { gap: 16px; }
+    .avatar { width: 96px; }
+    .info .actions .btn { padding: 0 14px; }
+  }
+
+  /* Màn hình thấp: nén lại để vẫn vừa 1 khung hình (màn 2) */
+  @media (max-height: 780px) {
+    .info { padding: 14px; gap: 14px; }
+    .card { --pad: 14px; }
+    .card-head { padding-top: 10px; padding-bottom: 10px; }
+    .card-head h2 { font-size: 19px; }
+    .info .fields { gap: 8px 20px; }
+    .info input[type="text"], .info select { height: 40px; }
+    #lichthe { height: 36px; }
+    .note { display: none; }
+    .info .actions { margin-top: 12px; }
+    .avatar { width: 112px; }
+  }
+
+  @media (max-height: 620px) {
+    .info .btn { min-height: 38px; }
+    .info input[type="text"], .info select { height: 36px; }
+    #lichthe { height: 32px; }
+    .card-head h2 { font-size: 17px; }
+    .avatar .face { width: 48px; height: 48px; font-size: 18px; }
+    .avatar { width: 96px; }
+  }
+
+  /* Màn hình rất nhỏ: cho phép cuộn lại */
+  @media (max-width: 767px) {
+    html, body { height: auto; }
+    body { overflow-y: auto; }
+    .edge { height: 14px; }
+    .login { height: auto; min-height: 100vh; padding: 44px 20px 28px; }
+    .brand { gap: 10px; }
+    .login .field { grid-template-columns: 1fr; gap: 8px; }
+    .login .field__label { text-align: left; }
+    .login .actions { margin-left: 0; }
+    .login .actions .btn { flex: 1; }
+    .control input, .control select, .btn--glass { backdrop-filter: none; }
+    .panel { backdrop-filter: none; background: rgba(255,255,255,.92); }
+
+    .info { height: auto; min-height: 100vh; }
+    .info .fields { grid-template-columns: minmax(0, 1fr); }
+    .info .field.span-2 { grid-column: auto; }
+    .info .card { flex: 0 0 auto; }
+    .info .profile { flex: 0 0 auto; }
+    .info .avatar { align-self: flex-start; width: 104px; }
+  }
+
+  @media (max-width: 768px) {
+    body[data-screen="info"] { background: var(--gray-100); }
+    body[data-screen="info"]::before { filter: blur(60px); opacity: .5; }
+    .glass, .glass-1 { background: rgba(255, 255, 255, .92); backdrop-filter: none; }
+  }
+</style>
+</head>
+
+<body data-screen="login" data-depth="1">
+
+  <div id="screen1">
+    <div class="edge edge--top" aria-hidden="true"></div>
+    <div class="edge edge--bottom" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+
+    <main class="login">
+      <header class="login__head">
+        <div class="brand">
+          <h1 class="brand__name">PMT-EMS</h1>
+          <span class="brand__suffix">EDUCATION</span>
+        </div>
+        <span class="brand__version">Version 1.0.0.3</span>
+      </header>
+
+      <p class="tagline">Hệ thống thi trắc nghiệm</p>
+      <hr class="rule" />
+
+      <div class="login__body">
+        <div class="login__spacer">
+          <img class="hand" src="hand.png" alt="" />
+        </div>
+
+        <section class="panel">
+          <form class="form" novalidate>
+            <div class="field">
+              <label class="field__label" for="msv">Mã sinh viên</label>
+              <div class="control">
+                <input id="msv" name="msv" type="text" placeholder="Nhập mã sinh viên" autocomplete="username" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="pwd">Mật khẩu</label>
+              <div class="control control--password">
+                <input id="pwd" name="pwd" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password" required />
+                <button class="toggle-pass" type="button" data-target="pwd" aria-label="Hiện mật khẩu">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="course">Lớp học phần</label>
+              <div class="control">
+                <select id="course" name="course" required>
+                  <option value="" selected disabled>Chọn lớp học phần</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn--primary" type="submit">Đăng nhập</button>
+              <button class="btn btn--glass" type="reset">Hủy</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <footer class="login__foot">
+        <div class="logo"><span>EP</span><span>MT</span></div>
+        <p class="copyright">
+          &copy; Công ty TNHH một thành viên EPMT &mdash;
+          <a href="https://www.epmt.vn" target="_blank" rel="noopener">www.epmt.vn</a>
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <div id="screen2" hidden>
+    <main class="info">
+      <section class="card glass glass-1">
+        <div class="card-head">
+          <h2>Thông tin sinh viên</h2>
+          <span class="hint" id="syncHint">Hồ sơ đã được xác thực</span>
+        </div>
+
+        <div class="profile">
+          <div class="avatar">
+            <img id="avatar" src="Ảnh sinh viên.png" alt="Ảnh sinh viên Phạm Hưng An">
+            <div id="avatarFallback" hidden>
+              <div class="face" aria-hidden="true">PHA</div>
+              <span class="cap">Ảnh sinh viên</span>
+            </div>
+          </div>
+
+          <div class="fields">
+            <div class="field">
+              <label for="masv">Mã sinh viên</label>
+              <input class="mono" type="text" id="masv" value="12104100346" readonly>
+            </div>
+
+            <div class="field">
+              <label for="hoten">Họ tên</label>
+              <input type="text" id="hoten" value="Phạm Hưng An">
+            </div>
+
+            <div class="field">
+              <label for="ngaysinh">Ngày sinh</label>
+              <input type="text" id="ngaysinh" value="09/01/1994">
+            </div>
+
+            <div class="field">
+              <label for="gioitinh">Giới tính</label>
+              <input type="text" id="gioitinh" value="Nam">
+            </div>
+
+            <div class="field span-2">
+              <label for="noisinh">Nơi sinh</label>
+              <input type="text" id="noisinh" placeholder="Nhập nơi sinh">
+            </div>
+
+            <div class="field">
+              <label for="lophoc">Lớp học</label>
+              <input type="text" id="lophoc" value="DH Điện 6A HN">
+            </div>
+
+            <div class="field">
+              <label for="khoc">Khóa học</label>
+              <input type="text" id="khoc" value="2012 - 2013">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card card-exam glass glass-1">
+        <div class="card-head">
+          <h2>Chọn lịch thi</h2>
+          <span class="hint" id="examHint"></span>
+        </div>
+
+        <div class="field">
+          <label for="lichthe">Lịch thi</label>
+          <div id="lichthe" role="status" aria-live="polite" title="Lịch thi do lớp học phần ở bước trước quyết định" data-empty>-- Chọn lớp học phần ở bước trước --</div>
+          <p class="note"><span class="dot" aria-hidden="true"></span>Danh sách lịch thi được cập nhật lần cuối 5 phút trước.</p>
+          <p class="note" id="autoNote" hidden><span class="dot" aria-hidden="true"></span><span id="autoNoteText"></span></p>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="button" id="btn-confirm">LÀM BÀI</button>
+          <button class="btn btn-ghost" type="button" id="btn-home">QUAY LẠI TRANG CHỦ</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/data.js"></script>
+
+  <script>
+    var screen1 = document.getElementById('screen1');
+    var screen2 = document.getElementById('screen2');
+
+    function showScreen(name) {
+      document.body.dataset.screen = name;
+      screen1.hidden = name !== 'login';
+      screen2.hidden = name !== 'info';
+    }
+
+    /* ---- Màn 1: hiện / ẩn mật khẩu ---- */
+    document.querySelector('#screen1 .toggle-pass').addEventListener('click', function () {
+      var input = document.getElementById(this.dataset.target);
+      var showPass = input.type === 'password';
+      input.type = showPass ? 'text' : 'password';
+      this.setAttribute('aria-label', showPass ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+    });
+
+    var form1 = document.querySelector('#screen1 .form');
+    form1.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ok = true;
+      this.querySelectorAll('input[required], select[required]').forEach(function (input) {
+        var field = input.closest('.field');
+        var bad = input.value.trim() === '';
+        field.classList.toggle('is-error', bad);
+        ok = ok && !bad;
+      });
+      if (!ok) return;
+      syncLichThe();
+      showScreen('info');
+    });
+
+    form1.addEventListener('input', function (e) {
+      var field = e.target.closest('.field');
+      if (field) field.classList.remove('is-error');
+    });
+
+    form1.addEventListener('change', function (e) {
+      var field = e.target.closest('.field');
+      if (field) field.classList.remove('is-error');
+    });
+
+    form1.addEventListener('reset', function () {
+      this.querySelectorAll('.field').forEach(function (field) {
+        field.classList.remove('is-error');
+      });
+      /* Khung "Lịch thi" ở màn 2 về lại trạng thái chờ: chưa có lớp học phần
+         thì không có lịch thi nào để hiện. */
+      setTimeout(syncLichThe, 0);
+    });
+
+    /* =====================================================================
+       MÔN THI THỬ ĐẾN TỪ TRANG CHỦ + DANH SÁCH LỊCH THI
+       ---------------------------------------------------------------------
+       Trang chủ mở popup "Thi thử" rồi điều hướng sang đây kèm `?m=<slug môn>`
+       (xem CK.partExam trong assets/data.js). Ở đây ta đọc slug đó để tự
+       chọn đúng lớp học phần ở màn 1.
+       Không có tham số thì người dùng tự chọn.
+
+       Mối quan hệ giữa hai màn: MÀN 2 PHỤ THUỘC MÀN 1. Lớp học phần chọn ở
+       màn 1 quyết định danh sách lịch thi ở màn 2 — mỗi lần đổi lớp học phần
+       (hoặc vào lại trang), cả khung "Lịch thi" được dựng lại từ đúng môn đó.
+       Không bao giờ hiện lịch thi của môn khác, và lịch thi đã chọn tay vẫn
+       được giữ nếu môn không đổi.
+       ===================================================================== */
+    var COURSE = document.getElementById('course');
+    var LICH = document.getElementById('lichthe');
+    var AUTO_NOTE = document.getElementById('autoNote');
+    var AUTO_NOTE_TEXT = document.getElementById('autoNoteText');
+    var EXAM_HINT = document.getElementById('examHint');
+
+    /* Nguồn duy nhất cho phần "Lịch thi". Mỗi dòng là MỘT lớp học phần thi.
+       Thường khai đủ: mã LHP, môn (slug — phải khớp với tên môn trong CK.CATS),
+       tên lớp, tiết, nhóm, phòng, lớp sinh viên và học kỳ; nhãn hiển thị ghép
+       từ các trường đó. Lớp nào chỉ cần hiện một cái tên thì khai `label` —
+       lúc đó hiển thị đúng chuỗi đó, bỏ qua các trường còn lại.
+       Thêm lịch thi mới chỉ cần thêm một dòng ở đây, không phải sửa HTML. */
+    var EXAMS = [
+      { id: '010100023601', m: 'th-ky-thuat-do-luong-ck', ten: 'Đo lường - cảm biến', tiet: 'Tiết[1 - 2]', nhom: 'Nhóm (1)', phong: 'HN_PMT1', lop: 'DH Điện 6A HN', hk: 'Học kỳ 4' },
+      { id: '010100023602', m: 'th-ky-thuat-do-luong-ck', ten: 'Đo lường - cảm biến', tiet: 'Tiết[3 - 4]', nhom: 'Nhóm (2)', phong: 'HN_PMT1', lop: 'DH Điện 6A HN', hk: 'Học kỳ 4' },
+      { id: '010100023603', m: 'th-ky-thuat-do-luong-ck', ten: 'Đo lường - cảm biến', tiet: 'Tiết[5 - 6]', nhom: 'Nhóm (3)', phong: 'HN_PMT2', lop: 'DH Điện 6A HN', hk: 'Học kỳ 4' },
+      { id: '010100023604', m: 'th-ky-thuat-do-luong-ck', ten: 'Đo lường - cảm biến', tiet: 'Tiết[7 - 8]', nhom: 'Nhóm (4)', phong: 'HN_PMT2', lop: 'DH Điện 6A HN', hk: 'Học kỳ 4' },
+      { id: '010100023605', m: 'qpan1', label: 'Giáo dục quốc phòng - an ninh 1' },
+       { id: '010100023606', m: 'qpan2', ten: 'Quốc phòng an ninh 2', tiet: 'Tiết[3 - 4]', nhom: 'Nhóm (2)', phong: 'HN_PMT2', lop: 'DH Điện 6A HN', hk: 'Học kỳ 4' },
+       { id: '010100023607', m: 'quan-tri-hoc', label: 'Quản trị học' },
+    { id: '010100023608', m: 'quan-tri-chat-luong', label: 'Quản trị chất lượng' },
+    { id: '010100023609', m: 'quan-tri-chuoi-cung-ung', label: 'Quản trị chuỗi cung ứng' },
+    { id: '010100023610', m: 'marketing-can-ban', label: 'Marketing căn bản' },
+    { id: '010100023611', m: 'ky-nang-giao-tiep', label: 'Kỹ năng giao tiếp' },
+    { id: '010100023612', m: 'lich-su-dang-cong-san-viet-nam', label: 'Lịch sử Đảng Cộng sản Việt Nam' },
+    { id: '010100023613', m: 'tu-tuong-ho-chi-minh', label: 'Tư tưởng Hồ Chí Minh' },
+    { id: '010100023614', m: 'triet-hoc-mac-lenin', label: 'Triết học Mác - Lênin' },
+    { id: '010100023615', m: 'chu-nghia-xa-hoi-khoa-hoc', label: 'Chủ nghĩa xã hội khoa học' },
+     { id: '010100023616', m: 'kinh-te-chinh-tri-mac-lenin', label: 'Kinh tế chính trị Mác - Lênin' },
+     { id: '010100023617', m: 'logic-hoc-dai-cuong', label: 'Logic học đại cương' }
+   ];
+
+    /* Mọi lịch thi của một môn — rỗng nếu môn đó chưa có lịch thi */
+    function examsOf(subject) {
+      return subject ? EXAMS.filter(function (e) { return e.m === subject; }) : [];
+    }
+
+    function examLabel(e) {
+      if (e.label) return e.label;
+      return 'LHP ' + e.id + ' - ' + e.ten + ' - ' + e.tiet + ' - ' + e.nhom +
+             ' - Phòng [' + e.phong + '] - ' + e.lop + ' - ' + e.hk;
+    }
+
+    function subjectFromUrl() {
+      try {
+        var m = new URLSearchParams(location.search).get('m');
+        return m ? m.trim().toLowerCase() : '';
+      } catch (e) {
+        return '';
+      }
+    }
+
+    /* Chọn option có data-m khớp slug môn — true nếu tìm thấy */
+    function pickBySubject(select, subject) {
+      if (!subject) return false;
+      var opt = select.querySelector('option[data-m="' + subject + '"]');
+      if (!opt) return false;
+      select.value = opt.value;
+      return true;
+    }
+
+    /* Danh sách lớp học phần = ĐÚNG danh mục môn ở Trang chủ (assets/data.js),
+       gom theo nhóm môn. Ở đây không khai thêm môn nào — thêm môn ở Trang chủ
+       là danh sách này tự có theo. */
+    function buildCourses() {
+      if (!window.CK || !CK.CATS) return;
+      CK.CATS.forEach(function (cat) {
+        var group = document.createElement('optgroup');
+        group.label = cat.title;
+        cat.subjects.forEach(function (s) {
+          var opt = document.createElement('option');
+          opt.value = s.slug;
+          opt.dataset.m = s.slug;
+          opt.textContent = s.name;
+          group.appendChild(opt);
+        });
+        COURSE.appendChild(group);
+      });
+    }
+
+    /* Màn 1: vào từ trang chủ thì chọn sẵn lớp học phần của môn đó */
+    buildCourses();
+    pickBySubject(COURSE, subjectFromUrl());
+
+    /* Khung "Lịch thi" ở màn 2 là giá trị CỐ ĐỊNH, không chọn được: lớp học phần
+       chọn ở màn 1 quyết định luôn lịch thi nào được hiện. Đổi lớp học phần
+       (hoặc vào lại trang) là khung này tự đổi theo — người dùng ở màn 2 không
+       có gì để chọn, nên không thể lệch khỏi lớp học phần đã chọn.
+       Lớp nào có nhiều nhóm thi thì hiện nhóm đầu tiên và ghi rõ ra dưới khung. */
+    var currentExam = null;
+
+    function syncLichThe() {
+      var opt = COURSE.options[COURSE.selectedIndex];
+      var subject = (opt && opt.dataset.m) || '';
+      var list = examsOf(subject);
+
+      currentExam = list[0] || null;
+
+      LICH.textContent = !subject
+        ? '-- Chọn lớp học phần ở bước trước --'
+        : (currentExam ? examLabel(currentExam) : '-- Môn này chưa có lịch thi --');
+      if (currentExam) LICH.removeAttribute('data-empty');
+      else LICH.setAttribute('data-empty', '');
+      LICH.title = currentExam ? 'Lịch thi: ' + examLabel(currentExam) : '';
+
+      if (EXAM_HINT) EXAM_HINT.textContent = subject ? opt.textContent : '';
+
+      if (!AUTO_NOTE) return;
+      AUTO_NOTE.hidden = !subject;
+      if (!subject) return;
+      if (!list.length) {
+        AUTO_NOTE_TEXT.textContent = opt.textContent + ' chưa có lịch thi trong danh sách.';
+      } else if (list.length === 1) {
+        AUTO_NOTE_TEXT.textContent = 'Lịch thi của lớp học phần ' + opt.textContent + '.';
+      } else {
+        AUTO_NOTE_TEXT.textContent = opt.textContent + ' có ' + list.length +
+          ' nhóm thi — đang hiển thị nhóm đầu tiên, gắn với lớp học phần đã chọn.';
+      }
+    }
+
+    COURSE.addEventListener('change', syncLichThe);
+    syncLichThe();
+
+    /* ---- Màn 2: hành động ---- */
+    /* Đường dẫn trong CK.partDo tính từ GỐC site, còn trang này nằm trong thư mục con —
+       nên nới bằng ../ theo `data-depth` trên <body>, đúng như CK.base() trong
+       assets/app.js. Tái hiệu đoạn logic đó ở đây để không phải nạp cả app.js
+       chỉ để dùng CK.url. */
+    function pageUrl(p) {
+      var d = parseInt(document.body.getAttribute('data-depth') || '0', 10) || 0;
+      var s = '';
+      for (var i = 0; i < d; i++) s += '../';
+      return s + p;
+    }
+
+    document.getElementById('btn-confirm').addEventListener('click', function () {
+      /* Lịch thi không chọn được ở đây — nó do lớp học phần ở màn 1 quyết định. */
+      if (!currentExam) {
+        alert('Lớp học phần đã chọn chưa có lịch thi. Vui lòng quay lại chọn lớp khác.');
+        document.getElementById('btn-home').focus();
+        return;
+      }
+      /* Môn nào có trang làm bài (CK.partDo) thì bấm LÀM BÀI là nhảy sang trang
+         đó — môn nào chưa có thì chỉ cảnh báo, không mở ra trang trắng. */
+      var opt = COURSE.options[COURSE.selectedIndex];
+      var page = CK && CK.partDo ? CK.partDo((opt && opt.dataset.m) || '') : null;
+      if (!page) {
+        alert('Môn này chưa có trang làm bài. Vui lòng quay lại chọn lớp khác.');
+        document.getElementById('btn-home').focus();
+        return;
+      }
+      location.href = pageUrl(page);
+    });
+
+    /* Nút quay lại TRANG CHỦ (index.html) — đường dẫn nới theo data-depth giống
+       pageUrl() ở trên, nên đúng cả khi mở bằng http lẫn file:// */
+    document.getElementById('btn-home').addEventListener('click', function () {
+      location.href = pageUrl('index.html');
+    });
+
+    /* ---- Avatar: fallback khi ảnh lỗi ---- */
+    var avatar = document.getElementById('avatar');
+    avatar.addEventListener('error', function () {
+      avatar.hidden = true;
+      document.getElementById('avatarFallback').hidden = false;
+    });
+
+    /* =====================================================================
+       ĐỒNG BỘ HỒ SƠ — CHIỀU CÁ NHÂN → PMT-EMS
+       ---------------------------------------------------------------------
+       Hồ sơ do trang Cá nhân quản lý nằm ở khoá ck-profile-v1. Ở đây ta chỉ
+       ĐỌC khoá đó rồi điền vào màn thông tin sinh viên; PMT-EMS không bao giờ
+       ghi ngược lại, nên sửa ở trang này không làm hỏng hồ sơ gốc.
+       Ô nào hồ sơ chưa có giá trị thì giữ nguyên dữ liệu mặc định của màn 2.
+       ===================================================================== */
+    var PROFILE_KEY = 'ck-profile-v1';
+    var PROFILE_PAGE = '../ca-nhan.html';
+
+    /* Trường của màn 2 <- trường trong hồ sơ (thử lần lượt, lấy giá trị đầu tiên khác rỗng) */
+    var SYNC_FIELDS = [
+      { id: 'masv',     keys: ['mssv'] },
+      { id: 'hoten',    keys: ['name'] },
+      { id: 'ngaysinh', keys: ['ngaysinh'] },
+      { id: 'gioitinh', keys: ['gioitinh'] },
+      { id: 'noisinh',  keys: ['noisinh'] },
+      { id: 'lophoc',   keys: ['lop'] },
+      { id: 'khoc',     keys: ['nam'] }
+    ];
+
+    function readProfile() {
+      try {
+        var raw = localStorage.getItem(PROFILE_KEY);
+        if (!raw) return null;
+        var p = JSON.parse(raw);
+        return (p && typeof p === 'object' && !Array.isArray(p)) ? p : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function twoDigits(n) {
+      return String(n).length < 2 ? '0' + n : String(n);
+    }
+
+    /* "Phạm Hưng An" -> "PHA" */
+    function initialsOf(name) {
+      var w = String(name || '').trim().split(/\s+/).filter(Boolean);
+      if (!w.length) return '';
+      return (w[0].charAt(0) + (w.length > 1 ? w[w.length - 1].charAt(0) : '')).toUpperCase();
+    }
+
+    function paintSyncHint(count, savedAt) {
+      var el = document.getElementById('syncHint');
+      var d = savedAt ? new Date(savedAt) : null;
+      var when = d && !isNaN(d)
+        ? ' · ' + twoDigits(d.getHours()) + ':' + twoDigits(d.getMinutes())
+        : '';
+
+      el.textContent = '';
+      var label = count
+        ? 'Đồng bộ từ Cá nhân' + when
+        : 'Hồ sơ đã được xác thực';
+      el.appendChild(document.createTextNode(label + ' · '));
+
+      var a = document.createElement('a');
+      a.href = PROFILE_PAGE;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = count ? 'Sửa hồ sơ' : 'Nhập hồ sơ';
+      el.appendChild(a);
+    }
+
+    function applyProfile() {
+      var p = readProfile();
+      var count = 0;
+
+      SYNC_FIELDS.forEach(function (f) {
+        if (!p) return;
+        var v = '';
+        f.keys.forEach(function (k) { if (!v) v = String(p[k] == null ? '' : p[k]).trim(); });
+        var el = document.getElementById(f.id);
+        /* Hồ sơ là nguồn sự thật: có giá trị thì thắng, kể cả giá trị mặc định
+           đang hiện sẵn trong HTML. Trống thì để nguyên mặc định của màn 2. */
+        if (v && el) { el.value = v; count++; }
+      });
+
+      /* Ảnh và chữ cái đầu bám theo tên vừa điền */
+      var name = document.getElementById('hoten').value.trim();
+      if (name) {
+        avatar.alt = 'Ảnh sinh viên ' + name;
+        var face = document.querySelector('#avatarFallback .face');
+        if (face) face.textContent = initialsOf(name) || 'SV';
+      }
+
+      paintSyncHint(count, p ? +p.savedAt : 0);
+    }
+
+    applyProfile();
+
+    /* Tab khác (Cá nhân) lưu hồ sơ -> PMT-EMS cập nhật theo, không cần tải lại */
+    window.addEventListener('storage', function (e) {
+      if (e.key === PROFILE_KEY) applyProfile();
+    });
+  </script>
+</body>
+</html>

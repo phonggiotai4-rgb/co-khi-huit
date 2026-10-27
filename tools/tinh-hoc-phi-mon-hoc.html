@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Công Cụ Tính Học Phí Tín Chỉ - HUIT</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ============================================================
+   GLASSMORPHISM TOKENS — design.md §2
+   accent duy nhất #034EA2 · ngoại lệ duy nhất #B4453C (xoá)
+   ============================================================ */
+:root{
+  --brand:#034EA2; --brand-deep:#023A80;
+  --b06:rgba(3,78,162,.06); --b10:rgba(3,78,162,.10);
+  --b20:rgba(3,78,162,.20); --b25:rgba(3,78,162,.25);
+  --danger:#B4453C; --danger-soft:rgba(180,69,60,.10);
+
+  --white:#fff; --off:#F7F8FA; --g100:#E8EAEF; --bg:#E8EAEF;
+  --g300:#C9CED8; --g400:#8B94A3; --g600:#4B5563;
+
+  --g1-bg:rgba(255,255,255,.55); --g2-bg:rgba(255,255,255,.70); --g3-bg:rgba(255,255,255,.85);
+  --g1-br:rgba(255,255,255,.70); --g2-br:rgba(255,255,255,.85); --g3-br:#fff;
+  --fill-weak:rgba(255,255,255,.50); --hi:rgba(255,255,255,.95);
+
+  --text:#4B5563; --strong:#034EA2; --muted:#8B94A3; --faint:#AEB5C0; --invert:#fff;
+
+  --sh-xs:0 1px 2px rgba(3,78,162,.05);
+  --sh-sm:0 1px 2px rgba(3,78,162,.04),0 4px 12px rgba(3,78,162,.07);
+  --sh-md:0 2px 4px rgba(3,78,162,.04),0 12px 28px rgba(3,78,162,.10);
+  --sh-lg:0 8px 16px rgba(3,78,162,.07),0 24px 56px rgba(3,78,162,.14);
+  --sh-float:0 1px 2px rgba(3,78,162,.06),0 10px 30px rgba(3,78,162,.12);
+  --sh-brand:0 8px 24px rgba(3,78,162,.30);
+
+  --line:var(--b06);
+  --blur:blur(28px) saturate(120%);
+  --blur-1:blur(16px) saturate(120%);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+  --ease:cubic-bezier(.16,1,.3,1); --fast:140ms; --base:240ms;
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SF Mono",Consolas,monospace;
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --g1-bg:rgba(255,255,255,.05); --g2-bg:rgba(255,255,255,.08); --g3-bg:rgba(255,255,255,.12);
+    --g1-br:rgba(255,255,255,.10); --g2-br:rgba(255,255,255,.14); --g3-br:rgba(255,255,255,.20);
+    --fill-weak:rgba(255,255,255,.06); --hi:rgba(255,255,255,.22);
+    --text:rgba(255,255,255,.72); --strong:#6FA8E8; --muted:rgba(255,255,255,.50);
+    --faint:rgba(255,255,255,.34); --bg:#0B1220;
+    --b06:rgba(111,168,232,.08); --b10:rgba(111,168,232,.14);
+    --b20:rgba(111,168,232,.26); --b25:rgba(111,168,232,.30);
+    --danger:#D9705F; --danger-soft:rgba(217,112,95,.14);
+    --sh-xs:0 1px 2px rgba(0,0,0,.30);
+    --sh-sm:0 1px 2px rgba(0,0,0,.30),0 4px 12px rgba(0,0,0,.28);
+    --sh-md:0 2px 4px rgba(0,0,0,.32),0 12px 28px rgba(0,0,0,.40);
+    --sh-lg:0 8px 16px rgba(0,0,0,.36),0 24px 56px rgba(0,0,0,.50);
+    --sh-float:0 1px 2px rgba(0,0,0,.36),0 10px 30px rgba(0,0,0,.45);
+    --sh-brand:0 8px 24px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --g1-bg:rgba(255,255,255,.05); --g2-bg:rgba(255,255,255,.08); --g3-bg:rgba(255,255,255,.12);
+  --g1-br:rgba(255,255,255,.10); --g2-br:rgba(255,255,255,.14); --g3-br:rgba(255,255,255,.20);
+  --fill-weak:rgba(255,255,255,.06); --hi:rgba(255,255,255,.22);
+  --text:rgba(255,255,255,.72); --strong:#6FA8E8; --muted:rgba(255,255,255,.50);
+  --faint:rgba(255,255,255,.34); --bg:#0B1220;
+  --b06:rgba(111,168,232,.08); --b10:rgba(111,168,232,.14);
+  --b20:rgba(111,168,232,.26); --b25:rgba(111,168,232,.30);
+  --danger:#D9705F; --danger-soft:rgba(217,112,95,.14);
+  --sh-xs:0 1px 2px rgba(0,0,0,.30);
+  --sh-sm:0 1px 2px rgba(0,0,0,.30),0 4px 12px rgba(0,0,0,.28);
+  --sh-md:0 2px 4px rgba(0,0,0,.32),0 12px 28px rgba(0,0,0,.40);
+  --sh-lg:0 8px 16px rgba(0,0,0,.36),0 24px 56px rgba(0,0,0,.50);
+  --sh-float:0 1px 2px rgba(0,0,0,.36),0 10px 30px rgba(0,0,0,.45);
+  --sh-brand:0 8px 24px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+html{scroll-padding-top:110px}
+body{
+  margin:0;min-height:100vh;display:flex;flex-direction:column;
+  background:var(--bg);color:var(--text);font-family:var(--font);
+  line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+::selection{background:var(--brand);color:#fff}
+.hidden{display:none!important}
+.tabular-nums{font-variant-numeric:tabular-nums}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:3px solid var(--strong);outline-offset:2px;border-radius:10px;
+}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+/* mesh nền §2.1 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(55% 45% at 12% 8%,  rgba(255,255,255,.85), transparent 70%),
+    radial-gradient(50% 45% at 82% 22%, rgba(3,78,162,.18),     transparent 70%),
+    radial-gradient(50% 45% at 20% 88%, rgba(255,255,255,.60),   transparent 70%),
+    radial-gradient(45% 40% at 92% 80%, rgba(160,172,190,.28),   transparent 70%),
+    linear-gradient(155deg,#F7F8FA,#E4E7ED);
+  filter:blur(90px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::before{
+  background:
+    radial-gradient(55% 45% at 12% 8%,  rgba(3,78,162,.30),  transparent 70%),
+    radial-gradient(50% 45% at 82% 22%, rgba(111,168,232,.16), transparent 70%),
+    radial-gradient(50% 45% at 20% 88%, rgba(111,168,232,.12), transparent 70%),
+    radial-gradient(45% 40% at 92% 80%, rgba(255,255,255,.05), transparent 70%),
+    linear-gradient(155deg,#0B1220,#060A14);
+}}
+:root[data-theme="dark"] body::before{
+  background:
+    radial-gradient(55% 45% at 12% 8%,  rgba(3,78,162,.30),  transparent 70%),
+    radial-gradient(50% 45% at 82% 22%, rgba(111,168,232,.16), transparent 70%),
+    radial-gradient(50% 45% at 20% 88%, rgba(111,168,232,.12), transparent 70%),
+    radial-gradient(45% 40% at 92% 80%, rgba(255,255,255,.05), transparent 70%),
+    linear-gradient(155deg,#0B1220,#060A14);
+}
+
+/* ---------- GLASS BASE §2.3 ---------- */
+.glass{
+  position:relative;background:var(--g2-bg);border:1px solid var(--g2-br);border-radius:var(--r-lg);
+  box-shadow:inset 0 1px 0 var(--hi), inset 0 -1px 0 var(--b06),
+             0 1px 2px var(--b06), 0 8px 24px rgba(3,78,162,.08);
+}
+.g1{background:var(--g1-bg);border-color:var(--g1-br)}
+.g3{background:var(--g3-bg);border-color:var(--g3-br);border-radius:var(--r-md)}
+@supports (backdrop-filter:blur(1px)){
+  .glass{backdrop-filter:var(--blur)}
+  .g1{backdrop-filter:var(--blur-1)}
+  .g3{backdrop-filter:blur(44px) saturate(120%)}
+}
+@media (max-width:768px){
+  .glass{background:rgba(255,255,255,.90)}
+  :root[data-theme="dark"] .glass{background:rgba(20,26,40,.92)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .glass{background:rgba(20,26,40,.92)}}
+}
+
+.fade-in{animation:fadeIn .28s var(--ease) forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--g300);border-radius:9999px}
+::-webkit-scrollbar-thumb:hover{background:var(--g400)}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap{width:100%;max-width:940px;margin:0 auto;padding:20px 20px 0}
+
+/* topbar §4.3 */
+.topbar{
+  position:sticky;top:12px;z-index:40;padding:12px 18px;border-radius:var(--r-xl);
+  box-shadow:var(--sh-float),inset 0 1px 0 var(--hi);
+  display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:28px;
+}
+.tb-brand{display:flex;align-items:center;gap:13px;min-width:0}
+.logo{width:44px;height:44px;border-radius:var(--r-md);flex:none;display:grid;place-items:center;
+  background:var(--brand);color:#fff;box-shadow:var(--sh-brand);font-size:17px;font-weight:800;letter-spacing:-.02em}
+.tb-brand .n{font-size:15px;font-weight:700;color:var(--strong);letter-spacing:-.01em;line-height:1.2}
+.tb-brand .d{font-size:11.5px;color:var(--muted);margin-top:1px}
+.icon-btn{
+  width:42px;height:42px;flex:none;border:0;border-radius:var(--r-md);cursor:pointer;
+  background:var(--fill-weak);border:1px solid var(--g1-br);box-shadow:var(--sh-xs);
+  color:var(--text);display:grid;place-items:center;font-size:15px;
+  transition:all var(--fast) var(--ease);
+}
+.icon-btn:hover{background:var(--g3-bg);color:var(--strong);transform:translateY(-1px)}
+
+/* hero */
+.hero{text-align:center;margin-bottom:30px}
+.badge-huit{
+  display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:9999px;
+  background:var(--g2-bg);border:1px solid var(--g2-br);box-shadow:var(--sh-xs);
+  backdrop-filter:var(--blur-1);font-size:12px;font-weight:600;color:var(--text);margin-bottom:16px;
+}
+.dot-live{width:7px;height:7px;border-radius:50%;background:var(--brand);position:relative;flex:none}
+.dot-live::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--brand);
+  animation:ping 1.8s infinite ease-out}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(3);opacity:0}}
+.badge-huit b{color:var(--strong);font-weight:800;letter-spacing:.04em}
+.badge-huit i{color:var(--g300);font-style:normal}
+.hero h1{margin:0;font-size:clamp(26px,5.4vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.14;color:var(--strong)}
+.hero h1 em{font-style:normal;color:var(--muted);font-weight:700}
+.hero p{margin:10px auto 0;max-width:52ch;font-size:14px;color:var(--text)}
+
+main{display:flex;flex-direction:column;gap:22px}
+
+/* card §4.1 */
+.card{border-radius:var(--r-xl);padding:26px;box-shadow:var(--sh-md),inset 0 1px 0 var(--hi)}
+.card-head{display:flex;align-items:center;gap:14px;padding-bottom:16px;margin-bottom:22px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.ico-tile{width:42px;height:42px;border-radius:var(--r-md);display:grid;place-items:center;flex:none;
+  background:var(--b10);border:1px solid var(--b20);color:var(--strong);font-size:15px;
+  box-shadow:inset 0 1px 0 var(--hi)}
+.card-head h2{margin:0;font-size:16.5px;font-weight:700;letter-spacing:-.01em;color:var(--strong);line-height:1.25}
+.card-head p{margin:3px 0 0;font-size:12px;color:var(--muted)}
+.card-head .act{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* form */
+.grid12{display:grid;gap:16px}
+@media (min-width:800px){
+  .g6{grid-column:span 6}.g3{grid-column:span 3}
+}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.inp,.sel{
+  width:100%;min-height:48px;padding:12px 16px;font-size:14px;
+  background:var(--fill-weak);border:1px solid var(--b25);border-radius:var(--r-sm);
+  color:var(--text);box-shadow:var(--sh-xs);
+  transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease);
+}
+.inp::placeholder{color:var(--faint)}
+.inp:hover,.sel:hover{border-color:var(--b25)}
+.inp:focus,.sel:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--b20);background:var(--g3-bg)}
+.inp.money{padding-right:52px;font-weight:700;font-family:var(--mono);color:var(--strong)}
+.suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;
+  color:var(--faint);pointer-events:none}
+.sel{appearance:none;cursor:pointer;padding-right:40px;font-weight:600}
+.sel-wrap{position:relative}
+.sel-wrap svg{position:absolute;right:15px;top:50%;transform:translateY(-50%);width:13px;height:13px;
+  color:var(--muted);pointer-events:none}
+.sel option{background:var(--g3-bg);color:var(--text);font-weight:400}
+
+/* buttons §4.5 */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:44px;padding:0 18px;border:0;border-radius:var(--r-md);cursor:pointer;
+  font-size:13px;font-weight:700;white-space:nowrap;
+  transition:all var(--fast) var(--ease);user-select:none;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:var(--sh-brand)}
+.btn-primary:hover{background:var(--brand-deep);transform:translateY(-1px)}
+.btn-glass{background:var(--fill-weak);backdrop-filter:var(--blur-1);color:var(--strong);
+  border:1px solid rgba(255,255,255,.80);box-shadow:var(--sh-sm)}
+.btn-glass:hover{background:var(--g3-bg)}
+.btn-danger{background:var(--danger-soft);color:var(--danger);border:1px solid var(--b20)}
+.btn-danger:hover{background:rgba(180,69,60,.18)}
+.btn-dashed{
+  width:100%;height:auto;padding:16px;border:2px dashed var(--b25);border-radius:var(--r-md);
+  background:var(--b06);color:var(--strong);font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:11px;
+  transition:all var(--fast) var(--ease);
+}
+.btn-dashed:hover{background:var(--b10);border-color:var(--brand)}
+.plus-dot{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;
+  place-items:center;font-size:12px;flex:none;transition:all var(--base) var(--ease)}
+.btn-dashed:hover .plus-dot{transform:rotate(90deg) scale(1.1)}
+
+/* ---------- DANH SÁCH MÔN ---------- */
+.rowhead{
+  display:none;padding:11px 16px;margin-bottom:12px;border-radius:var(--r-sm);
+  background:var(--b06);border:1px solid var(--line);
+  font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+}
+@media (min-width:820px){
+  .rowhead{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+  .rh-name{grid-column:span 4}.rh-tc{grid-column:span 2;text-align:center}
+  .rh-sum{grid-column:span 3;text-align:right;padding-right:4px}
+  .rh-del{grid-column:span 1;text-align:center}
+}
+#subjectsContainer{display:flex;flex-direction:column;gap:12px}
+.subject-item{
+  padding:14px;border-radius:var(--r-md);background:var(--g1-bg);
+  border:1px solid var(--g1-br);box-shadow:var(--sh-xs),inset 0 1px 0 var(--hi);
+  transition:all var(--fast) var(--ease);
+}
+.subject-item:hover{border-color:var(--b25);box-shadow:var(--sh-sm),inset 0 1px 0 var(--hi)}
+.only-mobile{display:none}
+@media (min-width:820px){
+  .subject-item{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:center;padding:11px 14px}
+  .si-name{grid-column:span 4}.si-tc{grid-column:span 2;display:flex;justify-content:center}
+  .si-sum{grid-column:span 3;text-align:right;padding-right:4px;display:flex;justify-content:flex-end}
+  .si-del{grid-column:span 1;text-align:center}
+}
+@media (max-width:819px){
+  .only-mobile{display:block}
+  .subject-item{display:flex;flex-direction:column;gap:12px}
+  .si-cell{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    background:var(--fill-weak);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 13px}
+  .si-cell > label{font-size:12px;font-weight:700;color:var(--text)}
+}
+.subject-badge{
+  width:34px;height:34px;border-radius:var(--r-sm);display:grid;place-items:center;flex:none;
+  background:var(--b10);border:1px solid var(--b20);color:var(--strong);
+  font-family:var(--mono);font-size:11.5px;font-weight:700;
+}
+#subjectsContainer{counter-reset:subject-index}
+.subject-badge::before{counter-increment:subject-index;content:"#" counter(subject-index, decimal-leading-zero)}
+.si-name{display:flex;align-items:center;gap:11px;min-width:0}
+.si-name .inp{min-height:44px;font-weight:500}
+
+.stepper{display:inline-flex;align-items:center;gap:5px}
+.step-btn{
+  width:32px;height:32px;border-radius:var(--r-sm);border:1px solid var(--g1-br);cursor:pointer;
+  background:var(--fill-weak);color:var(--text);box-shadow:var(--sh-xs);
+  display:grid;place-items:center;font-size:11px;
+  transition:all var(--fast) var(--ease);
+}
+.step-btn:hover{background:var(--b10);border-color:var(--b20);color:var(--strong)}
+.step-btn:active{transform:scale(.9)}
+.step-inp{
+  width:48px;height:32px;text-align:center;border-radius:var(--r-sm);
+  border:1px solid var(--b25);background:var(--fill-weak);color:var(--strong);
+  font-family:var(--mono);font-size:13px;font-weight:700;box-shadow:var(--sh-xs);
+}
+.step-inp:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--b20)}
+.row-subtotal{
+  font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--strong);
+  padding:5px 13px;border-radius:var(--r-sm);background:var(--b10);border:1px solid var(--b20);
+  display:inline-block;
+}
+@media (max-width:819px){.row-subtotal{margin-left:auto}}
+.del-btn{
+  width:36px;height:36px;border-radius:var(--r-sm);border:1px solid transparent;cursor:pointer;
+  background:transparent;color:var(--muted);display:grid;place-items:center;font-size:13px;
+  transition:all var(--fast) var(--ease);
+}
+.del-btn:hover{background:var(--danger-soft);color:var(--danger);border-color:var(--b20)}
+.del-btn:active{transform:scale(.9)}
+
+/* empty state thuần CSS */
+#subjectsContainer:empty::before{
+  content:"Chưa có môn học nào trong danh sách. Hãy nhấn nút 'Mẫu 10 môn' hoặc '+ Thêm Môn Học Mới' bên dưới.";
+  display:block;text-align:center;padding:44px 24px;color:var(--muted);
+  font-size:13.5px;font-weight:500;background:var(--b06);
+  border:2px dashed var(--b25);border-radius:var(--r-md);
+}
+
+/* ---------- CARD TỔNG QUAN: brand đặc, không gradient §1.2 ---------- */
+.overview{
+  position:relative;overflow:hidden;border-radius:var(--r-xl);padding:28px;
+  background:var(--brand);color:#fff;border:1px solid transparent;
+  box-shadow:var(--sh-brand),inset 0 1px 0 rgba(255,255,255,.22);
+}
+.overview::before,.overview::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.overview::before{width:220px;height:220px;right:-90px;bottom:-90px;background:rgba(255,255,255,.10);filter:blur(46px)}
+.overview::after{width:200px;height:200px;left:-80px;top:-80px;background:rgba(0,0,0,.20);filter:blur(46px)}
+.overview > *{position:relative;z-index:1}
+.ov-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding-bottom:18px;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,.14)}
+.ov-head .t{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.92)}
+.ov-head .chip{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;
+  padding:6px 13px;border-radius:9999px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.20);color:rgba(255,255,255,.88);backdrop-filter:blur(12px)}
+.ov-chip-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulseDot 1.6s infinite}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.35}}
+
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-bottom:24px}
+@media (min-width:720px){.stats{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:719px){.stat-s4{grid-column:span 2}}
+.stat{
+  padding:15px 14px;border-radius:var(--r-md);text-align:center;
+  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);
+  backdrop-filter:blur(12px);transition:background var(--fast) var(--ease);
+}
+.stat:hover{background:rgba(255,255,255,.16)}
+.stat .l{display:block;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.80);margin-bottom:4px}
+.stat .v{display:block;font-family:var(--mono);font-size:28px;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.15}
+.stat .s{display:block;font-size:10.5px;color:rgba(255,255,255,.62);margin-top:3px}
+
+.total-box{
+  text-align:center;padding:28px 20px;border-radius:var(--r-lg);
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 rgba(255,255,255,.20);
+}
+.total-box .cap{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.82);margin-bottom:8px}
+.total-box .big{font-family:var(--mono);font-size:clamp(30px,6.6vw,48px);font-weight:700;
+  letter-spacing:-.035em;line-height:1.1;color:#fff}
+.total-box p{margin:10px auto 0;max-width:44ch;font-size:12px;color:rgba(255,255,255,.76)}
+
+.ov-actions{display:flex;flex-direction:column;gap:12px;margin-top:22px}
+@media (min-width:560px){.ov-actions{flex-direction:row}}
+.ov-btn{
+  flex:1;height:48px;border-radius:var(--r-md);cursor:pointer;font-size:14px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  transition:all var(--fast) var(--ease);
+}
+.ov-btn:active{transform:scale(.985)}
+.ov-btn.ghost{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);color:#fff}
+.ov-btn.ghost:hover{background:rgba(255,255,255,.20)}
+.ov-btn.solid{background:#fff;color:var(--brand);box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.ov-btn.solid:hover{background:var(--off)}
+
+/* footer */
+footer{margin-top:30px;padding:0 20px 40px;text-align:center;font-size:12.5px;color:var(--muted)}
+footer p{margin:0}
+footer p + p{margin-top:5px}
+footer .note{display:flex;align-items:center;justify-content:center;gap:8px}
+footer .note i{color:var(--strong)}
+
+/* toast */
+#toast{
+  position:fixed;bottom:24px;right:24px;z-index:80;max-width:360px;
+  display:flex;align-items:center;gap:13px;padding:15px 20px;border-radius:var(--r-md);
+  background:var(--g3-bg);border:1px solid var(--g3-br);color:var(--strong);
+  box-shadow:var(--sh-lg),inset 0 1px 0 var(--hi);
+  backdrop-filter:blur(44px) saturate(120%);
+  font-size:13.5px;font-weight:600;
+  opacity:0;pointer-events:none;transform:translateY(16px);
+  transition:all var(--base) var(--ease);
+}
+#toast.show{opacity:1;transform:none;pointer-events:auto}
+#toast .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--b10);border:1px solid var(--b20);color:var(--strong);font-size:14px}
+
+@media (max-width:720px){
+  .wrap{padding:14px 14px 0}
+  .topbar{top:10px;padding:11px 14px;border-radius:var(--r-lg)}
+  .logo{width:40px;height:40px;font-size:15px}
+  .card{padding:20px 16px}
+  .overview{padding:20px 16px}
+  #toast{left:14px;right:14px;bottom:14px;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+  <link rel="stylesheet" href="../assets/app.css?v=20261017d">
+</head>
+<body data-depth="1">
+
+<div data-ck-nav="features"></div>
+
+<div class="wrap">
+
+  <header class="topbar glass">
+    <div class="tb-brand">
+      <div class="logo">H</div>
+      <div>
+        <div class="n">Tính Học Phí Tín Chỉ</div>
+        <div class="d">Đại học Công Thương TP.HCM</div>
+      </div>
+    </div>
+    <button id="theme-toggle" onclick="toggleTheme()" aria-label="Chuyển đổi giao diện Sáng/Tối" class="icon-btn">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </header>
+
+  <div class="hero">
+    <div class="badge-huit">
+      <span class="dot-live"></span>
+      <b>HUIT</b><i>|</i><span>Đại Học Công Thương TP.HCM</span>
+    </div>
+    <h1>Tính Học Phí Tín Chỉ <em>Trực Tuyến</em></h1>
+    <p>Hệ thống dự tính chi tiết học phí từng môn và tổng chi phí học kỳ theo niên khóa chính thức.</p>
+  </div>
+
+  <main>
+
+    <section class="glass card">
+      <div class="card-head">
+        <div class="ico-tile"><i class="fa-solid fa-sliders"></i></div>
+        <div>
+          <h2>1. Chọn Khóa Học &amp; Đơn Giá</h2>
+          <p>Đơn giá tự động đồng bộ theo quyết định thu học phí</p>
+        </div>
+      </div>
+
+      <div class="grid12" style="grid-template-columns:repeat(4,1fr)">
+        <div class="g6" style="grid-column:span 2">
+          <label for="khoaSelect">Khóa Học Của Bạn</label>
+          <div class="sel-wrap">
+            <select id="khoaSelect" onchange="updatePrices()" class="sel">
+              <option value="K14">Khóa 14 (Tuyển sinh 2023)</option>
+              <option value="K15" selected>Khóa 15 (Tuyển sinh 2024)</option>
+              <option value="K16">Khóa 16 (Tuyển sinh 2025)</option>
+              <option value="K26">Khóa 17 (Tuyển sinh 2026)</option>
+              <option value="custom">Tùy chỉnh (Tự nhập đơn giá thủ công)</option>
+            </select>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+        <div class="g3" style="grid-column:span 1">
+          <label for="theoryPrice">Đơn Giá Lý Thuyết</label>
+          <div style="position:relative">
+            <input type="number" id="theoryPrice" value="863000" min="0" oninput="calculateFee()" class="inp money">
+            <span class="suffix">₫/TC</span>
+          </div>
+        </div>
+        <div class="g3" style="grid-column:span 1">
+          <label for="practicePrice">Đơn Giá Thực Hành</label>
+          <div style="position:relative">
+            <input type="number" id="practicePrice" value="1100000" min="0" oninput="calculateFee()" class="inp money">
+            <span class="suffix">₫/TC</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass card">
+      <div class="card-head">
+        <div class="ico-tile"><i class="fa-solid fa-layer-group"></i></div>
+        <div>
+          <h2>2. Danh Sách Môn Học Đăng Ký</h2>
+          <p>Tiền từng môn và tổng số tín chỉ sẽ được tính tự động</p>
+        </div>
+        <div class="act">
+          <button type="button" onclick="addPresetSubjects()" class="btn btn-glass">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--strong)"></i> Mẫu 10 môn
+          </button>
+          <button type="button" onclick="clearAllSubjects()" class="btn btn-danger">
+            <i class="fa-regular fa-trash-can"></i> Xóa hết
+          </button>
+        </div>
+      </div>
+
+      <div class="rowhead">
+        <div class="rh-name">Tên Môn Học</div>
+        <div class="rh-tc">TC Lý Thuyết</div>
+        <div class="rh-tc">TC Thực Hành</div>
+        <div class="rh-sum">Thành Tiền Môn</div>
+        <div class="rh-del">Xóa</div>
+      </div>
+
+      <div id="subjectsContainer"></div>
+
+      <div style="margin-top:16px">
+        <button type="button" onclick="addSubject()" class="btn-dashed">
+          <span class="plus-dot"><i class="fa-solid fa-plus"></i></span>
+          Thêm Môn Học Mới
+        </button>
+      </div>
+    </section>
+
+    <section class="overview">
+      <div class="ov-head">
+        <div class="t"><i class="fa-solid fa-chart-pie"></i> Bảng Tổng Hợp Chi Phí Dự Kiến</div>
+        <span class="chip"><span class="ov-chip-dot"></span> Tính toán thời gian thực</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="l">Tổng Số Tín Chỉ</span>
+          <span class="v" id="totalCreditsText">0</span>
+          <span class="s">Tín chỉ tích lũy</span>
+        </div>
+        <div class="stat">
+          <span class="l">TC Lý Thuyết</span>
+          <span class="v" id="totalTheoryText">0</span>
+          <span class="s" id="totalTheoryCostText">0 ₫</span>
+        </div>
+        <div class="stat">
+          <span class="l">TC Thực Hành</span>
+          <span class="v" id="totalPracticeText">0</span>
+          <span class="s" id="totalPracticeCostText">0 ₫</span>
+        </div>
+        <div class="stat stat-s4">
+          <span class="l">Số Môn Học</span>
+          <span class="v" id="totalSubjectsText">0</span>
+          <span class="s">Môn trong kỳ</span>
+        </div>
+      </div>
+
+      <div class="total-box">
+        <div class="cap">Tổng Học Phí Dự Kiến Học Kỳ</div>
+        <div class="big" id="totalFee">0 ₫</div>
+        <p>(Đã bao gồm học phí toàn bộ tín chỉ Lý thuyết &amp; Thực hành theo đơn giá đã cấu hình)</p>
+      </div>
+
+      <div class="ov-actions">
+        <button type="button" onclick="copySummary()" class="ov-btn ghost">
+          <i class="fa-regular fa-copy"></i> Sao Chép Bảng Tổng Hợp
+        </button>
+        <button type="button" onclick="calculateFee()" class="ov-btn solid">
+          <i class="fa-solid fa-arrows-rotate"></i> Cập Nhật Lại
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="note">
+      <i class="fa-solid fa-circle-info"></i>
+      Đơn giá được áp dụng tham khảo theo các thông báo thu học phí chính thức từ HUIT.
+    </p>
+    <p>© 2026 HUIT Tuition Calculator — Công Cụ Hỗ Trợ Sinh Viên HUIT</p>
+  </footer>
+
+</div>
+
+<div id="toast" role="status">
+  <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
+  <span id="toastMsg">Đã sao chép kết quả thành công!</span>
+</div>
+
+<script>
+/* ==============================================================
+   Logic giữ nguyên 100%
+   ============================================================== */
+const priceData = {
+    "K14": { theory: 730000,  practice: 935000 },
+    "K15": { theory: 863000,  practice: 1100000 },
+    "K16": { theory: 940000,  practice: 1200000 },
+    "K26": { theory: 1100000, practice: 1350000 }
+};
+
+let subjectCount = 0;
+
+/* --- Theme: dùng chung bộ với các công cụ khác --- */
+const THEME_KEY = 'ck-theme';
+function initTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme((saved === 'dark' || (!saved && sysDark)) ? 'dark' : 'light');
+}
+function toggleTheme() {
+    if (typeof CK !== 'undefined' && CK.theme) { CK.theme.toggle(); return; }
+    applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+}
+function applyTheme(t) {
+    document.documentElement.dataset.theme = t;
+    localStorage.setItem(THEME_KEY, t);
+    document.querySelector('#theme-toggle i').className =
+        t === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+}
+/* Đồng bộ icon nút riêng với CK.theme (thanh điều hướng) */
+document.addEventListener('ck:theme', function (e) {
+    var i = document.querySelector('#theme-toggle i');
+    if (i) i.className = e.detail === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+});
+
+window.onload = function() {
+    initTheme();
+    addPresetSubjects();
+};
+
+function updatePrices() {
+    const selectedKhoa = document.getElementById('khoaSelect').value;
+    const theoryInput = document.getElementById('theoryPrice');
+    const practiceInput = document.getElementById('practicePrice');
+
+    if (priceData[selectedKhoa]) {
+        theoryInput.value = priceData[selectedKhoa].theory;
+        practiceInput.value = priceData[selectedKhoa].practice;
+    }
+    calculateFee();
+}
+
+/* CSS escape tên môn khi chèn vào value="" */
+function esc(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function addSubject(name = '', theory = 0, practice = 0) {
+    subjectCount++;
+    const container = document.getElementById('subjectsContainer');
+
+    const row = document.createElement('div');
+    row.className = 'subject-item fade-in';
+    row.id = `subject-row-${subjectCount}`;
+
+    row.innerHTML = `
+        <div class="si-name">
+            <span class="subject-badge"></span>
+            <input type="text" value="${esc(name)}" placeholder="Nhập tên môn học (Tùy chọn)"
+                aria-label="Tên môn học" class="inp">
+        </div>
+
+        <div class="si-cell si-tc">
+            <label class="only-mobile">TC Lý thuyết</label>
+            <div class="stepper">
+                <button type="button" onclick="stepVal(this, 'theory-input', -1)" aria-label="Giảm tín chỉ lý thuyết" class="step-btn"><i class="fa-solid fa-minus"></i></button>
+                <input type="number" value="${theory}" min="0" max="20" oninput="calculateFee()"
+                    aria-label="Số tín chỉ lý thuyết"
+                    class="theory-input step-inp">
+                <button type="button" onclick="stepVal(this, 'theory-input', 1)" aria-label="Tăng tín chỉ lý thuyết" class="step-btn"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+
+        <div class="si-cell si-tc">
+            <label class="only-mobile">TC Thực hành</label>
+            <div class="stepper">
+                <button type="button" onclick="stepVal(this, 'practice-input', -1)" aria-label="Giảm tín chỉ thực hành" class="step-btn"><i class="fa-solid fa-minus"></i></button>
+                <input type="number" value="${practice}" min="0" max="20" oninput="calculateFee()"
+                    aria-label="Số tín chỉ thực hành"
+                    class="practice-input step-inp">
+                <button type="button" onclick="stepVal(this, 'practice-input', 1)" aria-label="Tăng tín chỉ thực hành" class="step-btn"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+
+        <div class="si-cell si-sum">
+            <label class="only-mobile">Thành tiền</label>
+            <span class="row-subtotal">0 ₫</span>
+        </div>
+
+        <div class="si-del">
+            <button type="button" onclick="removeSubject(this)" aria-label="Xóa môn này" class="del-btn" title="Xóa môn này">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+        </div>
+    `;
+
+    container.appendChild(row);
+    calculateFee();
+}
+
+function stepVal(btn, className, delta) {
+    const container = btn.closest('.subject-item');
+    const input = container.querySelector('.' + className);
+    let val = parseInt(input.value) || 0;
+    val = Math.max(0, val + delta);
+    input.value = val;
+    calculateFee();
+}
+
+function removeSubject(btn) {
+    const row = btn.closest('.subject-item');
+    row.style.transition = 'opacity 200ms ease, transform 200ms ease';
+    row.style.opacity = '0';
+    row.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+        row.remove();
+        calculateFee();
+    }, 200);
+}
+
+function clearAllSubjects() {
+    document.getElementById('subjectsContainer').innerHTML = '';
+    calculateFee();
+}
+
+function addPresetSubjects() {
+    clearAllSubjects();
+    addSubject("Triết học Mác - Lênin", 3, 0);
+    addSubject("Kinh tế chính trị Mác-Lênin", 2, 0);
+    addSubject("Logic học", 2, 0);
+    addSubject("Phương pháp nghiên cứu khoa học", 2, 0);
+    addSubject("Vật lý đại cương", 2, 0);
+    addSubject("Vật lý kỹ thuật", 2, 0);
+    addSubject("Giải tích và ứng dụng trong kỹ thuật - công nghệ", 3, 0);
+    addSubject("Vẽ kỹ thuật", 1, 1);
+    addSubject("Vẽ cơ khí", 2, 1);
+    addSubject("Giáo dục thể chất", 0, 2);
+}
+
+function calculateFee() {
+    const theoryPrice = parseInt(document.getElementById('theoryPrice').value) || 0;
+    const practicePrice = parseInt(document.getElementById('practicePrice').value) || 0;
+
+    const subjectRows = document.querySelectorAll('.subject-item');
+
+    let totalTheoryCredits = 0;
+    let totalPracticeCredits = 0;
+    let totalFee = 0;
+
+    subjectRows.forEach(row => {
+        const theoryInput = row.querySelector('.theory-input');
+        const practiceInput = row.querySelector('.practice-input');
+        const subtotalEl = row.querySelector('.row-subtotal');
+
+        const tVal = parseInt(theoryInput.value) || 0;
+        const pVal = parseInt(practiceInput.value) || 0;
+
+        const rowSubtotal = (tVal * theoryPrice) + (pVal * practicePrice);
+        if (subtotalEl) subtotalEl.innerText = formatVND(rowSubtotal);
+
+        totalTheoryCredits += tVal;
+        totalPracticeCredits += pVal;
+        totalFee += rowSubtotal;
+    });
+
+    const totalCredits = totalTheoryCredits + totalPracticeCredits;
+    const totalSubjects = subjectRows.length;
+    const theoryCost = totalTheoryCredits * theoryPrice;
+    const practiceCost = totalPracticeCredits * practicePrice;
+
+    document.getElementById('totalCreditsText').innerText = totalCredits;
+    document.getElementById('totalTheoryText').innerText = totalTheoryCredits;
+    document.getElementById('totalPracticeText').innerText = totalPracticeCredits;
+    document.getElementById('totalSubjectsText').innerText = totalSubjects;
+
+    document.getElementById('totalTheoryCostText').innerText = formatVND(theoryCost);
+    document.getElementById('totalPracticeCostText').innerText = formatVND(practiceCost);
+    document.getElementById('totalFee').innerText = formatVND(totalFee);
+}
+
+function formatVND(amount) {
+    return new Intl.NumberFormat('vi-VN').format(amount) + " ₫";
+}
+
+function copySummary() {
+    const totalCredits = document.getElementById('totalCreditsText').innerText;
+    const totalFee = document.getElementById('totalFee').innerText;
+    const selectedKhoa = document.getElementById('khoaSelect').selectedOptions[0].text;
+
+    const textToCopy = `[TÍNH HỌC PHÍ HUIT]\n- Khóa: ${selectedKhoa}\n- Tổng tín chỉ: ${totalCredits} TC\n- Tổng học phí dự kiến: ${totalFee}`;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast("Đã sao chép tổng hợp học phí vào bộ nhớ tạm!");
+    });
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+</script>
+<div data-ck-footer></div>
+<script src="../assets/app.js?v=20261017d"></script>
+<script src="../assets/data.js"></script>
+</body>
+</html>
