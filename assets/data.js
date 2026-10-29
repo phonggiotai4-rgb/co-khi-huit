@@ -192,6 +192,11 @@
      "logic-hoc-dai-cuong": {
        label: "Chương",
        names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5"]
+     },
+     /* Đại số tuyến tính chia theo 5 chương của file "ĐẠI SỐ TUYẾN TÍNH.docx". */
+     "dai-so-tuyen-tinh": {
+       label: "Chương",
+       names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5"]
      }
    };
 
@@ -353,6 +358,15 @@
        "chuong-3": "logic-hoc-dai-cuong/luyen-tap.html?d=chuong-3",
        "chuong-4": "logic-hoc-dai-cuong/luyen-tap.html?d=chuong-4",
        "chuong-5": "logic-hoc-dai-cuong/luyen-tap.html?d=chuong-5"
+     },
+     /* Đại số tuyến tính: MỘT trang làm bài dùng chung cho cả 5 chương —
+        bài thi nào thì nạp tham số `?d=chuong-N`. */
+     "dai-so-tuyen-tinh": {
+       "chuong-1": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-1",
+       "chuong-2": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-2",
+       "chuong-3": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-3",
+       "chuong-4": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-4",
+       "chuong-5": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-5"
      }
    };
 
@@ -375,6 +389,8 @@
     "lich-su-dang-cong-san-viet-nam": "lich-su-dang-cong-san-viet-nam/quiz.html",
     /* Tư tưởng Hồ Chí Minh: trang đề cương dùng chung cho cả 5 chương — thêm `?d=`. */
     "tu-tuong-ho-chi-minh": "tu-tuong-ho-chi-minh/quiz.html",
+    /* Đại số tuyến tính: trang đề cương dùng chung cho cả 5 chương — thêm `?d=`. */
+    "dai-so-tuyen-tinh": "dai-so-tuyen-tinh/quiz.html",
     /* Triết học Mác-Lênin: trang đề cương dùng chung cho cả 3 chương — thêm `?d=`. */
     "triet-hoc-mac-lenin": "triet-hoc-mac-lenin/quiz.html",
     /* Chủ nghĩa xã hội khoa học: trang đề cương dùng chung cho cả 7 chương — thêm `?d=`. */
@@ -404,6 +420,9 @@
     /* Tư tưởng Hồ Chí Minh: đi qua pmt-ems rồi sang trang thi thử ngẫu nhiên
        40 câu / 60 phút. */
     "tu-tuong-ho-chi-minh": "pmt-ems/pmt-ems.html",
+    /* Đại số tuyến tính: đi qua pmt-ems rồi sang trang thi thử ngẫu nhiên
+       40 câu / 60 phút. */
+    "dai-so-tuyen-tinh": "pmt-ems/pmt-ems.html",
     /* Triết học Mác-Lênin: đi qua pmt-ems rồi sang trang thi thử ngẫu nhiên
        40 câu / 60 phút. */
     "triet-hoc-mac-lenin": "pmt-ems/pmt-ems.html",
@@ -429,6 +448,8 @@
     "quan-tri-chuoi-cung-ung": "quan-tri-chuoi-cung-ung/thi-quan-tri-chuoi-cung-ung-ngau-nhien.html",
     "quan-tri-chat-luong": "quan-tri-chat-luong/thi-quan-tri-chat-luong-ngau-nhien.html",
     "ky-nang-giao-tiep": "ky-nang-giao-tiep/thi-ky-nang-giao-tiep-ngau-nhien.html",
+    /* Đại số tuyến tính: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */
+    "dai-so-tuyen-tinh": "dai-so-tuyen-tinh/thi-dai-so-tuyen-tinh-ngau-nhien.html",
     "marketing-can-ban": "marketing-can-ban/thi-marketing-can-ban-ngau-nhien.html",
     "lich-su-dang-cong-san-viet-nam": "lich-su-dang-cong-san-viet-nam/thi-lich-su-dang-cong-san-viet-nam-ngau-nhien.html",
     /* Tư tưởng Hồ Chí Minh: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */

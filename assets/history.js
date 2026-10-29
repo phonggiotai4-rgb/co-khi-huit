@@ -125,6 +125,9 @@
     } else if (/^logic-hoc-dai-cuong$/i.test(dir)) {
       out.slug = "logic-hoc-dai-cuong"; out.subject = "LOGIC HỌC ĐẠI CƯƠNG";
       out.cat = "TOÁN HỌC & KHOA HỌC"; out.catName = "Toán học & Khoa học";
+    } else if (/^dai-so-tuyen-tinh$/i.test(dir)) {
+      out.slug = "dai-so-tuyen-tinh"; out.subject = "ĐẠI SỐ TUYẾN TÍNH";
+      out.cat = "TOÁN HỌC & KHOA HỌC"; out.catName = "Toán học & Khoa học";
     }
     return out;
   }

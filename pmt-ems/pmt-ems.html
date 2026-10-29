@@ -2,6 +2,21 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
+<!-- MathJax for rendering mathematical notation -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      tags: 'ams',
+      tagSide: 'right'
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PMT-EMS EDUCATION — Hệ thống thi trắc nghiệm</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1088,7 +1103,8 @@
     { id: '010100023614', m: 'triet-hoc-mac-lenin', label: 'Triết học Mác - Lênin' },
     { id: '010100023615', m: 'chu-nghia-xa-hoi-khoa-hoc', label: 'Chủ nghĩa xã hội khoa học' },
      { id: '010100023616', m: 'kinh-te-chinh-tri-mac-lenin', label: 'Kinh tế chính trị Mác - Lênin' },
-     { id: '010100023617', m: 'logic-hoc-dai-cuong', label: 'Logic học đại cương' }
+     { id: '010100023617', m: 'logic-hoc-dai-cuong', label: 'Logic học đại cương' },
+    { id: '010100023618', m: 'dai-so-tuyen-tinh', label: 'Đại số tuyến tính' },
    ];
 
     /* Mọi lịch thi của một môn — rỗng nếu môn đó chưa có lịch thi */
