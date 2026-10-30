@@ -2004,6 +2004,11 @@ const showToast = (kind, title, sub, mod) => {
     if (animate) animateCard();
     renderActionButton();
     renderProgress();
+
+    // Re-render MathJax after content change
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([el.qcard]).catch(err => console.log('MathJax error:', err));
+    }
   };
 
 const renderActionButton = () => {
@@ -2114,7 +2119,7 @@ if (picked === q.correct) {
     const q = SESSION[state.index];
     if (!isResolved(q)) return;              // chỉ qua câu đã trả lời đúng hoặc đã bỏ qua
     if (state.index === SESSION.length - 1) { finish(); return; }
-    state.index += 1;
+state.index += 1;
     state.lastWrong = null;
     hideToast();
     renderQuestion();
@@ -2329,6 +2334,8 @@ const skipCurrent = () => {
     el.practiceTag.hidden = !show;
     if (show) el.practiceTagText.textContent = state.practiceLabel || 'Luyện tập';
   };
+
+;;
 
   /* ================= TRANG XEM ĐÁP ÁN ================= */
   const REVIEW_FILTERS = [
@@ -2641,7 +2648,6 @@ reviewState.filter = 0;
       : 'Bắt đầu lại sẽ xoá toàn bộ tiến độ bài làm. Bạn có chắc chắn muốn bắt đầu lại ?',
     restart
   );
-
 
   /* ========================= BẢN ĐỒ CÂU HỎI ========================= */
   const buildMap = () => {

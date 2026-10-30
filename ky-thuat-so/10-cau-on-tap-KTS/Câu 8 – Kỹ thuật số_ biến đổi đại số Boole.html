@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 8 – Kỹ thuật số: biến đổi đại số Boole</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--bad:#c0392b;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--bad:#ff8a80;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--bad:#ff8a80;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:700px){#stage{grid-template-columns:1fr}}
+#rules{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:10px 14px}
+#rules h3{margin:0 0 6px;font-size:.95rem}
+#rules ul{list-style:none;margin:0;padding:0}
+#rules li{padding:7px 8px;border-top:1px solid var(--line);font:1rem/1.5 Georgia,'Times New Roman',serif;color:var(--mute)}
+#rules li.on{background:var(--hl);color:var(--ink);font-weight:700}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.25rem/1.9 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines small{font:.75rem 'Be Vietnam Pro',system-ui,sans-serif;color:var(--mute);margin-left:8px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+.bad{color:var(--bad);font-weight:700}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><div id="rules"><h3>Quy tắc dùng trong bài</h3><ul id="rl"></ul></div><div id="board"><h2 id="ttl"></h2><div id="lines"></div></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`,sm=t=>`<small>${t}</small>`;
+const A=n('A'),C=n('C'),D=n('D');
+const VT=`${A}B + ${A}D + BC${D}`,VPe=`(${A} + D)(${A} + ${C})(B + ${D})`,VPs=`${A}B + ${A}${D} + B${C}D`;
+const RU=['Phân phối: X(Y + Z) = XY + XZ','Lũy đẳng: X·X = X','Nuốt: 1 + X = 1',`Bù: X·${n('X')} = 0`,'Đồng nhất: X + 0 = X và X·1 = X'];
+const S=[
+{c:0,r:[],s:'Chào bạn, câu 8 là dạng biến đổi bằng đại số Boole. Cách làm: mình khai triển vế phải VP thành một tổng các tích, rồi đem so với vế trái VT.',a:[`VT = ${VT}`,`VP = ${VPe}`]},
+{c:1,r:[0],clr:1,s:'Nhân hai ngoặc đầu trước. Phân phối: A ngang nhân A ngang, A ngang nhân C ngang, D nhân A ngang, và D nhân C ngang.',a:[`VP = ${VPe}`,`(${A} + D)(${A} + ${C}) = ${A}${A} + ${A}${C} + ${A}D + ${C}D ${sm('phân phối')}`]},
+{c:1,r:[1],s:'A ngang nhân A ngang bằng A ngang, theo quy tắc lũy đẳng.',a:[`= ${A} + ${A}${C} + ${A}D + ${C}D ${sm('X·X = X')}`]},
+{c:1,r:[0,2,4],s:'Ba số hạng đầu cùng có A ngang, đặt ra ngoài: A ngang nhân ngoặc 1 cộng C ngang cộng D. Theo quy tắc nuốt, ngoặc đó bằng 1, nên còn A ngang. Vậy hai ngoặc đầu cho ra A ngang cộng C ngang D.',a:[`= ${A}(1 + ${C} + D) + ${C}D`,`= ${A}·1 + ${C}D ${sm('1 + X = 1')}`,`= ${A} + ${C}D`]},
+{c:1,r:[0],s:'Nhân tiếp với ngoặc cuối B cộng D ngang. Phân phối: A ngang B, A ngang D ngang, C ngang D B, và C ngang D D ngang.',a:[`VP = (${A} + ${C}D)(B + ${D})`,`= ${A}B + ${A}${D} + B${C}D + ${C}D${D} ${sm('phân phối')}`]},
+{c:1,r:[3,4],s:'D nhân D ngang bằng 0 theo quy tắc bù, nên số hạng cuối biến mất. Kết quả khai triển của vế phải là A ngang B cộng A ngang D ngang cộng B C ngang D.',a:[`= ${A}B + ${A}${D} + B${C}D + 0 ${sm('X·X̅ = 0')}`,res(`VP = ${VPs}`)]},
+{c:2,r:[],clr:1,s:'Bây giờ so với vế trái từng số hạng. A ngang B thì giống nhau. Nhưng số hạng thứ hai của VT là A ngang D, còn của VP là A ngang D ngang. Số hạng thứ ba của VT là B C D ngang, còn của VP là B C ngang D. Hai chỗ này khác nhau.',a:[`VT = ${A}B + <span class="bad">${A}D</span> + <span class="bad">BC${D}</span>`,`VP = ${A}B + <span class="bad">${A}${D}</span> + <span class="bad">B${C}D</span>`]},
+{c:2,r:[],s:'Kiểm tra bằng phản ví dụ: cho A, B, C, D đều bằng 0. Vế trái: A ngang B bằng 0 vì B bằng 0, A ngang D bằng 0 vì D bằng 0, B C D ngang bằng 0 vì B bằng 0, nên VT bằng 0. Vế phải: cả ba ngoặc đều bằng 1 nên VP bằng 1. Vậy VT khác VP.',a:['A = B = C = D = 0','VT = 0','VP = 1',res('VT ≠ VP')]},
+{c:3,r:[],clr:1,s:'Vậy với đề đúng như hình thì hai biểu thức không tương đương, dù phần khai triển ở trên là chính xác. Để ý VP sau khi khai triển chính là biểu thức của câu 7 sau khi sửa. Nhiều khả năng vế trái đúng của đề là A ngang B cộng A ngang D ngang cộng B C ngang D.',a:[`VP = ${VPs}`,'Có thể đề đúng: VT = A̅B + A̅D̅ + BC̅D']},
+{c:3,r:[],s:'Với vế trái đó thì phần khai triển vế phải ở trên đã chứng minh xong, vì biến đổi VP ra đúng VT. Cách trình bày an toàn: ghi các bước biến đổi VP, ghi chú đề có thể bị chép nhầm và hỏi lại thầy cô. Vậy là xong câu 8.',a:[res(`${VPs} = ${VPe}`),'Điều phải chứng minh ∎ (với đề đã sửa)']}];
+const CH=['Hướng làm','Khai triển VP','So sánh VT, VP','Đề chép nhầm?'],TT=['Câu 8: chứng minh bằng đại số Boole','Khai triển vế phải VP','So sánh với vế trái VT','Khả năng đề bị chép nhầm'];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id);
+function render(){
+ const s=S[si];
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x}</button>`).join('');
+ $('ttl').textContent=TT[s.c];
+ $('rl').innerHTML=RU.map((x,j)=>`<li class="${s.r.includes(j)?'on':''}">${x}</li>`).join('');
+ let L=[],k=0;
+ for(let j=0;j<=si;j++){const t=S[j];if(t.c==s.c){if(t.clr)L=[];L.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=L.map((x,j)=>`<div class="${j>=L.length-k?'new':''}">${x}</div>`).join('');
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>

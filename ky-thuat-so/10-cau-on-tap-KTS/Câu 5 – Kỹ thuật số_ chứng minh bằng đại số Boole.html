@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 5 – Kỹ thuật số: chứng minh bằng đại số Boole</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:700px){#stage{grid-template-columns:1fr}}
+#rules{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:10px 14px}
+#rules h3{margin:0 0 6px;font-size:.95rem}
+#rules ul{list-style:none;margin:0;padding:0}
+#rules li{padding:7px 8px;border-top:1px solid var(--line);font:1rem/1.5 Georgia,'Times New Roman',serif;color:var(--mute)}
+#rules li.on{background:var(--hl);color:var(--ink);font-weight:700}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.25rem/1.9 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines small{font:.75rem 'Be Vietnam Pro',system-ui,sans-serif;color:var(--mute);margin-left:8px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><div id="rules"><h3>Quy tắc dùng trong bài</h3><ul id="rl"></ul></div><div id="board"><h2 id="ttl"></h2><div id="lines"></div></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`,sm=t=>`<small>${t}</small>`;
+const An=n('A'),VT=`(A + B)(${An} + C)`,VP=`AC + ${An}B`;
+const RU=['Phân phối: X(Y + Z) = XY + XZ',`Bù: X·${n('X')} = 0 và X + ${n('X')} = 1`,'Đồng nhất: X + 0 = X và X·1 = X','Nuốt: 1 + X = 1','Giao hoán, kết hợp: đổi chỗ, nhóm số hạng'];
+const S=[
+{c:0,r:[],s:'Chào bạn, câu 5 là chứng minh lại đẳng thức của câu 4, nhưng lần này dùng các quy tắc đại số Boole thay cho bảng chân trị. Cách làm: chọn một vế rồi biến đổi từng bước cho đến khi ra vế còn lại. Mình chọn vế trái vì nó là tích của hai tổng, dễ khai triển.',a:['Cần chứng minh: VT = VP',`VT = ${VT}`,`VP = ${VP}`]},
+{c:1,r:[0],clr:1,s:'Bắt đầu từ vế trái. Việc đầu tiên là nhân phân phối: lấy từng số hạng của ngoặc thứ nhất nhân với từng số hạng của ngoặc thứ hai. Ta được A nhân A ngang, A nhân C, B nhân A ngang, B nhân C.',a:[`VT = ${VT}`,`= A·${An} + A·C + B·${An} + B·C ${sm('phân phối')}`]},
+{c:1,r:[1,2,4],s:'A nhân A ngang bằng 0, vì một biến nhân với phủ định của nó luôn bằng 0. Số 0 cộng với gì cũng không đổi nên bỏ đi. Đổi chỗ các thừa số cho gọn, ta được AC cộng A ngang B cộng BC.',a:[`= 0 + AC + ${An}B + BC ${sm('X·X̅ = 0')}`,`= AC + ${An}B + BC ${sm('X + 0 = X')}`]},
+{c:2,r:[1,2],clr:1,s:'So với vế phải thì ta đang thừa số hạng BC. Mẹo là nhân BC với A cộng A ngang. Vì A cộng A ngang bằng 1 và nhân với 1 không đổi, nên giá trị của biểu thức vẫn giữ nguyên.',a:[`VT = AC + ${An}B + BC`,`= AC + ${An}B + BC·(A + ${An}) ${sm('A + A̅ = 1')}`]},
+{c:2,r:[0],s:'Phân phối BC vào ngoặc: BC nhân A là ABC, BC nhân A ngang là A ngang BC.',a:[`= AC + ${An}B + ABC + ${An}BC ${sm('phân phối')}`]},
+{c:2,r:[4],s:'Nhóm lại cho hợp lý: ABC đi cùng AC, vì cùng có AC. A ngang BC đi cùng A ngang B, vì cùng có A ngang B.',a:[`= (AC + ABC) + (${An}B + ${An}BC) ${sm('giao hoán, kết hợp')}`]},
+{c:2,r:[0],s:'Đặt nhân tử chung. Viết AC thành AC nhân 1, rồi đặt AC ra ngoài nhóm đầu, được AC nhân ngoặc 1 cộng B. Nhóm sau làm tương tự với A ngang B, được ngoặc 1 cộng C.',a:[`= AC(1 + B) + ${An}B(1 + C) ${sm('đặt nhân tử chung')}`]},
+{c:2,r:[3],s:'Theo quy tắc nuốt, 1 cộng với bất kỳ biến nào cũng bằng 1. Nên 1 cộng B bằng 1 và 1 cộng C bằng 1.',a:[`= AC·1 + ${An}B·1 ${sm('1 + X = 1')}`]},
+{c:3,r:[2],clr:1,s:'Cuối cùng, nhân với 1 thì không đổi, ta được AC cộng A ngang B, đúng bằng vế phải. Vậy hai biểu thức tương đương, câu 5 xong.',a:[`VT = AC·1 + ${An}B·1`,res(`= AC + ${An}B = VP`),'Điều phải chứng minh ∎']},
+{c:3,r:[],s:`Mẹo thêm: nếu thầy cô cho dùng định lý đồng thuận, thì từ bước AC cộng A ngang B cộng BC có thể bỏ ngay BC vì nó thừa. Nhưng làm từng bước như trên thì an toàn nhất, không phải chứng minh thêm định lý.`,a:['Định lý đồng thuận: AC + A̅B + BC = AC + A̅B']}];
+const CH=['Hướng làm','Khai triển','Loại số hạng BC','Kết luận'],TT=['Câu 5: chứng minh bằng đại số Boole','Khai triển vế trái','Loại số hạng thừa BC','Kết luận'];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id);
+function render(){
+ const s=S[si];
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x}</button>`).join('');
+ $('ttl').textContent=TT[s.c];
+ $('rl').innerHTML=RU.map((x,j)=>`<li class="${s.r.includes(j)?'on':''}">${x}</li>`).join('');
+ let L=[],k=0;
+ for(let j=0;j<=si;j++){const t=S[j];if(t.c==s.c){if(t.clr)L=[];L.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=L.map((x,j)=>`<div class="${j>=L.length-k?'new':''}">${x}</div>`).join('');
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>

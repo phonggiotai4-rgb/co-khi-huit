@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- MathJax for rendering mathematical notation -->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -12,12 +12,10 @@
       tags: 'ams',
       tagSide: 'right'
     },
-    svg: {
-      fontCache: 'global'
-    }
+    svg: { fontCache: 'global' }
   };
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <title>ĐẠI SỐ TUYẾN TÍNH — 40 CÂU NGẪU NHIÊN / 60 PHÚT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -604,8 +602,7 @@
 <script>
 /* ============================================================
    NGÂN HÀNG CÂU HỎI — nạp từ assets/quiz-bank.js (CK.PART_QUIZ["dai-so-tuyen-tinh"])
-   412 câu / 5 chương. Mỗi câu trong ngân hàng: { q, o:[4 phương án], a: chỉ số đáp án đúng }
-   -> đổi sang dạng của trang này: { t: nội dung, o: [phương án], c: đáp án đúng, s: số chương }
+   Mỗi câu ngân hàng: { q, o:[4 phương án], a, e } -> { t, o, c, s: số chương }
    ============================================================ */
 var BANK = (function () {
   var src = (window.CK && CK.PART_QUIZ && CK.PART_QUIZ['dai-so-tuyen-tinh']) || {};
@@ -614,40 +611,13 @@ var BANK = (function () {
     var ch = parseInt(String(pid).replace(/^.*-(\d+)$/, '$1'), 10);
     if (!isFinite(ch)) ch = k + 1;
     (src[pid] || []).forEach(function (q) {
-      if (q && q.q && q.o && q.o.length >= 2 && q.o.length <= 6 && typeof q.a === 'number' && q.a >= 0 && q.a < q.o.length) {
+      if (q && q.q && q.o && q.o.length === 4 && typeof q.a === 'number' && q.a >= 0 && q.a <= 3) {
         out.push({ t: q.q, o: q.o, c: q.a, s: ch });
       }
     });
   });
   return out;
 })();
-var LETTERS = ['A','B','C','D','E','F'];
-var EXAM_COUNT = 40;          /* số câu mỗi lần thi */
-var EXAM_SECONDS = 60 * 60;    /* 60 phút */
-var STORAGE_KEY = 'dst_rng_v1';
-var SHOW_SOURCE = true;        /* hiện "nguồn: chương N" dưới mỗi câu */
-
-/* ============================================================
-   HỒ SƠ SINH VIÊN — đọc từ trang Cá nhân
-   Nguồn sự thật duy nhất là localStorage["ck-profile-v1"], do
-   ca-nhan.html quản lý (giống cách pmt-ems.html đọc).
-   CHỈ ĐỌC, không ghi ngược — sửa hồ sơ phải qua trang Cá nhân.
-   ============================================================ */
-var PROFILE_KEY = 'ck-profile-v1';
-var PROFILE_PAGE = '../ca-nhan.html';
-var PMT_PAGE = '../pmt-ems/pmt-ems.html';
-var student = null;
-
-/* Hồ sơ -> ô hiển thị. Nhiều trường hồ sơ gộp về một ô (ngày sinh + giới tính). */
-var PROFILE_FIELDS = [
-  { id: 'vName',   keys: ['name'] },
-  { id: 'vMssv',   keys: ['mssv'] },
-  { id: 'vLop',    keys: ['lop'] },
-  { id: 'vBirth',  keys: ['ngaysinh'] },
-  { id: 'vGender', keys: ['gioitinh'] },
-  { id: 'vKhoa',   keys: ['khoa'] },
-  { id: 'vEmail',  keys: ['email'] }
-];
 
 function readProfile() {
   try {
@@ -734,7 +704,7 @@ function esc(s) {
 function fmt(s) {
   var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), q = s % 60;
   function p(n) { return (n < 10 ? '0' : '') + n; }
-  return p(h) + ' : ' + p(m) + ' : ' + p(q);
+  return p(h) + ' : ' + p(m) + ' : ' + q;
 }
 
 /* ---------- Lịch sử: ưu tiên câu chưa từng làm ----------
@@ -1059,6 +1029,9 @@ function render() {
     elQsrc.innerHTML = '';
   }
   elOpts.innerHTML = optionsHtml();
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise().catch(function(err){ console.log(err); });
+  }
   elTotal.innerHTML = TOTAL;
   elAns.innerHTML = answeredCount();
 
@@ -1098,6 +1071,9 @@ function sync() {
   for (var i = 0; i < TOTAL; i++) updateRow(i);
   elAns.innerHTML = answeredCount();
   elOpts.innerHTML = optionsHtml();
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise().catch(function(err){ console.log(err); });
+  }
   applyFilter();
 }
 
@@ -1174,8 +1150,8 @@ function doSubmit() {
     subject: 'ĐẠI SỐ TUYẾN TÍNH',
     cat: 'TOÁN HỌC & KHOA HỌC',
     catName: 'Toán học & Khoa học',
-    part: 'chuong-ngau-nhien',
-    partName: 'Chương ngẫu nhiên'
+    part: 'de-ngau-nhien',
+    partName: 'Đề ngẫu nhiên'
   });
   var wrong = wrongList();
   var blank = TOTAL - answeredCount();

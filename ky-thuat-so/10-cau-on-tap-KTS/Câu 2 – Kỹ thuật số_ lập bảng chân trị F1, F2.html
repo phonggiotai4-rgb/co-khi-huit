@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 2 – Kỹ thuật số: lập bảng chân trị F1, F2</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--f2:#0e8a7d;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--f2:#4fd1c0;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--f2:#4fd1c0;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(250px,320px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:700px){#stage{grid-template-columns:1fr}}
+#tt{border-collapse:collapse;width:100%;background:var(--card);font-variant-numeric:tabular-nums;border:1.5px solid var(--ink)}
+#tt th,#tt td{text-align:center;padding:3px 4px;border:1px solid var(--line)}
+#tt th{background:var(--bg);font-size:.85rem}
+#tt td.u{color:var(--mute)}
+#tt .c1.on{background:color-mix(in srgb,var(--f1) 16%,transparent)}
+#tt .c2.on{background:color-mix(in srgb,var(--f2) 16%,transparent)}
+#tt th.c1{color:var(--f1)}#tt th.c2{color:var(--f2)}
+#tt tr.h td{background:var(--hl);font-weight:700}
+#tt tr.d{opacity:.45}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.25rem/1.9 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><table id="tt"></table><div id="board"><h2 id="ttl"></h2><div id="lines"></div></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const F={F1:[1,1,0,0,1,1,1,0,0,1,0,1,0,0,0,1],F2:[1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0]};
+const bit=(i,k)=>(i>>(3-k))&1,N=[...Array(16).keys()];
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`;
+const f1=`F1 = ${n('A')}BC${n('D')} + A${n('B')}D + ACD + ${n('A')}${n('C')}`;
+const f2=`F2 = (B + C + ${n('D')})(${n('A')} + ${n('C')} + ${n('D')})(${n('B')} + ${n('D')})`;
+const Z1=[2,3,7,8,10,12,13,14],O2=[0,2,3,4,6,8,10,12,14];
+const S=[
+{c:0,f:null,h:[],s:'Chào bạn, câu 2 mình làm tiếp nhé. Đề cho hai hàm F1 và F2 theo bốn biến A, B, C, D, yêu cầu lập bảng chân trị. Bốn biến thì có 2 mũ 4 bằng 16 hàng. Mình ghi các tổ hợp ABCD từ 0000 đến 1111, A là bit cao nhất. Hai cột F1, F2 còn trống, lát nữa mình điền dần.',a:[f1,f2]},
+{c:0,f:null,h:[],s:'Trước khi làm, nhớ hai quy tắc. F1 là tổng các tích: chỉ cần một tích bằng 1 thì F1 bằng 1. F2 là tích các tổng: chỉ cần một tổng bằng 0 thì F2 bằng 0. Nhớ vậy là làm rất nhanh.',a:['Tổng các tích: có 1 tích = 1 ⇒ F = 1','Tích các tổng: có 1 tổng = 0 ⇒ F = 0']},
+{c:1,f:'F1',h:[],clr:1,s:'Bắt đầu với F1. Mình xét từng số hạng, tìm những hàng làm số hạng đó bằng 1.',a:[f1]},
+{c:1,f:'F1',h:[6],r1:[6],s:'Số hạng thứ nhất: A ngang B C D ngang. Đủ cả bốn biến, nên chỉ có một hàng: A bằng 0, B bằng 1, C bằng 1, D bằng 0. Đó là 0110, hàng 6.',a:[`${n('A')}BC${n('D')} = 1 ⇒ 0110 → 6`]},
+{c:1,f:'F1',h:[9,11],r1:[9,11],s:'Số hạng thứ hai: A B ngang D. Thiếu biến C, nên C nhận 0 hoặc 1. A bằng 1, B bằng 0, D bằng 1: ra 1001 và 1011, tức hàng 9 và hàng 11.',a:[`A${n('B')}D = 1 ⇒ 1001, 1011 → 9, 11`]},
+{c:1,f:'F1',h:[11,15],r1:[11,15],s:'Số hạng thứ ba: A C D, thiếu B. A, C, D bằng 1 còn B tự do: 1011 và 1111, tức hàng 11 và hàng 15. Hàng 11 đã có ở trên rồi, nên chỉ thêm hàng 15.',a:['ACD = 1 ⇒ 1011, 1111 → 11, 15']},
+{c:1,f:'F1',h:[0,1,4,5],r1:[0,1,4,5],s:'Số hạng thứ tư: A ngang C ngang, thiếu cả B và D nên có bốn hàng. A và C bằng 0, B và D tự do: 0000, 0001, 0100, 0101, tức hàng 0, 1, 4, 5.',a:[`${n('A')}${n('C')} = 1 ⇒ 0000, 0001, 0100, 0101 → 0, 1, 4, 5`]},
+{c:1,f:'F1',h:Z1,r1:Z1,s:'Các hàng còn lại không có số hạng nào bằng 1, nên F1 bằng 0. Gom lại, F1 bằng 1 ở hàng 0, 1, 4, 5, 6, 9, 11, 15.',a:[res('F1 = Σm(0, 1, 4, 5, 6, 9, 11, 15)')]},
+{c:2,f:'F2',h:[],clr:1,s:'Sang F2, đây là tích của ba tổng. Mình tìm hàng làm từng tổng bằng 0, vì tổng bằng 0 thì F2 bằng 0. Nhớ là tổng chỉ bằng 0 khi tất cả biến trong nó bằng 0.',a:[f2]},
+{c:2,f:'F2',h:[1,9],r2:[1,9],s:'Tổng thứ nhất: B cộng C cộng D ngang. Bằng 0 khi B bằng 0, C bằng 0, và D ngang bằng 0, tức D bằng 1. A tự do: 0001 và 1001, hàng 1 và hàng 9.',a:[`B + C + ${n('D')} = 0 ⇒ 0001, 1001 → 1, 9`]},
+{c:2,f:'F2',h:[11,15],r2:[11,15],s:'Tổng thứ hai: A ngang cộng C ngang cộng D ngang. Bằng 0 khi A, C, D đều bằng 1, B tự do: 1011 và 1111, hàng 11 và hàng 15.',a:[`${n('A')} + ${n('C')} + ${n('D')} = 0 ⇒ 1011, 1111 → 11, 15`]},
+{c:2,f:'F2',h:[5,7,13,15],r2:[5,7,13,15],s:'Tổng thứ ba: B ngang cộng D ngang. Bằng 0 khi B và D bằng 1, A và C tự do nên có bốn hàng: 0101, 0111, 1101, 1111, tức hàng 5, 7, 13, 15.',a:[`${n('B')} + ${n('D')} = 0 ⇒ 0101, 0111, 1101, 1111 → 5, 7, 13, 15`]},
+{c:2,f:'F2',h:O2,r2:O2,s:'Các hàng còn lại không có tổng nào bằng 0, nên F2 bằng 1. Vậy F2 bằng 0 ở hàng 1, 5, 7, 9, 11, 13, 15.',a:[res('F2 = ΠM(1, 5, 7, 9, 11, 13, 15)')]},
+{c:3,f:null,h:[],clr:1,r1:N,r2:N,s:'Xong rồi, đây là bảng chân trị hoàn chỉnh của cả F1 và F2.',a:[res('F1 = Σm(0, 1, 4, 5, 6, 9, 11, 15)'),res('F2 = ΠM(1, 5, 7, 9, 11, 13, 15)')]},
+{c:3,f:null,h:[0,15],s:'Kiểm tra nhanh cho chắc. Hàng 15, ABCD bằng 1111: số hạng A C D bằng 1 nên F1 bằng 1; tổng B ngang cộng D ngang bằng 0 nên F2 bằng 0. Hàng 0, ABCD bằng 0000: A ngang C ngang bằng 1 nên F1 bằng 1; cả ba tổng đều bằng 1 nên F2 bằng 1. Khớp với bảng.',a:['Hàng 15: F1 = 1, F2 = 0','Hàng 0: F1 = 1, F2 = 1']}];
+const CH=[['Chuẩn bị','Câu 2: đọc đề, chuẩn bị bảng'],['F1','Lập cột F1 (tổng các tích)'],['F2','Lập cột F2 (tích các tổng)'],['Kết quả','Bảng chân trị hoàn chỉnh']];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id);
+function render(){
+ const s=S[si],h=s.h||[];
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x[0]}</button>`).join('');
+ $('ttl').textContent=CH[s.c][1];
+ let L=[],c1=new Set,c2=new Set,k=0;
+ for(let j=0;j<=si;j++){const t=S[j];(t.r1||[]).forEach(x=>c1.add(x));(t.r2||[]).forEach(x=>c2.add(x));
+  if(t.c==s.c){if(t.clr)L=[];L.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=L.map((x,j)=>`<div class="${j>=L.length-k?'new':''}">${x}</div>`).join('');
+ const on=q=>s.f==q?' on':'',cell=(q,set,i)=>set.has(i)?`<td class="c${q}${on('F'+q)}">${F['F'+q][i]}</td>`:`<td class="u c${q}${on('F'+q)}">·</td>`;
+ $('tt').innerHTML=`<tr><th>m</th><th>A</th><th>B</th><th>C</th><th>D</th><th class="c1${on('F1')}">F1</th><th class="c2${on('F2')}">F2</th></tr>`+N.map(i=>`<tr class="${h.includes(i)?'h':h.length?'d':''}"><td>${i}</td>${[0,1,2,3].map(q=>`<td>${bit(i,q)}</td>`).join('')}${cell(1,c1,i)}${cell(2,c2,i)}</tr>`).join('');
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>

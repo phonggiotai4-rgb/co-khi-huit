@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- MathJax for rendering mathematical notation -->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -17,7 +17,8 @@
     }
   };
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 <title>Đại số tuyến tính — Đề cương | CƠ KHÍ HUIT</title>
 <meta name="description" content="Đề cương trắc nghiệm Đại số tuyến tính theo từng chương: toàn bộ câu hỏi, đáp án đúng và lời giải thích.">
 <link rel="icon" href="../assets/logo.png">
@@ -150,7 +151,7 @@
 
 <script src="../assets/app.js?v=20261017d"></script>
 <script src="../assets/data.js"></script>
-<script src="../assets/quiz-bank.js?v=20261029"></script>
+<script src="../assets/quiz-bank.js"></script>
 <script src="../assets/exam-card.js"></script>
 <script>
 (function () {
@@ -160,7 +161,7 @@
   var SLUG = "dai-so-tuyen-tinh";
   var LETTERS = ["A", "B", "C", "D", "E", "F"];
 
-  /* Tên chương theo file "ĐẠI SỐ TUYẾN TÍNH.docx" */
+  /* Tên chương lấy từ file "ĐẠI SỐ TUYẾN TÍNH.docx" */
   var TITLES = {
     "chuong-1": "Chương 1. Ma trận – Định thức",
     "chuong-2": "Chương 2. Hệ phương trình tuyến tính",
@@ -248,7 +249,7 @@
     $("code").textContent = CK.exam.code(SLUG + ":" + id);
     $("headSub").textContent = (TITLES[id] ? TITLES[id] + ". " : "") +
       "Toàn bộ câu hỏi kèm đáp án đúng và lời giải thích của chương này.";
-    document.title = (TITLES[id] || partNameOf(id)) + " — Đề cương Đại số tuyến tính | CƠ KHÍ HUIT";
+    document.title = partNameOf(id) + " — Đề cương Đại số tuyến tính | CƠ KHÍ HUIT";
 
     renderChips();
     renderList();

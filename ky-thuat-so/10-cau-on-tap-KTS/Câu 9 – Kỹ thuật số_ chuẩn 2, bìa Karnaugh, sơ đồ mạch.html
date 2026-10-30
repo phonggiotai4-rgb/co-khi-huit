@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 9 – Kỹ thuật số: chuẩn 2, bìa Karnaugh, sơ đồ mạch</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--h2:#9be3d6;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--h2:#0e5f55;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--h2:#0e5f55;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(230px,300px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:700px){#stage{grid-template-columns:1fr}}
+#tt{border-collapse:collapse;width:100%;background:var(--card);font-variant-numeric:tabular-nums;border:1.5px solid var(--ink)}
+#tt th,#tt td{text-align:center;padding:6px 4px;border:1px solid var(--line)}
+#tt th{background:var(--bg);font-size:.85rem}
+#tt .c1{background:color-mix(in srgb,var(--f1) 14%,transparent)}
+#tt th.c1{color:var(--f1)}
+#tt tr.h td{background:var(--hl);font-weight:700}
+#tt tr.d{opacity:.45}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.2rem/1.85 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+#km{display:none;margin:10px 0 4px;border-collapse:collapse;font-family:Georgia,serif}
+#km th,#km td{border:1.5px solid var(--ink);width:68px;height:44px;text-align:center;font-size:1.15rem}
+#km th{background:var(--bg);font-size:.9rem;font-weight:600}
+#km td sub{font:.65rem 'Be Vietnam Pro',sans-serif;color:var(--mute);margin-left:2px}
+#km td.h1{background:var(--hl);font-weight:700}#km td.h2{background:var(--h2);font-weight:700}
+#fig{display:none;margin-top:8px}#fig svg{width:100%;max-width:560px;height:auto;color:var(--ink)}
+#fig .g{opacity:0;transition:opacity .5s}#fig .g.on{opacity:1}
+@media(prefers-reduced-motion:reduce){#fig .g{transition:none}}
+#fig text{fill:currentColor;font:600 14px Georgia,serif}
+#fig .w,#fig path{stroke:currentColor;stroke-width:2;fill:none}
+#fig .gate{fill:var(--card)}#fig .o{fill:var(--card);stroke:currentColor;stroke-width:2}
+#fig .dot{fill:currentColor}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><table id="tt"></table><div id="board"><h2 id="ttl"></h2><div id="lines"></div><table id="km"></table>
+<div id="fig"><svg viewBox="0 0 560 262" role="img" aria-label="Sơ đồ mạch F = (A + B̅ + C̅)(A̅ + B + C)">
+<g class="g" data-lv="0"><text x="56" y="14">A</text><text x="86" y="14">B</text><text x="116" y="14">C</text>
+<line class="w" x1="60" y1="22" x2="60" y2="180"/><line class="w" x1="90" y1="22" x2="90" y2="205"/><line class="w" x1="120" y1="22" x2="120" y2="230"/></g>
+<g class="g" data-lv="1"><line class="w" x1="90" y1="75" x2="150" y2="75"/><line class="w" x1="120" y1="100" x2="150" y2="100"/><line class="w" x1="60" y1="180" x2="150" y2="180"/>
+<path d="M150,63 L150,87 L170,75 Z"/><circle class="o" cx="174" cy="75" r="4"/><path d="M150,88 L150,112 L170,100 Z"/><circle class="o" cx="174" cy="100" r="4"/><path d="M150,168 L150,192 L170,180 Z"/><circle class="o" cx="174" cy="180" r="4"/>
+<line class="w" x1="178" y1="75" x2="262" y2="75"/><line class="w" x1="178" y1="100" x2="262" y2="100"/><line class="w" x1="178" y1="180" x2="262" y2="180"/>
+<circle class="dot" cx="90" cy="75" r="3.5"/><circle class="dot" cx="120" cy="100" r="3.5"/><circle class="dot" cx="60" cy="180" r="3.5"/></g>
+<g class="g" data-lv="2"><line class="w" x1="60" y1="50" x2="262" y2="50"/><line class="w" x1="90" y1="205" x2="262" y2="205"/><line class="w" x1="120" y1="230" x2="262" y2="230"/>
+<circle class="dot" cx="60" cy="50" r="3.5"/><circle class="dot" cx="90" cy="205" r="3.5"/><circle class="dot" cx="120" cy="230" r="3.5"/>
+<path class="gate" d="M260,30 Q285,75 260,120 Q310,120 345,75 Q310,30 260,30 Z"/><path class="gate" d="M260,160 Q285,205 260,250 Q310,250 345,205 Q310,160 260,160 Z"/>
+<text x="285" y="80">OR</text><text x="285" y="210">OR</text>
+<text x="350" y="64" style="font-size:12px">(A+B̅+C̅)</text><text x="350" y="194" style="font-size:12px">(A̅+B+C)</text></g>
+<g class="g" data-lv="3"><line class="w" x1="345" y1="75" x2="380" y2="75"/><line class="w" x1="380" y1="75" x2="380" y2="125"/><line class="w" x1="380" y1="125" x2="402" y2="125"/>
+<line class="w" x1="345" y1="205" x2="380" y2="205"/><line class="w" x1="380" y1="205" x2="380" y2="155"/><line class="w" x1="380" y1="155" x2="402" y2="155"/>
+<path class="gate" d="M400,105 H425 a35,35 0 0 1 0,70 H400 Z"/><text x="412" y="145">AND</text>
+<line class="w" x1="460" y1="140" x2="520" y2="140"/><text x="526" y="145">F</text></g>
+</svg></div></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const F=[1,1,1,0,0,1,1,1],bit=(i,k)=>(i>>(2-k))&1,N=[...Array(8).keys()];
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`;
+const A=n('A'),B=n('B'),C=n('C'),POS=`(A + ${B} + ${C})(${A} + B + C)`;
+const KM=[[0,1,3,2],[4,5,7,6]];
+const S=[
+{c:0,h:[],s:'Chào bạn, câu 9 mình làm tiếp nhé. Có ba tín hiệu cảm biến A, B, C, và F cho phép van nước hoạt động theo bảng chân trị. Đề yêu cầu ba việc: viết F theo chuẩn 2, tức tích các tổng; rút gọn bằng bìa Các-nô; rồi vẽ sơ đồ mạch.',a:[]},
+{c:0,h:[3,4],s:'Dạng tích các tổng thì mình nhìn vào những hàng mà F bằng 0. Nhìn cột F: chỉ có hai hàng bằng 0, là hàng 3 với ABC bằng 011, và hàng 4 với ABC bằng 100.',a:['F = 0 tại hàng 3 (011) và hàng 4 (100)']},
+{c:0,h:[3],s:'Hàng 3, A bằng 0, B bằng 1, C bằng 1. Với tổng thì quy tắc ngược lại so với tích: bit bằng 0 giữ nguyên biến, bit bằng 1 thì thêm ngang. Vậy ta có tổng A cộng B ngang cộng C ngang.',a:[`M3: A + ${B} + ${C}`]},
+{c:0,h:[4],s:'Hàng 4, A bằng 1, B bằng 0, C bằng 0. Bit 1 thì thêm ngang, bit 0 giữ nguyên, ta có tổng A ngang cộng B cộng C.',a:[`M4: ${A} + B + C`]},
+{c:0,h:[3,4],s:'Nhân hai tổng lại, ta được F theo chuẩn 2, viết gọn là pi của M 3 và M 4.',a:[res(`F = ${POS}`),'F = ΠM(3, 4)']},
+{c:1,h:[],km:{},clr:1,s:'Sang bìa Các-nô. Ba biến nên bìa có 2 hàng ứng với A, và 4 cột ứng với BC theo mã Gray: 00, 01, 11, 10. Mình điền giá trị F từ bảng chân trị vào từng ô. Góc nhỏ là số thứ tự hàng.',a:['Bìa K 3 biến: hàng A, cột BC theo mã Gray']},
+{c:1,h:[3,4],km:{h1:[3],h2:[4]},s:'Vì đề yêu cầu dạng tích các tổng, mình gom các ô bằng 0. Có hai ô 0: ô 3 ở hàng A bằng 0, cột BC bằng 11; và ô 4 ở hàng A bằng 1, cột BC bằng 00. Hai ô này nằm ở hai góc chéo nhau, không kề nhau, vì các bit của chúng khác nhau cả ba.',a:['Ô 3 và ô 4 không kề nhau ⇒ không gom được']},
+{c:1,h:[3,4],km:{h1:[3],h2:[4]},s:'Nên mỗi số 0 là một nhóm một ô, giữ nguyên cả ba biến. Nhóm ô 3 cho tổng A cộng B ngang cộng C ngang. Nhóm ô 4 cho tổng A ngang cộng B cộng C. Kết quả rút gọn trùng với dạng chuẩn 2, không rút gọn thêm được.',a:[res(`F = ${POS}`)]},
+{c:1,h:[0,1,2,5,6,7],km:{h1:[0,1,2,5,6,7]},s:'Tham khảo thêm: nếu gom các ô 1 thì được dạng tổng các tích, ba nhóm hai ô: A ngang B ngang, B C ngang, và A C. Cũng có ba số hạng, sáu biến. Nhưng đề yêu cầu dạng tích các tổng nên mình dùng kết quả ở trên.',a:[`Tham khảo (SOP): F = ${A}${B} + B${C} + AC`]},
+{c:2,h:[],lv:0,clr:1,s:'Cuối cùng là vẽ sơ đồ cho F bằng A cộng B ngang cộng C ngang, nhân A ngang cộng B cộng C. Cần ba cổng NOT để có A ngang, B ngang, C ngang, hai cổng OR ba ngõ vào, và một cổng AND hai ngõ vào. Mình kéo ba đường tín hiệu A, B, C xuống trước.',a:[res(`F = ${POS}`)]},
+{c:2,h:[],lv:1,s:'Bước một: lấy B và C qua hai cổng NOT để có B ngang và C ngang, và lấy A qua một cổng NOT để có A ngang.',a:[]},
+{c:2,h:[],lv:2,s:'Bước hai: cổng OR trên nhận A, B ngang, C ngang. Cổng OR dưới nhận A ngang, B, C.',a:[]},
+{c:2,h:[],lv:3,s:'Bước ba: đưa hai ngõ ra của hai cổng OR vào một cổng AND. Ngõ ra của cổng AND là F.',a:[]},
+{c:2,h:[3,4],lv:3,s:'Kiểm tra: ở hàng 3, A bằng 0, B bằng 1, C bằng 1, cổng OR trên bằng 0 nên F bằng 0. Ở hàng 4, A bằng 1, B bằng 0, C bằng 0, cổng OR dưới bằng 0 nên F bằng 0. Các hàng còn lại cả hai cổng OR đều bằng 1 nên F bằng 1. Khớp bảng chân trị. Vậy là xong câu 9.',a:[]}];
+const CH=['Chuẩn 2 (POS)','Bìa Karnaugh','Sơ đồ mạch'],TT=['Câu 9: viết F theo chuẩn 2 (tích các tổng)','Rút gọn bằng bìa Karnaugh','Vẽ sơ đồ mạch logic'];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id);
+function render(){
+ const s=S[si],h=s.h||[];
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x}</button>`).join('');
+ $('ttl').textContent=TT[s.c];
+ let L=[],k=0;
+ for(let j=0;j<=si;j++){const t=S[j];if(t.c==s.c){if(t.clr)L=[];L.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=L.map((x,j)=>`<div class="${j>=L.length-k?'new':''}">${x}</div>`).join('');
+ const km=s.km;$('km').style.display=km?'table':'none';
+ if(km)$('km').innerHTML=`<tr><th>A \\ BC</th>${['00','01','11','10'].map(x=>`<th>${x}</th>`).join('')}</tr>`+KM.map((r,a)=>`<tr><th>${a}</th>${r.map(i=>`<td class="${(km.h1||[]).includes(i)?'h1':(km.h2||[]).includes(i)?'h2':''}">${F[i]}<sub>${i}</sub></td>`).join('')}</tr>`).join('');
+ $('fig').style.display=s.lv==null?'none':'block';
+ document.querySelectorAll('#fig .g').forEach(g=>g.classList.toggle('on',s.lv!=null&&+g.dataset.lv<=s.lv));
+ $('tt').innerHTML='<tr><th>m</th><th>A</th><th>B</th><th>C</th><th class="c1">F</th></tr>'+N.map(i=>`<tr class="${h.includes(i)?'h':h.length?'d':''}"><td>${i}</td>${[0,1,2].map(q=>`<td>${bit(i,q)}</td>`).join('')}<td class="c1">${F[i]}</td></tr>`).join('');
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>

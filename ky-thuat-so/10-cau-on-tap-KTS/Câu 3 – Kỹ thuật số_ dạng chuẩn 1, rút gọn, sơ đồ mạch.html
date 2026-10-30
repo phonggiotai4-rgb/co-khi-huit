@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 3 – Kỹ thuật số: dạng chuẩn 1, rút gọn, sơ đồ mạch</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(230px,300px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:700px){#stage{grid-template-columns:1fr}}
+#tt{border-collapse:collapse;width:100%;background:var(--card);font-variant-numeric:tabular-nums;border:1.5px solid var(--ink)}
+#tt th,#tt td{text-align:center;padding:6px 4px;border:1px solid var(--line)}
+#tt th{background:var(--bg);font-size:.85rem}
+#tt .c1{background:color-mix(in srgb,var(--f1) 14%,transparent)}
+#tt th.c1{color:var(--f1)}
+#tt tr.h td{background:var(--hl);font-weight:700}
+#tt tr.d{opacity:.45}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.25rem/1.9 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+#fig{display:none;margin-top:8px}#fig svg{width:100%;max-width:560px;height:auto;color:var(--ink)}
+#fig .g{opacity:0;transition:opacity .5s}#fig .g.on{opacity:1}
+@media(prefers-reduced-motion:reduce){#fig .g{transition:none}}
+#fig text{fill:currentColor;font:600 14px Georgia,serif}
+#fig .w,#fig path,#fig .t{stroke:currentColor;stroke-width:2;fill:none}
+#fig .gate{fill:var(--card)}#fig .o{fill:var(--card);stroke:currentColor;stroke-width:2}
+#fig .dot{fill:currentColor}#fig .hot{stroke:var(--f1)}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><table id="tt"></table><div id="board"><h2 id="ttl"></h2><div id="lines"></div>
+<div id="fig"><svg viewBox="0 0 520 240" role="img" aria-label="Sơ đồ mạch F = B̅C̅ + BC">
+<g class="g" data-lv="0"><text x="4" y="20">A</text><line class="w" x1="24" y1="16" x2="70" y2="16"/><text x="76" y="20" style="font-weight:400;font-size:12px">A không dùng</text>
+<text x="4" y="115">B</text><text x="4" y="155">C</text>
+<line class="w" x1="24" y1="110" x2="60" y2="110"/><line class="w" x1="24" y1="150" x2="80" y2="150"/>
+<line class="w" x1="60" y1="50" x2="60" y2="170"/><line class="w" x1="80" y1="90" x2="80" y2="210"/>
+<circle class="dot" cx="60" cy="110" r="3.5"/><circle class="dot" cx="80" cy="150" r="3.5"/></g>
+<g class="g" data-lv="1"><line class="w" x1="60" y1="50" x2="100" y2="50"/><line class="w" x1="80" y1="90" x2="100" y2="90"/>
+<path d="M100,38 L100,62 L120,50 Z"/><circle class="o" cx="124" cy="50" r="4"/><path d="M100,78 L100,102 L120,90 Z"/><circle class="o" cx="124" cy="90" r="4"/>
+<line class="w" x1="128" y1="50" x2="230" y2="50"/><line class="w" x1="128" y1="90" x2="230" y2="90"/>
+<circle class="dot" cx="60" cy="50" r="3.5"/><circle class="dot" cx="80" cy="90" r="3.5"/></g>
+<g class="g" data-lv="2"><line class="w" x1="60" y1="170" x2="230" y2="170"/><line class="w" x1="80" y1="210" x2="230" y2="210"/>
+<circle class="dot" cx="60" cy="170" r="3.5"/><circle class="dot" cx="80" cy="210" r="3.5"/>
+<path class="gate" d="M230,35 H255 a35,35 0 0 1 0,70 H230 Z"/><path class="gate" d="M230,155 H255 a35,35 0 0 1 0,70 H230 Z"/>
+<text x="240" y="75">AND</text><text x="240" y="195">AND</text>
+<line class="w" x1="290" y1="70" x2="330" y2="70"/><line class="w" x1="290" y1="190" x2="330" y2="190"/>
+<text x="296" y="62">B̅C̅</text><text x="298" y="182">BC</text></g>
+<g class="g" data-lv="3"><line class="w" x1="330" y1="70" x2="330" y2="115"/><line class="w" x1="330" y1="115" x2="357" y2="115"/>
+<line class="w" x1="330" y1="190" x2="330" y2="145"/><line class="w" x1="330" y1="145" x2="357" y2="145"/>
+<path class="gate" d="M350,95 Q375,130 350,165 Q400,165 430,130 Q400,95 350,95 Z"/><text x="372" y="135">OR</text>
+<line class="w" x1="430" y1="130" x2="490" y2="130"/><text x="496" y="135">F</text></g>
+</svg></div></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const F=[1,0,0,1,1,0,0,1],bit=(i,k)=>(i>>(2-k))&1,N=[...Array(8).keys()];
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`;
+const BC=n('B')+n('C'),AA=`(${n('A')} + A)`;
+const S=[
+{c:0,h:[],s:'Chào bạn, câu 3 mình giải nhé. Đề cho ba tín hiệu cảm biến A, B, C và tín hiệu F cho phép động cơ chạy. Yêu cầu: viết F theo dạng chuẩn 1, tức tổng các tích, rồi rút gọn bằng đại số Boole và vẽ sơ đồ mạch logic.',a:[]},
+{c:0,h:[0,3,4,7],s:'Bước một, nhìn cột F. F bằng 1 ở bốn hàng: hàng 0, hàng 3, hàng 4 và hàng 7. Mình viết theo dạng sigma trước.',a:['F = Σm(0, 3, 4, 7)']},
+{c:0,h:[0,3,4,7],s:'Bước hai, mở sigma ra thành tổng các minterm: m0 cộng m3 cộng m4 cộng m7. Rồi đổi từng số sang nhị phân theo thứ tự A, B, C: 000, 011, 100 và 111.',a:['= m0 + m3 + m4 + m7','= 000 + 011 + 100 + 111']},
+{c:0,h:[0,3,4,7],s:'Bước ba, viết thành tích. Quy tắc quen thuộc: bit bằng 1 thì giữ nguyên biến, bit bằng 0 thì thêm ngang. 000 là A ngang B ngang C ngang. 011 là A ngang B C. 100 là A B ngang C ngang. 111 là A B C. Đây chính là dạng chuẩn 1.',a:[res(`= ${n('A')}${BC} + ${n('A')}BC + A${BC} + ABC`)]},
+{c:1,h:[],clr:1,s:'Giờ rút gọn bằng đại số Boole. Mình để ý các số hạng có cặp biến chung để gom nhân tử.',a:[`F = ${n('A')}${BC} + ${n('A')}BC + A${BC} + ABC`]},
+{c:1,h:[0,4],s:'Số hạng thứ nhất và số hạng thứ ba cùng có B ngang C ngang, chỉ khác nhau ở A. Đặt B ngang C ngang ra ngoài, trong ngoặc còn A ngang cộng A.',a:[`${n('A')}${BC} + A${BC} = ${BC}${AA}`]},
+{c:1,h:[3,7],s:'Số hạng thứ hai và số hạng thứ tư cùng có B C, cũng chỉ khác nhau ở A. Đặt B C ra ngoài, trong ngoặc cũng là A ngang cộng A.',a:[`${n('A')}BC + ABC = BC${AA}`]},
+{c:1,h:[],s:'Ghép hai nhóm lại, ta có F bằng B ngang C ngang nhân ngoặc, cộng B C nhân ngoặc. Cả hai ngoặc đều là A ngang cộng A.',a:[`F = ${BC}${AA} + BC${AA}`]},
+{c:1,h:[],s:'Dùng định lý: một biến cộng với phủ định của nó luôn bằng 1. Nên A ngang cộng A bằng 1, và nhân với 1 thì không đổi.',a:[`A + ${n('A')} = 1`,`F = ${BC}·1 + BC·1`]},
+{c:1,h:[0,3,4,7],clr:1,s:'Kết quả rút gọn: F bằng B ngang C ngang cộng B C. Biến A biến mất, nghĩa là F không phụ thuộc A. Đây chính là cổng XNOR của B và C: F bằng 1 khi B và C giống nhau.',a:[res(`F = ${BC} + BC`),'F = B ⊙ C (XNOR)']},
+{c:2,h:[],lv:0,clr:1,s:'Cuối cùng là vẽ sơ đồ mạch cho F bằng B ngang C ngang cộng B C. Mình cần hai cổng NOT, hai cổng AND và một cổng OR. Đầu vào có A, B, C, nhưng A không được nối vì F không phụ thuộc A.',a:[res(`F = ${BC} + BC`)]},
+{c:2,h:[],lv:1,s:'Bước một: lấy B và C qua hai cổng NOT để có B ngang và C ngang.',a:[]},
+{c:2,h:[],lv:2,s:'Bước hai: dùng hai cổng AND. Cổng trên nhận B ngang và C ngang, cho ra B ngang C ngang. Cổng dưới nhận thẳng B và C, cho ra B C.',a:[]},
+{c:2,h:[],lv:3,s:'Bước ba: đưa hai ngõ ra của cổng AND vào một cổng OR, ngõ ra của cổng OR chính là F.',a:[]},
+{c:2,h:[0,3,4,7],lv:3,s:'Kiểm tra: khi B và C cùng bằng 0, cổng AND trên bằng 1 nên F bằng 1. Khi B và C cùng bằng 1, cổng AND dưới bằng 1 nên F cũng bằng 1. Khi B và C khác nhau thì cả hai cổng AND bằng 0 nên F bằng 0. Đúng với bảng chân trị, A bằng gì cũng không ảnh hưởng. Vậy là xong câu 3.',a:[]}];
+const CH=['Dạng chuẩn 1','Rút gọn','Sơ đồ mạch'],TT=['Câu 3: viết F dạng chuẩn 1 (tổng các tích)','Rút gọn bằng đại số Boole','Vẽ sơ đồ mạch logic'];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id);
+function render(){
+ const s=S[si],h=s.h||[];
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x}</button>`).join('');
+ $('ttl').textContent=TT[s.c];
+ let L=[],k=0;
+ for(let j=0;j<=si;j++){const t=S[j];if(t.c==s.c){if(t.clr)L=[];L.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=L.map((x,j)=>`<div class="${j>=L.length-k?'new':''}">${x}</div>`).join('');
+ $('fig').style.display=s.lv==null?'none':'block';
+ document.querySelectorAll('#fig .g').forEach(g=>g.classList.toggle('on',s.lv!=null&&+g.dataset.lv<=s.lv));
+ $('tt').innerHTML='<tr><th>m</th><th>A</th><th>B</th><th>C</th><th class="c1">F</th></tr>'+N.map(i=>`<tr class="${h.includes(i)?'h':h.length?'d':''}"><td>${i}</td>${[0,1,2].map(q=>`<td>${bit(i,q)}</td>`).join('')}<td class="c1">${F[i]}</td></tr>`).join('');
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>

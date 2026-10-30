@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 4 – Kỹ thuật số: chứng minh bằng bảng chân trị</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--f2:#0e8a7d;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--f2:#4fd1c0;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--f2:#4fd1c0;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(300px,460px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:760px){#stage{grid-template-columns:1fr}}
+.tw{overflow-x:auto}
+#tt{border-collapse:collapse;width:100%;background:var(--card);font-variant-numeric:tabular-nums;border:1.5px solid var(--ink)}
+#tt th,#tt td{text-align:center;padding:6px 4px;border:1px solid var(--line)}
+#tt th{background:var(--bg);font-size:.82rem;white-space:nowrap}
+#tt td.u{color:var(--mute)}
+#tt .on{background:color-mix(in srgb,var(--f1) 18%,transparent)}
+#tt .sep{border-left:2.5px solid var(--ink)}
+#tt tr.h td{background:var(--hl);font-weight:700}
+#tt tr.d{opacity:.45}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.25rem/1.9 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><div class="tw"><table id="tt"></table></div><div id="board"><h2 id="ttl"></h2><div id="lines"></div></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`,bit=(i,k)=>(i>>(2-k))&1,N=[...Array(8).keys()];
+const COL={p:'A + B',q:n('A')+' + C',L:'VT',r:'AC',s:n('A')+'B',R:'VP'};
+const V=i=>{const a=bit(i,0),b=bit(i,1),c=bit(i,2),p=a|b,q=(1-a)|c,r=a&c,s=(1-a)&b;return{p,q,L:p&q,r,s,R:r|s}};
+const VT=`(A + B)(${n('A')} + C)`,VP=`AC + ${n('A')}B`;
+const S=[
+{c:0,h:[],s:'Chào bạn, câu 4 mình làm tiếp nhé. Đề bắt dùng bảng chân trị để chứng tỏ hai biểu thức tương đương. Ý tưởng rất đơn giản: lập bảng cho mọi tổ hợp của A, B, C, tính vế trái và vế phải. Nếu hai cột này giống hệt nhau ở mọi hàng thì hai biểu thức tương đương.',a:[`VT = ${VT}`,`VP = ${VP}`]},
+{c:0,h:[],s:'Ba biến nên có 2 mũ 3 bằng 8 hàng, mình ghi sẵn các tổ hợp ABC từ 000 đến 111. Vế trái cần hai cột phụ là A cộng B và A ngang cộng C, rồi nhân lại. Vế phải cần hai cột phụ là A nhân C và A ngang nhân B, rồi cộng lại.',a:['Cột phụ: A + B, A̅ + C, AC, A̅B']},
+{c:1,f:['p'],rv:['p'],h:[0,1],clr:1,s:'Bắt đầu vế trái. Cột thứ nhất là A cộng B. Tổng chỉ bằng 0 khi A và B cùng bằng 0, tức hàng 0 và hàng 1. Các hàng còn lại đều bằng 1.',a:['A + B = 0 chỉ khi A = B = 0']},
+{c:1,f:['q'],rv:['q'],h:[4,6],s:'Cột thứ hai là A ngang cộng C. Tổng bằng 0 khi A ngang bằng 0 và C bằng 0, nghĩa là A bằng 1 và C bằng 0: hàng 4 và hàng 6. Các hàng còn lại bằng 1.',a:[`${n('A')} + C = 0 chỉ khi A = 1, C = 0`]},
+{c:1,f:['L'],rv:['L'],h:[2,3,5,7],s:'Nhân hai cột lại. Tích chỉ bằng 1 khi cả hai cột cùng bằng 1: đó là hàng 2, 3, 5 và 7. Các hàng còn lại bằng 0. Đây là cột vế trái.',a:[res('VT = 1 tại hàng 2, 3, 5, 7')]},
+{c:2,f:['r'],rv:['r'],h:[5,7],clr:1,s:'Sang vế phải. Cột A nhân C bằng 1 khi A và C cùng bằng 1: hàng 5 và hàng 7.',a:['AC = 1 khi A = 1, C = 1']},
+{c:2,f:['s'],rv:['s'],h:[2,3],s:'Cột A ngang nhân B bằng 1 khi A bằng 0 và B bằng 1: hàng 2 và hàng 3.',a:[`${n('A')}B = 1 khi A = 0, B = 1`]},
+{c:2,f:['R'],rv:['R'],h:[2,3,5,7],s:'Cộng hai cột lại. Tổng bằng 1 khi một trong hai cột bằng 1: hàng 2, 3, 5 và 7. Các hàng còn lại bằng 0. Đây là cột vế phải.',a:[res('VP = 1 tại hàng 2, 3, 5, 7')]},
+{c:3,f:['L','R'],h:[],clr:1,s:'Bây giờ so sánh cột vế trái với cột vế phải, từng hàng một: 0, 0, 1, 1, 0, 1, 0, 1. Hai cột giống hệt nhau ở cả 8 hàng.',a:['VT = VP ở cả 8 hàng']},
+{c:3,f:['L','R'],h:[],s:'Vậy A cộng B nhân A ngang cộng C bằng AC cộng A ngang B. Hai biểu thức tương đương, câu 4 xong.',a:[res(`${VT} = ${VP}`),'Điều phải chứng minh ∎']}];
+const CH=['Chuẩn bị','Vế trái','Vế phải','Kết luận'],TT=['Câu 4: chứng minh bằng bảng chân trị','Tính cột vế trái','Tính cột vế phải','So sánh hai vế'];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id);
+function render(){
+ const s=S[si],h=s.h||[],f=s.f||[],known=new Set;
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x}</button>`).join('');
+ $('ttl').textContent=TT[s.c];
+ let L=[],k=0;
+ for(let j=0;j<=si;j++){const t=S[j];(t.rv||[]).forEach(x=>known.add(x));if(t.c==s.c){if(t.clr)L=[];L.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=L.map((x,j)=>`<div class="${j>=L.length-k?'new':''}">${x}</div>`).join('');
+ const ks=Object.keys(COL);
+ $('tt').innerHTML='<tr><th>m</th><th>A</th><th>B</th><th>C</th>'+ks.map((q,j)=>`<th class="${j==0?'sep ':''}${f.includes(q)?'on':''}">${COL[q]}</th>`).join('')+'</tr>'+N.map(i=>{const v=V(i);return `<tr class="${h.includes(i)?'h':h.length?'d':''}"><td>${i}</td>${[0,1,2].map(q=>`<td>${bit(i,q)}</td>`).join('')}${ks.map((q,j)=>`<td class="${j==0?'sep ':''}${known.has(q)?'':'u '}${f.includes(q)?'on':''}">${known.has(q)?v[q]:'·'}</td>`).join('')}</tr>`}).join('');
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>

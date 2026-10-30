@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Câu 10 – Kỹ thuật số: JK-FF, 8 cạnh lên và chọn ngõ ra</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--j:#2e9e4f;--k:#c98a00;--card:#fff;--line:#c9d5e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--j:#5fd07f;--k:#f2b84b;--card:#172236;--line:#2b3b57}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#6b5a00;--f1:#7ea2ff;--j:#5fd07f;--k:#f2b84b;--card:#172236;--line:#2b3b57}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .85rem inherit;font-family:inherit;white-space:nowrap;padding:8px 12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(230px,290px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:760px){#stage{grid-template-columns:1fr}}
+#side{display:flex;flex-direction:column;gap:12px}
+table{border-collapse:collapse;width:100%;background:var(--card);font-variant-numeric:tabular-nums;border:1.5px solid var(--ink)}
+th,td{text-align:center;padding:5px 4px;border:1px solid var(--line);font-size:.9rem}
+th{background:var(--bg);font-size:.82rem}
+td.u{color:var(--mute)}
+tr.h td{background:var(--hl);font-weight:700}
+#board{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:14px 18px;min-height:200px}
+#ttl{margin:0 0 6px;font-size:1.05rem}
+#lines div{font:1.15rem/1.8 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+i.n{font-style:normal;display:inline-block;border-top:2px solid currentColor;line-height:1.05;margin:0 2px}
+#wave{display:block;width:100%;max-width:680px;height:auto;margin-top:8px;color:var(--ink)}
+#wave text{fill:currentColor;font:600 13px 'Be Vietnam Pro',system-ui,sans-serif}
+#wave .s{fill:none;stroke-width:2.5}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.05rem;line-height:1.5;min-height:4.5em;max-width:70ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage"><div id="side"><table id="tj"></table><table id="tr"></table></div>
+<div id="board"><h2 id="ttl"></h2><div id="lines"></div><svg id="wave" viewBox="0 0 640 252" role="img" aria-label="Giản đồ xung CK, J, K, Q"></svg></div></section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+const n=x=>`<i class="n">${x}</i>`,res=h=>`<b class="res">${h}</b>`,Qb=n('Q');
+const J=[0,1,0,0,1,1,0,0],K=[1,0,0,1,1,0,1,1];
+const Q=[];{let q=0;for(let i=0;i<8;i++){q=J[i]&&K[i]?1-q:J[i]?1:K[i]?0:q;Q.push(q)}}
+const MD={'00':'giữ nguyên','01':'reset, Q về 0','10':'set, Q lên 1','11':'đảo trạng thái'};
+const ed=e=>{const j=J[e-1],k=K[e-1],m=''+j+k,p=e==1?0:Q[e-2],q=Q[e-1];return{c:1,e,m,s:`Cạnh ${e}: J bằng ${j}, K bằng ${k}, nên flip-flop ${MD[m]}. Q ${p==q?`vẫn bằng ${q}`:`từ ${p} thành ${q}`}.`,a:[`Cạnh ${e}: J=${j}, K=${k} → ${MD[m]} → Q = ${q}`]}};
+const run=Q.map((q,i)=>q?0:i+1).filter(x=>x);
+const S=[
+{c:0,e:0,s:'Chào bạn, câu 10 mình làm tiếp nhé. Có một flip-flop JK kích ở cạnh lên của CK, Q ban đầu bằng 0. Đề cho sẵn J và K ở 8 cạnh lên. Động cơ có ngõ ENABLE tích cực mức 1 và cần chạy khi Q bằng 0. Mình cần điền Q vào bảng, rồi chọn nối Q hay Q ngang vào ENABLE.',a:['JK-FF kích cạnh lên, Q0 = 0','ENABLE tích cực mức 1','Động cơ chạy khi Q = 0']},
+{c:0,e:0,s:'Nhớ bảng hoạt động của JK. J bằng 0, K bằng 0: giữ nguyên. J bằng 0, K bằng 1: reset, Q về 0. J bằng 1, K bằng 0: set, Q lên 1. J bằng 1, K bằng 1: đảo trạng thái. Chỉ đọc J, K đúng tại cạnh lên của CK, Q đổi ngay sau cạnh đó.',a:['Chỉ đọc J, K tại cạnh lên CK']},
+...[1,2,3,4,5,6,7,8].map(ed),
+{c:1,e:8,m:'',s:'Gom lại, Q sau các cạnh lên 1 đến 8 lần lượt là 0, 1, 1, 0, 1, 1, 0, 0. Đây là hàng Q cần điền vào bảng.',a:[res('Q = 0, 1, 1, 0, 1, 1, 0, 0')]},
+{c:2,e:8,m:'',s:'Một lưu ý về đề. Đề ghi sau 10 cạnh và nhắc cạnh xuống, nhưng giản đồ và bảng đánh số cạnh lên và chỉ có 8 cạnh. Nên mình tính theo 8 cạnh lên. Sau cạnh 8, Q bằng 0 và Q ngang bằng 1.',a:[`Sau cạnh 8: Q = 0, ${Qb} = 1`]},
+{c:2,e:8,m:'',run:1,s:`Đề cần động cơ chạy khi Q bằng 0, còn ENABLE chỉ cho chạy khi nhận mức 1. Mà Q ngang bằng 1 đúng lúc Q bằng 0, nên ta nối Q ngang vào ENABLE, không nối Q. Vùng tô sáng là lúc Q bằng 0, động cơ chạy sau các cạnh ${run.slice(0,-1).join(', ')} và ${run.slice(-1)}.`,a:[`ENABLE = ${Qb}`,`Q = 0 ⇒ ${Qb} = 1 ⇒ động cơ chạy`,`Q = 1 ⇒ ${Qb} = 0 ⇒ động cơ dừng`]},
+{c:2,e:8,m:'',run:1,s:'Kết luận: nối ngõ Q ngang vào ENABLE. Ngay sau cạnh 8, Q bằng 0 nên Q ngang bằng 1 và động cơ đang chạy. Vậy là xong câu 10.',a:[res(`Nối ${Qb} → ENABLE`)]}];
+const CH=['Quy tắc JK','Điền bảng Q','Chọn ngõ ra'],TT=['Câu 10: quy tắc của JK-FF','Xác định Q sau từng cạnh lên','Chọn Q hay Q̅ nối vào ENABLE'];
+let si=0,playing=false,gen=0,tm;
+const $=id=>document.getElementById(id),X=k=>90+(k-1)*66,L=(v,hi,lo)=>v?hi:lo;
+function wave(e,cur,run){
+ let h='';
+ if(run)Q.forEach((q,i)=>{if(!q)h+=`<rect x="${X(i+1)}" y="20" width="${i==7?60:66}" height="226" fill="var(--hl)" opacity=".55"/>`});
+ for(let k=1;k<=8;k++)h+=`<line x1="${X(k)}" y1="20" x2="${X(k)}" y2="246" stroke="${k==cur?'var(--f1)':'var(--mute)'}" stroke-width="${k==cur?2.5:1}" ${k==cur?'':'stroke-dasharray="4 4"'}/><text x="${X(k)-3}" y="14">${k}</text>`;
+ let ck='M30,58';for(let k=1;k<=8;k++)ck+=` H${X(k)} V30 H${X(k)+33} V58`;ck+=' H630';
+ const pj=(A,hi,lo)=>{let d=`M30,${L(A[0],hi,lo)}`;for(let k=2;k<=8;k++)d+=` H${X(k)-20} V${L(A[k-1],hi,lo)}`;return d+' H630'};
+ let q=`M30,238 H${X(1)}`;for(let k=1;k<=e;k++)q+=` V${L(Q[k-1],210,238)} H${X(k)+(k==8?60:66)}`;
+ h+=`<text x="4" y="50">CK</text><text x="4" y="110" style="fill:var(--j)">J</text><text x="4" y="170" style="fill:var(--k)">K</text><text x="4" y="230" style="fill:var(--f1)">Q</text>`;
+ h+=`<path class="s" stroke="currentColor" d="${ck}"/><path class="s" stroke="var(--j)" d="${pj(J,90,118)}"/><path class="s" stroke="var(--k)" d="${pj(K,150,178)}"/><path class="s" stroke="var(--f1)" d="${q}"/>`;
+ for(let k=1;k<=e;k++)h+=`<text x="${X(k)+28}" y="228" style="fill:var(--f1)">${Q[k-1]}</text>`;
+ $('wave').innerHTML=h;
+}
+function render(){
+ const s=S[si],e=Math.max(...S.slice(0,si+1).map(t=>t.e||0));
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==s.c?'on':''}">${x}</button>`).join('');
+ $('ttl').textContent=TT[s.c];
+ let Ls=[],k=0;
+ for(let j=0;j<=si;j++){const t=S[j];if(t.c==s.c){if(t.clr)Ls=[];Ls.push(...(t.a||[]));k=(t.a||[]).length}}
+ $('lines').innerHTML=Ls.map((x,j)=>`<div class="${j>=Ls.length-k?'new':''}">${x}</div>`).join('');
+ $('tj').innerHTML='<tr><th>J</th><th>K</th><th>Q sau cạnh lên</th></tr>'+[['00','Q (giữ)'],['01','0'],['10','1'],['11',Qb]].map(([m,v])=>`<tr class="${s.m==m?'h':''}"><td>${m[0]}</td><td>${m[1]}</td><td>${v}</td></tr>`).join('');
+ $('tr').innerHTML='<tr><th>Cạnh lên</th><th>J</th><th>K</th><th>Q</th></tr><tr><td>0</td><td>–</td><td>–</td><td>0</td></tr>'+[1,2,3,4,5,6,7,8].map(i=>`<tr class="${s.e==i&&s.c==1?'h':''}">${i<=e?`<td>${i}</td><td>${J[i-1]}</td><td>${K[i-1]}</td><td>${Q[i-1]}</td>`:`<td>${i}</td><td class="u">·</td><td class="u">·</td><td class="u">·</td>`}</tr>`).join('');
+ wave(e,s.c==1?s.e:0,s.run);
+ $('sub').textContent=s.s;
+ document.querySelector('#bar i').style.width=((si+1)/S.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+}
+function speak(){
+ clearTimeout(tm);const g=++gen,txt=S[si].s;let done=false;
+ const fin=()=>{if(done||g!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(g===gen&&playing)step(1)},800)};
+ const ss=window.speechSynthesis;let v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1500);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000);
+}
+function step(d){
+ if(d>0){if(si<S.length-1)si++;else{pause();return}}else if(si>0)si--;
+ render();if(playing)speak();
+}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(si==S.length-1)si=0;playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;si=S.findIndex(x=>x.c==j);render();if(playing)speak()};
+render();
+</script></body></html>
