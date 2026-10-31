@@ -64,7 +64,7 @@ FULL TN QTH 2024 HUIT.md   nguồn chuẩn đáp án Quản trị học (535 câ
 anh-van-2/            chuyên đề Anh văn
 dai-so-tuyen-tinh/    Đại số tuyến tính — 1 trang làm bài + 1 trang đề cương dùng chung 5 chương
                       (luyen-tap.html?d=chuong-N, quiz.html?d=chuong-N,
-                       thi-dai-so-tuyen-tinh-ngau-nhien.html — 40 câu / 60 phút từ
+                       thi-dai-so-tuyen-tinh-ngau-nhien.html — 25 câu / 60 phút từ
                        CK.PART_QUIZ["dai-so-tuyen-tinh"], khoá câu đã gặp dst_rng_v1;
                        412 câu / 5 chương, trích từ ĐẠI SỐ TUYẾN TÍNH.docx)
 ky-nang-giao-tiep/    Kỹ năng giao tiếp — 1 trang làm bài + 1 trang đề cương dùng chung 4 chương

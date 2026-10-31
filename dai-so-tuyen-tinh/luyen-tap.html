@@ -2544,6 +2544,10 @@ if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
       frag.appendChild(more);
     }
     el.rvList.appendChild(frag);
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([el.rvList]).catch(err => console.log('MathJax error:', err));
+    }
   };
 
   const paintReviewFilter = () => {

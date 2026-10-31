@@ -253,6 +253,9 @@
 
     renderChips();
     renderList();
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([$("list")]).catch(function (err) { console.log(err); });
+    }
 
     var u = location.pathname + "?d=" + encodeURIComponent(id);
     if (location.search !== u.slice(location.pathname.length)) history.replaceState(null, "", u);

@@ -61,6 +61,7 @@ const total = ids.reduce((n, k) => n + bank[k].length, 0);
 const names = ids.map(k => '    ' + JSON.stringify(k) + ': ' + JSON.stringify('Chương ' + parseInt(k.replace(/\D/g, '')))).join(',\n');
 const bankJs = ids.map(k => '    ' + JSON.stringify(k) + ': [\n' + bank[k].map((q, i) =>
   '      { id: ' + (i + 1) + ', text: ' + JSON.stringify(q.q) + ', options: ' + JSON.stringify(q.o) + ', correct: ' + q.a + ' }').join(',\n') + '\n    ]').join(',\n');
+s = rep(s, '    el.rvList.appendChild(frag);\n  };', '    el.rvList.appendChild(frag);\n\n    if (window.MathJax && MathJax.typesetPromise) {\n      MathJax.typesetPromise([el.rvList]).catch(err => console.log(\'MathJax error:\', err));\n    }\n  };', 1);
 const a = s.indexOf('  /* ========================= CÂU HỎI =========================');
 const b = s.indexOf('  const PART_PARAM = ');
 if (a < 0 || b < 0) throw new Error('Không tìm thấy khối dữ liệu mẫu');
@@ -92,5 +93,7 @@ const TITLES = { 1: 'Ma trận – Định thức', 2: 'Hệ phương trình tuy
 q = q.slice(0, ta) + '  /* Tên chương lấy từ file "ĐẠI SỐ TUYẾN TÍNH.docx" */\n  var TITLES = {\n' +
   ids.map(k => '    "' + k + '": ' + JSON.stringify('Chương ' + parseInt(k.replace(/\D/g, '')) + '. ' + TITLES[parseInt(k.replace(/\D/g, ''))])).join(',\n') + '\n  };\n\n' + q.slice(tb);
 q = rep(q, 'document.title = partNameOf(id) + " — Đề cương Quản trị chất lượng | CƠ KHÍ HUIT";', 'document.title = partNameOf(id) + " — Đề cương ' + SUBJECT_TITLE + ' | CƠ KHÍ HUIT";', 1);
+q = rep(q, '    renderChips();\n    renderList();\n\n    var u = location.pathname + "?d=" + encodeURIComponent(id);',
+        '    renderChips();\n    renderList();\n    if (window.MathJax && MathJax.typesetPromise) {\n      MathJax.typesetPromise([$("list")]).catch(function (err) { console.log(err); });\n    }\n\n    var u = location.pathname + "?d=" + encodeURIComponent(id);', 1);
 fs.writeFileSync(path.join(HERE, 'quiz.html'), q.replace(/\n/g, eol2), 'utf8');
 console.log('Đã sinh luyen-tap.html (' + total + ' câu) và quiz.html');
