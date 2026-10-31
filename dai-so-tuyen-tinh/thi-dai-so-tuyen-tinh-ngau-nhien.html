@@ -16,7 +16,7 @@
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<title>ĐẠI SỐ TUYẾN TÍNH — 40 CÂU NGẪU NHIÊN / 60 PHÚT</title>
+<title>ĐẠI SỐ TUYẾN TÍNH — 25 CÂU NGẪU NHIÊN / 60 PHÚT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -499,16 +499,16 @@
   <div class="workspace">
 
     <div class="pane-main">
-      <div class="titlebar">ĐẠI SỐ TUYẾN TÍNH — 40 CÂU NGẪU NHIÊN</div>
+      <div class="titlebar">ĐẠI SỐ TUYẾN TÍNH — 25 CÂU NGẪU NHIÊN</div>
 
       <div class="bar">
-        <span class="left"><span class="k">Bài thi</span> &nbsp;40 câu ngẫu nhiên từ ngân hàng 412 câu (5 chương)</span>
+        <span class="left"><span class="k">Bài thi</span> &nbsp;25 câu ngẫu nhiên từ ngân hàng 412 câu (5 chương)</span>
         <span class="right">Thời gian còn lại: &nbsp;<span class="num" id="timer">60 : 00 : 00</span></span>
       </div>
 
       <div class="bar">
         <span class="left">Mã thi: Kỳ kiểm tra Đại số tuyến tính</span>
-        <span class="right">Đã trả lời: &nbsp;<span class="num" id="answered">0</span> / <span id="total">40</span></span>
+        <span class="right">Đã trả lời: &nbsp;<span class="num" id="answered">0</span> / <span id="total">25</span></span>
       </div>
 
       <div class="exam">
@@ -618,6 +618,33 @@ var BANK = (function () {
   });
   return out;
 })();
+var LETTERS = ['A','B','C','D'];
+var EXAM_COUNT = 25;          /* số câu mỗi lần thi */
+var EXAM_SECONDS = 60 * 60;    /* 60 phút */
+var STORAGE_KEY = 'dst_rng_v1';
+var SHOW_SOURCE = true;        /* hiện "nguồn: chương N" dưới mỗi câu */
+
+/* ============================================================
+   HỒ SƠ SINH VIÊN — đọc từ trang Cá nhân
+   Nguồn sự thật duy nhất là localStorage["ck-profile-v1"], do
+   ca-nhan.html quản lý (giống cách pmt-ems.html đọc).
+   CHỈ ĐỌC, không ghi ngược — sửa hồ sơ phải qua trang Cá nhân.
+   ============================================================ */
+var PROFILE_KEY = 'ck-profile-v1';
+var PROFILE_PAGE = '../ca-nhan.html';
+var PMT_PAGE = '../pmt-ems/pmt-ems.html';
+var student = null;
+
+/* Hồ sơ -> ô hiển thị. Nhiều trường hồ sơ gộp về một ô (ngày sinh + giới tính). */
+var PROFILE_FIELDS = [
+  { id: 'vName',   keys: ['name'] },
+  { id: 'vMssv',   keys: ['mssv'] },
+  { id: 'vLop',    keys: ['lop'] },
+  { id: 'vBirth',  keys: ['ngaysinh'] },
+  { id: 'vGender', keys: ['gioitinh'] },
+  { id: 'vKhoa',   keys: ['khoa'] },
+  { id: 'vEmail',  keys: ['email'] }
+];
 
 function readProfile() {
   try {
@@ -704,7 +731,7 @@ function esc(s) {
 function fmt(s) {
   var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), q = s % 60;
   function p(n) { return (n < 10 ? '0' : '') + n; }
-  return p(h) + ' : ' + p(m) + ' : ' + q;
+  return p(h) + ' : ' + p(m) + ' : ' + p(q);
 }
 
 /* ---------- Lịch sử: ưu tiên câu chưa từng làm ----------

@@ -51,7 +51,12 @@ rep('  elOpts.innerHTML = optionsHtml();\n  applyFilter();',
     '    MathJax.typesetPromise().catch(function(err){ console.log(err); });\n' +
     '  }\n' +
     '  applyFilter();', 1);
-rep("var STORAGE_KEY = 'qpan1_rng_v1';", "var STORAGE_KEY = 'dai-so-tuyen-tinh_rng_v1';", 1);
+rep("var STORAGE_KEY = 'qpan1_rng_v1';", "var STORAGE_KEY = 'dst_rng_v1';", 1);
+rep("  return p(h) + ' : ' + p(m) + ' : ' + q;", "  return p(h) + ' : ' + p(m) + ' : ' + p(q);", 1);
+rep('40 CÂU NGẪU NHIÊN', '25 CÂU NGẪU NHIÊN', 2);
+rep('40 câu ngẫu nhiên', '25 câu ngẫu nhiên', 1);
+rep('id="total">40</span>', 'id="total">25</span>', 1);
+rep('var EXAM_COUNT = 40;', 'var EXAM_COUNT = 25;', 1);
 rep("'Nguồn: đề ' + QUESTIONS[cur].s", "'Nguồn: chương ' + QUESTIONS[cur].s", 1);
 rep('/* hiện "nguồn: đề N" dưới mỗi câu */', '/* hiện "nguồn: chương N" dưới mỗi câu */', 1);
 const bankBlock = `/* ============================================================
@@ -73,9 +78,9 @@ var BANK = (function () {
   return out;
 })();`;
 const bankStart = s.indexOf('/* ============================================================\n   NGÂN HÀNG CÂU HỎI');
-const bankEnd = s.indexOf('\n];', s.indexOf('var BANK = [', bankStart));
-if (bankStart === -1 || bankEnd === -1) throw new Error('Không tìm thấy khối BANK trong bản mẫu');
-s = s.slice(0, bankStart) + bankBlock + s.slice(bankEnd + 3);
+const bankLineEnd = s.indexOf('\n', s.indexOf('var BANK = [', bankStart));
+if (bankStart === -1 || bankLineEnd === -1) throw new Error('Không tìm thấy khối BANK trong bản mẫu');
+s = s.slice(0, bankStart) + bankBlock + s.slice(bankLineEnd + 1);
 rep('<script src="../assets/history.js"></script>',
     '<script src="../assets/quiz-bank.js"></script>\n<script src="../assets/history.js"></script>', 1);
 rep(`  CK.recordHistory({
