@@ -34,8 +34,9 @@
        "ANH VĂN 1",
        "ANH VĂN 2",
        "ANH VĂN 3",
-       "ANH VĂN CHUYÊN NGÀNH CƠ KHÍ"]],
-
+       "ANH VĂN CHUYÊN NGÀNH CƠ KHÍ",
+       "ForumFlash",
+       "ByeTOIEC"]],
     ["TOÁN HỌC & KHOA HỌC", "Toán học & Khoa học",
       ["GIẢI TÍCH",
        "ĐẠI SỐ TUYẾN TÍNH",
@@ -502,7 +503,11 @@
     /* Hệ điều hành: mở thẳng trang ôn tập bên ngoài, không mở popup. */
     "he-dieu-hanh": "https://tracnghiemhuit.onrender.com/monhoc/13",
     /* Quản trị hệ thống mạng K14: mở thẳng trang ôn tập bên ngoài. */
-    "quan-tri-he-thong-mang-k14": "https://tracnghiemhuit.onrender.com/monhoc/14"
+    "quan-tri-he-thong-mang-k14": "https://tracnghiemhuit.onrender.com/monhoc/14",
+    /* ForumFlash: mở thẳng trang ôn tập bên ngoài. */
+    "forumflash": "https://www.forumflashstudy.com/?fbclid=IwY2xjawVS905leHRuA2FlbQIxMABwZG9mBWJyaWQRMXBLTUZIR240MkR1Vkp3aEtzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfd6gX57_h1C3RgaBIFbH4EyepItk5DFCSmpTxadaXPxC1YyXSW9sxJXYbUPg_aem_PGbex1SgiJDVuyuNv4rktw",
+    /* ByeTOIEC: mở thẳng trang ôn tập bên ngoài. */
+    "byetoiec": "https://byetoeic.com/?fbclid=IwdGRjcAVSh9NleHRuA2FlbQIxMQBwZG9mBWZkaWQWURWzXfFl2RCcmLrbK_syVrC_QhIppXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR9EWzVpEeJDjlucNe_b4JwNLoXYMB8ee1iRjJnfzRQfwbfKnkXkxomKgU82Mw_aem_6PCB-uuekktfjlMzQ-RnLw"
   };
   g.CK.navFile = function (slug) { return NAV_FILES[slug] || null; };
 
