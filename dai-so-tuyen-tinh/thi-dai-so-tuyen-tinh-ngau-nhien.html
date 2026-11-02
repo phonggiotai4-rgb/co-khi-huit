@@ -482,6 +482,7 @@
 
 
   .exam-bar { display: none; }
+  .sheet-head { display: none; }
   .sheet-backdrop { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
@@ -535,6 +536,22 @@
     .exam-bar button { min-height: 44px; font-size: 13px; }
   }
 
+
+  @media (max-width: 768px) {
+    .pane-side { background: #fff; }
+    .sheet-backdrop { background: rgba(0,0,0,.45); cursor: pointer; }
+    .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--brand-06); font-weight: 700; position: sticky; top: 0; background: #fff; z-index: 2; }
+    .sheet-close { width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--brand-10); color: var(--brand); font-size: 20px; line-height: 1; cursor: pointer; }
+    #btnSubmit { display: none; }
+    .options, .options tbody, .options tr { display: block; width: 100%; }
+    .options tr { display: flex; align-items: center; gap: 12px; border: 1px solid #d8dee9; border-radius: 12px; padding: 12px 14px; min-height: 48px; margin-bottom: 10px; background: #fff; }
+    .options td { border: 0; padding: 0; background: transparent; }
+    .options td.k { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--brand-10); color: var(--brand); font-weight: 700; }
+    .options tr.sel td.k { background: var(--brand); color: #fff; }
+    .options tr.sel { border-color: var(--brand); background: var(--brand-06); }
+    body.sheet-open { overflow: hidden; }
+  }
+
 </style>
 </head>
 <body>
@@ -565,6 +582,7 @@
     </div>
 
     <div class="pane-side">
+<div class="sheet-head"><span>Danh sách câu hỏi</span><button type="button" class="sheet-close" onclick="closeSheet()" aria-label="Đóng">×</button></div>
 
       <div class="sec-title clickable" id="stuTitle" onclick="toggleStudent()"
            title="Bấm để thu gọn / mở rộng khối thông tin sinh viên">
@@ -711,11 +729,13 @@ function initialsOf(name) {
 
 function openSheet() {
   document.body.classList.add('sheet-open');
+  document.body.style.overflow = 'hidden';
   var bd = document.getElementById('sheetBackdrop');
   if (bd) bd.hidden = false;
 }
 function closeSheet() {
   document.body.classList.remove('sheet-open');
+  document.body.style.overflow = '';
   var bd = document.getElementById('sheetBackdrop');
   if (bd) bd.hidden = true;
 }
