@@ -196,7 +196,7 @@
     top: 0;
     z-index: 20;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: 1rem;
     min-height: 4rem;
@@ -226,7 +226,7 @@
   .btn-ghost:hover { background: rgba(255, 255, 255, .85); }
   .btn-ghost:active { transform: scale(.98); box-shadow: var(--sh-press); }
 
-  .candidate { text-align: center; font-weight: 700; color: var(--text-strong); }
+  .candidate { text-align: center; font-weight: 700; color: var(--text-strong); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
   .topbar-right { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; }
   .icon-group { display: flex; align-items: center; gap: .375rem; }
 
@@ -288,7 +288,7 @@
 
   .q-head { display: flex; flex-direction: column; gap: .5rem; }
   .q-number { font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
-  .q-text { font-size: .9375rem; line-height: 1.7; color: var(--text); }
+  .q-text { font-size: .9375rem; line-height: 1.7; color: var(--text); overflow-wrap: anywhere; word-break: break-word; }
 
   .divider {
     display: flex;
@@ -331,8 +331,11 @@
   }
 
   .option-text {
-    flex: 1;
+    flex: 1 1 0%;
+    min-width: 0;
     padding: .875rem 1.25rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     min-height: 3rem;
     display: flex;
     align-items: center;
@@ -455,6 +458,7 @@
     z-index: 20;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1.5rem;
     padding: .75rem 1.5rem;
     background: var(--glass-2-bg);
@@ -596,7 +600,7 @@
     font-size: .8125rem;
     font-weight: 600;
   }
-  .share-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .75rem; }
+  .share-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: .75rem; }
   .share-btn {
     display: flex;
     align-items: center;
@@ -687,7 +691,7 @@
     max-width: 112rem;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
     gap: 1.25rem;
     align-items: start;
   }
@@ -722,7 +726,7 @@
   .rrow dt { display: flex; align-items: center; gap: .625rem; color: var(--text-muted); }
   .rrow dd { margin: 0; font-weight: 700; color: var(--text-strong); text-align: right; }
 
-  .rbtns { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .75rem; margin-bottom: .75rem; }
+  .rbtns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: .75rem; margin-bottom: .75rem; }
   .rbtns .btn-block { width: 100%; }
 
   /* Nut ket qua: glass / primary / outline-deep (khong con ten mau cu) */
@@ -1027,7 +1031,7 @@
   }
   .rv-more:hover { background: #fff; }
   .rv-qtext { margin-top: .5rem; line-height: 1.7; color: var(--text); }
-  .rv-options { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem 2rem; }
+  .rv-options { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 1rem 2rem; }
   .rv-options li { font-weight: 500; color: var(--text-muted); }
   .rv-answer { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; margin-top: 1.25rem; }
   .rv-answer-text { font-weight: 700; }
@@ -1088,6 +1092,8 @@ body.is-result .stage, body.is-result .bottombar,
 
 .toast-layer { top: 8.5rem; right: 1rem; left: 1rem; }
     .toast { width: auto; }
+    .q-text, .option-text { overflow-wrap: anywhere; word-break: break-word; }
+    .topbar-right { flex-wrap: wrap; }
   }
 
   @media (prefers-reduced-motion: reduce) {
