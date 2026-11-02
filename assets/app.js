@@ -149,14 +149,22 @@
             '<span class="nvname">CƠ KHÍ HUIT</span>' +
           '</span>' +
         '</a>' +
-        '<nav class="site-nav-links" id="ckNavLinks" aria-label="Điều hướng chính">' + links + '</nav>' +
+        '<nav class="site-nav-links" id="ckNavLinks" aria-label="Điều hướng chính">' + links +
+          '<div class="site-nav-drawer-foot">' +
+            '<button class="site-nav-drawer-theme" id="ckThemeBtnDrawer" type="button" aria-label="Đổi giao diện sáng/tối">' +
+              svg(CK.theme.current() === "dark" ? SUN : MOON) + '<span>Chế độ sáng / tối</span>' +
+            '</button>' +
+            '<div class="site-nav-credit">Khoa Công nghệ Cơ khí – ĐH Công Thương TP.HCM</div>' +
+          '</div>' +
+        '</nav>' +
         '<div class="site-nav-actions">' +
           CK.searchHTML() +
-          '<button class="ck-icon-btn site-nav-burger" id="ckBurger" type="button" aria-expanded="false" aria-controls="ckNavLinks" aria-label="Mở menu">' + svg("M4 7h16M4 12h16M4 17h16") + '</button>' +
           '<button class="ck-icon-btn" id="ckThemeBtn" type="button" aria-label="Đổi giao diện sáng/tối" title="Đổi giao diện sáng/tối">' +
             svg(CK.theme.current() === "dark" ? SUN : MOON) +
           '</button>' +
+          '<button class="ck-icon-btn site-nav-burger" id="ckBurger" type="button" aria-expanded="false" aria-controls="ckNavLinks" aria-label="Mở menu">' + svg("M4 7h16M4 12h16M4 17h16") + '</button>' +
         '</div>' +
+        '<div class="site-nav-overlay" id="ckNavOverlay"></div>' +
       '</div></header>';
 
     CK.bindSearch();
@@ -772,6 +780,10 @@
     var timer;
     var re = function () { clearTimeout(timer); timer = setTimeout(CK.syncNavHeight, 120); };
     global.addEventListener("resize", re);
+    global.addEventListener("scroll", function () {
+      var nav = document.querySelector(".site-nav");
+      if (nav) nav.classList.toggle("scrolled", global.scrollY > 8);
+    }, { passive: true });
     global.addEventListener("load", re);
     document.addEventListener("ck:theme", re);
     if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
