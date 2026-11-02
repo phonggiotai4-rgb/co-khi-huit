@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MARKETING CĂN BẢN — 40 CÂU NGẪU NHIÊN / 60 PHÚT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +87,7 @@
 
   *:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
-  .app { display: flex; flex-direction: column; height: 100vh; padding: 16px; }
+  .app { display: flex; flex-direction: column; height: 100dvh; padding: 16px; }
   .workspace { flex: 1 1 auto; display: flex; gap: 16px; min-height: 0; }
 
   .pane-main {
@@ -467,6 +467,10 @@
   }
   .listwrap::-webkit-scrollbar-thumb:hover, .exam::-webkit-scrollbar-thumb:hover { background: var(--brand-25); background-clip: content-box; }
 
+
+  .exam-bar { display: none; }
+  .sheet-backdrop { display: none; }
+
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; }
   }
@@ -478,6 +482,46 @@
     .qgrid { grid-template-columns: 1fr; }
     .exam { padding: 16px; }
   }
+
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; }
+    .app { height: auto; min-height: 100dvh; padding: 8px 8px calc(72px + env(safe-area-inset-bottom)); }
+    .workspace { flex-direction: column; gap: 8px; }
+    .pane-main { width: 100%; }
+    .pane-side {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      height: 85dvh; width: 100%; flex: none;
+      transform: translateY(100%); transition: transform var(--dur-base) var(--ease-out);
+      z-index: 50; border-radius: 16px 16px 0 0; overflow: hidden;
+    }
+    body.sheet-open .pane-side { transform: translateY(0); }
+    .sheet-backdrop { display: block; }
+    .sheet-backdrop[hidden] { display: none; }
+    .titlebar { font-size: 17px; padding: 10px 12px; }
+    .bar {
+      flex-wrap: wrap; gap: 6px 12px; padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+      font-size: 12px; white-space: normal; position: sticky; top: 0; z-index: 5; background: #fff;
+    }
+    .bar .right { padding-left: 0; }
+    .bar.bar-meta { display: none; }
+    .exam { padding: 12px; }
+    .q-text { font-size: 16px; line-height: 1.45; }
+    .options td { padding: 10px 12px; font-size: 15px; }
+    .options td.k { width: 40px; }
+    .qb { width: 32px; height: 32px; font-size: 13px; }
+    .qgrid { grid-template-columns: 1fr; }
+    .qrow { height: 44px; }
+    .colhd { height: 32px; }
+    .student.collapsed { display: none; }
+    .exam-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 6px; padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      background: #fff; border-top: 1px solid var(--brand-06);
+    }
+    .exam-bar button { min-height: 44px; font-size: 13px; }
+  }
+
 </style>
 </head>
 <body>
@@ -489,13 +533,13 @@
       <div class="titlebar">MARKETING CĂN BẢN — 40 CÂU NGẪU NHIÊN</div>
 
       <div class="bar">
-        <span class="left"><span class="k">Bài thi</span> &nbsp;40 câu ngẫu nhiên từ ngân hàng 531 câu (9 chương)</span>
-        <span class="right">Thời gian còn lại: &nbsp;<span class="num" id="timer">60 : 00 : 00</span></span>
+        <span class="left"><span class="k">Thời gian còn lại:</span> &nbsp;<span class="num" id="timer">60 : 00 : 00</span></span>
+        <span class="right">Đã trả lời: &nbsp;<span class="num" id="answered">0</span> / <span id="total">40</span></span>
       </div>
 
-      <div class="bar">
+      <div class="bar bar-meta">
         <span class="left">Mã thi: Kỳ kiểm tra Marketing căn bản</span>
-        <span class="right">Đã trả lời: &nbsp;<span class="num" id="answered">0</span> / <span id="total">40</span></span>
+        <span class="right">Bài thi: 40 câu ngẫu nhiên từ ngân hàng 531 câu (9 chương)</span>
       </div>
 
       <div class="exam">
@@ -650,6 +694,18 @@ function initialsOf(name) {
   var w = String(name || '').trim().split(/\s+/).filter(Boolean);
   if (!w.length) return 'SV';
   return (w[0].charAt(0) + (w.length > 1 ? w[w.length - 1].charAt(0) : '')).toUpperCase();
+}
+
+
+function openSheet() {
+  document.body.classList.add('sheet-open');
+  var bd = document.getElementById('sheetBackdrop');
+  if (bd) bd.hidden = false;
+}
+function closeSheet() {
+  document.body.classList.remove('sheet-open');
+  var bd = document.getElementById('sheetBackdrop');
+  if (bd) bd.hidden = true;
 }
 
 function toggleStudent() {
@@ -919,6 +975,10 @@ elList.addEventListener('click', function (e) {
   go(+row.dataset.i);
 });
 
+
+var sheetBackdrop = document.getElementById('sheetBackdrop');
+if (sheetBackdrop) sheetBackdrop.addEventListener('click', closeSheet);
+
 function step(d) {
   var n = cur + d;
   if (n < 0) n = 0;
@@ -1051,6 +1111,10 @@ function render() {
 
   updateFlagButton();
   applyFilter();
+  var barCur = document.getElementById('barCur');
+  if (barCur) barCur.textContent = cur + 1;
+  var barTotal = document.getElementById('barTotal');
+  if (barTotal) barTotal.textContent = TOTAL;
   scrollRowIntoView();
 }
 
@@ -1067,6 +1131,7 @@ function go(i) {
   if (i > TOTAL - 1) i = TOTAL - 1;
   cur = i;
   render();
+  closeSheet();
 }
 
 /* pick() kẹp cả hai chỉ số — chặn gọi từ inline onclick với dữ liệu hỏng */
@@ -1106,6 +1171,12 @@ function startRound() {
   submitted = false;
   document.body.classList.remove('review');
   markSeen();
+  if (window.matchMedia('(max-width:768px)').matches) {
+    var sb = document.getElementById('stuBody');
+    if (sb && !sb.classList.contains('collapsed')) sb.classList.add('collapsed');
+    var st = document.getElementById('stuTitle');
+    if (st) st.classList.add('closed');
+  }
   elFilter.value = 'all';
   elTimer.className = 'num';
   buildList();
@@ -1249,5 +1320,14 @@ window.addEventListener('storage', function (e) {
   if (e.key === PROFILE_KEY) paintStudent();
 });
 </script>
+
+  <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
+  <div class="exam-bar" id="examBar">
+    <button type="button" id="btnPrev" onclick="step(-1)">‹ Câu trước</button>
+    <button type="button" id="btnSheet" onclick="openSheet()">Câu <span id="barCur">1</span>/<span id="barTotal">40</span></button>
+    <button type="button" id="btnNext" onclick="step(1)">Câu sau ›</button>
+    <button type="button" id="btnSubmitBar" onclick="submitExam()">Nộp bài</button>
+  </div>
+
 </body>
 </html>
