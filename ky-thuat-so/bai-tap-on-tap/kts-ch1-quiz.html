@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Bài trắc nghiệm trực tuyến</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -83,7 +83,7 @@
 
   body {
     margin: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
     color: var(--text);
     font-family: 'Plus Jakarta Sans', 'Be Vietnam Pro Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: .875rem;
@@ -408,7 +408,7 @@
     align-items: center;
     gap: 1.5rem;
     padding: .75rem 1.5rem;
-    background: var(--glass-2-bg);
+    background: var(--white);
     border: 0;
     border-top: 1px solid var(--brand-06);
     box-shadow: 0 -8px 24px rgba(3, 78, 162, .08);
@@ -1014,19 +1014,80 @@
   }
 
   @media (max-width: 640px) {
-    .topbar { grid-template-columns: 1fr; justify-items: center; row-gap: .75rem; padding: .75rem 1rem; }
-    .btn-ghost { justify-self: center; }
-    .topbar-right { justify-content: center; flex-wrap: wrap; }
+    html, body { overflow-x: hidden; }
 
-    .bottombar { flex-wrap: wrap; gap: .5rem .75rem; padding: .75rem 1rem 1rem; }
-    .bottombar-left { flex: 1 1 auto; flex-wrap: wrap; gap: .5rem .9rem; }
-    .link-btn, .counter { white-space: nowrap; font-size: .75rem; }
-    .btn-primary { min-width: 7.5rem; }
-    .dots { order: 3; width: 100%; margin: 0; overflow-x: auto; padding-bottom: .25rem; }
+    .topbar {
+      position: static;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+      padding: .5rem .75rem;
+      min-height: 3.25rem;
+    }
+    .btn-ghost { min-height: 2.5rem; padding: 0 .625rem; font-size: .75rem; justify-self: auto; }
+    .candidate { display: none; }
+    .topbar-right { justify-content: flex-end; gap: .375rem; flex-wrap: wrap; }
+    .timer { min-height: 2.25rem; padding: 0 .625rem; font-size: .75rem; }
+    .icon-btn { width: 2.25rem; height: 2.25rem; }
+    .icon-group { gap: .25rem; }
+
+    .stage { padding: .75rem .75rem calc(6.5rem + env(safe-area-inset-bottom)); }
+    .qcard { padding: .75rem 1rem; margin: 0; border-radius: var(--r-lg); }
+    .q-number { font-size: 1.0625rem; }
+    .q-text { font-size: 1rem; line-height: 1.45; }
+    .divider { margin: 1rem 0 1.125rem; }
+    .options { gap: .625rem; }
+    .option { min-height: 48px; gap: .5rem; }
+    .option-badge { width: 2rem; height: 2rem; font-size: .875rem; }
+    .option-text { padding: .625rem .875rem; font-size: 1rem; line-height: 1.45; min-height: 48px; }
+
+    .bottombar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      align-items: center;
+      gap: .5rem .75rem;
+      padding: .625rem .75rem calc(.625rem + env(safe-area-inset-bottom));
+      background: var(--white);
+      flex-wrap: wrap;
+    }
+    .bottombar-left { display: contents; }
+    .link-btn { grid-column: 1; grid-row: 1; white-space: nowrap; font-size: .75rem; min-height: 2.5rem; }
+    .counter { grid-column: 2; grid-row: 1; justify-self: center; white-space: nowrap; font-size: .75rem; }
+    .bottombar-right { grid-column: 3; grid-row: 1; margin-left: 0; justify-self: end; }
+    .btn-primary { min-width: 6.5rem; min-height: 2.5rem; }
+    .dots {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      order: initial;
+      width: 100%;
+      margin: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: .25rem;
+    }
+    .dots::-webkit-scrollbar { display: none; }
+    .dot {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      min-width: 24px;
+      min-height: 24px;
+      width: 24px;
+      height: 24px;
+    }
+    .dot.is-current { width: 28px; height: 28px; }
+    .dot-icon { width: 14px; height: 14px; }
 
     .toast-layer { top: 8.5rem; right: 1rem; left: 1rem; }
     .toast { width: auto; }
+    .q-text, .option-text { overflow-wrap: anywhere; word-break: break-word; }
   }
+
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
