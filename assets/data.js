@@ -500,6 +500,8 @@
     "anh-van-2": "anh-van-2/index.html",
     /* Kỹ thuật số: mở thẳng trang ôn tập chuyên đề, không mở popup. */
     "ky-thuat-so": "ky-thuat-so/index.html",
+    /* Kỹ thuật điện tử: mở thẳng trang tổng quan 4 chương (Chương 4–7). */
+    "ky-thuat-dien-tu": "ky-thuat-dien-tu/index.html",
     /* Hệ điều hành: mở thẳng trang ôn tập bên ngoài, không mở popup. */
     "he-dieu-hanh": "https://tracnghiemhuit.onrender.com/monhoc/13",
     /* Quản trị hệ thống mạng K14: mở thẳng trang ôn tập bên ngoài. */

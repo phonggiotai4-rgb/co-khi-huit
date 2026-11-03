@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chương 7 – Các mạch ứng dụng bộ khuếch đại thuật toán (video giảng giải)</title>
+<style>
+:root{--bg:#fbfaf4;--ink:#1f2a37;--mut:#6b7280;--ac:#2563eb;--hl:#fde68a;--card:#fff;--ln:#e3e8ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111827;--ink:#e5e7eb;--mut:#9ca3af;--ac:#60a5fa;--hl:#713f12;--card:#1f2937;--ln:#2b3646;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111827;--ink:#e5e7eb;--mut:#9ca3af;--ac:#60a5fa;--hl:#713f12;--card:#1f2937;--ln:#2b3646;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:12px 12px 112px}
+h1{font-size:1.15rem;margin:4px 0 8px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 0;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:4}
+.grp{flex:none;align-self:center;font-size:.72rem;font-weight:700;color:var(--mut);text-transform:uppercase;margin:0 2px 0 8px}
+nav button{flex:none;border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:16px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.board{background-color:var(--card);background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:24px 24px;border:1px solid var(--ln);border-radius:12px;padding:14px;min-height:300px}
+.board h2{margin:0 0 8px;font-size:1.05rem;color:var(--ac)}
+#ln div{padding:4px 10px;margin:4px 0;border-radius:6px;border-left:3px solid transparent;font-size:1.15rem;opacity:.7;overflow-wrap:anywhere}
+#ln div.n{opacity:1;font-weight:600;border-left-color:var(--ac);animation:fl 1.4s}
+#ln sub{font-size:.7em;line-height:0}
+#ln sup{font-size:.7em;line-height:0}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;font-size:.95em;line-height:1.25}
+.fr>span{padding:0 4px}
+.fr>span:first-child{border-bottom:1.5px solid currentColor}
+#de{grid-column:1/-1;margin:0 0 10px;padding:8px 12px;border:1px solid var(--ln);border-left:4px solid #f59e0b;border-radius:8px;background:var(--bg);font-size:.98rem}
+#de b{color:#b45309}
+.t51{width:100%;border-collapse:collapse;font-size:1.02rem;background:var(--card)}
+.t51 th,.t51 td{border:1px solid var(--ink);padding:8px 10px;text-align:center}
+.t51 th{background:var(--bg);font-weight:700}
+.t51 td.l{text-align:left;font-weight:600}
+.tw{overflow-x:auto}
+.t51{font-size:.92rem}
+.t51 td.nm{color:var(--ac);font-weight:600}
+.t51 th input{font:inherit;text-align:center;border:1px solid var(--ink);border-radius:4px;background:var(--card);color:var(--ink)}
+.t51 tr.n{animation:ti .7s}
+@keyframes ti{from{opacity:0;transform:translateY(-8px);background:var(--hl)}to{opacity:1;transform:none}}
+@media(min-width:760px){.board.wide{display:block}}
+#de div{margin-top:2px}
+#ln .lg{margin-top:12px;padding:8px 10px;border:1px dashed var(--mut);border-radius:8px;background:var(--bg);opacity:1;font-weight:400;font-size:.88rem;line-height:1.5}
+#ln .lg div{padding:1px 0;margin:0;opacity:1;font-size:.88rem;font-weight:400;border-left:0;animation:none}
+#ln .lg b{display:block;color:var(--ac);margin-bottom:2px}
+#ln .lg i{color:var(--mut)}
+body.nolg #ln .lg{display:none}
+.bar{flex-wrap:wrap}
+.bar button#lgb{background:var(--card);color:var(--ink);border:1px solid var(--ln);font-size:.85rem;padding:6px 10px}
+#st{font-size:.8rem;font-weight:400;color:var(--mut);margin-left:6px}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+svg{width:100%;max-height:230px;margin-top:10px;background:var(--bg);border:1px solid var(--ln);border-radius:8px;align-self:start}
+.i{fill:none;stroke:var(--mut);stroke-dasharray:4 3;stroke-width:1.5}
+.o{fill:none;stroke:var(--ac);stroke-width:2.8;stroke-dasharray:1;stroke-dashoffset:1;animation:d 1.6s forwards}
+@keyframes d{to{stroke-dashoffset:0}}
+svg text{fill:var(--mut);font-size:10px}
+#sub{margin:10px 0;padding:12px 14px;border-left:4px solid var(--ac);background:var(--card);border-radius:6px;min-height:4.5em;font-size:1.08rem}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:8px;align-items:center;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--ln)}
+.bar select{border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:8px;padding:7px 4px;font:inherit}
+.bar button{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+.bar input{flex:1;min-width:0}
+small{color:var(--mut);display:block;margin-top:8px}
+#ck path,#ck circle{fill:none;stroke:var(--ink);stroke-width:1.6}
+#ck .d{fill:var(--bg)}#ck .f{fill:var(--ink)}
+#ck text{fill:var(--ink);font-size:12px}
+#ck .d.on{fill:var(--ac);stroke:var(--ac)}
+#ck .cu path{fill:none;stroke:var(--ac);stroke-width:3;stroke-linejoin:round}
+#ck .cu .a{fill:var(--ac);stroke:none}
+#ph{display:flex;gap:6px;margin-top:10px}
+#ph button{border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:14px;padding:3px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+#ph button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+@media(min-width:760px){#ln{grid-row:span 3}}
+@media(min-width:760px){.board{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;align-content:start}.board h2{grid-column:1/-1}}
+.o2{fill:none;stroke:#f59e0b;stroke-width:2.4;stroke-dasharray:1;stroke-dashoffset:1;animation:d 1.6s forwards}
+#wv{cursor:pointer}
+#ck.dr path{stroke-dasharray:1;stroke-dashoffset:1;animation:d .8s forwards}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.o,.o2,#ck.dr path{stroke-dashoffset:0}}
+
+#ck{fill:none;stroke:var(--ink);stroke-width:1.6;max-height:260px}
+#ck text{fill:var(--ink);stroke:none;font-size:12px}
+#ck .i{stroke:var(--mut)}
+#ck.dr path{stroke-dasharray:1;stroke-dashoffset:1;animation:d .8s forwards}
+#ck .o{stroke:var(--ac);stroke-width:2.8}
+@media(prefers-reduced-motion:reduce){#ck.dr path{stroke-dashoffset:0}}
+.board{display:block}
+
+#bf{margin:.6rem 0 0;text-align:center}
+#bf img{max-width:100%;max-height:300px;background:#fff;border-radius:8px;border:1px solid var(--mut)}
+#bf figcaption{font-size:.8rem;color:var(--mut)}
+#bt{display:flex;gap:.4rem;justify-content:center;margin-bottom:.4rem}
+#bt button{padding:.2rem .6rem;font-size:.8rem}
+#bt button.on{background:var(--ac);color:#fff}
+#bf svg{width:100%;max-height:320px}.sk{fill:none;stroke:var(--ink);stroke-width:1.5}.sk text{fill:var(--ink);stroke:none;font-size:11px;font-style:italic;font-family:Georgia,serif}
+#de{margin:.5rem 0;padding:.6rem .8rem;border-left:4px solid var(--ac);background:var(--card);border-radius:6px;font-size:.92rem;line-height:1.5}
+#de div{padding:2px 6px;margin-top:3px;border-radius:4px}
+#de .cur{background:#ffe58a;color:#111;font-weight:600;animation:fl .6s}
+#pt{margin-left:8px;font-size:.78rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--ac);color:#fff;white-space:nowrap}
+#tools{margin:.4rem 0}#tools select{max-width:100%;padding:.45rem .6rem;font-size:.92rem}
+#sim{margin-top:10px;padding:10px 12px;border:1px dashed var(--ln);border-radius:12px;background:var(--card)}#sim .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:6px 14px;margin:8px 0}#sim label{font-size:.85rem;display:block}#sim label[hidden]{display:none}#sim input{width:100%}#sv{width:100%;height:auto;display:block;background:var(--bg);border-radius:8px}#sv text{font-size:9px;fill:var(--mut)}#so{font-size:.88rem;margin-top:6px;line-height:1.5}
+#ps{align-self:center;font-size:.85rem;color:var(--mut)}#ph{align-items:center;flex-wrap:wrap}
+#sheet{position:fixed;inset:0;z-index:50;overflow:auto;background:var(--bg);color:var(--ink);padding:14px 14px 40px;line-height:1.5}#sheet[hidden]{display:none}#sheet h2{margin:0 0 4px;font-size:1.15rem}#sheet .tb{display:flex;gap:8px;margin:8px 0 12px}#sheet .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}#sheet .cd{border:1px solid var(--ln);border-radius:10px;padding:8px 11px;background:var(--card);break-inside:avoid;font-size:.9rem}#sheet .cd b{display:block;margin-bottom:3px}#sheet ol{margin:2px 0 4px;padding-left:20px}#sheet .w{color:#b45309;font-size:.85rem}
+@media print{body>*:not(#sheet){display:none!important}#sheet{position:static;overflow:visible;background:#fff;color:#000;padding:0}#sheet .tb{display:none}#sheet .gr{grid-template-columns:1fr 1fr;gap:6px}#sheet .cd{background:#fff;font-size:10.5px;padding:5px 8px;border-color:#999}#sheet .w{color:#000}}
+</style></head><body><main>
+<h1>Chương 7. Các mạch ứng dụng bộ khuếch đại thuật toán</h1>
+<nav id="nv"></nav>
+<div id="tools"><label for="jp" style="font-size:.85rem">Chuyển đến bài: </label><select id="jp"></select></div>
+<section class="board"><h2><span id="ct"></span><span id="st"></span><span id="pt"></span></h2><div id="de"></div><div id="ln"></div><svg id="ck" viewBox="0 0 400 180"></svg><figure id="bf"><div id="bt"></div><svg id="bk" class="sk" role="img" aria-label="Hình vẽ lại từ sách"></svg><figcaption id="bc"></figcaption></figure><div id="ph" style="display:none"><button>v<sub>i</sub> &gt; 0</button><button>v<sub>i</sub> &lt; 0</button><span id="ps"></span></div><div id="sim" hidden><b id="simT"></b><div class="sg" id="sg"></div><svg id="sv" viewBox="0 0 400 150"></svg><div id="so"></div></div></section>
+<div id="sub"></div>
+<div class="bar"><button id="pv">◀ Trước</button><button id="pl">▶ Phát</button><button id="nx">Tiếp ▶</button><button id="cs">Tờ ôn</button><button id="lgb">Chú thích: bật</button><select id="sp" title="Tốc độ đọc"><option value="0.85">0,85×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option></select><input type="range" id="pr" min="0" value="0"></div>
+<small>Giọng đọc dùng giọng tiếng Việt của trình duyệt; nếu máy không có, bài tự chuyển bước theo độ dài câu.</small>
+</main>
+<div id="sheet" hidden></div><script>
+const f=(x,d=2)=>(+x.toFixed(d)).toString().replace('.',','),C=[],S=[];
+const ch=t=>C.push(t),T=(say,ln=[],k)=>S.push({c:C.length-1,say:say.replace(/(^|[\s(])-(\d)/g,'$1trừ $2'),ln,k});
+const CK={'7.1 Tổng quan bộ khuếch đại thuật toán':'amp','7.2.1 Mạch khuếch đại đảo':'inv','7.2.2 Mạch khuếch đại không đảo':'non','7.2.3 Mạch khuếch đại tổng đảo':'sum','7.2.4 Mạch khuếch đại tổng không đảo':'sumn','7.2.5 Mạch khuếch đại vi sai':'dif','7.2.6 Mạch lặp điện áp':'buf','VD 7.1':'amp','VD 7.2':'inv','VD 7.3':'non','VD 7.4':'sum','BT 7.1':'non','BT 7.2':'-','BT 7.3':'-','BT 7.4':'sum','BT 7.5':'-','BT 7.6':'dif','BT 7.7':'wave','BT 7.8':'non','BT 7.9':'sumn','BT 7.10':'sum','BT 7.11':'non','BT 7.12':'inv','BT 7.13':'sum','BT 7.14':'sumn','Kết luận chương 7':'-'};
+const G={'7.1 Tổng quan bộ khuếch đại thuật toán':'7.1 · Tổng quan','7.2.1 Mạch khuếch đại đảo':'7.2 · Các mạch ứng dụng cơ bản','Kết luận chương 7':'Kết luận','BT 7.1':'Bài tập chương 7'};
+const Vs=12;
+
+ch('7.1 Tổng quan bộ khuếch đại thuật toán');
+T('Chương 7 nói về bộ khuếch đại thuật toán, gọi tắt là Op-Amp. Nó có hai ngõ vào: ngõ không đảo dấu cộng và ngõ đảo dấu trừ, cùng một ngõ ra. Ngõ ra bằng hệ số khuếch đại vòng hở nhân hiệu hai điện áp vào.',['v_o = A_vo·(v⁺ − v⁻)   (7.1)','A_vo ≈ 10⁴ … 2·10⁵  (rất lớn)']);
+T('Op-Amp lý tưởng có trở kháng vào rất lớn, trở kháng ra bằng không, nên dòng vào hai ngõ đều bằng không. Khi mạch có hồi tiếp âm, hai ngõ vào luôn bằng nhau. Đây là hai quy tắc dùng cho cả chương.',['i⁺ = i⁻ = 0','v⁻ = v⁺  (hồi tiếp âm)   (7.2)']);
+T('Đặc tuyến vào ra có ba vùng. Vùng tuyến tính: ngõ ra nằm giữa trừ V sat và cộng V sat. Nếu ngõ ra vượt ngưỡng thì Op-Amp bão hòa, ngõ ra bị giữ ở cộng hoặc trừ V sat. Với nguồn đôi, V sat xấp xỉ V cc. Với nguồn đơn, bão hòa âm xấp xỉ không.',['Tuyến tính: −Vsat < v_o < +Vsat','v⁺ > v⁻ (vòng hở): v_o = +Vsat ≈ Vcc','v⁺ < v⁻ (vòng hở): v_o = −Vsat ≈ −Vcc (nguồn đôi) hoặc 0 (nguồn đơn)']);
+
+ch('VD 7.1');
+T('Đề: Op-Amp LF411 có hệ số khuếch đại vòng hở A_vo = 200000, cấp nguồn đôi ±12 V. Ngõ vào không đảo nối 0,5 V, ngõ vào đảo nối 0,3 V. Tìm điện áp ngõ ra v_o.',['Cho: A_vo = 200000 ; nguồn ±12 V','v⁺ = 0,5 V ; v⁻ = 0,3 V','Cần tìm: v_o'],'amp');
+T('Bước 1, nhận dạng mạch. Ngõ ra không nối về ngõ vào nào, tức không có hồi tiếp âm. Đây là mạch vòng hở, nên không được dùng điều kiện v⁻ = v⁺ của Op-Amp lý tưởng có hồi tiếp. Ta phải dùng công thức 7.1 và kiểm tra giới hạn nguồn.',['Không có hồi tiếp ⇒ vòng hở','⇒ dùng v_o = A_vo·(v⁺ − v⁻) rồi kiểm tra Vsat']);
+{const d=.5-.3,a=200000*d;
+T(`Bước 2, tính hiệu điện áp giữa hai ngõ vào: v cộng trừ v trừ bằng 0,5 trừ 0,3, bằng ${f(d)} vôn.`,['Δv_in = v⁺ − v⁻ = 0,5 − 0,3 = '+f(d)+' V']);
+T(`Bước 3, tính ngõ ra theo lý thuyết: v o bằng 200000 nhân ${f(d)}, bằng ${a} vôn.`,['v_o = A_vo·Δv_in = 200000·'+f(d)+' = '+a+' V']);
+T(`Bước 4, so sánh với nguồn. Ngõ ra Op-Amp không thể vượt điện áp nguồn: ${a} vôn lớn hơn rất nhiều 12 vôn. Vậy Op-Amp không làm việc ở vùng tuyến tính mà đã bão hòa.`,[a+' V ≫ 12 V ⇒ không thể đạt được','⇒ Op-Amp bão hòa']);}
+T('Bước 5, xác định bão hòa dương hay âm. Hiệu v cộng trừ v trừ dương, nên ngõ ra bị kéo về phía dương: Op-Amp bão hòa dương. Với nguồn đôi, V sat xấp xỉ V cc.',['Δv_in > 0 ⇒ BH(+)','v_o = +Vsat ≈ +Vcc = 12 V']);
+T('Cách làm nhanh: theo 7.3, chỉ cần so sánh hai ngõ vào. v cộng 0,5 lớn hơn v trừ 0,3 nên ngõ ra bằng cộng 12 vôn. Nhận xét: chỉ cần chênh lệch 12 chia 200000, tức 60 micro vôn, là đã bão hòa; vì vậy Op-Amp vòng hở thường dùng làm mạch so sánh.',['v⁺ > v⁻ ⇒ v_o = +12 V ✓','Ngưỡng bão hòa: 12/200000 = 60 µV']);
+
+ch('7.2.1 Mạch khuếch đại đảo');
+T('Mạch khuếch đại đảo: tín hiệu vào qua điện trở R i tới ngõ đảo, điện trở R f nối từ ngõ ra về ngõ đảo, ngõ không đảo nối đất. Vì v cộng bằng không, nên v trừ, tức điện áp nút N, cũng bằng không.',['v⁺ = 0 ⇒ v_N = v⁻ = 0']);
+T('Viết định luật Kirchhoff một tại nút N. Dòng vào ngõ đảo bằng không, nên dòng qua R i đi tới nút N phải bằng dòng đi qua R f.',['i_i − i_f − i⁻ = 0 ⇒ i_i = i_f','{v_i − v_N|R_i} − {v_N − v_o|R_f} = 0   (7.5)']);
+T('Thay v N bằng không: v i chia R i bằng trừ v o chia R f. Suy ra độ lợi điện áp bằng trừ R f chia R i. Dấu trừ nghĩa là ngõ ra đảo pha so với ngõ vào.',['{v_i|R_i} + {v_o|R_f} = 0','A_v = {v_o|v_i} = −{R_f|R_i}   (7.6)']);
+T('Tổng trở vào nhìn từ nguồn: nút N là đất ảo, nên dòng vào chỉ chảy qua R i. Vậy Z i bằng R i.',['Z_i = {v_i|i_i} = R_i   (7.7)']);
+
+ch('VD 7.2');
+T('Đề: mạch như Hình 7.5 với R f bằng 120 kilô ôm, R i bằng 8,2 kilô ôm, V sat bằng cộng trừ 12 vôn. Câu a: loại mạch. Câu b: độ lợi. Câu c: tổng trở vào. Câu d: điều kiện của v i để Op-Amp ở vùng tuyến tính.',['Cho: R_f = 120 kΩ ; R_i = 8,2 kΩ ; ±Vsat = ±12 V'],'inv');
+T('Câu a. Nhìn hình: nguồn v i đi qua R i vào ngõ đảo, ngõ không đảo nối đất, R f hồi tiếp từ ngõ ra về ngõ đảo. Đây là mạch khuếch đại đảo.',['v_i → R_i → ngõ đảo (−)','Ngõ không đảo (+) nối đất','⇒ Mạch khuếch đại đảo']);
+{const A=-120/8.2,L=12/-A;
+T('Câu b. Viết công thức độ lợi của mạch đảo, công thức 7.6: A v bằng v o chia v i, bằng trừ R f chia R i.',['A_v = {v_o|v_i} = −{R_f|R_i}']);
+T(`Thế số: 120 chia 8,2 bằng ${f(120/8.2,3)}. Vậy độ lợi bằng trừ ${f(-A)}. Dấu trừ cho biết ngõ ra đảo pha, độ lớn ngõ ra gấp ${f(-A)} lần ngõ vào.`,['A_v = −{120|8,2} = −'+f(120/8.2,3)+' ≈ '+f(A)]);
+T('Câu c. Ở mạch đảo, ngõ đảo là đất ảo, điện áp tại nút N bằng không. Dòng từ nguồn chỉ chảy qua R i, nên i i bằng v i chia R i. Do đó tổng trở vào bằng R i.',['v_N = 0 ⇒ i_i = {v_i − 0|R_i}','Z_i = {v_i|i_i} = R_i = 8,2 kΩ']);
+T('Câu d. Op-Amp ở vùng tuyến tính khi ngõ ra nằm giữa trừ V sat và cộng V sat, tức trừ 12 đến cộng 12 vôn.',['−Vsat < v_o < Vsat','−12 < v_o < 12']);
+T(`Thay v o bằng A v nhân v i, bằng trừ ${f(-A)} nhân v i.`,['−12 < '+f(A)+'·v_i < 12']);
+T(`Chia ba vế cho ${f(A)}. Vì đây là số âm nên phải đổi chiều các dấu bất đẳng thức. Mười hai chia ${f(-A)} bằng ${f(L)}.`,['{−12|'+f(A)+'} > v_i > {12|'+f(A)+'}','⇒ −'+f(L)+' < v_i < '+f(L)+'  (đã đổi chiều)']);
+T(`Kết luận: v i nằm giữa trừ ${f(L)} và cộng ${f(L)} vôn. Kiểm tra: v i bằng 0,82 vôn thì v o bằng ${f(A*L)} vôn, đúng bằng biên. Nếu v i bằng 1 vôn thì tính ra ${f(A)} vôn, vượt ngưỡng nên ngõ ra bị giữ ở trừ 12 vôn.`,['−'+f(L)+' V < v_i < '+f(L)+' V','Kiểm tra: v_i = 0,82 V ⇒ v_o = '+f(A*L)+' V ✓','v_i = 1 V ⇒ '+f(A)+' V ⇒ bão hòa, v_o = −12 V']);}
+ch('7.2.2 Mạch khuếch đại không đảo');
+T('Mạch không đảo: tín hiệu v i đưa thẳng vào ngõ không đảo, R i nối từ ngõ đảo xuống đất, R f nối từ ngõ ra về ngõ đảo. Vì v trừ bằng v cộng, nên điện áp nút N bằng v i.',['v⁺ = v_i ⇒ v_N = v⁻ = v_i']);
+T('Kirchhoff một tại nút N: dòng đi từ đất qua R i tới N bằng dòng đi qua R f ra ngõ ra. Thay v N bằng v i vào.',['{0 − v_N|R_i} − {v_N − v_o|R_f} = 0   (7.8)','{−v_i|R_i} − {v_i − v_o|R_f} = 0']);
+T('Giải ra độ lợi: một cộng R f chia R i, luôn lớn hơn hoặc bằng một và cùng dấu với ngõ vào. Tổng trở vào là vô cùng, vì tín hiệu nối thẳng vào ngõ có dòng bằng không.',['A_v = {v_o|v_i} = 1 + {R_f|R_i}   (7.9)','Z_i = {v_i|(−i⁺)} = ∞   (7.10)']);
+
+ch('VD 7.3');
+T('Đề: mạch như Hình 7.8 với R f bằng 68 kilô ôm, R i bằng 8,2 kilô ôm, V sat bằng cộng trừ 12 vôn. Các câu hỏi giống ví dụ 7.2.',['Cho: R_f = 68 kΩ ; R_i = 8,2 kΩ ; ±Vsat = ±12 V'],'non');
+T('Câu a. Nguồn v i nối trực tiếp vào ngõ không đảo, R i nối từ ngõ đảo xuống đất, R f hồi tiếp về ngõ đảo. Đây là mạch khuếch đại không đảo.',['v_i → ngõ không đảo (+)','R_i xuống đất, R_f hồi tiếp','⇒ Mạch khuếch đại không đảo']);
+{const A=1+68/8.2,L=12/A;
+T('Câu b. Viết công thức độ lợi của mạch không đảo, công thức 7.9.',['A_v = {v_o|v_i} = 1 + {R_f|R_i}']);
+T(`Thế số: 68 chia 8,2 bằng ${f(68/8.2,3)}, cộng một được ${f(A)}. Lưu ý: dòng thế số trong sách ghi 82 chia 6,8 là nhầm số; thế đúng số của đề cho kết quả ${f(A)} như sách. Độ lợi dương nên ngõ ra cùng pha với ngõ vào.`,['A_v = 1 + {68|8,2} = 1 + '+f(68/8.2,3)+' = '+f(A)]);
+T('Câu c. Tín hiệu nối thẳng vào ngõ không đảo, nơi dòng vào bằng không, nên nguồn không phải cấp dòng. Tổng trở vào là vô cùng.',['i⁺ = 0 ⇒ Z_i = {v_i|(−i⁺)} → ∞']);
+T('Câu d. Điều kiện tuyến tính: trừ 12 nhỏ hơn v o nhỏ hơn 12. Thay v o bằng A v nhân v i.',['−12 < v_o < 12','−12 < '+f(A)+'·v_i < 12']);
+T(`Chia ba vế cho ${f(A)}, số dương nên giữ nguyên chiều. Mười hai chia ${f(A)} bằng ${f(L)}. Vậy v i nằm giữa trừ ${f(L)} và cộng ${f(L)} vôn. Kiểm tra: v i bằng 1,29 vôn cho v o gần 12 vôn.`,['{−12|'+f(A)+'} < v_i < {12|'+f(A)+'}','−'+f(L)+' V < v_i < '+f(L)+' V','Kiểm tra: 1,29·'+f(A)+' = '+f(1.29*A)+' V ≈ 12 V ✓']);}
+ch('7.2.3 Mạch khuếch đại tổng đảo');
+T('Mạch tổng đảo có nhiều ngõ vào, mỗi ngõ qua một điện trở riêng tới nút N. Giống mạch đảo, v cộng bằng không nên v N cũng bằng không.',['v⁺ = 0 ⇒ v_N = 0']);
+T('Kirchhoff một tại N: tổng các dòng vào bằng dòng qua R f. Thay v N bằng không, rồi rút v o. Mỗi ngõ vào được khuếch đại đảo với hệ số riêng R f chia điện trở của ngõ đó.',['i_1 + i_2 + i_3 − i_f = 0','{v_1|R_1} + {v_2|R_2} + {v_3|R_3} + {v_o|R_f} = 0','v_o = −( v_1·{R_f|R_1} + v_2·{R_f|R_2} + v_3·{R_f|R_3} )   (7.12)']);
+T('Hai trường hợp đặc biệt: nếu các điện trở bằng R f thì ngõ ra là trừ tổng các ngõ vào, đây là mạch cộng đảo. Nếu các điện trở đều bằng ba lần R f thì ngõ ra là trừ trung bình cộng.',['R_1=R_2=R_3=R_f ⇒ v_o = −(v_1+v_2+v_3)','R_1=R_2=R_3=3R_f ⇒ v_o = −{v_1+v_2+v_3|3}']);
+
+ch('VD 7.4');
+T('Đề: mạch như Hình 7.11, hai tín hiệu v một, v hai qua R một, R hai vào ngõ đảo, R f hồi tiếp, ngõ không đảo nối đất. Câu a: loại mạch. Câu b: viết v o theo v một, v hai. Câu c: với v o bằng trừ hai v một cộng v hai, tính linh kiện. Câu d: với V sat bằng cộng trừ 12 V, v một bằng 2 V, tìm điều kiện của v hai.',['v_o = −(2v_1 + v_2) ; ±Vsat = ±12 V ; v_1 = 2 V'],'sum');
+T('Câu a. Hai ngõ vào cùng nối tới ngõ đảo, ngõ không đảo nối đất, nên đây là mạch khuếch đại tổng đảo.',['v_1, v_2 → ngõ đảo ; (+) nối đất','⇒ Mạch khuếch đại tổng đảo']);
+T('Câu b. Dùng nguyên lý xếp chồng. Cho v hai bằng 0, nối đất nguồn v hai: mạch thành mạch đảo với ngõ vào v một, nên v o một bằng trừ R f chia R một nhân v một.',['v_2 = 0 ⇒ v_o1 = −{R_f|R_1}·v_1']);
+T('Cho v một bằng 0, nối đất nguồn v một: mạch đảo với ngõ vào v hai, nên v o hai bằng trừ R f chia R hai nhân v hai. Ngõ ra khi có cả hai nguồn là tổng hai kết quả, công thức 7.13.',['v_1 = 0 ⇒ v_o2 = −{R_f|R_2}·v_2','v_o = v_o1 + v_o2 = −( {R_f|R_1}·v_1 + {R_f|R_2}·v_2 )   (7.13)']);
+T('Câu c. Đồng nhất hệ số của công thức 7.13 với v o bằng trừ hai v một cộng v hai: hệ số của v một là 2, hệ số của v hai là 1.',['−( {R_f|R_1}·v_1 + {R_f|R_2}·v_2 ) ≡ −(2·v_1 + 1·v_2)','{R_f|R_1} = 2 ; {R_f|R_2} = 1']);
+T('Có hai phương trình nhưng ba ẩn, nên ta được chọn một điện trở. Chọn R f bằng 100 kilô ôm, vì giá trị vài chục đến vài trăm kilô ôm là hợp lý. Suy ra R một bằng R f chia 2, bằng 50 kilô ôm; R hai bằng R f bằng 100 kilô ôm. Kiểm tra: 100 chia 50 bằng 2 và 100 chia 100 bằng 1, đúng.',['Chọn R_f = 100 kΩ','R_1 = R_f/2 = 50 kΩ','R_2 = R_f/1 = 100 kΩ','Kiểm tra: 100/50 = 2 ✓ ; 100/100 = 1 ✓']);
+T('Câu d. Với v một bằng 2 vôn, số hạng hai v một bằng 4 vôn, nên v o bằng trừ bốn cộng v hai. Sách viết 2.2 nghĩa là 2 nhân 2.',['2·v_1 = 2·2 = 4','v_o = −(4 + v_2)']);
+T('Điều kiện tuyến tính: trừ 12 nhỏ hơn v o nhỏ hơn 12. Nhân cả ba vế với trừ một thì đổi chiều bất đẳng thức, được trừ 12 nhỏ hơn 4 cộng v hai nhỏ hơn 12. Trừ 4 cả ba vế: v hai nằm giữa trừ 16 và cộng 8 vôn. Kiểm tra: v hai bằng 8 thì v o bằng trừ 12; v hai bằng trừ 16 thì v o bằng cộng 12.',['−12 < −(4 + v_2) < 12','−12 < 4 + v_2 < 12  (nhân −1, đổi chiều)','−16 V < v_2 < 8 V','Kiểm tra: v_2 = 8 ⇒ v_o = −12 V ✓ ; v_2 = −16 ⇒ v_o = +12 V ✓']);
+ch('7.2.4 Mạch khuếch đại tổng không đảo');
+T('Mạch tổng không đảo: hai tín hiệu v một, v hai qua R một, R hai tới ngõ không đảo; ngõ đảo có R i xuống đất và R f hồi tiếp. Dùng nguyên lý xếp chồng: xét từng nguồn, nối đất nguồn còn lại.',['Xếp chồng: v_o = v_o1 + v_o2']);
+T('Chỉ có v một: R một và R hai tạo cầu chia áp, điện áp tại ngõ không đảo là v một nhân R hai chia R một cộng R hai. Sau đó mạch là không đảo với độ lợi một cộng R f chia R i.',['v_1+ = v_1·{R_2|R_1+R_2}','v_o1 = (1 + {R_f|R_i})·{R_2|R_1+R_2}·v_1   (7.14)']);
+T('Tương tự với v hai, rồi cộng hai kết quả. Nếu R một, R hai, R i, R f đều bằng nhau thì ngõ ra bằng v một cộng v hai, đây là mạch cộng không đảo.',['v_o2 = (1 + {R_f|R_i})·{R_1|R_1+R_2}·v_2   (7.15)','v_o = (1 + {R_f|R_i})·( {R_2|R_1+R_2}·v_1 + {R_1|R_1+R_2}·v_2 )   (7.16)','R_1=R_2=R_i=R_f ⇒ v_o = v_1 + v_2']);
+
+ch('7.2.5 Mạch khuếch đại vi sai');
+T('Mạch vi sai có hai tín hiệu: v hai vào ngõ đảo qua R hai, v một vào ngõ không đảo qua R mười một, và R mười hai nối ngõ không đảo xuống đất. Ta xếp chồng, xét từng nguồn.',['Xếp chồng: v_o = v_o1 + v_o2']);
+T('Chỉ có v một: mạch là không đảo, điện áp tại ngõ không đảo qua cầu chia áp R mười một, R mười hai. Chỉ có v hai: mạch là đảo với độ lợi trừ R f chia R hai.',['v_o1 = v_1·{R_12|R_11+R_12}·(1 + {R_f|R_2})','v_o2 = −{R_f|R_2}·v_2']);
+T('Cộng lại ta được công thức tổng quát. Nếu R mười một, R mười hai, R hai, R f bằng nhau thì ngõ ra bằng v một trừ v hai, đây là mạch trừ.',['v_o = {R_12|R_11+R_12}·(1 + {R_f|R_2})·v_1 − {R_f|R_2}·v_2   (7.17)','R_11=R_12=R_2=R_f ⇒ v_o = v_1 − v_2']);
+
+ch('7.2.6 Mạch lặp điện áp');
+T('Mạch lặp điện áp nối thẳng ngõ ra về ngõ đảo. Vì v trừ bằng v cộng, mà v trừ chính là v o và v cộng là v i, nên v o bằng v i, độ lợi bằng một.',['v⁻ = v_o , v⁺ = v_i , v⁻ = v⁺','A_v = {v_o|v_i} = 1']);
+T('Tổng trở vào rất lớn, tổng trở ra rất nhỏ. Vì vậy mạch lặp dùng để lấy tín hiệu từ cảm biến mà không làm sụt áp nguồn tín hiệu.',['Z_i = R_i + R_in = ∞']);
+
+ch('Kết luận chương 7');
+T('Tóm tắt: mạch đảo có độ lợi trừ R f chia R i. Mạch không đảo có độ lợi một cộng R f chia R i. Tổng đảo cộng các ngõ vào với hệ số R f chia R. Vi sai khuếch đại hiệu hai ngõ vào. Mạch lặp có độ lợi một. Luôn nhớ kiểm tra ngõ ra có vượt V sat không. Vậy là xong chương 7!',['Đảo: A_v = −R_f/R_i','Không đảo: A_v = 1 + R_f/R_i','Tổng đảo: v_o = −Σ (R_f/R_k)·v_k','Vi sai (đặc biệt): v_o = v_1 − v_2','Lặp áp: A_v = 1 · Luôn kiểm tra |v_o| < Vsat']);
+
+ch('BT 7.1');
+{const A=1+22/3.3;
+T('Đề: tín hiệu v i nối thẳng vào ngõ không đảo, có điện trở 470 kilô ôm nối đất ngay tại ngõ vào. Ngõ đảo có 3,3 kilô ôm xuống đất và 22 kilô ôm hồi tiếp. Tìm Z i và độ lợi.',['470 kΩ ∥ ngõ vào ; R_i = 3,3 kΩ ; R_f = 22 kΩ'],'non');
+T('Đây là mạch không đảo. Ngõ vào của Op-Amp có trở kháng vô cùng, nên nguồn chỉ thấy điện trở 470 kilô ôm mắc song song với vô cùng, tức 470 kilô ôm.',['Z_i = 470 kΩ ∥ ∞ = 470 kΩ']);
+T(`Độ lợi bằng một cộng 22 chia 3,3, được ${f(A)}.`,['A_v = 1 + {22|3,3} = '+f(A)]);}
+
+ch('BT 7.2');
+T('Đề: tầng một dùng R f một bằng 100 kilô ôm, R một bằng 10 kilô ôm, vào ngõ đảo. Tầng hai là không đảo có độ lợi 5. Câu a: chức năng OP1, OP2. Câu b: v o hai theo v i. Câu c: tính A v một, R f hai, R hai, v o hai.',['R_f1 = 100 kΩ, R_1 = 10 kΩ, A_v2 = 5']);
+T('Câu a và b. OP1 là mạch khuếch đại đảo, OP2 là mạch khuếch đại không đảo. Hai tầng nối tiếp nên độ lợi tổng bằng tích hai độ lợi. Câu b: v o hai bằng A v một nhân A v hai nhân v i.',['OP1: đảo ; OP2: không đảo','v_o2 = A_v1·A_v2·v_i']);
+T('Câu c. A v một bằng trừ 100 chia 10, bằng trừ 10. Tầng hai: một cộng R f hai chia R hai bằng 5, nên R f hai bằng 4 lần R hai. Chọn R hai bằng 10 kilô ôm thì R f hai bằng 40 kilô ôm. Vậy v o hai bằng trừ 50 v i.',['A_v1 = −100/10 = −10','1 + R_f2/R_2 = 5 ⇒ R_f2 = 4R_2','Chọn R_2 = 10 kΩ ⇒ R_f2 = 40 kΩ','v_o2 = (−10)·5·v_i = −50·v_i']);
+
+ch('BT 7.3');
+T('Đề: hai tầng đảo nối tiếp. Cho R f hai bằng 100 kilô ôm, R hai bằng 10 kilô ôm, A v một bằng trừ 5. Tính A v hai, R f một, R một, v o hai theo v i.',['R_f2 = 100 kΩ, R_2 = 10 kΩ, A_v1 = −5']);
+T('Câu a đến c. OP1 và OP2 đều là mạch khuếch đại đảo. A v hai bằng trừ 100 chia 10, bằng trừ 10. Tầng một: R f một chia R một bằng 5; chọn R một bằng 10 kilô ôm thì R f một bằng 50 kilô ôm. Hai dấu trừ triệt tiêu, nên v o hai bằng cộng 50 v i.',['A_v2 = −100/10 = −10','R_f1/R_1 = 5 ⇒ chọn R_1 = 10 kΩ, R_f1 = 50 kΩ','v_o2 = (−5)(−10)·v_i = 50·v_i']);
+
+ch('BT 7.4');
+T('Đề: tổng đảo ba ngõ vào. Cho v o bằng trừ hai v một cộng ba v hai cộng v ba. Tính linh kiện; với v một bằng 2 V, v hai bằng 1 V, tìm điều kiện của v ba để ở vùng tuyến tính, nguồn cộng trừ 12 V.',['v_o = −(2v_1 + 3v_2 + v_3) ; ±Vsat = ±12 V'],'sum');
+T('Câu a và c. Mạch là tổng đảo. Đồng nhất hệ số: R f chia R một bằng 2, chia R hai bằng 3, chia R ba bằng 1. Chọn R f bằng 100 kilô ôm thì R một bằng 50, R hai bằng 33,3, R ba bằng 100 kilô ôm.',['R_f/R_1 = 2 , R_f/R_2 = 3 , R_f/R_3 = 1','Chọn R_f = 100 kΩ ⇒ R_1 = 50 kΩ , R_2 = 33,3 kΩ , R_3 = 100 kΩ']);
+T('Câu d. Thế v một bằng 2, v hai bằng 1: v o bằng trừ 7 cộng v ba. Trừ 12 nhỏ hơn v o nhỏ hơn 12 cho v ba nằm giữa trừ 19 và cộng 5 vôn.',['v_o = −(4 + 3 + v_3) = −(7 + v_3)','−12 < −(7 + v_3) < 12','−19 V < v_3 < 5 V']);
+
+ch('BT 7.5');
+T('Đề: tín hiệu vào trừ 30 dBV. Tầng một là mạch không đảo có R i bằng 2 kilô ôm, R f bằng 14 kilô ôm; tầng hai cũng không đảo, R i bằng 2 kilô ôm, R f bằng 18 kilô ôm; tải 15 kilô ôm. Trở kháng vào tầng một là 100 kilô ôm. Tính độ lợi và v o theo dB, với công thức của đề: A dB bằng 10 log A.',['v_in = −30 dBV ; Z_in = 100 kΩ','Tầng 1: R_i = 2k, R_f = 14k ; Tầng 2: R_i = 2k, R_f = 18k','A[dB] = 10·log₁₀ A (theo đề)']);
+T('Hai tầng đều là mạch không đảo nên độ lợi mỗi tầng là một cộng R f chia R i: tầng một bằng 8, tầng hai bằng 10. Hai tầng nối tiếp nên nhân lại, được 80. Tải 15 kilô ôm không ảnh hưởng vì ngõ ra Op-Amp lý tưởng có trở kháng ra bằng không.',['A_1 = 1 + {14|2} = 8','A_2 = 1 + {18|2} = 10','A = A_1·A_2 = 80']);
+T('Đổi sang dB theo công thức của đề: 10 log 8 bằng 9,03; 10 log 10 bằng 10; cộng lại 19,03 dB, trùng 10 log 80. Ngõ ra theo dB bằng ngõ vào cộng độ lợi: trừ 30 cộng 19,03 bằng trừ 10,97 dBV.',['A_1 = 10·log 8 = 9,03 dB ; A_2 = 10·log 10 = 10 dB','A = 9,03 + 10 = 19,03 dB','v_o = −30 + 19,03 = −10,97 dBV']);
+T('Lưu ý: dBV là đơn vị điện áp, chuẩn dùng 20 log. Theo cách này độ lợi là 38,06 dB, ngõ ra 8,06 dBV, tức khoảng 2,53 vôn, đúng bằng 31,6 mili vôn nhân 80. Bạn hỏi thầy cô dùng cách nào để trình bày cho khớp.',['Chuẩn điện áp: A = 20·log 80 = 38,06 dB','v_o = −30 + 38,06 = 8,06 dBV ≈ 2,53 V']);
+
+ch('BT 7.6');
+T('Đề: mạch vi sai, hai điện trở 20 kilô ôm ở ngõ vào, hai điện trở 100 kilô ôm, tải 39 kilô ôm. Tín hiệu vi sai ngõ vào 200 mili vôn, tìm v o. Lưu ý về hình: ở hình, điện trở 100 kilô ôm hồi tiếp nối về ngõ cộng, đó là hồi tiếp dương, mạch bị bão hòa và đề không cho V sat. Mình hiểu theo mạch vi sai chuẩn mục 7.2.5: hồi tiếp về ngõ đảo, 100 kilô ôm còn lại nối đất ở ngõ không đảo.',['R_11 = R_2 = 20 kΩ , R_12 = R_f = 100 kΩ','v_1 − v_2 = 200 mV'],'dif');
+T('Xếp chồng. Chỉ có v một: điện áp ngõ không đảo bằng v một nhân 100 chia 120, rồi nhân độ lợi không đảo một cộng 100 chia 20 bằng 6, được 5 v một. Chỉ có v hai: mạch đảo, độ lợi trừ 100 chia 20 bằng trừ 5.',['v_o1 = {100|120}·(1 + {100|20})·v_1 = 5·v_1','v_o2 = −{100|20}·v_2 = −5·v_2','v_o = 5·(v_1 − v_2)']);
+T('Với hiệu v một trừ v hai bằng 200 mili vôn, v o bằng 5 nhân 0,2, được 1 vôn. Tải 39 kilô ôm không ảnh hưởng. Mình đã tính lại bằng máy, ra đúng 1 vôn, và tín hiệu chung giống nhau cho ngõ ra bằng không.',['v_o = 5·0,2 = 1 V']);
+
+ch('BT 7.7');
+T('Đề: mạch đảo, R một 10 kilô ôm, R hai 100 kilô ôm, nguồn cộng trừ 12 V, v i bằng 2 sin 20 t vôn. Tìm v o và vẽ v i, v o chung một trục.',['R_1 = 10 kΩ, R_2 = 100 kΩ, v_i = 2·sin(20t) V'],'wave');
+T('Độ lợi bằng trừ 100 chia 10, bằng trừ 10. Vậy v o lý thuyết bằng trừ 20 sin 20 t, biên độ 20 vôn, vượt 12 vôn, nên đỉnh bị cắt.',['A_v = −100/10 = −10','v_o = −20·sin(20t) V (nếu không bão hòa)']);
+{const a=Math.asin(.6)*180/Math.PI;
+T(`Op-Amp chỉ tuyến tính khi 20 nhân giá trị tuyệt đối sin nhỏ hơn 12, tức sin nhỏ hơn 0,6, ứng với góc nhỏ hơn khoảng ${f(a,1)} độ. Ngoài đó v o bị giữ ở cộng trừ 12 vôn. Đồ thị: v i là nét đứt, v o bị xén phẳng ở hai đỉnh.`,['|v_o| = 20·|sin(20t)| < 12 ⇒ |sin(20t)| < 0,6','v_o = −20·sin(20t) khi |v_o| < 12 ; ngược lại v_o = ∓12 V']);}
+
+ch('BT 7.8');
+T('Đề: mạch không đảo, v i bằng 2 vôn, R một nối đất, R hai hồi tiếp từ ngõ ra, nguồn cộng trừ 12 V. Tìm v o cho ba trường hợp.',['v_i = 2 V , A_v = 1 + R_2/R_1 , ±Vsat = ±12 V'],'non');
+{const g=(a,b)=>1+b/a;
+T(`Câu a đến c. R một 5, R hai 10: độ lợi ${g(5,10)}, v o bằng ${g(5,10)*2} vôn, nhỏ hơn 12 nên tuyến tính. Câu b. R một 10, R hai 50: độ lợi ${g(10,50)}, v o bằng ${g(10,50)*2} vôn, đúng bằng ngưỡng 12, tức vừa chạm bão hòa. Câu c. R một 10, R hai 100: độ lợi ${g(10,100)}, tính ra ${g(10,100)*2} vôn nhưng bị giữ ở 12 vôn.`,['a) A_v = 1+10/5 = '+g(5,10)+' ⇒ v_o = '+g(5,10)*2+' V','b) A_v = 1+50/10 = '+g(10,50)+' ⇒ v_o = '+g(10,50)*2+' V ≈ Vsat','c) A_v = 1+100/10 = '+g(10,100)+' ⇒ 22 V ⇒ bão hòa, v_o = 12 V']);}
+
+ch('BT 7.9');
+{const k=10/15*(1+100/50);
+T('Đề: v i qua R một 5 kilô ôm vào ngõ không đảo, R hai 10 kilô ôm nối đất ở ngõ đó. Ngõ đảo có R bốn 50 kilô ôm xuống đất và R ba 100 kilô ôm hồi tiếp. Viết v o theo v i và tìm độ lợi.',['R_1 = 5 kΩ, R_2 = 10 kΩ, R_3 = 100 kΩ, R_4 = 50 kΩ'],'sumn');
+T(`Ngõ không đảo qua cầu chia áp: v cộng bằng v i nhân R hai chia R một cộng R hai, bằng hai phần ba v i. Phần còn lại là mạch không đảo với độ lợi một cộng R ba chia R bốn bằng 3. Vậy v o bằng 2 v i, độ lợi bằng ${f(k,0)}.`,['v⁺ = v_i·{R_2|R_1+R_2} = {10|15}·v_i = {2|3}·v_i','1 + {R_3|R_4} = 1 + {100|50} = 3','v_o = 3·{2|3}·v_i = 2·v_i ⇒ A_v = '+f(k,0)]);}
+
+ch('BT 7.10');
+T('Đề: thiết kế tổng đảo ba ngõ vào, v o bằng trừ hai v một cộng ba v hai cộng 0,5 v ba, nguồn cộng trừ 15 V. Câu a: linh kiện. Câu b: với v một 1 V, v hai 2 V, điều kiện v ba để tuyến tính. Câu c: điều kiện để bão hòa.',['v_o = −(2v_i1 + 3v_i2 + 0,5v_i3) ; ±15 V'],'sum');
+T('Câu a. Mạch tổng đảo, R f chia R một bằng 2, chia R hai bằng 3, chia R ba bằng 0,5. Chọn R f bằng 100 kilô ôm thì R một bằng 50, R hai bằng 33,3, R ba bằng 200 kilô ôm.',['R_f/R_1 = 2 , R_f/R_2 = 3 , R_f/R_3 = 0,5','Chọn R_f = 100 kΩ ⇒ R_1 = 50 kΩ , R_2 = 33,3 kΩ , R_3 = 200 kΩ']);
+T('Câu b và c. Thế v một bằng 1, v hai bằng 2: v o bằng trừ 8 cộng 0,5 v ba. Trừ 15 nhỏ hơn v o nhỏ hơn 15 cho v ba nằm giữa trừ 46 và cộng 14 vôn. Câu c: bão hòa khi v ba lớn hơn hoặc bằng 14 vôn, ngõ ra trừ 15; hoặc v ba nhỏ hơn hoặc bằng trừ 46 vôn, ngõ ra cộng 15.',['v_o = −(2 + 6 + 0,5v_3) = −(8 + 0,5v_3)','−15 < −(8 + 0,5v_3) < 15 ⇒ −46 V < v_3 < 14 V','Bão hòa: v_3 ≥ 14 V (v_o = −15 V) hoặc v_3 ≤ −46 V (v_o = +15 V)']);
+
+ch('BT 7.11');
+T('Đề: thiết kế mạch một ngõ vào, độ lợi 11, nguồn cộng trừ 12 V. Độ lợi dương lớn hơn một nên chọn mạch không đảo.',['A_v = 1 + R_f/R_i = 11'],'non');
+T('Một cộng R f chia R i bằng 11, nên R f bằng 10 lần R i. Chọn R i bằng 10 kilô ôm, R f bằng 100 kilô ôm. Mạch tuyến tính khi v i nhỏ hơn 12 chia 11, khoảng 1,09 vôn.',['R_f = 10·R_i ⇒ chọn R_i = 10 kΩ , R_f = 100 kΩ','|v_i| < 12/11 ≈ 1,09 V']);
+
+ch('BT 7.12');
+T('Đề: thiết kế mạch một ngõ vào, tổng trở vào 10 kilô ôm, độ lợi trừ 10, nguồn cộng trừ 15 V. Độ lợi âm nên chọn mạch đảo.',['Z_i = 10 kΩ , A_v = −10'],'inv');
+T('Mạch đảo có Z i bằng R i, nên R i bằng 10 kilô ôm. Độ lợi trừ R f chia R i bằng trừ 10 cho R f bằng 100 kilô ôm.',['R_i = Z_i = 10 kΩ','R_f = 10·R_i = 100 kΩ']);
+
+ch('BT 7.13');
+T('Đề: thiết kế mạch ba ngõ vào, v o bằng trừ tổng ba ngõ vào chia 3, nguồn cộng trừ 12 V. Dấu trừ và phép cộng nên dùng tổng đảo.',['v_o = −{v_1+v_2+v_3|3}'],'sum');
+T('Câu a và b. Mỗi hệ số bằng R f chia R bằng một phần ba, nên R bằng 3 lần R f. Chọn R f bằng 10 kilô ôm thì ba điện trở ngõ vào đều bằng 30 kilô ôm.',['R_1=R_2=R_3=3R_f','Chọn R_f = 10 kΩ ⇒ R_1 = R_2 = R_3 = 30 kΩ']);
+
+ch('BT 7.14');
+T('Đề: mạch trộn hai ngõ vào, v o bằng v một cộng v hai, nguồn cộng trừ 15 V. Dùng mạch cộng không đảo, theo công thức 7.16 với bốn điện trở bằng nhau.',['v_o = v_i1 + v_i2'],'sumn');
+T('Câu a và b. Với R một bằng R hai bằng R i bằng R f, độ lợi một cộng R f chia R i bằng 2, còn cầu chia áp cho mỗi ngõ một nửa, nên v o bằng v một cộng v hai. Chọn tất cả bằng 10 kilô ôm.',['(1 + {R_f|R_i})·{R_2|R_1+R_2} = 2·{1|2} = 1','R_1 = R_2 = R_i = R_f = 10 kΩ']);
+
+ch('Bảng tổng hợp 7.1');
+T('Bảng tổng hợp các mạch của chương 7. Bạn có thể đổi R i, R f, v một, v hai ở tiêu đề bảng để thấy ví dụ số thay đổi. Hàng một: mạch đảo, ngõ ra bằng trừ R f chia R i nhân v i, tổng trở vào bằng R i.',[]);
+T('Hàng hai: mạch không đảo, độ lợi một cộng R f chia R i, luôn lớn hơn hoặc bằng một và cùng pha với ngõ vào; tổng trở vào vô cùng.',[]);
+T('Hàng ba: mạch tổng đảo, mỗi ngõ vào có hệ số trừ R f chia điện trở của ngõ đó. Ví dụ số lấy R một bằng R hai bằng R i.',[]);
+T('Hàng bốn: mạch tổng không đảo. Mỗi tín hiệu đi qua cầu chia áp rồi nhân độ lợi một cộng R f chia R i. Ví dụ số lấy R một bằng R hai bằng R i, nên mỗi ngõ vào nhân một nửa độ lợi.',[]);
+T('Hàng năm: mạch vi sai. Ví dụ số lấy R mười một bằng R hai bằng R i và R mười hai bằng R f, khi đó ngõ ra bằng R f chia R i nhân hiệu v một trừ v hai.',[]);
+T('Hàng sáu: mạch lặp điện áp, độ lợi bằng một, tổng trở vào vô cùng.',[]);
+T('Hàng bảy: mạch vòng hở, không có hồi tiếp. Ngõ ra bằng A v o nhân hiệu v cộng trừ v trừ, nhưng bị kẹp ở cộng trừ V sat, nên chỉ cần chênh lệch rất nhỏ là bão hòa. Mạch này dùng làm mạch so sánh.',[]);
+T('Hàng tám: hai tầng nối tiếp. Độ lợi tổng bằng tích hai độ lợi A v một nhân A v hai, còn tổng trở vào là của tầng thứ nhất. Ví dụ số lấy tầng một là mạch đảo, tầng hai là mạch không đảo, cùng R i và R f.',[]);
+T('Hàng chín: độ lợi tính theo đề xi ben. Chuẩn cho điện áp là hai mươi log của trị tuyệt đối A v; riêng bài tập 7.5 trong sách dùng mười log, nên cần đọc kỹ đề.',[]);
+T('Hàng mười: điều kiện để Op-Amp còn ở vùng tuyến tính. Ngõ ra phải nằm giữa trừ V sat và cộng V sat, tức biên độ v i nhỏ hơn V sat chia trị tuyệt đối A v. Ví dụ số lấy V sat bằng 12 vôn với mạch đảo. Hãy thử đổi các ô nhập ở đầu bảng để xem các hàng thay đổi.',[]);
+const $=id=>document.getElementById(id),ss=window.speechSynthesis;
+let i=0,play=false,tk=0,tm;
+const first=c=>S.findIndex(s=>s.c==c);
+const DE={"VD 7.1": ["Ví dụ 7.1 — Cho mạch điện như Hình 7.3, Op-Amp LF411 có hệ số khuếch đại A_vo = 200000, nguồn ±12 V, v⁺ = 0,5 V, v⁻ = 0,3 V. Tìm điện áp ngõ ra v_o."], "VD 7.2": ["Ví dụ 7.2 — Cho mạch điện như Hình 7.5, trong đó R_f = 120 kΩ, R_i = 8,2 kΩ và ±V_sat = ±12 V.", "a. Xác định loại mạch khuếch đại.", "b. Tính độ lợi điện áp mạch A_v = v_o / v_i.", "c. Tìm tổng trở vào của mạch.", "d. Tìm điều kiện của v_i để Op-Amp làm việc ở vùng tuyến tính."], "VD 7.3": ["Ví dụ 7.3 — Cho mạch điện như Hình 7.8, trong đó: R_f = 68 kΩ, R_i = 8,2 kΩ, ±V_sat = ±12 V.", "a. Xác định loại mạch khuếch đại.", "b. Tính độ lợi điện áp A_v = v_o / v_i.", "c. Tính tổng trở vào của mạch.", "d. Tìm điều kiện của v_i để Op-Amp làm việc ở vùng tuyến tính."], "VD 7.4": ["Ví dụ 7.4 — Cho mạch điện như Hình 7.11.", "a. Xác định loại mạch trên.", "b. Viết biểu thức tính v_o theo v_1, v_2.", "c. Cho biểu thức điện áp ngõ ra v_o = −(2v_1 + v_2), tính các giá trị linh kiện trong mạch.", "d. Cho ±V_sat = ±12 V, v_1 = 2 V. Tìm điều kiện của v_2 để Op-Amp làm việc trong vùng tuyến tính."], "BT 7.1": ["Bài tập 7.1 — Cho mạch điện như Hình 7.16. Tìm trở kháng vào Z_i và độ khuếch đại A_v."], "BT 7.2": ["Bài tập 7.2 — Cho mạch điện như Hình 7.17, trong đó: R_f1 = 100 kΩ, R_1 = 10 kΩ, A_v2 = 5.", "a. Xác định chức năng của OP1, OP2.", "b. Viết biểu thức tính v_o2 theo v_i.", "c. Tính A_v1, R_f2, R_2, v_o2 theo v_i."], "BT 7.3": ["Bài tập 7.3 — Cho mạch điện như Hình 7.18, trong đó: R_f2 = 100 kΩ, R_2 = 10 kΩ, A_v1 = −5.", "a. Xác định chức năng của OP1, OP2.", "b. Viết biểu thức tính v_o2 theo v_i.", "c. Tính A_v2, R_f1, R_1, v_o2 theo v_i."], "BT 7.4": ["Bài tập 7.4 — Cho mạch điện như Hình 7.19.", "a. Xác định loại mạch khuếch đại.", "b. Viết biểu thức tính v_o theo v_1, v_2, v_3.", "c. Cho v_o = −(2v_1 + 3v_2 + v_3), tính các giá trị linh kiện trong mạch.", "d. Cho ±V_sat = ±12 V, v_1 = 2 V, v_2 = 1 V, tìm điều kiện của v_3 để Op-Amp làm việc trong vùng tuyến tính."], "BT 7.5": ["Bài tập 7.5 — Cho mạch điện như Hình 7.20 (nguồn −30 dBV). Trở kháng DC ngõ vào tầng 1 là 100 kΩ. Tính độ lợi và tín hiệu ngõ ra v_o theo đơn vị dB. Lưu ý đơn vị dexibel được tính theo biểu thức A[dB] = 10log₁₀A."], "BT 7.6": ["Bài tập 7.6 — Cho mạch khuếch đại vi sai như Hình 7.21. Nếu tín hiệu vi sai ngõ vào là 200 mV, xác định tín hiệu ngõ ra v_o."], "BT 7.7": ["Bài tập 7.7 — Cho mạch điện như Hình 7.22, Op-Amp hoạt động nguồn đôi ±12 V, nguồn tín hiệu v_i = 2 sin 20t (V), R_1 = 10 kΩ, R_2 = 100 kΩ. Tìm tín hiệu ngõ ra v_o và vẽ tín hiệu v_i, v_o trên cùng một tọa độ."], "BT 7.8": ["Bài tập 7.8 — Cho mạch điện như Hình 7.23. Op-Amp hoạt động nguồn đôi ±12 V. Giả sử tín hiệu ngõ vào v_i = 2 V, hãy tìm tín hiệu ngõ ra v_o trong các trường hợp điện trở R_1, R_2 có giá trị khác nhau.", "a. R_1 = 5 kΩ, R_2 = 10 kΩ.", "b. R_1 = 10 kΩ, R_2 = 50 kΩ.", "c. R_1 = 10 kΩ, R_2 = 100 kΩ."], "BT 7.9": ["Bài tập 7.9 — Cho mạch điện như Hình 7.24, Op-Amp hoạt động nguồn đôi ±12 V và các giá trị R_1 = 5 kΩ, R_2 = 10 kΩ, R_3 = 100 kΩ, R_4 = 50 kΩ. Viết biểu thức quan hệ giữa ngõ ra v_o và ngõ vào v_i. Từ đó xác định độ lợi áp A_v = v_o / v_i của mạch."], "BT 7.10": ["Bài tập 7.10 — Thiết kế mạch khuếch đại tổng đảo có 3 ngõ vào v_i1, v_i2, v_i3 và một ngõ ra v_o. Biết quan hệ giữa ngõ ra và các ngõ vào: v_o = −(2v_i1 + 3v_i2 + 0,5v_i3). Nguồn cung cấp cho Op-Amp là nguồn đôi ±15 V.", "a. Vẽ mạch thiết kế và tính các giá trị linh kiện trong mạch.", "b. Cho v_i1 = 1 V, v_i2 = 2 V, tìm điều kiện của v_i3 để Op-Amp hoạt động ở chế độ tuyến tính.", "c. Với điều kiện v_i1, v_i2 như trên, tìm điều kiện của v_i3 để Op-Amp hoạt động ở chế độ bão hòa."], "BT 7.11": ["Bài tập 7.11 — Thiết kế mạch khuếch đại dùng Op-Amp hoạt động nguồn đôi ±12 V. Mạch khuếch đại có một ngõ vào và độ lợi áp bằng 11. Vẽ mạch thiết kế và tính các giá trị linh kiện trong mạch."], "BT 7.12": ["Bài tập 7.12 — Thiết kế mạch khuếch đại dùng Op-Amp hoạt động nguồn đôi ±15 V. Mạch khuếch đại có một ngõ vào, tổng trở vào mạch là 10 kΩ và độ lợi áp bằng −10. Vẽ mạch thiết kế và tính các giá trị linh kiện trong mạch."], "BT 7.13": ["Bài tập 7.13 — Thiết kế mạch khuếch đại dùng Op-Amp có 3 ngõ vào v_i1, v_i2, v_i3 và một ngõ ra v_o. Biết quan hệ giữa ngõ ra và các ngõ vào: v_o = −(v_i1 + v_i2 + v_i3)/3. Nguồn cung cấp cho Op-Amp là ±12 V.", "a. Vẽ mạch thiết kế.", "b. Tính các giá trị linh kiện trong mạch."], "BT 7.14": ["Bài tập 7.14 — Thiết kế mạch trộn dùng Op-Amp, mạch có 2 ngõ vào v_i1, v_i2 và một ngõ ra v_o. Biết quan hệ giữa ngõ ra và các ngõ vào: v_o = v_i1 + v_i2. Nguồn cung cấp cho Op-Amp là ±15 V.", "a. Vẽ mạch thiết kế.", "b. Tính các giá trị linh kiện trong mạch."]};
+const SECS=[['7.1 Tổng quan',['7.1 Tổng quan bộ khuếch đại thuật toán','VD 7.1']],['7.2.1 Mạch đảo',['7.2.1 Mạch khuếch đại đảo','VD 7.2']],['7.2.2 Không đảo',['7.2.2 Mạch khuếch đại không đảo','VD 7.3']],['7.2.3 Tổng đảo',['7.2.3 Mạch khuếch đại tổng đảo','VD 7.4']],['7.2.4 Tổng không đảo',['7.2.4 Mạch khuếch đại tổng không đảo']],['7.2.5 Vi sai',['7.2.5 Mạch khuếch đại vi sai']],['7.2.6 Lặp điện áp',['7.2.6 Mạch lặp điện áp']],['Kết luận chương 7',['Kết luận chương 7']],['Bảng tổng hợp',['Bảng tổng hợp 7.1']],['Bài tập chương 7',["BT 7.1", "BT 7.2", "BT 7.3", "BT 7.4", "BT 7.5", "BT 7.6", "BT 7.7", "BT 7.8", "BT 7.9", "BT 7.10", "BT 7.11", "BT 7.12", "BT 7.13", "BT 7.14"]]];
+const secOf=c=>SECS.findIndex(x=>x[1].includes(C[c]));
+SECS.forEach((x,q)=>{if(q==1){const g=document.createElement('span');g.className='grp';g.textContent='7.2 Các mạch ứng dụng cơ bản';$('nv').append(g)}const b=document.createElement('button');b.textContent=x[0];b.onclick=()=>go(first(C.indexOf(x[1][0])));$('nv').append(b)});
+$('jp').onchange=e=>go(first(+e.target.value));
+const PRX=/^Câu ([a-z](?:(?:, | và | đến )[a-z](?![a-zà-ỹ]))*)[.,]/;
+function partNow(){const c=S[i].c;let L=[],tag='';for(let j=0;j<=i;j++){if(S[j].c!=c)continue;const t=S[j].say,m=t.match(PRX);if(/^Đề:/.test(t)){L=[];tag='Đang làm: đọc đề'}else if(m){const g=m[1];L=g.includes(' đến ')?(()=>{const [a,b]=g.split(' đến ');const r=[];for(let q=a.charCodeAt(0);q<=b.charCodeAt(0);q++)r.push(String.fromCharCode(q));return r})():g.split(/, | và /);tag='Đang giải: ý '+L.join(', ')+')'}else if(!tag.startsWith('Đang làm: đọc đề')||j>first(c))tag=tag&&tag!='Đang làm: đọc đề'?tag:'Đang giải'}return [L,tag]}
+const DEH=(c,L)=>{const d=DE[c];return d?'<b>ĐỀ BÀI</b> · '+mt(d[0])+d.slice(1).map(x=>`<div${L.includes(x[0])&&x[1]=='.'?" class='cur'":''}>${mt(x)}</div>`).join(''):''};
+$('pr').max=S.length-1;
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const mt=s=>{let o=esc(s.replace(/(^|[\s(·|{])-(\d)/g,'$1−$2')).replace(/_(\w+)/g,'<sub>$1</sub>');for(let n=0;n<3;n++)o=o.replace(/\{([^{}|]+)\|([^{}]+)\}/g,"<span class='fr'><span>$1</span><span>$2</span></span>");return o};
+const ts=(x,y,s,a)=>`<text x='${x}' y='${y}'${a?` text-anchor='${a}'`:''}>${esc(s).replace(/_(\w+)/g,"<tspan dy='3' font-size='8'>$1</tspan>")}</text>`;
+const rh=(x,y)=>`<path d='M${x} ${y}h6l4-6 6 12 6-12 6 12 4-6h8'/>`,gd=(x,y)=>`<path d='M${x} ${y}v6M${x-8} ${y+6}h16M${x-5} ${y+10}h10M${x-2} ${y+14}h4'/>`;
+const OP=`<path d='M190 55V135L270 95Z'/>`+ts(194,79,'−')+ts(194,119,'+')+`<path d='M270 95H340'/>`+ts(344,99,'v_o');
+const FB=`<path d='M150 6H170M210 6H290V95'/>`+rh(170,6)+ts(190,0,'R_f','middle');
+const sc={
+inv:()=>OP+FB+`<path d='M150 6V75H190M30 55H50M90 55H150M190 115H165V130'/>`+rh(50,55)+gd(165,130)+ts(4,59,'v_i')+ts(70,48,'R_i','middle')+ts(150,68,'N','end'),
+non:()=>OP+FB+`<path d='M150 6V75H190M30 115H190M110 75H90V85'/>`+rh(110,75)+gd(90,85)+ts(4,119,'v_i')+ts(130,68,'R_i','middle')+ts(150,68,'N','end'),
+sum:()=>OP+FB+`<path d='M150 6V75H190M190 115H165V130'/>`+[22,38,54].map((y,k)=>`<path d='M30 ${y}H50M90 ${y}H150'/>`+rh(50,y)+ts(4,y+4,'v_'+(k+1))+ts(70,y-5,'R_'+(k+1),'middle')).join('')+gd(165,130),
+sumn:()=>OP+FB+`<path d='M150 6V75H190M110 75H90V85M140 105V125M140 115H190M30 105H55M95 105H140M30 125H55M95 125H140'/>`+rh(110,75)+gd(90,85)+rh(55,105)+rh(55,125)+ts(4,109,'v_1')+ts(4,129,'v_2')+ts(75,100,'R_1','middle')+ts(75,141,'R_2','middle')+ts(130,68,'R_i','middle'),
+dif:()=>OP+FB+`<path d='M150 6V75H190M30 55H50M90 55H150M30 115H50M90 115H190M150 115V125'/>`+rh(50,55)+rh(50,115)+`<g transform='translate(150 125) rotate(90)'>${rh(0,0)}</g>`+gd(150,165)+ts(4,59,'v_2')+ts(4,119,'v_1')+ts(70,48,'R_2','middle')+ts(70,108,'R_11','middle')+ts(158,148,'R_12'),
+buf:()=>OP+`<path d='M30 115H190M290 95V6H170V75H190M290 95H270'/>`+ts(4,119,'v_i')+ts(200,16,'v⁻ = v_o'),
+amp:()=>`<path d='M20 70H390M200 15V130M20 115H170L230 25H380' style='stroke-width:2;stroke:var(--ac)'/>`+ts(385,64,'Δv_in','end')+ts(206,22,'v_o')+ts(236,22,'+Vsat')+ts(60,108,'−Vsat')+ts(250,60,'tuyến tính')+ts(80,50,'BH âm')+ts(300,95,'BH dương'),
+wave:()=>{const a=[],b=[];for(let k=0;k<=400;k++){const s=Math.sin(2*Math.PI*k/200);a.push(k+','+(75-4*2*s).toFixed(1));b.push(k+','+(75+4*Math.max(-12,Math.min(12,20*s))).toFixed(1))}return `<path d='M0 75H400' opacity='.3'/><path class='i' d='M${a.join('L')}'/><path class='o' pathLength='1' d='M${b.join('L')}'/><path d='M0 27H400M0 123H400' stroke-dasharray='2 4' opacity='.4'/>`+ts(2,24,'+12 V')+ts(2,138,'−12 V')+ts(150,12,'┄ v_i (2 V)   ━ v_o (bị xén ±12 V)')}};
+function rk(k){const e=$('ck');e.style.display=(!k||k=='-')?'none':'';if(sc[k]){e.innerHTML=sc[k]().replace(/<path /g,"<path pathLength='1' ");e.classList.add('dr')}}
+let key='';
+const _t=s=>s.replace(/_(\w+)/g,"<tspan dy='3' font-size='8'>$1</tspan><tspan dy='-3'>\u200b</tspan>");
+const tx=(x,y,s,a,z)=>`<text x='${x}' y='${y}'${a?` text-anchor='${a}'`:''}${z?` font-size='${z}'`:''}>${_t(s)}</text>`;
+const pl=(...p)=>{let d='M'+p[0]+' '+p[1];for(let k=2;k<p.length;k+=2)d+='L'+p[k]+' '+p[k+1];return `<path d='${d}'/>`};
+const dt=(x,y)=>`<circle cx='${x}' cy='${y}' r='2.5' style='fill:var(--ink);stroke:none'/>`;
+const Rh=(x,y,l)=>`<path d='M${x} ${y}h6l4-6 6 12 6-12 6 12 4-6h8'/>`+(l?tx(x+20,y-10,l,'middle'):'');
+const Rv=(x,y,l)=>`<path d='M${x} ${y}v6l-6 4 12 6-12 6 12 6-6 4v8'/>`+(l?tx(x+11,y+24,l):'');
+const GN=(x,y)=>`<path d='M${x} ${y}v6M${x-8} ${y+6}h16M${x-5} ${y+10}h10M${x-2} ${y+14}h4'/>`;
+const SR=(x,y,k)=>`<circle cx='${x}' cy='${y}' r='10'/>`+(k=='~'?`<path d='M${x-6} ${y}q3-7 6 0t6 0'/>`:tx(x,y-1,'+','middle',10)+tx(x,y+8,'−','middle',10));
+const OA=(x,y,f)=>`<path d='M${x} ${y-20}V${y+60}L${x+80} ${y+20}Z'/>`+tx(x+5,y+(f?44:4),'−')+tx(x+5,y+(f?4:44),'+');
+const VO=(x,y,l,g)=>`<circle cx='${x}' cy='${y}' r='2.5'/>`+(g?tx(x+8,y-6,'+')+tx(x+8,y+16,'−'):'')+tx(x+(g?16:8),y+4,l||'v_o')+(g?pl(x,y+3,x,y+g)+GN(x,y+g):'');
+const AR=(x,y,l,d0=1,ly=-7,d=/^i_[if]$/.test(l)?d0*(window.PH||1)*(window.NG||1):d0)=>`<path d='M${x} ${y}h${14*d}m${-5*d} -3l${5*d} 3l${-5*d} 3'/>`+tx(x+7*d,y+ly,l,'middle');
+const OUT=(ox,oy,g,l)=>pl(ox+80,oy+20,ox+140,oy+20)+VO(ox+140,oy+20,l,g);
+const FBK=(x,top,ox,oy,l)=>pl(x,oy,x,top,x+20,top)+Rh(x+20,top,l||'R_f')+pl(x+60,top,ox+100,top,ox+100,oy+20)+dt(ox+100,oy+20);
+const GP=(ox,oy)=>pl(ox,oy+40,ox-25,oy+40,ox-25,oy+55)+GN(ox-25,oy+55);
+const term=(x,y,l)=>`<circle cx='${x}' cy='${y}' r='2.5'/>`+tx(x-6,y+4,l,'end');
+const RF=l=>pl(150,30,170,30)+Rh(170,30,l||'R_f')+pl(210,30,290,30,290,90)+dt(290,90);
+const DROP=pl(150,30,150,70,190,70)+dt(150,30);
+const GP2=pl(190,110,150,110,150,125)+GN(150,125);
+const O2=pl(270,90,330,90)+VO(330,90,'v_o',45);
+const inv=(a,s)=>OA(190,70)+O2+RF()+DROP+GP2+pl(100,30,150,30)+Rh(60,30,'R_i')+
+ (s=='c'?pl(30,60,30,30,60,30)+SR(30,70,'+')+pl(30,80,30,120)+GN(30,120)+tx(8,74,'v_i','end'):pl(34,30,60,30)+`<circle cx='32' cy='30' r='2.5'/>`+tx(14,54,'+')+tx(14,68,'v_i')+tx(14,82,'−')+`<circle cx='32' cy='96' r='2.5'/>`+pl(32,99,32,115)+GN(32,115))+
+ (a?tx(150,20,'N','middle')+AR(104,30,'i_i',1,14)+AR(214,30,'i_f',1,14)+AR(160,70,'i⁻',1,14)+AR(180,110,'i⁺',-1,14)+tx(144,66,'v⁻','end')+tx(144,106,'v⁺','end'):'');
+const non=(a,s)=>OA(190,70)+O2+RF()+DROP+Rh(60,30,'R_i')+pl(100,30,150,30)+pl(60,30,45,30,45,40)+GN(45,40)+
+ (s=='c'?pl(150,125,150,110,190,110)+SR(150,135,'+')+pl(150,145,150,160)+GN(150,160)+tx(132,139,'v_i','end'):pl(190,110,150,110)+`<circle cx='150' cy='110' r='2.5'/>`+tx(138,126,'+')+tx(138,138,'v_i')+tx(138,150,'−')+`<circle cx='150' cy='160' r='2.5'/>`+pl(150,163,150,172)+GN(150,172))+
+ (a==1?tx(150,20,'N','middle')+AR(104,30,'i_i',1,14)+AR(214,30,'i_f',1,14)+AR(160,70,'i⁻',1,14)+AR(180,110,'i⁺',-1,14)+tx(144,66,'v⁻','end')+tx(176,104,'v⁺'):a==2?AR(176,70,'i⁻',-1,14)+AR(160,110,'i⁺',1,-7):'');
+const sum=(n,a,rf)=>{const ys=n==3?[25,55,85]:[40,70],yn=ys[ys.length-1],yr=rf||yn;
+ let s=OA(200,110)+pl(280,130,340,130)+VO(340,130,'v_o',45)+pl(160,yr,180,yr)+Rh(180,yr,'R_f')+pl(220,yr,300,yr,300,130)+dt(300,130)+pl(160,ys[0],160,110,200,110)+dt(160,yn)+pl(200,150,175,150,175,165)+GN(175,165);
+ ys.forEach((y,k)=>{s+=`<circle cx='34' cy='${y}' r='2.5'/>`+tx(28,y+4,'v_'+(k+1),'end')+pl(36,y,50,y)+Rh(50,y,'R_'+(k+1))+pl(90,y,160,y)+(a?AR(96,y,'i_'+(k+1),1,-7):'')});
+ return s+(a?tx(166,yn+16,'N')+AR(224,yr,'i_f',1,-7)+tx(150,106,'v⁻','end')+tx(170,146,'v⁺','end')+AR(168,110,'i⁻',1,14)+AR(194,150,'i⁺',-1,14):'')};
+const BK={
+'7.1':()=>`<path d='M110 40V140L230 90Z'/>`+tx(118,66,'−')+tx(118,124,'+')+pl(40,66,110,66)+pl(40,118,110,118)+AR(56,66,'i⁻')+AR(88,118,'i⁺',-1,15)+tx(6,70,'v⁻')+tx(6,122,'v⁺')+`<g stroke-dasharray='3 3'>`+pl(120,66,135,66,135,72)+Rv(135,72,'R_i')+pl(135,112,135,118,120,118)+pl(175,90,210,90)+`</g>`+tx(180,84,'R_o = 0')+`<circle cx='160' cy='116' r='8'/>`+tx(154,119,'e')+pl(160,124,160,132)+GN(160,132)+pl(160,108,160,98,175,90)+pl(230,90,300,90)+VO(300,90,'v_o')+pl(170,10,170,65)+tx(176,16,'+V_cc')+pl(170,115,170,160)+tx(176,172,'−V_cc hoặc GND')+tx(250,140,'e = A_vo·Δv_in = A_vo·(v⁺ − v⁻)','start',12),
+'7.2':()=>`<defs><pattern id='ht' width='6' height='6' patternUnits='userSpaceOnUse'><path d='M0 0L6 6M6 0L0 6' stroke-width='.6'/></pattern></defs><path d='M210 100L250 50H375V100ZM210 100L170 150H40V100Z' style='fill:url(#ht)'/>`+pl(20,100,400,100)+pl(210,15,210,175)+`<path d='M170 150L250 50' style='stroke-width:2.4;stroke:var(--ac)'/>`+`<path d='M210 50H250M170 150H210' stroke-dasharray='3 3'/>`+tx(216,14,'v_o')+tx(204,54,'+V_sat','end')+tx(216,154,'−V_sat')+tx(398,116,'Δv_in = v⁺ − v⁻','end')+tx(236,32,'Vùng bão hòa dương')+tx(60,178,'Vùng bão hòa âm')+tx(256,124,'Vùng khuếch đại')+tx(256,138,'tuyến tính'),
+'7.3':()=>OA(140,60,1)+tx(224,48,'LF411')+pl(140,60,60,60,60,72)+pl(60,72,60,78)+`<path d='M52 78h16M56 84h8'/>`+pl(60,84,60,100)+GN(60,100)+tx(48,86,'0,5V','end')+pl(140,100,100,100,100,110)+`<path d='M92 110h16M96 116h8'/>`+pl(100,116,100,132)+GN(100,132)+tx(88,118,'0,3V','end')+pl(170,28,170,55)+tx(176,30,'12V')+pl(170,105,170,135)+tx(176,146,'−12V')+pl(220,80,270,80,270,92)+Rv(270,92)+GN(270,132)+tx(282,102,'+')+tx(282,114,'v_o')+tx(282,128,'−')+pl(220,80,222,80),
+'7.4':()=>inv(1,'t'),'7.5':()=>inv(0,'c'),'7.6':()=>inv(1,'c'),'7.7':()=>non(1,'t'),'7.8':()=>non(0,'c'),'7.9':()=>non(2,'c'),
+'7.10':()=>sum(3,1),'7.11':()=>sum(2,0),'7.12':()=>sum(2,1),'7.19':()=>sum(3,0,55),
+'7.13':()=>OA(190,70)+pl(270,90,330,90)+`<circle cx='330' cy='90' r='2.5'/>`+tx(338,94,'v_o')+RF()+DROP+Rh(60,30,'R_i')+pl(100,30,150,30)+pl(60,30,45,30,45,40)+GN(45,40)+pl(160,110,190,110)+dt(160,110)+pl(160,95,160,125)+[95,125].map((y,k)=>`<circle cx='14' cy='${y}' r='2.5'/>`+tx(8,y+4,'v_'+(k+1),'end')+pl(16,y,30,y)+Rh(30,y,'R_'+(k+1))+pl(70,y,160,y)).join('')+tx(168,103,'v_i+'),
+'7.14':()=>OA(190,70)+pl(270,90,330,90)+`<circle cx='330' cy='90' r='2.5'/>`+tx(338,94,'v_o')+RF()+DROP+`<circle cx='34' cy='30' r='2.5'/>`+tx(28,34,'v_2','end')+pl(36,30,60,30)+Rh(60,30,'R_2')+pl(100,30,150,30)+`<circle cx='34' cy='110' r='2.5'/>`+tx(28,114,'v_1','end')+pl(36,110,60,110)+Rh(60,110,'R_11')+pl(100,110,190,110)+dt(150,110)+Rv(150,110,'R_12')+GN(150,150)+tx(158,104,'v_i+'),
+'7.15':()=>OA(190,60)+pl(270,80,330,80)+VO(330,80,'v_o')+dt(290,80)+pl(290,80,290,25,170,25,170,60,190,60)+pl(190,100,100,100)+Rh(60,100,'R_i')+pl(30,100,60,100)+tx(24,104,'v_i','end')+`<g stroke-dasharray='3 3'>`+Rv(212,62)+`</g>`+tx(216,86,'R_in')+AR(176,60,'i⁻',-1,15)+AR(150,100,'i⁺',1,-7)+tx(172,52,'v⁻')+tx(120,94,'v⁺'),
+'7.16':()=>SR(30,110,'~')+pl(30,100,30,50,260,50)+pl(30,120,30,175)+GN(30,175)+tx(8,114,'v_i','end')+`<path d='M95 25V180' stroke-dasharray='3 3'/>`+pl(55,160,95,160)+tx(50,164,'Z_i','end')+dt(150,50)+Rv(150,50,'470kΩ')+GN(150,90)+OA(260,50,1)+pl(260,90,225,90,225,130)+dt(225,130)+Rv(225,130,'3,3kΩ')+GN(225,170)+pl(225,130,250,130)+Rh(250,130,'22kΩ')+pl(290,130,360,130,360,70)+dt(360,70)+pl(340,70,400,70)+pl(400,70,400,85)+Rv(400,85)+tx(388,112,'10kΩ','end')+GN(400,125)+tx(412,98,'+')+tx(412,110,'v_o')+tx(412,122,'−'),
+'7.17':()=>BKtwo(0),
+'7.18':()=>BKtwo(1),
+'7.20':()=>`<circle cx='30' cy='85' r='10'/><path d='M24 85q3-7 6 0t6 0'/>`+tx(30,68,'−30dBV','middle')+pl(30,75,30,40,210,40)+pl(30,95,30,150)+GN(30,150)+`<path d='M85 20V160' stroke-dasharray='3 3'/>`+pl(55,150,85,150)+tx(44,154,'Z_in','end')+dt(130,40)+Rv(130,40,'100kΩ')+GN(130,80)+OA(210,40,1)+pl(210,80,180,80,180,100)+dt(180,100)+Rv(180,100,'2kΩ')+GN(180,140)+pl(180,100,205,100)+Rh(205,100,'14kΩ')+pl(245,100,320,100,320,60)+dt(320,60)+pl(290,60,335,60,335,40,370,40)+OA(370,40,1)+pl(370,80,345,80,345,100)+dt(345,100)+Rv(345,100,'2kΩ')+GN(345,140)+pl(345,100,365,100)+Rh(365,100,'18kΩ')+pl(405,100,470,100,470,60)+dt(470,60)+pl(450,60,520,60,520,75)+Rv(520,75)+tx(508,100,'15kΩ','end')+GN(520,115)+tx(532,92,'+')+tx(532,104,'v_o')+tx(532,116,'−'),
+'7.21':()=>tx(4,74,'v_1')+pl(30,70,40,70)+Rh(40,70,'20kΩ')+pl(80,70,170,70)+dt(130,70)+pl(130,70,130,30,150,30)+Rh(150,30,'100kΩ')+pl(190,30,280,30,280,90)+dt(280,90)+tx(4,114,'v_2')+pl(30,110,40,110)+Rh(40,110,'20kΩ')+pl(80,110,170,110)+dt(130,110)+Rv(130,110,'100kΩ')+GN(130,150)+OA(170,70,1)+pl(250,90,330,90,330,100)+Rv(330,100)+tx(318,124,'39kΩ','end')+GN(330,140)+tx(342,112,'+')+tx(342,124,'v_o')+tx(342,136,'−'),
+'7.22':()=>OA(190,70)+pl(270,90,330,90)+VO(330,90,'v_o',0)+RF('R_2')+DROP+GP2+pl(100,30,150,30)+Rh(60,30,'R_1')+pl(36,30,60,30)+term(36,30,'v_i'),
+'7.23':()=>OA(120,40,1)+pl(120,40,50,40)+term(50,40,'v_i')+pl(200,60,230,60,290,60)+VO(290,60,'v_o')+dt(230,60)+pl(230,60,230,70)+Rv(230,70,'R_2')+dt(230,110)+Rv(230,110,'R_1')+GN(230,150)+pl(230,110,95,110,95,80,120,80),
+'7.24':()=>OA(170,40,1)+pl(170,40,80,40)+term(40,40,'v_i')+pl(40,40,40,40)+Rh(40,40,'R_1')+pl(80,40,170,40)+dt(130,40)+Rv(130,40,'R_2')+GN(130,80)+pl(250,60,270,60,330,60)+VO(330,60,'v_o')+dt(270,60)+pl(270,60,270,70)+Rv(270,70,'R_3')+dt(270,110)+Rv(270,110,'R_4')+GN(270,150)+pl(270,110,150,110,150,80,170,80)};
+function BKtwo(k){let s=OA(150,70)+pl(30,50,30,30,50,30)+SR(30,60,'+')+pl(30,70,30,110)+GN(30,110)+tx(8,64,'v_i','end')+Rh(50,30,'R_1')+pl(90,30,110,30)+pl(110,30,110,70,150,70)+dt(110,30)+pl(110,30,130,30)+Rh(130,30,'R_f1')+pl(170,30,250,30,250,90)+dt(250,90)+pl(150,110,125,110,125,125)+GN(125,125)+pl(230,90,250,90)+tx(236,106,'v_o1')+tx(158,94,'OP1','start',9);
+ s+=OA(360,70)+pl(310,30,310,70,360,70)+dt(310,30)+pl(310,30,330,30)+Rh(330,30,'R_f2')+pl(370,30,460,30,460,90)+dt(460,90)+pl(440,90,520,90)+VO(520,90,'v_o2',40)+tx(368,94,'OP2','start',9);
+ if(!k)s+=Rh(270,30,'R_2')+pl(270,30,255,30,255,40)+GN(255,40)+pl(250,90,250,110,360,110);
+ else s+=pl(250,90,262,90,262,30,270,30)+Rh(270,30,'R_2')+pl(360,110,335,110,335,125)+GN(335,125);
+ return s}
+const VB={'7.1':'0 0 420 190','7.2':'0 0 420 190','7.3':'0 0 330 170','7.4':'-20 10 420 185','7.5':'-20 10 420 185','7.6':'-20 10 420 185','7.7':'-20 10 420 185','7.8':'-20 10 420 185','7.9':'-20 10 420 185','7.10':'-20 10 420 185','7.11':'-20 10 420 185','7.12':'-20 10 420 185','7.19':'-20 10 420 185','7.13':'-20 10 420 150','7.14':'-20 10 420 170','7.16':'0 10 450 190','7.17':'-20 10 620 140','7.18':'-20 10 620 140','7.20':'0 10 570 170','7.21':'-10 10 420 170','7.23':'0 20 330 150','7.24':'0 20 380 150','7.22':'-20 10 420 125'};
+
+const FG={"7.1 Tổng quan bộ khuếch đại thuật toán": ["7.1", "7.2"], "7.2.1 Mạch khuếch đại đảo": ["7.4"], "7.2.2 Mạch khuếch đại không đảo": ["7.7"], "7.2.3 Mạch khuếch đại tổng đảo": ["7.10"], "7.2.4 Mạch khuếch đại tổng không đảo": ["7.13"], "7.2.5 Mạch khuếch đại vi sai": ["7.14"], "7.2.6 Mạch lặp điện áp": ["7.15"], "VD 7.1": ["7.3"], "VD 7.2": ["7.5", "7.6"], "VD 7.3": ["7.8", "7.9"], "VD 7.4": ["7.11", "7.12"], "BT 7.1": ["7.16"], "BT 7.2": ["7.17"], "BT 7.3": ["7.18"], "BT 7.4": ["7.19"], "BT 7.5": ["7.20"], "BT 7.6": ["7.21"], "BT 7.7": ["7.22"], "BT 7.8": ["7.23"], "BT 7.9": ["7.24"]};
+let fk='',fi=0;
+function rf(s,man){const n=C[s.c],l=FG[n]||[],e=$('bf');e.style.display=l.length?'':'none';if(!l.length){fk='';return}
+ if(fk!=n){fk=n;fi=0}
+ if(!man&&n=='7.1 Tổng quan bộ khuếch đại thuật toán')fi=S.slice(0,i+1).filter(t=>t.c==s.c).length>=3?1:0;
+ $('bk').setAttribute('viewBox',VB[l[fi]]||'0 0 400 170');$('bk').innerHTML=BK[l[fi]]();$('bc').textContent='Hình '+l[fi]+' (vẽ lại theo sách)';
+ $('bt').innerHTML='';if(l.length>1)l.forEach((id,j)=>{const b=document.createElement('button');b.textContent='Hình '+id;b.className=j==fi?'on':'';b.onclick=()=>{fi=j;rf(s,1)};$('bt').append(b)})}
+function show(){const s=S[i],L=[];let k=CK[C[s.c]]||'-';
+ S.forEach((t,j)=>{if(t.c==s.c&&j<=i){t.ln.forEach(x=>L.push([x,j==i]));if(t.k)k=t.k}});
+ {const q=secOf(s.c),sa=S.filter(t=>secOf(t.c)==q),sd=S.slice(0,i+1).filter(t=>secOf(t.c)==q).length,cs=S.filter(t=>t.c==s.c).length,cn=S.slice(0,i+1).filter(t=>t.c==s.c).length;
+ $('ct').textContent=/^(VD|BT)/.test(C[s.c])?SECS[q][0]+' – '+C[s.c]:C[s.c];$('st').textContent='· bước '+cn+'/'+cs+(sa.length>cs?' · tiến độ mục '+sd+'/'+sa.length:'');
+ const jp=$('jp'),ch=SECS[q][1];jp.hidden=ch.length<2;if(jp.dataset.q!=q){jp.dataset.q=q;jp.innerHTML=ch.map(n=>`<option value="${C.indexOf(n)}">${n}</option>`).join('')}jp.value=s.c;
+ const pq=DE[C[s.c]]?partNow():[[],''];$('pt').textContent=pq[1];$('pt').style.display=pq[1]?'':'none';$('de').innerHTML=DEH(C[s.c],pq[0]);$('de').style.display=DE[C[s.c]]?'':'none'}
+ $('ln').innerHTML='';L.filter(a=>a[0]).forEach(([x,n])=>{const d=document.createElement('div');d.innerHTML=mt(x);if(n)d.className='n';$('ln').append(d)});
+ if(key!=C[s.c]+k){rk(k);key=C[s.c]+k}ext(s,k);
+ if(FG[C[s.c]]&&k!='wave')$('ck').style.display='none';
+ $('sub').textContent=s.say;$('pr').value=i;rf(s);
+ $('nv').querySelectorAll('button').forEach((b,j)=>{b.className=j==secOf(s.c)?'on':'';if(j==secOf(s.c))b.scrollIntoView({inline:'center',block:'nearest'})});
+ $('pl').textContent=play?'❚❚ Dừng':'▶ Phát'}
+function talk(){if(ss)ss.cancel();clearTimeout(tm);if(!play)return;const my=++tk,t=S[i].say,adv=()=>{if(my==tk&&play)go(i+1)};
+ const v=ss&&ss.getVoices().find(x=>x.lang.toLowerCase().startsWith('vi'));
+ if(v){const u=new SpeechSynthesisUtterance(t);u.voice=v;u.lang='vi-VN';u.rate=+$('sp').value;u.onend=()=>{tm=setTimeout(adv,1000)};u.onerror=u.onend;ss.speak(u)}
+ else tm=setTimeout(adv,t.length*65/+$('sp').value+1500)}
+function go(k){if(k>=S.length){play=false;k=S.length-1}i=Math.max(0,k);show();tk++;talk()}
+$('pv').onclick=()=>go(i-1);$('nx').onclick=()=>go(i+1);
+$('pl').onclick=()=>{play=!play;if(play&&i>=S.length-1)i=0;show();talk()};
+$('pr').oninput=e=>go(+e.target.value);
+
+const LT2='[A-Za-z0-9_\u00C0-\u1EF9]';
+const SY={'v_o':['Điện áp ngõ ra','V'],'v_i':['Điện áp tín hiệu ngõ vào','V'],'v_1':['Điện áp ngõ vào thứ 1','V'],'v_2':['Điện áp ngõ vào thứ 2','V'],'v_3':['Điện áp ngõ vào thứ 3','V'],'v_N':['Điện áp tại nút N (ngõ đảo)','V'],'v⁺':['Điện áp ngõ vào không đảo','V'],'v⁻':['Điện áp ngõ vào đảo','V'],'i⁺':['Dòng vào ngõ không đảo (≈ 0)','A'],'i⁻':['Dòng vào ngõ đảo (≈ 0)','A'],'i_i':['Dòng từ nguồn qua R_i tới nút N','A'],'i_f':['Dòng qua điện trở hồi tiếp R_f','A'],'A_vo':['Hệ số khuếch đại vòng hở của Op-Amp','không đơn vị'],'A_v':['Độ lợi điện áp vòng kín, A_v = v_o/v_i','không đơn vị'],'Z_i':['Tổng trở vào của mạch','Ω'],'R_i':['Điện trở nối từ nguồn (hoặc đất) tới ngõ đảo','Ω'],'R_f':['Điện trở hồi tiếp từ ngõ ra về ngõ đảo','Ω'],'R_1':['Điện trở ngõ vào thứ 1','Ω'],'R_2':['Điện trở ngõ vào thứ 2','Ω'],'R_3':['Điện trở ngõ vào thứ 3','Ω'],'R_11':['Điện trở nối v_1 tới ngõ không đảo','Ω'],'R_12':['Điện trở từ ngõ không đảo xuống đất','Ω'],'Vsat':['Điện áp bão hòa của ngõ ra','V'],'Vcc':['Điện áp nguồn cấp','V'],'Δv_in':['Hiệu hai ngõ vào, v⁺ − v⁻','V'],'v_o1':['Ngõ ra khi chỉ có v_1 (xếp chồng)','V'],'v_o2':['Ngõ ra khi chỉ có v_2 (xếp chồng)','V']};
+const SX=new RegExp('(?<!'+LT2+')('+Object.keys(SY).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')(?!'+LT2+')','g');
+const LG=ts=>{const t=ts.join(' \n '),h=new Set();let m;SX.lastIndex=0;while(m=SX.exec(t))h.add(m[1]);const r=Object.keys(SY).filter(k=>h.has(k));return r.length?`<div class='lg'><b>Chú thích ký hiệu</b>`+r.map(k=>`<div>${mt(k)} — ${mt(SY[k][0])} <i>[${SY[k][1]}]</i></div>`).join('')+'</div>':''};
+{const lb=$('lgb'),sync=()=>{lb.textContent='Chú thích: '+(document.body.classList.contains('nolg')?'tắt':'bật')};try{if(localStorage.getItem('nolg')=='1')document.body.classList.add('nolg')}catch(e){}sync();lb.onclick=()=>{document.body.classList.toggle('nolg');try{localStorage.setItem('nolg',document.body.classList.contains('nolg')?'1':'0')}catch(e){}sync()}}
+/* ---- Bảng tổng hợp ---- */
+const tv={Ri:10,Rf:100,v1:1,v2:.5};let tN=10;
+const TRW=[['Mạch đảo','v_o = −{R_f|R_i}·v_i','−{R_f|R_i}','R_i',()=>{const a=-tv.Rf/tv.Ri;return 'A_v = '+f(a)+' ⇒ v_o = '+f(a*tv.v1)+' V'}],
+['Mạch không đảo','v_o = (1 + {R_f|R_i})·v_i','1 + {R_f|R_i}','∞',()=>{const a=1+tv.Rf/tv.Ri;return 'A_v = '+f(a)+' ⇒ v_o = '+f(a*tv.v1)+' V'}],
+['Tổng đảo','v_o = −({R_f|R_1}v_1 + {R_f|R_2}v_2)','−{R_f|R_1} ; −{R_f|R_2}','R_1 ; R_2',()=>{const a=-tv.Rf/tv.Ri;return 'hệ số = '+f(a)+' ⇒ v_o = '+f(a*(tv.v1+tv.v2))+' V'}],
+['Tổng không đảo','v_o = (1 + {R_f|R_i})({R_2|R_1+R_2}v_1 + {R_1|R_1+R_2}v_2)','(1 + {R_f|R_i})·{R_2|R_1+R_2}','∞',()=>{const a=(1+tv.Rf/tv.Ri)/2;return 'hệ số = '+f(a)+' ⇒ v_o = '+f(a*(tv.v1+tv.v2))+' V'}],
+['Vi sai','v_o = {R_12|R_11+R_12}(1 + {R_f|R_2})v_1 − {R_f|R_2}v_2','{R_f|R_2} (khi cân bằng)','—',()=>{const a=tv.Rf/tv.Ri;return 'hệ số = '+f(a)+' ⇒ v_o = '+f(a*(tv.v1-tv.v2))+' V'}],
+['Mạch lặp','v_o = v_i','1','∞',()=>'A_v = 1 ⇒ v_o = '+f(tv.v1)+' V'],
+['Vòng hở (so sánh)','v_o = A_vo·(v⁺ − v⁻), kẹp ở ±Vsat','A_vo ≈ 10⁴ … 2·10⁵','rất lớn',()=>{const d=tv.v1-tv.v2,o=Math.max(-12,Math.min(12,2e5*d));return 'v⁺=v_1, v⁻=v_2, A_vo=2·10⁵ ⇒ v_o = '+f(o)+' V'+(Math.abs(2e5*d)>12?' (bão hòa)':'')}],
+['Hai tầng nối tiếp','v_o = A_v1·A_v2·v_i','A_v = A_v1·A_v2','Z_i của tầng 1',()=>{const a=-tv.Rf/tv.Ri*(1+tv.Rf/tv.Ri);return 'đảo rồi không đảo: A_v = '+f(a)+' ⇒ v_o = '+f(a*tv.v1)+' V'}],
+['Độ lợi theo dB','A[dB] = 20·log₁₀|A_v| (BT 7.5 sách dùng 10·log₁₀)','—','—',()=>{const a=Math.abs(tv.Rf/tv.Ri);return 'mạch đảo: |A_v| = '+f(a)+' ⇒ '+f(20*Math.log10(a))+' dB'}],
+['Điều kiện tuyến tính','−Vsat < v_o < Vsat ⇒ |v_i| < Vsat/|A_v|','v_imax = Vsat/|A_v|','—',()=>{const a=Math.abs(tv.Rf/tv.Ri);return 'Vsat = 12 V, mạch đảo: |v_i| < '+f(12/a)+' V'}]];
+function TB(n){tN=n;const ip=(k,w)=>`<input data-k='${k}' type='number' step='any' value='${tv[k]}' style='width:${w}em'>`;
+$('ln').innerHTML=`<div class='tw'><table class='t51'><tr><th rowspan='2'>Mạch</th><th colspan='3'>Công thức</th><th>Ví dụ số</th></tr><tr><th>Ngõ ra v_o</th><th>Độ lợi / hệ số</th><th>Z_i</th><th>R_i=${ip('Ri',4)}kΩ · R_f=${ip('Rf',4)}kΩ<br>v_1=${ip('v1',3.5)}V · v_2=${ip('v2',3.5)}V</th></tr>`.replace(/(<th>|<th [^>]*>)/g,m=>m)+TRW.slice(0,n).map((r,i)=>`<tr${i==n-1?" class='n'":''}><td class='l'>${r[0]}</td><td>${mt(r[1])}</td><td>${mt(r[2])}</td><td>${mt(r[3])}</td><td class='nm'>${mt(r[4]())}</td></tr>`).join('')+`</table></div><small>Tổng: R_1=R_2=R_i · Vi sai: R_11=R_2=R_i, R_12=R_f</small>`;
+$('ln').querySelectorAll('input').forEach(e=>e.onchange=()=>{tv[e.dataset.k]=+e.value||(e.dataset.k=='v1'||e.dataset.k=='v2'?0:1);TB(tN)})}
+/* ---- Mô phỏng + dạng sóng ---- */
+const SKD=['inv','non','sum','sumn','dif','buf'],AKM={wave:'inv'};
+const DFK={inv:{Ri:10,Rf:40,R2:10,A:1,B:0,Vs:12},non:{Ri:10,Rf:20,R2:10,A:1.5,B:0,Vs:12},sum:{Ri:10,Rf:10,R2:10,A:1,B:.5,Vs:12},sumn:{Ri:10,Rf:10,R2:10,A:1,B:.5,Vs:12},dif:{Ri:10,Rf:30,R2:10,A:1,B:.5,Vs:12},buf:{Ri:10,Rf:10,R2:10,A:1.5,B:0,Vs:12}};
+const DFC={'VD 7.2':{Ri:8.2,Rf:120,A:.8},'VD 7.3':{Ri:8.2,Rf:68,A:1},'VD 7.4':{Ri:50,Rf:100,R2:100,A:2,B:1},'BT 7.7':{Ri:10,Rf:100,A:2},'BT 7.8':{Ri:5,Rf:10,A:2},'BT 7.12':{Ri:10,Rf:100,A:.1}};
+const SL=[['Ri','R_i','kΩ',.5,100,.1],['Rf','R_f','kΩ',1,200,.1],['R2','R_2','kΩ',1,200,.1],['A','Biên độ v_1','V',0,5,.1],['B','v_2 (một chiều)','V',-3,3,.1],['Vs','Vsat','V',5,15,1]];
+const SHOW={inv:['Ri','Rf','A','Vs'],non:['Ri','Rf','A','Vs'],sum:['Ri','Rf','R2','A','B','Vs'],sumn:['Ri','Rf','A','B','Vs'],dif:['Ri','Rf','A','B','Vs'],buf:['A','Vs']};
+let SP={},sk='',sc7='';
+$('sg').innerHTML=SL.map(([k,n,u])=>`<label id='sl_${k}'><span>${mt(k=='Ri'?'R_i':n)}</span> = <output></output> ${u}<input type='range' data-k='${k}'></label>`).join('');
+SL.forEach(([k,n,u,a,b,st])=>{const e=document.querySelector(`#sl_${k} input`);e.min=a;e.max=b;e.step=st;e.oninput=()=>{SP[k]=+e.value;simDraw()}});
+const gains=()=>{const{Ri,Rf,R2}=SP;return{inv:[-Rf/Ri,0],non:[1+Rf/Ri,0],sum:[-Rf/Ri,-Rf/R2],sumn:[(1+Rf/Ri)/2,(1+Rf/Ri)/2],dif:[Rf/Ri,-Rf/Ri],buf:[1,0]}[sk]};
+function simDraw(){const[g1,g2]=gains(),{A,B,Vs}=SP,two=SHOW[sk].includes('B'),Y=Vs*1.3,y=v=>(75-v/Y*65).toFixed(1);
+SL.forEach(([k])=>{const l=$('sl_'+k);l.hidden=!SHOW[sk].includes(k);const e=l.querySelector('input');e.value=SP[k];l.querySelector('output').textContent=f(SP[k],1)});
+$('sl_Ri').firstChild.innerHTML=sk=='sum'?mt('R_1'):mt('R_i');
+const a=[],b=[],c=[];for(let x=0;x<=400;x++){const s=Math.sin(2*Math.PI*x/200),vi=A*s,vo=g1*vi+(two?g2*B:0);a.push(x+','+y(vi));b.push(x+','+y(vo));c.push(x+','+y(Math.max(-Vs,Math.min(Vs,vo))))}
+$('sv').innerHTML=`<path d='M0 75H400' stroke='currentColor' opacity='.3'/><path d='M0 ${y(Vs)}H400M0 ${y(-Vs)}H400' stroke='currentColor' stroke-dasharray='2 4' opacity='.4'/><text x='2' y='${+y(Vs)-3}'>+Vsat</text><text x='2' y='${+y(-Vs)+10}'>−Vsat</text><path class='i' d='M${a.join('L')}'/><path class='o2' pathLength='1' style='opacity:.6' d='M${b.join('L')}'/><path class='o' pathLength='1' d='M${c.join('L')}'/><text x='120' y='10'>┄ v₁   cam: v_o lý thuyết   xanh: v_o thực (xén ±Vsat)</text>`;
+const mx=Math.abs(g1)*A+(two?Math.abs(g2*B):0),lin=mx<=Vs,rg=Math.abs(g1)>1e-9?(Vs-(two?Math.abs(g2*B):0))/Math.abs(g1):0;
+$('so').innerHTML=(two?`v_o = ${f(g1)}·v₁ ${g2<0?'−':'+'} ${f(Math.abs(g2))}·v₂`:`A_v = <b>${f(g1)}</b>`)+` · |v_o|max lý thuyết = <b>${f(mx)} V</b> → `+(lin?`<b>tuyến tính</b> (còn dư ${f(Vs-mx)} V)`:`<b style='color:#dc2626'>bão hòa</b>, ngõ ra bị xén ở ±${f(Vs,0)} V`)+`.<br>Biên độ v₁ tối đa để còn tuyến tính: <b>${f(rg)} V</b>.`}
+function ext(s,k){const tb=C[s.c]=='Bảng tổng hợp 7.1',kk=AKM[k]||k;document.querySelector('.board').classList.toggle('wide',tb);
+if(tb)TB(S.slice(0,i+1).filter(t=>t.c==s.c).length);else $('ln').insertAdjacentHTML('beforeend',LG(s.ln));
+const ok=!tb&&SKD.includes(kk);$('sim').hidden=!ok;
+if(ok){if(sc7!=C[s.c]||sk!=kk){sc7=C[s.c];sk=kk;SP=Object.assign({},DFK[kk],DFC[C[s.c]]||{})}
+$('simT').textContent='Thử nghiệm: '+({inv:'mạch khuếch đại đảo',non:'mạch khuếch đại không đảo',sum:'mạch tổng đảo (2 ngõ vào)',sumn:'mạch tổng không đảo (R₁=R₂)',dif:'mạch vi sai (R₁₁=R₂=Rᵢ, R₁₂=R_f)',buf:'mạch lặp điện áp'}[kk])+' — kéo thanh để xem dạng sóng';simDraw()}
+window.NG=kk=='non'?-1:1;const l=FG[C[s.c]]||[],id=l[fk==C[s.c]?fi:0],ar=['7.4','7.6','7.7','7.10','7.12'].includes(id);$('ph').style.display=ar?'':'none';phU()}
+function phU(){const n=window.NG==-1;$('ph').querySelectorAll('button').forEach((b,j)=>b.className=(j==0)==((window.PH||1)==1)?'on':'');
+$('ps').textContent=(window.PH||1)==1?(n?'v_i > 0 ⇒ v_o > 0 (cùng pha); dòng chảy từ ngõ ra qua R_f xuống đất':'v_i > 0 ⇒ v_o < 0 (đảo pha); dòng chảy từ nguồn qua R_i và R_f'):(n?'v_i < 0 ⇒ v_o < 0 (cùng pha); dòng đổi chiều':'v_i < 0 ⇒ v_o > 0 (đảo pha); dòng đổi chiều')}
+function phSet(j){window.PH=j?-1:1;rf(S[i],1);phU()}
+$('ph').querySelectorAll('button').forEach((b,j)=>b.onclick=()=>{auto=false;phSet(j)});
+let auto=!matchMedia('(prefers-reduced-motion:reduce)').matches;setInterval(()=>{if(auto&&!document.hidden&&$('ph').style.display!='none')phSet((window.PH||1)==1?1:0)},2600);
+$('sv').onclick=()=>{if(!$('sim').hidden)simDraw()};
+
+
+const CS=[
+['0. Mở đầu mọi bài (ghi vào bài làm)',['Op-Amp lý tưởng, có hồi tiếp âm: v⁻ = v⁺, i⁻ = i⁺ = 0.','Gọi N là nút ngõ đảo, viết KCL tại N: tổng dòng vào = tổng dòng ra.','Thế v_N (biết từ v⁺) rồi rút v_o.'],'Quên ghi giả thiết lý tưởng; nhầm chiều dòng khi viết KCL.'],
+['1. Mạch đảo (tín hiệu vào ngõ −)',['v⁺ = 0 ⇒ v_N = 0.','KCL: {v_i|R_i} = −{v_o|R_f}.','A_v = −{R_f|R_i}; Z_i = R_i.'],'Mất dấu −. Đề cho v_i thì v_o ngược pha.'],
+['2. Mạch không đảo (tín hiệu vào ngõ +)',['v⁺ = v_i ⇒ v_N = v_i.','KCL: −{v_i|R_i} = {v_i − v_o|R_f}.','A_v = 1 + {R_f|R_i}; Z_i = ∞.'],'Viết thiếu số 1; A_v không bao giờ nhỏ hơn 1.'],
+['3. Tổng đảo / tổng không đảo',['Tổng đảo (v_N = 0): v_o = −({R_f|R_1}v_1 + {R_f|R_2}v_2 + …).','Tổng không đảo: xếp chồng; mỗi v_k qua cầu chia áp rồi nhân (1 + {R_f|R_i}).','Có thể dùng xếp chồng: cho các nguồn khác = 0, tính từng v_ok, rồi cộng.'],'Quên đặt các nguồn khác bằng 0 (nối đất) khi xếp chồng.'],
+['4. Vi sai',['Xếp chồng: cho v_2 = 0 → v_o1 = {R_12|R_11+R_12}(1 + {R_f|R_2})v_1.','Cho v_1 = 0 → v_o2 = −{R_f|R_2}v_2.','Cân bằng R_11 = R_2, R_12 = R_f: v_o = {R_f|R_2}(v_1 − v_2).'],'Nhầm ngõ nào là v_1, ngõ nào là v_2; quên v_o1 là không đảo có chia áp.'],
+['5. Mạch lặp & hai tầng nối tiếp',['Lặp: A_v = 1, Z_i = ∞ (đệm, không sụt áp nguồn).','Hai tầng: v_o1 là ngõ vào tầng 2; A_v = A_v1·A_v2; Z_i = Z_i tầng 1.','dB: dùng công thức đề cho (BT 7.5 sách ghi 10·log₁₀; chuẩn điện áp là 20·log₁₀).'],'Đổi dB phải tính từng tầng hoặc cộng dB; đừng nhân dB.'],
+['6. Điều kiện tuyến tính (đề hay hỏi)',['Giải −V_sat < v_o < V_sat với v_o = A_v·v_i.','Chia cho A_v < 0 thì đảo chiều bất đẳng thức.','Có nhiều ngõ: thế các ngõ đã cho, giải ra miền của ngõ còn lại.'],'Quên đổi chiều khi chia số âm; quên nguồn cấp của đề (±12 V hay ±15 V).'],
+['7. Bão hòa / vòng hở',['v⁺ > v⁻ ⇒ v_o = +V_sat; v⁺ < v⁻ ⇒ v_o = −V_sat (nguồn đơn thì −V_sat ≈ 0).','Tính thử v_o lý thuyết; nếu vượt ±V_sat thì ghi v_o = ±V_sat.'],'Ghi v_o lý thuyết (hàng chục nghìn V) thay vì giá trị bão hòa.'],
+['8. Bài thiết kế',['Đảo, A_v = −n, Z_i cho trước: R_i = Z_i, R_f = n·R_i.','Không đảo, A_v = n: chọn R_i, R_f = (n − 1)R_i.','Tổng đảo: hệ số a_k = {R_f|R_k} ⇒ chọn R_f (vd 100 kΩ), R_k = {R_f|a_k}.','Kiểm tra lại v_o tối đa < V_sat.'],'Chọn điện trở quá nhỏ (<1 kΩ) hoặc quá lớn; quên vẽ mạch.'],
+['9. Checklist trước khi nộp',['Dấu của v_o và A_v.','Đơn vị: kΩ chia kΩ ra số thuần; V, mA, dB.','Đã kiểm tra bão hòa chưa?','Kết luận cuối bài bằng một câu.'],'']];
+$('sheet').innerHTML='<div class="tb"><button id="shp">In tờ này</button><button id="shx">Đóng</button></div><h2>Tờ ôn: khuôn giải tự luận – Chương 7 Op-Amp</h2><div class="gr">'+CS.map(c=>`<div class="cd"><b>${mt(c[0])}</b><ol>${c[1].map(x=>'<li>'+mt(x)+'</li>').join('')}</ol>${c[2]?`<div class="w">⚠ ${mt(c[2])}</div>`:''}</div>`).join('')+'</div>';
+const shT=v=>{$('sheet').hidden=!v;document.body.style.overflow=v?'hidden':''};
+$('cs').onclick=()=>shT(true);$('shx').onclick=()=>shT(false);$('shp').onclick=()=>window.print();
+document.addEventListener('keydown',e=>{if(e.key=='Escape')shT(false)});
+
+show();
+</script></body></html>

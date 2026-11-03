@@ -62,6 +62,10 @@ FULL TN QTH 2024 HUIT.md   nguồn chuẩn đáp án Quản trị học (535 câ
                            script kiểm tra sẽ báo thiếu nguồn và thoát mã 2.
                            Cần khôi phục file .md vào gốc dự án trước khi chạy.
 anh-van-2/            chuyên đề Anh văn
+ky-thuat-dien-tu/     Kỹ thuật điện tử — trang tổng quan 4 chương (linh kiện điện tử,
+                      mạch nguồn ổn áp, khuếch đại tín hiệu nhỏ dùng BJT, mạch ứng dụng
+                      Op-Amp) + danh sách mô phỏng; Chương 7 liên kết tới
+                      Chuong_7_cac_mach_Op-Amp_vid.html (bài giảng video)
 dai-so-tuyen-tinh/    Đại số tuyến tính — 1 trang làm bài + 1 trang đề cương dùng chung 5 chương
                       (luyen-tap.html?d=chuong-N, quiz.html?d=chuong-N,
                        thi-dai-so-tuyen-tinh-ngau-nhien.html — 25 câu / 60 phút từ
