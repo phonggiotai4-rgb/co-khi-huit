@@ -1535,7 +1535,7 @@ body.is-result .stage, body.is-result .bottombar,
       { id: 27, text: "Trong phán đoán \"Không một ai là bất tử\", tính chu diên của S và P là:", options: ["S(-), P(+)", "S(+), P(-)", "S(+), P(+)", "S(-), P(-)"], correct: 2 },
       { id: 28, text: "Trong phán đoán \"Một số thiên tài không qua đào tạo đại học\", tính chu diên của S và P là:", options: ["S(-), P(+)", "S(+), P(-)", "S(+), P(+)", "S(-), P(-)"], correct: 0 },
       { id: 29, text: "Trong phán đoán \"Mọi hình vuông đều là hình thoi có hai đường chéo bằng nhau\", tính chu diên của S và P là:", options: ["S(-), P(+)", "S(+), P(-)", "S(+), P(+)", "S(-), P(-)"], correct: 1 },
-      { id: 30, text: "Trong phán đoán \"Có những đại biểu quốc hội là doanh nhân\", tính chu diên của S và P là:", options: ["S(-), P(+)", "S(+), P(-)", "S(+), P(+)", "S(-), P(-) Dạng 12: Mối quan hệ trên hình vuông logic"], correct: 3 },
+      { id: 30, text: "Trong phán đoán \"Có những đại biểu quốc hội là doanh nhân\", tính chu diên của S và P là:", options: ["S(-), P(+)", "S(+), P(-)", "S(+), P(+)", "S(-), P(-)"], correct: 3 },
       { id: 31, text: "Nếu phán đoán I đúng, giá trị chân lý của phán đoán A là gì?", options: ["Đúng", "Sai", "Không xác định", "Vừa đúng vừa sai"], correct: 2 },
       { id: 32, text: "Thực hiện suy luận trực tiếp dựa trên quan hệ mâu thuẫn từ phán đoán: “Một vài loài cây không có hoa.”", options: ["Không có loài cây nào có hoa", "Một số loài cây có hoa", "Không phải mọi loài cây đều có hoa"], correct: 3 },
       { id: 33, text: "Phán đoán “Mọi sinh viên đều đi học đúng giờ” có giá trị chân lý là sai. Suy ra phán đoán “Một số sinh viên không đi học đúng giờ” có giá trị là gì?", options: ["Đúng", "Sai", "Không xác định", "Vừa đúng vừa sai", "Đối chọi trên", "Đối chọi dưới"], correct: 1 },
@@ -1584,9 +1584,9 @@ body.is-result .stage, body.is-result .bottombar,
       { id: 24, text: "\"Tổng số đo các góc trong của một tam giác là 180°. Tam giác ABC là một tam giác. Vậy tổng số đo các góc trong của tam giác ABC là 180°\". Đây là loại suy luận nào?", options: ["Suy luận quy nạp", "Suy luận diễn dịch", "Suy luận tương tự", "Suy luận quy nạp hoàn toàn"], correct: 1 },
       { id: 25, text: "Một kiểm toán viên kiểm tra toàn bộ các chứng từ thu chi của một tháng và kết luận tháng đó không có sai sót. Đây là loại suy luận nào?", options: ["Suy luận quy nạp hoàn toàn", "Suy luận quy nạp không hoàn toàn", "Suy luận tương tự", "Suy luận khoa học"], correct: 0 },
       { id: 26, text: "\"Bạn không thể kết luận cả xã hội này đều xấu chỉ vì bạn vừa gặp 2 người lừa đảo\". Câu nói này phê phán loại suy luận nào?", options: ["Diễn dịch từ cái chung", "Quy nạp không hoàn toàn", "Quy nạp hoàn toàn", "Suy luận tương tự"], correct: 1 },
-      { id: 27, text: "Một người lấy một nắm gạo ở mặt trên của bao gạo và thấy gạo dẻo, liền kết luận cả bao gạo là gạo dẻo. Đây là loại suy luận nào?", options: ["Suy luận tương tự", "Suy luận quy nạp không hoàn toàn", "Suy luận quy nạp hoàn toàn", "Suy luận diễn dịch. Dạng 20: Tổng hợp Câu 1. Có 4 bạn học dự đoán thành tích thi của họ như sau: [ĐS: D] + Lời của", "\"Tôi thứ nhất, A thứ hai.\" + Lời của", "\"Không thể như vậy, D chỉ thứ hai, tôi thứ ba.\" + Lời của"], correct: 1 }
+      { id: 27, text: "Một người lấy một nắm gạo ở mặt trên của bao gạo và thấy gạo dẻo, liền kết luận cả bao gạo là gạo dẻo. Đây là loại suy luận nào?", options: ["Suy luận tương tự", "Suy luận quy nạp không hoàn toàn", "Suy luận quy nạp hoàn toàn", "Suy luận diễn dịch"], correct: 1 }
     ],
-  };  };
+  };
 
   const PART_PARAM = new URLSearchParams(location.search).get('d');
   const partId = Object.prototype.hasOwnProperty.call(BANK, PART_PARAM) ? PART_PARAM : Object.keys(BANK)[0];

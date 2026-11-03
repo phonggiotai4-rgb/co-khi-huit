@@ -502,6 +502,25 @@ body::before {
 
 .site-nav-burger { display: none; }
 
+/* Nút đổi sáng/tối trên navbar desktop: đúng 40×40, hình tròn */
+@media (min-width: 769px) {
+  .site-nav-actions #ckThemeBtn {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50%;
+  }
+}
+
+/* Mobile-only: ẩn hoàn toàn ở desktop (MOBILE-ONLY) */
+.site-nav-overlay,
+.site-nav-drawer-foot,
+.site-nav-drawer-theme,
+.site-nav-credit {
+  display: none !important;
+}
+
 @media (max-width: 960px) {
   .site-nav-links {
     position: fixed;
@@ -1245,12 +1264,21 @@ body.ck-modal-open { overflow: hidden; }
 @media (max-width: 768px) {
   .site-nav { position: sticky; top: 0; z-index: 50; padding: 0; }
   .site-nav-inner {
+    position: relative;
     max-width: 100%; margin: 0; padding: 8px 14px;
     border-radius: 0; min-height: 56px;
-    background: rgba(255, 255, 255, .92);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: transparent;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
     box-shadow: none; border-bottom: 1px solid var(--brand-06);
     padding-top: calc(8px + env(safe-area-inset-top));
+  }
+  /* Blur đặt ở lớp giả để .site-nav-inner KHÔNG tạo containing block cho drawer
+     (backdrop-filter trên chính nó làm drawer position:fixed tràn ngang). */
+  .site-nav-inner::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: inherit;
   }
   .site-nav.scrolled .site-nav-inner { box-shadow: var(--sh-xs); }
   .site-nav-logo img { width: 36px; height: 36px; }
@@ -1262,6 +1290,7 @@ body.ck-modal-open { overflow: hidden; }
   .ck-search-btn { display: inline-flex; }
 
   .site-nav-overlay {
+    display: block !important;
     position: fixed; inset: 0; z-index: 45;
     background: rgba(0, 0, 0, .45);
     opacity: 0; visibility: hidden;
@@ -1270,7 +1299,7 @@ body.ck-modal-open { overflow: hidden; }
   .site-nav-overlay.open { opacity: 1; visibility: visible; }
 
   .site-nav-links {
-    position: fixed; top: 0; right: 0;
+    position: fixed; top: 0; right: 0; left: auto;
     width: min(86vw, 340px); height: 100dvh;
     flex-direction: column; align-items: stretch; gap: 2px;
     padding: 16px 12px calc(16px + env(safe-area-inset-bottom));
@@ -1292,14 +1321,18 @@ body.ck-modal-open { overflow: hidden; }
     border-left: 3px solid var(--brand);
   }
   .site-nav-drawer-foot {
+    display: block !important;
     margin-top: auto; padding-top: 12px;
     border-top: 1px solid var(--brand-06);
   }
   .site-nav-drawer-theme {
-    display: flex; align-items: center; gap: 10px; width: 100%; height: 44px;
-    border: 0; background: transparent; color: var(--text); font-weight: 600;
-    cursor: pointer;
+    display: flex !important; align-items: center; gap: 10px; width: 100%; height: 44px;
+    background: none; border: 0; font: inherit; font-weight: 600; padding: 0;
+    color: var(--text); cursor: pointer;
   }
-  .site-nav-credit { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+  .site-nav-credit {
+    display: block !important;
+    font-size: 11px; color: var(--text-muted); margin-top: 8px;
+  }
   body.nav-open { overflow: hidden; }
 }
