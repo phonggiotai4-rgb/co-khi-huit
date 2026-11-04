@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chương 5 – Mạch nguồn ổn áp (video giảng giải)</title>
+<style>
+:root{--bg:#fbfaf4;--ink:#1f2a37;--mut:#6b7280;--ac:#2563eb;--hl:#fde68a;--card:#fff;--ln:#e3e8ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111827;--ink:#e5e7eb;--mut:#9ca3af;--ac:#60a5fa;--hl:#713f12;--card:#1f2937;--ln:#2b3646;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111827;--ink:#e5e7eb;--mut:#9ca3af;--ac:#60a5fa;--hl:#713f12;--card:#1f2937;--ln:#2b3646;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:12px 12px 112px}
+h1{font-size:1.15rem;margin:4px 0 8px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 0;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:4}
+.grp{flex:none;align-self:center;font-size:.72rem;font-weight:700;color:var(--mut);text-transform:uppercase;margin:0 2px 0 8px}
+nav button{flex:none;border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:16px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.board{background-color:var(--card);background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:24px 24px;border:1px solid var(--ln);border-radius:12px;padding:14px;min-height:300px}
+.board h2{margin:0 0 8px;font-size:1.05rem;color:var(--ac)}
+#ln div{padding:4px 10px;margin:4px 0;border-radius:6px;border-left:3px solid transparent;font-size:1.15rem;opacity:.7;overflow-wrap:anywhere}
+#ln div.n{opacity:1;font-weight:600;border-left-color:var(--ac);animation:fl 1.4s}
+#ln sub{font-size:.7em;line-height:0}
+#ln sup{font-size:.7em;line-height:0}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;font-size:.95em;line-height:1.25}
+.fr>span{padding:0 4px}
+.fr>span:first-child{border-bottom:1.5px solid currentColor}
+#de{grid-column:1/-1;margin:0 0 10px;padding:8px 12px;border:1px solid var(--ln);border-left:4px solid #f59e0b;border-radius:8px;background:var(--bg);font-size:.98rem}
+#de b{color:#b45309}
+.t51{width:100%;border-collapse:collapse;font-size:1.02rem;background:var(--card)}
+.t51 th,.t51 td{border:1px solid var(--ink);padding:8px 10px;text-align:center}
+.t51 th{background:var(--bg);font-weight:700}
+.t51 td.l{text-align:left;font-weight:600}
+.tw{overflow-x:auto}
+.t51{font-size:.92rem}
+.t51 td.nm{color:var(--ac);font-weight:600}
+.t51 th input{font:inherit;text-align:center;border:1px solid var(--ink);border-radius:4px;background:var(--card);color:var(--ink)}
+.t51 tr.n{animation:ti .7s}
+@keyframes ti{from{opacity:0;transform:translateY(-8px);background:var(--hl)}to{opacity:1;transform:none}}
+@media(min-width:760px){.board.wide{display:block}}
+#de div{margin-top:2px}
+#de div.cur{background:var(--hl);border-left:3px solid var(--ac);padding:2px 6px;border-radius:4px;font-weight:700}
+#pt{margin-left:10px;padding:2px 12px;border-radius:12px;background:var(--ac);color:#fff;font-size:.85rem;font-weight:700;vertical-align:middle}
+#ln .lg{margin-top:12px;padding:8px 10px;border:1px dashed var(--mut);border-radius:8px;background:var(--bg);opacity:1;font-weight:400;font-size:.88rem;line-height:1.5}
+#ln .lg div{padding:1px 0;margin:0;opacity:1;font-size:.88rem;font-weight:400;border-left:0;animation:none}
+#ln .lg b{display:block;color:var(--ac);margin-bottom:2px}
+#ln .lg i{color:var(--mut)}
+body.nolg #ln .lg{display:none}
+.bar{flex-wrap:wrap}
+.bar button#lgb{background:var(--card);color:var(--ink);border:1px solid var(--ln);font-size:.85rem;padding:6px 10px}
+#st{font-size:.8rem;font-weight:400;color:var(--mut);margin-left:6px}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+svg{width:100%;max-height:230px;margin-top:10px;background:var(--bg);border:1px solid var(--ln);border-radius:8px;align-self:start}
+.i{fill:none;stroke:var(--mut);stroke-dasharray:4 3;stroke-width:1.5}
+.o{fill:none;stroke:var(--ac);stroke-width:2.8;stroke-dasharray:1;stroke-dashoffset:1;animation:d 1.6s forwards}
+@keyframes d{to{stroke-dashoffset:0}}
+svg text{fill:var(--mut);font-size:10px}
+#sub{margin:10px 0;padding:12px 14px;border-left:4px solid var(--ac);background:var(--card);border-radius:6px;min-height:4.5em;font-size:1.08rem}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:8px;align-items:center;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--ln)}
+.bar select{border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:8px;padding:7px 4px;font:inherit}
+.bar button{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+.bar input{flex:1;min-width:0}
+small{color:var(--mut);display:block;margin-top:8px}
+#ck path,#ck circle{fill:none;stroke:var(--ink);stroke-width:1.6}
+#ck .d{fill:var(--bg)}#ck .f{fill:var(--ink)}
+#ck text{fill:var(--ink);font-size:12px}
+#ck .d.on{fill:var(--ac);stroke:var(--ac)}
+#ck .cu path{fill:none;stroke:var(--ac);stroke-width:3;stroke-linejoin:round}
+#ck .cu .a{fill:var(--ac);stroke:none}
+#ph{display:flex;gap:6px;margin-top:10px}
+#ph button{border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:14px;padding:3px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+#ph button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+@media(min-width:760px){#ln{grid-row:span 3}}
+@media(min-width:760px){.board{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;align-content:start}.board h2{grid-column:1/-1}}
+.o2{fill:none;stroke:#f59e0b;stroke-width:2.4;stroke-dasharray:1;stroke-dashoffset:1;animation:d 1.6s forwards}
+#wv{cursor:pointer}
+#ck.dr path{stroke-dasharray:1;stroke-dashoffset:1;animation:d .8s forwards}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.o,.o2,#ck.dr path{stroke-dashoffset:0}}
+#wv text{fill:var(--ink);font-size:9.5px}#wv .lgd{fill:var(--mut);font-size:9px}#wv .ax{stroke:var(--ink);stroke-width:1.3;opacity:.75}#wv .axh{fill:var(--ink);stroke:none;opacity:.75}#wv .o,#wv .o2{stroke-width:2.8;stroke-linejoin:round}#wv .i{stroke-width:1.6}
+#ck text{font-size:var(--fs,13px);font-weight:600}#ck path,#ck circle{stroke-width:1.9}#ck .cu path{stroke-width:3.4}
+#ck,#wv{width:100%;height:auto;display:block;max-height:46vh}
+#tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:2px 0 8px}#jp,#pib{border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:14px;padding:4px 10px;font:inherit;font-size:.85rem;max-width:100%}#pib{cursor:pointer}#jp[hidden]{display:none}
+#sim{margin-top:10px;padding:10px 12px;border:1px dashed var(--ln);border-radius:12px;background:var(--card)}#sim .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:6px 14px;margin:8px 0}#sim label{font-size:.85rem;display:block}#sim input{width:100%}#sv{width:100%;height:auto;display:block;background:var(--bg);border-radius:8px}#so{font-size:.88rem;margin-top:6px;line-height:1.5}#sv text{font-size:9px;fill:var(--mut)}
+#sheet{position:fixed;inset:0;z-index:50;overflow:auto;background:var(--bg);color:var(--ink);padding:14px 14px 40px;line-height:1.5}#sheet[hidden]{display:none}#sheet h2{margin:0 0 4px;font-size:1.15rem}#sheet .tb{display:flex;gap:8px;margin:8px 0 12px}#sheet .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}#sheet .cd{border:1px solid var(--ln);border-radius:10px;padding:8px 11px;background:var(--card);break-inside:avoid;font-size:.9rem}#sheet .cd b{display:block;margin-bottom:3px}#sheet ol{margin:2px 0 4px;padding-left:20px}#sheet .w{color:#b45309;font-size:.85rem}
+@media print{body>*:not(#sheet){display:none!important}#sheet{position:static;overflow:visible;background:#fff;color:#000;padding:0}#sheet .tb{display:none}#sheet .gr{grid-template-columns:1fr 1fr;gap:6px}#sheet .cd{background:#fff;font-size:10.5px;padding:5px 8px;border-color:#999}#sheet .w{color:#000}}
+#real{grid-column:1/-1}#real svg{max-height:none}#real text{font-size:9px}.rt{font-size:.8rem;font-weight:600;color:var(--mut);margin-top:12px}
+.bd{opacity:0;animation:fi .5s forwards}@keyframes fi{to{opacity:1}}
+.fl{animation:flo 4s ease-in-out infinite}@keyframes flo{50%{transform:translateY(-2px)}}.gl{opacity:.3;animation:gl 1.6s ease-in-out infinite}@keyframes gl{0%,100%{opacity:.05}50%{opacity:.5}}
+.spin,.vib{transform-box:fill-box;transform-origin:50% 50%}.spin{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.fw{animation:fw 1.4s linear infinite}@keyframes fw{0%{transform:translateX(0);opacity:0}15%,85%{opacity:1}100%{transform:translateX(84px);opacity:0}}
+.ac{animation:ac .5s ease-in-out infinite alternate}@keyframes ac{to{opacity:.2}}
+.chg{transform-box:fill-box;transform-origin:50% 100%;animation:chg 1s ease-out infinite}@keyframes chg{0%{transform:scaleY(.62)}20%{transform:scaleY(.9)}100%{transform:scaleY(.62)}}
+@media(prefers-reduced-motion:reduce){.bd{opacity:1}}
+</style></head><body><main>
+<h1>Chương 5 · Mạch nguồn ổn áp</h1>
+<nav id="nv"></nav>
+<div id="tools"><select id="jp" aria-label="Chuyển đến bài"></select><button id="pib" type="button"></button></div>
+<section class="board"><h2><span id="ct"></span><span id="st"></span><span id="pt"></span></h2><div id="de"></div><div id="ln"></div><div id="ph"><button>Nửa chu kỳ dương</button><button>Nửa chu kỳ âm</button></div><svg id="ck" viewBox="-10 0 410 168"></svg><svg id="wv" viewBox="-44 -2 458 156"></svg><div id="real"></div>
+<div id="sim" hidden><b id="simT"></b>
+<div class="sg"><label>U<sub>2m</sub> = <output id="o1"></output> V<input id="i1" type="range" min="5" max="60" step="0.5" value="30"></label>
+<label>f = <output id="o2"></output> Hz<input id="i2" type="range" min="50" max="60" step="10" value="50"></label>
+<label>R<sub>L</sub> = <output id="o3"></output> Ω<input id="i3" type="range" min="20" max="1000" step="10" value="100"></label>
+<label>C = <output id="o4"></output> µF<input id="i4" type="range" min="0" max="4700" step="50" value="1000"></label></div>
+<svg id="sv" viewBox="0 0 400 130"></svg><div id="so"></div></div></section>
+<div id="sub"></div>
+<div class="bar"><button id="pv">◀ Trước</button><button id="pl">▶ Phát</button><button id="nx">Tiếp ▶</button><button id="cs">Tờ ôn</button><button id="lgb">Chú thích: bật</button><select id="sp" title="Tốc độ đọc"><option value="0.85">0,85×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option></select><input type="range" id="pr" min="0" value="0"></div>
+<small>Giọng đọc dùng giọng tiếng Việt của trình duyệt; nếu máy không có, bài tự chuyển bước theo độ dài câu. Số liệu dùng π chính xác nên có thể lệch nhẹ so với sách (sách làm tròn π = 3,14; dùng nút π ở trên để khớp sách).</small>
+</main>
+<div id="sheet" hidden></div><script>
+const P=location.hash=='#pi314'?3.14:Math.PI,Q=Math.SQRT2,f=(x,d=2)=>x.toFixed(d).replace('.',','),C=[],S=[];
+const ch=t=>C.push(t),T=(say,ln=[],w,k)=>S.push({c:C.length-1,say,ln,w,k});
+const CK={'Tổng quan':'x','VD 5.1':'x','Bán kỳ':'h','Toàn kỳ':'b','Tụ lọc':'hc','Ổn áp':'z','VD 5.2':'h','VD 5.3':'b','VD 5.4':'t','VD 5.5':'hc','VD 5.6':'tc','BT 5.1':'x','BT 5.2':'h','BT 5.3':'b','BT 5.4':'t','BT 5.5':'hc','BT 5.6':'tc','BT 5.7':'bc','BT 5.8':'bn','Thêm 1':'h','Thêm 2':'b','Thêm 3':'t','Thêm 4':'hc','Thêm 5':'bc','Thêm 6':'z','Khó 1':'bc','Khó 3':'zb'};
+const M={uD:['u','D'],C1:['C','1'],C2:['C','2'],C3:['C','3'],Cin:['C','in'],Cout:['C','out'],'U′LDC':['U′','LDC'],URDmax:['U','RDmax'],IFDmax:['I','FDmax'],Vdcmax:['V','DCmax'],Vdcmin:['V','DCmin'],Vdc:['V','DC'],VDC:['V','DC'],ULDC:['U','LDC'],ULHD:['U','LHD'],ILDC:['I','LDC'],ILHD:['I','LHD'],Izmax:['I','Zmax'],Izmin:['I','Zmin'],Pzmax:['P','Zmax'],U1m:['U','1m'],U2m:['U','2m'],u21:['u','21'],u22:['u','22'],uRD:['u','RD'],Vout:['V','out'],VR2:['VR','2'],Iz:['I','Z'],Vz:['V','z'],UL:['U','L'],IL:['I','L'],RL:['R','L'],uL:['u','L'],U1:['U','1'],U2:['U','2'],u1:['u','1'],u2:['u','2'],L1:['L','1'],L2:['L','2'],R1:['R','1'],D1:['D','1'],D2:['D','2'],D3:['D','3'],D4:['D','4'],IB:['I','B'],Vin:['V','in']},
+LT='[A-Za-z0-9\u00C0-\u1EF9]',RX=new RegExp('(?<!'+LT+')('+Object.keys(M).sort((a,b)=>b.length-a.length).join('|')+')(?!'+LT+')|(fRC|fRL)|(?<=[0-9π])RL(?!'+LT+')','g'),
+mp=s=>{s=s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');const o=[];let p=0,m;RX.lastIndex=0;while(m=RX.exec(s)){if(m.index>p)o.push([s.slice(p,m.index),0]);if(m[2]){o.push(['fR',0],['L',1]);if(m[2]=='fRC')o.push(['C',0])}else if(!m[1]){o.push(['R',0],['L',1])}else{const t=M[m[1]];o.push([t[0],0],[t[1],1])}p=RX.lastIndex}if(p<s.length)o.push([s.slice(p),0]);return o},
+sp=t=>t.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g,m=>`<sup>${[...m].map(c=>'0123456789−'['⁰¹²³⁴⁵⁶⁷⁸⁹⁻'.indexOf(c)]).join('')}</sup>`),
+pl=s=>mp(s).map(([t,b])=>b?`<sub>${t}</sub>`:sp(t)).join(''),
+iw=(s,k)=>{const c=s[k];return /[A-Za-z0-9À-ỹ′.²³⁰¹⁴⁵⁶⁷⁸⁹⁻√]/.test(c)||(c==','&&/\d/.test(s[k-1]||'')&&/\d/.test(s[k+1]||''))},
+mo=(s,a)=>{let d=0;for(let j=a;j<s.length;j++){if(s[j]=='(')d++;else if(s[j]==')'&&!--d)return j}return -1},
+mc=(s,a)=>{let d=0;for(let j=a;j>=0;j--){if(s[j]==')')d++;else if(s[j]=='('&&!--d)return j}return -1},
+FR=s=>{const i=s.indexOf('/');if(i<0)return pl(s);let a=i-1;while(a>=0&&s[a]==' ')a--;let ls=a+1,r=i+1;while(s[r]==' ')r++;let re=r;
+ if(s[a]==')'){const j=mc(s,a);if(j>=0){ls=j;if(s[j-1]=='√')ls--}}else{ls=a;while(ls>=0&&iw(s,ls))ls--;ls++}
+ if(s[r]=='('){const j=mo(s,r);re=j<0?r:j+1}else{while(re<s.length&&iw(s,re))re++}
+ if(ls>=a+1||re<=r)return pl(s.slice(0,i+1))+FR(s.slice(i+1));
+ const st=x=>x[0]=='('&&mo(x,0)==x.length-1?x.slice(1,-1):x,n=s.slice(ls,a+1),d=s.slice(r,re);
+ return pl(s.slice(0,ls))+`<span class='fr'><span>${FR(st(n))}</span><span>${FR(st(d))}</span></span>`+FR(s.slice(re))},
+mt=s=>FR(s),
+mts=s=>{let pr=0;return mp(s).map(([t,b])=>{const r=b?`<tspan dy='3' font-size='8'>${t}</tspan>`:pr?`<tspan dy='-3'>${t}</tspan>`:t;pr=b;return r}).join('')};
+const tx=(x,y,s)=>`<text x='${x}' y='${y}'>${mts(s)}</text>`,gr=(x,y,r,b)=>`<g transform='translate(${x} ${y}) rotate(${r})'>${b}</g>`,
+dd=(x,y,r)=>gr(x,y,r,`<path class='d' d='M-8 -8V8L8 0ZM8 -8V8'/>`),
+rs=(x,y,r)=>gr(x,y,r,`<path d='M-20 0H-14L-10 -6L-4 6L2 -6L8 6L12 0H20'/>`),
+dt=(x,y)=>`<circle class='f' cx='${x}' cy='${y}' r='2.5'/>`,
+cp=(x,y,t,b)=>`<path d='M${x-10} ${y-4}H${x+10}M${x-10} ${y+4}H${x+10}M${x} ${t}V${y-4}M${x} ${y+4}V${b}'/>`+tx(x+13,y-5,'+')+tx(x+13,y+11,'C'),
+ar=(x,y,n,s)=>`M${x} ${y}`+`a7.5 7.5 0 0 ${s} 0 15`.repeat(n),
+tf=t=>{const a=t?45:60,b=t?135:120,n=(b-a)/15;return `<path d='${ar(76,a,n,0)}${ar(104,a,n,1)}M88 ${a-4}V${b+4}M92 ${a-4}V${b+4}M30 78V${a}H76M30 102V${b}H76'/><circle cx='30' cy='90' r='12'/>`+tx(25,94,'~')+tx(-2,94,'u1')+tx(80,a-8,'N:1')};
+const cq=(x,t,b,n,pl)=>`<path d='M${x-10} 93H${x+10}M${x-10} 101H${x+10}M${x} ${t}V93M${x} 101V${b}'/>`+dt(x,t)+dt(x,b)+(pl?tx(x+11,90,'+'):'')+tx(x+11,112,n),
+led=(x,y)=>dd(x,y,90)+`<path d='M308 ${y-4}l8 -8M312 ${y+4}l8 -8'/>`,
+ic0=m=>{const A=`<path d='M30 50H110M190 50H350M30 130H350M150 70V130M300 50V62M300 88V92'/>`;
+if(m=='i7')return A+`<path d='M110 28H190V70H110Z'/>`+cq(55,50,130,'C1',1)+cq(90,50,130,'C2')+cq(230,50,130,'C3')+led(300,75)+rs(300,110,90)+dt(150,130)+tx(130,53,'7812')+tx(100,42,'1')+tx(194,42,'3')+tx(156,84,'2')+tx(112,24,'IN')+tx(168,24,'OUT')+tx(156,146,'GND')+tx(312,114,'1kΩ')+tx(354,54,'+ Vout')+tx(354,134,'−')+tx(6,54,'+')+tx(6,134,'−')+tx(40,162,'Hình 5.21: nguồn +12 V');
+if(m=='i9')return `<path d='M30 50H350M30 130H110M190 130H350M150 50V110M300 50V62M300 88V92'/><path d='M110 110H190V150H110Z'/>`+cq(55,50,130,'C1',1)+cq(90,50,130,'C2')+cq(230,50,130,'C3')+led(300,75)+rs(300,110,90)+dt(150,50)+tx(130,133,'7912')+tx(98,148,'2')+tx(194,122,'3')+tx(156,104,'1')+tx(112,164,'IN')+tx(166,164,'OUT')+tx(156,44,'GND')+tx(312,114,'1kΩ')+tx(354,54,'+')+tx(354,134,'− Vout')+tx(40,12,'Hình 5.22: nguồn −12 V');
+if(m=='i4')return `<path d='M30 45H360M30 148H115M185 148H360M150 131V93H230M230 45V49M230 89V100M230 140V148'/><path d='M115 131H185V165H115Z'/>`+cg(70,45,148,'Cin',1)+cg(300,45,148,'Cout',1)+rs(230,69,90)+rs(230,120,90)+`<path d='M214 85L246 53'/>`+dt(230,93)+tx(124,153,'LM337')+tx(98,142,'2')+tx(190,142,'3')+tx(156,112,'ADJ')+tx(240,72,'VR2')+tx(240,124,'R1')+tx(184,72,'5kΩ')+tx(192,130,'240Ω')+tx(364,49,'+')+tx(364,152,'− Vout')+tx(30,14,'Vout ≈ −1,25(1 + VR2/R1)');
+return `<path d='M30 45H115M185 45H360M30 148H360M150 62V100H230M230 45V52M230 86V100M230 142V148'/><path d='M115 28H185V62H115Z'/>`+cq(70,45,148,'Cin')+cq(300,45,148,'Cout',1)+rs(230,69,90)+rs(230,122,90)+`<path d='M214 138L246 106'/>`+dt(230,100)+tx(132,50,'LM317')+tx(100,39,'3')+tx(188,39,'2')+tx(156,76,'ADJ')+tx(240,72,'R1')+tx(240,126,'VR2')+tx(190,88,'240Ω')+tx(188,126,'5kΩ')+tx(364,49,'+')+tx(364,152,'−')+tx(30,14,'Vout ≈ 1,25(1 + VR2/R1)')};
+const cg=(x,t,b,n,pl)=>{const y=(t+b)/2;return `<path d='M${x-10} ${y-4}H${x+10}M${x-10} ${y+4}H${x+10}M${x} ${t}V${y-4}M${x} ${y+4}V${b}'/>`+dt(x,t)+dt(x,b)+(pl?tx(x+11,y-6,'+'):'')+tx(x+11,y+16,n)},
+brg=(yt,yb,x2)=>tf(0)+`<path d='M104 60H128V90H150M104 120V160H286V${yb+6}a6 6 0 0 0 0 -12V90H270M150 90L210 50M270 90L210 50M210 130L150 90M210 130L270 90M210 50${yt==50?'':'H240V'+yt}H${x2}M210 130${yb==130?'':'H240V'+yb}H${x2}'/>`+dd(180,70,-33.7)+dd(240,70,213.7)+dd(180,110,213.7)+dd(240,110,-33.7)+[[150,90],[210,50],[270,90],[210,130]].map(p=>dt(...p)).join('')+tx(133,86,'a')+tx(215,44,'b')+tx(215,148,'c')+tx(277,86,'d')+tx(146,60,'D1')+tx(252,60,'D2')+tx(146,126,'D3')+tx(258,121,'D4');
+const icf=m=>{if(m=='i5'){const hp='a6 6 0 0 1 12 0';return tf(1)+`<path d='M104 45H125M125 25V155M150 25V155M104 135H119${hp}H150M104 90H119${hp}H144${hp}H430M125 25H245M315 25H400M125 155H245M315 155H400M280 42V90M280 138V90M385 25V30M385 46V50M385 130V134M385 150V155M430 90V96M420 96H440M424 101H436M428 106H432'/><path d='M245 8H315V42H245Z'/><path d='M245 138H315V172H245Z'/>`+dd(125,34,-90)+dd(150,34,-90)+dd(125,115,-90)+dd(150,145,-90)+dd(385,38,90)+dd(385,142,90)+rs(385,70,90)+rs(385,110,90)+cg(190,25,90,'C1',1)+cg(190,90,155,'C2',1)+cg(222,25,90,'C3',1)+cg(222,90,155,'C4',1)+cg(350,25,90,'C5',1)+cg(350,90,155,'C6',1)+[[125,45],[150,135],[125,25],[150,25],[125,155],[150,155],[280,90],[385,90]].map(p=>dt(...p)).join('')+tx(107,20,'D1')+tx(153,20,'D2')+tx(156,112,'D3')+tx(156,150,'D4')+tx(262,29,'7812')+tx(262,159,'7912')+tx(392,54,'R1')+tx(392,112,'R2')+tx(404,29,'+12 V')+tx(404,159,'−12 V')+tx(400,86,'GND')}
+let yt=50,yb=130,r,big='',dx=250;if(m=='i7'||m=='i9')r=ic0(m);else{yt=45;yb=148;r=ic0(m);dx=290;big=cg(312,45,148,'C',1)}
+r=r.replace(/<text x='6'[^>]*>[^<]*<\/text>/g,'').replace(/<text x='40' y='(162|12)'>.*?<\/text>/,'');
+return brg(yt,yb,30+dx)+`<g transform='translate(${dx} 0)'>`+r+`</g>`+big};
+const ck=k=>{if(k=='-')return'';const c=/c$/.test(k),m=k.replace(/c$/,'');let s='';
+if(m[0]=='i')return icf(m);
+if(m=='z')return `<path d='M60 40V84M60 96V140H300V110M60 40H130M170 40H300V70M220 40V82M220 98V140'/><path d='M48 84H72M54 96H66'/>`+rs(150,40,0)+gr(220,90,-90,`<path class='d' d='M-8 -8V8L8 0ZM5 -10H8V10H11'/>`)+rs(300,90,90)+dt(220,40)+dt(220,140)+tx(26,92,'VDC')+tx(76,84,'+')+tx(143,30,'R')+tx(230,94,'Vz')+tx(310,94,'RL')+tx(228,62,'Iz')+tx(211,34,'Q')+tx(100,32,'I')+tx(310,58,'IL')+tx(100,162,'I = Iz + IL')+`<path d='M208 142H232M213 147H227M218 152H222'/><circle cx='112' cy='90' r='20'/>`+tx(100,94,'(c)')+tx(232,80,'+')+tx(232,112,'−')+tx(340,76,'+')+tx(340,92,'UL')+tx(340,108,'−')+`<g class='cu'>`+av(105,40,0)+av(220,62,90)+av(300,55,90)+`</g>`;
+if(m=='zb')return `<path d='M60 40V84M60 96V140H320V140M60 40H275M170 80V102M170 118V140M170 80H250M250 68V92M250 74L275 58V40M250 86L275 104H320V100M320 140V140'/><path d='M48 84H72M54 96H66'/>`+rs(170,60,90)+gr(170,110,-90,`<path class='d' d='M-8 -8V8L8 0ZM5 -10H8V10H11'/>`)+rs(320,120,90)+dt(170,40)+dt(170,80)+dt(170,140)+dt(275,40)+tx(26,92,'VDC')+tx(76,84,'+')+tx(180,52,'R')+tx(178,120,'Vz')+tx(150,72,'Q')+tx(282,84,'BJT')+tx(332,124,'RL')+tx(205,74,'IB')+tx(284,50,'IC')+`<path class='f' d='M272.5 102.2L261.7 98.7L265.8 93.1Z'/><path d='M158 146H182M163 151H177M168 156H172'/>`+tx(374,112,'+')+tx(372,128,'UL')+tx(374,144,'−')+tx(332,104,'IL')+tx(178,96,'Iz')+`<g class='cu'>`+av(122,40,0)+av(170,50,90)+av(170,92,90)+av(215,80,0)+av(275,50,90)+av(308,120,90)+`</g>`;
+if(m=='x')return tf(0)+tx(116,68,'u2')+tx(150,94,'N = U1/U2')+tx(150,110,'f ra = f vào');
+if(m=='h')s=tf(0)+dd(170,60,0)+`<path d='M104 60H162M178 60H330V70M330 110V120H104'/>`+rs(330,90,90)+tx(164,44,'D')+tx(142,82,'− uD +')+tx(340,84,'RL')+tx(358,74,'+')+tx(358,92,'UL')+tx(358,110,'−')+tx(108,54,'a')+tx(108,138,'b')+tx(296,52,'IL')+(c?cp(260,90,60,120)+dt(260,60)+dt(260,120):'');
+if(m=='b'||m=='bn')s=(m=='bn'?`<circle cx='40' cy='90' r='12'/>`+tx(35,94,'~')+tx(14,94,'u')+`<path d='M40 78V60H128V90H150M40 102V160H296V90H270'/>`:tf(0)+`<path d='M104 60H128V90H150M104 120V160H296V90H270'/>`)+`<path d='M150 90L210 50M270 90L210 50M210 130L150 90M210 130L270 90M210 50H360V70M360 110V130H302M290 130H210M290 130a6 6 0 0 1 12 0'/>`+dd(180,70,-33.7)+dd(240,70,213.7)+dd(180,110,213.7)+dd(240,110,-33.7)+rs(360,90,90)+[[150,90],[210,50],[270,90],[210,130]].map(p=>dt(...p)).join('')+tx(133,86,'a')+tx(215,44,'b')+tx(215,148,'c')+tx(277,86,'d')+tx(146,60,'D1')+tx(252,60,'D2')+tx(146,126,'D3')+tx(258,121,'D4')+tx(372,94,'RL')+(c?cp(318,90,50,130)+dt(318,50)+dt(318,130):'');
+if(m=='t')s=tf(1)+dd(170,45,0)+dd(170,135,0)+`<path d='M104 45H162M178 45H330V48M330 88V90H104M104 135H162M178 135H230V45'/>`+rs(330,68,90)+dt(230,45)+tx(165,34,'D1')+tx(165,124,'D2')+tx(114,70,'u21')+tx(114,116,'u22')+tx(108,86,'c')+tx(342,72,'RL')+tx(106,38,'a')+tx(106,152,'d')+tx(236,36,'b')+tx(376,62,'+')+tx(372,78,'UL')+tx(376,94,'−')+tx(148,63,'− uRD +')+tx(148,153,'− uRD +')+(c?cp(290,68,45,90)+dt(290,45)+dt(290,90):'');
+return s};
+const av=(x,y,r)=>gr(x,y,r,`<path class='a' d='M-5 -4L4 0L-5 4Z'/>`),dn=(x,y,r)=>gr(x,y,r,`<path class='d on' d='M-8 -8V8L8 0ZM8 -8V8'/>`);
+const cur=(k,q)=>{const c=/c$/.test(k),m=k.replace(/c$/,''),bn=m=='bn';let p=[],a=[],d=[],l='';
+if(m=='h'){if(!q){p=['M104 60H162','M178 60H330V70','M330 110V120H104'];a=[[130,60,0],[215,60,0],[318,90,90],[200,120,180]];d=[[170,60,0]];l='Nửa dương: D dẫn'}else if(c){p=['M260 60H330V70','M330 110V120H260'];a=[[295,60,0],[318,90,90],[295,120,180]];l='Nửa âm: D khóa, tụ xả qua tải'}else l='Nửa âm: D khóa, i = 0'}
+else if(m=='b'||bn){const S0=bn?'M40 78V60':'M104 60',S1=bn?'M40 102V160':'M104 120V160',E0=bn?'H40V102':'H104V120',E1=bn?'H40V78':'H104V60';
+if(!q){p=[S0+'H128V90H150L210 50H360V70','M360 110V130H210L270 90H296V160'+E0];a=[[128,76,90],[280,50,0],[360,90,90],[250,130,180],[200,160,180]];d=[[180,70,-33.7],[240,110,-33.7]];l='Nửa dương: D1, D4 dẫn'}
+else{p=[S1+'H296V90H270L210 50H360V70','M360 110V130H210L150 90H128V60'+E1.slice(0,1)+(bn?'40V78':'104')];a=[[200,160,0],[280,50,0],[360,90,90],[250,130,180],[128,76,-90]];d=[[240,70,213.7],[180,110,213.7]];l='Nửa âm: D2, D3 dẫn'}}
+else if(m=='t'){p=q?['M104 135H162','M178 135H230V45H330V48','M330 88V90H104']:['M104 45H162','M178 45H330V48','M330 88V90H104'];a=q?[[130,135,0],[204,135,0],[230,115,-90],[260,45,0],[318,68,90],[200,90,180]]:[[130,45,0],[205,45,0],[305,45,0],[318,68,90],[200,90,180]];d=[[170,q?135:45,0]];l=q?'Nửa âm: D2 dẫn':'Nửa dương: D1 dẫn'}
+return `<g class='cu'>`+p.map(x=>`<path d='${x}'/>`).join('')+a.map(x=>av(...x)).join('')+`</g>`+d.map(x=>dn(...x)).join('')+tx(150,14,l)};
+const H=(u,R)=>({dc:u/P,rms:u/2,ir:u,if:u/R,idc:u/P/R,irms:u/2/R});
+const F=(u,R,t)=>({dc:2*u/P,rms:u/Q,ir:t?2*u:u,if:u/R,idc:2*u/P/R,irms:u/Q/R});
+const K=(u,k,fr,R,c)=>{const x=k*fr*R*c;return u*x/(x+1)};
+const CN=(u,k,fr,R,v)=>v/(k*fr*R*(u-v));
+const Gh=Math.sqrt(.25-1/P/P)*P,Gf=Math.sqrt(.5-4/P/P)*P/2;
+
+ch('Tổng quan');
+T('Chương 5 là mạch nguồn một chiều ổn áp. Linh kiện điện tử cần nguồn một chiều ổn định, còn ổ điện nhà mình là xoay chiều 220 vôn, 50 héc. Vì vậy cần bốn công đoạn nối tiếp: hạ áp, chỉnh lưu, lọc phẳng, ổn áp.',['AC 220V → Hạ áp → Chỉnh lưu → Lọc phẳng → Ổn áp → DC ổn định']);
+T('Biến áp chỉ đổi biên độ điện áp xoay chiều, không đổi tần số. Hệ số biến áp N bằng U một chia U hai. Độ tự cảm sơ cấp bằng độ tự cảm thứ cấp nhân N bình phương.',['N = U1m/U2m = U1/U2','L1 = L2·N²','f ra = f vào'],'tr');
+ch('VD 5.1');
+{const N=220/12,u2=20/Q,N2=220/u2,L=.001*N2*N2;
+T('Đọc đề: nguồn xoay chiều 220 vôn hiệu dụng, 50 héc vào sơ cấp; thứ cấp hiệu dụng 12 vôn. Câu c hỏi lại với dữ kiện khác: L hai bằng 0,001 henry và biên độ thứ cấp 20 vôn. Cần nhớ biến áp chỉ đổi biên độ, không đổi tần số.',['Cho: U1 = 220 V (hiệu dụng), f1 = 50 Hz, U2 = 12 V','Công thức: N = U1/U2 · f2 = f1 · L1 = L2·N²'],'tr');
+T(`Câu a. Hệ số biến áp bằng tỉ số điện áp hiệu dụng ngõ vào trên ngõ ra: N bằng 220 chia 12, được ${f(N,1)}. N lớn hơn 1 nên là biến áp hạ áp.`,['N = U1/U2 = 220/12 = '+f(N,1),'N > 1 ⇒ hạ áp ✓']);
+T('Câu b. Biến áp chỉ thay đổi biên độ điện áp xoay chiều, không làm thay đổi tần số. Vì vậy tần số ngõ ra vẫn là 50 héc.',['f2 = f1 = 50 Hz']);
+T(`Câu c, bước một. Đề cho biên độ thứ cấp 20 vôn. Nhưng điện áp trong công thức hệ số biến áp là hiệu dụng, nên phải đổi: hiệu dụng bằng biên độ chia căn 2, tức 20 chia căn 2, được ${f(u2,3)} vôn. Rồi N bằng 220 chia ${f(u2,3)}, được ${f(N2)}.`,['U2 = U2m/√2 = 20/√2 = '+f(u2,3)+' V','N = U1/U2 = 220/'+f(u2,3)+' = '+f(N2)]);
+T(`Câu c, bước hai. Độ tự cảm sơ cấp bằng L hai nhân N bình phương: 0,001 nhân ${f(N2)} bình phương, được ${f(L)} henry.`,['L1 = L2·N² = 0,001·'+f(N2)+'² = '+f(L)+' H'])}
+
+ch('Bán kỳ');
+T('Ta xem diode là lý tưởng: anôt cao hơn catôt thì dẫn, ngược lại thì khóa hẳn. Nửa chu kỳ dương, diode dẫn và toàn bộ điện áp thứ cấp đặt lên tải. Nửa chu kỳ âm, diode khóa, tải bằng không, diode chịu điện áp ngược.',['Nửa dương: D dẫn → uL = u2','Nửa âm: D khóa → uL = 0'],'h');
+T('Ta tính trung bình bằng tích phân trên một chu kỳ. Chỉ nửa dương có điện áp, nên U_LDC bằng một chia T nhân tích phân từ 0 đến T chia 2 của U hai m sin, ra U hai m chia pi. Với hiệu dụng, bình phương của nửa dương cho U hai m chia 2 bình phương, còn nửa âm bằng 0, nên U_LHD bằng U hai m chia 2.',['ULDC = (1/T)·∫[0→T/2] U2m·sin(2πt/T) dt = U2m/π','ULHD² = (1/T)·∫[0→T/2] (U2m·sin)² dt = (U2m/2)²','Nửa âm: uL = 0 → ULHD = U2m/2']);
+T(`Tổng hợp lại ta được: trung bình bằng U hai m chia pi, hiệu dụng bằng U hai m chia 2, áp ngược lớn nhất bằng U hai m, dòng thuận cực đại bằng U hai m chia R tải. Độ gợn sóng là ${f(Gh)}, rất lớn.`,['ULDC = U2m/π','ULHD = U2m/2','URDmax = U2m','IFDmax = U2m/RL','Γ = '+f(Gh)]);
+
+ch('Toàn kỳ');
+T('Chỉnh lưu cầu dùng bốn diode. Nửa dương, D một và D bốn dẫn; nửa âm, D hai và D ba dẫn. Cả hai nửa chu kỳ dòng đều chạy qua tải theo một chiều, và mỗi diode đang khóa chịu áp ngược bằng U hai.',['Cầu: 2 diode dẫn mỗi nửa chu kỳ','URDmax = U2m'],'f');
+T('Chỉnh lưu tia dùng biến áp có điểm giữa và chỉ hai diode. Mỗi diode dẫn một nửa chu kỳ, nhưng diode khóa chịu cả hai cuộn thứ cấp, nên áp ngược lớn nhất gấp đôi: hai U hai m. Ở đây U hai m là biên độ của một nửa cuộn thứ cấp.',['Tia: URDmax = 2U2m'],undefined,'t');
+T('Vì cả hai nửa chu kỳ đều có dòng qua tải, tích phân gấp đôi. Trung bình U_LDC bằng hai lần U hai m chia pi. Bình phương hiệu dụng cũng gấp đôi, nên U_LHD bằng căn của hai nhân U hai m chia 2 bình phương, tức U hai m chia căn 2.',['ULDC = (2/T)·∫[0→T/2] U2m·sin(2πt/T) dt = 2U2m/π','ULHD² = 2·(U2m/2)² = U2m²/2','ULHD = U2m/√2']);
+T(`Hai kiểu toàn kỳ có chung các công thức: trung bình bằng hai U hai m chia pi, hiệu dụng bằng U hai m chia căn 2, dòng thuận cực đại bằng U hai m chia R tải. Độ gợn sóng chỉ còn ${f(Gf)}, tốt hơn bán kỳ nhiều.`,['ULDC = 2U2m/π','ULHD = U2m/√2','IFDmax = U2m/RL','Γ = '+f(Gf)]);
+
+ch('Tụ lọc');
+T('Mắc tụ song song với tải. Khi điện áp tăng, tụ nạp nhanh tới giá trị cực đại. Khi điện áp giảm, tụ xả qua tải theo hàm mũ nên điện áp trên tải giảm chậm. Hằng số thời gian R tải nhân C càng lớn hơn chu kỳ T thì càng ít gợn.',['τ = RL·C ≫ T → điện áp phẳng hơn'],'ch');
+T('Điện áp trung bình khi có tụ tính gần đúng. Bán kỳ: U hai m nhân 2fRC trên 2fRC cộng 1. Toàn kỳ: thay 2 bằng 8. Tụ càng lớn thì kết quả càng tiến gần U hai m.',['Bán kỳ: U′ = U2m·2fRC/(2fRC+1)','Toàn kỳ: U′ = U2m·8fRC/(8fRC+1)'],'cf');
+T('Ngược lại, muốn có điện áp trung bình U phẩy cho trước thì tính điện dung C bằng U phẩy chia, hệ số 2 hoặc 8, nhân f, nhân R, nhân hiệu U hai m trừ U phẩy. Chú ý U phẩy luôn phải nhỏ hơn U hai m.',['C = U′/(2fRL(U2m−U′))  [bán kỳ]','C = U′/(8fRL(U2m−U′))  [toàn kỳ]']);
+
+ch('Bảng 5.1');
+T('Bảng 5.1 của sách tổng hợp các thông số chỉnh lưu, với N bằng U một m chia U hai m. Trung bình: bán kỳ là U hai m chia pi, toàn kỳ gấp đôi. Có tụ lọc: hệ số 2fRC cho bán kỳ, 8fRC cho toàn kỳ. Hiệu dụng: bán kỳ là U hai m chia 2, toàn kỳ là U hai m chia căn 2.',['Thông số | Bán kỳ | Toàn kỳ','ULDC | U2m/π | 2U2m/π','U′LDC | U2m·2fRC/(2fRC+1) | U2m·8fRC/(8fRC+1)','ULHD | U2m/2 | U2m/√2']);
+T('Áp ngược lớn nhất: bán kỳ và cầu là U hai m, riêng mạch tia là hai U hai m. Dòng điện bằng áp chia R tải: trung bình U hai m chia pi R cho bán kỳ và gấp đôi cho toàn kỳ; hiệu dụng U hai m chia 2R hoặc chia căn 2 R. Dòng thuận cực đại qua diode luôn bằng U hai m chia R tải.',['URDmax: bán kỳ = U2m · cầu = U2m · tia = 2U2m','ILDC = ULDC/RL: U2m/(πRL) · 2U2m/(πRL)','ILHD = ULHD/RL: U2m/(2RL) · U2m/(√2RL)','IFDmax = U2m/RL (cả ba loại)']);
+T(`Độ gợn sóng là thành phần xoay chiều lẫn trong đầu ra một chiều: gamma bằng căn của U_LHD bình phương trừ U_LDC bình phương, chia U_LDC. Bán kỳ ra ${f(Gh)}, toàn kỳ chỉ ${f(Gf)}, nên toàn kỳ cho điện áp phẳng hơn nhiều.`,['Γ = √(ULHD² − ULDC²) / ULDC','Bán kỳ: Γ = '+f(Gh),'Toàn kỳ: Γ = '+f(Gf),'Γ càng nhỏ → áp càng phẳng'],'cm');
+T(`Ví dụ số: lấy U hai m bằng 20 vôn, tải 100 ôm, 50 héc, tụ 1000 micrô farad. Bán kỳ cho trung bình ${f(20/P)} vôn, toàn kỳ gấp đôi, ${f(40/P)} vôn. Có tụ lọc, trung bình tăng lên ${f(20*10/11)} vôn ở bán kỳ và ${f(20*40/41)} vôn ở toàn kỳ, rất sát U hai m. Áp ngược mạch tia là 40 vôn, gấp đôi mạch cầu. Bạn có thể đổi giá trị U hai m trong ô nhập để xem các công thức thay đổi.`,[]);
+
+ch('Ổn áp');
+T('Ổn áp bằng diode Zener: khi phân cực ngược và vượt ngưỡng Vz, điện áp trên diode được giữ cố định bằng Vz. Dòng qua Zener bằng dòng qua R trừ dòng tải, và phải nằm giữa Izmin, khoảng 5 đến 10 miliampe, và Izmax.',['UL = Vz','Iz = (Vdc − Vz)/R − Vz/RL','Izmin ≤ Iz ≤ Izmax'],'zr');
+T('Chọn R bằng hai đầu: R nhỏ nhất ứng với Vdc lớn nhất và Izmax, R lớn nhất ứng với Vdc nhỏ nhất và Izmin. Khi hở tải thì toàn bộ dòng đi qua Zener, nên R bằng Vdc max trừ Vz chia Izmax. Nhược điểm: dòng tải không được vượt Izmax.',['(Vdcmax−Vz)/(Izmax+Vz/RL) ≤ R ≤ (Vdcmin−Vz)/(Izmin+Vz/RL)','Hở tải: R = (Vdcmax − Vz)/Izmax']);
+{const Vz=12,RL=1000,a=18,b=24,i0=.005,i1=1/12,R1=(b-Vz)/(i1+Vz/RL),R2=(a-Vz)/(i0+Vz/RL),R=220,za=(a-Vz)/R-Vz/RL,zb=(b-Vz)/R-Vz/RL,Rh=(b-Vz)/i1,zh=(b-Vz)/R,m=x=>f(x*1000,1);
+T('Ví dụ số do mình tự đặt để luyện công thức, sách không có số cho phần này. Cho Vz bằng 12 vôn, công suất tối đa của Zener 1 oát, nên Izmax bằng 1 chia 12, khoảng 83,3 mili ampe. Izmin lấy 5 mili ampe. Tải 1 kì lô ôm, nên dòng tải bằng 12 chia 1000, là 12 mili ampe. Nguồn Vdc dao động từ 18 đến 24 vôn.',['VD tự đặt: Vz = 12 V, Pzmax = 1 W, RL = 1 kΩ','Izmax = 1/12 = '+m(i1)+' mA, Izmin = 5 mA','IL = Vz/RL = 12 mA','Vdc = 18 … 24 V']);
+T(`Theo công thức 5.35: R nhỏ nhất bằng 24 trừ 12 chia, 0,0833 cộng 0,012, được ${f(R1,1)} ôm. R lớn nhất bằng 18 trừ 12 chia, 0,005 cộng 0,012, được ${f(R2,1)} ôm. Chọn R nằm trong khoảng này, ví dụ 220 ôm là trị số chuẩn.`,['(Vdcmax−Vz)/(Izmax+Vz/RL) = 12/(0,0833+0,012) = '+f(R1,1)+' Ω','(Vdcmin−Vz)/(Izmin+Vz/RL) = 6/(0,005+0,012) = '+f(R2,1)+' Ω',f(R1,1)+' Ω ≤ R ≤ '+f(R2,1)+' Ω → chọn R = 220 Ω']);
+T(`Kiểm tra Iz bằng Vdc trừ Vz chia R, trừ Vz chia R tải. Ở 18 vôn được ${m(za)} mili ampe, lớn hơn 5. Ở 24 vôn được ${m(zb)} mili ampe, nhỏ hơn ${m(i1)}. Hở tải theo công thức 5.38, R tối thiểu bằng 12 chia 0,0833, là ${f(Rh,0)} ôm, mà 220 lớn hơn nên an toàn: khi hở tải Iz là ${m(zh)} mili ampe, công suất ${f(Vz*zh)} oát, dưới 1 oát.`,['Iz(18V) = 6/220 − 0,012 = '+m(za)+' mA ≥ 5 ✓','Iz(24V) = 12/220 − 0,012 = '+m(zb)+' mA ≤ '+m(i1)+' ✓','Hở tải: R ≥ 12/0,0833 = '+f(Rh,0)+' Ω ✓','Iz = 12/220 = '+m(zh)+' mA, P = '+f(Vz*zh)+' W < 1 W']);}
+T('Muốn tải dòng lớn hơn, thêm transistor BJT. Điện áp ra là Vz trừ 0,6 vôn, và dòng tải có thể lớn gấp bê ta lần dòng Izmax.',['UL = Vz − 0,6 V','IL ≈ IC, tới β·Izmax']);
+T('IC 78XX ổn áp nguồn dương, 79XX ổn áp nguồn âm, XX là điện áp ra, chịu tải tới 1,5 ampe. Điện áp vào phải cao hơn điện áp ra ít nhất 3 vôn với 78XX. Hai tụ nhỏ ở vào và ra để lọc nhiễu cao tần. Chú ý chân: 7812 là vào, đất, ra; còn 7912 là đất, vào, ra.',['78XX: +, chân 1 IN · 2 GND · 3 OUT','79XX: −, chân 1 GND · 2 IN · 3 OUT','Vào − ra ≥ 3V, IL ≤ 1,5A'],'-','i7');
+T('Mạch 7912 vẽ ngược: chân 1 nối đất ở trên, điện áp vào âm ở chân 2, điện áp ra âm ở chân 3. Còn 7812 thì chân 1 là vào, chân 2 là đất, chân 3 là ra.',['7912: 1 GND · 2 IN · 3 OUT','Vout = −12 V so với đất'],'-','i9');
+T(`Điện áp vào của IC 317 lên tới 40 vôn, hoặc âm 40 vôn với 337. Điện áp ra điều chỉnh được từ 1,25 đến 37 vôn, tải tới 1,5 ampe, theo công thức V ra bằng 1,25 nhân một cộng VR hai chia R một. Với R một 240 ôm và biến trở 5 kilô ôm thì tối đa khoảng ${f(1.25*(1+5000/240),1)} vôn.`,['Vout ≈ ±1,25(1 + VR2/R1)','R1 = 240Ω, VR2 = 5kΩ → tối đa ≈ '+f(1.25*(1+5000/240),1)+' V'],'-','i3');
+T('IC 337 là bản nguồn âm của 317: chân 1 ADJ, chân 2 vào, chân 3 ra; điện áp ra âm V ra bằng trừ 1,25 nhân một cộng VR hai chia R một. Cầu diode và tụ lọc phía trước giống nhau.',['LM337: 1 ADJ · 2 IN · 3 OUT','Vout ≈ −1,25(1 + VR2/R1)'],'-','i4');
+T('Mạch ±12 vôn dùng biến áp có điểm giữa nối đất. Hai diode trên cấp nguồn dương qua 7812, hai diode dưới cấp nguồn âm qua 7912; mỗi nhánh có tụ lọc lớn C1, C2 và tụ nhỏ lọc nhiễu.',['Điểm giữa cuộn thứ cấp = đất (GND)','+12 V: D1, D2 → 7812','−12 V: D3, D4 → 7912'],'-','i5');
+
+const uf=x=>f(x,x<100?1:0);
+const PB=(nm,o,seq)=>{ch(nm);
+const ty=o.ty,cap=!!o.cap,ha=ty=='h',kk=ha?2:8,fr=o.f||50,RL=o.RL,U1m=o.sq?o.am*Q:o.am,
+U2m=o.noTr?U1m:o.N?U1m/o.N:(ha?P*o.ULDC:P*o.ULDC/2),N=U1m/U2m,g=ha?H(U2m,RL):F(U2m,RL,ty=='t'),
+tn=ha?'bán kỳ':ty=='b'?'toàn kỳ kiểu cầu':'toàn kỳ kiểu tia',res=[],Ld=l=>l?`Câu ${l}. `:'',rp=(l,s)=>res.push((l?l+') ':'')+s),
+nz=x=>Math.abs(x-Math.round(x))<1e-6?f(x,0):f(x,2),
+cd=ha?'một diode mắc nối tiếp với tải':ty=='b'?'bốn diode mắc thành cầu':'biến áp có điểm giữa và hai diode',
+fo=o.om=='314'?314/2/P:fr,c={U2m,U1m,N,g,fr,RL,res,rp,Ld,tn,ha,ty,kk,nz};
+const B={
+u2m:l=>{if(o.noTr){T(`${Ld(l)}Đề không có biến áp, nguồn đưa thẳng vào mạch chỉnh lưu, nên điện áp xoay chiều đặt vào mạch chính là điện áp nguồn: U hai m bằng ${f(U2m)} vôn.`,['Không biến áp ⇒ U2m = Um nguồn = '+o.am+'√2 = '+f(U2m)+' V'])}
+else if(o.N){T(`${Ld(l)}Đề cho sẵn N bằng ${o.N}. Vì N bằng U một m chia U hai m, nên U hai m bằng U một m chia N, tức ${f(U1m)} chia ${o.N}, được ${f(U2m)} vôn.${ty=='t'?' Chú ý đây là biên độ của mỗi nửa cuộn thứ cấp.':''}`,['N = U1m/U2m ⇒ U2m = U1m/N','U2m = '+f(U1m)+'/'+o.N+' = '+f(U2m)+' V'])}
+else{T(`${Ld(l)}Mọi công thức chỉnh lưu đều tính theo U hai m, nên ta tìm U hai m trước. Với mạch ${tn}, điện áp trung bình bằng ${ha?'U hai m chia pi':'hai U hai m chia pi'}. Đảo lại, U hai m bằng pi nhân ${o.ULDC}${ha?'':' rồi chia 2'}, được ${f(U2m)} vôn.`,[ha?'ULDC = U2m/π ⇒ U2m = π·ULDC':'ULDC = 2U2m/π ⇒ U2m = π·ULDC/2','U2m = π·'+o.ULDC+(ha?'':'/2')+' = '+f(U2m)+' V'])}
+rp(l,'U2m = '+f(U2m)+' V')},
+N:l=>{T(`${Ld(l)}Hệ số biến áp N bằng U một m chia U hai m, tức ${f(U1m)} chia ${f(U2m)}, được ${f(N)}. N lớn hơn 1 nên đây là biến áp hạ áp, đúng với mục đích tạo nguồn một chiều điện áp thấp.`,['N = U1m/U2m = '+f(U1m)+'/'+f(U2m)+' = '+f(N),'N > 1 ⇒ biến áp hạ áp ✓']);rp(l,'N = '+f(N))},
+dc:l=>{if(o.ULDC){const I=o.ULDC/RL;T(`${Ld(l)}Điện áp chỉnh lưu trung bình đề đã cho là ${o.ULDC} vôn. Dòng trung bình qua tải theo định luật Ôm bằng ULDC chia RL, tức ${o.ULDC} chia ${RL}, được ${f(I,3)} ampe.`,['ILDC = ULDC/RL = '+o.ULDC+'/'+RL+' = '+f(I,3)+' A']);rp(l,'ILDC = '+f(I,3)+' A')}
+else{T(`${Ld(l)}Với mạch ${tn}, ${ha?'chỉ nửa dương có dòng nên điện áp trung bình bằng U hai m chia pi':'cả hai nửa chu kỳ đều có dòng nên trung bình gấp đôi nửa kỳ, bằng hai U hai m chia pi'}. Thay số được ${f(g.dc)} vôn. Dòng trung bình bằng ULDC chia RL, tức ${f(g.dc)} chia ${RL}, được ${f(g.idc,4)} ampe.`,['ULDC = '+(ha?'U2m/π = ':'2U2m/π = 2·')+f(U2m)+'/π = '+f(g.dc)+' V','ILDC = ULDC/RL = '+f(g.dc)+'/'+RL+' = '+f(g.idc,4)+' A']);rp(l,'ULDC = '+f(g.dc)+' V, ILDC = '+f(g.idc,4)+' A')}},
+rms:(l,x)=>{const i=x&&x.i;T(`${Ld(l)}${ha?'Ở mạch bán kỳ, nửa âm bằng 0 nên bình phương trung bình chỉ còn một nửa của sóng sin, và hiệu dụng bằng U hai m chia 2':'Ở mạch toàn kỳ, điện áp trên tải lặp lại như một sóng sin đầy đủ, nên hiệu dụng bằng U hai m chia căn 2'}. Thay số: ${f(g.rms)} vôn.${i?` Dòng hiệu dụng bằng ULHD chia RL, tức ${f(g.rms)} chia ${RL}, được ${f(g.irms,4)} ampe.`:''}`,['ULHD = '+(ha?'U2m/2 = ':'U2m/√2 = ')+f(U2m)+(ha?'/2':'/√2')+' = '+f(g.rms)+' V'].concat(i?['ILHD = ULHD/RL = '+f(g.rms)+'/'+RL+' = '+f(g.irms,4)+' A']:[]));rp(l,'ULHD = '+f(g.rms)+' V'+(i?', ILHD = '+f(g.irms,4)+' A':''))},
+rev:l=>{T(`${Ld(l)}${ha?'Ở nửa âm diode khóa, toàn bộ điện áp thứ cấp đặt lên diode':ty=='b'?'Trong mạch cầu, diode đang khóa chịu điện áp bằng đúng điện áp thứ cấp':'Trong mạch tia, diode đang khóa chịu cả hai nửa cuộn thứ cấp nối tiếp, nên u RD bằng hai lần u hai'}. Vậy áp ngược lớn nhất bằng ${ty=='t'?'hai U hai m':'U hai m'}, tức ${f(g.ir)} vôn. Khi chọn diode phải chọn loại chịu áp ngược cao hơn giá trị này.`,['URDmax = '+(ty=='t'?'2U2m = 2·'+f(U2m):'U2m')+' = '+f(g.ir)+' V']);rp(l,'URDmax = '+f(g.ir)+' V')},
+fwd:l=>{T(`${Ld(l)}Diode mắc nối tiếp với tải nên dòng qua diode chính là dòng qua tải. Dòng lớn nhất khi điện áp tải đạt U hai m, nên IFDmax bằng U hai m chia RL, tức ${f(U2m)} chia ${RL}, được ${f(g.if,4)} ampe.`,['IFDmax = U2m/RL = '+f(U2m)+'/'+RL+' = '+f(g.if,4)+' A']);rp(l,'IFDmax = '+f(g.if,4)+' A')},
+cap:l=>{const x=kk*fr*RL*o.C*1e-6,v=U2m*x/(x+1);T(`${Ld(l)}Có tụ lọc nên dùng công thức gần đúng: U phẩy bằng U hai m nhân ${kk} f RL C trên ${kk} f RL C cộng 1, hệ số ${kk} dành cho mạch ${tn}. Tính ${kk} f RL C bằng ${kk} nhân ${f(fr,0)} nhân ${RL} nhân ${o.C} nhân mười mũ trừ sáu, được ${nz(x)}. Vậy U phẩy bằng ${f(U2m)} nhân ${nz(x)} chia ${nz(x+1)}, được ${f(v)} vôn. Giá trị này nhỏ hơn U hai m nhưng sát, vì tụ giữ điện áp gần mức đỉnh.`,['U′LDC = U2m·'+kk+'fRC/('+kk+'fRC+1)',kk+'fRC = '+kk+'·'+fr+'·'+RL+'·'+o.C+'·10⁻⁶ = '+nz(x),'U′LDC = '+f(U2m)+'·'+nz(x)+'/'+nz(x+1)+' = '+f(v)+' V','U′LDC < U2m ✓'],cap||o.ck?(ha?'ch':'cf'):undefined,o.ck);rp(l,'U′LDC = '+f(v)+' V')},
+capC:(l,x)=>{const v=x.v,C=v/(kk*fr*RL*(U2m-v)),xx=kk*fr*RL*C,vc=U2m*xx/(xx+1);T(`${Ld(l)}Muốn trung bình bằng ${v} vôn thì trước hết phải có ${v} nhỏ hơn U hai m, mà U hai m là ${f(U2m)} vôn, nên điều kiện thỏa. Đảo công thức tụ lọc ta được C bằng U phẩy chia, ${kk} f RL nhân hiệu U hai m trừ U phẩy. Thay số: C bằng ${v} chia, ${kk} nhân ${f(fr,0)} nhân ${RL} nhân ${f(U2m-v)}, được khoảng ${uf(C*1e6)} micrô farad. Kiểm tra lại: với C này, ${kk} f RL C bằng ${nz(xx)} và U phẩy tính ngược ra ${f(vc)} vôn, khớp ${v}.`,['C = U′/('+kk+'fRL(U2m − U′))','C = '+v+'/('+kk+'·'+fr+'·'+RL+'·('+f(U2m)+' − '+v+')) = '+uf(C*1e6)+' µF','Thử lại: U′ = '+f(vc)+' V ≈ '+v+' V ✓'],cap?(ha?'ch':'cf'):undefined);rp(l,'C ≈ '+uf(C*1e6)+' µF (để U′ = '+v+' V)')},
+chk:()=>{T(`Tóm tắt đáp số của bài. Lỗi hay gặp: ${ha&&!cap?'dùng nhầm hệ số hai trên pi của toàn kỳ cho mạch bán kỳ':cap?'nhầm hệ số 2 f R C của bán kỳ với 8 f R C của toàn kỳ':ty=='t'?'quên rằng U hai m là biên độ của mỗi nửa cuộn, và áp ngược của mạch tia là hai U hai m':'nhầm áp ngược của mạch cầu, bằng U hai m, với của mạch tia, bằng hai U hai m'}.`,res.slice())}};
+T(`Bước đầu tiên là đọc đề. Mạch có ${cd}${cap?', thêm tụ C song song với tải':''}, nên đây là mạch chỉnh lưu ${tn}${cap?' có tụ lọc':''}.${o.noTr?' Đề không có biến áp, nguồn đưa thẳng vào mạch.':''} Nguồn có dạng U một m nhân sin omega t. ${o.sq?`Có căn 2 nên biên độ U một m là ${o.am} căn 2, khoảng ${f(U1m)} vôn, còn hiệu dụng là ${o.am} vôn`:`Không có căn 2 nên biên độ U một m chính là ${o.am} vôn`}. Tần số góc ${o.om} rad trên giây cho f bằng omega chia 2 pi, khoảng ${f(fr,0)} héc.`,['Mạch: '+tn+(cap?' + tụ lọc':''),'u1 = '+o.sp+' ⇒ U1m = '+(o.sq?o.am+'√2 = '+f(U1m):o.am)+' V','ω = '+o.om+' rad/s ⇒ f = ω/2π ≈ '+f(fo,2)+' Hz','Cho: '+o.given],cap?(ha?'ch':'cf'):(ha?'h':'f'));
+T(o.plan,o.pl);
+seq.forEach(([l,bl])=>bl.forEach(b=>{if(typeof b=='string')B[b](l);else if(Array.isArray(b))B[b[0]](l,b[1]);else b(l,c)}));
+B.chk()};
+
+PB('VD 5.2',{ty:'h',sq:1,am:220,sp:'220√2·sin(100πt)',om:'100π',RL:100,ULDC:12,given:'RL = 100 Ω, ULDC = 12 V',plan:'Hướng giải: đề cho điện áp trung bình ULDC, nên ta đi từ ngõ ra ngược về ngõ vào. Từ ULDC tìm U hai m, rồi tìm N bằng U một m chia U hai m. Sau đó mọi đại lượng còn lại đều tính từ U hai m.',pl:['ULDC → U2m → N','Các đại lượng còn lại tính từ U2m']},[['a',['u2m','N','dc']],['b',['rms']],['c',['rev']],['d',['fwd']]]);
+PB('VD 5.3',{ty:'b',sq:1,am:220,sp:'220√2·sin(100πt)',om:'100π',RL:100,ULDC:15,given:'RL = 100 Ω, ULDC = 15 V',plan:'Hướng giải giống Ví dụ 5.2, chỉ khác công thức của mạch cầu: trung bình bằng hai U hai m chia pi. Từ ULDC tìm U hai m, rồi N, rồi các đại lượng còn lại.',pl:['ULDC = 2U2m/π ⇒ U2m ⇒ N','Còn lại tính từ U2m']},[['a',['u2m','N','dc']],['b',['rms']],['c',['rev']],['d',['fwd']]]);
+PB('VD 5.4',{ty:'t',sq:1,am:110,sp:'110√2·sin(120πt)',om:'120π',f:60,RL:100,N:6,given:'RL = 100 Ω, N = 6',plan:'Hướng giải: lần này đề cho N chứ không cho ULDC, nên đi xuôi từ ngõ vào. Từ U một m và N tìm U hai m, rồi tính lần lượt trung bình, hiệu dụng và áp ngược.',pl:['U1m, N → U2m','U2m → ULDC, ULHD, URDmax']},[['a',['u2m','dc']],['b',[['rms',{i:1}]]],['c',['rev']]]);
+PB('VD 5.5',{ty:'h',cap:1,sq:1,am:220,sp:'220√2·sin(100πt)',om:'100π',RL:100,C:1000,N:8,given:'RL = 100 Ω, C = 1000 µF, N = 8',plan:'Hướng giải: tìm U hai m từ N, rồi dùng công thức có tụ lọc của mạch bán kỳ. Câu b đảo công thức để tìm C khi biết điện áp trung bình mong muốn.',pl:['U1m, N → U2m','U2m, f, RL, C → U′LDC','U′LDC cho trước → C']},[['a',['u2m','cap']],['b',[['capC',{v:25}]]]]);
+PB('VD 5.6',{ty:'t',cap:1,sq:1,am:110,sp:'110√2·sin(120πt)',om:'120π',f:60,RL:100,C:1000,N:6,given:'RL = 100 Ω, C = 1000 µF, N = 6',plan:'Hướng giải giống Ví dụ 5.5 nhưng mạch tia là toàn kỳ, nên hệ số là 8 f RL C, và f bằng 60 héc. Tìm U hai m từ N, rồi tính U phẩy; câu b đảo công thức tìm C.',pl:['U1m, N → U2m','Toàn kỳ: hệ số 8fRC','U′LDC cho trước → C']},[['a',['u2m','cap']],['b',[['capC',{v:23}]]]]);
+
+ch('BT 5.1');
+{const N=220/20,L=N*N;
+T('Đọc đề: u một bằng 220 căn 2 sin 100 pi t. Biên độ sơ cấp là 220 căn 2, nên điện áp hiệu dụng sơ cấp U một là biên độ chia căn 2, tức 220 vôn. Thứ cấp cho sẵn hiệu dụng 20 vôn và L hai bằng 1 henry.',['u1 = 220√2·sin(100πt) ⇒ U1m = 220√2 V','U1 = U1m/√2 = 220 V (hiệu dụng)','Cho: U2 = 20 V, L2 = 1 H'],'tr');
+T(`Câu a. Hệ số biến áp bằng tỉ số điện áp hiệu dụng sơ cấp trên thứ cấp: N bằng 220 chia 20, được ${N}. Có thể dùng biên độ hoặc hiệu dụng đều được, miễn là cùng loại ở cả hai vế.`,['N = U1/U2 = 220/20 = '+N,'N > 1 ⇒ biến áp hạ áp ✓']);
+T(`Câu b. Độ tự cảm tỉ lệ với bình phương số vòng dây, nên L một bằng L hai nhân N bình phương, bằng 1 nhân ${N} bình phương, được ${L} henry. Giá trị lớn vì N lớn và N được bình phương.`,['L1 = L2·N² = 1·'+N+'² = '+L+' H'])}
+
+PB('BT 5.2',{ty:'h',sq:1,am:250,sp:'250√2·sin(120πt)',om:'120π',f:60,RL:200,ULDC:18,given:'RL = 200 Ω, ULDC = 18 V',plan:'Hướng giải: đề cho ULDC nên từ ULDC tìm U hai m, rồi N. Tần số 60 héc ở bài này không dùng đến vì mạch không có tụ lọc.',pl:['ULDC → U2m → N','f = 60 Hz không dùng (không có tụ)']},[['a',['u2m','N']],['b',['dc']],['c',['rms']],['d',['rev']],['e',['fwd']]]);
+PB('BT 5.3',{ty:'b',sq:0,am:325,sp:'325·sin(100πt)',om:'100π',RL:200,ULDC:25,given:'RL = 200 Ω, ULDC = 25 V',plan:'Hướng giải: chú ý nguồn viết 325 sin, không có căn 2, nên 325 vôn đã là biên độ. Từ ULDC của mạch cầu tìm U hai m, rồi N và các đại lượng còn lại.',pl:['325 là biên độ (không có √2)','ULDC = 2U2m/π ⇒ U2m ⇒ N']},[['a',['u2m','N','dc']],['b',['rms']],['c',['rev']],['d',['fwd']]]);
+PB('BT 5.4',{ty:'t',sq:0,am:212,sp:'212·sin(120πt)',om:'120π',f:60,RL:100,N:8,given:'RL = 100 Ω, N = 8',plan:'Hướng giải: nguồn 212 sin không có căn 2 nên U một m bằng 212 vôn. Đề cho N, nên từ U một m và N tìm U hai m rồi tính các đại lượng của mạch tia.',pl:['U1m = 212 V','U1m, N → U2m → các đại lượng']},[['a',['u2m','dc']],['b',[['rms',{i:1}]]],['c',['rev','fwd']]]);
+PB('BT 5.5',{ty:'h',cap:1,sq:0,am:311,sp:'311·sin(314t)',om:'314',RL:100,C:1000,N:10,given:'RL = 100 Ω, C = 1000 µF, N = 10',plan:'Hướng giải: tần số góc 314 rad trên giây xấp xỉ 100 pi, nên f khoảng 50 héc. Tìm U hai m từ N, dùng công thức bán kỳ có tụ; câu b đảo để tìm C.',pl:['ω = 314 ≈ 100π ⇒ f ≈ 50 Hz','U2m → U′LDC; U′LDC → C']},[['a',['u2m','cap']],['b',[['capC',{v:24}]]]]);
+PB('BT 5.6',{ty:'t',cap:1,sq:1,am:100,sp:'100√2·sin(100πt)',om:'100π',RL:100,C:2200,N:5,given:'RL = 100 Ω, C = 2200 µF, N = 5',plan:'Hướng giải: mạch tia có tụ nên hệ số là 8 f RL C. Câu a, b giống các bài trước. Câu c hỏi giá trị tối đa của điện áp trung bình, câu d so độ gợn sóng khi có và không có tụ.',pl:['a, b: như các bài có tụ trước','c: giá trị tối đa của U′LDC','d: so sánh độ gợn Γ']},[['a',['u2m','cap']],['b',[['capC',{v:20}]]],['c',[(l,c)=>{const v=.99*c.U2m,C=v/(8*c.fr*c.RL*(c.U2m-v));T(`${c.Ld(l)}Điện áp trung bình có tụ luôn nhỏ hơn U hai m, và chỉ tiến tới U hai m khi tích f RL C tiến ra vô cùng. Vậy giá trị tối đa là U hai m, bằng ${f(c.U2m)} vôn, nhưng không có tụ hữu hạn nào đạt đúng giá trị này. Trong thực tế chọn C đủ lớn: ví dụ muốn đạt 99%, tức ${f(v)} vôn, thì C khoảng ${uf(C*1e6)} micrô farad. Câu này đề hơi mở, bạn nên hỏi lại thầy cách hiểu.`,['U′LDC → U2m = '+f(c.U2m)+' V khi C → ∞','Ví dụ 99%: U′ = '+f(v)+' V ⇒ C ≈ '+uf(C*1e6)+' µF']);c.rp(l,'U′max = U2m = '+f(c.U2m)+' V (C → ∞)')}]],['d',[(l,c)=>{const x=8*c.fr*c.RL*2200e-6,Ud=c.U2m*x/(x+1),dV=c.U2m/(2*c.fr*c.RL*2200e-6),rm=dV/(2*Math.sqrt(3)),G=rm/Ud;T(`${c.Ld(l)}Không có tụ, độ gợn sóng toàn kỳ là ${f(Gf)}. Có tụ, sách không cho công thức, nên mình dùng xấp xỉ quen thuộc: gợn đỉnh đỉnh bằng U hai m chia 2 f RL C, được ${f(dV)} vôn; gợn hiệu dụng bằng gợn đỉnh đỉnh chia 2 căn 3, được ${f(rm,3)} vôn. Chia cho điện áp trung bình ${f(Ud)} vôn ta được gamma khoảng ${f(G,3)}. Tụ giảm độ gợn khoảng ${f(Gf/G,0)} lần.`,['Không tụ: Γ = '+f(Gf),'ΔVpp ≈ U2m/(2fRLC) = '+f(dV)+' V','Vgợn,hd = ΔVpp/(2√3) = '+f(rm,3)+' V','Có tụ: Γ ≈ '+f(rm,3)+'/'+f(Ud)+' = '+f(G,3)]);c.rp(l,'Γ: '+f(Gf)+' → ≈ '+f(G,3)+' (có tụ)')}]]]);
+PB('BT 5.7',{ty:'b',cap:1,sq:0,am:220,sp:'220·sin(314t)',om:'314',RL:100,C:1000,N:10,given:'RL = 100 Ω, C = 1000 µF, N = 10',plan:'Hướng giải: nguồn 220 sin không có căn 2 nên U một m bằng 220 vôn; ω bằng 314 nên f khoảng 50 héc. Mạch cầu có tụ, hệ số 8 f RL C.',pl:['U1m = 220 V, f ≈ 50 Hz','Toàn kỳ: hệ số 8fRC']},[['a',['u2m','cap']],['b',[['capC',{v:20}]]]]);
+PB('BT 5.8',{ty:'b',noTr:1,sq:1,am:28,sp:'28√2·sin(100πt)',om:'100π',RL:200,C:2200,ck:'bnc',given:'RL = 200 Ω; câu e: C = 2200 µF',plan:'Hướng giải: nguồn nối thẳng vào cầu nên U hai m bằng biên độ nguồn, 28 căn 2 vôn. Từ đó tính trung bình, hiệu dụng; câu c so sánh dòng qua diode với dòng qua tải; câu d viết biểu thức áp ngược; câu e thêm tụ.',pl:['Không biến áp: U2m = 28√2','a, b: công thức cầu','c, d: dòng và áp ngược trên diode','e: thêm tụ 2200 µF']},[['a',['u2m','dc']],['b',[['rms',{i:1}]]],['c',[(l,c)=>{T(`${c.Ld(l)}Dòng thuận cực đại qua mỗi diode bằng U hai m chia RL, được ${f(c.g.if,4)} ampe. Dòng cực đại qua tải cũng bằng U hai m chia RL, nên hai giá trị bằng nhau: lúc dẫn, mỗi diode mang trọn dòng tải. Nhưng mỗi diode chỉ dẫn nửa thời gian, nên dòng trung bình qua mỗi diode chỉ bằng một nửa dòng trung bình tải, tức ${f(c.g.idc/2,4)} ampe.`,['IFDmax = U2m/RL = '+f(c.U2m)+'/'+c.RL+' = '+f(c.g.if,4)+' A','IL max = U2m/RL = '+f(c.g.if,4)+' A','⇒ IFDmax = IL max','Trung bình mỗi diode = ILDC/2 = '+f(c.g.idc/2,4)+' A']);c.rp(l,'IFDmax = IL max = '+f(c.g.if,4)+' A')}]],['d',[(l,c)=>{T(`${c.Ld(l)}Diode đang khóa chịu điện áp bằng trị tuyệt đối của điện áp nguồn: u RD bằng U hai m nhân trị tuyệt đối sin omega t, trong nửa chu kỳ mà nó khóa. Giá trị lớn nhất bằng U hai m, tức ${f(c.U2m)} vôn. Hình trong đề không đọc rõ nhãn diode nên mình mô tả chung cho cặp diode đang khóa.`,['uRD = U2m·|sin ωt| (nửa chu kỳ diode khóa)','URDmax = U2m = '+f(c.U2m)+' V']);c.rp(l,'URDmax = '+f(c.U2m)+' V')}]],['e',['cap']]]);
+
+PB('Thêm 1',{ty:'h',sq:0,am:170,sp:'170·sin(120πt)',om:'120π',f:60,RL:50,N:10,given:'RL = 50 Ω, N = 10',plan:'Hướng giải: nguồn 170 sin không có căn 2 nên U một m bằng 170 vôn. Đề cho N, nên đi xuôi từ ngõ vào: U hai m, rồi trung bình, hiệu dụng, áp ngược và dòng thuận cực đại.',pl:['U1m = 170 V, N → U2m','U2m → ULDC, ULHD, URDmax, IFDmax']},[['a',['u2m','dc']],['b',[['rms',{i:1}]]],['c',['rev']],['d',['fwd']]]);
+PB('Thêm 2',{ty:'b',sq:1,am:110,sp:'110√2·sin(120πt)',om:'120π',f:60,RL:30,ULDC:9,given:'RL = 30 Ω, ULDC = 9 V',plan:'Hướng giải: đề cho điện áp trung bình 9 vôn của mạch cầu. Từ ULDC tìm U hai m, rồi N, rồi các đại lượng còn lại. Tần số 60 héc không dùng vì không có tụ.',pl:['ULDC = 2U2m/π ⇒ U2m ⇒ N','f = 60 Hz không dùng (không có tụ)']},[['a',['u2m','N','dc']],['b',[['rms',{i:1}]]],['c',['rev']],['d',['fwd']]]);
+PB('Thêm 3',{ty:'t',sq:1,am:220,sp:'220√2·sin(100πt)',om:'100π',RL:120,ULDC:24,given:'RL = 120 Ω, ULDC = 24 V',plan:'Hướng giải: mạch tia, đề cho ULDC. Từ ULDC tìm U hai m của mỗi nửa cuộn, rồi N. Nhớ áp ngược của mạch tia gấp đôi so với mạch cầu.',pl:['ULDC = 2U2m/π ⇒ U2m ⇒ N','Tia: URDmax = 2U2m']},[['a',['u2m','N','dc']],['b',['rms']],['c',['rev']],['d',['fwd']]]);
+PB('Thêm 4',{ty:'h',cap:1,sq:1,am:220,sp:'220√2·sin(100πt)',om:'100π',RL:200,C:470,N:11,given:'RL = 200 Ω, C = 470 µF, N = 11',plan:'Hướng giải: tìm U hai m từ N, rồi dùng công thức bán kỳ có tụ lọc với hệ số 2 f RL C. Câu b đảo công thức, nhớ kiểm tra điện áp mong muốn nhỏ hơn U hai m.',pl:['U1m, N → U2m','U2m → U′LDC','U′LDC cho trước → C']},[['a',['u2m','cap']],['b',[['capC',{v:27}]]]]);
+PB('Thêm 5',{ty:'b',cap:1,sq:0,am:311,sp:'311·sin(314t)',om:'314',RL:60,C:2200,N:14,given:'RL = 60 Ω, C = 2200 µF, N = 14',plan:'Hướng giải: nguồn 311 sin không có căn 2, ω bằng 314 nên f khoảng 50 héc. Mạch cầu có tụ dùng hệ số 8 f RL C. Câu c là câu mở rộng: ước lượng độ gợn đỉnh đỉnh của điện áp tải.',pl:['U1m = 311 V, f ≈ 50 Hz','Toàn kỳ: hệ số 8fRC','c: độ gợn đỉnh–đỉnh ΔV']},[['a',['u2m','cap']],['b',[['capC',{v:21}]]],['c',[(l,c)=>{const C=2200e-6,dV=c.U2m/(2*c.fr*c.RL*C),x=8*c.fr*c.RL*C,Ud=c.U2m*x/(x+1);T(`${c.Ld(l)}Sau mỗi lần nạp tới đỉnh, tụ xả qua tải trong khoảng một nửa chu kỳ, tức một chia hai f giây, với dòng xấp xỉ U hai m chia RL. Độ sụt điện áp đỉnh đỉnh khi đó là dòng nhân thời gian chia C, được ΔV bằng U hai m chia, 2 f RL C, bằng ${f(dV)} vôn. So với điện áp trung bình ${f(Ud)} vôn thì độ gợn khoảng ${f(dV/Ud*100,1)} phần trăm. Đây là công thức xấp xỉ ngoài sách, dùng để ước lượng nhanh.`,['ΔV ≈ (U2m/RL)·(1/(2f))/C = U2m/(2fRLC)','ΔV = '+f(c.U2m)+'/(2·'+c.fr+'·'+c.RL+'·2200·10⁻⁶) = '+f(dV)+' V','ΔV/U′LDC ≈ '+f(dV/Ud*100,1)+' %']);c.rp(l,'ΔV ≈ '+f(dV)+' V (≈ '+f(dV/Ud*100,1)+' %)')}]]]);
+
+ch('Thêm 6');
+{const Vz=9,RL=300,a=15,b=20,i0=.005,i1=1/9,IL=Vz/RL,R1=(b-Vz)/(i1+IL),R2=(a-Vz)/(i0+IL),R=120,za=(a-Vz)/R-IL,zb=(b-Vz)/R-IL,Rh=(b-Vz)/i1,zh=(b-Vz)/R,m=x=>f(x*1000,1);
+T('Đọc đề: đây là bài thiết kế điện trở R cho mạch ổn áp Zener. Cần ba việc: giữ dòng qua Zener nằm giữa Izmin và Izmax khi nguồn dao động từ 15 đến 20 vôn, chọn R trong khoảng cho phép, và kiểm tra trường hợp hở tải để Zener không bị hỏng.',['Cho: Vz = 9 V, Pzmax = 1 W, Izmin = 5 mA','RL = 300 Ω, Vdc = 15 … 20 V','Cần: Izmax, IL, khoảng R, kiểm tra hở tải']);
+T(`Câu a. Dòng Zener lớn nhất theo công suất: Izmax bằng Pzmax chia Vz, bằng 1 chia 9, được ${m(i1)} mili ampe. Dòng tải bằng Vz chia RL, bằng 9 chia 300, được ${m(IL)} mili ampe.`,['Izmax = Pzmax/Vz = 1/9 = '+m(i1)+' mA','IL = Vz/RL = 9/300 = '+m(IL)+' mA']);
+T(`Câu b. Theo công thức 5.35, R nhỏ nhất bằng Vdcmax trừ Vz, chia Izmax cộng Vz chia RL: 11 chia ${f(i1+IL,4)}, được ${f(R1,1)} ôm. R lớn nhất bằng Vdcmin trừ Vz, chia Izmin cộng Vz chia RL: 6 chia ${f(i0+IL,3)}, được ${f(R2,1)} ôm.`,['Rmin = (Vdcmax−Vz)/(Izmax+Vz/RL) = 11/'+f(i1+IL,4)+' = '+f(R1,1)+' Ω','Rmax = (Vdcmin−Vz)/(Izmin+Vz/RL) = 6/'+f(i0+IL,3)+' = '+f(R2,1)+' Ω',f(R1,1)+' Ω ≤ R ≤ '+f(R2,1)+' Ω']);
+T(`Câu c. Chọn R bằng 120 ôm, nằm trong khoảng trên. Kiểm tra Iz bằng Vdc trừ Vz chia R, trừ Vz chia RL. Ở 15 vôn được ${m(za)} mili ampe, lớn hơn 5. Ở 20 vôn được ${m(zb)} mili ampe, nhỏ hơn ${m(i1)}. Vậy Zener luôn ổn áp và không quá tải.`,['R = 120 Ω','Iz(15V) = 6/120 − 0,03 = '+m(za)+' mA ≥ 5 ✓','Iz(20V) = 11/120 − 0,03 = '+m(zb)+' mA ≤ '+m(i1)+' ✓']);
+T(`Câu d. Khi hở tải, toàn bộ dòng đi qua Zener. Theo công thức 5.38, R tối thiểu bằng Vdcmax trừ Vz chia Izmax, bằng 11 chia ${f(i1,4)}, được ${f(Rh,0)} ôm. R bằng 120 lớn hơn nên an toàn: Iz khi hở tải là ${m(zh)} mili ampe, công suất ${f(Vz*zh)} oát, dưới 1 oát.`,['Hở tải: R ≥ (Vdcmax−Vz)/Izmax = 11/'+f(i1,4)+' = '+f(Rh,0)+' Ω','R = 120 Ω > '+f(Rh,0)+' Ω ✓','Iz = 11/120 = '+m(zh)+' mA, P = '+f(Vz*zh)+' W < 1 W'])}
+
+ch('Khó 1');
+{const RL=24,f0=50,C1=2200e-6,C2=6800e-6,Ut=12,U1m=220*Q,x1=8*f0*RL*C1,U2n=Ut*(x1+1)/x1,Nn=U1m/U2n,N=25,U2=U1m/N,Uav=U2*x1/(x1+1),IL=Uav/RL,Ipk=U2/RL,dV=U2/(2*f0*RL*C1),Cmin=U2/(2*f0*RL*1),x2=8*f0*RL*C2,Uav2=U2*x2/(x2+1),dV2=U2/(2*f0*RL*C2);
+T('Đọc đề: đây là bài thiết kế nguồn, không chỉ tính toán. Ta cần chọn hệ số biến áp N, kiểm tra điện áp trung bình, rồi chọn diode và tụ. Mạch cầu có tụ lọc dùng công thức toàn kỳ với hệ số 8 f RL C. Dữ kiện: tải 24 ôm cần 12 vôn, lưới 220 vôn 50 héc, tụ 2200 micrô farad, và yêu cầu độ gợn đỉnh đỉnh không quá 1 vôn.',['Cầu + tụ lọc · U1m = 220√2 = '+f(U1m)+' V · f = 50 Hz','RL = 24 Ω, C = 2200 µF','Mục tiêu: U′LDC = 12 V, ΔV ≤ 1 V'],'cf');
+T(`Câu a. Đảo công thức tụ lọc để tìm U hai m cần thiết: 8 f RL C bằng ${f(x1,2)}, nên U hai m bằng 12 nhân ${f(x1+1,2)} chia ${f(x1,2)}, được ${f(U2n)} vôn. Hệ số biến áp N bằng U một m chia U hai m, khoảng ${f(Nn)}. Quấn biến áp cần số nguyên nên chọn N bằng 25. Khi đó U hai m thực là ${f(U2)} vôn và điện áp trung bình thực là ${f(Uav)} vôn, lệch khoảng ${f((Ut-Uav)/Ut*100,1)} phần trăm so với 12 vôn, chấp nhận được.`,['8fRC = 8·50·24·2200·10⁻⁶ = '+f(x1,2),'U2m = U′·(8fRC+1)/(8fRC) = 12·'+f(x1+1,2)+'/'+f(x1,2)+' = '+f(U2n)+' V','N = U1m/U2m = '+f(U1m)+'/'+f(U2n)+' ≈ '+f(Nn)+' → chọn N = 25','U2m thực = '+f(U1m)+'/25 = '+f(U2)+' V','U′LDC thực = '+f(U2)+'·'+f(x1,2)+'/'+f(x1+1,2)+' = '+f(Uav)+' V'],'cf');
+T(`Câu b. Dòng trung bình qua tải bằng ${f(Uav)} chia 24, được ${f(IL,3)} ampe. Mỗi diode chỉ dẫn một nửa thời gian nên dòng trung bình mỗi diode khoảng một nửa, ${f(IL/2,3)} ampe. Dòng thuận cực đại theo sách bằng U hai m chia RL, được ${f(Ipk,3)} ampe. Trong thực tế khi có tụ lọc, dòng nạp đỉnh qua diode còn lớn hơn nhiều, nên phải chọn diode dư dòng.`,['ILDC = U′LDC/RL = '+f(Uav)+'/24 = '+f(IL,3)+' A','Mỗi diode: ILDC/2 ≈ '+f(IL/2,3)+' A','IFDmax = U2m/RL = '+f(U2)+'/24 = '+f(Ipk,3)+' A']);
+T(`Câu c. Mạch cầu có áp ngược lớn nhất bằng U hai m, tức ${f(U2)} vôn. Nên chọn diode có áp ngược gấp ít nhất 2 đến 3 lần, tức từ 50 vôn trở lên, và dòng định mức gấp đôi dòng tính được, khoảng 1 ampe. Ví dụ họ diode 1N4001 chịu 50 vôn, 1 ampe. Tụ lọc phải có điện áp định mức lớn hơn U hai m, nên chọn loại 25 vôn để có dự phòng.`,['URDmax = U2m = '+f(U2)+' V → chọn diode ≥ 50 V','IF định mức ≥ 2·'+f(Ipk,2)+' ≈ 1 A (ví dụ 1N4001: 50 V, 1 A)','Tụ: điện áp định mức > '+f(U2)+' V → chọn 25 V']);
+T(`Câu d. Với C bằng 2200 micrô farad, độ gợn đỉnh đỉnh xấp xỉ U hai m chia, 2 f RL C, được ${f(dV)} vôn, vượt yêu cầu 1 vôn. Muốn gợn không quá 1 vôn thì C phải lớn hơn U hai m chia, 2 f RL nhân 1 vôn, tức ${f(Cmin*1e6,0)} micrô farad. Chọn tụ chuẩn 6800 micrô farad. Kiểm tra lại: độ gợn còn ${f(dV2)} vôn và điện áp trung bình mới là ${f(Uav2)} vôn, tăng nhẹ vì tụ lớn hơn.`,['ΔV ≈ U2m/(2fRLC) = '+f(U2)+'/(2·50·24·2200·10⁻⁶) = '+f(dV)+' V > 1 V ✗','C ≥ U2m/(2fRL·ΔV) = '+f(U2)+'/(2·50·24·1) = '+f(Cmin*1e6,0)+' µF','Chọn C = 6800 µF → ΔV = '+f(dV2)+' V ✓','U′LDC mới = '+f(U2)+'·'+f(x2,2)+'/'+f(x2+1,2)+' = '+f(Uav2)+' V']);
+T('Tóm tắt đáp số và lưu ý thực tế: các công thức tụ lọc của sách đều là gần đúng. Khi lắp thật, nên đo lại điện áp, và cần kể thêm sụt áp khoảng 0,7 vôn trên mỗi diode, mà bài này xem diode là lý tưởng.',['a) N = 25, U2m = '+f(U2)+' V, U′LDC = '+f(Uav)+' V','b) ILDC = '+f(IL,3)+' A; IFDmax = '+f(Ipk,3)+' A','c) Diode ≥ 50 V / 1 A; tụ ≥ 25 V','d) C ≥ '+f(Cmin*1e6,0)+' µF → chọn 6800 µF; U′LDC = '+f(Uav2)+' V','Lưu ý: bỏ qua sụt áp ~0,7 V mỗi diode'])}
+
+ch('Khó 2');
+{const IL=.8,Vi=18,RLe=Vi/IL,f0=50,C1=2200e-6,U1m=220*Q,x=8*f0*RLe*C1,U2n=Vi*(x+1)/x,Nn=U1m/U2n,N=16,U2=U1m/N,Uav=U2*x/(x+1),dV=U2/(2*f0*RLe*C1),Vmin=U2-dV,PIC=(Uav-12)*IL;
+T('Đọc đề: nguồn đối xứng cộng trừ 12 vôn. Mỗi nhánh là một mạch toàn kỳ kiểu tia với hai diode, nên dùng hệ số 8 f R C, rồi qua IC 7812 hoặc 7912 để ổn áp. Điều kiện của IC: điện áp vào phải cao hơn điện áp ra ít nhất 3 vôn, tức tối thiểu 15 vôn, kể cả lúc thấp nhất do gợn sóng. Hai nhánh đối xứng nên chỉ cần tính một nhánh.',['Hình 5.23: biến áp có điểm giữa, 4 diode, IC 7812 / 7912','U1m = 220√2 = '+f(U1m)+' V · f = 50 Hz','Mỗi nhánh: IL = 0,8 A, C1 = 2200 µF','IC cần: Vin ≥ 12 + 3 = 15 V']);
+T(`Câu a. Chọn điện áp trung bình sau tụ lọc là 18 vôn, cao hơn 15 vôn để chừa chỗ cho độ gợn. Điện trở tải tương đương của mỗi nhánh, tức đầu vào của IC, bằng 18 chia 0,8, được ${f(RLe)} ôm. Dòng 0,8 ampe nhỏ hơn giới hạn 1,5 ampe của IC nên đạt.`,['Chọn Vin(TB) = 18 V','RL,tđ = Vin/IL = 18/0,8 = '+f(RLe)+' Ω','IL = 0,8 A < 1,5 A ✓']);
+T(`Câu b. Tính 8 f R C bằng ${f(x,1)}. Đảo công thức: U hai m bằng 18 nhân ${f(x+1,1)} chia ${f(x,1)}, được ${f(U2n)} vôn cho mỗi nửa cuộn. N bằng ${f(U1m)} chia ${f(U2n)}, khoảng ${f(Nn)}, chọn N bằng 16. Khi đó U hai m thực là ${f(U2)} vôn và điện áp trung bình thực là ${f(Uav)} vôn.`,['8fRC = 8·50·'+f(RLe)+'·2200·10⁻⁶ = '+f(x,1),'U2m = 18·'+f(x+1,1)+'/'+f(x,1)+' = '+f(U2n)+' V','N = '+f(U1m)+'/'+f(U2n)+' ≈ '+f(Nn)+' → chọn N = 16','U2m thực = '+f(U2)+' V → U′LDC = '+f(Uav)+' V']);
+T(`Câu c. Độ gợn đỉnh đỉnh xấp xỉ U hai m chia, 2 f RL C, được ${f(dV)} vôn. Điện áp thấp nhất sau gợn khoảng U hai m trừ gợn, bằng ${f(Vmin)} vôn. Giá trị này ${Vmin>=15?'lớn hơn':'nhỏ hơn'} 15 vôn nên IC còn làm việc, nhưng dự phòng chỉ ${f(Vmin-15)} vôn, khá sát. Nên tăng C lên hoặc tăng một chút số vòng thứ cấp để an toàn khi lưới tụt áp.`,['ΔV ≈ U2m/(2fRL,tđC) = '+f(U2)+'/(2·50·'+f(RLe)+'·2200·10⁻⁶) = '+f(dV)+' V','Vin,min ≈ U2m − ΔV = '+f(Vmin)+' V','Vin,min ≥ 15 V ✓ (dự phòng '+f(Vmin-15)+' V)']);
+T(`Câu d. Mỗi nhánh là mạch tia, nên áp ngược lớn nhất lên diode bằng hai U hai m, được ${f(2*U2)} vôn. Dòng trung bình mỗi diode bằng một nửa dòng tải, ${f(IL/2,2)} ampe. Diode 1N4007 chịu 1000 vôn, 1 ampe là đủ về áp, nhưng vì dòng nạp tụ đỉnh khá lớn nên thường chọn loại 3 ampe như 1N5401.`,['URDmax = 2U2m = 2·'+f(U2)+' = '+f(2*U2)+' V','Dòng TB mỗi diode = IL/2 = '+f(IL/2,2)+' A','Chọn diode ≥ 100 V, 3 A (ví dụ 1N5401)']);
+T(`Câu e. Công suất tiêu tán trên IC 7812 bằng hiệu điện áp vào ra nhân dòng tải: ${f(Uav)} trừ 12, nhân 0,8, được ${f(PIC)} oát. Công suất này khá lớn, hầu hết chuyển thành nhiệt nên IC phải gắn tản nhiệt. Nếu hạ điện áp vào gần 15 vôn, công suất giảm nhưng dự phòng gợn cũng mất.`,['P = (Vin − Vout)·IL = ('+f(Uav)+' − 12)·0,8 = '+f(PIC)+' W','→ cần tản nhiệt cho 7812 / 7912','a) Vin(TB) = 18 V · b) N = 16, U2m = '+f(U2)+' V','c) Vin,min = '+f(Vmin)+' V · d) URDmax = '+f(2*U2)+' V'])}
+
+ch('Khó 3');
+{const Vz=6.8,UL=Vz-.6,RL=12,IL=UL/RL,be=50,IB=IL/be,i1=1/Vz,i0=.005,a=11,b=14,Rm=(a-Vz)/(i0+IB),Rn=(b-Vz)/i1,R=150,z1=(a-Vz)/R-IB,z2=(b-Vz)/R,PQ=(b-UL)*IL,m=x=>f(x*1000,1);
+T('Đọc đề: đây là mạch ổn áp Zener có thêm transistor BJT, để mở rộng dòng tải. Điện áp ra thấp hơn Vz khoảng 0,6 vôn do mối nối base emitter. Dòng R cung cấp cho Zener và cho base, chứ không cung cấp dòng tải lớn. Ta kiểm tra Zener có đủ dòng ở trường hợp xấu nhất.',['Hình 5.19: Zener + BJT','Vz = 6,8 V, Pzmax = 1 W, Izmin = 5 mA','RL = 12 Ω, β = 50, Vdc = 11 … 14 V']);
+T(`Câu a. Điện áp ra UL bằng Vz trừ 0,6, tức ${f(UL,1)} vôn. Dòng tải bằng UL chia RL, được ${m(IL)} mili ampe.`,['UL = Vz − 0,6 = '+f(UL,1)+' V','IL = UL/RL = '+f(UL,1)+'/12 = '+m(IL)+' mA']);
+T(`Câu b. Dòng Zener lớn nhất bằng Pzmax chia Vz, bằng 1 chia 6,8, được ${m(i1)} mili ampe. Dòng tải ${m(IL)} mili ampe lớn hơn nhiều, nên nếu chỉ dùng Zener thì Zener bị quá tải và hỏng. Đây chính là lý do phải thêm BJT: dòng tải đi qua BJT, còn Zener chỉ cần cấp dòng base nhỏ.`,['Izmax = 1/6,8 = '+m(i1)+' mA','IL = '+m(IL)+' mA > Izmax ⇒ Zener đơn không đủ','Thêm BJT: dòng tải qua BJT, Zener chỉ cấp IB']);
+T(`Câu c. Dòng tải xấp xỉ dòng collector, bằng bê ta nhân dòng base, nên dòng base bằng ${m(IL)} chia 50, được ${m(IB)} mili ampe. Đây là dòng R phải cấp thêm cho nhánh Zener.`,['IL ≈ IC = β·IB ⇒ IB ≈ IL/β','IB = '+m(IL)+'/50 = '+m(IB)+' mA']);
+T(`Câu d. Với dòng base cần cấp, R lớn nhất ứng với Vdc nhỏ nhất: 11 trừ 6,8, chia Izmin cộng IB, được ${f(Rm,1)} ôm. R nhỏ nhất ứng với Vdc lớn nhất khi hở tải, lúc đó IB bằng 0 và toàn bộ dòng qua Zener: 14 trừ 6,8, chia Izmax, được ${f(Rn,1)} ôm.`,['Rmax = (Vdcmin − Vz)/(Izmin + IB) = 4,2/'+f(i0+IB,4)+' = '+f(Rm,1)+' Ω','Rmin = (Vdcmax − Vz)/Izmax = 7,2/'+f(i1,4)+' = '+f(Rn,1)+' Ω',f(Rn,1)+' Ω ≤ R ≤ '+f(Rm,1)+' Ω']);
+T(`Câu e. Chọn R bằng 150 ôm. Khi đầy tải với Vdc bằng 11 vôn, Iz bằng 4,2 chia 150 trừ IB, được ${m(z1)} mili ampe, lớn hơn 5, nên Zener vẫn ổn áp. Khi hở tải với Vdc bằng 14 vôn, Iz bằng 7,2 chia 150, được ${m(z2)} mili ampe, nhỏ hơn ${m(i1)}, nên Zener an toàn.`,['R = 150 Ω','Đầy tải, 11 V: Iz = 4,2/150 − IB = '+m(z1)+' mA ≥ 5 ✓','Hở tải, 14 V: Iz = 7,2/150 = '+m(z2)+' mA ≤ '+m(i1)+' ✓']);
+T(`Câu f. Công suất lớn nhất trên BJT bằng điện áp collector emitter nhân dòng tải, lúc Vdc lớn nhất: 14 trừ ${f(UL,1)}, nhân ${f(IL,3)}, được ${f(PQ)} oát. Rất lớn so với một transistor nhỏ, nên cần chọn BJT công suất và gắn tản nhiệt. Đây cũng là nhược điểm của mạch ổn áp tuyến tính: phần điện áp thừa biến thành nhiệt.`,['PQ,max = (Vdcmax − UL)·IL = (14 − '+f(UL,1)+')·'+f(IL,3)+' = '+f(PQ)+' W','→ BJT công suất + tản nhiệt'])}
+
+ch('Khó 4');
+{const R1=240,Vo=9,VR=R1*(Vo/1.25-1),Vmax=1.25*(1+5000/R1),IR=1.25/R1,Vin=Vo+3,Vi2=15,IL=1,P=(Vi2-Vo)*IL;
+T('Đọc đề: IC 317 điều chỉnh điện áp ra theo công thức V ra bằng 1,25 nhân một cộng VR hai chia R một. Điện áp 1,25 vôn là điện áp chuẩn giữa chân ra và chân ADJ, nên lúc nào cũng có dòng chạy qua R một. Ta dùng công thức đó để chọn biến trở, kiểm tra dải điều chỉnh, rồi tính nhiệt.',['Hình 5.24: IC 317, R1 = 240 Ω, VR2 ≤ 5 kΩ','IL tối đa 1,5 A','Vout ≈ 1,25·(1 + VR2/R1)']);
+T(`Câu a. Muốn V ra bằng 9 vôn thì một cộng VR hai chia R một bằng 9 chia 1,25, được ${f(Vo/1.25,2)}. Suy ra VR hai chia R một bằng ${f(Vo/1.25-1,2)}, nên VR hai bằng 240 nhân ${f(Vo/1.25-1,2)}, được ${f(VR,0)} ôm, nhỏ hơn 5 kilô ôm nên chỉnh được.`,['Vout = 1,25·(1 + VR2/R1) = 9 V','1 + VR2/R1 = 9/1,25 = '+f(Vo/1.25,2),'VR2 = 240·'+f(Vo/1.25-1,2)+' = '+f(VR,0)+' Ω < 5 kΩ ✓']);
+T(`Câu b. Khi biến trở bằng 0, V ra thấp nhất là 1,25 vôn. Khi biến trở bằng 5 kilô ôm, V ra lớn nhất là 1,25 nhân một cộng 5000 chia 240, được ${f(Vmax,1)} vôn. Dòng qua R một khi đó chỉ khoảng ${f(IR*1000,1)} mili ampe, rất nhỏ so với dòng tải. Sách ghi dải đến 25 vôn là số làm tròn của sơ đồ.`,['VR2 = 0: Vout = 1,25 V','VR2 = 5 kΩ: Vout = 1,25·(1 + 5000/240) = '+f(Vmax,1)+' V','Dòng qua R1 ≈ 1,25/240 = '+f(IR*1000,1)+' mA']);
+T(`Câu c. Theo sơ đồ của sách, điện áp vào phải lớn hơn điện áp ra khoảng 3 vôn, ví dụ vào hơn 28 vôn để ra 25 vôn. Với V ra bằng 9 vôn thì vào tối thiểu khoảng ${Vin} vôn. Nếu cấp ${Vi2} vôn và tải 1 ampe thì công suất tiêu tán trên IC bằng ${Vi2} trừ 9, nhân 1, được ${f(P,0)} oát, cần tản nhiệt tốt. Muốn giảm nhiệt, hạ điện áp vào gần mức 12 vôn.`,['Vin,min ≈ Vout + 3 = '+Vin+' V','Vin = 15 V, IL = 1 A: P = (15 − 9)·1 = '+f(P,0)+' W','→ tản nhiệt; hạ Vin để giảm nhiệt','a) VR2 ≈ '+f(VR,0)+' Ω · b) 1,25 … '+f(Vmax,1)+' V · c) Vin ≥ '+Vin+' V, P = '+f(P,0)+' W'])}
+
+ch('Tổng kết');
+T('Tóm tắt chương 5. Bán kỳ: trung bình U hai m chia pi, hiệu dụng U hai m chia 2. Toàn kỳ: trung bình hai U hai m chia pi, hiệu dụng U hai m chia căn 2. Áp ngược: U hai m cho bán kỳ và cầu, hai U hai m cho tia. Tụ lọc: hệ số 2fRC cho bán kỳ, 8fRC cho toàn kỳ. Vậy là xong chương 5, chúc bạn thi tốt!',['Bán kỳ: U2m/π · U2m/2 · Γ=1,21','Toàn kỳ: 2U2m/π · U2m/√2 · Γ=0,48','Áp ngược: bán kỳ, cầu = U2m · tia = 2U2m','Tụ: 2fRC (bán kỳ) · 8fRC (toàn kỳ)']);
+
+
+// ===== Bố cục bài giảng theo đề mục của sách =====
+ch('Mở đầu');T('Chương 5 trình bày nguyên lý của một mạch nguồn ổn áp gồm bốn công đoạn: hạ áp, chỉnh lưu, lọc phẳng và ổn áp. Ngoài lý thuyết phân tích và tính toán, chương còn có các ví dụ minh họa, các mạch ứng dụng trong thực tế và bài tập củng cố ở cuối chương.',['Hạ áp → Chỉnh lưu → Lọc phẳng → Ổn áp','5.1 Tổng quan · 5.2 Biến áp · 5.3 Chỉnh lưu · 5.4 Lọc · 5.5 Ổn áp']);
+ch('Chỉnh lưu');T('Để chỉnh lưu điện áp xoay chiều thành một chiều, người ta dùng diode hoặc SCR, tương ứng với mạch chỉnh lưu không điều khiển hoặc có điều khiển. Ở đây ta chỉ xét chỉnh lưu dùng diode với tải thuần trở. Diode được xem là lý tưởng: khi điện thế anôt lớn hơn catôt thì dẫn và áp thuận bằng không; ngược lại thì khóa hẳn, không có dòng ngược.',['Diode lý tưởng: VA > VK → dẫn, UFD = 0','VA < VK → khóa, IRD = 0','Ba mạch: bán kỳ · toàn kỳ kiểu cầu · toàn kỳ kiểu tia']);
+ch('Mạch lọc');T('Để lọc phẳng điện áp chỉnh lưu, ta có thể mắc tụ điện song song với tải, cuộn cảm nối tiếp với tải, hoặc kết hợp cả hai. Trong phần này chỉ xét tụ điện mắc song song với tải; cách tính với cuộn cảm được trình bày trong giáo trình Điện tử công suất.',['Tụ C song song với tải RL','Cuộn cảm nối tiếp tải: không xét ở đây']);
+ch('Ổn áp 5.5');T('Ổn áp là công đoạn cuối của mạch nguồn một chiều, sau khi hạ áp, chỉnh lưu và lọc phẳng. Có nhiều cách ổn định điện áp một chiều: diode Zener, transistor BJT, Op-Amp, vi mạch 78XX/79XX, vi mạch 317/337. Bài giảng giới thiệu ba loại: diode Zener, IC 78XX/79XX và IC 317/337.',['Zener · BJT · Op-Amp · 78XX/79XX · 317/337','Học: Zener → 78XX/79XX → 317/337']);
+ch('Tụ lọc TK');CK['Tụ lọc TK']='bc';
+T('Với chỉnh lưu toàn kỳ kiểu cầu hoặc kiểu tia, tụ cũng mắc song song với tải. Trong một chu kỳ có hai đỉnh điện áp nên tụ được nạp hai lần, thời gian xả ngắn hơn, vì vậy điện áp trên tải gợn ít hơn so với bán kỳ.',['Tụ C song song tải · nạp 2 lần mỗi chu kỳ','Gợn nhỏ hơn bán kỳ'],'cf');
+T('Điện áp trung bình có tụ lọc của mạch toàn kỳ tính gần đúng bằng U hai m nhân 8fRC trên 8fRC cộng 1, hệ số 8 thay cho hệ số 2 của bán kỳ. Muốn có điện áp trung bình U phẩy cho trước thì tính C bằng U phẩy chia 8fR tải nhân hiệu U hai m trừ U phẩy.',['U′LDC = U2m·8fRC/(8fRC+1)','C = U′/(8fRL(U2m−U′))','U′ < U2m']);
+const QZ=(nm,key,q,a,la)=>{ch(nm);CK[nm]=key;T(q,['Hỏi nhanh: tạm dừng, tự trả lời rồi bấm Tiếp']);T(a,la)};
+QZ('Hỏi nhanh 5.2','x','Hỏi nhanh. Biến áp có điện áp sơ cấp 220 vôn hiệu dụng, thứ cấp 12 vôn. Hệ số biến áp bằng bao nhiêu, và tần số ngõ ra là bao nhiêu?',`Đáp án. N bằng 220 chia 12, khoảng ${f(220/12,1)}. Biến áp chỉ đổi biên độ chứ không đổi tần số, nên tần số ngõ ra vẫn là 50 hertz.`,['N = 220/12 ≈ '+f(220/12,1),'f ra = f vào = 50 Hz']);
+QZ('Hỏi nhanh 5.3.1','h','Hỏi nhanh. Trong mạch chỉnh lưu bán kỳ, ở nửa chu kỳ âm diode ở trạng thái nào, và điện áp trên tải bằng bao nhiêu?','Đáp án. Diode khóa, dòng qua tải bằng 0 nên điện áp trên tải cũng bằng 0. Toàn bộ điện áp u hai đặt lên diode, vì vậy điện áp ngược lớn nhất trên diode là U hai m.',['Nửa âm: D khóa, UL = 0','URDmax = U2m']);
+QZ('Hỏi nhanh 5.3.2','b','Hỏi nhanh. Trong mạch cầu, ở nửa chu kỳ âm những diode nào dẫn, và dòng qua tải có đổi chiều không?','Đáp án. D hai và D ba dẫn, D một và D bốn khóa. Dòng qua tải vẫn đi từ điểm b đến điểm c, không đổi chiều. Điện áp ngược lớn nhất trên mỗi diode khóa là U hai m.',['Nửa âm: D2, D3 dẫn','IL vẫn chiều b → c','URDmax = U2m']);
+QZ('Hỏi nhanh 5.3.3','t','Hỏi nhanh. Vì sao diode trong mạch tia chịu áp ngược lớn nhất gấp đôi U hai m, còn mạch cầu chỉ chịu U hai m?','Đáp án. Ở mạch tia diode khóa nằm giữa hai nửa cuộn thứ cấp nên chịu hiệu u hai mốt trừ u hai hai, bằng hai lần u hai mốt, cực đại là hai U hai m. Ở mạch cầu, diode khóa chỉ chịu một điện áp u hai.',['Tia: uRD = u21 − u22 = 2u21','URDmax = 2U2m (tia) · U2m (cầu)']);
+QZ('Hỏi nhanh 5.4.1','hc','Hỏi nhanh. Khi tăng điện dung C hoặc tăng điện trở tải, điện áp trung bình trên tải tăng hay giảm, và độ gợn thay đổi thế nào?','Đáp án. Hằng số thời gian R nhân C lớn hơn nên tụ xả chậm hơn. Điện áp trung bình tăng, tiến gần U hai m, còn độ gợn giảm. Điều này thấy rõ từ tỉ số 2fRC chia 2fRC cộng 1, tiến tới 1 khi RC tăng.',['RC tăng → tụ xả chậm','U′LDC → U2m, độ gợn giảm']);
+QZ('Hỏi nhanh 5.4.2','bc','Hỏi nhanh. Với cùng C, R và f, vì sao điện áp trung bình có tụ của mạch toàn kỳ cao hơn mạch bán kỳ?','Đáp án. Hệ số của toàn kỳ là 8fRC chia 8fRC cộng 1, lớn hơn 2fRC chia 2fRC cộng 1 của bán kỳ. Lý do là trong một chu kỳ tụ được nạp hai lần, nên thời gian xả ngắn hơn.',['Toàn kỳ: 8fRC/(8fRC+1)','Bán kỳ: 2fRC/(2fRC+1)']);
+QZ('Hỏi nhanh 5.5.1','z','Hỏi nhanh. Nếu mất tải, dòng qua diode Zener bằng bao nhiêu, và điều đó ràng buộc việc chọn điện trở R như thế nào?','Đáp án. Khi hở tải, toàn bộ dòng I bằng V DC trừ Vz chia R chạy qua Zener, nên phải không vượt quá I Z max. Vì vậy chọn R theo V DC max trừ Vz chia I Z max.',['IL = 0 → Iz = I = (Vdc − Vz)/R','R = (VDCmax − Vz)/IZmax']);
+QZ('Hỏi nhanh 5.5.2','i9','Hỏi nhanh. IC 7912 khác IC 7812 ở điểm nào về thứ tự chân và dấu của điện áp?','Đáp án. Với 7812: chân một là vào, chân hai là đất, chân ba là ra, điện áp ra cộng 12 vôn. Với 7912: chân một là đất, chân hai là vào, chân ba là ra, điện áp vào và ra đều âm, ra trừ 12 vôn.',['7812: 1 IN · 2 GND · 3 OUT → +12 V','7912: 1 GND · 2 IN · 3 OUT → −12 V']);
+QZ('Hỏi nhanh 5.5.3','i3','Hỏi nhanh. Với IC LM317, R một bằng 240 ôm và VR hai chỉnh đến 2160 ôm thì điện áp ra xấp xỉ bao nhiêu vôn?',`Đáp án. V ra bằng 1,25 nhân một cộng 2160 chia 240, tức 1,25 nhân 10, bằng ${f(1.25*(1+2160/240),1)} vôn.`,['Vout ≈ 1,25(1 + 2160/240)','= '+f(1.25*(1+2160/240),1)+' V']);
+{const ci=n=>C.indexOf(n),
+mk=(old,parts)=>{const o=ci(old),idx=S.map((t,j)=>t.c==o?j:-1).filter(j=>j>=0);
+ parts.forEach(([nn,loc],q)=>{let c=o;if(q){C.push(nn);c=C.length-1}else C[o]=nn;CK[nn]=CK[old];loc.forEach(l=>S[idx[l]].c=c)})};
+mk('Tổng quan',[['Tổng quan',[0]],['Biến áp',[1]]]);CK['Biến áp']='x';
+mk('Toàn kỳ',[['Cầu',[0,2]],['Tia',[1,3]]]);CK['Tia']='t';
+S.forEach(t=>{if(C[t.c]=='Tia'&&!t.w&&t.k=='t')t.w='f'});
+mk('Ổn áp',[['Zener',[0,1,2,3,4,5]],['78XX/79XX',[6,7,10]],['317/337',[8,9]]]);S.forEach(t=>{if(C[t.c]=='Zener'&&t.say.startsWith('Muốn tải dòng lớn'))t.k='zb'});delete CK['78XX/79XX'];delete CK['317/337'];
+ch('Bảng tổng hợp');
+T('Bảng tổng hợp công thức chương 5. Nhóm một: biến áp. Hệ số N bằng U một chia U hai; độ tự cảm sơ cấp bằng N bình phương nhân độ tự cảm thứ cấp; tần số không đổi; đổi hiệu dụng sang biên độ nhân căn hai.',[]);
+T('Nhóm hai: chỉnh lưu bán kỳ. Trung bình U hai m chia pi, hiệu dụng U hai m chia 2, dòng thuận cực đại U hai m chia R tải, áp ngược U hai m, độ gợn khoảng 1,21.',[]);
+T('Nhóm ba: chỉnh lưu toàn kỳ. Trung bình hai U hai m chia pi, hiệu dụng U hai m chia căn hai. Áp ngược của mạch cầu là U hai m, của mạch tia là hai U hai m. Độ gợn khoảng 0,48.',[]);
+T('Nhóm bốn: tụ lọc. Hệ số 2fRC cho bán kỳ, 8fRC cho toàn kỳ. Muốn tính tụ thì dùng công thức ngược, và U phẩy luôn nhỏ hơn U hai m.',[]);
+T('Nhóm năm: ổn áp Zener. Dòng qua R bằng dòng Zener cộng dòng tải; Zener nằm giữa Izmin và Izmax; R nhỏ nhất ứng với Vdc lớn nhất, R lớn nhất ứng với Vdc nhỏ nhất.',[]);
+T('Nhóm sáu: Zener có thêm transistor BJT. Điện áp ra bằng Vz trừ 0,6 vôn; dòng base bằng dòng tải chia bê ta; công suất BJT bằng hiệu điện áp vào ra nhân dòng tải.',[]);
+T('Nhóm bảy: IC 78XX và 79XX. Điện áp vào phải cao hơn điện áp ra ít nhất 3 vôn, dòng tải tối đa 1,5 ampe, công suất tản nhiệt bằng hiệu điện áp vào ra nhân dòng tải. Nhớ thứ tự chân của 7812 khác 7912.',[]);
+T('Nhóm tám: IC 317 và 337. Điện áp ra bằng 1,25 nhân một cộng VR hai chia R một; 337 thì có dấu âm. Vậy là đã đủ công thức chương 5, chúc bạn thi tốt!',[]);
+var SEC=[['CHƯƠNG 5. MẠCH NGUỒN ỔN ÁP','Chương 5',['Mở đầu']],
+['5.1. Tổng quan về mạch nguồn ổn áp','5.1 Tổng quan',['Tổng quan']],
+['5.2. Biến áp','5.2 Biến áp',['Biến áp','VD 5.1','Hỏi nhanh 5.2']],
+['5.3. Chỉnh lưu','5.3 Chỉnh lưu',['Chỉnh lưu']],
+['5.3.1. Chỉnh lưu bán kỳ','5.3.1 Bán kỳ',['Bán kỳ','VD 5.2','Hỏi nhanh 5.3.1']],
+['5.3.2. Chỉnh lưu toàn kỳ kiểu cầu','5.3.2 Kiểu cầu',['Cầu','VD 5.3','Hỏi nhanh 5.3.2']],
+['5.3.3. Chỉnh lưu toàn kỳ kiểu tia','5.3.3 Kiểu tia',['Tia','VD 5.4','Bảng 5.1','Hỏi nhanh 5.3.3']],
+['5.4. Mạch lọc dùng tụ điện','5.4 Mạch lọc',['Mạch lọc']],
+['5.4.1. Chỉnh lưu bán kỳ có tụ lọc','5.4.1 Bán kỳ + tụ',['Tụ lọc','VD 5.5','Hỏi nhanh 5.4.1']],
+['5.4.2. Chỉnh lưu toàn kỳ có tụ lọc','5.4.2 Toàn kỳ + tụ',['Tụ lọc TK','VD 5.6','Hỏi nhanh 5.4.2']],
+['5.5. Ổn áp','5.5 Ổn áp',['Ổn áp 5.5']],
+['5.5.1. Ổn áp dùng diode Zener','5.5.1 Zener',['Zener','Hỏi nhanh 5.5.1']],
+['5.5.2. Ổn áp dùng IC 78XX/79XX','5.5.2 78XX/79XX',['78XX/79XX','Hỏi nhanh 5.5.2']],
+['5.5.3. Ổn áp dùng IC 317/337','5.5.3 317/337',['317/337','Hỏi nhanh 5.5.3']],
+['KẾT LUẬN CHƯƠNG 5','Kết luận',['Tổng kết']],
+['BÀI TẬP CHƯƠNG 5','Bài tập',C.filter(n=>/^(BT|Thêm|Khó)/.test(n))],['BẢNG TỔNG HỢP CÔNG THỨC CHƯƠNG 5','Bảng tổng hợp',['Bảng tổng hợp']]];
+var sec=new Map();SEC.forEach((e,q)=>e[2].forEach((n,r)=>sec.set(ci(n),[q,r])));
+const o=S.map((t,j)=>[t,j]).sort((a,b)=>{const x=sec.get(a[0].c)||[99,0],y=sec.get(b[0].c)||[99,0];return x[0]-y[0]||x[1]-y[1]||a[1]-b[1]}).map(a=>a[0]);S.splice(0,S.length,...o)}
+const secOf=c=>(sec.get(c)||[0])[0];
+
+{
+/* ===== Hình dạng thực tế của linh kiện (SVG vẽ tay) ===== */
+const SH='<defs><linearGradient id="sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient><linearGradient id="sv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".4"/><stop offset=".3" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient></defs>';
+const rc=(x,y,w,h,f,rx=0,g='sh')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${f}"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="url(#${g})"/>`;
+const ld=(x1,y1,x2,y2,w=2.5,c='#b9b9b9')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+const tt=(x,y,s,c='#fff',z=7)=>`<text x="${x}" y="${y}" text-anchor="middle" style="fill:${c};font-size:${z}px;font-weight:700">${s}</text>`;
+const ci=(x,y,r,f,s='none')=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" stroke="${s}"/>`;
+const CU='#c4691a',OR='#e07b00';
+const ax=(body,cols)=>{const n=cols.length;let g=ld(4,45,96,45)+`<rect x="22" y="33" width="56" height="24" rx="11" fill="${body}"/>`;cols.forEach((c,i)=>g+=`<rect x="${i<n-1?34+i*9:66}" y="33.5" width="5" height="23" fill="${c}"/>`);return g+`<rect x="22" y="33" width="56" height="24" rx="11" fill="url(#sh)"/>`};
+const toro=(f)=>{let g=`<ellipse cx="50" cy="46" rx="36" ry="26" fill="${f}"/><ellipse cx="50" cy="46" rx="17" ry="11" fill="var(--bg)"/>`;for(let k=0;k<22;k++){const a=2*Math.PI*k/22,c=Math.cos(a),s=Math.sin(a);g+=`<line x1="${(50+16*c).toFixed(1)}" y1="${(46+10*s).toFixed(1)}" x2="${(50+37*c).toFixed(1)}" y2="${(46+27*s).toFixed(1)}" stroke="${CU}" stroke-width="3"/>`}return g+ld(24,70,12,90,2,CU)+ld(76,70,88,90,2,CU)};
+const dio=(body,band,txt)=>ld(4,46,96,46)+'<circle class="fw" cx="8" cy="46" r="2.5" fill="#4aa3ff"/>'+rc(26,38,48,16,body,3)+`<rect x="62" y="38" width="8" height="16" fill="${band}"/>`+(txt?tt(44,49,txt,'#fff',6):'')+tt(12,38,'A',OR,9)+tt(88,38,'K',OR,9);
+const t220=(txt,lb)=>`<rect x="28" y="10" width="44" height="24" rx="2" fill="#b8bdc4"/>`+ci(50,20,5,'var(--bg)')+rc(28,34,44,32,'#1c1c1c',2)+tt(50,54,txt,'#fff',8)+[38,50,62].map((x,i)=>ld(x,66,x,86)+tt(x,97,lb[i],OR,lb[i].length>2?5.5:8)).join('');
+const wc='<clipPath id="cw"><rect x="20" y="2" width="60" height="26"/></clipPath>';
+const sinW=()=>wc+'<g clip-path="url(#cw)"><g class="wv" style="--d:-12px;animation-duration:.5s"><path transform="translate(8,0)" d="M0,14q3,-9 6,0'+'t6,0'.repeat(27)+'" fill="none" stroke="#4aa3ff" stroke-width="2"/></g></g>'+tt(90,18,'f',OR,9);
+const sqW=()=>wc+'<g clip-path="url(#cw)"><g class="wv" style="--d:-20px"><path transform="translate(10,0)" d="M0,24'+Array.from({length:8},(_,k)=>'H'+(k*20+5)+'V8H'+(k*20+15)+'V24').join('')+'H170" fill="none" stroke="#4aa3ff" stroke-width="2"/></g></g>'+tt(90,18,'Vo',OR,8);
+const RF={
+res4:()=>ax('#e3c78e',['#d62828','#d62828','#f77f00','#d4af37']),
+resC:()=>ax('#b88a4a',['#7b3f00','#111','#d62828','#d4af37']),
+resM:()=>ax('#6fa8dc',['#d62828','#7e22ce','#111','#7b3f00','#7b3f00']),
+wire:()=>ld(4,50,96,50)+rc(16,32,68,36,'#efe6d3',5)+Array.from({length:10},(_,k)=>`<line x1="${22+k*6}" y1="34" x2="${22+k*6}" y2="66" stroke="#b08a5a" stroke-width="1.4"/>`).join(''),
+smd:()=>rc(30,36,40,24,'#262626',2)+'<rect x="28" y="36" width="7" height="24" fill="#c9c9c9"/><rect x="65" y="36" width="7" height="24" fill="#c9c9c9"/>'+tt(50,53,'103','#fff',11),
+sip:()=>rc(10,30,80,24,'#222',2)+tt(50,46,'A103J','#fff',9)+Array.from({length:9},(_,k)=>ld(16+k*8.5,54,16+k*8.5,82,2)).join(''),
+fuse:()=>ax('#b7c4cf',['#d62828']),
+ntc:()=>ld(44,54,44,90)+ld(56,54,56,90)+'<path d="M50,12C70,12 74,34 70,48C66,60 34,60 30,48C26,34 30,12 50,12Z" fill="#d9531e"/><path d="M50,12C70,12 74,34 70,48C66,60 34,60 30,48C26,34 30,12 50,12Z" fill="url(#sv)"/>'+tt(50,38,'103','#fff',9),
+ldr:()=>'<g class="gl" stroke="#f4b400" stroke-width="2"><line x1="78" y1="14" x2="70" y2="22"/><line x1="88" y1="28" x2="78" y2="32"/><line x1="68" y1="6" x2="64" y2="16"/></g>'+ld(42,64,42,90)+ld(58,64,58,90)+ci(50,40,26,'#d8cfa9','#999')+'<path d="M32,26H68L32,34H68L32,42H68L32,50H68" fill="none" stroke="#8b3d12" stroke-width="3"/>',
+trim:()=>rc(24,22,52,48,'#1e5fa8',4)+ci(50,44,15,'#f2f2f2')+'<line class="spin" style="animation-duration:4s" x1="40" y1="44" x2="60" y2="44" stroke="#777" stroke-width="3" stroke-linecap="round"/>'+ld(34,70,34,90)+ld(50,70,50,90)+ld(66,70,66,90),
+air:()=>ld(4,45,18,45)+ld(82,45,96,45)+Array.from({length:7},(_,k)=>ld(22+k*8,30,28+k*8,60,5,CU)+ld(23+k*8,32,28+k*8,50,1.5,'#f0a15a')).join(''),
+toroid:()=>toro('#2d2d2d'),
+toroidT:()=>toro('#3a2a1a'),
+iron:()=>rc(18,18,64,54,'#8d949c',2)+'<rect x="32" y="30" width="36" height="30" fill="#151515"/>'+rc(34,32,32,26,CU,2)+[24,28,64,68].map(y=>`<line x1="18" y1="${y}" x2="82" y2="${y}" stroke="#5d636a"/>`).join('')+ld(40,72,40,88)+ld(60,72,60,88),
+slug:()=>rc(30,28,40,44,'#c9ccd1',3)+'<ellipse cx="50" cy="28" rx="20" ry="6" fill="#e7e9ec"/><rect x="44" y="12" width="12" height="16" fill="#f4f1e8" stroke="#aaa"/><line x1="44" y1="20" x2="56" y2="20" stroke="#777" stroke-width="2"/>'+ld(36,72,36,90)+ld(64,72,64,90),
+indAx:()=>ax('#4a7f9c',['#f4c20d','#7e22ce','#7b3f00','#111']),
+indSmd:()=>rc(30,28,40,44,'#1f1f1f',4)+'<rect x="24" y="36" width="9" height="28" fill="#c9c9c9"/><rect x="67" y="36" width="9" height="28" fill="#c9c9c9"/>'+tt(50,56,'472','#fff',12),
+elec:(p)=>ld(42,70,42,84)+ld(58,70,58,92)+rc(32,14,36,58,'#1c3f8f',4,'sv')+'<ellipse cx="50" cy="14" rx="18" ry="4" fill="#cfd3d8"/><rect x="32" y="14" width="9" height="58" fill="#e8eefc" opacity=".85"/>'+[28,40,52].map(y=>tt(36.5,y,'−','#1c3f8f',10)).join('')+tt(56,46,'µF','#fff',9)+(p?tt(66,92,'+ dài','#d62828',8)+tt(30,84,'−','#1d4ed8',11):''),
+tant:(p)=>ld(40,66,40,90)+ld(60,66,60,90)+'<path d="M32,66V34a18,18 0 0 1 36,0V66Z" fill="#e5a01a"/><path d="M32,66V34a18,18 0 0 1 36,0V66Z" fill="url(#sv)"/>'+tt(38,30,'+','#7a3b00',11)+tt(52,54,'106','#5a3000',9)+(p?tt(40,98,'+',OR,10)+tt(60,98,'−',OR,10):''),
+cer:()=>ld(42,58,42,90)+ld(58,58,58,90)+ci(50,36,24,'#c98a3a')+`<circle cx="50" cy="36" r="24" fill="url(#sh)"/>`+tt(50,40,'103','#4a2c0a',11),
+film:()=>rc(26,22,48,44,'#b3261e',3)+tt(50,48,'104J','#fff',10)+ld(38,66,38,90)+ld(62,66,62,90),
+filmAx:()=>ld(4,45,96,45)+rc(20,30,60,30,'#e0a82e',6)+tt(50,43,'2,2µF','#4a3000',8)+tt(50,54,'250V','#4a3000',8),
+oil:()=>rc(30,24,40,58,'#c4c9cf',4,'sv')+'<rect x="38" y="14" width="8" height="10" fill="#777"/><rect x="54" y="14" width="8" height="10" fill="#777"/>'+tt(50,58,'8µF','#333',9),
+smdE:()=>rc(28,22,44,34,'#bfc4ca',3,'sv')+'<rect x="28" y="22" width="10" height="34" fill="#111" opacity=".7"/><rect x="28" y="56" width="44" height="10" fill="#222"/><rect x="22" y="62" width="12" height="6" fill="#c9c9c9"/><rect x="66" y="62" width="12" height="6" fill="#c9c9c9"/>'+tt(55,42,'10µF','#222',8),
+trimC:()=>rc(26,26,48,40,'#d9792b',4)+ci(50,46,12,'#eee')+ld(42,46,58,46,3,'#666')+ld(38,66,38,88)+ld(62,66,62,88),
+trafo:()=>rc(14,18,72,56,'#8d949c',2)+'<rect x="26" y="28" width="48" height="36" fill="#151515"/>'+rc(28,30,44,32,'#d6a21f',2)+'<rect class="gl" x="28" y="30" width="44" height="32" fill="#fff"/>'+tt(50,50,'~220 V','#4a3000',8)+[24,36,64,76].map(x=>ld(x,74,x,90)).join(''),
+x49:()=>sinW()+ld(40,58,40,90)+ld(60,58,60,90)+'<g class="xv">'+rc(22,32,56,28,'#cfd3d8',12)+tt(50,50,'20.000','#333',9)+'</g>',
+xcyl:()=>sinW()+ld(44,62,44,90)+ld(56,62,56,90)+'<g class="xv">'+rc(38,28,24,38,'#d6d9de',12,'sv')+tt(50,50,'32k','#333',8)+'</g>',
+xsmd:()=>sinW()+'<g class="xv">'+rc(26,30,48,32,'#bfc4ca',3)+[[26,30],[66,30],[26,54],[66,54]].map(([x,y])=>`<rect x="${x}" y="${y}" width="8" height="8" fill="#8a8a8a"/>`).join('')+tt(50,50,'12.0','#222',9)+'</g>',
+reso:()=>sinW()+'<g class="xv">'+rc(28,26,44,36,'#c9a46a',5)+tt(50,48,'8.00','#4a3000',9)+'</g>'+ld(36,62,36,90)+ld(50,62,50,90)+ld(64,62,64,90),
+toggle:()=>rc(30,56,40,18,'#8a8f96',3)+'<rect x="38" y="46" width="24" height="12" fill="#b9bec4"/>'+ld(50,46,64,14,8,'#c9ccd1')+ci(64,14,5,'#e5e5e5','#888')+ld(38,74,38,90)+ld(50,74,50,90)+ld(62,74,62,90),
+rocker:()=>rc(24,24,52,40,'#1a1a1a',4)+'<path d="M30,30L70,30L66,58L34,58Z" fill="#2c2c2c"/>'+ci(50,44,7,'none','#eee')+ld(36,64,36,86,3)+ld(64,64,64,86,3),
+tact:()=>rc(28,24,44,44,'#2b2b2b',4)+ci(50,46,13,'#4a4a4a','#777')+ld(22,34,30,34,3)+ld(22,58,30,58,3)+ld(70,34,78,34,3)+ld(70,58,78,58,3),
+limit:()=>rc(28,40,44,38,'#2b6cb0',3)+ld(40,40,26,16,5,'#c9ccd1')+ci(26,16,7,'#e5e5e5','#777')+tt(52,64,'LS','#fff',10)+ld(50,78,50,90,4),
+relay:()=>rc(22,22,56,48,'rgba(170,205,230,.45)',4)+rc(28,30,24,32,CU,2)+'<line class="arm" x1="60" y1="56" x2="60" y2="30" stroke="#c9ccd1" stroke-width="3" stroke-linecap="round"/>'+tt(40,50,'12V','#fff',8)+[30,42,60,72].map(x=>ld(x,70,x,88)).join(''),
+ssr:()=>rc(18,28,64,44,'#9aa1a8',3)+'<rect x="26" y="20" width="14" height="8" fill="#555"/><rect x="60" y="20" width="14" height="8" fill="#555"/>'+tt(50,47,'SSR','#222',12)+tt(50,62,'25A','#222',9),
+rmod:()=>rc(10,26,80,48,'#1f7a3f',3)+rc(18,32,30,30,'#2b5da8',3)+tt(33,51,'5V','#fff',9)+rc(58,32,28,16,'#111',2)+[65,72,79].map(x=>ci(x,40,2.5,'#c9c9c9')).join('')+ci(64,62,3,'#ff4040')+'<rect x="72" y="56" width="10" height="8" fill="#111"/>',
+spk:()=>ci(50,46,38,'#1a1a1a')+'<g class="vib">'+ci(50,46,30,'#333','#555')+ci(50,46,11,'#555')+'</g>'+[[20,16],[80,16],[20,76],[80,76]].map(([x,y])=>ci(x,y,2.5,'#888')).join(''),
+spkC:()=>'<path class="vib" d="M12,18L88,18L64,58L36,58Z" fill="#2f2f2f"/><rect x="10" y="14" width="80" height="5" fill="#666"/>'+rc(34,58,32,16,'#8a8f96',2)+'<rect x="44" y="50" width="12" height="8" fill="'+CU+'"/>'+tt(50,34,'màng loa','#fff',7)+tt(50,69,'nam châm','#111',7)+tt(80,56,'cuộn dây',CU,7),
+mdc:()=>ld(78,46,96,46,5,'#d6d9de')+rc(18,24,58,44,'#aeb4bb',12)+rc(14,30,10,32,'#555',2)+rc(76,32,5,28,'#777',1)+'<rect x="4" y="34" width="12" height="4" fill="#c9a227"/><rect x="4" y="52" width="12" height="4" fill="#c9a227"/>'+tt(50,50,'12V','#222',10)+'<g class="spin"><circle cx="91" cy="46" r="6" fill="#d6d9de" stroke="#777"/><line x1="91" y1="40" x2="91" y2="52" stroke="#555" stroke-width="2"/></g>',
+mac:()=>ld(78,46,96,46,5,'#d6d9de')+rc(16,26,56,40,'#2b5aa0',4)+Array.from({length:8},(_,k)=>`<line x1="${22+k*6.5}" y1="26" x2="${22+k*6.5}" y2="66" stroke="#1c3f73" stroke-width="2"/>`).join('')+rc(72,30,8,32,'#7e8a96',2)+rc(24,66,44,6,'#444',1)+rc(34,18,18,8,'#222',1)+'<g class="spin"><circle cx="91" cy="46" r="6" fill="#d6d9de" stroke="#777"/><line x1="91" y1="40" x2="91" y2="52" stroke="#555" stroke-width="2"/></g>',
+step:()=>rc(24,16,52,52,'#262626',3)+ci(50,42,16,'#c9ccd1')+ci(50,42,5,'#666')+'<line class="stp" x1="50" y1="27" x2="50" y2="57" stroke="#444" stroke-width="3"/>'+[[30,22],[70,22],[30,62],[70,62]].map(([x,y])=>ci(x,y,2.5,'#888')).join('')+['#e63946','#2a6fdb','#2a9d4a','#f4c20d'].map((c,i)=>ld(38+i*8,68,38+i*8,90,2,c)).join(''),
+servo:()=>rc(8,44,84,8,'#222',1)+rc(18,32,64,38,'#1d1d1d',3)+ci(70,28,8,'#c9ccd1')+'<rect class="sw" x="50" y="25" width="40" height="5" rx="2" fill="#f2f2f2"/>'+['#f77f00','#d62828','#7b3f00'].map((c,i)=>ld(18,56+i*4,2,56+i*4,2,c)).join('')+tt(46,62,'SG90','#fff',7),
+d4007:()=>dio('#222','#d9d9d9','1N4007'),
+d4148:()=>ld(4,46,96,46)+'<circle class="fw" cx="8" cy="46" r="2.5" fill="#4aa3ff"/>'+rc(34,40,32,12,'#d9913b',4)+'<rect x="58" y="40" width="5" height="12" fill="#111"/>'+tt(12,38,'A',OR,9)+tt(88,38,'K',OR,9),
+dsmd:()=>'<rect x="20" y="40" width="12" height="12" fill="#c9c9c9"/><rect x="68" y="40" width="12" height="12" fill="#c9c9c9"/>'+rc(26,36,48,20,'#222',2)+'<rect x="60" y="36" width="8" height="20" fill="#ddd"/>',
+d5819:()=>dio('#1c1c1c','#bbb','1N5819'),
+dz:()=>ld(4,46,96,46)+rc(34,40,32,12,'#c4803a',5)+'<rect x="56" y="40" width="5" height="12" fill="#111"/>'+tt(12,38,'A',OR,9)+tt(88,38,'K',OR,9),
+dz1:()=>dio('#222','#ddd','1N4742'),
+dz5:()=>ld(4,46,96,46)+rc(22,34,56,24,'#1a1a1a',4)+'<rect x="66" y="34" width="8" height="24" fill="#ddd"/>'+tt(44,50,'1N5349','#fff',7)+tt(10,38,'A',OR,9)+tt(90,38,'K',OR,9),
+brSq:()=>rc(24,18,52,52,'#2a2a2a',3)+ci(50,44,9,'var(--bg)')+tt(33,33,'~','#fff',12).replace('<text','<text class="ac"')+tt(67,33,'+','#fff',12)+tt(67,63,'~','#fff',12).replace('<text','<text class="ac"')+tt(33,63,'−','#fff',12)+[30,70].map(x=>ld(x,70,x,88,3)).join(''),
+brRd:()=>ci(50,40,26,'#222')+`<circle cx="50" cy="40" r="26" fill="url(#sh)"/>`+tt(50,43,'W10M','#fff',8)+[36,44,56,64].map(x=>ld(x,64,x,88)).join(''),
+brFl:()=>rc(18,28,64,28,'#222',2)+tt(50,46,'KBP307','#fff',9)+[30,43,57,70].map(x=>ld(x,56,x,88)).join(''),
+to220d:()=>t220('MBR16100',['A','K','A']),
+to92:()=>ld(40,62,40,86)+ld(50,62,50,86)+ld(60,62,60,86)+'<path d="M32,62V36a18,18 0 0 1 36,0V62Z" fill="#1b1b1b"/><path d="M32,62V36a18,18 0 0 1 36,0V62Z" fill="url(#sh)"/>'+tt(50,48,'C945','#fff',9)+['E','C','B'].map((l,i)=>tt(40+i*10,97,l,OR,9)).join(''),
+to126:()=>'<rect x="32" y="10" width="36" height="16" rx="2" fill="#b8bdc4"/>'+ci(50,18,4,'var(--bg)')+rc(32,26,36,30,'#1c1c1c',2)+tt(50,45,'BD139','#fff',8)+[40,50,60].map(x=>ld(x,56,x,86)).join('')+['E','C','B'].map((l,i)=>tt(40+i*10,97,l,OR,9)).join(''),
+to220:()=>t220('TIP41',['B','C','E']),
+sot:()=>rc(36,38,28,18,'#1c1c1c',2)+ld(42,56,42,66,3)+ld(58,56,58,66,3)+ld(50,38,50,28,3)+tt(50,51,'1AM','#fff',7),
+scr:()=>t220('BT151',['K','A','G']),
+stud:()=>rc(30,56,40,14,'#a9afb6',2)+rc(44,70,12,18,'#b9bec4',1)+rc(34,30,32,26,'#c9ccd1',3,'sv')+'<path d="M44,30C40,18 30,16 26,8M56,30C60,18 70,16 74,8" fill="none" stroke="#d6d6d6" stroke-width="2"/>'+tt(22,8,'K',OR,8)+tt(78,8,'G',OR,8)+tt(50,98,'A',OR,9),
+triac:()=>t220('BT136',['T1','T2','G']),
+diac:()=>ld(4,46,96,46)+rc(34,40,32,12,'#d9913b',5)+tt(50,49,'DB3','#222',6)+tt(12,38,'A1',OR,8)+tt(88,38,'A2',OR,8),
+led:(p)=>{const[c,l]=(p||'#e63946').split(',');return `<circle class="gl" cx="50" cy="40" r="26" fill="${c}"/>`+ld(42,66,42,92)+ld(58,66,58,84)+`<path d="M34,62V34a16,16 0 0 1 32,0V62Z" fill="${c}" opacity=".88"/><path d="M34,62V34a16,16 0 0 1 32,0V62Z" fill="url(#sv)"/>`+rc(30,62,40,5,c,1)+'<path d="M44,62V46M56,62V50M44,46H56" stroke="#555" stroke-width="1.5" fill="none"/>'+(l?tt(42,102,'A (+)',OR,8)+tt(60,94,'K (−)',OR,8):'')},
+seg7:()=>rc(16,14,68,70,'#111',3)+[22,45,68].map((y,q)=>`<rect class="sg" data-s="${'agd'[q]}" x="36" y="${y}" width="28" height="5" rx="2" fill="#ff3b30"/>`).join('')+[[29,26],[66,26],[29,49],[66,49]].map(([x,y],q)=>`<rect class="sg" data-s="${'fbec'[q]}" x="${x}" y="${y}" width="5" height="20" rx="2" fill="#ff3b30"/>`).join('')+ci(75,72,2.5,'#ff3b30')+[26,38,50,62,74].map(x=>ld(x,84,x,94,2)).join(''),
+pdCan:()=>ld(44,64,44,90)+ld(56,64,56,90)+rc(30,60,40,4,'#aaa',1)+rc(34,28,32,32,'#c9ccd1',3,'sv')+'<ellipse cx="50" cy="28" rx="16" ry="4" fill="#8a8f96"/><ellipse cx="50" cy="28" rx="9" ry="2.5" fill="#223"/>',
+optoDIP:(p)=>rc(22,32,56,28,'#1c1c1c',2)+ci(28,38,2.5,'#666')+'<path class="bm" d="M38,41H70" stroke="#ffd54a" stroke-width="2" stroke-dasharray="3 3"/>'+tt(54,52,p||'PC817','#fff',8)+[32,68].map(x=>ld(x,60,x,80)+ld(x,32,x,14)).join(''),
+dip8:(p)=>(p=='NE555'?sqW():'')+rc(22,30,56,34,'#1c1c1c',2)+'<path d="M44,30a6,6 0 0 0 12,0" fill="#333"/>'+ci(29,58,2,'#777')+tt(52,52,p,'#fff',8)+[30,42,54,66].map(x=>ld(x,64,x,84)).join(''),
+so8:(p)=>(p=='NE555'?sqW():'')+rc(30,34,40,26,'#1c1c1c',2)+[0,1,2,3].map(k=>`<rect x="24" y="${37+k*5.5}" width="6" height="3" fill="#c9c9c9"/><rect x="70" y="${37+k*5.5}" width="6" height="3" fill="#c9c9c9"/>`).join('')+ci(35,40,1.8,'#777')+tt(52,52,p,'#fff',7),
+r7805:()=>t220('7805',['IN','GND','OUT']),
+r7905:()=>t220('7905',['GND','IN','OUT']),
+l317:()=>t220('LM317',['ADJ','OUT','IN']),
+l337:()=>t220('LM337',['ADJ','IN','OUT']),
+trafoCT:()=>rc(14,18,72,56,'#8d949c',2)+'<rect x="26" y="28" width="48" height="36" fill="#151515"/>'+rc(28,30,44,32,'#d6a21f',2)+'<rect class="gl" x="28" y="30" width="44" height="32" fill="#fff"/>'+tt(50,50,'12-0-12','#4a3000',8)+[20,32,54,66,78].map(x=>ld(x,74,x,90)).join(''),
+canC:()=>rc(26,14,48,62,'#222',4,'sv')+'<ellipse cx="50" cy="14" rx="24" ry="5" fill="#cfd3d8"/><rect x="26" y="14" width="10" height="62" fill="#cfd3d8" opacity=".6"/>'+tt(55,46,'4700µF','#fff',8)+tt(55,57,'50V','#fff',8)+'<rect x="82" y="14" width="8" height="62" fill="none" stroke="#888"/><rect class="chg" x="82" y="14" width="8" height="62" fill="#4aa3ff"/>'+tt(86,88,'U',OR,8)+[40,60].map(x=>ld(x,76,x,88,3)).join(''),
+heat:()=>'<g class="gl" stroke="#ff6a3d" stroke-width="2" fill="none"><path d="M30,12q4,-4 0,-8"/><path d="M50,12q4,-4 0,-8"/><path d="M70,12q4,-4 0,-8"/></g>'+Array.from({length:9},(_,k)=>`<rect x="${16+k*8}" y="16" width="4" height="26" fill="#c4c9cf"/>`).join('')+rc(14,40,72,34,'#aeb4bb',2)+rc(36,46,28,22,'#1c1c1c',2)+tt(50,60,'7812','#fff',7)+[42,50,58].map(x=>ld(x,68,x,88)).join(''),
+psu:()=>rc(6,18,88,62,'#1f7a3f',3)+rc(12,26,18,18,'#222',2)+ci(52,36,13,'#1c3f8f')+ci(52,36,5,'#cfd3d8')+rc(68,22,20,30,'#aeb4bb',1)+Array.from({length:4},(_,k)=>`<line x1="${72+k*5}" y1="22" x2="${72+k*5}" y2="52" stroke="#7d848c"/>`).join('')+rc(72,40,12,10,'#1c1c1c',1)+rc(12,58,16,14,'#2b5da8',2)+ci(20,65,3,'#ddd')+rc(70,60,16,12,'#2b5da8',2)+ci(78,66,3,'#ddd')+'<circle class="gl" cx="54" cy="66" r="3.5" fill="#ff4040"/>'
+};
+const gal=it=>{const rows=Math.ceil(it.length/4),ox=(400-Math.min(it.length,4)*100)/2;let g='';
+ it.forEach(([k,c,p],j)=>{const[a,b]=c.split('|');g+=`<g class="bd" style="animation-delay:${j*.4}s" transform="translate(${ox+(j%4)*100},${Math.floor(j/4)*130})"><g class="fl" style="animation-delay:${j*.5}s">${RF[k](p)}</g><text x="50" y="111" text-anchor="middle">${a}</text>${b?`<text x="50" y="122" text-anchor="middle">${b}</text>`:''}</g>`});
+ return `<div class="rt">Hình dạng thực tế (minh họa)</div><svg class="rl" viewBox="0 0 400 ${rows*130}">${SH}${g}</svg>`};
+
+const RG={
+chain:[['trafo','① Hạ áp|biến áp'],['brSq','② Chỉnh lưu|cầu diode'],['canC','③ Lọc phẳng|tụ hóa'],['r7805','④ Ổn áp|IC 78XX']],
+trafo:[['trafo','Biến áp|lõi lá sắt'],['toroidT','Biến áp xuyến'],['trafoCT','Biến áp điểm giữa|12-0-12']],
+dio:[['d4007','Diode 1N4007|1 A, 1000 V'],['dsmd','Diode dán SMD'],['brFl','Cầu chỉnh lưu|4 diode đóng gói']],
+half:[['trafo','Biến áp|cấp u2'],['d4007','Diode chỉnh lưu|(1 diode)']],
+bridge:[['brSq','Cầu vuông'],['brRd','Cầu tròn'],['brFl','Cầu dẹt 4 chân'],['d4007','Hoặc 4 diode rời|1N4007 ×4']],
+tia:[['trafoCT','Biến áp điểm giữa'],['d4007','Diode 1N4007|dùng 2 chiếc']],
+cap:[['elec','Tụ hóa|chân dài = +',1],['canC','Tụ hóa công suất|nạp/xả ra tải'],['cer','Tụ gốm|lọc nhiễu cao tần'],['film','Tụ film|lọc nhiễu']],
+zener:[['dz','Zener|vỏ thủy tinh'],['dz1','Zener 1 W|1N4742'],['dz5','Zener 5 W|1N5349']],
+zb:[['dz1','Zener|giữ điện áp chuẩn'],['to220','BJT công suất|TIP41'],['heat','BJT + tản nhiệt|chịu dòng lớn']],
+reg:[['dz1','Zener|ổn áp đơn giản'],['to220','Zener + BJT|tăng dòng tải'],['r7805','IC 78XX|ổn áp cố định'],['l317','IC LM317|điều chỉnh được']],
+ic78:[['r7805','7805: +5 V|IN-GND-OUT'],['r7905','7905: −5 V|GND-IN-OUT'],['heat','IC + tản nhiệt|tỏa nhiệt nhiều'],['psu','Mạch nguồn|hoàn chỉnh']],
+ic317:[['l317','LM317|nguồn dương'],['l337','LM337|nguồn âm'],['trim','Biến trở 5 kΩ|VR2 chỉnh áp ra']]};
+const GM={'Mở đầu':'chain','Tổng quan':'chain','Tổng kết':'chain','Khó 2':'chain','Khó 4':'chain','Biến áp':'trafo','Chỉnh lưu':'dio','Mạch lọc':'cap','Ổn áp 5.5':'reg','78XX/79XX':'ic78','Hỏi nhanh 5.5.2':'ic78','317/337':'ic317','Hỏi nhanh 5.5.3':'ic317'};
+const GL={x:'trafo',h:'half',b:'bridge',bn:'bridge',t:'tia',hc:'cap',tc:'cap',bc:'cap',z:'zener',zb:'zb'};
+let lastG=null;
+window.realOf=s=>{const n=C[s.c],k=GM[n]||GL[CK[n]]||'';if(k===lastG)return null;lastG=k;return RG[k]?gal(RG[k]):''};
+}
+let simK=2;
+const simUpd=()=>{const U=+$('i1').value,fq=+$('i2').value,R=+$('i3').value,Cu=+$('i4').value,Cf=Cu*1e-6;
+$('o1').textContent=U;$('o2').textContent=fq;$('o3').textContent=R;$('o4').textContent=Cu||'0 (không tụ)';
+const T=1/fq,N=600,dt=3*T/N,tau=R*Cf,vi=[],vc=[];let v=0;
+for(let n=0;n<=N;n++){const t=n*dt,sn=Math.sin(2*Math.PI*fq*t),e=U*(simK==8?Math.abs(sn):Math.max(sn,0));v=Cf?Math.max(e,v*Math.exp(-dt/tau)):e;vi.push(U*sn);vc.push(v)}
+const L=vc.slice(N*2/3),av=L.reduce((a,b)=>a+b,0)/L.length,mx=Math.max(...L),mn=Math.min(...L);
+const nn=simK*fq*R*Cf,Uf=Cf?U*nn/(nn+1):U/(simK==8?Math.PI/2:Math.PI);
+const X=n=>(n/N*400).toFixed(1),Y=u=>(65-u/U*50).toFixed(1);
+const pl=a=>a.map((u,n)=>X(n)+','+Y(u)).join(' ');
+$('sv').innerHTML=`<line x1="0" x2="400" y1="65" y2="65" stroke="currentColor" opacity=".35"/><polyline points="${pl(vi)}" fill="none" stroke="var(--mut)" stroke-dasharray="4 3" stroke-width="1.2"/><polyline points="${pl(vc)}" fill="none" stroke="var(--ac)" stroke-width="2.4"/><line x1="267" x2="400" y1="${Y(av)}" y2="${Y(av)}" stroke="#f59e0b" stroke-width="1.4" stroke-dasharray="3 2"/><text x="3" y="12">+U2m</text><text x="3" y="125">3 chu kỳ · xanh: u_L · cam: giá trị trung bình</text>`;
+$('so').innerHTML=(Cf?`Công thức: U′<sub>LDC</sub> = U<sub>2m</sub>·${simK}fRC/(${simK}fRC+1) ≈ <b>${f(Uf,2)} V</b> (${simK}fRC = ${f(nn,1)})<br>`:`Không có tụ: U<sub>LDC</sub> = ${simK==8?'2U<sub>2m</sub>/π':'U<sub>2m</sub>/π'} ≈ <b>${f(Uf,2)} V</b><br>`)+`Mô phỏng: trung bình ≈ <b>${f(av,2)} V</b> · gợn đỉnh–đỉnh ≈ <b>${f(mx-mn,2)} V</b> (${f((mx-mn)/Math.max(av,1e-9)*100,1)} % của trung bình)`+(Cf?`<br><small>Tăng C hoặc R<sub>L</sub> → gợn giảm, điện áp trung bình tiến gần U<sub>2m</sub>.</small>`:'')};
+
+const $=id=>document.getElementById(id),ss=window.speechSynthesis;
+let i=0,play=false,tk=0,tm,key='';
+const first=q=>S.findIndex(t=>secOf(t.c)==q);
+['i1','i2','i3','i4'].forEach(k=>$(k).oninput=simUpd);$('jp').onchange=e=>go(S.findIndex(t=>t.c==+e.target.value));$('pib').textContent=location.hash=='#pi314'?'π = 3,14 (như sách) · bấm để dùng π chính xác':'π chính xác · bấm để dùng π = 3,14 như sách';$('pib').onclick=()=>{location.hash=location.hash=='#pi314'?'':'#pi314';location.reload()};
+SEC.forEach((e,q)=>{const b=document.createElement('button');b.textContent=e[1];b.title=e[0];b.onclick=()=>go(first(q));$('nv').append(b)});
+$('pr').max=S.length-1;
+function draw(w){const full=w=='f'||w=='cf',cap=w[0]=='c',a=[],o=[];let v=0;
+ for(let k=0;k<=400;k++){const s=Math.sin(2*Math.PI*k/200),e=full?Math.abs(s):Math.max(s,0);v=cap?Math.max(e,v*Math.exp(-1/180)):e;a.push(k+','+(60-45*s).toFixed(1));o.push(k+','+(60-45*v).toFixed(1))}
+ return `<line x1="0" x2="400" y1="60" y2="60" stroke="currentColor" opacity=".3"/><path class="i" d="M${a.join('L')}"/><path class="o" pathLength="1" d="M${o.join('L')}"/><text x="205" y="10">┄┄ u2 (vào)   ━━ uL (ra)</text><text x="2" y="118">0</text><text x="94" y="118">T/2</text><text x="196" y="118">T</text><text x="290" y="118">3T/2</text><text x="384" y="118">2T</text>`}
+const DE={
+'VD 5.1':['Ví dụ 5.1 — Đấu nối nguồn điện xoay chiều một pha có tần số 50 Hz và điện áp hiệu dụng 220 V đến ngõ vào của máy biến áp một pha, ngõ ra của máy biến áp có điện áp hiệu dụng 12 V.','a. Xác định hệ số biến áp N của máy biến áp.','b. Xác định tần số nguồn điện ở ngõ ra của máy biến áp.','c. Nếu biết rằng độ tự cảm của cuộn dây ngõ ra của biến áp là 0,001 H và điện áp biên độ ngõ ra máy biến áp là 20 V. Xác định lại hệ số biến áp và độ tự cảm của cuộn dây sơ cấp.'],
+'VD 5.2':['Ví dụ 5.2 — Cho mạch điện như Hình 5.5, biết u1(t) = 220√2 sin100πt (V), điện trở tải RL = 100 Ω, điện áp chỉnh lưu trung bình trên tải là 12 V. Tìm các đại lượng sau đây:','a. Hệ số biến áp N và dòng điện chỉnh lưu trung bình chạy qua tải.','b. Điện áp hiệu dụng trên tải.','c. Điện áp ngược lớn nhất đặt lên diode.','d. Dòng điện thuận cực đại chạy qua diode.'],
+'VD 5.3':['Ví dụ 5.3 — Cho mạch điện như Hình 5.8, biết u1(t) = 220√2 sin100πt (V), điện trở tải RL = 100 Ω, điện áp chỉnh lưu trung bình trên tải là 15 V. Tính các thông số sau:','a. Hệ số biến áp N và dòng điện chỉnh lưu trung bình chạy qua tải.','b. Điện áp hiệu dụng trên tải.','c. Điện áp ngược lớn nhất đặt lên diode.','d. Dòng điện thuận cực đại chạy qua diode.'],
+'VD 5.4':['Ví dụ 5.4 — Cho mạch điện như Hình 5.11, biết u1(t) = 110√2 sin120πt (V), điện trở tải RL = 100 Ω, hệ số biến áp N = 6. Tính các thông số sau:','a. Điện áp chỉnh lưu trung bình trên tải và dòng điện chỉnh lưu trung bình chạy qua tải.','b. Điện áp hiệu dụng trên tải và dòng điện hiệu dụng chạy qua tải.','c. Điện áp ngược lớn nhất đặt lên diode.'],
+'VD 5.5':['Ví dụ 5.5 — Cho mạch điện như Hình 5.5, biết u1(t) = 220√2 sin100πt (V), điện trở tải RL = 100 Ω, tụ điện C = 1000 µF, hệ số biến áp N = 8.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải là 25 V.'],
+'VD 5.6':['Ví dụ 5.6 — Cho mạch điện như Hình 5.17, biết u1(t) = 110√2 sin120πt (V), điện trở tải RL = 100 Ω, tụ điện C = 1000 µF, hệ số biến áp N = 6.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải là 23 V.'],
+'BT 5.1':['Bài tập 5.1 — Biến áp một pha có điện áp sơ cấp u1 = 220√2 sin100πt (V) và điện áp hiệu dụng thứ cấp là 20 V. Độ tự cảm của cuộn dây thứ cấp là 1 H.','a. Xác định hệ số biến áp.','b. Độ tự cảm của cuộn dây sơ cấp.'],
+'BT 5.2':['Bài tập 5.2 — Cho mạch điện như Hình 5.26, biết u1(t) = 250√2 sin120πt (V), điện trở tải RL = 200 Ω, điện áp chỉnh lưu trung bình trên tải là 18 V. Tìm các đại lượng sau đây:','a. Hệ số biến áp N.','b. Dòng điện chỉnh lưu trung bình chạy qua tải.','c. Điện áp hiệu dụng trên tải.','d. Điện áp ngược lớn nhất đặt lên diode.','e. Dòng điện thuận cực đại chạy qua diode.'],
+'BT 5.3':['Bài tập 5.3 — Cho mạch điện như Hình 5.27, biết u1(t) = 325 sin100πt (V), điện trở tải RL = 200 Ω, điện áp chỉnh lưu trung bình trên tải là 25 V. Tính các thông số sau của mạch chỉnh lưu:','a. Hệ số biến áp N và dòng điện chỉnh lưu trung bình chạy qua tải.','b. Điện áp hiệu dụng trên tải.','c. Điện áp ngược lớn nhất đặt lên diode.','d. Dòng điện thuận cực đại chạy qua diode.'],
+'BT 5.4':['Bài tập 5.4 — Cho mạch điện như Hình 5.28, biết u1(t) = 212 sin120πt (V), điện trở tải RL = 100 Ω, hệ số biến áp N = 8. Tính các thông số sau:','a. Điện áp chỉnh lưu trung bình trên tải và dòng điện chỉnh lưu trung bình chạy qua tải.','b. Điện áp hiệu dụng trên tải và dòng điện hiệu dụng chạy qua tải.','c. Điện áp ngược lớn nhất trên diode và dòng điện thuận tối đa chạy qua.'],
+'BT 5.5':['Bài tập 5.5 — Cho mạch điện như Hình 5.29, biết u1(t) = 311 sin314t (V), điện trở tải RL = 100 Ω, tụ điện C = 1000 µF, hệ số biến áp N = 10.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải bằng 24 V.'],
+'BT 5.6':['Bài tập 5.6 — Cho mạch điện như Hình 5.30, biết u1(t) = 100√2 sin100πt (V), điện trở tải RL = 100 Ω, tụ điện C = 2200 µF, hệ số biến áp N = 5.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải bằng 20 V.','c. Điện áp chỉnh lưu trung bình trên tải tối đa bằng bao nhiêu, hãy tìm điện dung của tụ lọc để đạt được điện áp đó.','d. Kiểm tra lại độ gợn sóng trường hợp không tụ lọc và có tụ lọc.'],
+'BT 5.7':['Bài tập 5.7 — Cho mạch điện như Hình 5.31, biết u1(t) = 220 sin314t (V), điện trở tải RL = 100 Ω, tụ điện C = 1000 µF, hệ số biến áp N = 10.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải bằng 20 V.'],
+'BT 5.8':['Bài tập 5.8 — Cho mạch điện như Hình 5.32, biết u(t) = 28√2 sin100πt (V), điện trở tải RL = 200 Ω. Xác định các thông số sau của mạch chỉnh lưu:','a. Điện áp chỉnh lưu trung bình trên tải và dòng điện chỉnh lưu trung bình chạy qua tải.','b. Điện áp hiệu dụng trên tải và dòng điện hiệu dụng chạy qua tải.','c. Dòng điện thuận cực đại chạy qua diode và so sánh với dòng điện cực đại chạy qua tải.','d. Biểu thức điện áp ngược trên diode và điện áp ngược lớn nhất đặt trên diode.','e. Nếu mắc thêm tụ điện C = 2200 µF song song với tải RL thì điện áp chỉnh lưu trung bình trên tải bằng bao nhiêu?']};
+Object.assign(DE,{
+'Thêm 1':['Bài tập thêm 1 (ngoài sách) — Mạch chỉnh lưu bán kỳ như Hình 5.3 (một diode lý tưởng nối tiếp tải), nguồn u1(t) = 170 sin120πt (V), hệ số biến áp N = 10, điện trở tải RL = 50 Ω. Tính:','a. Điện áp chỉnh lưu trung bình trên tải và dòng chỉnh lưu trung bình.','b. Điện áp hiệu dụng trên tải và dòng điện hiệu dụng.','c. Điện áp ngược lớn nhất đặt lên diode.','d. Dòng điện thuận cực đại chạy qua diode.'],
+'Thêm 2':['Bài tập thêm 2 (ngoài sách) — Mạch chỉnh lưu cầu như Hình 5.6, u1(t) = 110√2 sin120πt (V), điện trở tải RL = 30 Ω, điện áp chỉnh lưu trung bình trên tải là 9 V. Tính:','a. Hệ số biến áp N và dòng điện chỉnh lưu trung bình.','b. Điện áp hiệu dụng trên tải và dòng điện hiệu dụng.','c. Điện áp ngược lớn nhất đặt lên diode.','d. Dòng điện thuận cực đại chạy qua diode.'],
+'Thêm 3':['Bài tập thêm 3 (ngoài sách) — Mạch chỉnh lưu toàn kỳ kiểu tia như Hình 5.9, u1(t) = 220√2 sin100πt (V), điện trở tải RL = 120 Ω, điện áp chỉnh lưu trung bình trên tải là 24 V. Tính:','a. Hệ số biến áp N và dòng điện chỉnh lưu trung bình.','b. Điện áp hiệu dụng trên tải.','c. Điện áp ngược lớn nhất đặt lên diode.','d. Dòng điện thuận cực đại chạy qua diode.'],
+'Thêm 4':['Bài tập thêm 4 (ngoài sách) — Mạch chỉnh lưu bán kỳ có tụ lọc như Hình 5.12, u1(t) = 220√2 sin100πt (V), N = 11, điện trở tải RL = 200 Ω, tụ điện C = 470 µF.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải là 27 V.'],
+'Thêm 5':['Bài tập thêm 5 (ngoài sách) — Mạch chỉnh lưu cầu có tụ lọc như Hình 5.15, u1(t) = 311 sin314t (V), N = 14, điện trở tải RL = 60 Ω, tụ điện C = 2200 µF.','a. Tính điện áp chỉnh lưu trung bình trên tải.','b. Tìm điện dung C để điện áp chỉnh lưu trung bình trên tải là 21 V.','c. Ước lượng độ gợn đỉnh–đỉnh ΔV của điện áp trên tải khi C = 2200 µF.'],
+'Thêm 6':['Bài tập thêm 6 (ngoài sách) — Mạch ổn áp dùng diode Zener như Hình 5.18: nguồn một chiều Vdc thay đổi từ 15 V đến 20 V, Vz = 9 V, công suất cực đại của Zener Pzmax = 1 W, Izmin = 5 mA, tải RL = 300 Ω.','a. Tìm Izmax và dòng điện tải.','b. Tìm khoảng giá trị của điện trở R.','c. Chọn R = 120 Ω và kiểm tra dòng Iz.','d. Kiểm tra trường hợp hở tải.']});
+Object.assign(DE,{
+'Khó 1':['Bài tập nâng cao 1 (ngoài sách) — Thiết kế nguồn một chiều 12 V cho tải RL = 24 Ω (dòng khoảng 0,5 A) từ lưới u1(t) = 220√2 sin100πt (V), dùng chỉnh lưu cầu và tụ lọc C = 2200 µF (Hình 5.15).','a. Tìm U2m cần thiết và hệ số biến áp N (làm tròn N về số nguyên), tính lại điện áp trung bình thực tế.','b. Tính dòng trung bình qua tải, dòng trung bình mỗi diode và IFDmax.','c. Chọn diode (áp ngược, dòng) và điện áp định mức của tụ.','d. Độ gợn đỉnh–đỉnh phải không quá 1 V: tìm C tối thiểu, chọn C chuẩn và tính lại điện áp trung bình.'],
+'Khó 2':['Bài tập nâng cao 2 (ngoài sách) — Thiết kế nguồn đối xứng ±12 V như Hình 5.23: biến áp có điểm giữa, mỗi nhánh hai diode, tụ lọc C1 = 2200 µF và IC 7812 (nhánh dương), 7912 (nhánh âm). Mỗi nhánh cấp dòng tải 0,8 A. Lưới u1(t) = 220√2 sin100πt (V).','a. IC cần điện áp vào cao hơn điện áp ra ít nhất 3 V. Chọn điện áp trung bình sau tụ lọc mỗi nhánh là 18 V, tính điện trở tải tương đương mỗi nhánh.','b. Tìm U2m của mỗi nửa cuộn và hệ số biến áp N (làm tròn về số nguyên).','c. Kiểm tra điện áp thấp nhất sau gợn của mỗi nhánh có còn từ 15 V trở lên không.','d. Tính điện áp ngược lớn nhất đặt lên diode và dòng trung bình mỗi diode.','e. Tính công suất tiêu tán trên IC 7812.'],
+'Khó 3':['Bài tập nâng cao 3 (ngoài sách) — Ổn áp Zener kết hợp BJT như Hình 5.19: Vdc thay đổi từ 11 V đến 14 V, Vz = 6,8 V, Pzmax = 1 W, Izmin = 5 mA, tải RL = 12 Ω, hệ số khuếch đại dòng của BJT β = 50.','a. Điện áp trên tải UL và dòng tải IL.','b. Giải thích vì sao chỉ dùng Zener (không có BJT) không đáp ứng được tải này.','c. Dòng base IB (xấp xỉ IL/β).','d. Tìm khoảng giá trị của R.','e. Chọn R = 150 Ω, kiểm tra Iz khi đầy tải với Vdc nhỏ nhất và khi hở tải với Vdc lớn nhất.','f. Công suất lớn nhất tiêu tán trên BJT.'],
+'Khó 4':['Bài tập nâng cao 4 (ngoài sách) — Nguồn điều chỉnh dùng IC 317 như Hình 5.24, R1 = 240 Ω, biến trở VR2 tối đa 5 kΩ, dòng tải tối đa 1,5 A.','a. Tìm VR2 để điện áp ra Vout = 9 V.','b. Tìm dải điện áp ra điều chỉnh được.','c. Điện áp vào tối thiểu, và công suất tiêu tán trên IC khi Vin = 15 V, IL = 1 A.']});
+const partOf=t=>{const m=t.match(/^Câu ([a-z])[.,]/);if(m)return[m[1],'Đang giải: ý '+m[1]+')'];if(/^(Đọc đề|Bước đầu tiên là đọc đề)/.test(t))return['','Đang làm: đọc đề'];if(/^Hướng giải/.test(t))return['','Đang làm: hướng giải'];if(/^Tóm tắt đáp số/.test(t))return['','Đáp số của bài'];return['','']};
+const DEH=(c,L)=>{const d=DE[c];return d?`<b>ĐỀ BÀI</b> · `+mt(d[0])+d.slice(1).map(x=>`<div${L&&x[0]==L&&x[1]=='.'?` class='cur'`:''}>${mt(x)}</div>`).join(''):''};
+const TR=[
+['Điện áp chỉnh lưu trung bình trên tải ULDC',['ULDC = U2m/π = U1m/(Nπ)','ULDC = 2U2m/π = 2U1m/(Nπ)']],
+['Điện áp chỉnh lưu trung bình trên tải khi có tụ lọc U′LDC',['U′LDC = U2m·2fRC/(2fRC+1)','U′LDC = U2m·8fRC/(8fRC+1)']],
+['Điện áp hiệu dụng trên tải ULHD',['ULHD = U2m/2','ULHD = U2m/√2']],
+['Điện áp ngược lớn nhất đặt trên diode URDmax',['URDmax = U2m','URDmax = U2m','URDmax = 2U2m']],
+['Dòng chỉnh lưu trung bình chạy qua tải ILDC',['ILDC = ULDC/RL = U2m/(πRL)','ILDC = ULDC/RL = 2U2m/(πRL)']],
+['Dòng điện hiệu dụng chạy qua tải ILHD',['ILHD = ULHD/RL = U2m/(2RL)','ILHD = ULHD/RL = U2m/(√2RL)']],
+['Dòng điện thuận cực đại chạy qua diode IFDmax',['IFDmax = U2m/RL']],
+['Độ gợn sóng Γ = √(ULHD² − ULDC²)/ULDC',['Γ = '+f(Gh),'Γ = '+f(Gf)]]];
+const TBL=n=>{const c=n==1?3:n==2?7:8,p=n==1?0:n==2?3:7;return `<table class='t51'><tr><th>Các thông số chỉnh lưu</th><th>Bán kỳ</th><th>Toàn kỳ<br>kiểu cầu</th><th>Toàn kỳ<br>kiểu tia</th></tr>`+TR.slice(0,c).map(([l,x],i)=>`<tr${i>=p?` class='n'`:''}><td class='l'>${mt(l)}</td>`+(x.length==3?x.map(t=>`<td>${mt(t)}</td>`).join(''):x.length==2?`<td>${mt(x[0])}</td><td colspan='2'>${mt(x[1])}</td>`:`<td colspan='3'>${mt(x[0])}</td>`)+'</tr>').join('')+'</table>'};
+let tU=20,tN=1;
+const n2=x=>Math.abs(x-Math.round(x))<1e-6?f(x,0):f(x,2);
+const NV=U=>{const R=100,q=50,Cc=1e-3,a=2*q*R*Cc,b=8*q*R*Cc,dc=U/P,dd=2*U/P;return [
+[n2(U)+'/π = '+f(dc)+' V','2·'+n2(U)+'/π = '+f(dd)+' V'],
+[n2(U)+'·'+n2(a)+'/'+n2(a+1)+' = '+f(U*a/(a+1))+' V',n2(U)+'·'+n2(b)+'/'+n2(b+1)+' = '+f(U*b/(b+1))+' V'],
+[n2(U)+'/2 = '+f(U/2)+' V',n2(U)+'/√2 = '+f(U/Q)+' V'],
+[n2(U)+' V','cầu: '+n2(U)+' V · tia: '+n2(2*U)+' V'],
+[f(dc)+'/'+R+' = '+f(dc/R,4)+' A',f(dd)+'/'+R+' = '+f(dd/R,4)+' A'],
+[n2(U/2)+'/'+R+' = '+f(U/2/R,4)+' A',f(U/Q)+'/'+R+' = '+f(U/Q/R,4)+' A'],
+[n2(U)+'/'+R+' = '+f(U/R,4)+' A',n2(U)+'/'+R+' = '+f(U/R,4)+' A'],
+[f(Gh),f(Gf)]]};
+const TBL2=n=>{tN=n;const c=n==1?3:n==2?7:8,p=n==1?0:n==2?3:n==3?7:8,nv=NV(tU);return `<div class='tw'><table class='t51'><tr><th rowspan='2'>Các thông số chỉnh lưu</th><th colspan='3'>Công thức</th><th colspan='2'>Ví dụ số<br>U<sub>2m</sub> = <input id='u2in' type='number' min='1' step='1' value='${tU}' style='width:4.6em'> V · R<sub>L</sub> = 100 Ω · f = 50 Hz · C = 1000 µF</th></tr><tr><th>Bán kỳ</th><th>Toàn kỳ<br>kiểu cầu</th><th>Toàn kỳ<br>kiểu tia</th><th>Bán kỳ</th><th>Toàn kỳ</th></tr>`+TR.slice(0,c).map(([l,x],i)=>`<tr${i>=p?` class='n'`:''}><td class='l'>${mt(l)}</td>`+(x.length==3?x.map(t=>`<td>${mt(t)}</td>`).join(''):x.length==2?`<td>${mt(x[0])}</td><td colspan='2'>${mt(x[1])}</td>`:`<td colspan='3'>${mt(x[0])}</td>`)+`<td class='nm'>${mt(nv[i][0])}</td><td class='nm'>${mt(nv[i][1])}</td></tr>`).join('')+'</table></div>'};
+const SY={
+'U1m':['Biên độ (đỉnh) điện áp sơ cấp','V'],
+'U2m':['Biên độ (đỉnh) điện áp thứ cấp; ở mạch tia là của mỗi nửa cuộn','V'],
+'U1':['Điện áp hiệu dụng sơ cấp','V'],'U2':['Điện áp hiệu dụng thứ cấp','V'],
+'u1':['Điện áp tức thời sơ cấp (nguồn)','V'],'u2':['Điện áp tức thời thứ cấp','V'],
+'u21':['Điện áp tức thời nửa cuộn thứ cấp trên','V'],'u22':['Điện áp tức thời nửa cuộn thứ cấp dưới','V'],
+'N':['Hệ số biến áp, N = U1m/U2m','không đơn vị'],
+'L1':['Độ tự cảm cuộn sơ cấp','H (henry)'],'L2':['Độ tự cảm cuộn thứ cấp','H (henry)'],
+'f':['Tần số nguồn xoay chiều','Hz (héc)'],'ω':['Tần số góc, ω = 2πf','rad/s'],'T':['Chu kỳ, T = 1/f','s (giây)'],'π':['Hằng số pi ≈ 3,1416','không đơn vị'],
+'ULDC':['Điện áp chỉnh lưu trung bình trên tải (thành phần một chiều)','V'],
+'U′LDC':['Điện áp trung bình trên tải khi có tụ lọc','V'],'U′':['Điện áp trung bình trên tải khi có tụ lọc (U′ = U′LDC)','V'],
+'ULHD':['Điện áp hiệu dụng trên tải','V'],'UL':['Điện áp trên tải','V'],'uL':['Điện áp tức thời trên tải','V'],
+'ILDC':['Dòng chỉnh lưu trung bình qua tải','A (ampe)'],'ILHD':['Dòng hiệu dụng qua tải','A (ampe)'],'IL':['Dòng qua tải','A (ampe)'],
+'URDmax':['Điện áp ngược lớn nhất đặt lên diode','V'],'IFDmax':['Dòng thuận cực đại qua diode','A (ampe)'],'uRD':['Điện áp ngược tức thời trên diode','V'],
+'RL':['Điện trở tải','Ω (ôm)'],'R':['Điện trở mắc nối tiếp (mạch Zener)','Ω (ôm)'],'R1':['Điện trở cố định của IC 317/337 (240 Ω)','Ω (ôm)'],'VR2':['Biến trở điều chỉnh điện áp ra','Ω (ôm)'],
+'C':['Điện dung tụ lọc','F (1 µF = 10⁻⁶ F)'],'τ':['Hằng số thời gian xả của tụ, τ = RL·C','s (giây)'],
+'Γ':['Độ gợn sóng = thành phần xoay chiều / thành phần một chiều','không đơn vị'],
+'D':['Diode (D1…D4: các diode trong mạch)','—'],
+'Vz':['Điện áp ổn định (ngưỡng) của diode Zener','V'],'Vdc':['Điện áp nguồn một chiều đầu vào (VDC)','V'],'Vdcmax':['Điện áp đầu vào lớn nhất','V'],'Vdcmin':['Điện áp đầu vào nhỏ nhất','V'],
+'Iz':['Dòng ngược qua diode Zener','A (thường tính mA)'],'Izmax':['Dòng Zener lớn nhất (theo công suất Pzmax = Izmax·Vz)','A (thường tính mA)'],'Izmin':['Dòng Zener nhỏ nhất để còn ổn áp (≈ 5–10 mA)','A (thường tính mA)'],'Pzmax':['Công suất cực đại của diode Zener','W (oát)'],
+'I':['Dòng tổng từ nguồn qua R','A (ampe)'],'β':['Hệ số khuếch đại dòng của BJT','không đơn vị'],'Vout':['Điện áp ra của IC ổn áp','V'],
+'ΔV':['Độ gợn đỉnh–đỉnh của điện áp tải','V'],'IB':['Dòng base của BJT','A (thường tính mA)'],'Vin':['Điện áp vào của IC ổn áp','V']};
+const SK=Object.keys(SY),AL={VDC:'Vdc',D1:'D',D2:'D',D3:'D',D4:'D'},
+SX=new RegExp('(?<!'+LT+')('+SK.concat(Object.keys(AL)).sort((a,b)=>b.length-a.length).join('|')+')(?!'+LT+')','g'),
+LG=ts=>{const s=ts.join(' \n '),h=new Set();let m;SX.lastIndex=0;while(m=SX.exec(s))h.add(AL[m[1]]||m[1]);
+['ω','π','τ','Γ','β','ΔV'].forEach(c=>{if(s.includes(c))h.add(c)});if(/fR[CL]/.test(s)){h.add('f');h.add('RL');h.add('C')}
+const r=SK.filter(k=>h.has(k));return r.length?`<div class='lg'><b>Chú thích ký hiệu</b>`+r.map(k=>`<div>${mt(k)} — ${SY[k][0]} <i>[${SY[k][1]}]</i></div>`).join('')+'</div>':''};
+const RT=n=>{const a=n==1?0:n==2?3:n==3?7:0,b=n==1?3:n==2?7:8;$('ln').innerHTML=TBL2(n)+LG(TR.slice(a,b).flatMap(r=>[r[0]].concat(r[1])));const e=$('u2in');if(e)e.onchange=()=>{tU=Math.max(.1,+e.value||20);RT(tN)}};
+const THG=[['Biến áp',[['Hệ số biến áp','N = U1/U2 = U1m/U2m'],['Độ tự cảm','L1 = N²·L2'],['Tần số','f1 = f2 (không đổi)'],['Hiệu dụng → biên độ','U2m = √2·U2']]],
+['Chỉnh lưu bán kỳ',[['Trung bình','ULDC = U2m/π'],['Hiệu dụng','ULHD = U2m/2'],['Dòng trung bình','ILDC = U2m/(π·RL)'],['Dòng hiệu dụng','ILHD = U2m/(2·RL)'],['Dòng thuận cực đại','IFDmax = U2m/RL'],['Áp ngược cực đại','URDmax = U2m'],['Độ gợn sóng','Γ ≈ 1,21']]],
+['Chỉnh lưu toàn kỳ (cầu, tia)',[['Trung bình','ULDC = 2U2m/π'],['Hiệu dụng','ULHD = U2m/√2'],['Dòng trung bình','ILDC = 2U2m/(π·RL)'],['Dòng hiệu dụng','ILHD = U2m/(√2·RL)'],['Dòng thuận cực đại','IFDmax = U2m/RL'],['Áp ngược: cầu ; tia','URDmax = U2m ; URDmax = 2U2m'],['Độ gợn sóng','Γ ≈ 0,48']]],
+['Tụ lọc',[['Điều kiện','τ = RL·C ≫ T ; U′ < U2m'],['Bán kỳ','U′ = U2m·2fRC/(2fRC+1)'],['Toàn kỳ','U′ = U2m·8fRC/(8fRC+1)'],['Tính C','C = U′/(k·f·RL·(U2m−U′)) ; k = 2 hoặc 8']]],
+['Ổn áp Zener',[['Dòng','IR = Iz + IL'],['Điều kiện','Izmin ≤ Iz ≤ Izmax'],['Dòng cực đại','Izmax = Pzmax/Vz'],['R nhỏ nhất','Rmin = (Vdcmax − Vz)/(Izmax + ILmin)'],['R lớn nhất','Rmax = (Vdcmin − Vz)/(Izmin + ILmax)'],['Hở tải','R = (Vdcmax − Vz)/Izmax']]],
+['Zener + BJT',[['Điện áp ra','UL = Vz − 0,6 V'],['Dòng base','IB = IL/β'],['Giới hạn R','Rmax = (Vdcmin − Vz)/(Izmin + IB) ; Rmin = (Vdcmax − Vz)/Izmax'],['Công suất BJT','PQmax = (Vdcmax − UL)·IL']]],
+['IC 78XX và 79XX',[['Loại','78XX: nguồn dương ; 79XX: nguồn âm ; XX = Vout'],['Điều kiện vào','Vin ≥ Vout + 3 V (78XX)'],['Dòng tải','IL ≤ 1,5 A'],['Công suất tản nhiệt','P = (Vin − Vout)·IL'],['Chân','7812: 1 vào, 2 đất, 3 ra ; 7912: 1 đất, 2 vào, 3 ra']]],
+['IC 317 và 337',[['Điện áp ra 317','Vout = 1,25·(1 + VR2/R1)'],['Điện áp ra 337','Vout = −1,25·(1 + VR2/R1)'],['Tính VR2','VR2 = R1·(Vout/1,25 − 1)'],['Dòng qua R1','IR1 = 1,25/R1']]]];
+function TH(n){$('ln').innerHTML=`<div class='tw'><table class='t51'><tr><th>Nhóm</th><th>Đại lượng</th><th>Công thức</th></tr>`+THG.slice(0,n).map((g,k)=>g[1].map((r,j)=>`<tr${k==n-1?" class='n'":''}>${j?'':`<td class='l' rowspan='${g[1].length}'>${mt(g[0])}</td>`}<td>${mt(r[0])}</td><td>${mt(r[1])}</td></tr>`).join('')).join('')+`</table></div>`}
+function draw2(w,k){const m=(k||'-').replace(/c$/,''),N=400,sn=i=>Math.sin(2*Math.PI*i/200),cap=w[0]=='c'&&w!='cm',full=w=='f'||w=='cf',
+ tr=(g,A=45)=>{const r=[];for(let i=0;i<=N;i++)r.push(i+','+(60-A*g(i)).toFixed(1));return r},
+ pt=(r,c,d)=>`<path class='${c}' pathLength='1' style='animation-delay:${d}s' d='M${r.join('L')}'/>`;
+ let o='',lg='',b=60,ax='',yl='u [V]';const yt=(t,v)=>`<text x='-4' y='${v+3}' text-anchor='end'>${mts(t)}</text><line x1='-2' x2='400' y1='${v}' y2='${v}' stroke='currentColor' opacity='.25' stroke-dasharray='2 4'/>`;
+ if(w=='tr'){o=pt(tr(sn),'i',0)+pt(tr(i=>sn(i)*.4),'o',.5);lg='┄┄ u1 (vào)   ━━ u2 (ra): biên độ khác, cùng tần số';ax=yt('+U1m',15)+yt('−U1m',105)}
+ else if(w=='zr'){b=112;const y=g=>{const r=[];for(let i=0;i<=N;i++)r.push(i+','+(112-3.6*g(i)).toFixed(1));return r};o=pt(y(i=>21+3*Math.sin(2*Math.PI*i/140+1)),'i',0)+pt(y(()=>12),'o',.5);lg='┄┄ VDC dao động 18–24 V   ━━ UL = 12 V (ổn định)';ax=yt('24 V',25.6)+yt('18 V',47.2)+yt('12 V',68.8);yl='U [V]'}
+ else if(w=='cm'){o=pt(tr(i=>Math.max(sn(i),0)),'o2',0)+pt(tr(i=>Math.abs(sn(i))),'o',.9)+[.318,.637].map(a=>`<line x1='0' x2='400' y1='${60-45*a}' y2='${60-45*a}' stroke='currentColor' opacity='.4' stroke-dasharray='2 3'/>`).join('');lg='cam: bán kỳ   xanh: toàn kỳ   (nét chấm: trị trung bình)';ax=yt('U2m',15)+yt('0,637·U2m',31.4)+yt('0,318·U2m',45.7);yl='uL [V]'}
+ else{const e=i=>full?Math.abs(sn(i)):Math.max(sn(i),0),vv=[];let v=0;for(let i=0;i<=N;i++){v=cap?Math.max(e(i),v*Math.exp(-1/180)):e(i);vv.push(v)}
+  const rd=!cap&&(w=='h'||w=='f')?(m=='h'?i=>Math.min(sn(i),0):m=='b'||m=='bn'?i=>-Math.max(sn(i),0):m=='t'?i=>-2*Math.max(sn(i),0):null):null,A=m=='t'?30:44;
+  o=pt(tr(sn,A),'i',0)+pt(tr(i=>vv[i],A),'o',.5)+(rd?pt(tr(rd,A),'o2',1.1):'');lg='┄┄ u2 (vào)   xanh: uL (ra)'+(rd?'   cam: uRD (áp ngược trên diode)':'');ax=yt('+U2m',60-A)+yt('−U2m',60+A)+(rd&&m=='t'?yt('−2·U2m',120):'')}
+ const vg=[100,200,300,400].map(x=>`<line x1='${x}' x2='${x}' y1='6' y2='${b+(b<100?60:12)}' stroke='currentColor' opacity='.18' stroke-dasharray='2 4'/>`).join('');return `${vg}<line class='ax' x1='-2' x2='404' y1='${b}' y2='${b}'/><path class='axh' d='M404 ${b}l-6 -3v6z'/><line class='ax' x1='0' x2='0' y1='4' y2='${b+(b<100?60:12)}'/><path class='axh' d='M0 2l-3 6h6z'/>${o}${ax}<text x='6' y='9'>${yl}</text><text x='412' y='${b-7}' text-anchor='end'>t [s]</text><text x='-4' y='${b+14}' text-anchor='end'>0</text><text x='100' y='128' text-anchor='middle'>T/2</text><text x='200' y='128' text-anchor='middle'>T</text><text x='300' y='128' text-anchor='middle'>3T/2</text><text x='400' y='128' text-anchor='middle'>2T</text><text class='lgd' x='-40' y='148'>${mts(lg)}</text>`}
+function show(){const s=S[i];let L=[],w='';
+ S.forEach((t,k)=>{if(t.c==s.c&&k<=i){t.ln.forEach(x=>L.push([x,k==i]));if(t.w)w=t.w}});
+ $('ct').textContent=SEC[secOf(s.c)][0]+(/^(VD|BT|Thêm|Khó|Hỏi)/.test(C[s.c])?' – '+C[s.c]:'');{const q0=secOf(s.c),sa=S.filter(t=>secOf(t.c)==q0),sd=S.slice(0,i+1).filter(t=>secOf(t.c)==q0).length,cs=S.filter(t=>t.c==s.c).length;$('st').textContent='· bước '+S.slice(0,i+1).filter(t=>t.c==s.c).length+'/'+cs+(sa.length>cs?' · tiến độ mục '+sd+'/'+sa.length:'');const cl=[...new Set(sa.map(t=>t.c))],jp=$('jp');jp.hidden=cl.length<2;if(jp.dataset.q!=q0){jp.dataset.q=q0;jp.innerHTML=cl.map(c=>`<option value="${c}">${C[c]}</option>`).join('')}jp.value=s.c;const sm=q0==8||q0==9;$('sim').hidden=!sm;if(sm){simK=q0==9?8:2;$('simT').textContent='Thử nghiệm: '+(q0==9?'chỉnh lưu toàn kỳ có tụ lọc (hệ số 8fRC)':'chỉnh lưu bán kỳ có tụ lọc (hệ số 2fRC)')+' — kéo thanh để xem dạng sóng';simUpd()}}$('ln').innerHTML='';const pq=partOf(s.say);$('pt').textContent=pq[1];$('pt').style.display=pq[1]?'':'none';$('de').innerHTML=DEH(C[s.c],pq[0]);$('de').style.display=DE[C[s.c]]?'':'none';document.querySelector('.board').classList.toggle('wide',C[s.c]=='Bảng 5.1'||C[s.c]=='Bảng tổng hợp');
+ if(C[s.c]=='Bảng tổng hợp')TH(S.slice(0,i+1).filter(t=>t.c==s.c).length);else if(C[s.c]=='Bảng 5.1')RT(S.slice(0,i+1).filter(t=>t.c==s.c).length);else L.forEach(([x,n])=>{const d=document.createElement('div');d.innerHTML=mt(x);if(n)d.className='n';$('ln').append(d)});if(C[s.c]!='Bảng 5.1'&&C[s.c]!='Bảng tổng hợp')$('ln').insertAdjacentHTML('beforeend',LG(L.filter(a=>a[1]).map(a=>a[0])));
+ if(w=='-')w='';$('wv').style.display=w?'':'none';
+ let k=CK[C[s.c]]||'-';S.forEach((t,j)=>{if(t.c==s.c&&j<=i&&t.k)k=t.k});curK=k;curC=s.c;rk();
+ if(w&&key!=s.c+w+k){$('wv').innerHTML=draw2(w,k);lw=[w,k]}key=s.c+w+k;
+ {const g=realOf(s);if(g!==null)$('real').innerHTML=g}$('sub').textContent=s.say;$('pr').value=i;
+ $('nv').querySelectorAll('button').forEach((b,k)=>{b.className=k==secOf(s.c)?'on':'';if(k==secOf(s.c))b.scrollIntoView({inline:'center',block:'nearest'})});
+ $('pl').textContent=play?'❚❚ Dừng':'▶ Phát'}
+function talk(){if(ss)ss.cancel();clearTimeout(tm);if(!play)return;const my=++tk,t=S[i].say,adv=()=>{if(my==tk&&play)go(i+1)};
+ const v=ss&&ss.getVoices().find(x=>x.lang.toLowerCase().startsWith('vi'));
+ if(v){const u=new SpeechSynthesisUtterance(t);u.voice=v;u.lang='vi-VN';u.rate=+$('sp').value;u.onend=()=>{tm=setTimeout(adv,1000)};u.onerror=u.onend;ss.speak(u)}
+ else tm=setTimeout(adv,t.length*65/+$('sp').value+1500)}
+function go(k){if(k>=S.length){play=false;k=S.length-1}i=Math.max(0,k);show();tk++;talk()}
+$('pv').onclick=()=>go(i-1);$('nx').onclick=()=>go(i+1);
+$('pl').onclick=()=>{play=!play;if(play&&i>=S.length-1)i=0;show();talk()};
+$('pr').oninput=e=>go(+e.target.value);
+let lw=[],lastK='',curC=0,ph=0,curK='-',auto=!matchMedia('(prefers-reduced-motion:reduce)').matches;
+function rk(){const m=curK.replace(/c$/,''),sh=['-','x','z','zb'].includes(m)||m[0]=='i';const nw=curK+'|'+curC!=lastK;lastK=curK+'|'+curC;$('ck').setAttribute('viewBox',m[0]=='i'?`-10 0 ${m=='i5'?500:m=='i3'||m=='i4'?740:690} 190`:'-10 0 410 168');$('ck').style.setProperty('--fs',m=='i5'?'13px':m[0]=='i'?'15px':'13px');$('ck').innerHTML=(ck(curK)+(sh?'':cur(curK,ph))).replace(/<path /g,`<path pathLength='1' `);$('ck').classList.toggle('dr',nw);if(nw)$('ck').querySelectorAll('path').forEach((p,j)=>p.style.animationDelay=(j*.04)+'s');$('ck').style.display=curK=='-'?'none':'';$('ph').style.display=sh?'none':'';$('ph').querySelectorAll('button').forEach((b,j)=>b.className=j==ph?'on':'')}
+{const lb=$('lgb'),sync=()=>{lb.textContent='Chú thích: '+(document.body.classList.contains('nolg')?'tắt':'bật')};try{if(localStorage.getItem('nolg')=='1')document.body.classList.add('nolg')}catch(e){}sync();lb.onclick=()=>{document.body.classList.toggle('nolg');try{localStorage.setItem('nolg',document.body.classList.contains('nolg')?'1':'0')}catch(e){}sync()}}
+$('wv').onclick=()=>{if(lw[0])$('wv').innerHTML=draw2(lw[0],lw[1])};$('ck').onclick=()=>{lastK='';rk()};
+setInterval(()=>{if(auto&&!document.hidden&&curK!='-'){ph=1-ph;rk()}},2600);
+$('ph').querySelectorAll('button').forEach((b,j)=>b.onclick=()=>{auto=false;ph=j;rk()});
+
+const CS=[
+['0. Đọc đề & đổi đại lượng',['Sơ đồ khối: biến áp (hạ áp) → chỉnh lưu → lọc phẳng → ổn áp.','u1 = 220√2·sin(100πt) ⇒ biên độ 220√2, U1 = 220 V hiệu dụng, ω = 100π ⇒ f = 50 Hz.','Biến áp chỉ đổi biên độ, KHÔNG đổi tần số: N = U1/U2 = U1m/U2m, L1 = N²·L2.','Thứ cấp cho hiệu dụng U2 ⇒ U2m = √2·U2.'],'Nhầm biên độ với hiệu dụng; đổi tần số qua biến áp.'],
+['1. Chỉnh lưu bán kỳ (1 diode)',['Nửa dương diode dẫn, nửa âm khóa (diode lý tưởng).','ULDC = U2m/π ; ULHD = U2m/2.','ILDC = U2m/(π·RL) ; ILHD = U2m/(2·RL) ; IFDmax = U2m/RL.','URDmax = U2m ; độ gợn sóng chưa lọc ≈ 1,21.'],'Lẫn trung bình (π) với hiệu dụng (2).'],
+['2. Chỉnh lưu toàn kỳ: cầu & tia',['Cả hai: ULDC = 2U2m/π ; ULHD = U2m/√2 ; IFDmax = U2m/RL ; gợn ≈ 0,48.','ILDC = 2U2m/(π·RL) ; ILHD = U2m/(√2·RL).','Cầu: 4 diode, mỗi nửa chu kỳ 2 diode dẫn, URDmax = U2m.','Tia: biến áp điểm giữa, 2 diode, URDmax = 2U2m (U2m là biên độ MỘT nửa cuộn thứ cấp).'],'Quên áp ngược của mạch tia gấp đôi khi chọn diode.'],
+['3. Tụ lọc song song tải',['Điều kiện lọc tốt: τ = RL·C ≫ T.','U′ = U2m·2fRC/(2fRC+1) (bán kỳ); U′ = U2m·8fRC/(8fRC+1) (toàn kỳ).','Ngược lại (thiết kế C): C = U′/(k·f·RL·(U2m − U′)), k = 2 (bán kỳ) hoặc 8 (toàn kỳ).','Luôn có U′ < U2m.'],'Dùng nhầm hệ số 2 hoặc 8; công thức chỉ gần đúng (sách), thực tế còn sụt áp ~0,7 V mỗi diode.'],
+['4. Bài thiết kế nguồn (dạng "Khó 1")',['Từ tải (RL, U′ cần) chọn kiểu chỉnh lưu.','Chọn U2m > U′ ⇒ tính N = U1m/U2m.','Tính C bằng công thức ngược ở mục 3.','Chọn diode: URDmax ≤ PIV, IFDmax ≤ dòng cho phép (nên có dư).','Kiểm tra lại: thay C vào tính U′ phải đạt yêu cầu.'],'Chọn diode không có dư áp ngược; quên ghi sơ đồ.'],
+['5. Ổn áp Zener',['Zener phân cực ngược vượt ngưỡng: điện áp trên Zener giữ cố định = Vz.','IR = Iz + IL ; Izmin ≤ Iz ≤ Izmax ; Izmax = Pzmax/Vz.','R nhỏ nhất: R = (Vdcmax − Vz)/(Izmax + ILmin); hở tải (ILmin = 0): R = (Vdcmax − Vz)/Izmax.','R lớn nhất: R = (Vdcmin − Vz)/(Izmin + ILmax). Chọn R nằm giữa hai giá trị. (ILmin, ILmax: dòng tải nhỏ nhất, lớn nhất.)'],'Quên kiểm tra trường hợp hở tải (toàn bộ dòng qua Zener); dòng tải không được vượt Izmax.'],
+['6. Zener + transistor BJT',['Mục đích: tăng dòng tải.','Vout = Vz − 0,6 V (mối nối B-E).','R cấp dòng cho Zener và cho base; dòng tải có thể lớn gấp β lần dòng Izmax.'],'Quên trừ 0,6 V; vẫn phải kiểm tra Zener không vượt Izmax.'],
+['7. IC ổn áp 78XX và 79XX',['78XX: nguồn dương; 79XX: nguồn âm; XX = điện áp ra; tải tới 1,5 A.','Vào phải cao hơn ra ít nhất 3 V (78XX): 7812 cần ≥ 15 V.','7812: chân 1 vào, 2 đất, 3 ra. 7912: chân 1 đất, 2 vào (âm), 3 ra.','Nguồn ±12 V: biến áp điểm giữa nối đất; 2 diode trên → 7812, 2 diode dưới → 7912; mỗi nhánh có tụ lọc lớn và tụ nhỏ lọc nhiễu.'],'Nhầm thứ tự chân 7812 với 7912; quên điều kiện chênh áp 3 V khi tính C.'],
+['8. IC điều chỉnh 317 và 337',['317: Vout = 1,25·(1 + VR2/R1); 337 (nguồn âm): Vout = −1,25·(1 + VR2/R1).','1,25 V là điện áp chuẩn giữa chân ra và ADJ nên luôn có dòng qua R1.','Tính VR2 = R1·(|Vout|/1,25 − 1).','337: chân 1 ADJ, chân 2 vào, chân 3 ra.'],'Quên dấu âm của 337.'],
+['9. Checklist trước khi nộp',['Biên độ hay hiệu dụng? Hệ số k đã đúng (2 hoặc 8)?','Áp ngược của diode (tia gấp đôi); U′ < U2m.','Zener: đã kiểm hở tải và dải R? IC: đã đủ chênh áp 3 V?','Ghi đơn vị và kết luận cuối bài.'],'']];
+const shq=id=>document.getElementById(id);
+shq('sheet').innerHTML='<div class="tb"><button id="shp">In tờ này</button><button id="shx">Đóng</button></div><h2>Tờ ôn: khuôn giải tự luận – Chương 5 Nguồn một chiều ổn áp</h2><div class="gr">'+CS.map(c=>`<div class="cd"><b>${mt(c[0])}</b><ol>${c[1].map(x=>'<li>'+mt(x.replace(/\.$/,''))+'</li>').join('')}</ol>${c[2]?`<div class="w">⚠ ${mt(c[2])}</div>`:''}</div>`).join('')+'</div>';
+const shT=v=>{shq('sheet').hidden=!v;document.body.style.overflow=v?'hidden':''};
+shq('cs').onclick=()=>shT(true);shq('shx').onclick=()=>shT(false);shq('shp').onclick=()=>window.print();
+document.addEventListener('keydown',e=>{if(e.key=='Escape')shT(false)});
+
+show();
+</script></body></html>
