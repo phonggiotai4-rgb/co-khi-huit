@@ -100,6 +100,15 @@
       icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
     { id: "tinkercad", href: "https://www.tinkercad.com/", label: "TinkerCad",
       desc: "Thiết kế 3D và mô phỏng Arduino trực tuyến",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "trac-nghiem-luu-huu-phuoc", href: "https://drive.google.com/drive/u/0/folders/1DBmJvkrO5xvxUayBGctAEbOtOuU9MUoj?fbclid=IwdGRjcARlKGNjbGNrBGUoXmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHrX_jlAnVoG1gc_Knovf6b1I1liLHmXAaJ2GhDJEYcwC3hhq4nB17gPdz6Gm_aem_Wjh7c4zySCqZdVz998e14w", label: "TRẮC NGHIỆM CỦA AD LƯU HỮU PHƯỚC",
+      desc: "Bộ trắc nghiệm của ad Lưu Hữu Phước (Google Drive)",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "baitap-tracnghiem", href: "https://baitaptracnghiem.com/", label: "BaiTap TracNghiem",
+      desc: "Bài tập trắc nghiệm trực tuyến",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "xep-lich-hoc-phan", href: "https://shounlak.github.io/HUIT-Schedule/", label: "Xếp Lịch Học Phần",
+      desc: "Công cụ xếp lịch học phần HUIT",
       icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" }
   ];
 
