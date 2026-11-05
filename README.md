@@ -64,8 +64,8 @@ FULL TN QTH 2024 HUIT.md   nguồn chuẩn đáp án Quản trị học (535 câ
 anh-van-2/            chuyên đề Anh văn
 ky-thuat-dien-tu/     Kỹ thuật điện tử — trang tổng quan 4 chương (linh kiện điện tử,
                       mạch nguồn ổn áp, khuếch đại tín hiệu nhỏ dùng BJT, mạch ứng dụng
-                      Op-Amp) + danh sách mô phỏng; Chương 4, 5 và 7 liên kết tới
-                      các trang bài giảng video (Chuong_4_..., Chuong_5_..., Chuong_7_..._vid.html)
+                      Op-Amp) + danh sách mô phỏng; cả 4 chương liên kết tới
+                      các trang bài giảng video (Chuong_4_..._vid.html … Chuong_7_..._vid.html)
 dai-so-tuyen-tinh/    Đại số tuyến tính — 1 trang làm bài + 1 trang đề cương dùng chung 5 chương
                       (luyen-tap.html?d=chuong-N, quiz.html?d=chuong-N,
                        thi-dai-so-tuyen-tinh-ngau-nhien.html — 25 câu / 60 phút từ
