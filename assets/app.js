@@ -81,6 +81,72 @@
       icon: "M8 11a3.2 3.2 0 1 0 0-6.4A3.2 3.2 0 0 0 8 11zM2.8 20a5.2 5.2 0 0 1 10.4 0M16 5.2a3.2 3.2 0 0 1 0 6M18 20a5.4 5.4 0 0 0-2.4-4.5" }
   ];
 
+  /* Công cụ bên ngoài — mở ở tab mới, không thuộc kho công cụ nội bộ */
+  CK.EXTERNAL_TOOLS = [
+    { id: "phet", href: "https://phet.colorado.edu/vi/simulations/filter?type=html", label: "PHET SIM",
+      desc: "Mô phỏng tương tác Toán & Khoa học (PhET) — ĐH Colorado Boulder",
+      icon: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 7v5l3 3M4 12h16" },
+    { id: "cannao", href: "https://cannao.pages.dev", label: "CÂN NÃO",
+      desc: "Công cụ rèn luyện tư duy và giải đố Cân Não",
+      icon: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9 9h.01M15 9h.01M9.5 15.5c.9.9 2.2 1.5 3.5 1.5s2.6-.6 3.5-1.5" },
+    { id: "scholar", href: "https://scholar.google.com/", label: "GOOGLE SCHOLAR",
+      desc: "Tìm kiếm và trích dẫn tài liệu học thuật, bài báo khoa học",
+      icon: "M12 3 2 8l10 5 10-5-10-5zM2 8v8M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5" },
+    { id: "vocago", href: "https://vocago.pages.dev/?fbclid=IwdGRzaAUmy3ljbGNrBSbLbmV4dG4DYWVtAjExAHBkb2YFc3J0YwZhcHBfaWQMMzUwNjg1NTMxNzI4AAEe1xNyCnn2HuDoQyE56CzDeijjSE56lwfkgtlUwcjVHXugB8NKCBhgRPGN5uE_aem_nUxb4mOak73dCWV9K1pCsQ", label: "VOCAGO",
+      desc: "Công cụ học từ vựng VOCAGO",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "circuitjs", href: "https://www.falstad.com/circuit/circuitjs.html", label: "CircuitJS",
+      desc: "Mô phỏng mạch điện trực tuyến",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "tinkercad", href: "https://www.tinkercad.com/", label: "TinkerCad",
+      desc: "Thiết kế 3D và mô phỏng Arduino trực tuyến",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" }
+  ];
+
+  /* Công cụ AI — mở ở tab mới */
+  CK.AI_TOOLS = [
+    { id: "chatgpt", href: "https://chatgpt.com/", label: "ChatGPT",
+      desc: "Trợ lý AI hội thoại của OpenAI",
+      icon: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8 12h8M12 8v8" },
+    { id: "claude", href: "https://claude.ai/new", label: "Claude",
+      desc: "Trợ lý AI của Anthropic",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "gemeni", href: "https://gemini.google.com/app?hl=vi", label: "Gemeni",
+      desc: "Trợ lý AI của Google",
+      icon: "M12 2 2 7l10 5 10-5-10-5zM2 7v10l10 5 10-5V7M12 12v10" },
+    { id: "deepseek", href: "https://chat.deepseek.com/", label: "DeepSeek",
+      desc: "Trợ lý AI mã nguồn mở của DeepSeek",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "grok", href: "https://grok.com/", label: "Grok",
+      desc: "Trợ lý AI của xAI",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "muse", href: "https://muse.ai/", label: "Muse",
+      desc: "Nền tảng video AI Muse.ai",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "perplexity", href: "https://www.perplexity.ai/", label: "PERPLEXITY AI",
+      desc: "Công cụ tìm kiếm và trả lời bằng AI",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "gemeni-notebook", href: "https://notebook.google.com/", label: "Gemini Notebook",
+      desc: "Sổ tay AI của Google (NotebookLM)",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "quillbot", href: "https://quillbot.com/", label: "QUILLBOT AI",
+      desc: "Công cụ viết lại và kiểm tra ngữ pháp AI",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "wormgpt", href: "https://tuangpt.top/", label: "WormGPT",
+      desc: "Công cụ AI WormGPT",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" }
+  ];
+
+  /* Những thứ hay ho — mở ở tab mới */
+  CK.COOL_TOOLS = [
+    { id: "trua-nay-an-gi", href: "https://truanayangi.com/", label: "Trưa nay ăn gì",
+      desc: "Gợi ý món ăn trưa nay",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "game-xuyen-khong-nong-trai", href: "https://time.aigame3d.com/?fbclid=IwdGRjcAUnBFxjbGNrBScEJWV4dG4DYWVtAjExAHBkb2YFc3J0YwZhcHBfaWQMMzUwNjg1NTMxNzI4AAEetRpAv3L4lTdBcWq0QUY5NmgGmZbxPajbuCStNx2d3ZwR6ZL-3uuCKh29UIM_aem_4cDbpRMhN9gLA4cRgEqUGQ", label: "GAME XUYÊN KHÔNG NÔNG TRẠI",
+      desc: "Game nông trại xuyên không",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" }
+  ];
+
   var SUN  = "M12 3v1.5m0 15V21m9-9h-1.5M4.5 12H3m15.36-6.36-1.06 1.06M6.7 17.3l-1.06 1.06M18.36 18.36 17.3 17.3M6.7 6.7 5.64 5.64M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z";
   var MOON = "M20.4 15.4A9 9 0 0 1 8.6 3.6 9 9 0 1 0 20.4 15.4z";
   var MAG  = "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-3.6-3.6";
@@ -225,6 +291,15 @@
     });
     (CK.TOOLS || []).forEach(function (t) {
       items.push({ g: "tool", t: t.label, d: t.desc, h: CK.url(t.href), i: t.icon });
+    });
+    (CK.EXTERNAL_TOOLS || []).forEach(function (t) {
+      items.push({ g: "tool", t: t.label, d: t.desc, h: t.href, i: t.icon });
+    });
+    (CK.AI_TOOLS || []).forEach(function (t) {
+      items.push({ g: "tool", t: t.label, d: t.desc, h: t.href, i: t.icon });
+    });
+    (CK.COOL_TOOLS || []).forEach(function (t) {
+      items.push({ g: "tool", t: t.label, d: t.desc, h: t.href, i: t.icon });
     });
     (CK.SUBJECTS || []).forEach(function (s) {
       var nf = CK.navFile && CK.navFile(s.slug);

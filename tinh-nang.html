@@ -150,7 +150,34 @@
 
   <section aria-labelledby="g2">
     <div class="group-head">
-      <h2 id="g2">DÙNG NHANH</h2>
+      <h2 id="g2">NHỮNG CÔNG CỤ BÊN NGOÀI</h2>
+      <span class="bar"></span>
+      <span class="ck-pill solid" id="extToolCount">—</span>
+    </div>
+    <div class="tool-grid" id="extTools"></div>
+  </section>
+
+  <section aria-labelledby="g3">
+    <div class="group-head">
+      <h2 id="g3">CÔNG CỤ AI</h2>
+      <span class="bar"></span>
+      <span class="ck-pill solid" id="aiToolCount">—</span>
+    </div>
+    <div class="tool-grid" id="aiTools"></div>
+  </section>
+
+  <section aria-labelledby="g4">
+    <div class="group-head">
+      <h2 id="g4">NHỮNG THỨ HAY HO</h2>
+      <span class="bar"></span>
+      <span class="ck-pill solid" id="coolToolCount">—</span>
+    </div>
+    <div class="tool-grid" id="coolTools"></div>
+  </section>
+
+  <section aria-labelledby="g5">
+    <div class="group-head">
+      <h2 id="g5">DÙNG NHANH</h2>
       <span class="bar"></span>
     </div>
     <div class="quick">
@@ -177,7 +204,7 @@
 
 <div data-ck-footer></div>
 
-<script src="assets/app.js?v=20261017d"></script>
+<script src="assets/app.js?v=20261017e"></script>
 <script>
 (function () {
   "use strict";
@@ -188,6 +215,48 @@
 
   document.getElementById("tools").innerHTML = LIST.map(function (t, i) {
     return '<a class="tool glass g1" href="' + t.href + '">' +
+      '<span class="ico">' + CK.svg(t.icon) + '</span>' +
+      '<h3>' + t.label + '</h3>' +
+      '<p>' + t.desc + '</p>' +
+      '<span class="meta">' +
+        '<span class="open">Mở công cụ ' + CK.svg("M5 12h13m-5-5 5 5-5 5") + '</span>' +
+        '<span class="num">' + CK.pad(i + 1) + '</span>' +
+      '</span>' +
+    '</a>';
+  }).join("");
+
+  var EXT = (CK.EXTERNAL_TOOLS || []);
+  document.getElementById("extToolCount").textContent = EXT.length + " công cụ";
+  document.getElementById("extTools").innerHTML = EXT.map(function (t, i) {
+    return '<a class="tool glass g1" href="' + t.href + '" target="_blank" rel="noopener">' +
+      '<span class="ico">' + CK.svg(t.icon) + '</span>' +
+      '<h3>' + t.label + '</h3>' +
+      '<p>' + t.desc + '</p>' +
+      '<span class="meta">' +
+        '<span class="open">Mở công cụ ' + CK.svg("M5 12h13m-5-5 5 5-5 5") + '</span>' +
+        '<span class="num">' + CK.pad(i + 1) + '</span>' +
+      '</span>' +
+    '</a>';
+  }).join("");
+
+  var AI = (CK.AI_TOOLS || []);
+  document.getElementById("aiToolCount").textContent = AI.length + " công cụ";
+  document.getElementById("aiTools").innerHTML = AI.map(function (t, i) {
+    return '<a class="tool glass g1" href="' + t.href + '" target="_blank" rel="noopener">' +
+      '<span class="ico">' + CK.svg(t.icon) + '</span>' +
+      '<h3>' + t.label + '</h3>' +
+      '<p>' + t.desc + '</p>' +
+      '<span class="meta">' +
+        '<span class="open">Mở công cụ ' + CK.svg("M5 12h13m-5-5 5 5-5 5") + '</span>' +
+        '<span class="num">' + CK.pad(i + 1) + '</span>' +
+      '</span>' +
+    '</a>';
+  }).join("");
+
+  var COOL = (CK.COOL_TOOLS || []);
+  document.getElementById("coolToolCount").textContent = COOL.length + " công cụ";
+  document.getElementById("coolTools").innerHTML = COOL.map(function (t, i) {
+    return '<a class="tool glass g1" href="' + t.href + '" target="_blank" rel="noopener">' +
       '<span class="ico">' + CK.svg(t.icon) + '</span>' +
       '<h3>' + t.label + '</h3>' +
       '<p>' + t.desc + '</p>' +
