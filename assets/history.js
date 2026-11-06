@@ -131,6 +131,12 @@
     } else if (/^phuong-phap-nghien-cuu-khoa-hoc$/i.test(dir)) {
       out.slug = "phuong-phap-nghien-cuu-khoa-hoc"; out.subject = "PHƯƠNG PHÁP NGHIÊN CỨU KHOA HỌC";
       out.cat = "TOÁN HỌC & KHOA HỌC"; out.catName = "Toán học & Khoa học";
+    } else if (/^he-dieu-hanh$/i.test(dir)) {
+      out.slug = "he-dieu-hanh"; out.subject = "HỆ ĐIỀU HÀNH";
+      out.cat = "ĐẠI CƯƠNG LÝ LUẬN CHÍNH TRỊ & MÔN KHÁC"; out.catName = "Đại cương lý luận chính trị & môn khác";
+    } else if (/^quan-tri-he-thong-mang-k14$/i.test(dir)) {
+      out.slug = "quan-tri-he-thong-mang-k14"; out.subject = "QUẢN TRỊ HỆ THỐNG MẠNG K14";
+      out.cat = "ĐIỆN TỬ"; out.catName = "Điện tử";
     }
     return out;
   }

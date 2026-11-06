@@ -203,6 +203,16 @@
       "phuong-phap-nghien-cuu-khoa-hoc": {
         label: "Chương",
         names: ["Chương 9"]
+      },
+      /* Hệ điều hành: 1 chương (Chương 10). */
+      "he-dieu-hanh": {
+        label: "Chương",
+        names: ["Chương 10"]
+      },
+      /* Quản trị hệ thống mạng K14: 9 phần (Chương 1-8 + File 2). */
+      "quan-tri-he-thong-mang-k14": {
+        label: "Chương",
+        names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5", "Chương 6", "Chương 7", "Chương 8", "File 2"]
       }
    };
 
@@ -376,6 +386,20 @@
      },
       "phuong-phap-nghien-cuu-khoa-hoc": {
         "chuong-9": "phuong-phap-nghien-cuu-khoa-hoc/luyen-tap.html?d=chuong-9"
+      },
+      "he-dieu-hanh": {
+        "chuong-10": "he-dieu-hanh/luyen-tap.html?d=chuong-10"
+      },
+      "quan-tri-he-thong-mang-k14": {
+        "chuong-1": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-1",
+        "chuong-2": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-2",
+        "chuong-3": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-3",
+        "chuong-4": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-4",
+        "chuong-5": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-5",
+        "chuong-6": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-6",
+        "chuong-7": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-7",
+        "chuong-8": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=chuong-8",
+        "file-2": "quan-tri-he-thong-mang-k14/luyen-tap.html?d=file-2"
       }
    };
 
@@ -408,7 +432,9 @@
      "kinh-te-chinh-tri-mac-lenin": "kinh-te-chinh-tri-mac-lenin/quiz.html",
      /* Logic học đại cương: trang đề cương dùng chung cho cả 5 chương — thêm `?d=`. */
      "logic-hoc-dai-cuong": "logic-hoc-dai-cuong/quiz.html",
-      "phuong-phap-nghien-cuu-khoa-hoc": "phuong-phap-nghien-cuu-khoa-hoc/quiz.html"
+      "phuong-phap-nghien-cuu-khoa-hoc": "phuong-phap-nghien-cuu-khoa-hoc/quiz.html",
+      "he-dieu-hanh": "he-dieu-hanh/quiz.html",
+      "quan-tri-he-thong-mang-k14": "quan-tri-he-thong-mang-k14/quiz.html"
    };
 
   /* Chế độ THI THỬ có sẵn trang riêng thì khai ở đây.
@@ -445,7 +471,9 @@
      /* Logic học đại cương: đi qua pmt-ems rồi sang trang thi thử ngẫu nhiên
         40 câu / 60 phút. */
      "logic-hoc-dai-cuong": "pmt-ems/pmt-ems.html",
-      "phuong-phap-nghien-cuu-khoa-hoc": "pmt-ems/pmt-ems.html"
+      "phuong-phap-nghien-cuu-khoa-hoc": "pmt-ems/pmt-ems.html",
+      "he-dieu-hanh": "pmt-ems/pmt-ems.html",
+      "quan-tri-he-thong-mang-k14": "pmt-ems/pmt-ems.html"
    };
 
   /* Đường dẫn tới trang LÀM BÀI của một môn — nơi nút "LÀM BÀI" ở màn chọn lớp
@@ -473,7 +501,9 @@
      "kinh-te-chinh-tri-mac-lenin": "kinh-te-chinh-tri-mac-lenin/thi-kinh-te-chinh-tri-mac-lenin-ngau-nhien.html",
      /* Logic học đại cương: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */
      "logic-hoc-dai-cuong": "logic-hoc-dai-cuong/thi-logic-hoc-dai-cuong-ngau-nhien.html",
-      "phuong-phap-nghien-cuu-khoa-hoc": "phuong-phap-nghien-cuu-khoa-hoc/thi-phuong-phap-nghien-cuu-khoa-hoc-ngau-nhien.html"
+      "phuong-phap-nghien-cuu-khoa-hoc": "phuong-phap-nghien-cuu-khoa-hoc/thi-phuong-phap-nghien-cuu-khoa-hoc-ngau-nhien.html",
+      "he-dieu-hanh": "he-dieu-hanh/thi-he-dieu-hanh-ngau-nhien.html",
+      "quan-tri-he-thong-mang-k14": "quan-tri-he-thong-mang-k14/thi-quan-tri-he-thong-mang-k14-ngau-nhien.html"
    };
 
   /* Đường dẫn tới trang làm bài của một bài thi (null nếu bài thi đó không có
@@ -513,10 +543,6 @@
     "ky-thuat-so": "ky-thuat-so/index.html",
     /* Kỹ thuật điện tử: mở thẳng trang tổng quan 4 chương (Chương 4–7). */
     "ky-thuat-dien-tu": "ky-thuat-dien-tu/index.html",
-    /* Hệ điều hành: mở thẳng trang ôn tập bên ngoài, không mở popup. */
-    "he-dieu-hanh": "https://tracnghiemhuit.onrender.com/monhoc/13",
-    /* Quản trị hệ thống mạng K14: mở thẳng trang ôn tập bên ngoài. */
-    "quan-tri-he-thong-mang-k14": "https://tracnghiemhuit.onrender.com/monhoc/14",
     /* ForumFlash: mở thẳng trang ôn tập bên ngoài. */
     "forumflash": "https://www.forumflashstudy.com/?fbclid=IwY2xjawVS905leHRuA2FlbQIxMABwZG9mBWJyaWQRMXBLTUZIR240MkR1Vkp3aEtzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfd6gX57_h1C3RgaBIFbH4EyepItk5DFCSmpTxadaXPxC1YyXSW9sxJXYbUPg_aem_PGbex1SgiJDVuyuNv4rktw",
     /* ByeTOIEC: mở thẳng trang ôn tập bên ngoài. */

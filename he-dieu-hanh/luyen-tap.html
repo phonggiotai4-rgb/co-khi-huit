@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<!-- MathJax for rendering mathematical notation -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      tags: 'ams',
+      tagSide: 'right'
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hệ điều hành — Luyện tập | CƠ KHÍ HUIT</title>
+<link rel="icon" href="../assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Font nap khong chan render: trang van hien thi ngay voi font he thong neu mang cham/offline -->
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" /></noscript>
+<style>
+
+  /* =====================================================================
+     DESIGN TOKENS — Glassmorphism trung tinh + 1 mau nhan #034EA2
+     Doi mau nhan: chi sua --brand va --brand-deep o duoi day.
+     ===================================================================== */
+  :root {
+    /* Trung tinh */
+    --white:     #FFFFFF;
+    --off-white: #F7F8FA;
+    --gray-100:  #E8EAEF;
+    --gray-300:  #C9CED8;
+    --gray-400:  #8B94A3;
+    --gray-600:  #4B5563;
+
+    /* Brand — mau nhan duy nhat */
+    --brand:        #034EA2;
+    --brand-deep:   #023A80;
+    --brand-06: rgba(3, 78, 162, .06);
+    --brand-10: rgba(3, 78, 162, .10);
+    --brand-25: rgba(3, 78, 162, .25);
+    --brand-45: rgba(3, 78, 162, .45);
+
+    /* Trang thai dung — xanh la */
+    --ok:        #12805C;
+    --ok-deep:   #0B5F42;
+    --ok-06: rgba(18, 128, 92, .06);
+    --ok-10: rgba(18, 128, 92, .10);
+    --ok-25: rgba(18, 128, 92, .25);
+    --ok-45: rgba(18, 128, 92, .45);
+
+/* Trang thai sai — do */
+    --bad:        #C0271E;
+    --bad-deep:   #9A1F17;
+    --bad-06: rgba(192, 39, 30, .06);
+    --bad-10: rgba(192, 39, 30, .10);
+    --bad-25: rgba(192, 39, 30, .25);
+    --bad-45: rgba(192, 39, 30, .45);
+
+    /* Trang thai sai roi lam lai dung — vang */
+    --warn:        #B45309;
+    --warn-deep:   #92400E;
+    --warn-06: rgba(180, 83, 9, .06);
+    --warn-10: rgba(180, 83, 9, .10);
+    --warn-25: rgba(180, 83, 9, .25);
+    --warn-45: rgba(180, 83, 9, .45);
+
+    /* Kinh */
+    --glass-1-bg: rgba(255, 255, 255, .52);
+    --glass-2-bg: rgba(255, 255, 255, .67);
+    --glass-3-bg: rgba(255, 255, 255, .82);
+    --glass-1-br: rgba(255, 255, 255, .72);
+    --glass-2-br: rgba(255, 255, 255, .88);
+    --glass-3-br: rgba(255, 255, 255, 1);
+    --blur-1: 18px; --blur-2: 30px; --blur-3: 46px;
+
+    /* Bo goc */
+    --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-full: 9999px;
+
+    /* Chu */
+    --text-strong: #034EA2;
+    --text:        #4B5563;
+    --text-muted:  #4B5563;   /* chu nho cung AA 6.5:1 — phan biet khoi body bang size/weight */
+    --text-icon:   #8B94A3;   /* chi dung cho ICON / placeholder, khong dung cho chu */
+    --text-faint:  #AEB5C0;
+    --text-invert: #FFFFFF;
+
+    /* Bong — luon pha brand, khong bao gio den */
+    --sh-xs:    0 1px 2px rgba(3, 78, 162, .05);
+    --sh-sm:    0 1px 2px rgba(3, 78, 162, .04), 0 4px 12px rgba(3, 78, 162, .07);
+    --sh-md:    0 2px 4px rgba(3, 78, 162, .04), 0 12px 28px rgba(3, 78, 162, .10);
+    --sh-lg:    0 8px 16px rgba(3, 78, 162, .07), 0 24px 56px rgba(3, 78, 162, .14);
+    --sh-float: 0 1px 2px rgba(3, 78, 162, .06), 0 10px 30px rgba(3, 78, 162, .12);
+    --sh-press: 0 1px 2px rgba(3, 78, 162, .14);
+
+    /* Motion */
+    --ease-out: cubic-bezier(.16, 1, .3, 1);
+    --dur-fast: 140ms;
+    --dur-base: 240ms;
+
+/* Trang thai: dung = xanh la (--ok), sai = do (--bad), canh bao = vang (--warn) */
+    --info:  var(--brand-25);
+  }
+
+  /* ========================= Base ========================= */
+  * { box-sizing: border-box; }
+  html { font-size: 16px; scroll-padding-top: 5rem; scroll-padding-bottom: 6rem; }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', 'Be Vietnam Pro Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: .875rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    /* Fallback khi trinh duyet khong ho tro gradient phuc tap */
+    background: linear-gradient(155deg, var(--off-white), #E4E7ED);
+  }
+
+  /* Nen: gradient + mesh blob trang/xam — binh con dung gradient nen nen
+     khong can filter: blur rieng (radial-gradient da soft san). */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 14% 8%,  rgba(255, 255, 255, .90), transparent 70%),
+      radial-gradient(50% 45% at 80% 22%, rgba(160, 172, 190, .30), transparent 70%),
+      radial-gradient(50% 45% at 20% 88%, rgba(255, 255, 255, .70), transparent 70%),
+      radial-gradient(45% 40% at 92% 84%, rgba(148, 163, 184, .24), transparent 70%),
+      linear-gradient(155deg, var(--off-white), #E4E7ED);
+  }
+
+  button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+  button:disabled { cursor: not-allowed; }
+  .icon { display: block; flex: none; }
+
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+
+  /* ========================= Lop kinh ========================= */
+  .glass-1, .glass-2, .glass-3 {
+    position: relative;
+    border-radius: var(--r-lg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      0 1px 2px rgba(3, 78, 162, .04),
+      0 8px 24px rgba(3, 78, 162, .08);
+  }
+  .glass-1 { background: var(--glass-1-bg); border: 1px solid var(--glass-1-br); }
+  .glass-2 { background: var(--glass-2-bg); border: 1px solid var(--glass-2-br); box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-md); }
+  .glass-3 { background: var(--glass-3-bg); border: 1px solid var(--glass-3-br); border-radius: var(--r-xl); box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-lg); }
+
+/* Lop kinh: blur nhe + sat nhat nhe de cam -> cam giac liquid glass.
+     Be mat lon (qcard/modal/toast) blur manh; be mat nho chi blur-1 de
+     giu repaint re. */
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .qcard {
+      backdrop-filter: blur(var(--blur-2)) saturate(135%) brightness(1.02);
+      -webkit-backdrop-filter: blur(var(--blur-2)) saturate(135%) brightness(1.02);
+    }
+    .modal, .confirm, .toast {
+      backdrop-filter: blur(var(--blur-3)) saturate(135%) brightness(1.02);
+      -webkit-backdrop-filter: blur(var(--blur-3)) saturate(135%) brightness(1.02);
+    }
+    .topbar, .bottombar, .rcard, .timer, .icon-btn, .btn-ghost, .btn-glass,
+    .rank-count, .btn-share, .rv-score, .rv-side-box, .rv-head, .rv-item {
+      backdrop-filter: blur(var(--blur-1)) saturate(135%);
+      -webkit-backdrop-filter: blur(var(--blur-1)) saturate(135%);
+    }
+  }
+
+  /* ========================= Thanh tren ========================= */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    min-height: 4rem;
+    padding: .75rem 1.25rem;
+    background: var(--glass-2-bg);
+    border: 0;
+    border-bottom: 1px solid var(--brand-06);
+    box-shadow: var(--sh-md);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: .5rem;
+    min-height: 2.75rem;
+    padding: 0 .875rem;
+    border-radius: var(--r-md);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    font-size: .8125rem;
+    font-weight: 600;
+    box-shadow: var(--sh-sm);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, .85); }
+  .btn-ghost:active { transform: scale(.98); box-shadow: var(--sh-press); }
+
+  .candidate { text-align: center; font-weight: 700; color: var(--text-strong); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .topbar-right { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; }
+  .icon-group { display: flex; align-items: center; gap: .375rem; }
+
+  .timer {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 .875rem;
+    border-radius: var(--r-full);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--text-strong);
+    font-size: .875rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    box-shadow: var(--sh-xs);
+  }
+  .timer.is-warning { background: var(--brand-10); border-color: var(--brand-25); color: var(--brand-deep); }
+  .timer.is-danger { background: var(--brand-deep); border-color: var(--brand-deep); color: var(--text-invert); }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--r-md);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    box-shadow: var(--sh-xs);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .icon-btn:hover { background: rgba(255, 255, 255, .85); }
+  .icon-btn:active { transform: scale(.96); }
+  .icon-btn.is-muted { color: var(--text-faint); background: rgba(255, 255, 255, .35); }
+
+  /* ========================= The lam bai ========================= */
+  .stage {
+    flex: 1;
+    padding: 1.5rem 1.25rem 6rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .qcard {
+    width: 100%;
+    max-width: 112rem;
+    align-self: flex-start;
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    border-radius: var(--r-xl);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-md);
+    padding: 1.75rem 2rem 2.25rem;
+  }
+
+  .q-head { display: flex; flex-direction: column; gap: .5rem; }
+  .q-number { font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+  .q-text { font-size: .9375rem; line-height: 1.7; color: var(--text); overflow-wrap: anywhere; word-break: break-word; }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 1.75rem;
+    color: var(--text-muted);
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--brand-06); }
+
+  .options { display: flex; flex-direction: column; gap: .75rem; }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: .875rem;
+    min-height: 3rem;
+    text-align: left;
+    border-radius: var(--r-md);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .option-badge {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--r-full);
+    border: 1.5px solid var(--gray-300);
+    background: rgba(255, 255, 255, .75);
+    color: var(--text);
+    font-weight: 700;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+
+  .option-text {
+    flex: 1 1 0%;
+    min-width: 0;
+    padding: .875rem 1.25rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .62);
+    box-shadow: var(--sh-xs);
+    color: var(--text);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .option:hover .option-badge { border-color: var(--brand-25); color: var(--brand); }
+  .option:hover .option-text { border-color: var(--brand-25); background: rgba(255, 255, 255, .88); }
+
+  /* da chon */
+  .option.is-selected .option-badge { background: var(--brand); border-color: var(--brand); color: var(--text-invert); }
+  .option.is-selected .option-text { background: var(--brand-06); border-color: var(--brand-25); color: var(--brand-deep); }
+
+/* chon sai: canh bao vang */
+  .option.is-wrong .option-badge { background: var(--warn); border-color: var(--warn); color: var(--text-invert); }
+  .option.is-wrong .option-text {
+    background: rgba(255, 255, 255, .92);
+    border: 1.5px solid var(--warn);
+    color: var(--warn-deep);
+    box-shadow: inset 0 -3px 0 var(--warn);
+  }
+
+  /* bo qua bang Esc: do */
+  .option.is-skipped .option-badge { background: var(--bad); border-color: var(--bad); color: var(--text-invert); }
+  .option.is-skipped .option-text {
+    background: rgba(255, 255, 255, .92);
+    border: 1.5px solid var(--bad);
+    color: var(--bad);
+    box-shadow: inset 0 -3px 0 var(--bad);
+  }
+
+/* chon dung: nen xanh la + vien ok-deep */
+  .option.is-correct .option-badge { background: var(--white); border-color: var(--ok); color: var(--ok); }
+  .option.is-correct .option-text {
+    background: var(--ok);
+    border-color: var(--ok-deep);
+    color: var(--text-invert);
+    font-weight: 600;
+    box-shadow: var(--sh-sm);
+  }
+
+  .option.is-locked { pointer-events: none; cursor: default; }
+
+  /* ========================= Toast ========================= */
+  .toast-layer {
+    position: fixed;
+    right: 1.5rem;
+    top: 5.5rem;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .toast {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: .875rem;
+    width: 22rem;
+    max-width: calc(100vw - 2rem);
+    padding: 1rem 1.125rem;
+    background: var(--glass-3-bg);
+    border: 1px solid var(--glass-3-br);
+    border-radius: var(--r-md);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-lg);
+    pointer-events: auto;
+  }
+  .toast[hidden] { display: none; }
+  .toast.is-in { animation: toastIn var(--dur-base) var(--ease-out) both; }
+  .toast.is-out { animation: toastOut var(--dur-fast) var(--ease-out) both; }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(1.25rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-.5rem); } }
+
+  .toast-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--r-full);
+    margin-top: .1rem;
+  }
+.toast.is-good .toast-icon { background: var(--ok); color: var(--text-invert); }
+  .toast.is-hint .toast-icon { background: var(--warn); color: var(--text-invert); }
+  .toast.is-wrong .toast-icon { background: var(--warn-10); color: var(--warn-deep); }
+  .toast.is-skipped .toast-icon { background: var(--bad-10); color: var(--bad); }
+
+  .toast-title { font-size: .9375rem; font-weight: 700; line-height: 1.35; color: var(--text-strong); }
+  .toast.is-wrong .toast-title { color: var(--warn-deep); }
+  .toast.is-skipped .toast-title { color: var(--bad); }
+  .toast-sub { margin-top: .125rem; font-size: .8125rem; color: var(--text-muted); }
+
+  .toast-close {
+    position: relative;
+    z-index: 1;
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--r-sm);
+    color: var(--brand-deep);
+  }
+  .toast-close:hover { background: var(--brand-10); }
+
+  /* ========================= Thanh duoi ========================= */
+  .bottombar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: .75rem 1.5rem;
+    background: var(--white);
+    border: 0;
+    border-top: 1px solid var(--brand-06);
+    box-shadow: 0 -8px 24px rgba(3, 78, 162, .08);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .bottombar-left { display: flex; align-items: center; gap: 1.25rem; min-width: 0; }
+  .bottombar-right { margin-left: auto; }
+
+  .link-btn {
+    flex: none;
+    white-space: nowrap;   /* khong bao gio de nut bi bop lai khi thanh duoi chat */
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 .5rem;
+    border-radius: var(--r-md);
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--brand);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .link-btn:hover { background: var(--brand-06); }
+  .link-btn[disabled] { color: var(--text-faint); }
+
+  .counter {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 .75rem;
+    border-radius: var(--r-full);
+    background: var(--brand-10);
+    color: var(--brand-deep);
+    font-size: .8125rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .counter:hover { background: var(--brand-25); }
+
+  .dots { display: flex; align-items: center; gap: .375rem; margin-left: .25rem; }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: .75rem;
+    height: .75rem;
+    padding: 0;
+    border-radius: var(--r-full);
+    border: 1.5px solid var(--gray-300);
+    background: rgba(255, 255, 255, .7);
+    color: var(--text-invert);
+    transition: width var(--dur-fast) var(--ease-out), height var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .dot-icon { width: .625rem; height: .625rem; }
+  .dot:hover:not(.is-locked) { transform: scale(1.2); }
+  .dot.is-current { width: 1.375rem; height: 1.375rem; border-color: var(--brand); border-width: 2px; background: transparent; }
+  .dot.is-current .dot-icon { width: .875rem; height: .875rem; }
+  .dot.is-marked { width: 1.125rem; height: 1.125rem; border-color: transparent; }
+  .dot.is-right { background: var(--ok); }
+.dot.is-retry { background: var(--warn); color: var(--warn-deep); }
+  .dot.is-wrong { background: rgba(255, 255, 255, .9); color: var(--bad); border-color: var(--bad); }
+  .dot.is-locked { border-color: var(--gray-100); background: rgba(255, 255, 255, .45); }
+  .dot.is-locked:hover { transform: none; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-width: 9.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.5rem;
+    border-radius: var(--r-md);
+    background: var(--brand);
+    color: var(--text-invert);
+    font-size: .875rem;
+    font-weight: 600;
+    box-shadow: var(--sh-sm);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .btn-primary:hover:not([disabled]) { background: var(--brand-deep); }
+  .btn-primary:active:not([disabled]) { transform: scale(.98); box-shadow: var(--sh-press); }
+  .btn-primary[disabled] { background: var(--gray-100); color: var(--text-faint); box-shadow: none; }
+  .btn-primary.btn-sm { min-width: 7.5rem; }
+
+/* ========================= Modal / Hop thoai ========================= */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1.25rem;
+    background: var(--brand-45);
+  }
+  .backdrop[hidden] { display: none; }
+  .backdrop.is-in { animation: fadeIn var(--dur-base) var(--ease-out) both; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal, .confirm {
+    position: relative;
+    width: min(100%, 32rem);
+    max-height: 100%;
+    overflow: auto;
+    background: var(--glass-3-bg);
+    border: 1px solid var(--glass-3-br);
+    border-radius: var(--r-xl);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-lg);
+    padding: 1.5rem 2rem 1.75rem;
+    animation: modalIn var(--dur-base) var(--ease-out) both;
+  }
+  .modal.is-wide { width: min(100%, 70rem); }
+  .confirm { padding: 0; overflow: hidden; }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(.875rem) scale(.96); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .modal-title { margin: 0 0 1.25rem; font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+
+  /* ========================= CHIA SE ========================= */
+  .share-summary {
+    margin: -.5rem 0 1.25rem;
+    padding: .75rem 1rem;
+    border-radius: var(--r-md);
+    background: var(--brand-06);
+    border: 1px solid var(--brand-25);
+    color: var(--brand-deep);
+    font-size: .8125rem;
+    font-weight: 600;
+  }
+  .share-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: .75rem; }
+  .share-btn {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-height: 3.25rem;
+    padding: .5rem .875rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--brand-deep);
+    font-size: .8125rem;
+    font-weight: 600;
+    text-align: left;
+    box-shadow: var(--sh-xs);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .share-btn:hover { background: #fff; border-color: var(--brand); }
+  .share-ico {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-sm);
+    background: var(--brand-10);
+    color: var(--brand);
+  }
+  .share-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .modal-foot { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+    gap: .75rem;
+    padding: 1rem;
+    border-radius: var(--r-md);
+    background: var(--brand-06);
+    border: 1px solid var(--brand-06);
+  }
+  .map-btn {
+    min-height: 2.75rem;
+    border-radius: var(--r-sm);
+    background: rgba(255, 255, 255, .85);
+    border: 1px solid var(--gray-300);
+    box-shadow: var(--sh-xs);
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .map-btn:hover:not([disabled]) { background: #fff; border-color: var(--brand-25); color: var(--brand); }
+  .map-btn.is-current { border-color: var(--brand); color: var(--brand); background: var(--brand-10); box-shadow: 0 0 0 3px var(--brand-06); }
+  .map-btn.is-done { background: var(--ok-10); border-color: var(--ok-25); color: var(--ok-deep); }
+  .map-btn.is-retry { background: var(--warn-10); border-color: var(--warn-25); color: var(--warn-deep); }
+  .map-btn.is-bad { background: rgba(255, 255, 255, .9); border-color: var(--bad); color: var(--bad); box-shadow: inset 0 -3px 0 var(--bad); }
+  .map-btn[disabled] { background: rgba(255, 255, 255, .4); color: var(--text-faint); border-color: var(--gray-100); box-shadow: none; }
+
+  /* Hop xac nhan thoat — Danger: khong do, chi dung vien brand + icon tam giac canh bao */
+  .confirm-head { display: flex; align-items: center; gap: 1rem; padding: 1.5rem 1.75rem; }
+  .confirm-icon { flex: none; color: var(--brand-deep); }
+  .confirm-msg { margin: 0; font-size: .9375rem; line-height: 1.5; color: var(--text); }
+  .confirm-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    padding: 1rem 1.25rem 1.25rem;
+    background: var(--brand-06);
+    border-top: 1px solid var(--brand-06);
+  }
+  .btn-soft {
+    min-height: 2.75rem;
+    padding: 0 1.5rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .8);
+    border: 1px solid var(--brand-25);
+    color: var(--text);
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .btn-soft:hover { background: #fff; }
+
+  /* ========================= Man ket qua ========================= */
+  .result-page { padding: 1.5rem 1.25rem 2.5rem; }
+  .result-page[hidden] { display: none; }
+  .result-grid {
+    width: 100%;
+    max-width: 112rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .rcard {
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    border-radius: var(--r-lg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .95),
+      inset 0 -1px 0 rgba(3, 78, 162, .04),
+      var(--sh-md);
+    padding: 1.5rem;
+  }
+
+  .rcard-title { margin: 0 0 1.5rem; font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; text-align: center; color: var(--text-strong); }
+  .score-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: .75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--brand-06);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .score-row strong { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1.875rem; font-weight: 700; color: var(--text-strong); letter-spacing: -.02em; }
+  .rcard-course { margin: 1.25rem 0 1.5rem; text-align: center; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+
+  .rlist { display: flex; flex-direction: column; gap: 1rem; margin: 0 0 1.75rem; }
+  .rrow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .875rem; }
+  .rrow dt { display: flex; align-items: center; gap: .625rem; color: var(--text-muted); }
+  .rrow dd { margin: 0; font-weight: 700; color: var(--text-strong); text-align: right; }
+
+  .rbtns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: .75rem; margin-bottom: .75rem; }
+  .rbtns .btn-block { width: 100%; }
+
+  /* Nut ket qua: glass / primary / outline-deep (khong con ten mau cu) */
+  .btn-glass, .btn-solid, .btn-outline-strong {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border: 1px solid var(--brand-25);
+    border-radius: var(--r-md);
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  /* Glass — hanh dong phu */
+  .btn-glass { background: rgba(255, 255, 255, .62); color: var(--brand); box-shadow: var(--sh-xs); }
+  .btn-glass:hover { background: #fff; border-color: var(--brand); }
+  /* Primary — hanh dong chinh */
+  .btn-solid { background: var(--brand); border-color: var(--brand); color: var(--text-invert); box-shadow: var(--sh-sm); }
+  .btn-solid:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+  /* Outline day — nhu "luyen tap lai cau sai" */
+  .btn-outline-strong {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid var(--brand-deep);
+    color: var(--brand-deep);
+  }
+  .btn-outline-strong:hover { background: var(--brand-10); }
+  .btn-glass:active, .btn-solid:active, .btn-outline-strong:active { transform: scale(.98); box-shadow: var(--sh-press); }
+
+  /* Bang xep hang */
+  .rank-head { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
+  .rank-head .icon { color: var(--brand); }
+  .rank-head h2 { margin: 0; font-size: 1.375rem; font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+  .rank-count {
+    margin-left: auto;
+    padding: .3rem .75rem;
+    border-radius: var(--r-full);
+    background: var(--brand-10);
+    color: var(--brand-deep);
+    font-size: .75rem;
+    font-weight: 600;
+  }
+  .btn-share {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.5rem;
+    padding: 0 1.125rem;
+    margin-bottom: 1.25rem;
+    border-radius: var(--r-full);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    font-size: .8125rem;
+    font-weight: 600;
+    box-shadow: var(--sh-xs);
+  }
+  .btn-share:hover { background: #fff; }
+
+  .rank-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .75rem; }
+  .rank-item {
+    display: flex;
+    align-items: center;
+    gap: .875rem;
+    padding: .875rem 1.125rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .62);
+    border: 1px solid var(--gray-300);
+    box-shadow: var(--sh-xs);
+  }
+.rank-item.is-top { background: var(--warn-06); border-color: var(--warn-25); }
+  .rank-item.is-me { border-color: var(--brand-25); }
+  .rank-empty {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, .5);
+    border: 1px dashed var(--gray-300);
+    border-radius: var(--r-md);
+    font-size: .8125rem;
+  }
+  .rank-no {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-full);
+    background: var(--gray-300);
+    color: var(--white);
+    font-weight: 700;
+  }
+  .rank-item.is-top .rank-no { background: var(--warn); }
+  .rank-avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-full);
+    background: var(--gray-100);
+    color: var(--text);
+    font-weight: 700;
+    font-size: .875rem;
+  }
+  .rank-item.is-top .rank-avatar { background: var(--warn-10); color: var(--warn-deep); }
+  .rank-info { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .rank-name { font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .rank-meta { display: flex; align-items: center; flex-wrap: wrap; gap: .125rem .5rem; margin-top: .125rem; }
+  .rank-score { font-weight: 700; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+  .rank-ratio { font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .rank-time { display: flex; align-items: center; gap: .375rem; font-size: .75rem; color: var(--text-muted); }
+  .rank-crown { margin-left: auto; color: var(--gray-300); }
+  .rank-item.is-top .rank-crown { color: var(--warn); }
+
+  /* ========================= Che do luyen tap ========================= */
+  .q-head-row { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+  .practice-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    min-height: 1.5rem;
+    padding: 0 .625rem;
+    border-radius: var(--r-full);
+    background: var(--brand-10);
+    border: 1px solid var(--brand-25);
+    color: var(--brand-deep);
+    font-size: .6875rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .practice-tag[hidden] { display: none; }
+  .link-back-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    min-height: 2.75rem;
+    margin-top: .75rem;
+    padding: 0 .75rem;
+    border-radius: var(--r-md);
+    color: var(--brand);
+    font-size: .8125rem;
+    font-weight: 600;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .link-back-result:hover { background: var(--brand-06); }
+  .link-back-result[hidden] { display: none; }
+  /* ========================= Trang xem dap an ========================= */
+  .review-page { padding: 1.25rem; }
+  .review-page[hidden] { display: none; }
+  .review-layout {
+    width: 100%;
+    max-width: 112rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 23rem 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+.review-layout.is-collapsed { grid-template-columns: 1fr; }
+  .review-layout.is-collapsed .rv-side { display: none; }
+  .review-layout.no-answer .rv-answer { display: none; }
+
+  .rv-side { display: flex; flex-direction: column; gap: 1rem; }
+  .rv-score {
+    display: flex;
+    align-items: baseline;
+    gap: .625rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--r-lg);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    box-shadow: var(--sh-sm);
+    font-size: 1.25rem;
+  }
+  .rv-score strong { color: var(--text); }
+  .rv-score span { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; color: var(--text-strong); }
+  .rv-side-box { background: var(--glass-1-bg); border: 1px solid var(--glass-1-br); border-radius: var(--r-lg); box-shadow: var(--sh-sm); overflow: hidden; }
+  .rv-side-title { background: var(--brand-06); padding: .875rem 1.25rem; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+  .rv-meta { margin: 0; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: .875rem; }
+  .rv-meta > div { display: flex; justify-content: space-between; gap: 1rem; font-size: .8125rem; }
+  .rv-meta dt { color: var(--text-muted); }
+  .rv-meta dd { margin: 0; font-weight: 700; color: var(--text-strong); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .rv-parts-label { padding: 0 1.25rem .75rem; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+  .rv-part {
+    display: flex;
+    gap: .875rem;
+    align-items: center;
+    margin: 0 1.25rem 1rem;
+    padding: .875rem 1rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .62);
+    border: 1px solid var(--brand-06);
+  }
+  .rv-part-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--r-md);
+    background: var(--brand-10);
+    color: var(--brand);
+  }
+  .rv-part-body { display: flex; flex-direction: column; min-width: 0; }
+  .rv-part-title { display: flex; justify-content: space-between; gap: 1rem; font-weight: 700; color: var(--text); }
+  .rv-part-title b { color: var(--text-strong); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .rv-part-sub { font-size: .75rem; color: var(--text-muted); margin-top: .125rem; }
+  .rv-history { display: flex; align-items: center; gap: .5rem; margin: 0 1.25rem; padding-bottom: .875rem; font-size: .8125rem; color: var(--text-muted); }
+  .rv-link {
+    display: block;
+    margin: 0 1.25rem 1.25rem;
+    padding: 0;
+    color: var(--brand);
+    font-weight: 600;
+    font-size: .8125rem;
+    text-align: left;
+  }
+  .rv-link:hover { text-decoration: underline; }
+
+  .rv-main { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+  .rv-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 1.25rem;
+    border-radius: var(--r-lg);
+    background: var(--glass-1-bg);
+    border: 1px solid var(--glass-1-br);
+    box-shadow: var(--sh-sm);
+  }
+  .rv-icon-btn {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+  }
+  .rv-icon-btn:hover { background: #fff; }
+  .rv-course { flex: 1; text-align: center; font-weight: 600; color: var(--text); }
+  .rv-filters { display: flex; gap: .5rem; }
+  .rv-filter {
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: var(--r-full);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--text);
+    font-size: .8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .rv-filter:hover { background: #fff; }
+  .rv-filter.is-all { background: var(--brand); border-color: var(--brand); color: var(--text-invert); }
+  .rv-filter.is-right { background: var(--ok-10); border-color: var(--ok-25); color: var(--ok-deep); }
+  .rv-filter.is-wrong { background: rgba(255, 255, 255, .7); border: 1.5px solid var(--bad); color: var(--bad); }
+  .rv-filter.is-toggle.is-on { background: var(--brand-10); border-color: var(--brand-25); color: var(--brand-deep); box-shadow: inset 0 0 0 1px var(--brand-25); }
+
+  .rv-tabs { border-bottom: 1px solid var(--brand-06); }
+  .rv-tab, .rv-tab.is-active { display: inline-block; padding: .5rem 1.5rem; font-size: .8125rem; font-weight: 700; color: var(--brand); border-bottom: 2px solid var(--brand); margin-bottom: -1px; }
+
+  .rv-list { display: flex; flex-direction: column; gap: 1rem; }
+  .rv-item {
+    background: rgba(255, 255, 255, .62);
+    border: 1px solid var(--brand-06);
+    border-radius: var(--r-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--sh-xs);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 230px;
+  }
+  .rv-item.is-right { border-color: var(--ok-25); background: var(--ok-06); }
+  .rv-item.is-wrong { border-color: var(--bad); box-shadow: var(--sh-xs), inset 3px 0 0 var(--bad); }
+  .rv-item-head { display: flex; align-items: center; gap: .75rem; }
+  .rv-qno { font-weight: 700; font-size: 1rem; color: var(--text-strong); }
+  .rv-qid { padding: .2rem .5rem; border-radius: var(--r-sm); background: var(--gray-100); color: var(--text-muted); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .6875rem; }
+  .rv-tag { margin-left: auto; padding: .2rem .5rem; border-radius: var(--r-full); font-size: .6875rem; font-weight: 600; }
+.rv-tag.is-retry { background: var(--warn-10); color: var(--warn-deep); }
+  .rv-tag.is-wrong { background: rgba(255, 255, 255, .9); border: 1px solid var(--bad); color: var(--bad); }
+  .rv-empty { padding: 2.5rem 1rem; text-align: center; color: var(--text-muted); background: rgba(255, 255, 255, .5); border: 1px dashed var(--gray-300); border-radius: var(--r-lg); }
+  .rv-more {
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border-radius: var(--r-md);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--brand-25);
+    color: var(--brand);
+    font-weight: 600;
+    box-shadow: var(--sh-xs);
+  }
+  .rv-more:hover { background: #fff; }
+  .rv-qtext { margin-top: .5rem; line-height: 1.7; color: var(--text); }
+  .rv-options { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 1rem 2rem; }
+  .rv-options li { font-weight: 500; color: var(--text-muted); }
+  .rv-answer { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; margin-top: 1.25rem; }
+  .rv-answer-text { font-weight: 700; }
+  .rv-item.is-right .rv-answer-text { color: var(--ok-deep); }
+  .rv-item.is-wrong .rv-answer-text { color: var(--bad); }
+  .rv-strip {
+    display: flex;
+    gap: 2rem;
+    padding: .5rem 1rem;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--brand-25);
+    background: rgba(255, 255, 255, .7);
+    font-weight: 600;
+  }
+  .rv-item.is-right .rv-strip { border-color: var(--ok-25); }
+  .rv-item.is-wrong .rv-strip { border-color: var(--bad); }
+  .rv-strip span { display: inline-flex; align-items: center; gap: .375rem; color: var(--text-faint); }
+  .rv-strip .is-correct { color: var(--ok); }
+  .rv-strip .is-yours { color: var(--warn-deep); }
+
+body.is-result .stage, body.is-result .bottombar,
+  body.is-review .stage, body.is-review .bottombar,
+  body.is-review .result-page { display: none; }
+
+  /* Đồng hồ đếm chỉ có ý nghĩa khi đang làm bài -> ẩn ở màn kết quả và bảng xếp hạng */
+  body.is-result .timer, body.is-review .timer { display: none; }
+
+  /* ========================= Responsive ========================= */
+  @media (max-width: 900px) {
+    .review-layout { grid-template-columns: 1fr; }
+    .rv-course { display: none; }
+    .rv-head { flex-wrap: wrap; }
+  }
+
+  /* Mobile: tat blur theo quy chuan (it kien thuc hon nhieu) */
+  @media (max-width: 768px) {
+    .glass-1, .glass-2, .glass-3,
+    .topbar, .bottombar, .qcard, .rcard, .modal, .confirm, .toast,
+    .timer, .icon-btn, .btn-ghost, .btn-glass, .rank-count, .btn-share,
+    .rv-score, .rv-side-box, .rv-head, .rv-item {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(255, 255, 255, .92);
+    }
+    .qcard { padding: 1.5rem 1.25rem 1.75rem; }
+  }
+
+  @media (max-width: 640px) {
+    html, body { overflow-x: hidden; }
+
+    .topbar {
+      position: static;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+      padding: .5rem .75rem;
+      min-height: 3.25rem;
+    }
+    .btn-ghost { min-height: 2.5rem; padding: 0 .625rem; font-size: .75rem; justify-self: auto; }
+    .candidate { display: none; }
+    .topbar-right { justify-content: flex-end; gap: .375rem; flex-wrap: wrap; }
+    .timer { min-height: 2.25rem; padding: 0 .625rem; font-size: .75rem; }
+    .icon-btn { width: 2.25rem; height: 2.25rem; }
+    .icon-group { gap: .25rem; }
+
+    .stage { padding: .75rem .75rem calc(6.5rem + env(safe-area-inset-bottom)); }
+    .qcard { padding: .75rem 1rem; margin: 0; border-radius: var(--r-lg); }
+    .q-number { font-size: 1.0625rem; }
+    .q-text { font-size: 1rem; line-height: 1.45; }
+    .divider { margin: 1rem 0 1.125rem; }
+    .options { gap: .625rem; }
+    .option { min-height: 48px; gap: .5rem; }
+    .option-badge { width: 2rem; height: 2rem; font-size: .875rem; }
+    .option-text { padding: .625rem .875rem; font-size: 1rem; line-height: 1.45; min-height: 48px; }
+
+    .bottombar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      align-items: center;
+      gap: .5rem .75rem;
+      padding: .625rem .75rem calc(.625rem + env(safe-area-inset-bottom));
+      background: var(--white);
+      flex-wrap: wrap;
+    }
+    .bottombar-left { display: contents; }
+    .link-btn { grid-column: 1; grid-row: 1; white-space: nowrap; font-size: .75rem; min-height: 2.5rem; }
+    .counter { grid-column: 2; grid-row: 1; justify-self: center; white-space: nowrap; font-size: .75rem; }
+    .bottombar-right { grid-column: 3; grid-row: 1; margin-left: 0; justify-self: end; }
+    .btn-primary { min-width: 6.5rem; min-height: 2.5rem; }
+    .dots {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      order: initial;
+      width: 100%;
+      margin: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: .25rem;
+    }
+    .dots::-webkit-scrollbar { display: none; }
+    .dot {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      min-width: 24px;
+      min-height: 24px;
+      width: 24px;
+      height: 24px;
+    }
+    .dot.is-current { width: 28px; height: 28px; }
+    .dot-icon { width: 14px; height: 14px; }
+
+    .toast-layer { top: 8.5rem; right: 1rem; left: 1rem; }
+    .toast { width: auto; }
+    .q-text, .option-text { overflow-wrap: anywhere; word-break: break-word; }
+  }
+
+
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Nen gradient + mesh blob duoc ve bang CSS (body::before) — khong can node HTML -->
+
+<header class="topbar">
+  <button class="btn-ghost" type="button" id="btnBack">
+    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Quay lại
+  </button>
+
+  <div class="candidate" aria-hidden="true"></div>
+
+  <div class="topbar-right">
+    <div class="timer" id="timer">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="timerText">Không giới hạn</span>
+    </div>
+    <div class="icon-group">
+      <button class="icon-btn" type="button" id="btnZoomOut" title="Thu nhỏ (Ctrl -)">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+      </button>
+      <button class="icon-btn" type="button" id="btnZoomIn" title="Phóng to (Ctrl +)">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+      </button>
+      <button class="icon-btn" type="button" id="btnSound" title="Bật / tắt âm thanh">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-on='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>' data-off='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>'><g id="soundIcon"></g></svg>
+      </button>
+      <button class="icon-btn" type="button" id="btnFullscreen" title="Toàn màn hình (F)">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 9 4 4 9 4"/><polyline points="15 4 20 4 20 9"/><polyline points="20 15 20 20 15 20"/><polyline points="9 20 4 20 4 15"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+  <section class="qcard" id="qcard">
+    <div class="q-head">
+      <div class="q-head-row">
+        <div class="q-number" id="qNumber">Câu 1</div>
+        <span class="practice-tag" id="practiceTag" hidden>
+          <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+          <span id="practiceTagText">Luyện tập</span>
+        </span>
+      </div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="divider">Chọn một đáp án đúng</div>
+    <div class="options" id="options"></div>
+  </section>
+</main>
+
+<section class="result-page" id="resultPage" hidden>
+  <div class="result-grid">
+
+    <article class="rcard">
+      <h2 class="rcard-title">Bài làm của bạn đã được gửi đi</h2>
+      <div class="score-row">
+        <span>Điểm của bạn:</span>
+        <strong id="resScore">0/0</strong>
+      </div>
+
+      <div class="rcard-course" id="resCourse">—</div>
+
+      <dl class="rlist">
+        <div class="rrow">
+          <dt>
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Thí sinh
+          </dt>
+          <dd id="resName">—</dd>
+        </div>
+        <div class="rrow">
+          <dt>
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Thời gian làm bài
+          </dt>
+          <dd id="resTime">—</dd>
+        </div>
+        <div class="rrow">
+          <dt>
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
+            Số câu trắc nghiệm đúng
+          </dt>
+          <dd id="resCorrect">0/0</dd>
+        </div>
+      </dl>
+
+      <div class="rbtns">
+        <button class="btn-glass btn-block" type="button" id="btnRetry">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+          Luyện tập lại
+        </button>
+        <button class="btn-solid btn-block" type="button" id="btnReviewAnswers">
+          Xem đáp án
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <button class="btn-outline-strong" type="button" id="btnRetryWrong">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+        Luyện tập lại câu sai
+      </button>
+      <button class="link-back-result" type="button" id="btnBackToResult" hidden>
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Quay lại phần xem điểm
+      </button>
+    </article>
+
+    <article class="rcard">
+      <div class="rank-head">
+        <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 5H7"/><path d="M17 6h2.5a2.5 2.5 0 0 1-2.5 5H17"/><path d="M12 14v3"/><path d="M8.5 20h7"/><path d="M9.5 17h5l1.5 3H8l1.5-3Z"/></svg>
+        <h2>Bảng xếp hạng</h2>
+        <span class="rank-count" id="rankCount">(0 Thí sinh)</span>
+      </div>
+      <button class="btn-share" type="button" id="btnShare">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+        Chia sẻ
+      </button>
+      <ol class="rank-list" id="rankList"></ol>
+    </article>
+
+  </div>
+</section>
+
+<section class="review-page" id="reviewPage" hidden>
+  <div class="review-layout" id="reviewLayout">
+
+    <aside class="rv-side" id="rvSide">
+      <div class="rv-score"><strong>Điểm:</strong><span id="rvScore">0/0</span></div>
+      <div class="rv-side-box">
+        <div class="rv-side-title">Thông tin chi tiết</div>
+        <dl class="rv-meta">
+          <div><dt>Thời gian làm bài:</dt><dd id="rvTime">—</dd></div>
+          <div><dt>Thời gian nộp bài:</dt><dd id="rvSubmit">—</dd></div>
+        </dl>
+
+        <div class="rv-parts-label">CHI TIẾT THEO PHẦN</div>
+        <div class="rv-part">
+          <span class="rv-part-icon">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 2.5 2.5L16 9"/></svg>
+          </span>
+          <span class="rv-part-body">
+            <span class="rv-part-title">Trắc nghiệm<b id="rvPartScore">0 / 0</b></span>
+            <span class="rv-part-sub" id="rvPartSub">0 câu (0 đúng - 0 sai)</span>
+          </span>
+        </div>
+
+        <p class="rv-history">
+          Xem chi tiết quá trình làm bài:
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/><path d="M12 8v4l2.5 2.5"/></svg>
+        </p>
+        <button class="rv-link" type="button" id="btnCopyLink">Copy link gửi giáo viên</button>
+      </div>
+    </aside>
+
+    <div class="rv-main">
+      <div class="rv-head">
+        <button class="rv-icon-btn" type="button" id="btnRvCollapse" title="Ẩn / hiện thông tin chi tiết" aria-pressed="false">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line id="btnRvCollapseLine" x1="14" y1="4" x2="14" y2="20"/></svg>
+        </button>
+        <div class="rv-course" id="rvCourse">—</div>
+        <div class="rv-filters">
+          <button class="rv-filter" type="button" id="btnRvFilter">Đúng &amp; sai</button>
+          <button class="rv-filter is-toggle" type="button" id="btnRvAnswer">Đáp án</button>
+        </div>
+      </div>
+
+      <div class="rv-tabs"><span class="rv-tab is-active">Trắc nghiệm</span></div>
+
+      <div class="rv-list" id="rvList"></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="toast-layer">
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <div class="toast-icon" id="toastIcon"></div>
+    <div>
+      <div class="toast-title" id="toastTitle"></div>
+      <div class="toast-sub" id="toastSub"></div>
+    </div>
+    <button class="toast-close" type="button" id="toastClose" aria-label="Đóng thông báo">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
+<footer class="bottombar" id="bottombar">
+  <div class="bottombar-left">
+    <button class="link-btn" type="button" id="btnRestart" disabled>
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+      Bắt đầu lại
+    </button>
+    <button class="counter" type="button" id="btnCounter" title="Danh sách câu hỏi">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3.5h6v3H9z"/><path d="M8.5 12h7"/><path d="M8.5 16h4.5"/></svg>
+      <span id="counterText">Câu 1/51</span>
+    </button>
+    <div class="dots" id="dots" role="tablist" aria-label="Tiến trình các câu hỏi"></div>
+  </div>
+  <div class="bottombar-right">
+    <button class="btn-primary" type="button" id="btnAction" disabled>Kiểm tra</button>
+  </div>
+</footer>
+
+<div class="backdrop" id="mapBackdrop" hidden>
+  <div class="modal is-wide" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
+    <h2 class="modal-title" id="mapTitle">Danh sách câu hỏi</h2>
+    <div class="map-grid" id="mapGrid"></div>
+    <div class="modal-foot">
+      <button class="btn-primary" type="button" id="btnCloseMap">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" id="confirmBackdrop" hidden>
+  <div class="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirmMsg" aria-describedby="confirmMsg">
+    <div class="confirm-head">
+      <svg class="confirm-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <p class="confirm-msg" id="confirmMsg">Bạn có chắc chắn muốn thoát bài thi ?</p>
+    </div>
+    <div class="confirm-foot">
+      <button class="btn-soft" type="button" id="btnConfirmClose">Đóng</button>
+      <button class="btn-primary btn-sm" type="button" id="btnConfirmOk">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" id="shareBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <h2 class="modal-title" id="shareTitle">Chia sẻ kết quả</h2>
+    <p class="share-summary" id="shareSummary">—</p>
+    <div class="share-grid">
+      <button class="share-btn" type="button" data-share="facebook">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H6v3h3v9h3v-9h3l1-3h-4V7a1 1 0 0 1 1-1h2Z"/></svg></span>
+        <span class="share-label">Facebook</span>
+      </button>
+      <button class="share-btn" type="button" data-share="messenger">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5a9.5 9.5 0 0 0-8.3 14L2.5 21.5l5.1-1.2A9.5 9.5 0 1 0 12 2.5Z"/><path d="M6.8 13.8 10 9.6l2.6 2.6 4.6-4.2"/></svg></span>
+        <span class="share-label">Messenger</span>
+      </button>
+      <button class="share-btn" type="button" data-share="zalo">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.1A9 9 0 1 0 12 3Z"/><path d="M8 10.5h8M8 13.5h5"/></svg></span>
+        <span class="share-label">Zalo</span>
+      </button>
+      <button class="share-btn" type="button" data-share="tiktok">
+        <span class="share-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.2a3.3 3.3 0 1 1-2.6-3.2"/><path d="M14 6.2A5.8 5.8 0 0 0 19.8 10"/></svg></span>
+        <span class="share-label">TikTok</span>
+      </button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-soft" type="button" id="btnShareCopy">Sao chép kết quả</button>
+      <button class="btn-primary" type="button" id="btnShareClose">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/history.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  /* ========================= CẤU HÌNH ========================= */
+  const CONFIG = {
+    questionCount: 0,              // = QUESTIONS.length, gán ngay sau khi nạp dữ liệu
+    candidateName: '',            // tên thí sinh hiển thị ở màn kết quả
+    subjectName: '',              // gán theo chương đang làm (xem bên dưới)
+    timeLimitSeconds: null,       // null = không giới hạn
+    dotWindow: 15,                // số chấm tròn hiển thị trên thanh dưới
+    startSound: true,
+    exitUrl: null,                // không dùng — xem onExit ngay dưới
+    onExit: function () {         // xác nhận thoát: quay lại popup chọn chương
+      if (window.history.length > 1) { window.history.back(); return; }
+      window.location.href = '../index.html?m=he-dieu-hanh&mode=learn#lb';
+    },
+    leaderboard: null,           // dữ liệu thật sẵn có: [{ name, score, seconds, total }]
+    leaderboardUrl: null,        // URL trả về JSON: mảng, hoặc { rows: [...] } — nguồn ưu tiên hơn leaderboard
+    shareUrl: null,               // link chia sẻ (mặc định = location.href của trang)
+    messengerAppId: null,         // App ID Facebook để mở hộp thoại Messenger trên web
+    onFinish: function (r) {      // nhận kết quả khi hoàn thành: ({ total, correct, score, wrongCount, seconds, ratio, name, subject, answers })
+      CK.recordHistory(r, {
+        slug: 'he-dieu-hanh',
+        part: partId,
+        partName: PART_NAMES[partId],
+        subject: 'HỆ ĐIỀU HÀNH',
+        cat: 'ĐẠI CƯƠNG LÝ LUẬN CHÍNH TRỊ & MÔN KHÁC',
+        catName: 'Đại cương lý luận chính trị & môn khác'
+      });
+    }
+  };
+
+  const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+  /* ========================= CÂU HỎI =========================
+     Nguồn: he-dieu-hanh-questions.json — 200 câu, 1 chương.
+     Chương đang làm lấy từ tham số ?d=chuong-N; thiếu hoặc sai thì mặc định chương đầu.
+     Sinh tự động bởi TN-luyen-tap/gen-luyen-tap.js — không sửa tay. */
+  const PART_NAMES = {
+    "chuong-10": "Chương 10"
+  };
+
+  const BANK = {
+    "chuong-10": [
+      { id: 1, text: "Câu 34: (CLO1(2)3): Một tiến trình chuyển từ running sang ready thường do nguyên nhân nào?", options: ["A. Hoàn tất toàn bộ chương trình và thoát.", "B. Bị thu hồi CPU do hết quantum hoặc có tiến trình ưu tiên cao hơn.", "C. Đang chờ dữ liệu từ thiết bị I/O.", "D. Bị xóa khỏi hệ thống file."], correct: 1 },
+      { id: 2, text: "Câu 36: (CLO1(2)3): Một tiến trình có nhiều file đang mở. Thông tin này thường gắn với phần nào của quản lý tiến trình?", options: ["A. Bộ đếm chương trình duy nhất của CPU.", "B. Thanh ghi giới hạn của mọi tiến trình khác.", "C. Thuật toán thay thế trang toàn cục.", "D. Thông tin trạng thái I/O và bảng mô tả file liên quan đến tiến trình."], correct: 3 },
+      { id: 3, text: "Câu 66: (CLO2(4)3): Trong Round Robin, quantum quá nhỏ thường gây hậu quả nào?", options: ["A. Biến thuật toán thành FCFS hoàn toàn.", "B. Tăng overhead context switch và giảm hiệu quả CPU.", "C. Loại bỏ mọi thời gian chờ của tiến trình.", "D. Làm page fault không thể xảy ra."], correct: 1 },
+      { id: 4, text: "Câu 66: (CLO1(7)3): Trong một hệ thống máy tính, 3 tiến trình cùng chia sẻ 4 ổ đĩa. Mỗi tiến trình có nhu cầu tối đa là 2 ổ đĩa. Tình trạng tắc nghẽn (Deadlock) có thể xảy ra hay không?", options: ["A. Có, vì số ổ đĩa ít hơn tổng nhu cầu của tất cả các tiến trình (6 ổ).", "B. Có, nếu hệ điều hành cấp phát ngẫu nhiên không kiểm soát.", "C. Không, vì trong trường hợp xấu nhất mỗi tiến trình giữ 1 ổ, vẫn dư 1 ổ để 1 tiến trình hoàn thành và nhường lại tài nguyên.", "D. Không, vì ổ đĩa là tài nguyên có thể chia sẻ đồng thời tuyệt đối (sharable)."], correct: 2 },
+      { id: 5, text: "Câu 15: (CLO1(1)3): Khi nhiều tiến trình truy cập cùng thiết bị in, HĐH thường dùng hàng đợi/spooling nhằm mục đích gì?", options: ["A. Cho phép mọi tiến trình ghi trực tiếp vào cổng máy in cùng lúc.", "B. Bảo đảm máy in xử lý trước yêu cầu lớn nhất.", "C. Tuần tự hóa yêu cầu in và chia sẻ thiết bị không thể phục vụ đồng thời tùy ý.", "D. Biến máy in thành bộ nhớ chính tạm thời."], correct: 2 },
+      { id: 6, text: "Câu 65: (CLO1(7)3): Trong khôi phục tắc nghẽn, \"Nạn nhân\" (Victim) bị tước quyền tài nguyên thường được hệ điều hành chọn dựa trên tiêu chí nào để tối ưu hóa?", options: ["A. Dựa trên hàm chi phí (cost function) xét đến mức độ ưu tiên, lượng tài nguyên đang giữ và tiến độ thực thi để giảm thiểu thiệt hại.", "B. Luôn chọn tiến trình của tài khoản Administrator để hệ thống có quyền cao nhất.", "C. Chọn ngẫu nhiên hoàn toàn theo thuật toán gieo hạt tĩnh.", "D. Luôn chọn tiến trình vừa mới được tạo ra trong 1 mili-giây gần nhất."], correct: 0 },
+      { id: 7, text: "Câu 94: (CLO2(6)3): Trong định thời thời gian thực (Real-time scheduling), thuật toán Rate-Monotonic (RMS) gán độ ưu tiên tĩnh cho các tác vụ chu kỳ dựa trên tiêu chí nào?", options: ["A. Tác vụ nào yêu cầu nhiều CPU burst nhất sẽ có ưu tiên cao nhất.", "B. Dựa vào hàm API do người quản trị cấu hình thủ công.", "C. Chu kỳ càng ngắn (tần suất lặp lại càng cao) thì độ ưu tiên càng cao.", "D. Tác vụ nào đến trước sẽ có độ ưu tiên cao hơn."], correct: 2 },
+      { id: 8, text: "Câu 32: (CLO1(2)3): Vì sao thao tác context switch được xem là overhead?", options: ["A. Nó làm tăng tốc độ thực thi từng lệnh máy.", "B. Nó xóa bỏ nhu cầu dùng cache.", "C. Nó luôn làm giảm số tiến trình trong hệ thống về 1.", "D. CPU tiêu tốn thời gian lưu/nạp ngữ cảnh mà không thực thi trực tiếp mã người dùng."], correct: 3 },
+      { id: 9, text: "Câu 39: (CLO2(6)3): Trong định thời CPU thời gian thực cứng (Hard Real-Time), nếu chu kỳ của 3 sự kiện lần lượt là 100, 200, 500ms và thời gian xử lý là 50, 30, 100ms. Hệ thống có khả năng định thời (schedulable) hay không?", options: ["A. Không, vì thời gian xử lý tổng cộng lớn hơn 100ms.", "B. Có, vì tỷ lệ tải bằng chính xác 1.", "C. Có, vì tỷ lệ sử dụng CPU (50/100 + 30/200 + 100/500) = 0.85 < 1.", "D. Không, vì sự kiện đầu tiên chiếm tới 50% CPU sẽ chặn sự kiện thứ hai."], correct: 2 },
+      { id: 10, text: "Câu 53: (CLO1(7)3): Trong phân trang đa cấp, lợi ích chính là gì?", options: ["A. Giảm bộ nhớ dành cho bảng trang bằng cách chỉ cấp phát các bảng con cần thiết.", "B. Loại bỏ hoàn toàn chi phí dịch địa chỉ.", "C. Bắt buộc mọi trang phải thường trú trong RAM.", "D. Làm kích thước trang thay đổi theo từng lệnh máy."], correct: 0 },
+      { id: 11, text: "Câu 94: (CLO2(6)3): Trong phát hiện deadlock với nhiều instance tài nguyên, hệ thống cần dữ liệu nào ngoài Available và Allocation?", options: ["A. Tên shell đang dùng.", "B. Request hiện tại của từng tiến trình.", "C. Kích thước quantum Round Robin.", "D. Số bit của địa chỉ logic."], correct: 1 },
+      { id: 12, text: "Câu 81: (CLO2(5)3): Mutex lock khác spinlock nguy hiểm ở điểm nào khi vùng chờ kéo dài trên hệ đơn CPU?", options: ["A. Spinlock có thể lãng phí CPU vì bận chờ trong khi holder chưa được chạy.", "B. Spinlock luôn nhanh hơn trong mọi trường hợp dài.", "C. Mutex không bao giờ cần hỗ trợ của HĐH.", "D. Spinlock tự động giải quyết bounded waiting."], correct: 0 },
+      { id: 13, text: "Câu 41: (CLO1(7)3): Cặp thanh ghi base-limit bảo vệ bộ nhớ như thế nào trong hệ thống đơn giản?", options: ["A. CPU kiểm tra địa chỉ do tiến trình sinh ra nằm trong đoạn hợp lệ trước khi truy cập.", "B. CPU tự động sao chép mọi địa chỉ sang đĩa trước khi truy cập.", "C. HĐH gán cùng base và limit cho mọi tiến trình để tiết kiệm thanh ghi.", "D. Trình biên dịch xóa mọi con trỏ trước khi chạy."], correct: 0 },
+      { id: 14, text: "Câu 56: (CLO1(7)3): Đồ thị cấp phát tài nguyên (RAG) chỉ có thể dùng để PHÁT HIỆN tắc nghẽn một cách tuyệt đối (có chu trình là có tắc nghẽn) trong điều kiện nào?", options: ["A. Khi hệ thống có ít hơn 10 tiến trình đang chạy.", "B. Khi mỗi loại tài nguyên trong hệ thống chỉ có đúng một thực thể (single instance).", "C. Khi không có tiến trình nào yêu cầu sử dụng CPU.", "D. Khi tất cả các tài nguyên đều là tài nguyên phần mềm ảo."], correct: 1 },
+      { id: 15, text: "Câu 26: (CLO2(4)3): Việc sử dụng Pool của các tiểu trình (Thread Pools) thay vì tạo tiểu trình mới cho mỗi yêu cầu mang lại lợi thế hiệu suất nào?", options: ["A. Tăng dung lượng bộ nhớ khả dụng do xóa ngay các tiểu trình sau khi khởi tạo.", "B. Giảm độ trễ phục vụ do loại bỏ thời gian khởi tạo và hủy tiểu trình cho từng tác vụ riêng rẽ.", "C. Chống được tình trạng tắc nghẽn vòng quanh (Circular wait) theo mặc định.", "D. Ngăn cấm luồng con ghi đè bộ nhớ của luồng cha."], correct: 1 },
+      { id: 16, text: "Câu 8: (CLO1(2)3): Phương thức truyền tham số nào cho Lời gọi hệ thống mang lại sự linh hoạt tối đa khi số lượng và độ dài tham số là cực lớn?", options: ["A. Truyền qua các thanh ghi (registers) tích hợp sẵn trên CPU.", "B. Đẩy thẳng tham số vào đĩa cứng và gọi ngắt I/O.", "C. Chỉ định tĩnh độ dài tham số trong System-call interface.", "D. Lưu tham số trong một khối (block) ở bộ nhớ và truyền địa chỉ của khối đó vào thanh ghi."], correct: 3 },
+      { id: 17, text: "Câu 14: (CLO1(1)3): Đặc tính nào sau đây giải thích sự khác biệt giữa hệ thống đơn xử lý và hệ thống đa xử lý đối xứng (SMP)?", options: ["A. SMP sử dụng duy nhất một bộ nhớ đệm (cache) chung cho tất cả các CPU.", "B. Trong SMP, mỗi vi xử lý đều có thể chạy hệ điều hành và chia sẻ bộ nhớ, thay vì một CPU thực hiện mọi tác vụ.", "C. Hệ thống đơn xử lý hỗ trợ chia sẻ thời gian (timesharing), còn SMP thì không.", "D. SMP gán một vi xử lý cụ thể chuyên làm nhiệm vụ I/O, các vi xử lý khác chỉ tính toán."], correct: 1 },
+      { id: 18, text: "Câu 72: (CLO2(4)3): Với SJF, khó khăn thực tế quan trọng nhất là gì?", options: ["A. Không thể dùng trong hệ một CPU.", "B. Không thể tính waiting time sau khi chạy.", "C. Không hỗ trợ tiến trình đến cùng thời điểm.", "D. Không biết chính xác CPU burst kế tiếp nên phải ước lượng."], correct: 3 },
+      { id: 19, text: "Câu 79: (CLO2(4)3): Cơ chế Lưu trữ Cục bộ của Tiểu trình (Thread Local Storage - TLS) khác với Biến cục bộ (Local Variables) ở điểm nào?", options: ["A. Biến cục bộ chỉ tồn tại khi hàm đang thực thi, trong khi TLS hiển thị trên toàn bộ mã nguồn thuộc tiểu trình đó và tồn tại xuyên suốt vòng đời tiểu trình.", "B. TLS được lưu trực tiếp trên đĩa cứng, còn biến cục bộ lưu ở RAM.", "C. Biến cục bộ có thể được truy cập bởi mọi tiểu trình khác, TLS thì không.", "D. TLS do phần cứng quản lý qua Cache L3, biến cục bộ do HĐH quản lý."], correct: 0 },
+      { id: 20, text: "Câu 77: (CLO2(5)3): Semaphore S khởi tạo bằng 1, hai tiến trình dùng wait(S) trước miền găng và signal(S) sau miền găng. Vai trò của S là gì?", options: ["A. Binary semaphore/mutex bảo đảm chỉ một tiến trình vào miền găng.", "B. Counting semaphore cho phép vô hạn tiến trình vào cùng lúc.", "C. Biến đếm page fault của hệ thống.", "D. Cờ báo tiến trình đã terminated."], correct: 0 },
+      { id: 21, text: "Câu 29: (CLO1(2)3): Một tiến trình zombie xuất hiện khi nào trong hệ UNIX-like?", options: ["A. Tiến trình con đã kết thúc nhưng tiến trình cha chưa thu nhận trạng thái kết thúc.", "B. Tiến trình cha bị block vì thiếu bộ nhớ cache.", "C. Tiến trình đang chạy nhưng bị thiếu trang liên tục.", "D. Tiến trình bị scheduler đưa về ready sau quantum."], correct: 0 },
+      { id: 22, text: "Câu 70: (CLO1(7)3): Trong phân tích thuật toán Banker, độ phức tạp thuật toán để kiểm tra trạng thái an toàn cho n tiến trình và m loại tài nguyên là bao nhiêu?", options: ["A. O(m + n)", "B. O(m × n²)", "C. O(1)", "D. O(n!)"], correct: 1 },
+      { id: 23, text: "Câu 80: (CLO2(4)3): Trong mô hình Many-to-Many, \"Scheduler Activation\" sử dụng cơ chế Upcall nhằm mục đích gì?", options: ["A. Gửi email thông báo cho người quản trị khi CPU quá tải.", "B. Cho phép hạt nhân thông báo cho thư viện tiểu trình ở không gian người dùng biết về một sự kiện (như một luồng nhân bị chặn), để thư viện có thể định thời lại các luồng người dùng khác.", "C. Đình chỉ hệ thống và yêu cầu người dùng nâng cấp bộ nhớ vật lý.", "D. Tự động chuyển đổi mã nguồn Java sang mã máy của Windows."], correct: 1 },
+      { id: 24, text: "Câu 51: (CLO1(7)3): Hiện tượng thrashing trong bộ nhớ ảo được hiểu đúng nhất là gì?", options: ["A. CPU luôn chạy 100% mã người dùng không có ngắt.", "B. Đĩa không còn file hệ thống để đọc.", "C. Hệ thống dành phần lớn thời gian xử lý page fault/thay trang thay vì thực thi hữu ích.", "D. Mọi trang đều nằm trong TLB nên không có truy cập bộ nhớ."], correct: 2 },
+      { id: 25, text: "Câu 88: (CLO2(6)3): Bốn điều kiện cần để deadlock có thể xảy ra gồm mutual exclusion, hold and wait, no preemption và điều kiện nào?", options: ["A. CPU burst.", "B. TLB hit.", "C. Spooling.", "D. Circular wait."], correct: 3 },
+      { id: 26, text: "Câu 9: (CLO1(1)3): Trong mô hình phân lớp của HĐH, ưu điểm kỹ thuật chính của việc chia thành các lớp là gì?", options: ["A. Giảm độ phức tạp bằng giao diện rõ giữa các lớp, dễ kiểm thử và bảo trì hơn.", "B. Làm mọi lời gọi hệ thống chạy nhanh hơn nhân nguyên khối trong mọi trường hợp.", "C. Loại bỏ nhu cầu thiết kế cấu trúc dữ liệu trong nhân.", "D. Bắt buộc mọi driver phải chạy ở user mode."], correct: 0 },
+      { id: 27, text: "Câu 47: (CLO1(7)3): Trong cấp phát liên tục, thuật toán best-fit có nhược điểm thực tế nào?", options: ["A. Luôn chọn lỗ đầu tiên nên không cần tìm kiếm.", "B. Không thể cấp phát cho tiến trình nhỏ.", "C. Có thể tạo nhiều lỗ trống rất nhỏ, làm tăng phân mảnh ngoài.", "D. Bắt buộc dùng TLB cho mọi truy cập."], correct: 2 },
+      { id: 28, text: "Câu 50: (CLO1(7)3): Với chuỗi tham chiếu trang 1,2,3,1,4 và 3 khung rỗng ban đầu, FIFO gây bao nhiêu page fault?", options: ["A. 3 page faults.", "B. 4 page faults.", "C. 5 page faults.", "D. 2 page faults."], correct: 1 },
+      { id: 29, text: "Câu 92: (CLO2(6)3): Trong Định thời hệ đa xử lý đối xứng (SMP Scheduling), \"Processor Affinity\" (Sự liên kết bộ xử lý) dạng Hard Affinity có ý nghĩa gì?", options: ["A. Tiến trình sẽ được tự do di chuyển qua lại giữa mọi CPU để cân bằng tải.", "B. Hệ thống bắt buộc ép tiến trình chạy với tốc độ nhanh nhất.", "C. Hệ điều hành cung cấp cơ chế cho phép tiến trình chỉ định rõ nó không được phép di chuyển sang bộ xử lý khác, đảm bảo tỷ lệ Hit rate của bộ đệm (Cache).", "D. Đóng băng các CPU không sử dụng để tiết kiệm pin."], correct: 2 },
+      { id: 30, text: "Câu 83: (CLO2(5)3): Monitor giúp lập trình đồng bộ an toàn hơn semaphore thô vì lý do nào?", options: ["A. Cho phép mọi tiến trình truy cập dữ liệu chia sẻ không kiểm soát.", "B. Chỉ hoạt động nếu không có biến điều kiện.", "C. Đóng gói dữ liệu chia sẻ và thủ tục, bảo đảm một luồng hoạt động trong monitor tại một thời điểm.", "D. Thay thế hoàn toàn bộ quản lý bộ nhớ."], correct: 2 },
+      { id: 31, text: "Câu 50: (CLO1(2)3): Trình thông dịch lệnh (Command Interpreter) thường được hệ điều hành hiện đại tách ra thành một chương trình người dùng độc lập thay vì tích hợp vào hạt nhân. Lợi ích của việc này là gì?", options: ["A. Tăng cường khả năng cướp quyền điều khiển phần cứng của người dùng.", "B. Bắt buộc người dùng phải học ngôn ngữ kịch bản trước khi dùng máy.", "C. Cho phép bỏ qua quá trình kiểm tra bảo mật của User Mode.", "D. Cho phép linh hoạt thay đổi hoặc có nhiều trình thông dịch lệnh khác nhau (như bash, csh) mà không cần can thiệp vào hạt nhân."], correct: 3 },
+      { id: 32, text: "Câu 75: (CLO1(2)3): Trình biên dịch mã nguồn C (như gcc) liên kết các hàm của thư viện chuẩn (như printf) tới hạt nhân hệ điều hành thông qua cơ chế nào?", options: ["A. Mở một socket mạng kết nối tới máy chủ của Microsoft/Linux.", "B. Thông qua Thư viện thực thi chuẩn (Standard C Library - libc) đóng vai trò trung gian chứa các Lời gọi hệ thống.", "C. Bằng cách gọi trực tiếp vào bộ điều khiển bàn phím.", "D. Kích hoạt môi trường máy ảo Java (JVM)."], correct: 1 },
+      { id: 33, text: "Câu 22: (CLO1(2)3): Trong mô hình trạng thái tiến trình, tiến trình đang chờ hoàn tất đọc đĩa sẽ ở trạng thái nào?", options: ["A. Ready vì đang chờ cấp phát bộ nhớ ảo.", "B. Waiting/blocked vì chưa đủ điều kiện tiếp tục chạy trên CPU.", "C. Running vì thiết bị đĩa đang hoạt động thay CPU.", "D. Terminated vì tiến trình không dùng CPU."], correct: 1 },
+      { id: 34, text: "Câu 75: (CLO2(5)3): Hai tiến trình cùng cập nhật biến đếm count bằng thao tác đọc-tăng-ghi. Nếu không đồng bộ, lỗi nào có thể xảy ra?", options: ["A. Deadlock chắc chắn xảy ra sau đúng hai lệnh.", "B. Page fault luôn làm count tăng gấp đôi.", "C. Race condition làm mất cập nhật do xen kẽ lệnh không nguyên tử.", "D. CPU tự sửa count bằng timer interrupt."], correct: 2 },
+      { id: 35, text: "Câu 30: (CLO1(2)3): Nếu một tiến trình bị treo khi giữ tài nguyên, HĐH cần thông tin nào để thu hồi hoặc xử lý đúng?", options: ["A. Chỉ tên người dùng đăng nhập vào GUI.", "B. Bảng tài nguyên, trạng thái I/O và các mô tả mở được lưu trong cấu trúc quản lý tiến trình.", "C. Chỉ số dòng trong mã nguồn C của chương trình.", "D. Chỉ địa chỉ IP của máy khách."], correct: 1 },
+      { id: 36, text: "Câu 67: (CLO1(1)3): Cơ chế \"Spooling\" (Simultaneous Peripheral Operations On-Line) mang lại lợi ích gì khi in ấn tài liệu?", options: ["A. Trực tiếp biến máy in thành một máy chủ xử lý dữ liệu thay thế CPU.", "B. Thu nhận luồng dữ liệu từ các tiến trình xuất ra một không gian đệm trên đĩa từ, giải phóng tiến trình khỏi việc phải chờ máy in tốc độ chậm.", "C. Gửi tài liệu in trực tiếp lên đám mây thông qua giao thức IaaS.", "D. Tự động kiểm tra chính tả của văn bản trước khi đẩy ra khay giấy."], correct: 1 },
+      { id: 37, text: "Câu 8: (CLO1(1)3): Một HĐH muốn ngăn tiến trình người dùng ghi vào vùng nhớ của nhân. Cơ chế nào là nền tảng nhất?", options: ["A. Đổi tên file hệ thống sang tên khó đoán.", "B. Yêu cầu mọi tiến trình dùng chung một stack.", "C. Tắt toàn bộ ngắt đồng hồ trong lúc chạy user mode.", "D. Phần cứng bảo vệ bộ nhớ kết hợp chế độ đặc quyền và kiểm tra địa chỉ."], correct: 3 },
+      { id: 38, text: "Câu 71: (CLO1(1)3): Trong chu kỳ lệnh CPU, khi một ngắt xuất hiện, CPU phản hồi như thế nào?", options: ["A. Bỏ qua lệnh hiện tại, xóa RAM và nạp lại hệ điều hành.", "B. Đẩy ngắt vào một file log trên đĩa từ và tiếp tục tính toán.", "C. Tắt nguồn hệ thống để bảo vệ an toàn dữ liệu.", "D. Tạm dừng tiến trình hiện tại, lưu ngữ cảnh, chuyển cờ lệnh tới địa chỉ của Trình phục vụ ngắt (ISR) để xử lý."], correct: 3 },
+      { id: 39, text: "Câu 78: (CLO2(5)3): Nếu một tiến trình gọi wait(S) nhưng quên signal(S) sau khi rời miền găng, hậu quả có thể là gì?", options: ["A. Mọi tiến trình khác vẫn vào miền găng bình thường.", "B. Các tiến trình khác bị chặn vô hạn trên S, gây starvation/deadlock cục bộ.", "C. S tự động tăng nhờ ngắt đồng hồ.", "D. Bảng trang của tiến trình bị xóa ngay."], correct: 1 },
+      { id: 40, text: "Câu 19: (CLO1(1)3): Sắp xếp phân cấp bộ nhớ nào sau đây đúng theo thứ tự từ tốc độ cao nhất (chi phí đắt nhất) đến tốc độ thấp nhất?", options: ["A. Main memory -> Registers -> Cache -> Hard disk", "B. Cache -> Main memory -> Registers -> Optical disk", "C. Registers -> Cache -> Main memory -> Solid-state disk", "D. Hard disk -> Solid-state disk -> Cache -> Registers"], correct: 2 },
+      { id: 41, text: "Câu 62: (CLO2(4)3): Cho P1(AT=0,BT=5), P2(AT=1,BT=3), P3(AT=2,BT=1). Theo FCFS, thời gian hoàn thành của P3 là bao nhiêu?", options: ["A. 6 ms.", "B. 9 ms.", "C. 5 ms.", "D. 4 ms."], correct: 1 },
+      { id: 42, text: "Câu 52: (CLO1(7)3): Working set của tiến trình được dùng để ước lượng điều gì?", options: ["A. Tập tất cả file mà người dùng từng mở.", "B. Tập thanh ghi vật lý của CPU.", "C. Tập thiết bị I/O có thể tháo lắp nóng.", "D. Tập trang tiến trình đang cần trong một cửa sổ thời gian để chạy hiệu quả."], correct: 3 },
+      { id: 43, text: "Câu 73: (CLO2(4)3): Trong multilevel feedback queue, cơ chế chuyển tiến trình giữa các hàng đợi nhằm mục đích gì?", options: ["A. Phản ánh hành vi CPU-bound/I/O-bound và giảm starvation bằng điều chỉnh ưu tiên động.", "B. Cố định vĩnh viễn mọi tiến trình ở một hàng đợi.", "C. Bỏ qua hoàn toàn quantum trong mọi hàng đợi.", "D. Chỉ dùng để quản lý thư mục file."], correct: 0 },
+      { id: 44, text: "Câu 91: (CLO2(6)3): Banker's algorithm thuộc nhóm chiến lược nào?", options: ["A. Phát hiện deadlock sau khi đã xảy ra và xóa file.", "B. Ngăn chặn bằng cách cấm mọi tài nguyên chia sẻ.", "C. Tránh deadlock bằng cách chỉ cấp phát nếu hệ thống vẫn ở trạng thái an toàn.", "D. Khôi phục bằng cách tăng kích thước trang."], correct: 2 },
+      { id: 45, text: "Câu 30: (CLO2(6)3): Nhược điểm lớn nhất của thuật toán định thời First-Come, First-Served (FCFS) khi áp dụng trong thực tế là gì?", options: ["A. Gây ra hiện tượng phân mảnh ngoại bộ nhớ.", "B. Các tiến trình ngắn (I/O-bound) phải chờ đợi rất lâu sau một tiến trình dài (CPU-bound) gây ra hiệu ứng Convoy (đoàn xe).", "C. Gây đói CPU (Starvation) vĩnh viễn cho những tiến trình đến sau.", "D. Thuật toán quá phức tạp để lập trình trong không gian hạt nhân."], correct: 1 },
+      { id: 46, text: "Câu 61: (CLO1(1)3): Khi thiết bị ngoại vi truyền xong khối lượng lớn dữ liệu vào bộ nhớ qua cơ chế DMA, nó sẽ báo hiệu cho CPU thông qua hình thức nào?", options: ["A. Ngắt phần mềm (Trap) từ các ứng dụng đang chạy.", "B. Chỉ gửi một ngắt (Interrupt) duy nhất sau khi đã truyền hoàn tất toàn bộ khối dữ liệu.", "C. Gửi ngắt liên tục sau mỗi byte được truyền vào RAM.", "D. Kích hoạt bộ nạp khởi động (Bootstrap) để thông báo ngầm."], correct: 1 },
+      { id: 47, text: "Câu 97: (CLO2(6)3): Thiết kế Hàng đợi phản hồi đa cấp (Multilevel Feedback Queue) cần định nghĩa rất nhiều tham số cốt lõi, NGOẠI TRỪ tham số nào sau đây?", options: ["A. Giới hạn nhiệt độ tối đa mà CPU được phép hoạt động khi chạy hàng đợi.", "B. Tiêu chí để thăng cấp (upgrade) hoặc giáng cấp (demote) một tiến trình sang hàng đợi khác.", "C. Thuật toán định thời nội bộ của mỗi hàng đợi riêng biệt (ví dụ RR, FCFS).", "D. Số lượng hàng đợi trong hệ thống."], correct: 0 },
+      { id: 48, text: "Câu 53: (CLO1(7)3): Trong ngăn chặn tắc nghẽn (Deadlock Prevention), việc phủ nhận điều kiện \"Loại trừ tương hỗ\" (Mutual Exclusion) là không khả thi trên thực tế vì lý do gì?", options: ["A. Người lập trình không thích chia sẻ dữ liệu với nhau.", "B. Thuật toán phân định quyền ưu tiên quá phức tạp để mã hóa.", "C. Nhiều tài nguyên phần cứng hoặc phần mềm (như máy in, biến cờ) có bản chất không thể truy cập đồng thời bởi nhiều tiến trình.", "D. Việc này làm tăng dung lượng bộ nhớ ảo lên mức không thể kiểm soát."], correct: 2 },
+      { id: 49, text: "Câu 35: (CLO2(5)3): Đâu là giải pháp hiệu quả nhất để giải quyết tình trạng \"Đảo độ ưu tiên\" (Priority Inversion) khi định thời tiến trình?", options: ["A. Áp dụng cơ chế định thời Round Robin cho mọi tiến trình.", "B. Đình chỉ vĩnh viễn tiến trình có độ ưu tiên thấp đang giữ khóa.", "C. Kế thừa độ ưu tiên (Priority Inheritance Protocol), tạm thời nâng độ ưu tiên của tiến trình giữ khóa lên bằng với tiến trình ưu tiên cao đang chờ khóa.", "D. Giảm lượng Time Quantum xuống dưới 1 mili-giây."], correct: 2 },
+      { id: 50, text: "Câu 27: (CLO2(5)3): Trong Giải pháp Peterson áp dụng cho 2 tiến trình, điều kiện nào giúp phá vỡ sự kìm hãm nếu cả hai tiến trình cùng xin vào miền găng (Critical Section)?", options: ["A. Kiểm tra phần cứng thông qua lệnh bẫy ngắt.", "B. Chỉ định tĩnh tiến trình 0 luôn được ưu tiên hơn tiến trình 1.", "C. Ghi đè biến turn: tiến trình nào ghi vào turn sau cùng sẽ phải nhường quyền cho tiến trình kia.", "D. Tự động đóng băng cả hai tiến trình trong 1 mili-giây để đặt lại trạng thái."], correct: 2 },
+      { id: 51, text: "Câu 84: (CLO2(5)3): Trong Monitor, lệnh signal() trên biến điều kiện khác biệt với signal() của Semaphore như thế nào?", options: ["A. Trong Monitor nó sẽ giải phóng toàn bộ bộ nhớ RAM, Semaphore thì không.", "B. Trong Monitor nó kích hoạt mọi tiến trình đang ngủ dậy cùng lúc.", "C. Trong Monitor, nếu không có tiến trình nào đang chờ (wait), tín hiệu bị mất (không được lưu lại); trong Semaphore, thao tác này luôn làm tăng giá trị biến đếm.", "D. Trong Monitor nó yêu cầu cấp quyền Admin, Semaphore thì chạy ở User mode."], correct: 2 },
+      { id: 52, text: "Câu 23: (CLO1(2)3): Tác dụng chính của chương trình mồi (Bootstrap loader) khi máy tính vừa được cấp nguồn là gì?", options: ["A. Tải và chạy các ứng dụng văn phòng của người dùng (Application programs).", "B. Biên dịch các tệp hệ thống bằng trình biên dịch C/C++.", "C. Định vị hạt nhân (kernel) trên đĩa, nạp nó vào bộ nhớ và bắt đầu thực thi hệ điều hành.", "D. Sao lưu dữ liệu trên ổ cứng vào mạng lưu trữ (SAN)."], correct: 2 },
+      { id: 53, text: "Câu 86: (CLO2(5)3): Một Semaphore đếm (Counting Semaphore) hiện có giá trị là -3. Con số này phản ánh trạng thái thực tế nào của hệ thống?", options: ["A. Hệ thống đang bị lỗi bộ nhớ tràn số âm.", "B. Đang có dư 3 tài nguyên sẵn sàng cấp phát.", "C. Hệ thống đã thu hồi 3 tài nguyên từ tiến trình ưu tiên thấp.", "D. Đang có chính xác 3 tiến trình bị chặn (blocked) và nằm trong hàng đợi chờ tài nguyên này."], correct: 3 },
+      { id: 54, text: "Câu 2: (CLO1(1)3): Cấu trúc Truy cập bộ nhớ trực tiếp (DMA) tối ưu hóa hiệu năng của hệ thống máy tính trong trường hợp cụ thể nào dưới đây?", options: ["A. Khi hệ thống đang chia sẻ thời gian (timesharing) giữa hàng trăm tiến trình tính toán CPU-bound.", "B. Khi truyền một khối dữ liệu lớn từ thiết bị I/O tốc độ cao trực tiếp vào bộ nhớ chính mà không cần CPU can thiệp.", "C. Khi CPU cần thực thi các lệnh bảo mật đặc quyền chuyển đổi giữa User mode và Kernel mode.", "D. Khi nạp các tập lệnh từ ổ đĩa quang chậm lên bộ nhớ đệm (cache) nhằm thực thi song song."], correct: 1 },
+      { id: 55, text: "Câu 16: (CLO1(1)3): Sự khác nhau chính giữa CLI và system call là gì?", options: ["A. CLI luôn chạy trong kernel mode; system call luôn chạy trong user mode.", "B. CLI chỉ dùng cho quản lý bộ nhớ; system call chỉ dùng cho đồ họa.", "C. Hai khái niệm đồng nhất, chỉ khác tên gọi.", "D. CLI là giao diện nhập lệnh; system call là giao diện lập trình để yêu cầu dịch vụ nhân."], correct: 3 },
+      { id: 56, text: "Câu 44: (CLO1(7)3): Trong phân trang, địa chỉ logic thường được tách thành hai phần nào?", options: ["A. Số tiến trình và số luồng.", "B. Mã lệnh và mã lỗi ngắt.", "C. Số file và số thư mục.", "D. Số trang và độ dời trong trang."], correct: 3 },
+      { id: 57, text: "Câu 76: (CLO2(5)3): Một lời giải bài toán miền găng đúng phải thỏa điều kiện nào?", options: ["A. Chỉ cần tiến trình chạy nhanh nhất luôn vào trước.", "B. Chỉ cần dùng biến toàn cục không khóa.", "C. Chỉ cần tắt màn hình trong lúc vào miền găng.", "D. Mutual exclusion, progress và bounded waiting."], correct: 3 },
+      { id: 58, text: "Câu 60: (CLO1(7)3): Khi sử dụng thuật toán Wait-for graph (Đồ thị chờ đợi) để phát hiện tắc nghẽn, đồ thị này được xây dựng từ Đồ thị cấp phát tài nguyên bằng cách nào?", options: ["A. Nhân đôi số lượng các nút tài nguyên.", "B. Đảo ngược toàn bộ chiều của các cung cấp phát.", "C. Bỏ đi các nút tài nguyên và gộp các cung lại, nếu tiến trình Pi đợi tài nguyên của Pj thì vẽ cung từ Pi sang Pj.", "D. Xóa tất cả các nút tiến trình và chỉ giữ lại các nút tài nguyên đang bị khóa."], correct: 2 },
+      { id: 59, text: "Câu 73: (CLO1(7)3): Định lý \"Ostrich Algorithm\" (Thuật toán đà điểu) khuyên các nhà phát triển hệ điều hành làm gì với vấn đề tắc nghẽn?", options: ["A. Dùng mọi tài nguyên của CPU để quét tắc nghẽn mỗi mili-giây.", "B. Bắt buộc mọi tiến trình chạy đơn nhiệm tuần tự để loại bỏ tắc nghẽn.", "C. Cứ lờ nó đi, đánh đổi giữa xác suất tắc nghẽn rất thấp và chi phí suy giảm hiệu năng rất cao nếu cài đặt cơ chế phòng tránh phức tạp.", "D. Thu hồi toàn bộ quyền Admin của người dùng để họ không thể sinh ra tắc nghẽn."], correct: 2 },
+      { id: 60, text: "Câu 38: (CLO2(5)3): Trong hệ thống truyền thông liên tiến trình, phương pháp Rendezvous yêu cầu điều kiện gì để truyền thông điệp?", options: ["A. Thông điệp được lưu tạm trong mailbox vô hạn.", "B. Tiến trình gửi và nhận phải chạy đồng bộ (lockstep), người gửi bị chặn cho đến khi người nhận lấy tin.", "C. Thông báo phải được truyền qua một đường dẫn ẩn danh (anonymous pipe) chỉ dùng 1 chiều.", "D. Tin nhắn được quảng bá (broadcast) toàn mạng cho mọi tiến trình."], correct: 1 },
+      { id: 61, text: "Câu 13: (CLO1(1)3): Tại sao ngắt bẫy (trap) lại đóng vai trò quan trọng trong việc bảo vệ hệ thống của chế độ phân quyền (Dual-mode)?", options: ["A. Nó chặn các lỗi phần mềm hoặc lệnh cấm từ User mode và chuyển quyền kiểm soát một cách an toàn cho hệ điều hành.", "B. Nó tự động dọn dẹp bộ nhớ cache để ngăn ngừa rò rỉ dữ liệu (memory leak).", "C. Nó vô hiệu hóa hoàn toàn mọi thiết bị ngoại vi đang chiếm dụng băng thông.", "D. Nó nâng cấp quyền của chương trình người dùng lên Kernel mode vô điều kiện."], correct: 0 },
+      { id: 62, text: "Câu 46: (CLO1(2)3): Lợi thế lớn nhất của phương pháp Module hạt nhân có thể nạp động (Loadable Kernel Modules - LKM) so với kiến trúc nguyên khối truyền thống là gì?", options: ["A. Không cần biên dịch lại toàn bộ hạt nhân hoặc khởi động lại hệ thống mỗi khi thêm chức năng mới (như trình điều khiển thiết bị).", "B. Tăng tốc độ thực thi của CPU lên gấp đôi nhờ loại bỏ các ngắt phần cứng.", "C. Cô lập hoàn toàn lỗi phần mềm, nếu một module bị lỗi thì hệ thống vẫn hoạt động bình thường như Microkernel.", "D. Cho phép người dùng bình thường tự do nạp module mà không cần quyền quản trị."], correct: 0 },
+      { id: 63, text: "Câu 80: (CLO2(5)3): Trong producer-consumer, semaphore full thường biểu diễn điều gì?", options: ["A. Số producer tối đa trong toàn hệ thống.", "B. Số CPU đang rỗi.", "C. Số trang đang nằm trong TLB.", "D. Số ô buffer đã có dữ liệu sẵn sàng cho consumer."], correct: 3 },
+      { id: 64, text: "Câu 95: (CLO2(6)3): Khôi phục deadlock bằng cách terminate tiến trình có nhược điểm nào?", options: ["A. Luôn bảo toàn toàn bộ trạng thái ứng dụng.", "B. Không bao giờ giải phóng tài nguyên.", "C. Có thể mất công việc, gây rollback phức tạp và cần chính sách chọn nạn nhân hợp lý.", "D. Không cần cập nhật cấu trúc dữ liệu nhân."], correct: 2 },
+      { id: 65, text: "Câu 52: (CLO1(2)3): Tại sao công cụ DTrace lại an toàn để sử dụng trên các hệ thống đang hoạt động thực tế (production systems) mà không cần dừng hệ thống?", options: ["A. Vì DTrace được thiết kế động, các điểm thăm dò (probes) không tiêu tốn tài nguyên khi không kích hoạt và tự động ngăn chặn các lỗi mã hóa ảnh hưởng đến hạt nhân.", "B. Vì DTrace chạy ở chế độ User Mode nên không có khả năng truy cập vào dữ liệu nhân.", "C. Vì nó yêu cầu khởi động lại máy chủ vào chế độ \"Safe Mode\" trước khi giám sát.", "D. Vì nó chỉ lưu trữ báo cáo dưới dạng văn bản tĩnh trên đĩa mềm."], correct: 0 },
+      { id: 66, text: "Câu 24: (CLO1(2)3): Khi context switch từ P1 sang P2, thao tác nào là cần thiết nhất?", options: ["A. Xóa mã chương trình của P1 khỏi file thực thi.", "B. Chuyển toàn bộ dữ liệu P2 sang ổ đĩa trước khi chạy.", "C. Gộp PCB của P1 và P2 thành một PCB chung.", "D. Lưu ngữ cảnh P1 vào PCB của P1 và nạp ngữ cảnh P2 từ PCB của P2."], correct: 3 },
+      { id: 67, text: "Câu 99: (CLO2(6)3): Vì sao thứ tự hóa tài nguyên có thể ngăn circular wait?", options: ["A. Cho phép mọi tiến trình yêu cầu tài nguyên theo thứ tự tùy ý.", "B. Làm mọi tài nguyên trở thành không độc quyền.", "C. Bắt buộc tiến trình yêu cầu tài nguyên theo thứ tự tăng cố định nên không tạo vòng chờ.", "D. Loại bỏ nhu cầu giải phóng tài nguyên."], correct: 2 },
+      { id: 68, text: "Câu 17: (CLO1(7)3): Giải pháp thu hồi tài nguyên (Preemption) để khôi phục hệ thống từ trạng thái tắc nghẽn phải đối mặt với nguy cơ gì nếu không được thiết kế kỹ?", options: ["A. Tạo ra các luồng zombie trong hạt nhân (kernel).", "B. Gây ra hiện tượng phân mảnh ngoại (External Fragmentation).", "C. Tiến trình bị thu hồi tài nguyên liên tục (Starvation) dẫn đến không bao giờ hoàn thành.", "D. Vi phạm định luật Amdahl về khả năng tăng tốc song song."], correct: 2 },
+      { id: 69, text: "Câu 55: (CLO1(7)3): Trong Giải thuật Banker, nếu hệ thống ở \"trạng thái không an toàn\" (Unsafe state), điều này mang ý nghĩa chính xác là gì?", options: ["A. Hệ thống đã chính thức bị tắc nghẽn và cần phải khởi động lại.", "B. Một tiến trình độc hại đang cố gắng chiếm quyền điều khiển bộ nhớ.", "C. Chắc chắn 100% sẽ xảy ra tắc nghẽn trong tương lai gần dù bất kỳ tiến trình nào chạy.", "D. Hệ thống không thể đảm bảo một chuỗi cấp phát để tất cả tiến trình hoàn thành; tắc nghẽn có THỂ xảy ra."], correct: 3 },
+      { id: 70, text: "Câu 82: (CLO2(5)3): Giải pháp Peterson cho hai tiến trình dùng biến turn và flag để đạt mục tiêu gì?", options: ["A. Tối ưu thay thế trang theo LRU.", "B. Bảo đảm loại trừ tương hỗ với tiến triển và chờ hữu hạn trong giả định bộ nhớ phù hợp.", "C. Tạo tiến trình con giống fork().", "D. Phát hiện tất cả deadlock nhiều tài nguyên."], correct: 1 },
+      { id: 71, text: "Câu 69: (CLO1(7)3): Để ngăn chặn điều kiện \"Không cướp quyền\" (No Preemption), hệ thống quy định: Nếu P1 yêu cầu tài nguyên mà phải chờ, mọi tài nguyên P1 đang giữ sẽ bị hệ thống thu hồi. Phương pháp này chỉ khả thi với loại tài nguyên nào?", options: ["A. Thiết bị truyền thông mạng (Card mạng).", "B. Máy in kim hoặc máy vẽ đồ thị.", "C. Những tài nguyên có thể dễ dàng lưu và khôi phục trạng thái bộ nhớ (như thanh ghi CPU, vùng nhớ RAM).", "D. Đĩa CD-ROM đang trong quá trình ghi (burn)."], correct: 2 },
+      { id: 72, text: "Câu 36: (CLO2(6)3): Mục tiêu chính của Hàng đợi phản hồi đa cấp (Multilevel Feedback Queue) là gì?", options: ["A. Tính toán trước chính xác thời gian Burst time của CPU.", "B. Chặn tất cả I/O cho đến khi CPU hoàn thành mọi tác vụ.", "C. Định thời theo cơ chế LIFO (Last-In-First-Out).", "D. Tự động thích ứng, phân loại tiến trình I/O-bound và CPU-bound bằng cách hạ cấp các tiến trình chiếm CPU quá lâu."], correct: 3 },
+      { id: 73, text: "Câu 33: (CLO2(5)3): \"Tranh đoạt điều khiển\" (Race condition) trên một biến chung xảy ra khi nào?", options: ["A. Khi nhiều tiến trình truy cập, thao tác lên biến đó đồng thời và kết quả cuối cùng phụ thuộc vào thứ tự thực thi bị xen kẽ.", "B. Khi hai tiến trình gửi tin nhắn cho nhau thông qua Pipe theo thứ tự tuần tự.", "C. Khi hệ điều hành thu hồi bộ nhớ của một tiến trình đã bị hủy.", "D. Khi bộ đệm vòng (Bounded buffer) có kích thước vô hạn (Unbounded)."], correct: 0 },
+      { id: 74, text: "Câu 16: (CLO1(2)3): Điểm yếu cốt lõi của việc tổ chức cấu trúc hệ điều hành nguyên khối (Monolithic) MS-DOS ban đầu là gì?", options: ["A. Giới hạn số lượng tiến trình con được tạo bởi hàm fork().", "B. Yêu cầu phần cứng phải hỗ trợ đa xử lý đối xứng (SMP).", "C. Chạy trên môi trường điện toán đám mây với độ trễ cao.", "D. Không phân tách rõ ràng các cấp độ chức năng, khiến ứng dụng có thể vượt quyền ảnh hưởng đến toàn hệ thống."], correct: 3 },
+      { id: 75, text: "Câu 40: (CLO1(2)3): Khi một tiến trình tạo nhiều tiến trình con, cây tiến trình giúp HĐH quản lý gì?", options: ["A. Thứ tự vật lý các sector trên đĩa.", "B. Sơ đồ cấp phát cache L1 cho từng lõi.", "C. Màu sắc cửa sổ của từng ứng dụng.", "D. Quan hệ cha-con, kế thừa tài nguyên, tín hiệu và thu dọn tiến trình kết thúc."], correct: 3 },
+      { id: 76, text: "Câu 95: (CLO2(6)3): Thuật toán định thời Earliest Deadline First (EDF) trong thời gian thực có đặc điểm gán độ ưu tiên ưu việt nào?", options: ["A. Ưu tiên động: Deadline (hạn chót) càng gần thì tác vụ tự động được cấp độ ưu tiên càng cao, bất kể chu kỳ của nó là gì.", "B. Ưu tiên tĩnh tuyệt đối và không bao giờ thay đổi.", "C. Luôn dùng phương pháp cướp quyền (preemption) đối với các ứng dụng User Mode.", "D. Gán ưu tiên theo mức độ quan trọng do người lập trình quyết định cứng trong mã."], correct: 0 },
+      { id: 77, text: "Câu 12: (CLO1(1)3): Một hệ thống nhúng điều khiển thiết bị công nghiệp không có giao diện người dùng. Thiết kế HĐH nên nhấn mạnh yếu tố nào?", options: ["A. Giao diện đồ họa nhiều cửa sổ và hiệu ứng chuyển động.", "B. Hỗ trợ tối đa trò chơi đa phương tiện.", "C. Cho phép người dùng cài đặt tùy ý mọi driver chưa kiểm chứng.", "D. Tính tin cậy, đáp ứng thời gian và vận hành tự động với can thiệp tối thiểu."], correct: 3 },
+      { id: 78, text: "Câu 44: (CLO1(1)3): Việc phân chia đặc quyền thành User Mode và Kernel Mode không thể ngăn chặn loại lỗi nào dưới đây?", options: ["A. Một tiến trình cố ý ghi đè lên bộ nhớ của tiến trình khác.", "B. Người dùng gọi trực tiếp lệnh điều khiển thiết bị phần cứng.", "C. Một ứng dụng thay đổi cấu trúc bảng phân trang hệ thống.", "D. Một lỗi chia cho 0 bên trong chính mã nguồn của ứng dụng người dùng."], correct: 3 },
+      { id: 79, text: "Câu 10: (CLO1(1)3): Một máy ảo chạy nhiều HĐH khách trên cùng phần cứng. Tài nguyên nào bắt buộc hypervisor phải điều phối để tránh xung đột?", options: ["A. Chỉ bàn phím và chuột vì CPU không thể ảo hóa.", "B. CPU, bộ nhớ, thiết bị I/O và các sự kiện đặc quyền của HĐH khách.", "C. Chỉ file văn bản trong thư mục người dùng.", "D. Chỉ giao diện đồ họa của HĐH chủ."], correct: 1 },
+      { id: 80, text: "Câu 71: (CLO2(4)3): Trong đánh giá thuật toán lập lịch, throughput nghĩa là gì?", options: ["A. Thời gian từ khi tiến trình đến đến khi hoàn thành.", "B. Số khung trang còn rỗi trong bộ nhớ.", "C. Số tiến trình hoàn thành trong một đơn vị thời gian.", "D. Số file mở đồng thời trong hệ thống."], correct: 2 },
+      { id: 81, text: "Câu 28: (CLO1(2)3): Shared memory và message passing khác nhau chủ yếu ở điểm nào?", options: ["A. Shared memory chỉ dùng trong hệ thống đơn nhiệm; message passing chỉ dùng cho bộ nhớ ảo.", "B. Shared memory không cần đồng bộ bao giờ; message passing luôn gây deadlock.", "C. Hai cơ chế đều bắt buộc sao chép toàn bộ không gian địa chỉ.", "D. Shared memory dùng vùng nhớ chung; message passing trao đổi qua primitive gửi/nhận do HĐH hỗ trợ."], correct: 3 },
+      { id: 82, text: "Câu 39: (CLO1(2)3): Trong IPC bằng pipe, tính chất nào cần lưu ý khi thiết kế trao đổi dữ liệu?", options: ["A. Pipe luôn là bộ nhớ chia sẻ hai chiều không cần nhân.", "B. Pipe chỉ truyền được địa chỉ vật lý của trang.", "C. Pipe là kênh luồng byte/ghi-đọc có trật tự, thường cần xác định chiều và đồng bộ đọc ghi.", "D. Pipe tự động giải quyết mọi bài toán ưu tiên CPU."], correct: 2 },
+      { id: 83, text: "Câu 27: (CLO1(2)3): Một tiến trình ready nhưng chưa running. Điều kiện trực tiếp để nó chuyển sang running là gì?", options: ["A. Nó tự đọc xong tất cả file trên đĩa.", "B. Nó tự giải phóng toàn bộ bộ nhớ đang dùng.", "C. Bộ lập lịch chọn nó và dispatcher cấp CPU cho nó.", "D. Người dùng đổi tên file thực thi của nó."], correct: 2 },
+      { id: 84, text: "Câu 31: (CLO1(2)3): Trong hàng đợi tiến trình, ready queue chứa những tiến trình nào?", options: ["A. Tiến trình đang chờ sự kiện I/O hoàn tất.", "B. Tiến trình đã terminated nhưng chưa xóa file.", "C. Tiến trình đã đủ điều kiện chạy và đang chờ CPU.", "D. Tiến trình chưa được tạo PCB."], correct: 2 },
+      { id: 85, text: "Câu 55: (CLO1(7)3): Khi kích thước trang quá lớn, hậu quả nào dễ tăng?", options: ["A. Phân mảnh ngoài trong từng khung trang cố định.", "B. Số lần trap hệ thống do chia cho 0.", "C. Phân mảnh trong vì phần cuối trang có thể không dùng hết.", "D. Số tiến trình zombie trong hệ thống."], correct: 2 },
+      { id: 86, text: "Câu 89: (CLO2(6)3): Trong đồ thị cấp phát tài nguyên, chu trình chắc chắn suy ra deadlock khi nào?", options: ["A. Khi mỗi loại tài nguyên trong chu trình chỉ có một instance.", "B. Khi mọi tài nguyên đều có nhiều instance tùy ý.", "C. Khi hệ thống không có tiến trình chờ.", "D. Khi mọi cạnh đều là cạnh yêu cầu ảo."], correct: 0 },
+      { id: 87, text: "Câu 57: (CLO1(7)3): Trong quản lý bộ nhớ bằng bitmap, bit tương ứng thường biểu diễn điều gì?", options: ["A. Một đơn vị bộ nhớ đang rỗi hoặc đã được cấp phát.", "B. Một tiến trình đã kết thúc hay chưa.", "C. Một lõi CPU đang bật hay tắt.", "D. Một file có quyền đọc hay không."], correct: 0 },
+      { id: 88, text: "Câu 70: (CLO2(4)3): Một tiến trình có nhiều I/O burst ngắn thường phù hợp được ưu tiên trong hệ tương tác vì sao?", options: ["A. Nó không bao giờ cần lập lịch CPU.", "B. Nó nhanh chóng trả CPU khi chờ I/O, giúp cải thiện phản hồi và sử dụng tài nguyên.", "C. Nó luôn có CPU burst dài nhất hệ thống.", "D. Nó không thể bị ngắt bởi timer."], correct: 1 },
+      { id: 89, text: "Câu 18: (CLO1(1)3): Nếu bỏ cơ chế timer interrupt trong hệ thống chia sẻ thời gian, hậu quả nào nghiêm trọng nhất?", options: ["A. Mọi file trên đĩa tự động mất quyền truy cập.", "B. Một tiến trình có thể giữ CPU quá lâu, làm suy giảm khả năng chia sẻ công bằng.", "C. Không thể tạo địa chỉ logic trong MMU.", "D. Tất cả thiết bị I/O sẽ chạy nhanh hơn nhưng thiếu an toàn."], correct: 1 },
+      { id: 90, text: "Câu 98: (CLO2(4)3): Một nhược điểm của mô hình tiểu trình Many-to-One (Nhiều người dùng - Một hạt nhân) là:", options: ["A. Hệ thống không thể sử dụng bộ nhớ ảo.", "B. Tạo luồng quá tốn kém vì luôn phải gọi hạt nhân.", "C. Toàn bộ tiến trình sẽ bị chặn (block) nếu một tiểu trình duy nhất thực hiện một Lời gọi hệ thống chặn (Blocking System Call).", "D. Không thể áp dụng mã hóa bảo mật."], correct: 2 },
+      { id: 91, text: "Câu 33: (CLO1(2)3): Trong mô hình client-server dùng message passing, điều gì làm tăng tính an toàn so với vùng nhớ chia sẻ tùy ý?", options: ["A. Dữ liệu đi qua giao diện gửi/nhận rõ ràng, giảm truy cập trực tiếp sai vào bộ nhớ của nhau.", "B. Mọi thông điệp đều tự động được mã hóa lượng tử.", "C. Server luôn chạy trong user mode còn client luôn chạy trong kernel mode.", "D. Không cần kiểm tra tham số vì không có lỗi truyền thông."], correct: 0 },
+      { id: 92, text: "Câu 48: (CLO1(7)3): Phân đoạn khác phân trang ở điểm nào quan trọng nhất?", options: ["A. Phân đoạn không cần địa chỉ logic còn phân trang không cần địa chỉ vật lý.", "B. Phân đoạn chỉ dùng cho file system.", "C. Phân đoạn luôn loại bỏ mọi loại phân mảnh.", "D. Phân đoạn phản ánh đơn vị logic có kích thước biến đổi; phân trang dùng đơn vị cố định."], correct: 3 },
+      { id: 93, text: "Câu 15: (CLO1(2)3): Trong hệ điều hành đa nhiệm (Multitasking), việc chuyển ngữ cảnh (Context switch) tiêu tốn hiệu năng chủ yếu do hoạt động nào?", options: ["A. Chờ người dùng nhập lệnh mới trên giao diện CLI.", "B. Biên dịch lại mã nguồn của tiến trình đích.", "C. Lưu trạng thái thanh ghi của tiến trình cũ vào PCB và nạp trạng thái của tiến trình mới.", "D. Xóa toàn bộ dữ liệu trên đĩa cứng (Hard disk) để giải phóng vùng nhớ."], correct: 2 },
+      { id: 94, text: "Câu 85: (CLO2(5)3): Khi sử dụng Khóa quay vòng (Spinlock) trên hệ thống đa xử lý, nó mang lại ưu thế gì so với Mutex truyền thống (loại chặn tiến trình)?", options: ["A. Đưa tiến trình vào trạng thái Sleep để tiết kiệm điện.", "B. Giải quyết triệt để vấn đề đói tài nguyên của mọi luồng.", "C. Tránh được độ trễ cực lớn của việc chuyển đổi ngữ cảnh nếu thời gian chờ đợi khóa là rất ngắn (ngắn hơn chi phí context switch).", "D. Chạy được trên cả những hệ thống đơn nhân (uniprocessor) thiếu bộ định thời."], correct: 2 },
+      { id: 95, text: "Câu 76: (CLO1(7)3): Vấn đề \"Chết đói tài nguyên\" (Starvation) thường đi kèm với khôi phục tắc nghẽn khi nào?", options: ["A. Khi hệ thống không sử dụng thuật toán FIFO.", "B. Khi bộ nhớ ảo cấp phát quá nhiều trang trống.", "C. Khi hệ điều hành thu hồi bộ nhớ Cache L1.", "D. Khi một tiến trình liên tục bị hệ điều hành chọn làm \"nạn nhân\" để tước quyền tài nguyên nhằm phá tắc nghẽn."], correct: 3 },
+      { id: 96, text: "Câu 87: (CLO2(5)3): Tại sao thao tác test-and-set có thể dùng xây dựng khóa?", options: ["A. Vì nó thay đổi thuật toán FCFS thành SJF.", "B. Vì nó nạp trang từ đĩa vào RAM.", "C. Vì nó kiểm tra và ghi giá trị một cách nguyên tử, tránh xen kẽ gây race.", "D. Vì nó tự động tính waiting time."], correct: 2 },
+      { id: 97, text: "Câu 1: (CLO1(1)3): Khi CPU và các thiết bị nhập/xuất (I/O) hoạt động đồng thời trong chu trình bộ nhớ, bộ điều khiển thiết bị thông báo cho CPU biết nó đã hoàn thành tác vụ bằng cơ chế nào?", options: ["A. Gây ra một ngắt (interrupt) để CPU chuyển hướng xử lý thông qua véc tơ ngắt.", "B. Gửi trực tiếp tín hiệu thay đổi trạng thái vào bộ nhớ cache L1 của CPU.", "C. Chờ CPU chủ động thực hiện vòng lặp chờ (wait loop) kiểm tra liên tục trạng thái.", "D. Kích hoạt trực tiếp chương trình tự khởi động (bootstrap) trong ROM."], correct: 0 },
+      { id: 98, text: "Câu 63: (CLO2(4)3): Với Round Robin q=2, các tiến trình P1=5, P2=3, P3=1 đều đến lúc 0. Thứ tự CPU burst đầu tiên hợp lý là gì?", options: ["A. P1(0-5), P2(5-8), P3(8-9).", "B. P3(0-1), P2(1-4), P1(4-9).", "C. P1(0-2), P2(2-4), P3(4-5), P1(5-7), P2(7-8), P1(8-9).", "D. P1(0-2), P1(2-4), P1(4-5), P2(5-8), P3(8-9)."], correct: 2 },
+      { id: 99, text: "Câu 45: (CLO1(1)3): Trong kiến trúc Cluster (Hệ thống gom cụm) bất đối xứng (Asymmetric clustering), các nút (nodes) hoạt động theo cơ chế nào?", options: ["A. Tất cả các nút đều thực thi các ứng dụng giống hệt nhau để tăng gấp đôi thông lượng tính toán.", "B. Mỗi nút chia sẻ chung một thanh ghi phần cứng và không có hệ điều hành riêng biệt.", "C. Một máy ở chế độ chờ dự phòng (hot-standby) chỉ làm nhiệm vụ giám sát máy chính đang hoạt động.", "D. Các nút kết nối mạng ngang hàng và lưu trữ dữ liệu hoàn toàn độc lập không chia sẻ."], correct: 2 },
+      { id: 100, text: "Câu 23: (CLO1(2)3): PCB của tiến trình cần chứa thông tin định thời CPU nhằm mục đích gì?", options: ["A. Lưu toàn bộ nội dung mọi file mà tiến trình mở.", "B. Thay thế chức năng của bộ nhớ cache.", "C. Giúp HĐH đặt tiến trình vào hàng đợi, xét ưu tiên và tiếp tục lập lịch sau này.", "D. Chứa mã nguồn gốc của chương trình."], correct: 2 },
+      { id: 101, text: "Câu 37: (CLO1(2)3): Trong hệ thống đa chương trình, mục tiêu của short-term scheduler là gì?", options: ["A. Chọn tiến trình ready tiếp theo để cấp CPU trong thời gian ngắn.", "B. Chọn job nào được đưa từ đĩa vào hệ thống sau nhiều phút.", "C. Chọn file nào sẽ bị xóa khỏi thư mục.", "D. Chọn thiết bị nào được thay thế vật lý."], correct: 0 },
+      { id: 102, text: "Câu 20: (CLO1(2)3): Môi trường tính toán Ảo hóa (Virtualization) mang lại tính năng kỹ thuật nào vượt trội cho hệ thống?", options: ["A. Tự động chuyển đổi mã ngôn ngữ bậc cao sang ngôn ngữ kịch bản.", "B. Loại bỏ hoàn toàn ngắt phần mềm trong chế độ hạt nhân.", "C. Thay thế ổ đĩa vật lý bằng hệ thống lưu trữ mạng phân tán Peer-to-Peer.", "D. Cho phép phần cứng chạy đồng thời nhiều hệ điều hành khách (Guest OS) thông qua Virtual Machine Manager (VMM)."], correct: 3 },
+      { id: 103, text: "Câu 40: (CLO2(5)3): Trong lệnh compare_and_swap do phần cứng cung cấp nhằm hỗ trợ đồng bộ, hành động hoán đổi (swap) giá trị chỉ diễn ra khi nào?", options: ["A. Khi cờ ngắt bị tắt (Interrupt disabled).", "B. Khi Semaphore đếm bằng 0.", "C. Khi một tiến trình gửi tín hiệu wakeup.", "D. Khi giá trị hiện tại của biến khớp chính xác với giá trị dự kiến (expected value)."], correct: 3 },
+      { id: 104, text: "Câu 28: (CLO2(5)3): Khi sử dụng Semaphore để giải quyết bài toán Sản xuất - Tiêu thụ (Producer - Consumer), tại sao lệnh down(&mutex) KHÔNG ĐƯỢC đặt trước lệnh down(&empty) ở phía Nhà sản xuất?", options: ["A. Việc đặt trước sẽ làm mất tín hiệu (signal) của Hệ điều hành.", "B. Trình biên dịch C sẽ báo lỗi do xung đột kiểu dữ liệu.", "C. Làm giảm thông lượng của bộ nhớ Cache L1.", "D. Nếu bộ đệm đầy, Nhà sản xuất sẽ bị khóa trong khi đang giữ mutex, làm Nhà tiêu thụ không thể vào giải phóng bộ đệm (Tắc nghẽn)."], correct: 3 },
+      { id: 105, text: "Câu 48: (CLO1(2)3): Chương trình SYSGEN (System Generation) thực hiện nhiệm vụ gì trong giai đoạn cấu hình hệ điều hành?", options: ["A. Đọc các thông số về cấu hình phần cứng cụ thể để tạo ra một hạt nhân (kernel) được biên dịch tùy biến và tối ưu cho máy tính đó.", "B. Tự động sinh ra các đoạn mã kịch bản (shell script) để quản trị viên tự động hóa công việc.", "C. Xóa các tập tin rác và phân mảnh đĩa cứng trước khi hệ điều hành khởi động hoàn tất.", "D. Khởi tạo các ứng dụng văn phòng cơ bản cho người dùng sau khi cài đặt."], correct: 0 },
+      { id: 106, text: "Câu 74: (CLO2(4)3): Nếu mục tiêu chính là thời gian đáp ứng thấp cho người dùng tương tác, thuật toán nào thường phù hợp hơn FCFS thuần túy?", options: ["A. FCFS không ngắt với job dài đứng đầu.", "B. Round Robin với quantum hợp lý.", "C. SJF không độc quyền nhưng không xét tiến trình mới đến.", "D. Lập lịch theo PID tăng dần."], correct: 1 },
+      { id: 107, text: "Câu 96: (CLO2(6)3): Chiến lược ostrich đối với deadlock có nghĩa là gì?", options: ["A. Luôn chạy Banker's algorithm mỗi chu kỳ CPU.", "B. Cấm mọi tiến trình tạo file mới.", "C. Tự động tăng RAM để xóa deadlock.", "D. Bỏ qua vấn đề nếu deadlock hiếm và chi phí xử lý cao hơn lợi ích."], correct: 3 },
+      { id: 108, text: "Câu 81: (CLO2(4)3): Theo định luật Amdahl, nếu một chương trình có 40% đoạn mã phải chạy tuần tự không thể song song hóa. Dù bạn có nâng cấp lên hệ thống có 100 lõi CPU, mức tăng tốc tối đa (speedup) không bao giờ vượt qua con số nào?", options: ["A. 100 lần.", "B. 40 lần.", "C. 1.5 lần.", "D. 2.5 lần."], correct: 3 },
+      { id: 109, text: "Câu 6: (CLO1(1)3): Nếu một driver thiết bị bị lỗi trong nhân nguyên khối, rủi ro kiến trúc nào thường lớn hơn so với microkernel?", options: ["A. Lỗi chỉ ảnh hưởng tiến trình người dùng đang gọi shell.", "B. Lỗi có thể làm sập toàn bộ nhân vì nhiều dịch vụ chạy cùng không gian đặc quyền.", "C. Lỗi tự động được MMU chuyển thành page replacement.", "D. Lỗi làm tăng độ trễ mạng nhưng không ảnh hưởng nhân."], correct: 1 },
+      { id: 110, text: "Câu 89: (CLO2(6)3): Thuật toán định thời Round Robin (RR) với Time Quantum q. Nếu q quá lớn (tiến tới vô cùng), thuật toán RR sẽ biến đổi thành thuật toán nào?", options: ["A. Priority Scheduling.", "B. First-Come, First-Served (FCFS).", "C. Shortest Job First (SJF).", "D. Multilevel Feedback Queue."], correct: 1 },
+      { id: 111, text: "Câu 7: (CLO1(1)3): Trong hệ thống ngắt, sau khi CPU nhận ngắt phần cứng, thông tin nào cần được bảo toàn để quay lại chương trình bị ngắt?", options: ["A. Tên file thực thi và toàn bộ nội dung ổ đĩa.", "B. Mã nguồn chương trình và cây thư mục hiện hành.", "C. Ngữ cảnh thực thi như bộ đếm chương trình, thanh ghi và trạng thái liên quan.", "D. Địa chỉ IP của máy và bảng định tuyến mạng."], correct: 2 },
+      { id: 112, text: "Câu 25: (CLO2(4)3): Cấu trúc phân luồng Many-to-Many (Nhiều - Nhiều) giải quyết được nhược điểm nào của mô hình One-to-One?", options: ["A. Tránh quá tải số lượng tiểu trình mức nhân do giới hạn được việc tạo luồng nhân tỉ lệ thuận với luồng người dùng.", "B. Khắc phục lỗi chia cho 0 khi tính toán đa luồng.", "C. Tự động chia sẻ các tập tin mở (open files) mà không cần lập trình viên can thiệp.", "D. Loại bỏ hoàn toàn sự tranh đoạt điều khiển (Race condition) trên dữ liệu dùng chung."], correct: 0 },
+      { id: 113, text: "Câu 86: (CLO2(5)3): Trong dining philosophers, nếu mỗi triết gia cầm đũa trái rồi chờ đũa phải, nguy cơ nào xuất hiện?", options: ["A. Thrashing do thiếu khung trang.", "B. Deadlock do circular wait khi mọi người cùng giữ một tài nguyên và chờ tài nguyên kế tiếp.", "C. Zombie process do cha không wait().", "D. Fragmentation do cấp phát liên tục."], correct: 1 },
+      { id: 114, text: "Câu 22: (CLO1(1)3): Trong hệ thống nhúng thời gian thực (Real-time embedded systems), hệ điều hành có đặc điểm nào bắt buộc tuân thủ?", options: ["A. Cung cấp giao diện người dùng đồ họa (GUI) phức tạp 3D.", "B. Đảm bảo các tác vụ phải được hoàn thành đúng ràng buộc khắt khe về mặt thời gian.", "C. Luôn dựa trên kiến trúc Peer-to-Peer để dự phòng rủi ro.", "D. Yêu cầu điện toán đám mây để tính toán song song."], correct: 1 },
+      { id: 115, text: "Câu 77: (CLO2(4)3): Khi thực hiện Hủy tiểu trình (Thread Cancellation), chế độ Hủy không đồng bộ (Asynchronous cancellation) mang lại rủi ro nghiêm trọng nào?", options: ["A. Tiểu trình sẽ rơi vào trạng thái ngủ đông vô thời hạn và không giải phóng CPU.", "B. Nếu tiểu trình đang cập nhật dữ liệu chung hoặc giữ tài nguyên hệ thống, việc ngắt đột ngột có thể làm hỏng toàn vẹn dữ liệu hệ thống.", "C. Hạt nhân sẽ bị cướp quyền bởi tiến trình con vừa tạo.", "D. Gây ra hiện tượng đói tài nguyên (starvation) cho các luồng mạng."], correct: 1 },
+      { id: 116, text: "Câu 1: (CLO1(1)3): Một hệ điều hành vừa đóng vai trò “máy mở rộng” vừa là “bộ quản lý tài nguyên”. Trong tình huống nhiều tiến trình cùng yêu cầu CPU, bộ nhớ và I/O, vai trò nào thể hiện rõ nhất?", options: ["A. Điều phối, cấp phát và bảo vệ tài nguyên để các tiến trình dùng hệ thống an toàn, hiệu quả.", "B. Che giấu hoàn toàn phần cứng để mọi chương trình chạy không cần biên dịch.", "C. Chỉ cung cấp giao diện đồ họa cho người dùng cuối.", "D. Tự động biến mọi chương trình tuần tự thành chương trình song song."], correct: 0 },
+      { id: 117, text: "Câu 46: (CLO1(7)3): Nếu thời gian truy cập bộ nhớ là 100 ns, TLB hit ratio 90%, tra TLB coi như 0 ns, page-table lookup cần một lần truy cập bộ nhớ. EAT gần đúng là bao nhiêu?", options: ["A. 100 ns.", "B. 110 ns.", "C. 190 ns.", "D. 200 ns."], correct: 1 },
+      { id: 118, text: "Câu 68: (CLO2(4)3): Cho P1(AT=0,BT=3), P2(AT=0,BT=6), P3(AT=0,BT=9). FCFS theo thứ tự P1,P2,P3 có waiting time trung bình là bao nhiêu?", options: ["A. 3 ms.", "B. 6 ms.", "C. 9 ms.", "D. 4 ms."], correct: 3 },
+      { id: 119, text: "Câu 47: (CLO1(2)3): Khi thiết kế hệ điều hành theo cấu trúc phân lớp (Layered Approach), khó khăn lớn nhất mà các kỹ sư phải đối mặt là gì?", options: ["A. Người dùng không thể sử dụng giao diện đồ họa (GUI) ở các lớp cao.", "B. Số lượng lời gọi hệ thống (System calls) bị giới hạn tối đa là 256 lời gọi.", "C. Khó khăn trong việc định nghĩa chính xác ranh giới và phân định lớp nào nằm trên lớp nào để tránh phụ thuộc vòng.", "D. Cấu trúc này không hỗ trợ đa nhiệm, chỉ cho phép chạy một tiến trình duy nhất."], correct: 2 },
+      { id: 120, text: "Câu 2: (CLO1(1)3): Trong kiến trúc có chế độ user/kernel, vì sao lệnh thao tác trực tiếp thiết bị I/O thường bị xếp vào nhóm lệnh đặc quyền?", options: ["A. Vì thiết bị I/O luôn chậm hơn CPU nên cần chạy ở mức ưu tiên thấp.", "B. Vì lệnh này có thể phá vỡ bảo vệ hệ thống nếu chương trình người dùng thực thi tùy ý.", "C. Vì mọi lệnh I/O đều phải được trình biên dịch tối ưu trước khi chạy.", "D. Vì tiến trình người dùng không thể phát sinh ngắt phần cứng."], correct: 1 },
+      { id: 121, text: "Câu 12: (CLO1(7)3): Biện pháp nào sau đây phá vỡ điều kiện \"Đợi vòng quanh\" (Circular wait) nhằm ngăn chặn tắc nghẽn ngay từ đầu thiết kế?", options: ["A. Yêu cầu tiến trình phải xin cấp phát mọi tài nguyên nó cần cùng một lúc lúc khởi động.", "B. Cho phép hệ điều hành cướp quyền (preempt) tài nguyên từ bất kỳ tiến trình nào.", "C. Chuyển đổi mọi tài nguyên không thể chia sẻ thành tài nguyên có thể chia sẻ.", "D. Gán số thứ tự cho tất cả các loại tài nguyên và bắt buộc tiến trình phải yêu cầu tài nguyên theo thứ tự tăng dần."], correct: 3 },
+      { id: 122, text: "Câu 62: (CLO1(1)3): Đặc trưng quan trọng nhất của một hệ điều hành nhúng thời gian thực (RTOS) là gì?", options: ["A. Khả năng phản hồi các sự kiện hoặc yêu cầu ngắt với một độ trễ được đảm bảo chặt chẽ (Deterministic).", "B. Luôn sở hữu giao diện đồ họa 3D trực quan sinh động.", "C. Khả năng chạy được toàn bộ các ứng dụng Windows và Linux cùng lúc.", "D. Tự động lưu trữ toàn bộ dữ liệu trên đám mây (Cloud) để tránh mất mát."], correct: 0 },
+      { id: 123, text: "Câu 84: (CLO2(5)3): Trong monitor, condition variable thường cần thao tác nào?", options: ["A. fork() và exec() để tạo tiến trình mới.", "B. open() và close() để quản lý file.", "C. malloc() và free() để cấp phát heap.", "D. wait() để ngủ trên điều kiện và signal()/notify() để đánh thức tiến trình phù hợp."], correct: 3 },
+      { id: 124, text: "Câu 7: (CLO1(2)3): Kiến trúc cốt lõi (kernel) Darwin của hệ điều hành Apple Mac OS X được thiết kế theo mô hình nào dưới đây?", options: ["A. Cấu trúc nguyên khối đơn giản nhằm chia sẻ toàn bộ không gian nhớ.", "B. Kiến trúc gom cụm (Clustered system) bất đối xứng.", "C. Hệ thống lai (Hybrid), một phần dựa trên cấu trúc Mach microkernel và BSD UNIX.", "D. Môi trường tính toán hoàn toàn dựa trên Peer-to-Peer."], correct: 2 },
+      { id: 125, text: "Câu 42: (CLO1(1)3): Tại sao hệ điều hành cần sử dụng bộ định thời (Timer) phát ra các ngắt theo chu kỳ nhất định?", options: ["A. Để đồng bộ hóa thời gian hệ thống với các máy chủ NTP trên mạng Internet.", "B. Để ngăn chặn các chương trình người dùng rơi vào vòng lặp vô hạn và cướp quyền điều khiển CPU vĩnh viễn.", "C. Để tính toán chính xác chu kỳ quay của đĩa từ nhằm tăng tốc độ đọc/ghi dữ liệu.", "D. Để kích hoạt hệ thống làm mát phần cứng khi CPU hoạt động ở cường độ cao."], correct: 1 },
+      { id: 126, text: "Câu 54: (CLO1(7)3): Phương pháp phòng tránh tắc nghẽn (Deadlock Avoidance) yêu cầu hệ điều hành phải biết thông tin nào từ tiến trình trước khi cấp phát?", options: ["A. Ngôn ngữ lập trình được sử dụng để viết tiến trình.", "B. Số lượng tối đa của mỗi loại tài nguyên mà tiến trình có thể yêu cầu trong suốt vòng đời của nó.", "C. Chính xác số lượng chu kỳ xung nhịp CPU mà tiến trình sẽ thực thi.", "D. Dung lượng của bộ nhớ Cache L1 mà tiến trình sẽ chiếm dụng."], correct: 1 },
+      { id: 127, text: "Câu 18: (CLO1(7)3): Trong cấu trúc dữ liệu của thuật toán Banker, ma trận Need[i,j] được tính toán thông qua công thức nào?", options: ["A. Need = Available + Allocation", "B. Need = Max - Allocation", "C. Need = Max + Available", "D. Need = Allocation - Max"], correct: 1 },
+      { id: 128, text: "Câu 87: (CLO2(5)3): Lệnh phần cứng TestAndSet đảm bảo tính \"nguyên tử\" (Atomicity) khi hoạt động, điều này nghĩa là gì?", options: ["A. Việc kiểm tra và cập nhật biến bộ nhớ được thực thi trong một chu kỳ máy duy nhất không thể bị ngắt ngang.", "B. Lệnh này chỉ tiêu thụ năng lượng ngang với hạt nhân nguyên tử.", "C. Bắt buộc tiến trình phải chia nhỏ thành các tiểu trình kích thước bằng nhau.", "D. Lệnh tự động chuyển hệ thống về chế độ Kernel Mode mãi mãi."], correct: 0 },
+      { id: 129, text: "Câu 26: (CLO1(2)3): Trong UNIX-like system, tổ hợp fork() rồi exec() thường được dùng vì lý do nào?", options: ["A. fork thay mã chương trình hiện tại; exec sao chép PCB sang tiến trình cha.", "B. fork tạo tiến trình mới, exec thay không gian địa chỉ bằng chương trình cần chạy.", "C. fork chỉ dùng để đóng file; exec chỉ dùng để mở file.", "D. fork và exec đều là lệnh phần cứng không qua nhân."], correct: 1 },
+      { id: 130, text: "Câu 35: (CLO1(2)3): Khi tiến trình gọi wait() đối với tiến trình con, mục đích thường là gì?", options: ["A. Tăng kích thước stack của tiến trình con.", "B. Buộc tiến trình con chuyển sang kernel mode mãi mãi.", "C. Đồng bộ với kết thúc của tiến trình con và nhận trạng thái thoát.", "D. Sao chép toàn bộ heap của tiến trình cha sang file."], correct: 2 },
+      { id: 131, text: "Câu 99: (CLO2(5)3): Khi sử dụng Semaphore để đảm bảo Độc quyền truy xuất (Mutual Exclusion), biến Semaphore mutex phải được khởi tạo giá trị ban đầu là bao nhiêu?", options: ["A. Bằng 0", "B. Bằng 1", "C. Bằng -1", "D. Bằng kích thước của vùng nhớ đệm."], correct: 1 },
+      { id: 132, text: "Câu 14: (CLO1(1)3): Một chương trình bị chia cho 0 trong user mode. Thành phần HĐH nào thường xử lý sự kiện này trước khi báo lỗi cho tiến trình?", options: ["A. Trình quản lý tập tin tự động đổi tên tiến trình.", "B. Cơ chế trap/exception của phần cứng được nhân tiếp nhận và xử lý.", "C. Bộ lập lịch đĩa chuyển tiến trình sang ready.", "D. Shell thay đổi thuật toán phân trang."], correct: 1 },
+      { id: 133, text: "Câu 63: (CLO1(2)3): Tại sao Giao diện lập trình ứng dụng (API) lại được lập trình viên ưa chuộng hơn là sử dụng trực tiếp các Lời gọi hệ thống (System calls)?", options: ["A. API chạy nhanh hơn System calls gấp 10 lần nhờ bỏ qua việc chuyển đổi ngữ cảnh.", "B. API hoàn toàn độc lập với phần cứng nên không bị giới hạn bộ nhớ.", "C. API không cần sử dụng CPU để biên dịch.", "D. API mang tính khả chuyển cao (portability) giúp code chạy được trên nhiều hệ thống khác nhau và ẩn đi độ phức tạp của các Lời gọi hệ thống thực tế."], correct: 3 },
+      { id: 134, text: "Câu 78: (CLO2(4)3): Trong hệ thống UNIX, khi một tín hiệu (signal) được gửi tới một tiến trình đa luồng (ví dụ nhấn Ctrl+C), hệ điều hành sẽ phân phối tín hiệu đó như thế nào nếu luồng bị chỉ định không chặn tín hiệu?", options: ["A. Gửi tín hiệu trực tiếp tới luồng đang chờ I/O trên đĩa.", "B. Gửi tuần tự tín hiệu tới mọi tiểu trình cho đến khi tiểu trình cuối cùng bị kết thúc.", "C. Nhân bản tín hiệu thành hàng ngàn bản và làm tràn bộ đệm.", "D. Tín hiệu được chuyển tới tiểu trình cụ thể áp dụng tín hiệu đó, hoặc chuyển tới mọi tiểu trình, hoặc một tiểu trình đại diện tùy thuộc vào loại tín hiệu."], correct: 3 },
+      { id: 135, text: "Câu 19: (CLO1(1)3): Trong thiết kế HĐH hiện đại, vì sao cấu trúc dữ liệu như queue, list, tree được dùng rộng rãi trong nhân?", options: ["A. Vì nhân chỉ thực hiện các phép toán số học đơn giản.", "B. Vì mọi dữ liệu nhân đều bất biến sau khi boot.", "C. Nhân phải quản lý động tiến trình, bộ nhớ, file, thiết bị và sự kiện theo trạng thái.", "D. Vì cấu trúc dữ liệu chỉ cần cho chương trình ứng dụng."], correct: 2 },
+      { id: 136, text: "Câu 49: (CLO1(7)3): Một tiến trình truy cập trang hợp lệ nhưng chưa nằm trong bộ nhớ chính. Sự kiện nào xảy ra?", options: ["A. Page fault; HĐH phải nạp trang từ bộ nhớ phụ vào khung trang thích hợp.", "B. Context switch bắt buộc sang terminated.", "C. Trap chia cho 0 do địa chỉ sai.", "D. TLB hit làm bỏ qua bảng trang."], correct: 0 },
+      { id: 137, text: "Câu 21: (CLO1(7)3): Tại sao hầu hết các hệ điều hành thương mại phổ biến (như Linux, Windows) lại chọn cách \"Bỏ qua việc xử lý tắc nghẽn\" (The Ostrich Algorithm)?", options: ["A. Chi phí giám sát liên tục để tránh/phát hiện tắc nghẽn làm giảm đáng kể hiệu suất hệ thống so với tần suất tắc nghẽn thực tế.", "B. Hệ thống đã có cơ chế tự động khởi động lại phần cứng bằng Bootstrap.", "C. Đồ thị cấp phát tài nguyên của chúng không bao giờ có thể tạo thành chu trình khép kín.", "D. Mọi tài nguyên trong hệ thống hiện đại đều có thể được chia sẻ đồng thời không giới hạn."], correct: 0 },
+      { id: 138, text: "Câu 97: (CLO2(6)3): Nếu phá vỡ điều kiện no-preemption, hệ thống cần khả năng gì?", options: ["A. Thu hồi tài nguyên đang giữ từ tiến trình và khôi phục/rollback trạng thái nếu cần.", "B. Bảo đảm tài nguyên không bao giờ bị thu hồi.", "C. Không cần lưu trạng thái tiến trình.", "D. Tắt hoàn toàn lập lịch CPU."], correct: 0 },
+      { id: 139, text: "Câu 65: (CLO2(4)3): Cho P1(0,7), P2(2,4), P3(4,1). Theo SRTF, thời điểm P1 hoàn thành là bao nhiêu?", options: ["A. 12 ms.", "B. 7 ms.", "C. 8 ms.", "D. 11 ms."], correct: 0 },
+      { id: 140, text: "Câu 96: (CLO2(4)3): Giao thức \"Kế thừa độ ưu tiên\" (Priority Inheritance Protocol) giải quyết sự cố đảo ngược ưu tiên (Priority Inversion) theo cơ chế nào?", options: ["A. Xóa sổ ngay lập tức tiến trình có ưu tiên thấp đang cản trở.", "B. Tăng lượng Quantum cho tiến trình độ ưu tiên cao.", "C. Chặn tất cả ngắt phần cứng trong miền găng.", "D. Tiến trình ưu tiên thấp đang giữ khóa tạm thời mượn mức ưu tiên của tiến trình cao nhất đang đợi khóa, đẩy nhanh việc giải phóng khóa."], correct: 3 },
+      { id: 141, text: "Câu 88: (CLO2(5)3): Bài toán Bữa ăn của các triết gia (Dining Philosophers) là mô hình kinh điển đại diện cho vấn đề gì trong lập trình đa nhiệm?", options: ["A. Vấn đề chuyển đổi dữ liệu từ chữ sang số.", "B. Vấn đề cân bằng tải mạng phân tán.", "C. Vấn đề cấp phát nhiều tài nguyên dùng chung giữa các tiến trình để tránh Tắc nghẽn và Đói tài nguyên.", "D. Vấn đề mã hóa dữ liệu đầu cuối."], correct: 2 },
+      { id: 142, text: "Câu 82: (CLO2(4)3): Tại sao chuyển ngữ cảnh (Context switch) giữa các Tiểu trình mức người dùng (User-level threads) lại nhanh hơn rất nhiều so với Tiến trình (Processes)?", options: ["A. Vì tiểu trình không sử dụng thanh ghi (Registers) của CPU.", "B. Vì tiểu trình dùng chung bộ nhớ và tài nguyên của tiến trình cha, do đó không cần nạp lại bảng phân trang hay vô hiệu hóa TLB.", "C. Vì hệ điều hành không nhận thức được sự tồn tại của tiến trình.", "D. Vì tiểu trình mức người dùng luôn chạy trực tiếp bằng ngắt phần cứng."], correct: 1 },
+      { id: 143, text: "Câu 69: (CLO2(4)3): Aging trong lập lịch ưu tiên được dùng để xử lý vấn đề nào?", options: ["A. Starvation của tiến trình ưu tiên thấp bằng cách tăng dần ưu tiên theo thời gian chờ.", "B. Deadlock do giữ tài nguyên vòng tròn.", "C. Page fault do thiếu khung trang.", "D. Phân mảnh ngoài trong cấp phát bộ nhớ."], correct: 0 },
+      { id: 144, text: "Câu 60: (CLO1(7)3): Bảng trang đảo ngược khác bảng trang truyền thống ở điểm nào?", options: ["A. Nó lưu từng ký tự của file trong thư mục.", "B. Nó chỉ dùng cho hệ thống không có bộ nhớ ảo.", "C. Nó thay thế hoàn toàn scheduler của HĐH.", "D. Nó thường có một mục cho mỗi khung vật lý, không phải một mục cho mỗi trang ảo của mỗi tiến trình."], correct: 3 },
+      { id: 145, text: "Câu 91: (CLO2(6)3): Thuật toán SJF (Shortest Job First) được chứng minh là tối ưu nhất vì lý do gì?", options: ["A. Thuật toán này không bao giờ gây ra hiện tượng Starvation.", "B. Thuật toán có thể dự đoán chính xác 100% thời gian chạy bằng Trí tuệ nhân tạo.", "C. Giảm thiểu số lần chuyển ngữ cảnh xuống mức 0.", "D. Nó cho ra thời gian chờ đợi trung bình (Average Waiting Time) nhỏ nhất cho một tập hợp các tiến trình nhất định."], correct: 3 },
+      { id: 146, text: "Câu 92: (CLO2(6)3): Một trạng thái an toàn được hiểu thế nào?", options: ["A. Mọi tiến trình đang running đồng thời trên CPU riêng.", "B. Không có tiến trình nào yêu cầu tài nguyên trong tương lai.", "C. Tất cả tài nguyên đều đang rỗi.", "D. Tồn tại ít nhất một safe sequence để các tiến trình hoàn thành với tài nguyên hiện có và sẽ được trả."], correct: 3 },
+      { id: 147, text: "Câu 5: (CLO1(1)3): Khi thiết kế HĐH cho máy chủ nhiều người dùng, tiêu chí nào cần được ưu tiên hơn so với máy cá nhân đơn người dùng?", options: ["A. Công bằng, bảo vệ và kiểm soát chia sẻ tài nguyên giữa nhiều người dùng/tiến trình.", "B. Tối đa hóa hiệu ứng giao diện và giảm số lời gọi hệ thống.", "C. Loại bỏ mọi cơ chế kiểm soát truy cập để tăng tốc độ.", "D. Chỉ tối ưu thời lượng pin và độ sáng màn hình."], correct: 0 },
+      { id: 148, text: "Câu 93: (CLO2(6)3): Để cân bằng tải (Load Balancing) trên hệ SMP, chiến lược \"Push migration\" hoạt động ra sao?", options: ["A. Một tác vụ chạy ngầm định kỳ kiểm tra tải của từng CPU và chủ động đẩy (push) tiến trình từ luồng quá tải sang luồng rảnh rỗi.", "B. CPU rảnh rỗi tự động đi tìm và kéo (pull) tiến trình từ CPU khác về mình.", "C. Ngắt kết nối các máy trạm (clients) đang gửi dữ liệu vào mạng.", "D. Đẩy mọi dữ liệu từ RAM xuống không gian hoán đổi (Swap) trên đĩa cứng."], correct: 0 },
+      { id: 149, text: "Câu 93: (CLO2(6)3): Cho Available=(3,3,2), Need P1=(1,2,2), P2=(6,0,0), P3=(0,1,1). Tiến trình nào có thể hoàn thành ngay?", options: ["A. P1 và P3.", "B. Chỉ P2.", "C. P1 và P2.", "D. Không tiến trình nào."], correct: 0 },
+      { id: 150, text: "Câu 51: (CLO1(2)3): Trong hệ điều hành, \"Daemons\" hoặc \"Background services\" (Dịch vụ chạy ngầm) được phân loại là gì?", options: ["A. Là các lời gọi hệ thống trực tiếp từ phần cứng.", "B. Là các chương trình hệ thống chạy nền liên tục để xử lý các tác vụ như in ấn, mạng hoặc lập lịch.", "C. Là các virus hợp pháp được hệ điều hành cấp quyền để kiểm thử bảo mật.", "D. Là vùng nhớ đệm đặc biệt nằm trong thanh ghi CPU."], correct: 1 },
+      { id: 151, text: "Câu 83: (CLO2(5)3): Trong bài toán Người đọc - Người ghi (Readers-Writers), nếu ta áp dụng chính sách ưu tiên tuyệt đối cho Người đọc (không người đọc nào phải chờ trừ khi có người ghi đang ghi), rủi ro nào sẽ xảy ra?", options: ["A. Chết đói (Starvation) cho Người ghi, do luồng người đọc có thể đến liên tục và chiếm giữ miền găng mãi mãi.", "B. Livelock cho tất cả Người đọc vì họ sẽ nhường quyền lẫn nhau.", "C. Tắc nghẽn mạng (Network congestion) giữa các lõi CPU.", "D. Tăng tốc độ đọc lên mức làm hỏng bộ nhớ Cache."], correct: 0 },
+      { id: 152, text: "Câu 31: (CLO2(4)3): Lời gọi hệ thống nào của UNIX thường gặp sự nhập nhằng về ngữ nghĩa (semantics) trong môi trường đa tiểu trình khi quyết định có sao chép tất cả các tiểu trình hay chỉ tiểu trình gọi nó?", options: ["A. exit()", "B. wait()", "C. fork()", "D. signal()"], correct: 2 },
+      { id: 153, text: "Câu 42: (CLO1(7)3): Phân mảnh ngoài thường xuất hiện rõ nhất trong cơ chế nào?", options: ["A. Phân trang với khung trang kích thước cố định.", "B. Cấp phát liên tục kích thước biến đổi khi các lỗ trống nằm rải rác.", "C. TLB hit trong dịch địa chỉ.", "D. Bảng trang đảo ngược không dùng bộ nhớ chính."], correct: 1 },
+      { id: 154, text: "Câu 21: (CLO1(2)3): Một chương trình đã nằm trên đĩa nhưng chưa được nạp để chạy. Phát biểu nào phân biệt đúng chương trình và tiến trình?", options: ["A. Chương trình là thực thể thụ động; tiến trình là thực thể đang thực thi với trạng thái và ngữ cảnh.", "B. Chương trình luôn có PCB; tiến trình thì không cần PCB.", "C. Chương trình luôn ở kernel mode; tiến trình luôn ở user mode.", "D. Chương trình và tiến trình hoàn toàn giống nhau trong mọi HĐH."], correct: 0 },
+      { id: 155, text: "Câu 85: (CLO2(5)3): Bài toán readers-writers cần cân bằng yêu cầu nào?", options: ["A. Cho nhiều reader đọc đồng thời nhưng writer phải độc quyền khi ghi.", "B. Cho nhiều writer ghi đồng thời vào cùng dữ liệu.", "C. Cấm tất cả reader khi không có writer.", "D. Chỉ cho phép tiến trình có PID chẵn truy cập."], correct: 0 },
+      { id: 156, text: "Câu 59: (CLO1(7)3): Livelock (Khóa sống) khác với Deadlock (Tắc nghẽn) ở điểm cốt lõi nào?", options: ["A. Livelock chỉ xảy ra trên mạng internet, Deadlock xảy ra ở máy cục bộ.", "B. Trong Livelock, các tiến trình không bị chặn lại (blocked) mà liên tục thay đổi trạng thái để nhường nhau nhưng không tiến trình nào hoàn thành công việc.", "C. Livelock có thể được giải quyết bằng thuật toán Banker, còn Deadlock thì không.", "D. Livelock làm hỏng phần cứng CPU do nhiệt độ tăng cao."], correct: 1 },
+      { id: 157, text: "Câu 43: (CLO1(7)3): Một hệ thống phân trang có kích thước trang 4 KB. Địa chỉ logic 10.500 thuộc trang nào nếu đánh số trang từ 0?", options: ["A. Trang 1, vì 10.500 gần 8 KB.", "B. Trang 3, vì làm tròn lên luôn được dùng.", "C. Trang 2, vì 10.500 // 4.096 = 2.", "D. Trang 10, vì lấy hai chữ số đầu của địa chỉ."], correct: 2 },
+      { id: 158, text: "Câu 90: (CLO2(6)3): Hiện tượng \"Lão hóa\" (Aging) được sử dụng trong định thời CPU nhằm mục đích giải quyết vấn đề gì?", options: ["A. Tăng dần mức độ ưu tiên của các tiến trình nằm chờ quá lâu trong hệ thống để tránh tình trạng Chết đói (Starvation).", "B. Hủy bỏ các tiến trình tiêu tốn quá nhiều RAM.", "C. Giảm xung nhịp CPU khi máy tính bị quá nhiệt.", "D. Sao lưu dữ liệu cũ trên ổ cứng sang băng từ."], correct: 0 },
+      { id: 159, text: "Câu 68: (CLO1(2)3): Trong việc thiết kế cơ chế (mechanism) và chính sách (policy) của HĐH, nguyên tắc phân tách (Separation of Policy and Mechanism) đem lại lợi thế nào?", options: ["A. Tính linh hoạt cao: có thể dễ dàng thay đổi các quyết định phân bổ (policy) mà không cần viết lại mã thực thi ở mức thấp (mechanism).", "B. Tăng dung lượng bộ nhớ Cache L2 bằng cách gộp cả hai vào cùng một hàm hạt nhân.", "C. Ngăn chặn hoàn toàn hiện tượng phân mảnh ngoại vi trên đĩa cứng.", "D. Loại bỏ hoàn toàn sự cần thiết của Timer Interrupt."], correct: 0 },
+      { id: 160, text: "Câu 45: (CLO1(7)3): TLB giúp tăng tốc truy cập bộ nhớ vì lý do nào?", options: ["A. Lưu ánh xạ trang-khung gần đây để giảm số lần tra bảng trang trong bộ nhớ chính.", "B. Tăng kích thước trang vật lý sau mỗi lần truy cập.", "C. Xóa mọi page fault trước khi chương trình chạy.", "D. Biến bộ nhớ phụ thành thanh ghi CPU."], correct: 0 },
+      { id: 161, text: "Câu 61: (CLO2(4)3): Cho các tiến trình đến cùng lúc: P1=8 ms, P2=4 ms, P3=2 ms. Theo SJF không độc quyền, thời gian chờ trung bình là bao nhiêu?", options: ["A. 2,67 ms.", "B. 4,00 ms.", "C. 3,33 ms.", "D. 6,00 ms."], correct: 0 },
+      { id: 162, text: "Câu 57: (CLO1(7)3): Trong khôi phục tắc nghẽn (Recovery from Deadlock), chiến lược \"Chấm dứt tất cả các tiến trình bị tắc nghẽn\" có nhược điểm lớn nhất là gì?", options: ["A. Chi phí rất cao vì phải vứt bỏ mọi kết quả tính toán dở dang của các tiến trình này và thực hiện lại từ đầu.", "B. Gây ra hiện tượng phân mảnh tĩnh cho bộ nhớ đệm.", "C. Hệ thống bắt buộc phải tắt nguồn và khởi động lại.", "D. Làm hỏng cấu trúc vật lý của đĩa cứng."], correct: 0 },
+      { id: 163, text: "Câu 67: (CLO2(4)3): Tiêu chí turnaround time của một tiến trình được tính thế nào?", options: ["A. Thời gian chờ trong ready queue trừ CPU burst.", "B. Tổng số lần context switch nhân với quantum.", "C. Thời điểm hoàn thành trừ thời điểm đến.", "D. Thời gian I/O trừ thời gian CPU."], correct: 2 },
+      { id: 164, text: "Câu 29: (CLO2(6)3): Trong thuật toán định thời CPU Shortest-Remaining-Time-First (SRTF), việc \"Cướp quyền\" (Preemption) xảy ra theo cơ chế nào?", options: ["A. Khi một tiến trình mới đến có thời gian chạy yêu cầu ngắn hơn thời gian còn lại của tiến trình đang chạy, hệ thống cướp CPU giao cho tiến trình mới.", "B. Khi tiến trình đang chạy vượt quá thời lượng Time Quantum.", "C. Khi tiến trình bắt đầu thực hiện thao tác I/O.", "D. Khi tiến trình có độ ưu tiên thấp bị giảm ưu tiên (Aging) xuống mức 0."], correct: 0 },
+      { id: 165, text: "Câu 49: (CLO1(2)3): Máy ảo cấp hệ thống (Type 1 Hypervisor) khác biệt với máy ảo lưu trữ (Type 2 Hypervisor) ở điểm kỹ thuật nào?", options: ["A. Type 1 chỉ chạy được hệ điều hành Linux, còn Type 2 chạy được Windows.", "B. Type 1 chạy trực tiếp trên phần cứng máy chủ (bare-metal) để quản lý tài nguyên, trong khi Type 2 chạy như một ứng dụng trên hệ điều hành vật chủ.", "C. Type 1 không cần sử dụng bộ nhớ RAM, lưu trữ toàn bộ tiến trình trên đĩa.", "D. Type 1 không hỗ trợ mạng, chỉ dùng cho tính toán cục bộ."], correct: 1 },
+      { id: 166, text: "Câu 54: (CLO1(7)3): Bit valid/invalid trong bảng trang thường dùng để làm gì?", options: ["A. Đếm số lần tiến trình gọi system call.", "B. Cho biết trang thuộc không gian địa chỉ hợp lệ và có thể được ánh xạ hay không.", "C. Xác định thứ tự ưu tiên của ready queue.", "D. Mã hóa tên file trong thư mục gốc."], correct: 1 },
+      { id: 167, text: "Câu 3: (CLO1(1)3): Một chương trình gọi read() để đọc file. Trình tự hợp lý nhất khi chuyển từ chương trình người dùng sang dịch vụ HĐH là gì?", options: ["A. Ngắt đồng hồ chuyển sang user mode, trình biên dịch kiểm tra tham số rồi đọc đĩa.", "B. Shell chuyển tiến trình sang trạng thái terminated rồi nhân tạo lại tiến trình mới.", "C. Trap/lời gọi hệ thống chuyển sang kernel mode, nhân kiểm tra tham số rồi thực hiện dịch vụ.", "D. DMA trực tiếp gọi hàm trong chương trình người dùng để lấy dữ liệu."], correct: 2 },
+      { id: 168, text: "Câu 4: (CLO1(1)3): Chế độ hoạt động Dual-mode (chế độ kép) bảo vệ hệ điều hành khỏi các chương trình lỗi bằng cách nào?", options: ["A. Cách ly dữ liệu của người dùng thành các thư mục ẩn không có quyền đọc/ghi.", "B. Buộc mọi tiến trình phải chạy qua máy ảo trước khi truy cập bộ nhớ.", "C. Khóa (lock) véc tơ ngắt không cho phép bất kỳ phần mềm nào gọi đến nó.", "D. Cung cấp bit chế độ (mode bit) bằng phần cứng, yêu cầu các lệnh đặc quyền chỉ được thực thi trong Kernel mode."], correct: 3 },
+      { id: 169, text: "Câu 17: (CLO1(1)3): Một HĐH hỗ trợ plug-and-play thiết bị mới. Thành phần nào cần phối hợp nhiều nhất để thiết bị dùng được?", options: ["A. Phát hiện phần cứng, nạp driver, cấp tài nguyên I/O và đăng ký thiết bị với nhân.", "B. Chỉ thay đổi hình nền và ngôn ngữ giao diện.", "C. Chỉ tăng kích thước heap của tiến trình đang chạy.", "D. Chỉ xóa các tiến trình ở trạng thái ready."], correct: 0 },
+      { id: 170, text: "Câu 25: (CLO1(2)3): Một tiến trình cha tạo tiến trình con để xử lý yêu cầu. Lợi ích của mô hình này trong máy chủ là gì?", options: ["A. Tách biệt xử lý từng yêu cầu, tăng khả năng đồng thời và kiểm soát lỗi.", "B. Bảo đảm mọi yêu cầu luôn xử lý tuần tự theo FIFO.", "C. Loại bỏ hoàn toàn chi phí tạo tiến trình.", "D. Không cần cơ chế IPC giữa các tiến trình."], correct: 0 },
+      { id: 171, text: "Câu 74: (CLO1(1)3): Lợi ích của kiến trúc Đa lõi (Multicore) so với việc lắp nhiều chip CPU vật lý rời rạc trên mainboard là gì?", options: ["A. Truyền thông giữa các lõi trên cùng một chip (on-chip) nhanh hơn và tiêu thụ ít năng lượng điện hơn so với giao tiếp qua bus của bo mạch chủ.", "B. Không cần sử dụng bất kỳ bộ nhớ Cache nào.", "C. Loại bỏ hoàn toàn sự cần thiết của Hệ điều hành.", "D. Chỉ cần cấp nguồn cho một lõi duy nhất, các lõi khác hoạt động bằng năng lượng tĩnh điện."], correct: 0 },
+      { id: 172, text: "Câu 64: (CLO2(4)3): Trong lập lịch ưu tiên độc quyền, nếu tiến trình ưu tiên cao hơn đến khi CPU đang chạy tiến trình thấp hơn, hệ thống nên làm gì?", options: ["A. Luôn giữ tiến trình hiện tại đến khi kết thúc mọi trường hợp.", "B. Xóa tiến trình ưu tiên thấp khỏi hệ thống.", "C. Tự động tăng burst time của tiến trình ưu tiên cao.", "D. Thu hồi CPU và chuyển sang tiến trình ưu tiên cao nếu chính sách cho phép preemption."], correct: 3 },
+      { id: 173, text: "Câu 41: (CLO1(1)3): Trong hệ thống đa bộ xử lý đối xứng (SMP), vấn đề \"Cấu kết bộ nhớ đệm\" (Cache coherency) xảy ra khi nào và đòi hỏi phần cứng phải làm gì?", options: ["A. Khi đĩa cứng bị quá tải; phần cứng phải tự động tắt cache để ghi trực tiếp vào RAM.", "B. Khi một CPU độc quyền sử dụng bộ nhớ; các CPU khác phải chờ thông qua ngắt phần mềm.", "C. Khi một giá trị dữ liệu nằm trong cache của nhiều CPU bị thay đổi bởi một CPU; phần cứng phải đảm bảo cập nhật sự thay đổi này tới các cache khác.", "D. Khi dung lượng RAM bị đầy; phần cứng phải xóa toàn bộ cache để nhường chỗ cho tiến trình hệ thống."], correct: 2 },
+      { id: 174, text: "Câu 10: (CLO1(7)3): Điều kiện \"Giữ và đợi\" (Hold and Wait) là một trong bốn điều kiện xảy ra tắc nghẽn (Deadlock), nó được định nghĩa ra sao?", options: ["A. Một tiến trình từ chối giải phóng tài nguyên sau khi đã thực thi xong.", "B. Một tiến trình đang giữ ít nhất một tài nguyên và đang chờ được cấp thêm tài nguyên do tiến trình khác giữ.", "C. Nhiều tiến trình cùng yêu cầu một thiết bị phần cứng không thể chia sẻ.", "D. CPU bị kẹt trong vòng lặp vô hạn khi chờ thiết bị I/O phản hồi."], correct: 1 },
+      { id: 175, text: "Câu 56: (CLO1(7)3): Thuật toán LRU chọn trang nào để thay thế?", options: ["A. Trang vừa được nạp gần nhất bất kể sử dụng.", "B. Trang có số hiệu trang lớn nhất.", "C. Trang thuộc tiến trình có PID nhỏ nhất.", "D. Trang lâu nhất chưa được sử dụng lại tính đến thời điểm thay thế."], correct: 3 },
+      { id: 176, text: "Câu 58: (CLO1(7)3): Nếu dùng compaction để giảm phân mảnh ngoài, điều kiện phần cứng/phần mềm nào thường cần?", options: ["A. Tất cả chương trình phải không dùng biến cục bộ.", "B. Có khả năng relocation để di chuyển tiến trình và cập nhật địa chỉ tương ứng.", "C. Không được có bất kỳ thiết bị I/O nào trong hệ thống.", "D. Mọi trang phải có cùng số hiệu logic và vật lý."], correct: 1 },
+      { id: 177, text: "Câu 37: (CLO2(4)3): Khi thực thi song song dữ liệu (Data parallelism), cách tiếp cận chia nhỏ công việc diễn ra như thế nào trên hệ thống Đa lõi?", options: ["A. Cùng một thao tác lệnh được thực thi trên các tập con dữ liệu khác nhau bởi nhiều lõi đồng thời.", "B. Các lõi chạy các thao tác hoàn toàn khác nhau trên cùng một phần tử dữ liệu.", "C. Một lõi tính toán, lõi còn lại dự phòng (Standby) để sẵn sàng thay thế.", "D. Toàn bộ dữ liệu được đẩy vào một luồng duy nhất để tránh xung đột cache."], correct: 0 },
+      { id: 178, text: "Câu 11: (CLO1(7)3): Khi phân tích Đồ thị cấp phát tài nguyên (RAG) có chứa chu trình, kết luận nào sau đây là chính xác tuyệt đối?", options: ["A. Hệ thống chắc chắn bị tắc nghẽn bất kể số lượng thực thể của tài nguyên.", "B. Đồ thị chỉ phản ánh trạng thái cảnh báo, không bao giờ dẫn đến tắc nghẽn thực sự.", "C. Nếu mỗi loại tài nguyên trên chu trình chỉ có một thực thể duy nhất, hệ thống chắc chắn bị tắc nghẽn.", "D. Các tiến trình trên chu trình sẽ tự động nhường tài nguyên (preemption) để phá vỡ bế tắc."], correct: 2 },
+      { id: 179, text: "Câu 38: (CLO1(2)3): Một tiến trình bị terminate bất thường do lỗi bảo vệ bộ nhớ. HĐH nên xử lý tài nguyên của nó thế nào?", options: ["A. Giữ nguyên mọi tài nguyên để tiến trình khác dùng trực tiếp.", "B. Thu hồi tài nguyên đã cấp, đóng/giải phóng đối tượng liên quan và cập nhật trạng thái.", "C. Chuyển toàn bộ tài nguyên sang tiến trình ngẫu nhiên.", "D. Tắt MMU để tiến trình tiếp tục chạy."], correct: 1 },
+      { id: 180, text: "Câu 98: (CLO2(6)3): Trong Banker's algorithm, ma trận Need được tính như thế nào?", options: ["A. Need = Available + Allocation.", "B. Need = Max - Allocation.", "C. Need = Request - Available.", "D. Need = Work + Finish."], correct: 1 },
+      { id: 181, text: "Câu 79: (CLO2(5)3): Trong bài toán producer-consumer với buffer kích thước N, semaphore empty nên khởi tạo bằng bao nhiêu?", options: ["A. 0.", "B. 1.", "C. N.", "D. -1."], correct: 2 },
+      { id: 182, text: "Câu 72: (CLO1(2)3): Hệ thống nào sau đây KHÔNG phải là một Môi trường Tính toán (Computing Environment) theo phân loại của Hệ điều hành?", options: ["A. Điện toán đám mây (Cloud Computing).", "B. Hệ thống phân tán (Distributed System).", "C. Điện toán di động (Mobile Computing).", "D. Vi kiến trúc bóng bán dẫn (Transistor Microarchitecture)."], correct: 3 },
+      { id: 183, text: "Câu 6: (CLO1(2)3): Các ngôn ngữ lập trình bậc cao tương tác với dịch vụ của hệ điều hành thông qua cơ chế nào để ẩn đi độ phức tạp của Lời gọi hệ thống (System calls)?", options: ["A. Gửi gói tin ngắt phần cứng (Hardware Interrupt Packet) trực tiếp tới CPU.", "B. Sử dụng Giao diện lập trình ứng dụng (API) như Win32 API hoặc POSIX API.", "C. Gọi trực tiếp trình thông dịch lệnh (Command Interpreter).", "D. Kích hoạt trực tiếp tệp thực thi mã nguồn mở trong nhân."], correct: 1 },
+      { id: 184, text: "Câu 9: (CLO1(7)3): Trong Giải thuật Banker, làm thế nào hệ thống xác định việc cấp phát một yêu cầu tài nguyên không dẫn đến trạng thái không an toàn (unsafe state)?", options: ["A. Kiểm tra xem có tồn tại một chuỗi an toàn để tất cả các tiến trình đều có thể hoàn thành nhu cầu tối đa (Max) hay không.", "B. Ngay lập tức cấp phát nếu số lượng yêu cầu nhỏ hơn tổng tài nguyên hệ thống đang có.", "C. Từ chối mọi yêu cầu nếu tiến trình chưa kết thúc hoàn toàn.", "D. Thu hồi tài nguyên của tiến trình khác để đảm bảo Available luôn bằng Max."], correct: 0 },
+      { id: 185, text: "Câu 100: (CLO2(6)3): Một hệ thống có deadlock nhưng chỉ một tiến trình bị giết để giải phóng tài nguyên. Tiêu chí chọn victim nào hợp lý hơn?", options: ["A. Luôn chọn tiến trình có PID lớn nhất bất kể trạng thái.", "B. Luôn chọn tiến trình đang giữ ít tài nguyên nhất kể cả không liên quan.", "C. Chọn ngẫu nhiên tiến trình đang ở ready queue dù không thuộc deadlock.", "D. Chi phí rollback thấp, ít tài nguyên đã dùng và ít ảnh hưởng đến người dùng/hệ thống."], correct: 3 },
+      { id: 186, text: "Câu 64: (CLO1(2)3): Kiến trúc hạt nhân lai (Hybrid Kernel) của Mac OS X (Darwin) là sự kết hợp ưu điểm của những kiến trúc nào?", options: ["A. Bảng phân trang và Phân đoạn bộ nhớ.", "B. Khả năng truyền thông điệp linh hoạt của Mach microkernel và sức mạnh xử lý khối lượng lớn của BSD Unix nguyên khối.", "C. Điện toán đám mây và hệ thống gom cụm bất đối xứng.", "D. Kiến trúc hướng dịch vụ (SOA) và Peer-to-Peer."], correct: 1 },
+      { id: 187, text: "Câu 34: (CLO2(5)3): Mô hình cấu trúc Monitor đảm bảo tính độc quyền truy xuất (Mutual Exclusion) bằng cách nào?", options: ["A. Bắt buộc người dùng gọi hàm acquire_lock một cách thủ công.", "B. Dựa vào cấu trúc ngôn ngữ lập trình, chỉ cho phép duy nhất một tiến trình hoạt động bên trong monitor tại một thời điểm.", "C. Vô hiệu hóa ngắt phần cứng của toàn hệ thống khi tiến trình gọi monitor.", "D. Khóa toàn bộ các tệp liên quan bằng File System."], correct: 1 },
+      { id: 188, text: "Câu 59: (CLO1(7)3): Trong hệ phân trang theo yêu cầu, locality of reference giúp hệ thống hiệu quả hơn vì sao?", options: ["A. Tiến trình luôn truy cập ngẫu nhiên đều toàn bộ không gian địa chỉ.", "B. Mọi truy cập bộ nhớ đều bỏ qua MMU.", "C. Tiến trình có xu hướng truy cập lặp lại một tập trang nhỏ trong từng giai đoạn.", "D. Page fault được xử lý bởi chương trình người dùng không qua nhân."], correct: 2 },
+      { id: 189, text: "Câu 32: (CLO2(4)3): Theo định luật Amdahl, với tỷ lệ phần trăm mã lệnh chạy tuần tự (S) và số lượng bộ xử lý (N), tốc độ tăng tốc (speedup) của hệ thống sẽ tiệm cận giới hạn nào khi N tiến tới vô cùng?", options: ["A. Bằng chính N.", "B. Bằng S * N.", "C. Bằng 1 / (1 - S).", "D. Bằng 1 / S."], correct: 3 },
+      { id: 190, text: "Câu 100: (CLO2(5)3): Trong Giải pháp Peterson áp dụng cho 2 tiến trình đồng bộ hóa, mảng cờ flag[i] mang ý nghĩa gì?", options: ["A. Quyền quyết định tiến trình nào được chạy tiếp theo (lượt chạy).", "B. Thể hiện trạng thái tiến trình i ĐÃ SẴN SÀNG muốn tiến vào miền găng (Critical Section).", "C. Chứa dữ liệu của bộ đệm đang được chia sẻ.", "D. Biểu thị số lần tiến trình đã vào miền găng."], correct: 1 },
+      { id: 191, text: "Câu 4: (CLO1(1)3): Một hệ thống đa chương trình giữ nhiều tiến trình trong bộ nhớ. Lợi ích trực tiếp nhất của cơ chế này là gì?", options: ["A. Làm cho mọi tiến trình hoàn thành đúng theo thứ tự nạp vào bộ nhớ.", "B. Loại bỏ hoàn toàn nhu cầu lập lịch CPU.", "C. Bảo đảm mỗi tiến trình luôn có một CPU vật lý riêng.", "D. Tăng mức sử dụng CPU bằng cách chạy tiến trình khác khi một tiến trình chờ I/O."], correct: 3 },
+      { id: 192, text: "Câu 3: (CLO1(1)3): Cơ chế đa chương (Multiprogramming) tổ chức công việc và bộ nhớ nhằm giải quyết vấn đề cốt lõi nào của hệ thống xử lý theo lô (Batch system)?", options: ["A. Giảm thiểu dung lượng bộ nhớ ảo cần thiết cho mỗi tiến trình.", "B. Loại bỏ hoàn toàn sự chậm trễ của thời gian truy cập ngẫu nhiên trên đĩa cứng.", "C. Tối đa hóa hiệu suất CPU bằng cách luôn có một tiến trình sẵn sàng để CPU thực thi khi tiến trình khác chờ I/O.", "D. Cấp phát một giao diện đồ họa (GUI) cho mỗi tiến trình đang chạy ẩn."], correct: 2 },
+      { id: 193, text: "Câu 90: (CLO2(6)3): Ngăn chặn deadlock bằng cách phá vỡ hold-and-wait thường yêu cầu gì?", options: ["A. Cho tiến trình giữ tài nguyên rồi chờ tùy ý.", "B. Tiến trình yêu cầu toàn bộ tài nguyên cần dùng trước khi bắt đầu hoặc không giữ gì khi yêu cầu thêm.", "C. Tắt cơ chế cấp phát tài nguyên.", "D. Bỏ qua mọi yêu cầu I/O."], correct: 1 },
+      { id: 194, text: "Câu 11: (CLO1(1)3): Trong quá trình khởi động, bootstrap loader có nhiệm vụ thực dụng nhất nào?", options: ["A. Cấp phát CPU cho mọi tiến trình người dùng đang chờ.", "B. Tối ưu thuật toán thay thế trang trước khi có nhân.", "C. Nạp nhân HĐH vào bộ nhớ và chuyển quyền điều khiển cho nhân khởi tạo hệ thống.", "D. Chạy trình duyệt để người dùng đăng nhập."], correct: 2 },
+      { id: 195, text: "Câu 58: (CLO1(7)3): Một giải pháp ngăn chặn điều kiện \"Giữ và đợi\" (Hold and Wait) là yêu cầu tiến trình xin tất cả tài nguyên cùng một lúc trước khi chạy. Hậu quả tiêu cực của cách làm này là gì?", options: ["A. Làm tăng khả năng hệ thống bị nhiễm virus.", "B. Dẫn đến vi phạm quyền truy cập Dual-mode.", "C. Hiệu suất sử dụng tài nguyên rất thấp vì tiến trình có thể giữ tài nguyên mà chưa cần dùng đến trong thời gian dài.", "D. Gây ra lỗi chia cho 0 trong toán học logic."], correct: 2 },
+      { id: 196, text: "Câu 13: (CLO1(1)3): Tại sao HĐH cần cơ chế accounting/ghi nhận sử dụng tài nguyên trong hệ thống nhiều người dùng?", options: ["A. Để theo dõi, giới hạn, tính phí hoặc phân tích việc sử dụng CPU, bộ nhớ, I/O.", "B. Để thay thế hoàn toàn bộ lập lịch CPU.", "C. Để biến địa chỉ vật lý thành địa chỉ logic.", "D. Để loại bỏ mọi lỗi do race condition."], correct: 0 },
+      { id: 197, text: "Câu 20: (CLO1(1)3): Một tiến trình gọi dịch vụ mở file nhưng không có quyền. HĐH phải làm gì để đúng nguyên tắc bảo vệ?", options: ["A. Tự động cấp quyền root tạm thời để tránh lỗi ứng dụng.", "B. Xóa file để bảo vệ hệ thống.", "C. Chuyển file vào bộ nhớ cache rồi cho đọc một phần.", "D. Từ chối yêu cầu, trả mã lỗi thích hợp và không cấp tài nguyên file."], correct: 3 },
+      { id: 198, text: "Câu 43: (CLO1(1)3): Sự khác biệt cốt lõi về mục tiêu thiết kế giữa hệ thống Đa chương (Multiprogramming) và hệ thống Chia sẻ thời gian (Time-sharing) là gì?", options: ["A. Đa chương tối đa hóa độ tận dụng CPU, trong khi Chia sẻ thời gian tối thiểu hóa thời gian đáp ứng để tương tác trực tiếp với người dùng.", "B. Đa chương chỉ dùng cho máy tính cá nhân, còn Chia sẻ thời gian dùng cho máy chủ phân tán.", "C. Đa chương cho phép mã nguồn mở sửa đổi, còn Chia sẻ thời gian bắt buộc dùng mã nguồn đóng.", "D. Đa chương yêu cầu phần cứng đa nhân, trong khi Chia sẻ thời gian chỉ chạy trên lõi đơn."], correct: 0 },
+      { id: 199, text: "Câu 5: (CLO1(2)3): Trong kiến trúc Microkernel (vi nhân), lợi ích kỹ thuật lớn nhất khi di chuyển phần lớn các dịch vụ (như file system) từ chế độ nhân sang chế độ người dùng (user mode) là gì?", options: ["A. Hệ thống đáng tin cậy, an toàn hơn và dễ dàng mở rộng sang các kiến trúc phần cứng mới.", "B. Loại bỏ hoàn toàn độ trễ khi liên lạc giữa các module (Message passing).", "C. Giảm dung lượng của bộ nhớ ảo xuống mức tối thiểu.", "D. Cho phép người dùng trực tiếp sửa đổi nhân (kernel) mà không cần biên dịch lại."], correct: 0 },
+      { id: 200, text: "Câu 24: (CLO1(7)3): Điểm khác biệt lớn nhất giữa việc kiểm tra tắc nghẽn cho tài nguyên 1 thực thể và tài nguyên nhiều thực thể là gì?", options: ["A. Tài nguyên nhiều thực thể chỉ cần tìm một chu trình trong RAG là kết luận ngay tắc nghẽn.", "B. Tài nguyên 1 thực thể sử dụng thuật toán Banker để kiểm tra chuỗi an toàn.", "C. Tài nguyên nhiều thực thể không bao giờ xảy ra tắc nghẽn do có dư thừa tài nguyên.", "D. Tài nguyên 1 thực thể dựa vào việc phát hiện chu trình trên RAG, còn tài nguyên nhiều thực thể phải dựa vào thuật toán rút gọn đồ thị (như Banker)."], correct: 3 }
+    ]
+  };
+
+  const PART_PARAM = new URLSearchParams(location.search).get('d');
+  const partId = Object.prototype.hasOwnProperty.call(BANK, PART_PARAM) ? PART_PARAM : Object.keys(BANK)[0];
+  const QUESTIONS = BANK[partId];
+const ICONS = {
+    wrong: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/></svg>',
+    skipped: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+    star: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2.5 15 9 22 9.8 16.8 14.4 18.3 21.3 12 17.8 5.7 21.3 7.2 14.4 2 9.8 9 9"/></svg>',
+    done: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>'
+  };
+
+  /* Dựng sẵn icon toast 1 lần, tránh parse lại SVG mỗi lần hiện thông báo */
+  const ICON_NODES = Object.fromEntries(
+    Object.entries(ICONS).map(([key, svg]) => {
+      const holder = document.createElement('span');
+      holder.innerHTML = svg;
+      return [key, holder.firstElementChild];
+    })
+  );
+
+  const PRAISE = [
+    { title: 'Chú ý hơn nhé', sub: 'Hãy cố gắng hơn nhé', tone: 'hint' },
+    { title: 'Làm tốt lắm', sub: 'Hãy giữ vững phong độ. Tiến lên' },
+    { title: 'Tuyệt vời!', sub: 'Bạn đang làm rất tốt' },
+    { title: 'Chính xác', sub: 'Giữ nguyên nhịp độ này nhé' }
+  ];
+
+  /* Ký hiệu trạng thái trên thanh tiến trình */
+  const DOT_ICONS = {
+    right: '<svg class="dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    retry: '<svg class="dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    wrong: '<svg class="dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+  };
+  const STATUS_TEXT = {
+    right: 'làm đúng ngay',
+    retry: 'làm sai rồi chọn lại đúng',
+    wrong: 'làm sai, đã bỏ qua bằng phím Esc',
+    pending: 'chưa làm'
+  };
+
+  /* ========================= TRẠNG THÁI ========================= */
+  CONFIG.questionCount = QUESTIONS.length;
+  CONFIG.subjectName = 'Hệ điều hành — ' + PART_NAMES[partId];
+  document.title = PART_NAMES[partId] + ' — Hệ điều hành | CƠ KHÍ HUIT';
+
+  const ALL_QUESTIONS = QUESTIONS;
+  let SESSION = ALL_QUESTIONS;      // danh sách câu của phiên làm bài hiện tại
+  let startedAt = Date.now();       // mốc bắt đầu, dùng tính thời gian làm bài
+  const state = {
+    index: 0,
+    picked: {},        // id -> index đáp án đang chọn
+    solved: {},        // id -> true khi đã trả lời đúng
+    attempts: {},      // id -> số lần chọn sai
+    skipped: {},       // id -> true khi bỏ qua bằng phím Esc
+    lastWrong: null,   // { id, index } đáp án vừa bị báo sai (để tô đỏ)
+    finished: false,
+    lastResult: null,  // kết quả của phiên vừa hoàn thành
+    practice: false,   // phiên hiện tại có phải luyện tập từ trang điểm không
+    practiceLabel: '', // nhãn hiển thị trên khung làm bài
+    practiceSession: null,    // danh sách câu của phiên luyện tập (để Bắt đầu lại đúng tập)
+    practicePrevResult: null   // kết quả gốc để quay lại phần xem điểm
+  };
+
+  /* Trạng thái mỗi câu: right = đúng ngay lần đầu, retry = sai rồi làm đúng,
+     wrong = bấm Esc bỏ qua, pending = chưa làm */
+  const statusOf = (q) => {
+    if (state.solved[q.id]) return state.attempts[q.id] ? 'retry' : 'right';
+    if (state.skipped[q.id]) return 'wrong';
+    return 'pending';
+  };
+  const isResolved = (q) => state.solved[q.id] || state.skipped[q.id];
+
+  /* ĐIỂM: đúng ngay 100%, sai 1 lần 75%, sai 2 lần 50%, sai từ 3 lần 25%,
+     bỏ qua (Esc) hoặc chưa làm = 0%. Quy tắc đầy đủ: scoring.md */
+  const SCORE_RATE_BY_ATTEMPTS = [100, 75, 50, 25];   // % giá trị của câu
+  const pointsOf = (status, attempts) => {
+    if (status === 'right') return 1;
+    if (status === 'retry') return SCORE_RATE_BY_ATTEMPTS[Math.min(attempts || 0, 3)] / 100;
+    return 0;
+  };
+  const formatScore = (n) => String(Math.round(n * 100) / 100);
+
+  const elapsedSeconds = () => (remaining == null
+    ? Math.floor((Date.now() - startedAt) / 1000)
+    : Math.max(0, CONFIG.timeLimitSeconds - remaining));
+
+  /* Câu cao nhất đã xử lý xong (đúng hoặc bỏ qua), theo chỉ số trong SESSION */
+  const maxUnlockedIndex = () => {
+    let last = -1;
+    SESSION.forEach((q, i) => { if (isResolved(q)) last = i; });
+    return last + 1;
+  };
+  const isReachable = (index) => index <= maxUnlockedIndex();
+
+  /* ========================= DOM ========================= */
+  const $ = (id) => document.getElementById(id);
+  const el = {
+    timerText: $('timerText'), timer: $('timer'),
+    qcard: $('qcard'), qNumber: $('qNumber'), qText: $('qText'), options: $('options'),
+    toast: $('toast'), toastIcon: $('toastIcon'), toastTitle: $('toastTitle'), toastSub: $('toastSub'),
+    toastClose: $('toastClose'), dots: $('dots'), counter: $('counterText'),
+    btnAction: $('btnAction'), btnRestart: $('btnRestart'), btnCounter: $('btnCounter'),
+    mapBackdrop: $('mapBackdrop'), mapGrid: $('mapGrid'),
+    resultPage: $('resultPage'), resScore: $('resScore'), resCourse: $('resCourse'),
+    resName: $('resName'), resTime: $('resTime'), resCorrect: $('resCorrect'),
+    rankCount: $('rankCount'), rankList: $('rankList'),
+    btnRetry: $('btnRetry'), btnRetryWrong: $('btnRetryWrong'), btnBackToResult: $('btnBackToResult'),
+    practiceTag: $('practiceTag'), practiceTagText: $('practiceTagText'),
+    btnReviewAnswers: $('btnReviewAnswers'), btnShare: $('btnShare'),
+    reviewPage: $('reviewPage'), reviewLayout: $('reviewLayout'),
+    rvScore: $('rvScore'), rvTime: $('rvTime'), rvSubmit: $('rvSubmit'), rvCourse: $('rvCourse'),
+    rvPartScore: $('rvPartScore'), rvPartSub: $('rvPartSub'), rvList: $('rvList'),
+    btnRvCollapse: $('btnRvCollapse'), btnRvFilter: $('btnRvFilter'), btnRvAnswer: $('btnRvAnswer'),
+    btnCopyLink: $('btnCopyLink'),
+    btnZoomIn: $('btnZoomIn'), btnZoomOut: $('btnZoomOut'), btnSound: $('btnSound'),
+    btnFullscreen: $('btnFullscreen'), btnBack: $('btnBack'),
+    confirmBackdrop: $('confirmBackdrop'), confirmMsg: $('confirmMsg'), btnConfirmClose: $('btnConfirmClose'), btnConfirmOk: $('btnConfirmOk'),
+    shareBackdrop: $('shareBackdrop'), shareSummary: $('shareSummary'),
+    btnShareCopy: $('btnShareCopy'), btnShareClose: $('btnShareClose')
+  };
+
+  /* ========================= ÂM THANH ========================= */
+  let audioCtx = null;
+  let soundOn = CONFIG.startSound;
+
+  const playTone = (freqs, type = 'sine', duration = 0.14) => {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      freqs.forEach((f, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = f;
+        const start = audioCtx.currentTime + i * duration * 0.9;
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.18, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start(start);
+        osc.stop(start + duration + 0.02);
+      });
+    } catch (_) { /* im lặng nếu trình duyệt chặn audio */ }
+  };
+
+const sfx = {
+    select: () => playTone([520], 'sine', 0.08),
+    wrong: () => playTone([300, 220], 'sawtooth', 0.16),
+    right: () => playTone([660, 880], 'sine', 0.16),
+    finish: () => playTone([523, 659, 784], 'sine', 0.22)
+  };
+
+  /* Tạo AudioContext sẵn lúc rảnh: nếu để tới cú bấm đầu tiên thì có thể treo
+     vài chục tới vài trăm ms (mở thiết bị âm thanh) -> khung làm bài giật. */
+  const warmUpAudio = () => {
+    if (!soundOn || audioCtx) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+    } catch (_) { /* trình duyệt không cho tạo audio -> bo qua */ }
+  };
+  const whenIdle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200));
+  whenIdle(warmUpAudio, { timeout: 3000 });
+
+  /* ========================= TIMER ========================= */
+  let remaining = CONFIG.timeLimitSeconds;
+
+  const formatTime = (s) => {
+    const m = Math.floor(s / 60), r = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+  };
+
+  const paintTimer = () => {
+    if (remaining == null) {
+      el.timerText.textContent = 'Không giới hạn';
+      el.timer.classList.remove('is-warning', 'is-danger');
+      return;
+    }
+    el.timerText.textContent = formatTime(Math.max(remaining, 0));
+    el.timer.classList.toggle('is-danger', remaining <= 60);
+    el.timer.classList.toggle('is-warning', remaining > 60 && remaining <= 300);
+  };
+
+  setInterval(() => {
+    if (remaining == null || state.finished || remaining <= 0) return;
+    remaining -= 1;
+    paintTimer();
+    if (remaining === 0) showToast('done', 'Hết thời gian', 'Bài làm được ghi nhận với số điểm hiện tại');
+  }, 1000);
+
+  /* ========================= TOAST ========================= */
+  let toastTimer = null;
+  let toastHideTimer = null;
+
+  const hideToast = () => {
+    if (el.toast.hidden) return;
+    clearTimeout(toastHideTimer);
+    el.toast.classList.add('is-out');
+    toastHideTimer = setTimeout(() => { el.toast.hidden = true; el.toast.classList.remove('is-in', 'is-out'); }, 190);
+  };
+
+const showToast = (kind, title, sub, mod) => {
+    clearTimeout(toastHideTimer);          // huỷ ẩn đang chờ, tránh ẩn nhầm toast mới
+    const icon = ICON_NODES[kind] || ICON_NODES.star;
+    if (el.toastIcon.firstChild !== icon) {
+      el.toastIcon.textContent = '';
+      el.toastIcon.appendChild(icon);
+    }
+    el.toastTitle.textContent = title;
+    el.toastSub.textContent = sub || '';
+    el.toast.classList.remove('is-good', 'is-wrong', 'is-skipped', 'is-hint');
+    if (mod === 'hint') el.toast.classList.add('is-hint');
+    else if (kind === 'wrong' || kind === 'skipped') el.toast.classList.add(kind === 'skipped' ? 'is-skipped' : 'is-wrong');
+    else el.toast.classList.add('is-good');
+    // chỉ ép reflow khi toast đang mở (cần khởi động lại animation); lúc ẩn thì không cần
+    if (!el.toast.hidden) void el.toast.offsetWidth;
+    el.toast.hidden = false;
+    el.toast.classList.remove('is-in', 'is-out');
+    el.toast.classList.add('is-in');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 6000);
+  };
+
+  /* ========================= RENDER CÂU HỎI =========================
+     Tách 2 mức để không giật khi bấm đáp án:
+       buildQuestion()  - dựng DOM (chỉ chạy khi đổi câu)
+       syncQuestion()   - chỉ bật/tắt class, không tạo lại phần tử
+  */
+  let optionButtons = [];
+  let builtQuestionId = null;
+  let dotButtons = [];
+  let dotsStart = -1;
+  let mapButtons = [];
+
+  const buildQuestion = (q) => {
+    el.qNumber.textContent = 'Câu ' + q.id;
+    el.qText.textContent = q.text;
+    el.options.innerHTML = '';
+
+    const frag = document.createDocumentFragment();
+    optionButtons = q.options.map((text, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option';
+      btn.innerHTML =
+        '<span class="option-badge">' + LETTERS[i] + '</span>' +
+        '<span class="option-text"></span>';
+      btn.querySelector('.option-text').textContent = text;
+      btn.addEventListener('click', () => choose(i));
+      frag.appendChild(btn);
+      return btn;
+    });
+    el.options.appendChild(frag);
+    builtQuestionId = q.id;
+  };
+
+  const syncQuestion = () => {
+    const q = SESSION[state.index];
+    const picked = state.picked[q.id];
+    const solved = !!state.solved[q.id];
+    const skipped = !!state.skipped[q.id];
+    const wrong = state.lastWrong && state.lastWrong.id === q.id;
+
+    optionButtons.forEach((btn, i) => {
+      const isPicked = picked === i;
+      btn.classList.toggle('is-selected', isPicked && !solved && !skipped);
+      btn.classList.toggle('is-wrong', isPicked && !skipped && !!wrong);
+      btn.classList.toggle('is-skipped', isPicked && skipped);
+      btn.classList.toggle('is-correct', solved && picked === i);
+      btn.classList.toggle('is-locked', solved);   // đã trả lời đúng thì khoá; câu đã bỏ qua vẫn làm lại được
+    });
+  };
+
+/* Animation chuyển câu bằng Web Animations: không cần ép reflow thủ công */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let cardAnim = null;
+  const animateCard = () => {
+    if (reduceMotion.matches || !el.qcard.animate) return;
+    if (cardAnim) cardAnim.cancel();
+    cardAnim = el.qcard.animate(
+      [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+      { duration: 280, easing: 'ease' }
+    );
+  };
+
+  const renderQuestion = (animate = true) => {
+    const q = SESSION[state.index];
+    if (builtQuestionId !== q.id) buildQuestion(q);
+    syncQuestion();
+    renderPracticeTag();
+    if (animate) animateCard();
+    renderActionButton();
+    renderProgress();
+  };
+
+const renderActionButton = () => {
+    const q = SESSION[state.index];
+    const picked = state.picked[q.id];
+    const solved = !!state.solved[q.id];
+    const btn = el.btnAction;
+
+if (solved) {
+      btn.disabled = false;
+      btn.textContent = state.index === SESSION.length - 1 ? 'Hoàn tất' : 'Câu tiếp theo';
+    } else if (picked == null) {
+      btn.disabled = true;
+      btn.textContent = 'Kiểm tra';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Kiểm tra';
+    }
+  };
+
+  const renderProgress = () => {
+    const total = SESSION.length;
+    const done = Object.keys(state.solved).length;
+    const current = SESSION[state.index];
+    el.counter.textContent = 'Câu ' + (state.index + 1) + '/' + total;
+    el.btnRestart.disabled = done === 0 && state.picked[current.id] == null;   // đáp án A có chỉ số 0, phải so với null
+
+    const size = Math.min(CONFIG.dotWindow, total);
+    const start = Math.max(0, Math.min(state.index - Math.floor(CONFIG.dotWindow / 2), total - CONFIG.dotWindow));
+
+    if (start !== dotsStart) {              // chỉ dựng lại khi cửa sổ chấm tròn dịch chuyển
+      dotsStart = start;
+      el.dots.innerHTML = '';
+      dotButtons = SESSION.slice(start, start + size).map((q, k) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dot';
+        b.setAttribute('role', 'tab');
+        b.title = 'Câu ' + q.id;
+        b.setAttribute('aria-label', 'Câu ' + q.id);
+        b.addEventListener('click', () => goTo(start + k));
+        el.dots.appendChild(b);
+        return b;
+      });
+    }
+    dotButtons.forEach((b, k) => {
+      const index = start + k;
+      const q = SESSION[index];
+      const status = statusOf(q);
+      const marked = status !== 'pending';
+      b.classList.toggle('is-current', index === state.index);
+      b.classList.toggle('is-marked', marked);
+      b.classList.toggle('is-right', status === 'right');
+      b.classList.toggle('is-retry', status === 'retry');
+      b.classList.toggle('is-wrong', status === 'wrong');
+      b.classList.toggle('is-locked', !isReachable(index));
+      b.setAttribute('aria-selected', index === state.index ? 'true' : 'false');
+      b.setAttribute('aria-label', 'Câu ' + q.id + ' - ' + STATUS_TEXT[status]);
+      b.title = 'Câu ' + q.id + ' - ' + STATUS_TEXT[status];
+      const wantIcon = marked ? status : '';
+      if (b.dataset.icon !== wantIcon) {
+        b.dataset.icon = wantIcon;
+        b.innerHTML = wantIcon ? DOT_ICONS[wantIcon] : '';
+      }
+    });
+
+    const currentDot = dotButtons[state.index - start];
+    if (currentDot && typeof currentDot.scrollIntoView === 'function') {
+      currentDot.scrollIntoView({ inline: 'center', block: 'nearest' });
+    }
+
+    if (!el.mapBackdrop.hidden) syncMap();   // chỉ cập nhật bản đồ khi nó đang mở
+  };
+
+  /* ========================= LOGIC ========================= */
+const choose = (optionIndex) => {
+    const q = SESSION[state.index];
+    if (state.solved[q.id]) return;            // đã trả lời đúng thì khoá, không chọn lại được
+    if (state.picked[q.id] === optionIndex) {
+      delete state.picked[q.id];
+    } else {
+      state.picked[q.id] = optionIndex;
+      state.lastWrong = null;              // bỏ dấu đỏ của lượt chọn sai trước
+      hideToast();
+    }
+    sfx.select();
+    renderQuestion(false);                 // chỉ đổi trạng thái, không dựng lại khung
+  };
+
+  const check = () => {
+    const q = SESSION[state.index];
+    const picked = state.picked[q.id];
+    if (picked == null) return;
+
+if (picked === q.correct) {
+      state.solved[q.id] = true;
+      delete state.skipped[q.id];   // làm lại đúng câu đã bỏ qua thì không còn tính là bỏ qua nữa
+      state.lastWrong = null;
+      const p = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+      sfx.right();
+      showToast('star', p.title, p.sub, p.tone);
+      renderQuestion(false);
+    } else {
+      state.attempts[q.id] = (state.attempts[q.id] || 0) + 1;
+      state.lastWrong = { id: q.id, index: picked };
+      sfx.wrong();
+      showToast('wrong', 'Không đúng!', 'Hãy chọn lại một đáp án khác');
+      renderQuestion(false);
+    }
+  };
+
+  const next = () => {
+    const q = SESSION[state.index];
+    if (!isResolved(q)) return;              // chỉ qua câu đã trả lời đúng hoặc đã bỏ qua
+    if (state.index === SESSION.length - 1) { finish(); return; }
+    state.index += 1;
+    state.lastWrong = null;
+    hideToast();
+    renderQuestion();
+  };
+
+const act = () => {
+    const q = SESSION[state.index];
+    if (state.solved[q.id]) next();
+    else check();
+  };
+
+  const goTo = (index) => {
+    if (index < 0 || index >= SESSION.length) return;
+    if (!isReachable(index)) {
+      showToast('wrong', 'Chưa mở câu này', 'Hãy trả lời đúng câu trước đã');
+      return;
+    }
+    state.index = index;
+    state.lastWrong = null;
+    hideToast();
+    renderQuestion();
+  };
+
+  /* Bỏ qua câu hiện tại bằng phím Esc.
+   Chỉ bỏ qua được sau khi đã chọn sai ít nhất 1 lần; chưa làm gì thì Esc không có tác dụng. */
+const skipCurrent = () => {
+    const q = SESSION[state.index];
+    const goNext = () => {
+      if (state.index === SESSION.length - 1) { finish(); return; }
+      state.index += 1;
+      renderQuestion();
+    };
+    if (state.solved[q.id]) return;          // đã trả lời đúng thì không bỏ qua được
+    if (state.skipped[q.id]) { goNext(); return; }   // đã bỏ qua rồi -> Esc để đi tiếp
+    if (!state.attempts[q.id]) return;       // chưa chọn sai lần nào -> không bỏ qua được
+
+    state.skipped[q.id] = true;
+    state.lastWrong = null;               // giữ lại đáp án sai đã chọn để xem lại
+    sfx.wrong();
+    showToast('skipped', 'Đã bỏ qua câu này', 'Câu này được tính là sai, xem lại được bất cứ lúc nào');
+    goNext();
+  };
+
+  const finish = () => {
+    state.finished = true;
+    sfx.finish();
+    const total = SESSION.length;
+    const answers = SESSION.map(q => ({
+      q,
+      picked: state.picked[q.id],
+      status: statusOf(q),
+      solved: !!state.solved[q.id],
+      firstTry: statusOf(q) === 'right',
+      attempts: state.attempts[q.id] || 0,
+      points: pointsOf(statusOf(q), state.attempts[q.id])
+    }));
+    /* Điểm = 100% mỗi câu đúng ngay, 75% nếu sai 1 lần, 50% nếu sai 2 lần,
+       25% nếu sai từ 3 lần; câu bỏ qua bằng Esc hoặc chưa làm = 0 điểm.
+       Quy tắc đầy đủ: scoring.md */
+    const correct = answers.filter(a => a.status !== 'wrong' && a.status !== 'pending').length;
+    const score = answers.reduce((sum, a) => sum + pointsOf(a.status, a.attempts), 0);
+    const missed = SESSION.filter(q => statusOf(q) !== 'right');
+    state.lastResult = {
+      total, correct, score, missedCount: missed.length,
+      wrongCount: Object.values(state.attempts).reduce((a, b) => a + b, 0),
+      seconds: elapsedSeconds(),
+      ratio: total ? Math.round((score / total) * 100) : 0,
+      submittedAt: formatDateTime(new Date()),
+      name: CONFIG.candidateName || 'Bạn',
+      subject: CONFIG.subjectName || '',      // tên môn học
+      missedQuestions: missed,
+      answers
+    };
+    if (typeof CONFIG.onFinish === 'function') CONFIG.onFinish(state.lastResult);
+    showResultPage();
+  };
+
+  /* ========================= MÀN KẾT QUẢ ========================= */
+  const CROWN = '<svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3 18h18l-1.2-9-4.3 3.4L12 5.5 8.5 12.4 4.2 9 3 18Z"/></svg>';
+
+  const formatDuration = (totalSeconds) => {
+    const s = Math.max(0, Math.round(totalSeconds));
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h) return h + ' giờ ' + String(m).padStart(2, '0') + ' phút';
+    if (m) return m + ' phút ' + String(sec).padStart(2, '0') + ' giây';
+    return sec + ' giây';
+  };
+
+  const initialsOf = (name) => String(name || '').trim().split(/\s+/).filter(Boolean).slice(-2).map(w => w[0] || '').join('').toUpperCase() || '?';
+
+  const formatDateTime = (d) => {
+    const p = (n) => String(n).padStart(2, '0');
+    return p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear() +
+      ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  };
+
+  /* Nguồn dữ liệu: CONFIG.leaderboardUrl (API) > CONFIG.leaderboard (mảng sẵn) > []
+     Hàng của người làm bài luôn được gộp vào, ưu tiên kết quả vừa làm. */
+  const normalizeRow = (row, fallbackTotal) => {
+    const total = Number(row.total) > 0 ? Number(row.total) : (fallbackTotal || 0);
+    const score = Number(row.score) || 0;
+    return {
+      name: String(row.name || 'Không rõ'),
+      score,
+      seconds: Math.max(0, Number(row.seconds) || 0),
+      total,
+      correct: Number(row.correct) || 0,
+      ratio: total ? Math.round((score / total) * 100) : null
+    };
+  };
+
+  const fetchLeaderboard = async () => {
+    if (Array.isArray(CONFIG.leaderboard) && CONFIG.leaderboard.length) return CONFIG.leaderboard;
+    const url = CONFIG.leaderboardUrl;
+    if (typeof url !== 'string' || !url) return [];
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : (Array.isArray(data?.rows) ? data.rows : []);
+    } catch (_) {
+      return [];
+    }
+  };
+
+  /* Xếp hạng: điểm giảm dần → tỷ lệ % giảm dần → thời gian tăng dần */
+  const buildRanking = async (r) => {
+    const rows = (await fetchLeaderboard()).map(row => normalizeRow(row, r.total));
+    const mine = normalizeRow(
+      { name: r.name, score: r.score, seconds: r.seconds, total: r.total, correct: r.correct },
+      r.total
+    );
+    const at = rows.findIndex(row => row.name === mine.name);
+    if (at >= 0) rows[at] = mine; else rows.push(mine);
+    rows.sort((a, b) => b.score - a.score
+      || (b.ratio ?? -1) - (a.ratio ?? -1)
+      || a.seconds - b.seconds);
+    return rows.map((row, i) => ({ rank: i + 1, ...row, isMe: row.name === mine.name }));
+  };
+
+  const RANK_TIME_ICON = '<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>';
+
+  const renderRanking = async (r) => {
+    let rows = [];
+    try { rows = await buildRanking(r); } catch (_) { rows = []; }
+    if (!rows.length) {
+      el.rankCount.textContent = '(0 Thí sinh)';
+      el.rankList.innerHTML = '<li class="rank-empty">Chưa có dữ liệu xếp hạng</li>';
+      return;
+    }
+    el.rankCount.textContent = '(' + rows.length + ' Thí sinh)';
+    el.rankList.innerHTML = '';
+
+    const frag = document.createDocumentFragment();
+    rows.forEach(row => {
+      const li = document.createElement('li');
+      li.className = 'rank-item' + (row.rank === 1 ? ' is-top' : '') + (row.isMe ? ' is-me' : '');
+      li.innerHTML =
+        '<span class="rank-no"></span>' +
+        '<span class="rank-avatar"></span>' +
+        '<span class="rank-info">' +
+          '<span class="rank-name"></span>' +
+          '<span class="rank-meta">' +
+            '<span class="rank-score"></span>' +
+            '<span class="rank-ratio"></span>' +
+            '<span class="rank-time">' + RANK_TIME_ICON + '<span></span></span>' +
+          '</span>' +
+        '</span>' +
+        '<span class="rank-crown">' + CROWN + '</span>';
+
+      li.querySelector('.rank-no').textContent = row.rank;
+      li.querySelector('.rank-avatar').textContent = initialsOf(row.name);
+      li.querySelector('.rank-name').textContent = row.name + (row.isMe ? ' (bạn)' : '');
+      li.querySelector('.rank-score').textContent = formatScore(row.score) + ' điểm';
+      li.querySelector('.rank-ratio').textContent =
+        (row.ratio === null ? '' : row.ratio + '%') +
+        (row.total ? ' · ' + row.correct + '/' + row.total + ' câu đúng' : '');
+      li.querySelector('.rank-time span').textContent = formatDuration(row.seconds);
+      frag.appendChild(li);
+    });
+    el.rankList.appendChild(frag);
+  };
+
+  const scrollToTop = () => { if (window.scrollY > 0) window.scrollTo(0, 0); };
+
+  const showResultPage = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    el.resScore.textContent = formatScore(r.score) + '/' + r.total;
+    el.resCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
+    el.resName.textContent = r.name;
+    el.resTime.textContent = formatDuration(r.seconds);
+    el.resCorrect.textContent = r.correct + '/' + r.total + ' câu · ' + formatScore(r.score) + ' điểm';
+    renderRanking(r);
+    renderBackLink();
+    hideToast();
+    document.body.classList.add('is-result');
+    el.resultPage.hidden = false;
+    scrollToTop();
+  };
+
+  /* Nút "Quay lại phần xem điểm" chỉ hiện khi đang luyện tập (hoặc vừa luyện tập xong) */
+  const renderBackLink = () => {
+    el.btnBackToResult.hidden = !state.practicePrevResult;
+  };
+
+  /* Nhãn "Luyện tập" trên khung làm bài */
+  const renderPracticeTag = () => {
+    const show = !!state.practice;
+    el.practiceTag.hidden = !show;
+    if (show) el.practiceTagText.textContent = state.practiceLabel || 'Luyện tập';
+  };
+
+  /* ================= TRANG XEM ĐÁP ÁN ================= */
+  const REVIEW_FILTERS = [
+    { key: 'all', label: 'Đúng & sai', cls: 'is-all' },
+    { key: 'right', label: 'Đúng ✓', cls: 'is-right' },
+    { key: 'wrong', label: 'Sai ✗', cls: 'is-wrong' }
+  ];
+  const reviewState = { filter: 0, showAnswer: true };
+
+  const codeOf = (q) => q.code || ('ID:' + (564058296 + q.id));
+
+const isRightStatus = (status) => status === 'right' || status === 'retry';
+
+  /* Trang xem đáp án có thể rất dài (hàng chục câu) -> hiển thị từng phần
+     để lần vẽ đầu tiên không bị nặng. */
+  const REVIEW_PAGE_SIZE = 10;
+  let reviewLimit = REVIEW_PAGE_SIZE;
+
+  const renderReviewList = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    const filter = REVIEW_FILTERS[reviewState.filter];
+    el.rvList.innerHTML = '';
+
+    const list = r.answers.filter(a => filter.key === 'all'
+      ? a.status !== 'pending'
+      : filter.key === 'right' ? isRightStatus(a.status) : !isRightStatus(a.status));
+
+    if (!list.length) {
+      const empty = document.createElement('div');
+      empty.className = 'rv-empty';
+      empty.textContent = filter.key === 'wrong'
+        ? 'Không có câu nào làm sai.'
+        : 'Không có câu nào làm đúng.';
+      el.rvList.appendChild(empty);
+      return;
+    }
+
+    const frag = document.createDocumentFragment();   // gắp 1 lần thay vì từng thẻ
+    list.slice(0, reviewLimit).forEach(({ q, picked, status, attempts, points }) => {
+      const right = isRightStatus(status);
+      const item = document.createElement('article');
+      item.className = 'rv-item ' + (right ? 'is-right' : 'is-wrong');
+
+      const options = q.options.map((text, i) =>
+        '<li>' + LETTERS[i] + '. <span></span></li>').join('');
+      const strip = q.options.map((text, i) => {
+        const marks = [];
+        if (i === q.correct) marks.push('is-correct');
+        if (!right && i === picked) marks.push('is-yours');
+        if (!marks.length) return '<span>' + LETTERS[i] + '</span>';
+        return '<span class="' + marks.join(' ') + '">' +
+          (marks.includes('is-correct')
+            ? '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+            : '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>') +
+          LETTERS[i] + '</span>';
+      }).join('');
+
+      item.innerHTML =
+        '<div class="rv-item-head"><span class="rv-qno"></span><span class="rv-qid"></span></div>' +
+        '<div class="rv-qtext"></div>' +
+        '<ul class="rv-options">' + options + '</ul>' +
+        '<div class="rv-answer">' +
+          '<div class="rv-answer-text">Đáp án đúng: ' + LETTERS[q.correct] + '</div>' +
+          '<div class="rv-strip">' + strip + '</div>' +
+        '</div>';
+
+      item.querySelector('.rv-qno').textContent = 'Câu ' + q.id;
+      item.querySelector('.rv-qid').textContent = codeOf(q);
+      item.querySelector('.rv-qtext').textContent = q.text;
+      item.querySelectorAll('.rv-options span').forEach((s, i) => { s.textContent = q.options[i]; });
+
+if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
+        'beforeend', '<span class="rv-tag is-retry">Làm sai ' + attempts + ' lần · +' + formatScore(points) + ' điểm</span>');
+      if (status === 'wrong') item.querySelector('.rv-item-head').insertAdjacentHTML(
+        'beforeend', '<span class="rv-tag is-wrong">Bỏ qua</span>');
+
+      frag.appendChild(item);
+    });
+
+    if (list.length > reviewLimit) {
+      const more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'rv-more';
+      const rest = list.length - reviewLimit;
+      more.textContent = 'Xem thêm ' + Math.min(REVIEW_PAGE_SIZE, rest) + ' câu (còn ' + rest + ' câu)';
+      more.addEventListener('click', () => { reviewLimit += REVIEW_PAGE_SIZE; renderReviewList(); });
+      frag.appendChild(more);
+    }
+    el.rvList.appendChild(frag);
+  };
+
+  const paintReviewFilter = () => {
+    const f = REVIEW_FILTERS[reviewState.filter];
+    el.btnRvFilter.textContent = f.label;
+    el.btnRvFilter.className = 'rv-filter ' + f.cls;
+  };
+
+  const showReviewPage = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    const wrongCount = r.total - r.correct;
+
+    el.rvScore.textContent = formatScore(r.score) + '/' + r.total;
+    el.rvTime.textContent = formatDuration(r.seconds);
+    el.rvSubmit.textContent = r.submittedAt;
+    el.rvCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
+    el.rvPartScore.textContent = formatScore(r.score) + ' / ' + r.total;
+    el.rvPartSub.textContent = r.total + ' câu (' + r.correct + ' đúng - ' + wrongCount + ' sai) · ' + formatScore(r.score) + ' điểm';
+
+reviewState.filter = 0;
+    reviewState.showAnswer = true;
+    reviewLimit = REVIEW_PAGE_SIZE;
+    paintReviewFilter();
+    el.reviewLayout.classList.remove('no-answer');
+    el.reviewLayout.classList.remove('is-collapsed');
+    el.btnRvCollapse.setAttribute('aria-pressed', 'false');
+    $('btnRvCollapseLine').setAttribute('x1', '14');
+    el.btnRvAnswer.classList.add('is-on');   // đáp án đang hiển thị -> nút ở trạng thái bật
+    renderReviewList();
+
+    document.body.classList.remove('is-result');
+    document.body.classList.add('is-review');
+    el.reviewPage.hidden = false;
+    scrollToTop();
+  };
+
+  const hideReviewPage = () => {
+    closeAllBackdrops();
+    document.body.classList.remove('is-review');
+    el.reviewPage.hidden = true;
+    showResultPage();
+  };
+
+  const copyTeacherLink = () => copyToClipboard(
+    window.location.href, 'Đã sao chép liên kết', 'Dán vào tin nhắn gửi giáo viên'
+  );
+
+  const shareResultText = (r) => {
+    const mon = r.subject ? r.subject + ' — ' : '';
+    return 'Kết quả bài trắc nghiệm ' + mon + ': ' + r.correct + '/' + r.total +
+      ' đúng (' + formatScore(r.score) + '/' + r.total + ' điểm), thời gian ' + formatDuration(r.seconds);
+  };
+
+  const shareResult = async () => {
+    const r = state.lastResult;
+    if (!r) return;
+    const text = shareResultText(r);
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Kết quả bài trắc nghiệm', text }); return; }
+      catch (_) { /* người dùng huỷ chia sẻ */ }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('done', 'Đã sao chép kết quả', 'Dán vào nơi bạn muốn chia sẻ');
+    } catch (_) {
+      showToast('wrong', 'Không chia sẻ được', 'Trình duyệt không cho phép chia sẻ');
+    }
+  };
+
+  /* ========================= CHIA SẺ KẾT QUẢ ========================= */
+  /* Facebook: sharer.php (chạy được trên web, kèm link trong bài đăng).
+     Messenger: deep-link app, thiếu app_id thì mở hộp thoại web.
+     Zalo: deep-link app, web không có endpoint chia sẻ công khai.
+     TikTok: không có endpoint chia sẻ web — dùng share sheet của hệ điều hành
+     (trên Android sẽ hiện TikTok nếu đã cài), không có thì chỉ sao chép được. */
+  const sharePayload = () => {
+    const r = state.lastResult;
+    const url = CONFIG.shareUrl || window.location.href;
+    return { url, text: shareResultText(r), title: 'Kết quả bài trắc nghiệm' };
+  };
+
+  const SHARE_TARGETS = {
+    facebook: (p) => 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(p.url),
+    messenger: (p) => CONFIG.messengerAppId
+      ? 'https://www.facebook.com/dialog/send?link=' + encodeURIComponent(p.url) +
+        '&app_id=' + encodeURIComponent(CONFIG.messengerAppId) +
+        '&redirect_uri=' + encodeURIComponent(p.url)
+      : 'fb-messenger://share?link=' + encodeURIComponent(p.url),
+    zalo: (p) => 'zalo://?url=' + encodeURIComponent(p.url),
+    tiktok: null                       // không có URL chia sẻ web -> dùng navigator.share
+  };
+
+  const copyToClipboard = async (text, okTitle, okSub) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('done', okTitle, okSub);
+      return true;
+    } catch (_) {
+      showToast('wrong', 'Không sao chép được', 'Trình duyệt không cho phép sao chép');
+      return false;
+    }
+  };
+
+  const openShare = () => {
+    const r = state.lastResult;
+    if (!r) return;
+    el.shareSummary.textContent = formatScore(r.score) + '/' + r.total + ' điểm · ' +
+      r.correct + '/' + r.total + ' câu đúng · ' + formatDuration(r.seconds);
+    openBackdrop(el.shareBackdrop);
+  };
+
+  const shareTo = async (channel) => {
+    const p = sharePayload();
+    if (channel === 'tiktok') {
+      if (navigator.share) {
+        try { await navigator.share({ title: p.title, text: p.text, url: p.url }); closeBackdrop(el.shareBackdrop); }
+        catch (_) { /* người dùng huỷ */ }
+        return;
+      }
+      showToast('wrong', 'TikTok không có nút chia sẻ trên web', 'Đã chép sẵn nội dung, dán vào TikTok');
+      await copyToClipboard(p.text + ' ' + p.url, 'Đã sao chép nội dung', 'Dán vào bài đăng TikTok');
+      return;
+    }
+    const build = SHARE_TARGETS[channel];
+    if (!build) return;
+    if (channel === 'messenger' && !CONFIG.messengerAppId && !navigator.share) {
+      showToast('wrong', 'Messenger chưa sẵn sàng', 'Đã chép sẵn link, dán vào Messenger');
+      await copyToClipboard(p.url, 'Đã sao chép link', 'Dán vào tin nhắn Messenger');
+      return;
+    }
+    const target = build(p);
+    window.open(target, '_blank', 'noopener,noreferrer');
+    closeBackdrop(el.shareBackdrop);
+  };
+
+  /* ========================= THOÁT BÀI THI ========================= */
+  const exitQuiz = () => {
+    if (typeof CONFIG.onExit === 'function') { CONFIG.onExit(); return; }
+    if (CONFIG.exitUrl) { window.location.href = CONFIG.exitUrl; return; }
+    if (window.history.length > 1) window.history.back();
+  };
+
+  /* Bắt đầu một phiên làm bài.
+     opts.practice = true khi phiên này sinh ra từ nút "Luyện tập ..." trên trang điểm,
+     khi đó giữ lại kết quả gốc để người dùng quay lại phần xem điểm. */
+  const startSession = (list, opts = {}) => {
+    const isPractice = !!opts.practice;
+    SESSION = list && list.length ? list : ALL_QUESTIONS;
+    state.index = 0;
+    state.picked = {};
+    state.solved = {};
+    state.attempts = {};
+    state.skipped = {};
+    state.lastWrong = null;
+    state.finished = false;
+    state.practice = isPractice;
+    state.practiceLabel = opts.label || '';
+    state.practiceSession = isPractice ? SESSION.slice() : null;
+    state.practicePrevResult = isPractice ? state.lastResult : null;
+    startedAt = Date.now();
+    remaining = CONFIG.timeLimitSeconds;
+    dotsStart = -1;
+    paintTimer();
+    closeAllBackdrops();
+    hideToast();
+    document.body.classList.remove('is-result');
+    document.body.classList.remove('is-review');
+    el.resultPage.hidden = true;
+    el.reviewPage.hidden = true;
+    buildMap();
+    renderQuestion();
+  };
+
+  /* Quay lại phần xem điểm gốc (đang luyện tập hoặc vừa luyện tập xong) */
+  const backToResult = () => {
+    if (!state.practicePrevResult) return false;
+    state.lastResult = state.practicePrevResult;
+    state.practicePrevResult = null;
+    state.practice = false;
+    state.practiceLabel = '';
+    renderPracticeTag();
+    renderBackLink();
+    showResultPage();
+    showToast('done', 'Đã quay lại kết quả', 'Kết quả lần luyện tập được bỏ qua');
+    return true;
+  };
+
+  const retryWrongOnly = () => {
+    const wrong = state.lastResult ? state.lastResult.missedQuestions : [];
+    if (!wrong.length) {
+      showToast('star', 'Bạn đã làm đúng tất cả', 'Không có câu nào cần luyện lại');
+      return;
+    }
+    startSession(wrong, { practice: true, label: 'Luyện tập câu sai' });
+  };
+
+  /* Bắt đầu lại: đang luyện tập thì làm lại đúng tập câu đó (không mất chế độ luyện tập) */
+  /* Hộp thoại xác nhận dùng chung: truyền nội dung + hàm cần chạy khi xác nhận */
+  let confirmAction = null;
+  const openConfirm = (message, action) => {
+    el.confirmMsg.textContent = message;
+    confirmAction = action;
+    openBackdrop(el.confirmBackdrop);
+    el.btnConfirmOk.focus({ preventScroll: true });
+  };
+
+  const restart = () => {
+    if (state.practice && state.practiceSession && state.practiceSession.length) {
+      startSession(state.practiceSession, { practice: true, label: state.practiceLabel });
+      return;
+    }
+    startSession(ALL_QUESTIONS);
+  };
+
+  /* "Bắt đầu lại" xoá tiến độ đang làm (cả bài chính lẫn tập câu sai) -> luôn hỏi trước */
+  const requestRestart = () => openConfirm(
+    state.practice
+      ? 'Bắt đầu lại sẽ xoá tiến độ luyện tập. Bạn có chắc chắn muốn bắt đầu lại ?'
+      : 'Bắt đầu lại sẽ xoá toàn bộ tiến độ bài làm. Bạn có chắc chắn muốn bắt đầu lại ?',
+    restart
+  );
+
+
+  /* ========================= BẢN ĐỒ CÂU HỎI ========================= */
+  const buildMap = () => {
+    el.mapGrid.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    mapButtons = SESSION.map((q, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'map-btn';
+      b.textContent = q.id;
+      b.addEventListener('click', () => { closeBackdrop(el.mapBackdrop); goTo(i); });
+      frag.appendChild(b);
+      return b;
+    });
+    el.mapGrid.appendChild(frag);
+  };
+
+  const syncMap = () => {
+    if (!mapButtons.length) return;
+    const currentId = SESSION[state.index].id;
+    for (let i = 0; i < mapButtons.length; i++) {
+      const q = SESSION[i];
+      const b = mapButtons[i];
+      b.classList.toggle('is-current', q.id === currentId);
+      b.classList.toggle('is-done', !!state.solved[q.id]);
+      b.classList.toggle('is-retry', !!state.solved[q.id] && !!state.attempts[q.id]);
+      b.classList.toggle('is-bad', !!state.skipped[q.id]);
+      b.disabled = !isReachable(i);
+    }
+  };
+
+  /* ========================= BACKDROP ========================= */
+  const openBackdrop = (node) => {
+    node.hidden = false;
+    node.classList.add('is-in');
+  };
+  const closeBackdrop = (node) => {
+    node.hidden = true;
+    node.classList.remove('is-in');
+  };
+  const backdrops = [el.mapBackdrop, el.confirmBackdrop, el.shareBackdrop];
+  backdrops.forEach(b => {
+    b.addEventListener('click', (e) => { if (e.target === b) closeBackdrop(b); });
+  });
+  const closeAllBackdrops = () => backdrops.forEach(closeBackdrop);
+
+  /* Nút chia sẻ: mở bảng chọn nền tảng, bấm ra ngoài/Esc đều đóng được */
+  el.btnShare.addEventListener('click', openShare);
+  el.btnShareClose.addEventListener('click', () => closeBackdrop(el.shareBackdrop));
+  el.btnShareCopy.addEventListener('click', shareResult);
+  el.shareBackdrop.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-share]');
+    if (btn) shareTo(btn.dataset.share);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (backdrops.some(b => !b.hidden)) closeAllBackdrops();
+      else skipCurrent();
+      return;
+    }
+  });
+
+  /* ========================= ĐIỀU KHIỂN GIAO DIỆN ========================= */
+  let scale = 1;
+  const applyScale = () => document.documentElement.style.fontSize = (16 * scale) + 'px';
+  const zoom = (delta) => {
+    scale = Math.min(1.35, Math.max(0.85, +(scale + delta).toFixed(2)));
+    applyScale();
+  };
+
+  el.btnZoomIn.addEventListener('click', () => zoom(0.1));
+  el.btnZoomOut.addEventListener('click', () => zoom(-0.1));
+
+  el.btnSound.addEventListener('click', () => {
+    soundOn = !soundOn;
+    el.btnSound.classList.toggle('is-muted', !soundOn);
+    const g = el.btnSound.querySelector('#soundIcon');
+    const data = el.btnSound.querySelector('svg').dataset;
+    g.innerHTML = soundOn ? data.on : data.off;
+    if (soundOn) sfx.select();
+  });
+
+  el.btnFullscreen.addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+
+  el.btnAction.addEventListener('click', act);
+  el.btnRestart.addEventListener('click', requestRestart);
+  el.btnCounter.addEventListener('click', () => { syncMap(); openBackdrop(el.mapBackdrop); });
+  el.toastClose.addEventListener('click', hideToast);
+  el.btnBack.addEventListener('click', () => {
+    if (document.body.classList.contains('is-review')) { hideReviewPage(); return; }
+    if (backToResult()) return;            // đang luyện tập -> quay lại phần xem điểm
+    openConfirm('Bạn có chắc chắn muốn thoát bài thi ?', exitQuiz);
+  });
+  el.btnConfirmClose.addEventListener('click', () => closeBackdrop(el.confirmBackdrop));
+  el.btnConfirmOk.addEventListener('click', () => {
+    closeBackdrop(el.confirmBackdrop);
+    const run = confirmAction;
+    confirmAction = null;
+    if (run) run();
+  });
+  $('btnCloseMap').addEventListener('click', () => closeBackdrop(el.mapBackdrop));
+  el.btnRetry.addEventListener('click', () => startSession(ALL_QUESTIONS, { practice: true, label: 'Luyện tập lại' }));
+  el.btnRetryWrong.addEventListener('click', retryWrongOnly);
+  el.btnBackToResult.addEventListener('click', backToResult);
+  el.btnReviewAnswers.addEventListener('click', showReviewPage);
+  el.btnRvCollapse.addEventListener('click', () => {
+    const hidden = el.reviewLayout.classList.toggle('is-collapsed');
+    el.btnRvCollapse.setAttribute('aria-pressed', String(hidden));
+    $('btnRvCollapseLine').setAttribute('x1', hidden ? '10' : '14');
+  });
+el.btnRvFilter.addEventListener('click', () => {
+    reviewState.filter = (reviewState.filter + 1) % REVIEW_FILTERS.length;
+    reviewLimit = REVIEW_PAGE_SIZE;
+    paintReviewFilter();
+    renderReviewList();
+  });
+  el.btnRvAnswer.addEventListener('click', () => {
+    reviewState.showAnswer = !reviewState.showAnswer;
+    el.reviewLayout.classList.toggle('no-answer', !reviewState.showAnswer);
+    el.btnRvAnswer.classList.toggle('is-on', reviewState.showAnswer);
+  });
+  el.btnCopyLink.addEventListener('click', copyTeacherLink);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target instanceof Element && e.target.closest('input, textarea, [contenteditable]')) return;
+    const key = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && (key === '+' || key === '=')) { e.preventDefault(); zoom(0.1); }
+    else if ((e.ctrlKey || e.metaKey) && key === '-') { e.preventDefault(); zoom(-0.1); }
+    else if (key === 'f') { el.btnFullscreen.click(); }
+    else if (key === 'enter') { e.preventDefault(); act(); }
+    else if (/^[1-6]$/.test(key)) { choose(+key - 1); }
+    else if (/^[a-f]$/.test(key)) { choose('abcdef'.indexOf(key)); }
+  });
+
+  /* ========================= API TÍCH HỢP ========================= */
+  // Giao diện chính thức cho trang ngoài (nạp dữ liệu thật, nút nộp bài, hẹn giờ...).
+  // Lưu ý: đáp án đúng nằm ở client nên khi dùng thật phải chấm lại ở server.
+  window.quiz = {
+    config: CONFIG,
+    questions: ALL_QUESTIONS,
+    get session() { return SESSION; },
+    get state() { return state; },
+start: (list) => startSession(list || ALL_QUESTIONS),
+    finish: () => finish(),
+    elapsed: () => elapsedSeconds(),
+    get audioReady() { return !!audioCtx; }   // đã tạo AudioContext sẵn chưa (true = không bị nghẽn lần bấm đầu)
+  };
+
+  /* ========================= KHỞI TẠO ========================= */
+  buildMap();
+  el.btnSound.classList.toggle('is-muted', !soundOn);
+  el.btnSound.querySelector('#soundIcon').innerHTML = soundOn
+    ? el.btnSound.querySelector('svg').dataset.on
+    : el.btnSound.querySelector('svg').dataset.off;
+  applyScale();
+  paintTimer();
+  renderQuestion();
+})();
+</script>
+</body>
+</html>
