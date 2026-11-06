@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chương 1 – Cấu trúc cơ cấu và bậc tự do (video giảng giải)</title>
+<style>
+:root{--bg:#fbfaf4;--ink:#1f2a37;--mut:#6b7280;--ac:#2563eb;--or:#e07b00;--hl:#fde68a;--card:#fff;--ln:#e3e8ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111827;--ink:#e5e7eb;--mut:#9ca3af;--ac:#60a5fa;--hl:#713f12;--card:#1f2937;--ln:#2b3646;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111827;--ink:#e5e7eb;--mut:#9ca3af;--ac:#60a5fa;--hl:#713f12;--card:#1f2937;--ln:#2b3646;color-scheme:dark}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:900px;margin:0 auto;padding:12px 12px 88px}
+h1{font-size:1.15rem;margin:4px 0 8px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 0;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:4}
+nav button{flex:none;border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:16px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.board{background-color:var(--card);background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:24px 24px;border:1px solid var(--ln);border-radius:12px;padding:14px;min-height:300px}
+.board h2{margin:0 0 8px;font-size:1.05rem;color:var(--ac)}
+#st{font-size:.8rem;font-weight:400;color:var(--mut);margin-left:6px}
+#ln div{padding:4px 10px;margin:4px 0;border-radius:6px;border-left:3px solid transparent;font-size:1.1rem;opacity:.7;overflow-wrap:anywhere}
+#ln div.n{opacity:1;font-weight:600;border-left-color:var(--ac);animation:fl 1.4s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+#sub{margin:10px 0;padding:12px 14px;border-left:4px solid var(--ac);background:var(--card);border-radius:6px;min-height:4.5em;font-size:1.08rem}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:8px;align-items:center;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--ln)}
+.bar select{border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:8px;padding:7px 4px;font:inherit}
+.bar button{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+.bar input{flex:1;min-width:0}
+small{color:var(--mut);display:block;margin-top:8px}
+#fig svg{width:100%;max-height:230px;margin-top:10px;background:var(--bg);border:1px solid var(--ln);border-radius:8px}
+#fig text{fill:var(--mut);font-size:11px}
+.o{fill:none;stroke:var(--ac);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 2s forwards}
+.g{fill:none;stroke:var(--mut);stroke-width:1.6}
+.j{fill:var(--card);stroke:var(--or);stroke-width:2.6}
+@keyframes dr{to{stroke-dashoffset:0}}
+.sw{transform-box:fill-box;transform-origin:50% 50%;animation:sp 3s ease-in-out infinite alternate}
+@keyframes sp{from{transform:rotate(-12deg)}to{transform:rotate(12deg)}}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;font-size:.95em;line-height:1.25}.fr>span{padding:0 4px}.fr>span:first-child{border-bottom:1.5px solid currentColor}
+sub{font-size:.72em;line-height:0}
+.l1,.l2,.l3{fill:none;stroke-width:5;stroke-linecap:round}.l1{stroke:var(--ac)}.l2{stroke:var(--or)}.l3{stroke:#16a34a}
+.sl{animation:sld 2.4s ease-in-out infinite alternate}@keyframes sld{from{transform:translateX(-22px)}to{transform:translateX(22px)}}
+#sim{margin-top:8px}#sim label{display:inline-flex;gap:6px;align-items:center;margin-right:12px;font-size:.9rem}
+#de{margin:0 0 8px;padding:8px 12px;border:1px dashed var(--ac);border-radius:8px;background:var(--bg);font-size:.95rem}#de:empty{display:none}
+#tb{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px}#tb button{flex:none;border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:8px;padding:3px 10px;font:inherit;font-size:.82rem;cursor:pointer}#tb button.on{border-color:var(--or);background:var(--or);color:#fff}
+#sheet{position:fixed;inset:0;z-index:50;overflow:auto;background:var(--bg);color:var(--ink);padding:14px 14px 40px}#sheet[hidden]{display:none}#sheet h2{margin:0 0 4px;font-size:1.15rem}#sheet .tb{display:flex;gap:8px;margin:8px 0 12px}#sheet .tb button{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}#sheet .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}#sheet .cd{border:1px solid var(--ln);border-radius:10px;padding:8px 11px;background:var(--card);break-inside:avoid;font-size:.92rem}#sheet .cd b{display:block;margin-bottom:3px}#sheet .w{color:#b45309;font-size:.85rem}
+@media print{main{display:none!important}#sheet{position:static;overflow:visible;background:#fff;color:#000;padding:0}#sheet .tb{display:none}#sheet .gr{grid-template-columns:1fr 1fr;gap:6px}#sheet .cd{background:#fff;font-size:11px;padding:5px 8px;border-color:#999}#sheet .w{color:#000}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.o{stroke-dashoffset:0}}
+</style></head><body><main>
+<h1>Chương 1. Cấu trúc cơ cấu và bậc tự do</h1>
+<nav id="nv"></nav><div id="tb"></div>
+<section class="board"><h2><span id="ct"></span><span id="st"></span></h2><div id="de"></div><div id="ln"></div><div id="fig"></div><div id="sim" hidden></div></section>
+<div id="sub"></div>
+<div class="bar"><button id="pv">◀ Trước</button><button id="pl">▶ Phát</button><button id="nx">Tiếp ▶</button><button id="cs">Tờ ôn</button><select id="sp" title="Tốc độ đọc"><option value="0.85">0,85×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option></select><input type="range" id="pr" min="0" value="0" aria-label="Tiến độ"></div>
+<small>Giọng đọc dùng giọng tiếng Việt của trình duyệt; nếu máy không có, bài tự chuyển bước theo độ dài câu.</small>
+</main><div id="sheet" hidden></div><script>
+const C=[],S=[],ch=t=>C.push(t),T=(say,ln=[],k)=>S.push({c:C.length-1,say,ln,k});
+
+ch('1.1 Chi tiết máy, khâu, khớp');
+T('Máy được tạo từ các chi tiết máy. Chi tiết máy là phần nhỏ nhất tách ra được khỏi máy. Ví dụ thanh truyền gồm thân, nắp, bu lông và đai ốc, mỗi thứ là một chi tiết máy.',['Chi tiết máy: phần nhỏ nhất tách rời được']);
+T('Khâu là một hoặc vài chi tiết máy ghép cứng với nhau thành một vật rắn và chuyển động tương đối so với các vật rắn khác. Thanh truyền sau khi lắp xong là một khâu.',['Khâu = 1 hay nhiều chi tiết ghép cứng','Khâu có chuyển động tương đối với khâu khác']);
+T('Bậc tự do của một khâu là số chuyển động độc lập của nó. Trong không gian, một khâu tự do có sáu bậc: tịnh tiến theo x, y, z và quay quanh x, y, z. Trong mặt phẳng chỉ còn ba bậc: x, y và quay quanh z.',['Không gian: 6 bậc (x, y, z, rot x, rot y, rot z)','Mặt phẳng: 3 bậc (x, y, rot z)']);
+T('Khi hai khâu tiếp xúc nhau, sự tiếp xúc đó hạn chế chuyển động tương đối, gọi là ràng buộc. Hai bề mặt tiếp xúc của hai khâu hợp lại thành một khớp, còn gọi là cặp động. Ví dụ hình trụ nằm trên mặt phẳng: còn 4 bậc tự do, 2 ràng buộc.',['Ràng buộc: hạn chế chuyển động tương đối','Khớp = 2 bề mặt tiếp xúc tạo ràng buộc','Trụ trên mặt phẳng: 4 bậc tự do, 2 ràng buộc'],'cyl');
+T('Khớp loại k là khớp có k ràng buộc, nên còn 6 trừ k bậc tự do. Khớp bản lề có 5 ràng buộc, 1 bậc tự do là quay. Khớp trượt cũng có 5 ràng buộc, 1 bậc tự do là tịnh tiến. Khớp cầu có 3 ràng buộc, 3 bậc tự do.',['Khớp loại k: k ràng buộc, (6 − k) bậc tự do','Bản lề: loại 5, DOF = rot z','Trượt: loại 5, DOF = tịnh tiến','Cầu: loại 3, DOF = 3'],'joint');
+T('Phân loại theo tiếp xúc: khớp thấp tiếp xúc theo mặt, như bản lề và khớp trượt. Khớp cao tiếp xúc theo điểm hoặc đường, như hai bánh răng ăn khớp hay cam với cần.',['Khớp thấp: tiếp xúc mặt (bản lề, trượt)','Khớp cao: tiếp xúc điểm / đường (bánh răng, cam)']);
+
+ch('1.2 Cơ cấu và máy');
+T('Nhóm khâu động là tập các khâu nối với nhau bằng khớp. Nhóm có thể kín hoặc hở. Cơ cấu là nhóm khâu động có ba điều kiện.',['Nhóm khâu động: các khâu nối bằng khớp']);
+T('Một: có một khâu cố định gọi là giá. Hai: có một hay nhiều khâu được cấp chuyển động độc lập, gọi là khâu dẫn. Ba: các khâu còn lại chuyển động theo khâu dẫn, gọi là khâu bị dẫn. Cơ cấu dùng để truyền hoặc biến đổi chuyển động và lực.',['1) Giá (khâu cố định)','2) Khâu dẫn (điều khiển độc lập)','3) Khâu bị dẫn (chuyển động theo khâu dẫn)'],'sc');
+T('Máy là một hay nhiều cơ cấu kết hợp để truyền hoặc biến đổi năng lượng. Ví dụ động cơ đốt trong gồm cơ cấu tay quay con trượt và hai cơ cấu cam.',['Máy = ≥ 1 cơ cấu, truyền / biến đổi năng lượng','Động cơ: tay quay con trượt + 2 cam']);
+
+ch('1.3 Bậc tự do cơ cấu');
+T('Bậc tự do của cơ cấu là số chuyển động tương đối độc lập giữa các khâu, cũng bằng số thông số đầu vào độc lập cần để xác định vị trí mọi khâu.',['W = số đầu vào độc lập cần điều khiển','Thử kéo hai thanh trượt: cơ cấu 5 khâu cần 2 đầu vào'],'five');
+T('Với cơ cấu không gian: W bằng 6 nhân n trừ tổng k nhân p k, cộng lại các ràng buộc thừa, trừ đi bậc tự do thừa. Trong đó n là số khâu động, p k là số khớp loại k.',['W = 6n − Σ k·p_k + r_th − w_th','n: số khâu động ; p_k: số khớp loại k']);
+T('Cần cộng lại ràng buộc thừa vì có khi một ràng buộc đã bị loại từ trước. Ví dụ cơ cấu bốn khâu bản lề nhìn như không gian cho W bằng 6 nhân 3 trừ 5 nhân 4 bằng âm 2, vô lý, vì các ràng buộc bị trùng.',['6·3 − 5·4 = −2 (vô lý)','⇒ có ràng buộc trùng, phải cộng lại','Thực tế cơ cấu 4 khâu này chạy bình thường: W = 1'],'four');
+T('Với cơ cấu phẳng chỉ có hai loại khớp: loại 4 như bánh răng hay cam, và loại 5 như bản lề hay khớp trượt. Công thức: W bằng 3n trừ, mở ngoặc, p4 cộng 2 p5 trừ r th, đóng ngoặc, trừ w th.',['W = 3n − (p₄ + 2p₅ − r_th) − w_th','p₄: khớp cao ; p₅: khớp thấp','r_th: ràng buộc thừa ; w_th: bậc tự do thừa'],'sc');
+T('Cách đếm: n là số khâu động, không tính giá. Khớp bản lề và khớp trượt tính vào p5. Bánh răng ăn khớp và cam với cần tính vào p4. Con lăn quay tự do trên cần là bậc tự do thừa.',['n: không tính giá','Bản lề, trượt → p₅','Bánh răng, cam → p₄','Con lăn quay tự do → w_th']);
+
+ch('VD 1.1 Tay quay con trượt');
+T('Đề: tính bậc tự do cơ cấu tay quay con trượt gồm khâu 1, 2, 3 và giá. Có bốn khớp: A, B, C là bản lề, và con trượt với giá là khớp trượt.',['Cho: khâu 1, 2, 3 + giá','Cần tìm: W'],'sc');
+T('Số khâu động n bằng 3. Số khớp loại 5 là 4: ba bản lề A, B, C và một khớp trượt. Không có khớp cao, không có ràng buộc thừa hay bậc tự do thừa.',['n = 3 ; p₅ = 4 ; p₄ = 0','r_th = 0 ; w_th = 0']);
+T('Thế vào công thức: 3 nhân 3 trừ 2 nhân 4, bằng 9 trừ 8, bằng 1. Cơ cấu có một bậc tự do, nên chỉ cần một khâu dẫn.',['W = 3·3 − (0 + 2·4) = 9 − 8 = 1','⇒ 1 khâu dẫn']);
+
+ch('VD 1.2 Cơ cấu 10 khâu');
+T('Đề: cơ cấu phẳng 10 khâu có một khớp cao ở điểm E và 13 khớp thấp. Nhóm khâu 8, 9, 10 có một bậc tự do thừa, vì thanh 10 quay tự do mà không ảnh hưởng các khâu khác. Tính W. Lời giải chi tiết ở Bài tập 1.',['n = 10 ; p₄ = 1 (tại E)','p₅ = 13 ; r_th = 0 ; w_th = 1']);
+T('Thế số: 3 nhân 10 bằng 30. Trong ngoặc: 1 cộng 2 nhân 13 trừ 0, bằng 27. Lấy 30 trừ 27 bằng 3, rồi trừ w th bằng 1, được 2.',['W = 3·10 − (1 + 2·13 − 0) − 1','= 30 − 27 − 1 = 2']);
+T('Kết luận: cơ cấu có hai bậc tự do, nên cần hai khâu dẫn. Nếu quên trừ bậc tự do thừa, ta sẽ ra 3, sai.',['W = 2 ⇒ cần 2 khâu dẫn','Quên w_th ⇒ ra 3 (sai)']);
+
+ch('VD 1.3 Cơ cấu 13 khâu');
+T('Đề: cơ cấu phẳng 13 khâu có 2 khớp cao tiếp xúc giữa các khâu 1, 2 và 10, 2 bậc tự do thừa, và 16 khớp thấp. Tính W.',['n = 13 ; p₄ = 2 ; p₅ = 16','r_th = 0 ; w_th = 2']);
+T('Thế số: 3 nhân 13 bằng 39. Trong ngoặc: 2 cộng 2 nhân 16 trừ 0, bằng 34. Lấy 39 trừ 34 bằng 5, trừ tiếp 2, được 3. Cơ cấu cần ba khâu dẫn.',['W = 3·13 − (2 + 2·16 − 0) − 2','= 39 − 34 − 2 = 3 ⇒ 3 khâu dẫn']);
+
+ch('VD 1.4 Hệ bánh răng (đề thi)');
+T('Đề thi: hệ bánh răng gồm Z1, Z2 cùng trục với Z2 phẩy, Z3 cùng trục với Z3 phẩy, Z4 và Z5. Hỏi số khớp loại 5, số khớp loại 4 và bậc tự do. Đây là dạng câu 1 của đề cuối kỳ.',['Cho: Z₁ ; Z₂≡Z′₂ ; Z₃≡Z′₃ ; Z₄ ; Z₅','Cần tìm: p₅ ; p₄ ; W'],'gear');
+T('Bước 1: đếm khâu động. Hai bánh răng chung một trục cứng chỉ là một khâu. Vậy Z2 với Z phẩy 2 là khâu 2, Z3 với Z phẩy 3 là khâu 3. Cùng Z1, Z4, Z5 ta có năm khâu.',['Khâu 1: Z₁ ; 2: Z₂≡Z′₂ ; 3: Z₃≡Z′₃','Khâu 4: Z₄ ; 5: Z₅','n = 5']);
+T('Bẫy hay gặp: đếm theo bánh răng sẽ ra bảy bánh và bảy khớp quay, và đó là sai. Phải đếm theo khâu, không đếm theo bánh.',['Bẫy: 7 bánh răng ≠ 7 khâu','Cùng trục cứng ⇒ 1 khâu ⇒ 1 khớp quay']);
+T('Bước 2: mỗi khâu động quay quanh một trục gắn với giá, nên có năm khớp quay, đều là khớp loại 5. Các cặp bánh răng ăn khớp là khớp cao loại 4: Z1 với Z2, Z phẩy 2 với Z3, Z phẩy 3 với Z4, Z4 với Z5. Có bốn cặp.',['p₅ = 5 (0–1, 0–2, 0–3, 0–4, 0–5)','p₄ = 4 (4 cặp ăn khớp)'],'gear');
+T('Bước 3: thế vào công thức, W bằng 3 nhân 5, trừ, 4 cộng 2 nhân 5, bằng 15 trừ 14, bằng 1. Bậc tự do bằng 1, nên chỉ cần cho một bánh dẫn, ví dụ Z1, là xác định chuyển động mọi bánh còn lại. Đó là lý do ở câu sau ta tìm được tỉ số truyền duy nhất.',['W = 3·5 − (4 + 2·5) = 15 − 14 = 1','⇒ 1 bánh dẫn (Z₁) là đủ']);
+
+ch('BT 1 Cơ cấu 10 khâu (Dạng 1)');
+T('Bài tập 1, dạng 1, câu 1: tính bậc tự do của cơ cấu phẳng như hình, gồm các khớp A, B, C, D, E, F, G, H, K, L, M, N. Các điểm L, G, D, A đều nằm trên giá. Ta làm theo năm bước.',['Cho: cơ cấu phẳng, khâu 1 … 10, giá 0','Cần tìm: W'],'ten');
+T('Bước 1, đếm khâu động. Theo số ghi trên hình, các khâu động đánh số từ 1 đến 10. Giá là khâu 0, gồm các điểm L, G, D, A. Giá không tính vào n. Vậy n bằng 10.',['Khâu động: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10','Giá 0: L, G, D, A (không tính)','n = 10']);
+T('Bước 2, đếm khớp loại 5, gồm bản lề và khớp trượt. Bản lề đơn tại A, B, C, D, F, G, K, L, M, N, có mười khớp. Tại H có ba khâu gặp nhau, tính hai khớp. Thêm một khớp trượt giữa con trượt tại M và thanh 10. Tổng cộng 13.',['Bản lề đơn: A, B, C, D, F, G, K, L, M, N = 10','Tại H: 3 khâu ⇒ 2 khớp','Khớp trượt (M, thanh 10) = 1','p₅ = 10 + 2 + 1 = 13']);
+T('Bước 3, đếm khớp loại 4. Tại E, khâu 3 tiếp xúc với đĩa tròn theo đường, đó là khớp cao. Không còn chỗ tiếp xúc nào khác. Vậy p bốn bằng 1.',['E: khâu 3 chạm đĩa ⇒ khớp cao','p₄ = 1']);
+T('Bẫy hay gặp tại điểm H: ba khâu cùng nối vào một bản lề. Nếu chỉ đếm một khớp là thiếu. Quy tắc: k khâu chung một bản lề thì có k trừ 1 khớp. Ở H có 3 khâu nên có 2 khớp.',['Bẫy: k khâu chung 1 bản lề = (k − 1) khớp','H: 3 khâu ⇒ 2 khớp']);
+T('Bước 4, tìm ràng buộc thừa và bậc tự do thừa. Không có ràng buộc thừa nên r th bằng 0. Xét nhóm 8, 9, 10: khâu 8 nối H với M, M là con trượt trên thanh 10, thanh 10 quay quanh N. Khi H đã xác định, thanh 10 vẫn quay tự do được mà không làm các khâu khác chuyển động. Đó là một bậc tự do thừa, nên w th bằng 1.',['r_th = 0','Nhóm 8, 9, 10: thanh 10 quay tự do quanh N','Không ảnh hưởng khâu khác ⇒ w_th = 1']);
+T('Bước 5, thế số vào công thức: W bằng 3 nhân 10, trừ, mở ngoặc 1 cộng 2 nhân 13 trừ 0, đóng ngoặc, trừ 1. Bằng 30 trừ 27 trừ 1, bằng 2.',['W = 3·10 − (1 + 2·13 − 0) − 1','= 30 − 27 − 1 = 2']);
+T('Kết luận: cơ cấu có hai bậc tự do, nên cần hai khâu dẫn. Nếu quên trừ w th thì ra 3, sai.',['W = 2 ⇒ cần 2 khâu dẫn']);
+T('Kiểm tra bằng cách tách vòng. Vòng năm khâu gồm giá và các khâu qua G, F, H, K, L có hai bậc tự do. Vòng bốn khâu A, B, C, D có một bậc tự do. Hai vòng nối nhau qua khớp cao E, lấy đi một bậc. Cộng lại 2 cộng 1 trừ 1 bằng 2. Nhóm 8, 9, 10 chỉ thêm bậc tự do thừa. Kết quả khớp.',['Vòng 5 khâu (G, F, H, K, L): 3·4 − 2·5 = 2','Vòng 4 khâu (A, B, C, D): 3·3 − 2·4 = 1','Khớp cao E nối hai vòng: −1','2 + 1 − 1 = 2 ✓']);
+
+ch('Tổng kết chương 1');
+T('Tóm tắt. Khâu là vật rắn chuyển động, khớp tạo ràng buộc. Khớp thấp tiếp xúc mặt, khớp cao tiếp xúc điểm hoặc đường. Cơ cấu có giá, khâu dẫn và khâu bị dẫn.',['Khâu · Khớp · Ràng buộc','Thấp (mặt) ≠ Cao (điểm / đường)','Cơ cấu = giá + dẫn + bị dẫn']);
+T('Ba bước tính bậc tự do cơ cấu phẳng: đếm n, đếm p4 và p5, tìm ràng buộc thừa và bậc tự do thừa. Rồi áp dụng W bằng 3n trừ, p4 cộng 2 p5 trừ r th, trừ w th. Chương sau sẽ dùng cơ cấu này để phân tích động học.',['1) n ; 2) p₄, p₅ ; 3) r_th, w_th','W = 3n − (p₄ + 2p₅ − r_th) − w_th']);
+T('Ba lỗi hay gặp khi làm bài. Một: đếm theo số bánh răng thay vì số khâu. Hai: nhầm khớp cao với khớp thấp, ăn khớp bánh răng và cam là p bốn, không phải p năm. Ba: quên trừ bậc tự do thừa, như con lăn quay tự do.',['Lỗi 1: bánh răng ≠ khâu (cùng trục = 1 khâu)','Lỗi 2: ăn khớp, cam là p₄ (không phải p₅)','Lỗi 3: quên w_th (con lăn quay tự do)']);
+
+const $=id=>document.getElementById(id),ss=window.speechSynthesis;
+let i=0,play=false,tk=0,tm,sp=1;
+const first=c=>S.findIndex(s=>s.c==c);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const mt=s=>esc(s).replace(/_(\w+)/g,'<sub>$1</sub>');
+const rh=(x,y)=>`<path d='M${x} ${y}h6l4-6 6 12 6-12 6 12 4-6h8'/>`;
+const J=(x,y)=>`<circle class='j' cx='${x}' cy='${y}' r='6'/>`;
+const tx=(x,y,s)=>`<text x='${x}' y='${y}'>${s}</text>`;
+const sc0={
+ sc:()=>`<path class='g' stroke-dasharray='5 4' d='M60 120H380'/><path class='o' pathLength='1' d='M60 120L120 45L300 120'/><rect class='g' x='286' y='108' width='40' height='24'/>${J(60,120)+J(120,45)+J(300,120)}${tx(46,142,'A')+tx(112,36,'B')+tx(304,104,'C')+tx(80,92,'1')+tx(210,72,'2')+tx(340,106,'3')+tx(180,138,'giá 0')}`,
+ cyl:()=>`<path class='g' d='M40 110H360'/><circle class='o' pathLength='1' cx='200' cy='86' r='24'/>${tx(110,142,'4 bậc tự do · 2 ràng buộc')}`,
+ joint:()=>`<circle class='o' pathLength='1' cx='90' cy='70' r='24'/>${J(90,70)}${tx(40,125,'Bản lề: loại 5')}<rect class='o' pathLength='1' x='240' y='50' width='70' height='40'/><path class='g' d='M210 70H340'/>${tx(230,125,'Trượt: loại 5')}`
+};
+const DE={'BT 1 Cơ cấu 10 khâu (Dạng 1)':'Bài tập 1 – Dạng 1, câu 1: tính bậc tự do của cơ cấu phẳng như hình (các khớp A, B, C, D, E, F, G, H, K, L, M, N; đoạn L–G–D–A là giá).','VD 1.1 Tay quay con trượt':'Tính bậc tự do của cơ cấu tay quay con trượt gồm khâu 1, 2, 3 và giá.','VD 1.2 Cơ cấu 10 khâu':'Cơ cấu phẳng 10 khâu: p₄ = 1, p₅ = 13, w_th = 1. Tính W.','VD 1.3 Cơ cấu 13 khâu':'Cơ cấu phẳng 13 khâu: p₄ = 2, p₅ = 16, w_th = 2. Tính W.','VD 1.4 Hệ bánh răng (đề thi)':'Hệ bánh răng Z₁, Z₂≡Z′₂, Z₃≡Z′₃, Z₄, Z₅. a) Số khớp loại 5? b) Số khớp loại 4? c) Bậc tự do?'};
+const L2=(p,q,c)=>`<path class='${c}' d='M${p[0].toFixed(1)} ${p[1].toFixed(1)}L${q[0].toFixed(1)} ${q[1].toFixed(1)}'/>`,
+ci=(P,r,Q,s)=>{const dx=Q[0]-P[0],dy=Q[1]-P[1],d=Math.hypot(dx,dy),a=(r*r-s*s+d*d)/(2*d),h=Math.sqrt(Math.max(0,r*r-a*a));return [P[0]+a*dx/d+h*dy/d,P[1]+a*dy/d-h*dx/d]},
+GR=`<path class='g' stroke-dasharray='5 4' d='M30 135H380'/>`,
+JJ=(ps,ls)=>ps.map((p,j)=>`<circle class='j' cx='${p[0].toFixed(1)}' cy='${p[1].toFixed(1)}' r='5'/>${tx((p[0]-4).toFixed(1),(p[1]+(p[1]>125?18:-9)).toFixed(1),ls[j])}`).join(''),
+rd=x=>x*Math.PI/180,pol=(O,r,a)=>[O[0]+r*Math.cos(rd(a)),O[1]-r*Math.sin(rd(a))],
+RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let a1=50,a2=130,auto=!RM,kk='',raf,ph=0;
+const sx={
+ten:()=>{const p={A:'326 135',B:'366 99',C:'219 53',D:'221 135',G:'168 135',L:'88 135',K:'61 87',H:'193 59',F:'182 93',M:'134 15',N:'20 14'},c='var(--ac)',o='var(--or)',k='#16a34a',P=(a,b,s)=>`<path d='M${p[a]}L${p[b]}' style='fill:none;stroke:${s};stroke-width:3;stroke-linecap:round'/>`;return `<path class='g' d='M80 135H335'/><circle class='g' cx='182' cy='93' r='38'/><rect class='g' x='118' y='6' width='34' height='18' style='fill:var(--card)'/>`+P('A','B',c)+P('B','C',o)+P('C','D',k)+P('G','F',c)+P('F','H',o)+P('H','K',k)+P('K','L',c)+P('H','M',o)+P('N','M',k)+`<path d='M134 15H270' style='fill:none;stroke:${k};stroke-width:3'/><circle cx='220' cy='93' r='4' style='fill:var(--or)'/>`+tx(224,106,'E')+Object.entries(p).map(([n,v])=>{const [x,y]=v.split(' ');return `<circle class='j' cx='${x}' cy='${y}' r='3.5'/>${tx(+x+5,+y-5,n)}`}).join('')+[['1',352,112],['2',300,68],['3',208,96],['4',163,112],['5',196,78],['6',122,66],['7',66,112],['8',166,32],['10',236,10]].map(([n,x,y])=>tx(x,y,n)).join('')},
+joint:()=>`<circle class='g' cx='90' cy='70' r='26'/><g class='sw' style='transform-box:view-box;transform-origin:90px 70px'><path class='l1' d='M90 70H160'/></g>${J(90,70)}${tx(40,125,'Bản lề: loại 5 · 1 bậc (quay)')}<path class='g' d='M215 85H375'/><g class='sl'><rect class='g' x='260' y='55' width='54' height='30' style='fill:var(--card)'/><path class='l2' d='M287 70H340'/></g>${tx(230,125,'Trượt: loại 5 · 1 bậc (tịnh tiến)')}`,
+gear:()=>{const n=['Z₁','Z₂≡Z′₂','Z₃≡Z′₃','Z₄','Z₅'];return n.map((q,j)=>`<rect class='g' x='${12+j*78}' y='45' width='62' height='32' style='fill:var(--card)'/>${tx(18+j*78,65,q)}<path class='g' d='M${43+j*78} 77V100'/>${J(43+j*78,106)}`).join('')+[0,1,2,3].map(j=>`<path class='o' pathLength='1' d='M${74+j*78} 61H${90+j*78}'/>${tx(66+j*78,38,'ăn '+(j+1))}`).join('')+tx(30,134,'4 cặp ăn khớp = p₄ = 4')+tx(220,134,'5 khớp quay với giá = p₅ = 5')}};
+function mech(){
+ if(kk=='sc'){const A=[70,135],B=pol(A,50,a1),C=[B[0]+Math.sqrt(120*120-(135-B[1])**2),135];return GR+L2(A,B,'l1')+L2(B,C,'l2')+`<rect class='g' x='${C[0]-20}' y='123' width='40' height='24' style='fill:var(--card)'/>`+JJ([A,B,C],['A','B','C'])+tx((A[0]+B[0])/2-14,(A[1]+B[1])/2,'1')+tx((B[0]+C[0])/2,(B[1]+C[1])/2-8,'2')+tx(C[0]+24,118,'3')}
+ if(kk=='four'){const A=[120,135],D=[270,135],B=pol(A,45,a1),C=ci(B,120,D,100);return GR+L2(A,B,'l1')+L2(B,C,'l2')+L2(D,C,'l3')+JJ([A,B,C,D],['A','B','C','D'])}
+ const A=[130,135],E=[270,135],B=pol(A,55,a1),D=pol(E,55,a2),C=ci(B,130,D,130);return GR+L2(A,B,'l1')+L2(E,D,'l1')+L2(B,C,'l2')+L2(D,C,'l3')+JJ([A,B,C,D,E],['A','B','C','D','E'])}
+const draw=()=>{const s=$('ms');if(s)s.innerHTML=mech()},sync=()=>{const r=$('r1'),q=$('r2');if(r)r.value=a1;if(q)q.value=a2};
+function loop(){if(auto){ph+=.016;if(kk=='five'){a1=90+70*Math.sin(ph);a2=90+70*Math.sin(ph*1.3+1)}else a1=(a1+.8)%360;sync()}draw();raf=requestAnimationFrame(loop)}
+function setFig(k){if(k==kk)return;kk=k;cancelAnimationFrame(raf);const f=$('fig'),e=$('sim');
+ if(['sc','four','five'].includes(k)){const fv=k=='five';auto=!RM;if(fv){a1=Math.min(170,Math.max(10,a1));a2=Math.min(170,Math.max(10,a2))}
+  f.innerHTML=`<svg id='ms' viewBox='0 0 400 150' role='img' aria-label='Mô phỏng cơ cấu'></svg>`;e.hidden=false;
+  e.innerHTML=`<label>Khâu dẫn${fv?' 1':''}: <input type='range' id='r1' min='${fv?10:0}' max='${fv?170:360}' value='${a1}'></label>`+(fv?`<label>Khâu dẫn 2: <input type='range' id='r2' min='10' max='170' value='${a2}'></label>`:'')+`<small>${fv?'W = 2: giữ khâu dẫn 1 cố định, khâu 2 vẫn còn tự do. Cần 2 đầu vào.':'W = 1: một đầu vào (khâu dẫn 1) xác định vị trí mọi khâu. Kéo thanh trượt để tự điều khiển.'}</small>`;
+  ['r1','r2'].forEach((id,q)=>{const r=$(id);if(r)r.oninput=()=>{auto=false;if(q)a2=+r.value;else a1=+r.value}});loop()}
+ else{e.hidden=true;f.innerHTML=k?`<svg viewBox='0 0 400 150' role='img' aria-label='Hình minh họa'>${(sx[k]||sc0[k])()}</svg>`:''}}
+function fig(){let k='';for(let j=i;j>=0&&S[j].c==S[i].c;j--)if(S[j].k){k=S[j].k;break}setFig(k)}
+function show(){const s=S[i];$('ct').textContent=C[s.c];$('st').textContent=` · bước ${i+1}/${S.length}`;
+ const L=[];S.forEach((x,j)=>{if(x.c==s.c&&j<=i)x.ln.forEach(l=>L.push([l,j==i]))});
+ $('ln').innerHTML=L.map(([l,n])=>`<div${n?" class='n'":''}>${mt(l)}</div>`).join('');fig();
+ $('sub').textContent=s.say;$('pr').value=i;$('de').innerHTML=DE[C[s.c]]?'<b>ĐỀ BÀI</b> · '+mt(DE[C[s.c]]):'';
+ [...$('nv').children].forEach((b,q)=>b.classList.toggle('on',q==s.c));tabs();speak()}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));show()}
+function speak(){tk++;const my=tk;clearTimeout(tm);ss&&ss.cancel();if(!play)return;
+ const nxt=()=>{if(my==tk){if(i<S.length-1)go(i+1);else{play=false;$('pl').textContent='▶ Phát'}}};
+ const t=S[i].say,vi=ss&&ss.getVoices().some(v=>/^vi/i.test(v.lang));
+ tm=setTimeout(nxt,t.length*75/sp+2500);
+ if(vi){const u=new SpeechSynthesisUtterance(t);u.lang='vi-VN';u.rate=sp;u.onend=()=>{clearTimeout(tm);nxt()};ss.speak(u)}else{clearTimeout(tm);tm=setTimeout(nxt,t.length*60/sp+1500)}}
+C.forEach((t,q)=>{const b=document.createElement('button');b.textContent=t.split(' ').slice(0,2).join(' ')+(t.startsWith('VD')?' '+t.split(' ').slice(2,3).join(''):'');b.title=t;b.onclick=()=>go(first(q));$('nv').append(b)});
+const LAB={'1.1 Chi tiết máy, khâu, khớp':['Chi tiết máy','Khâu','Bậc tự do khâu','Ràng buộc','Khớp loại k','Thấp / cao'],'1.2 Cơ cấu và máy':['Nhóm khâu','Cơ cấu','Máy'],'1.3 Bậc tự do cơ cấu':['Định nghĩa','Không gian','Ràng buộc thừa','Cơ cấu phẳng','Cách đếm'],'Tổng kết chương 1':['Tóm tắt','Quy trình','Ba lỗi']};
+function labs(c){const L=[];let p='';S.forEach((s,j)=>{if(s.c!=c)return;const m=LAB[C[c]];let l=m&&m[L.length];if(!l){const t=s.say,b=t.match(/^Bước (\d)/);l=/^Đề/.test(t)?'Đề':b?'Bước '+b[1]:/^Bẫy/.test(t)?'Bẫy':/^Kết luận/.test(t)?'Kết luận':p=='Đề'?'Giải':p}L.push([l,j]);p=l});return L}
+function tabs(){const c=S[i].c,L=labs(c),cur=L[i-first(c)][0],seen=[],h=$('tb');h.innerHTML='';L.forEach(([l,j])=>{if(seen.includes(l))return;seen.push(l);const b=document.createElement('button');b.textContent=l;if(l==cur)b.className='on';b.onclick=()=>go(j);h.append(b)})}
+const CARDS=[['Khái niệm','Chi tiết máy: phần nhỏ nhất tách rời.<br>Khâu: ≥ 1 chi tiết ghép cứng, chuyển động tương đối.<br>Khớp (cặp động): 2 bề mặt tiếp xúc tạo ràng buộc.<br>Bậc tự do: số chuyển động độc lập.'],['Khớp','Loại k: k ràng buộc, 6 − k bậc tự do.<br>Bản lề: loại 5, quay. Trượt: loại 5, tịnh tiến. Cầu: loại 3.<br>Thấp: tiếp xúc mặt. Cao: điểm / đường (bánh răng, cam).'],['Cơ cấu và máy','Cơ cấu = giá + khâu dẫn + khâu bị dẫn.<br>Máy = ≥ 1 cơ cấu, truyền / biến đổi năng lượng.<br>Số khâu dẫn cần có = W.'],['Công thức','Phẳng: W = 3n − (p₄ + 2p₅ − r_th) − w_th<br>Không gian: W = 6n − Σk·p_k + r_th − w_th<br><span class="w">Dấu ở công thức không gian: đối chiếu với slide.</span>'],['Cách đếm','n: khâu động (không tính giá).<br>p₅: bản lề, trượt. p₄: bánh răng ăn khớp, cam–cần.<br>w_th: chuyển động cục bộ không ảnh hưởng đầu ra (con lăn, nhóm khâu quay tự do).<br>Cùng trục cứng = 1 khâu. k khâu chung 1 bản lề = k − 1 khớp.'],['Ví dụ đã giải','Tay quay con trượt: n=3, p₅=4 ⇒ W=1<br>10 khâu: n=10, p₄=1, p₅=13, w_th=1 ⇒ W=2<br>13 khâu: n=13, p₄=2, p₅=16, w_th=2 ⇒ W=3<br>Bánh răng đề thi: n=5, p₄=4, p₅=5 ⇒ W=1'],['Bài tập 1 (Dạng 1)','n=10, p₅=13, p₄=1, r_th=0, w_th=1 ⇒ W=2<br>Tại H: 3 khâu chung bản lề = 2 khớp<br>w_th: nhóm 8–9–10 (thanh 10 quay tự do)<br>Kiểm tra: 2 + 1 − 1 = 2'],['Từ bảng của thầy','n=6, p₄=5, p₅=6 ⇒ W=1<br>n=6, p₄=4, p₅=6 ⇒ W=2<br>n=7, p₄=5, p₅=7 ⇒ W=2'],['Ba lỗi hay gặp','1) Đếm bánh răng thay vì khâu.<br>2) Nhầm khớp cao (p₄) với khớp thấp (p₅).<br>3) Quên trừ w_th (con lăn quay tự do).'],['Tự kiểm tra','1) n=4, p₅=5, p₄=0. W = ? <i>(3·4 − 10 = 2)</i><br>2) Hai bánh chung trục cứng là mấy khâu? <i>(1 khâu)</i><br>3) Cặp bánh răng ăn khớp là khớp loại mấy? <i>(loại 4, khớp cao)</i>']];
+$('cs').onclick=()=>{play=false;$('pl').textContent='▶ Phát';speak();const e=$('sheet');e.innerHTML=`<h2>Tờ ôn · Chương 1</h2><div class='tb'><button id='pt'>In / lưu PDF</button><button id='cl'>Đóng</button></div><div class='gr'>`+CARDS.map(([t,b])=>`<div class='cd'><b>${t}</b>${b}</div>`).join('')+'</div>';e.hidden=false;$('pt').onclick=()=>print();$('cl').onclick=()=>{e.hidden=true}};
+$('pv').onclick=()=>go(i-1);$('nx').onclick=()=>go(i+1);
+$('pl').onclick=()=>{play=!play;$('pl').textContent=play?'❚❚ Dừng':'▶ Phát';speak()};
+$('sp').onchange=e=>{sp=+e.target.value;speak()};
+$('pr').max=S.length-1;$('pr').oninput=e=>go(+e.target.value);
+if(ss)ss.onvoiceschanged=()=>{};
+show();
+</script></body></html>

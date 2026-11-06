@@ -128,6 +128,9 @@
     } else if (/^dai-so-tuyen-tinh$/i.test(dir)) {
       out.slug = "dai-so-tuyen-tinh"; out.subject = "ĐẠI SỐ TUYẾN TÍNH";
       out.cat = "TOÁN HỌC & KHOA HỌC"; out.catName = "Toán học & Khoa học";
+    } else if (/^phuong-phap-nghien-cuu-khoa-hoc$/i.test(dir)) {
+      out.slug = "phuong-phap-nghien-cuu-khoa-hoc"; out.subject = "PHƯƠNG PHÁP NGHIÊN CỨU KHOA HỌC";
+      out.cat = "TOÁN HỌC & KHOA HỌC"; out.catName = "Toán học & Khoa học";
     }
     return out;
   }

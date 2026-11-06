@@ -198,7 +198,12 @@
      "dai-so-tuyen-tinh": {
        label: "Chương",
        names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5"]
-     }
+     },
+      /* Phương pháp nghiên cứu khoa học: 1 chương (Chương 9). */
+      "phuong-phap-nghien-cuu-khoa-hoc": {
+        label: "Chương",
+        names: ["Chương 9"]
+      }
    };
 
   var CATS = RAW.map(function (row, i) {
@@ -368,7 +373,10 @@
        "chuong-3": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-3",
        "chuong-4": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-4",
        "chuong-5": "dai-so-tuyen-tinh/luyen-tap.html?d=chuong-5"
-     }
+     },
+      "phuong-phap-nghien-cuu-khoa-hoc": {
+        "chuong-9": "phuong-phap-nghien-cuu-khoa-hoc/luyen-tap.html?d=chuong-9"
+      }
    };
 
   /* Bài thi có sẵn trang XEM ĐỀ CƯƠNG riêng thì khai ở đây.
@@ -399,7 +407,8 @@
      /* Kinh tế chính trị Mác-Lênin: trang đề cương dùng chung cho cả 6 chương — thêm `?d=`. */
      "kinh-te-chinh-tri-mac-lenin": "kinh-te-chinh-tri-mac-lenin/quiz.html",
      /* Logic học đại cương: trang đề cương dùng chung cho cả 5 chương — thêm `?d=`. */
-     "logic-hoc-dai-cuong": "logic-hoc-dai-cuong/quiz.html"
+     "logic-hoc-dai-cuong": "logic-hoc-dai-cuong/quiz.html",
+      "phuong-phap-nghien-cuu-khoa-hoc": "phuong-phap-nghien-cuu-khoa-hoc/quiz.html"
    };
 
   /* Chế độ THI THỬ có sẵn trang riêng thì khai ở đây.
@@ -435,7 +444,8 @@
      "kinh-te-chinh-tri-mac-lenin": "pmt-ems/pmt-ems.html",
      /* Logic học đại cương: đi qua pmt-ems rồi sang trang thi thử ngẫu nhiên
         40 câu / 60 phút. */
-     "logic-hoc-dai-cuong": "pmt-ems/pmt-ems.html"
+     "logic-hoc-dai-cuong": "pmt-ems/pmt-ems.html",
+      "phuong-phap-nghien-cuu-khoa-hoc": "pmt-ems/pmt-ems.html"
    };
 
   /* Đường dẫn tới trang LÀM BÀI của một môn — nơi nút "LÀM BÀI" ở màn chọn lớp
@@ -462,7 +472,8 @@
      /* Kinh tế chính trị Mác-Lênin: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */
      "kinh-te-chinh-tri-mac-lenin": "kinh-te-chinh-tri-mac-lenin/thi-kinh-te-chinh-tri-mac-lenin-ngau-nhien.html",
      /* Logic học đại cương: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */
-     "logic-hoc-dai-cuong": "logic-hoc-dai-cuong/thi-logic-hoc-dai-cuong-ngau-nhien.html"
+     "logic-hoc-dai-cuong": "logic-hoc-dai-cuong/thi-logic-hoc-dai-cuong-ngau-nhien.html",
+      "phuong-phap-nghien-cuu-khoa-hoc": "phuong-phap-nghien-cuu-khoa-hoc/thi-phuong-phap-nghien-cuu-khoa-hoc-ngau-nhien.html"
    };
 
   /* Đường dẫn tới trang làm bài của một bài thi (null nếu bài thi đó không có
