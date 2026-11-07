@@ -646,7 +646,7 @@ $("copyBtn").addEventListener("click", async () => {
     var items = [
       { id: "bai-giang", label: "Bài giảng các chương", hint: "@@CHAPCOUNT@@ chương", icon: "M4.5 6.5h15M4.5 12h15M4.5 17.5h9" },
       { id: "video", label: "Link video YouTube", hint: "@@VIDCOUNT@@ video", icon: "M4 6.5h16v11H4zM10 9.5l4 2.5-4 2.5z" },
-      { id: "de-nam-ngoai", label: "Đề năm ngoái", hint: "đang cập nhật", icon: "M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3" }
+      { id: "de-nam-ngoai", label: "Đề năm ngoái", hint: "@@EXAMCOUNT@@ đề", icon: "M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3" }
     ];
     var videos = [
       { t: 'Tuần 1 - Chương 1: Cấu tạo cơ cấu', u: 'https://youtu.be/Nr2Mj6GlNtg?si=E7y__8oZbVQKY9eU' },
@@ -671,7 +671,13 @@ $("copyBtn").addEventListener("click", async () => {
       { t: 'Tuần 15 - Chương 12: Giải BT Hệ bánh răng', u: 'https://youtu.be/i0vBqKryCuw?si=PtVISlLZ02WYnLSZ' }
     ];
     var chapters = [
-      { t: 'Chương 1 – Cấu trúc cơ cấu và bậc tự do (video giảng giải)', u: 'nguyen-ly-may/Chương 1 – Cấu trúc cơ cấu và bậc tự do (video giảng giải).html' }
+      { t: 'Chương 1 – Cấu trúc cơ cấu và bậc tự do (video giảng giải)', u: 'nguyen-ly-may/Chương_1_Cấu_trúc_cơ_cấu_và_bậc_tự_do__video_giảng_giải.html' },
+      { t: 'Chương 2 – Động học cơ cấu phẳng (video giảng giải)', u: 'nguyen-ly-may/Chương 2 – Động học cơ cấu phẳng (video giảng giải).html' }
+    ];
+    var exams = [
+      { t: 'Nguyên lý máy – Giải đề cuối kỳ 2 (2024–2025)', u: 'nguyen-ly-may/Nguyên lý máy – Giải đề cuối kỳ 2 (2024–2025).html' },
+      { t: 'Nguyên lý máy – Đề 2 (đề luyện tập)', u: 'nguyen-ly-may/Nguyên lý máy – Đề 2 (đề luyện tập).html' },
+      { t: 'Nguyên lý máy – Đề 3 (đề luyện tập nâng cao)', u: 'nguyen-ly-may/Nguyên lý máy – Đề 3 (đề luyện tập nâng cao).html' }
     ];
 
     function mainView() {
@@ -684,7 +690,7 @@ $("copyBtn").addEventListener("click", async () => {
             '<span class="pl">Nội dung</span>' +
             '<div class="seg">' +
               items.map(function (it) {
-                var hint = it.hint.replace("@@CHAPCOUNT@@", chapters.length).replace("@@VIDCOUNT@@", videos.length);
+                var hint = it.hint.replace("@@CHAPCOUNT@@", chapters.length).replace("@@VIDCOUNT@@", videos.length).replace("@@EXAMCOUNT@@", exams.length);
                 return '<button class="opt" type="button" data-cm="' + it.id + '">' +
                   it.label + '<em>' + hint + '</em></button>';
               }).join("") +
@@ -700,6 +706,7 @@ $("copyBtn").addEventListener("click", async () => {
         b.addEventListener("click", function () {
           if (b.dataset.cm === "video") { videoView(); return; }
           if (b.dataset.cm === "bai-giang") { baiGiangView(); return; }
+          if (b.dataset.cm === "de-nam-ngoai") { deNamNgoaiView(); return; }
           CK.toast("Nội dung này đang được cập nhật.", "Đang cập nhật");
         });
       });
@@ -720,6 +727,35 @@ $("copyBtn").addEventListener("click", async () => {
                 return '<a class="opt" href="' + CK.url(c.u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
                   '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx+1) + '</span>' +
                   '<span style="flex:1;min-width:0;">' + c.t + '</span>' +
+                  '<span style="flex:none;opacity:.6;">↗</span>' +
+                '</a>';
+              }).join("") +
+            '</div>' +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    function deNamNgoaiView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3") + ' Đề năm ngoái</span>' +
+          '<p class="exam-lead">' + exams.length + ' đề thi. Bấm để mở.</p>' +
+          '<div class="exam-parts">' +
+            '<span class="pl">Danh sách đề</span>' +
+            '<div class="seg" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+              exams.map(function (e, idx) {
+                return '<a class="opt" href="' + CK.url(e.u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
+                  '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx+1) + '</span>' +
+                  '<span style="flex:1;min-width:0;">' + e.t + '</span>' +
                   '<span style="flex:none;opacity:.6;">↗</span>' +
                 '</a>';
               }).join("") +

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nguyên lý máy – Đề 3 (đề luyện tập – nâng cao)</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--grid:#dce5f1;--ink:#1c2b45;--mute:#5b6b85;--hl:#ffe36b;--f1:#2a5bd7;--card:#fff;--line:#c9d5e6;--c0:#2a5bd7;--c1:#0e8a7d;--c2:#d97706;--c3:#7c3aed;--c4:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#7a6600;--f1:#7ea2ff;--card:#172236;--line:#2b3b57;--c0:#7ea2ff;--c1:#4fd1c0;--c2:#fbbf24;--c3:#b794f6;--c4:#f87171}}
+:root[data-theme="dark"]{--bg:#101826;--grid:#1a2538;--ink:#e6edf8;--mute:#9aa9c2;--hl:#7a6600;--f1:#7ea2ff;--card:#172236;--line:#2b3b57;--c0:#7ea2ff;--c1:#4fd1c0;--c2:#fbbf24;--c3:#b794f6;--c4:#f87171}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column}
+#tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}
+#tabs button{font:600 .82rem inherit;font-family:inherit;white-space:nowrap;padding:8px 11px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);border-radius:8px;cursor:pointer}
+#tabs button.on{border-color:var(--ink);color:var(--ink);background:var(--hl)}
+#stage{flex:1;display:grid;grid-template-columns:minmax(290px,440px) 1fr;gap:16px;padding:4px 12px 12px;align-items:start}
+@media(max-width:760px){#stage{grid-template-columns:1fr}}
+.card{background:var(--card);border:1.5px solid var(--ink);border-radius:6px;padding:12px 14px;margin-bottom:12px}
+#de{font-size:.92rem;line-height:1.5}#de b{display:block;margin-bottom:4px}
+#de ol{margin:6px 0 0;padding-left:1.4em;list-style:lower-alpha}
+#de li{padding:2px 4px;border-radius:4px;color:var(--mute)}#de li.on{background:var(--hl);color:var(--ink);font-weight:600}
+svg{width:100%;height:auto;display:block}
+svg text{fill:currentColor;font-family:inherit}
+.dim{opacity:.18}.mk{fill:var(--ink);opacity:.3}.mk.on{opacity:1;fill:var(--hl);stroke:var(--ink);stroke-width:2.5}
+#ttl{margin:0 0 10px;font-size:1.05rem}
+#lines div{font:1.2rem/1.9 Georgia,'Times New Roman',serif;overflow-wrap:anywhere;padding:0 4px}
+#lines .new{animation:fl .8s}
+@keyframes fl{from{background:var(--hl)}to{background:transparent}}
+@media(prefers-reduced-motion:reduce){#lines .new{animation:none}}
+.res{display:inline-block;border-bottom:3px solid var(--hl)}
+sub{font-size:.65em}
+footer{position:sticky;bottom:0;background:var(--card);border-top:1.5px solid var(--ink);padding:10px 14px}
+#sub{margin:0 0 8px;font-size:1.02rem;line-height:1.5;min-height:3em;max-width:75ch}
+#bar{height:5px;background:var(--line);margin-bottom:10px}#bar i{display:block;height:100%;width:0;background:var(--f1)}
+#ctl{display:flex;gap:8px}
+#ctl button{font:600 .95rem inherit;font-family:inherit;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+#ctl #play{background:var(--ink);color:var(--card);min-width:110px}
+button:focus-visible{outline:3px solid var(--f1);outline-offset:2px}
+</style></head><body>
+<nav id="tabs"></nav>
+<section id="stage">
+<div><div class="card" id="de"></div>
+<div class="card"><svg id="fgear" viewBox="0 0 420 350" role="img" aria-label="Mô phỏng hệ bánh răng hành tinh"></svg><svg id="flink" viewBox="0 0 520 330" role="img" aria-label="Mô phỏng cơ cấu tay quay con trượt" style="display:none"></svg></div></div>
+<div class="card" id="board"><h2 id="ttl"></h2><div id="lines"></div></div>
+</section>
+<footer><p id="sub"></p><div id="bar"><i></i></div><div id="ctl"><button id="prev">Trước</button><button id="play">Phát</button><button id="next">Tiếp</button></div></footer>
+<script>
+/* ===== Dữ liệu đề 3 & tính toán (một nguồn duy nhất) ===== */
+const z={1:20,2:40,p2:20,3:80};
+const K=z[2]*z[3]/(z[1]*z.p2),I13H=-K,I1H=1+K,N1=900,NH=N1/I1H,N2=NH-(z[1]/z[2])*(N1-NH),N2b=NH*(1-z[3]/z.p2);
+const wH=1/I1H,w2=wH-(z[1]/z[2])*(1-wH);
+const fm=x=>x.toFixed(3).replace('.',',').replace('-','−'),f2=x=>x.toFixed(2).replace('.',','),f2s=x=>x.toFixed(2).replace('.',' phẩy ');
+const R=h=>`<b class="res">${h}</b>`,S=(s,a=[],o={})=>({s,a,...o});
+const A_=.1,OM=10,VB=OM*A_,AB_=OM*OM*A_,BCl=2*A_,AT=AB_/Math.cos(Math.PI/6),AC_=AB_*Math.tan(Math.PI/6),EP=AT/BCl;
+const CAU=[
+{h:'Câu 1 (3 điểm): CLO1',t:'Cho hệ bánh răng hành tinh như Hình vẽ 1: bánh mặt trời Z₁ = 20 (khâu 1); bánh vệ tinh kép Z₂ = 40 và Z′₂ = 20 chung trục (khâu 2), lắp trên cần H; bánh vành trong Z₃ = 80 nối cố định với giá. Các bánh răng có cùng mô đun.',y:['Tính bậc tự do của hệ (nêu rõ n, p₅, p₄).','Kiểm tra điều kiện đồng trục của hệ.','Hệ có bao nhiêu cặp bánh răng ăn khớp ngoài, bao nhiêu cặp ăn khớp trong?']},
+{h:'Câu 2 (3 điểm): CLO2',t:'Với hệ bánh răng hành tinh ở Hình vẽ 1, cho n₁ = 900 vòng/phút (chiều dương), bánh Z₃ cố định. Hãy xác định:',y:['Viết công thức Willis và tính tỉ số truyền i₁₃ᴴ (khi cố định cần H).','Tính tỉ số truyền i₁H = n₁ / n_H và tốc độ n_H (độ lớn và chiều).','Tính tốc độ tuyệt đối n₂ của bánh vệ tinh (độ lớn và chiều).']},
+{h:'Câu 3 (4 điểm): (Hình 2) CLO2',t:'Cho cơ cấu tay quay con trượt. Biết AB = a = 0,1 m; BC = 2a; AB ⟂ AC (góc CAB = 90°); khâu 1 quay đều theo chiều kim đồng hồ với ω₁ = 10 rad/s. Xác định:',y:['Vận tốc và gia tốc điểm B₁;','Viết phương trình vận tốc của C₂ so với B₂, lập họa đồ vận tốc; tính ω₂ và vận tốc con trượt 3;','Viết phương trình gia tốc của C₂ so với B₂, lập họa đồ gia tốc;','Tính gia tốc góc ε₂ của khâu 2 và gia tốc con trượt 3.']}];
+const vB='v<sub>B₁</sub>';
+const NUMA=(()=>{const x=t=>{const q=Math.PI/2-OM*t;return A_*Math.cos(q)+Math.sqrt(4*A_*A_-A_*A_*Math.sin(q)**2)},h=1e-4;return (x(h)-2*x(0)+x(-h))/h/h})();
+const CH=[
+{tab:'Đề 3',c:0,y:-1,all:1,fig:0,ttl:'Đề thứ ba (đề luyện tập – nâng cao)',st:[
+S('Đây là đề thứ ba, khó hơn hai đề trước. Câu 1 và 2 chuyển sang hệ bánh răng hành tinh có cần H và công thức Willis. Câu 3 thêm bài toán gia tốc và một trường hợp đặc biệt khi omega hai bằng không. Đề giữ nguyên ở bên trái.',['Hành tinh: Z₁=20, Z₂=40, Z′₂=20, Z₃=80 (cố định); n₁ = 900 vg/ph','Cơ cấu: AB = a = 0,1 m; BC = 2a; ∠CAB = 90°; ω₁ = 10 rad/s ↻ (đều)'])]},
+{tab:'Câu 1a',c:0,y:0,fig:0,st:[
+S('Câu 1, ý a: bậc tự do. Đọc hình: mặt trời Z1 ở giữa, vệ tinh Z2 cùng Z phẩy 2 gắn trên cần H, vành Z3 cố định nên thuộc giá. Z2 và Z phẩy 2 dính cứng nên là một khâu.',['Khâu 1: Z₁ &nbsp; Khâu 2: Z₂ ≡ Z′₂ &nbsp; Cần H','Z₃ cố định ⇒ thuộc giá (khâu 0)',R('n = 3')],{h:['g1','g2','g2p','gH']}),
+S('Khớp loại 5 là các khớp quay: Z1 với giá, cần H với giá, và vệ tinh với cần H. Lưu ý trục vệ tinh gắn trên cần chứ không gắn giá.',['0–1, 0–H, H–2',R('p₅ = 3')],{h:['j1','jH','j2']}),
+S('Khớp loại 4 là các cặp ăn khớp: Z1 với Z2, và Z phẩy 2 với Z3.',['Z₁–Z₂, Z′₂–Z₃',R('p₄ = 2')],{h:['m12','m2p3']}),
+S('Thế vào công thức W bằng 3 n trừ 2 p năm trừ p bốn, bằng 9 trừ 6 trừ 2, bằng 1. Một khâu dẫn, ví dụ Z1, là đủ để cả hệ chuyển động xác định.',['W = 3n − 2p₅ − p₄ = 3·3 − 2·3 − 2',R('W = 1')])]},
+{tab:'1b',c:0,y:1,fig:0,st:[
+S('Ý b: điều kiện đồng trục. Cần H quay quanh tâm của Z1 và Z3, nên khoảng cách từ tâm Z1 tới trục vệ tinh tính theo cặp Z1 với Z2 phải bằng khoảng cách tính theo cặp Z phẩy 2 với Z3.',['Cặp ngoài Z₁–Z₂: a₁₂ = m(Z₁+Z₂)/2','Cặp trong Z′₂–Z₃: a′₂₃ = m(Z₃−Z′₂)/2'],{h:['m12','m2p3']}),
+S('Cho hai khoảng cách bằng nhau, cùng mô đun thì rút gọn: Z1 cộng Z2 bằng Z3 trừ Z phẩy 2.',['a₁₂ = a′₂₃ ⇒ Z₁ + Z₂ = Z₃ − Z′₂']),
+S('Thế số: 20 cộng 40 bằng 60, và 80 trừ 20 cũng bằng 60. Điều kiện đồng trục được thỏa.',['20 + 40 = 60','80 − 20 = 60',R('60 = 60 ✔ đồng trục')])]},
+{tab:'1c',c:0,y:2,fig:0,st:[
+S('Ý c: phân loại các cặp ăn khớp. Z1 với Z2 là hai bánh nằm ngoài nhau nên ăn khớp ngoài.',['Z₁–Z₂: ngoài'],{h:['m12']}),
+S('Z phẩy 2 nằm bên trong vành Z3 nên ăn khớp trong. Xong câu 1.',['Z′₂–Z₃: trong',R('1 cặp ngoài, 1 cặp trong')],{h:['m12','m2p3']})]},
+{tab:'Câu 2a',c:1,y:0,fig:0,st:[
+S('Câu 2, ý a. Hệ có cần H quay nên không dùng tích tỉ số trực tiếp. Ta dùng phương pháp Willis: trừ tốc độ của cần cho mọi khâu, hệ trở thành hệ bánh răng thường, và tỉ số truyền từ 1 đến 3 khi đó là i một ba mũ H.',['Willis: i₁₃ᴴ = (n₁ − n_H)/(n₃ − n_H)'],{h:['gH']}),
+S('Tính i một ba mũ H như hệ bánh răng thường: nhân trừ một mũ m, với m là số cặp ăn khớp ngoài, bằng 1, rồi nhân số răng bị động chia số răng chủ động.',['i₁₃ᴴ = (−1)¹ · (Z₂/Z₁)(Z₃/Z′₂)'],{h:['m12','m2p3']}),
+S(`Thế số: 40 nhân 80 chia 20 nhân 20 bằng ${K}, nên i một ba mũ H bằng âm ${K}.`,['i₁₃ᴴ = −(40·80)/(20·20)',R(`i₁₃ᴴ = ${fm(I13H).replace(',000','')}`)])]},
+{tab:'2b',c:1,y:1,fig:0,st:[
+S(`Ý b: Z3 cố định nên n ba bằng 0. Thế vào công thức Willis.`,[`(n₁ − n_H)/(0 − n_H) = −${K}`]),
+S(`Nhân chéo: n một trừ n H bằng ${K} n H, suy ra n một bằng ${I1H} n H.`,[`n₁ − n_H = ${K}·n_H`,`n₁ = ${I1H}·n_H`,R(`i₁H = n₁/n_H = ${I1H}`)]),
+S(`Với n một bằng 900 vòng trên phút, n H bằng 900 chia ${I1H} bằng ${NH} vòng trên phút, cùng chiều n một.`,[R(`n_H = 900/${I1H} = ${NH} vòng/phút (cùng chiều n₁)`)],{h:['gH']})]},
+{tab:'2c',c:1,y:2,fig:0,st:[
+S('Ý c: tốc độ tuyệt đối của vệ tinh Z2. Áp dụng Willis cho cặp Z1 và Z2 khi cố định cần H.',['(n₁ − n_H)/(n₂ − n_H) = −Z₂/Z₁'],{h:['g1','g2']}),
+S(`Thế số: n một trừ n H bằng ${N1-NH}, chia cho n hai trừ ${NH} bằng âm 2. Suy ra n hai trừ ${NH} bằng âm ${(N1-NH)/2}, nên n hai bằng âm ${-N2} vòng trên phút.`,[`${N1-NH}/(n₂ − ${NH}) = −2`,`n₂ − ${NH} = −${(N1-NH)/2}`,R(`n₂ = −${-N2} vòng/phút (ngược chiều n₁)`)]),
+S(`Kiểm tra bằng cặp Z phẩy 2 với vành Z3. Ăn khớp trong nên dấu cộng: n hai trừ n H chia n ba trừ n H bằng Z3 chia Z phẩy 2 bằng ${z[3]/z.p2}. Với n ba bằng 0 ta có n hai trừ ${NH} bằng âm ${NH*z[3]/z.p2}, đúng như trên. Hai cặp cho cùng một kết quả nên hệ nhất quán.`,[`(n₂ − n_H)/(n₃ − n_H) = +Z₃/Z′₂ = ${z[3]/z.p2}`,`(n₂ − ${NH})/(0 − ${NH}) = ${z[3]/z.p2} ⇒ n₂ = −${-N2b} ✔`],{h:['g2p','g3']}),
+S('Mô phỏng: cần H quay chậm cùng chiều Z1, còn vệ tinh vừa quay quanh Z1 theo cần vừa tự quay ngược chiều. Xong câu 2.',[`Mô phỏng: n_H/n₁ = ${fm(wH)}; n₂/n₁ = ${fm(w2)}`])]},
+{tab:'Câu 3a',c:2,y:0,fig:1,st:[
+S('Câu 3 có hình 2, tay quay con trượt. Cho AB bằng a bằng 0,1 mét, BC bằng 2a, AB vuông góc AC, khâu 1 quay đều theo chiều kim đồng hồ với omega một bằng 10 radian trên giây. Đề có hai điểm khó: hỏi cả gia tốc, và hình đặc biệt vì tay quay thẳng đứng.',['AB = a = 0,1 m; BC = 2a; ∠CAB = 90°','ω₁ = 10 rad/s ↻, đều (ε₁ = 0)'],{sim:1}),
+S('Ý a: vận tốc B một. B thuộc khâu 1 nên v B bằng omega một nhân AB, vuông góc AB. AB thẳng đứng nên v B nằm ngang. Quay theo chiều kim đồng hồ, B ở phía trên A nên chạy sang phải.',[R(`${vB} = ω₁·a = 10·0,1 = ${f2(VB)} m/s`),'Phương ngang, hướng sang phải'],{v:['B']}),
+S('Gia tốc B một. Khâu 1 quay đều nên gia tốc tiếp bằng 0, chỉ còn gia tốc pháp tuyến hướng từ B về A, độ lớn omega một bình phương nhân a.',['ε₁ = 0 ⇒ a<sup>t</sup><sub>B₁</sub> = 0',R(`a<sub>B₁</sub> = ω₁²·a = 10²·0,1 = ${AB_} m/s² (hướng B → A)`)],{acc:['B']})]},
+{tab:'3b',c:2,y:1,fig:1,st:[
+S('Ý b: B một và B hai là cùng một điểm nên vận tốc bằng nhau. Viết phương trình vận tốc của C hai so với B hai.',[`v<sub>B₂</sub> = ${vB} = ${f2(VB)} m/s`,R('v<sub>C₂</sub> = v<sub>B₂</sub> + v<sub>C₂B₂</sub>')],{v:['B']}),
+S('Phân tích phương chiều: v C hai nằm ngang vì con trượt chạy trên giá ngang. v B hai cũng nằm ngang. Còn v C hai B hai vuông góc BC.',['v<sub>C₂</sub>: phương ngang, độ lớn ?','v<sub>B₂</sub>: phương ngang, 1 m/s, sang phải','v<sub>C₂B₂</sub>: ⟂ BC, độ lớn ?'],{v:['B','C']}),
+S('Chú ý: v C và v B đều nằm ngang nên hiệu của chúng, tức v C hai B hai, cũng nằm ngang. Nhưng v C hai B hai phải vuông góc BC, mà BC không nằm ngang. Chỉ còn một khả năng: vector này bằng không.',['v<sub>C₂B₂</sub> nằm ngang và ⟂ BC (BC không ngang)',R('⇒ v<sub>C₂B₂</sub> = 0')],{v:['B','C'],poly:1}),
+S('Trên họa đồ vận tốc, điểm c trùng điểm b. Vậy tại thời điểm này khâu 2 chuyển động tịnh tiến tức thời.',['Họa đồ: c ≡ b','v<sub>C₂</sub> = v<sub>B₂</sub> = 1 m/s'],{v:['B','C'],poly:1}),
+S('Vậy omega hai bằng v C hai B hai chia BC bằng 0, và vận tốc con trượt bằng 1 mét trên giây sang phải. Kiểm tra bằng tâm quay tức thời: đường vuông góc v B và đường vuông góc v C đều thẳng đứng, song song nhau nên tâm P ở vô cực, khâu 2 tịnh tiến tức thời.',[R('ω₂ = v<sub>C₂B₂</sub>/BC = 0'),R('v<sub>C₃</sub> = v<sub>C₂</sub> = 1 m/s →'),'P ở vô cực ⇒ tịnh tiến tức thời'],{v:['B','C']})]},
+{tab:'3c',c:2,y:2,fig:1,st:[
+S('Ý c: phương trình gia tốc. Khâu 2 chuyển động song phẳng nên gia tốc C hai bằng gia tốc B hai cộng gia tốc tương đối, gồm thành phần pháp và thành phần tiếp.',[R('a<sub>C₂</sub> = a<sub>B₂</sub> + a<sup>n</sup><sub>C₂B₂</sub> + a<sup>t</sup><sub>C₂B₂</sub>')],{acc:['B']}),
+S('Thành phần pháp có độ lớn omega hai bình phương nhân BC. Vì omega hai bằng 0 nên thành phần pháp bằng 0. Đừng dùng nhầm omega một ở đây.',['a<sup>n</sup><sub>C₂B₂</sub> = ω₂²·BC = 0 ⇒ a<sub>C₂</sub> = a<sub>B₂</sub> + a<sup>t</sup><sub>C₂B₂</sub>']),
+S('Phân tích phương chiều. a C hai nằm ngang. a B hai đã biết: thẳng đứng, hướng xuống, 10 mét trên giây bình phương. a tiếp C hai B hai vuông góc BC. Hai ẩn là độ lớn của a C hai và a tiếp, nên giải được.',['a<sub>C₂</sub>: phương ngang, độ lớn ?',`a<sub>B₂</sub>: thẳng đứng, xuống, ${AB_} m/s²`,'a<sup>t</sup><sub>C₂B₂</sub>: ⟂ BC, độ lớn ?'],{acc:['B','C','CB']}),
+S('Họa đồ gia tốc: từ cực pi đặt pi b phẩy bằng a B, từ b phẩy kẻ đường vuông góc BC, từ pi kẻ đường nằm ngang, hai đường cắt nhau tại c phẩy.',[],{acc:['B','C','CB'],apoly:1})]},
+{tab:'3d',c:2,y:3,fig:1,st:[
+S('Ý d: đọc họa đồ gia tốc. Tam giác pi b phẩy c phẩy vuông tại pi, vì a B thẳng đứng còn a C nằm ngang. Đường vuông góc BC hợp với phương ngang góc 60 độ.',['△πb′c′ vuông tại π; góc giữa b′c′ và phương ngang = 60°'],{acc:['B','C','CB'],apoly:1}),
+S(`Suy ra b phẩy c phẩy bằng a B chia sin 60 độ, bằng ${f2s(AT)}. Và pi c phẩy bằng a B chia tang 60 độ, bằng ${f2s(AC_)}.`,[`a<sup>t</sup><sub>C₂B₂</sub> = b′c′ = a<sub>B</sub>/sin60° = ${AB_}/0,866 = ${f2(AT)} m/s²`,`a<sub>C₂</sub> = πc′ = a<sub>B</sub>/tan60° = ${f2(AC_)} m/s²`],{acc:['B','C','CB'],apoly:1}),
+S(`Gia tốc con trượt 3 bằng a C hai, ${f2s(AC_)} mét trên giây bình phương, hướng sang phải.`,[R(`a<sub>C₃</sub> = a<sub>C₂</sub> = ${f2(AC_)} m/s² →`)],{acc:['C']}),
+S(`Gia tốc góc epsilon hai bằng a tiếp chia BC bằng ${f2s(AT)} chia 0 phẩy 2, bằng ${f2s(EP)} radian trên giây bình phương. Chiều: a tiếp tại C hướng lên bên phải, tức khâu 2 quay ngược chiều kim đồng hồ.`,['BC = 2a = 0,2 m',R(`ε₂ = a<sup>t</sup>/BC = ${f2(AT)}/0,2 = ${f2(EP)} rad/s² (ngược chiều kim đồng hồ)`)],{acc:['C','CB']}),
+S(`Kiểm tra bằng đạo hàm. Vị trí con trượt x C bằng a cô-sin theta cộng a nhân căn của 4 trừ sin bình phương theta. Cho theta giảm đều 10 radian trên giây và đạo hàm hai lần tại theta bằng 90 độ, ta được gia tốc ${f2s(AC_)}. Khớp.`,['x<sub>C</sub>(θ) = a·cosθ + a·√(4 − sin²θ)',`θ = 90° − ω₁t ⇒ d²x<sub>C</sub>/dt² = ${f2(NUMA)} m/s² ✔ (tính số)`]),
+S('Bấm phát để xem cơ cấu chuyển động. Tại đúng vị trí tay quay thẳng đứng, omega hai đổi dấu nên bằng 0, nhưng gia tốc góc khác 0. Vậy là xong cả đề.',['ω₂/ω₁ = cosθ / √(4 − sin²θ)',`θ = 90°: ω₂ = 0 nhưng ε₂ = ${f2(EP)} rad/s² ≠ 0`],{sim:1,v:['B','C','CB']})]},
+{tab:'Đáp án',all:1,c:2,y:-1,fig:1,ttl:'Tổng kết đáp án đề 3',st:[
+S('Tổng kết. Câu 1: n bằng 3, p năm bằng 3, p bốn bằng 2, bậc tự do bằng 1. Điều kiện đồng trục thỏa. Một cặp ăn khớp ngoài, một cặp ăn khớp trong.',[R('Câu 1: a) n = 3, p₅ = 3, p₄ = 2 ⇒ W = 1'),R('b) 20 + 40 = 80 − 20 ✔ &nbsp; c) 1 ngoài, 1 trong')]),
+S(`Câu 2: i một ba mũ H bằng âm ${K}, i một H bằng ${I1H}, n H bằng ${NH} vòng trên phút cùng chiều, n hai bằng âm ${-N2} vòng trên phút.`,[R(`Câu 2: a) i₁₃ᴴ = −${K}`),R(`b) i₁H = ${I1H}; n_H = ${NH} vòng/phút (cùng chiều n₁)`),R(`c) n₂ = −${-N2} vòng/phút (ngược chiều n₁)`)]),
+S(`Câu 3: v B bằng 1 mét trên giây, a B bằng ${AB_}. Omega hai bằng 0, v C bằng 1. Gia tốc a C bằng ${f2s(AC_)}, epsilon hai bằng ${f2s(EP)} ngược chiều kim đồng hồ. Hết đề.`,[R(`Câu 3: a) v<sub>B₁</sub> = 1 m/s, a<sub>B₁</sub> = ${AB_} m/s²`),R('b) ω₂ = 0; v<sub>C₃</sub> = 1 m/s'),R(`c) a<sub>C₂</sub> = a<sub>B₂</sub> + a<sup>t</sup><sub>C₂B₂</sub> (a<sup>n</sup> = 0)`),R(`d) ε₂ = ${f2(EP)} rad/s² ↺; a<sub>C₃</sub> = ${f2(AC_)} m/s²`)])]}];
+/* ===== Hình hành tinh (nhìn từ đầu trục) ===== */
+const $=id=>document.getElementById(id);
+const O=[210,165],kk=1.3,r1=z[1]*kk,r2=z[2]*kk,r2p=z.p2*kk,r3=z[3]*kk,D=r1+r2,W={w1:1,wH,w2};
+const TT=(r,Z,fill)=>{const d=(Math.PI*r/Z).toFixed(2);return `<circle r="${r}" fill="${fill?'currentColor':'none'}" fill-opacity=".12" stroke="currentColor" stroke-width="6" stroke-dasharray="${d} ${d}"/>`};
+const SK=r=>`<line x1="${-r+7}" y1="0" x2="${r-7}" y2="0" stroke="currentColor" stroke-width="2"/><line x1="0" y1="${-r+7}" x2="0" y2="${r-7}" stroke="currentColor" stroke-width="2"/><circle cx="${r-14}" cy="0" r="4" fill="currentColor"/>`;
+let g=`<g data-i="g3" style="color:var(--c2)" transform="translate(${O})">${TT(r3,z[3],0)}<circle r="${r3+9}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+for(let i=0;i<24;i++){const a=i*15*Math.PI/180;g+=`<line x1="${((r3+9)*Math.cos(a)).toFixed(1)}" y1="${((r3+9)*Math.sin(a)).toFixed(1)}" x2="${((r3+19)*Math.cos(a-.25)).toFixed(1)}" y2="${((r3+19)*Math.sin(a-.25)).toFixed(1)}" stroke="var(--mute)" stroke-width="1.5"/>`}
+g+=`</g><g id="gc" data-i="gH" style="color:var(--ink)"><line x1="${-D}" y1="0" x2="${D}" y2="0" stroke="currentColor" stroke-width="5" stroke-opacity=".45" stroke-linecap="round"/><circle r="9" fill="var(--card)" stroke="currentColor" stroke-width="2.5"/></g>`;
+g+=`<g id="gs" data-i="g1" style="color:var(--c0)">${TT(r1,z[1],1)}${SK(r1)}</g>`;
+[0,1].forEach(i=>g+=`<g id="pl${i}"><g data-i="g2" style="color:var(--c1)">${TT(r2,z[2],1)}${SK(r2)}</g><g data-i="g2p" style="color:var(--c3)">${TT(r2p,z.p2,1)}${SK(r2p)}</g></g>`);
+[['j1',-9,0],['jH',9,0]].forEach(([id,x,y])=>g+=`<circle class="mk" data-i="${id}" cx="${O[0]+x}" cy="${O[1]+y}" r="6"/>`);
+['j2','m12','m2p3'].forEach(id=>g+=`<circle class="mk" id="mk_${id}" data-i="${id}" cx="${O[0]}" cy="${O[1]}" r="6"/>`);
+g+=`<text x="8" y="16" font-size="11">Nhìn từ đầu trục · Z₃ (vành) cố định, cần H quay</text><text x="8" y="312" font-size="11">Z₁=20 (mặt trời) · Z₂=40, Z′₂=20 (vệ tinh kép)</text><text x="8" y="328" font-size="11">Z₃=80 (vành trong, nối giá) · H: cần</text>`;
+$('fgear').innerHTML=g;
+function drawGear(){const aH=phi*W.wH,r=Math.PI/180,ca=Math.cos(aH*r),sa=Math.sin(aH*r);
+ $('gs').setAttribute('transform',`translate(${O}) rotate(${phi})`);$('gc').setAttribute('transform',`translate(${O}) rotate(${aH})`);
+ [1,-1].forEach((s,i)=>$('pl'+i).setAttribute('transform',`translate(${(O[0]+s*D*ca).toFixed(1)} ${(O[1]+s*D*sa).toFixed(1)}) rotate(${phi*W.w2})`));
+ [['j2',D],['m12',r1],['m2p3',r3]].forEach(([id,d])=>{const e=$('mk_'+id);e.setAttribute('cx',(O[0]+d*ca).toFixed(1));e.setAttribute('cy',(O[1]+d*sa).toFixed(1))})}
+/* ===== Hình cơ cấu (BC = 2a, θ₀ = 90°) ===== */
+const L=(a,b,c,d,col,w)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>`;
+const AR=(x,y,dx,dy,c,t)=>{const l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l,X=x+dx,Y=y+dy;return L(x,y,X-ux*6,Y-uy*6,c,3)+`<polygon fill="${c}" points="${X},${Y} ${X-ux*11-uy*5},${Y-uy*11+ux*5} ${X-ux*11+uy*5},${Y-uy*11-ux*5}"/><text x="${X+5}" y="${Y-6}" font-size="13" fill="${c}" style="fill:${c}">${t}</text>`};
+const SB=t=>`<tspan font-size="9" dy="3">${t}</tspan>`;
+const A=[80,190],a0=100,BB=200,T0=Math.PI/2;let phi=0,th=T0,last=0;
+function kin(T){const c=Math.cos(T),n=Math.sin(T),dx=Math.sqrt(BB*BB-a0*a0*n*n);return{c,n,dx,k2:a0*c/dx,B:[A[0]+a0*c,190-a0*n],C:[A[0]+a0*c+dx,190]}}
+function drawLink(s){
+ const T=s.sim?th:T0,{c,n,dx,k2,B,C}=kin(T),v=s.v||[],ac=s.acc||[];
+ let o=L(60,190,500,190,'var(--ink)',3);for(let x=80;x<500;x+=30)o+=L(x,190,x-10,203,'var(--mute)',2);
+ o+=L(...A,...B,'var(--c0)',6)+L(...B,...C,'var(--c1)',6)+`<rect x="${C[0]-22}" y="178" width="44" height="24" fill="var(--card)" fill-opacity=".8" stroke="var(--ink)" stroke-width="2"/>`;
+ [A,B,C].forEach(p=>o+=`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="var(--card)" stroke="var(--ink)" stroke-width="2.5"/>`);
+ o+=`<text x="${A[0]-22}" y="${A[1]+22}" font-size="14">A</text><text x="${B[0]-18}" y="${B[1]-10}" font-size="14">B</text><text x="${C[0]+9}" y="${C[1]+5}" font-size="13">C</text><text x="${A[0]-46}" y="${A[1]-30}" font-size="13">ω₁</text><path d="M${A[0]-33.8},${A[1]-12.3} A36,36 0 0 1 ${A[0]+33.8},${A[1]-12.3}" fill="none" stroke="var(--ink)" stroke-width="2"/><polygon points="${A[0]+36.2},${A[1]-5.7} ${A[0]+28.5},${A[1]-11} ${A[0]+37.5},${A[1]-18}" fill="var(--ink)"/><text x="${(A[0]+B[0])/2-18}" y="${(A[1]+B[1])/2-4}" font-size="13">1</text><text x="${(B[0]+C[0])/2+12}" y="${(B[1]+C[1])/2-8}" font-size="13">2</text><text x="${C[0]-4}" y="${C[1]+38}" font-size="13">3</text><text x="${A[0]+90}" y="${A[1]+36}" font-size="13">0</text>`;
+ if(!s.sim)o+=`<path d="M${A[0]+16},${A[1]} L${A[0]+16},${A[1]-16} L${A[0]},${A[1]-16}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+ if(v.includes('B'))o+=AR(...B,60*n,60*c,'var(--c0)','v'+SB('B'));
+ if(v.includes('C'))o+=AR(...C,60*n*(1+k2),0,'var(--c4)','v'+SB('C'));
+ if(v.includes('CB')&&Math.abs(k2)>.01)o+=AR(...C,60*k2*n,-60*k2*dx/a0,'var(--c1)','v'+SB('CB'));
+ if(ac.length){const q=a0*n*(1-k2*k2)/dx,aCx=-c-k2*k2*dx/a0+q*n;
+  if(ac.includes('B'))o+=AR(...B,-60*c,60*n,'var(--c3)','a'+SB('B'));
+  if(ac.includes('C'))o+=AR(...C,60*aCx,0,'var(--c4)','a'+SB('C'));
+  if(ac.includes('CB'))o+=AR(...C,60*q*n,-60*q*dx/a0,'var(--c2)','a'+SB('t'));
+  if(s.apoly){const P=[300,40],b=[P[0]-60*c,P[1]+60*n],cc=[P[0]+60*aCx,P[1]];
+   o+=AR(...P,b[0]-P[0],b[1]-P[1],'var(--c3)','')+AR(...P,cc[0]-P[0],0,'var(--c4)','')+AR(...b,cc[0]-b[0],cc[1]-b[1],'var(--c2)','')+`<text x="${P[0]-16}" y="${P[1]-4}" font-size="13">π</text><text x="${b[0]-16}" y="${b[1]+12}" font-size="13">b′</text><text x="${cc[0]+6}" y="${cc[1]+14}" font-size="13">c′</text><text x="${P[0]-10}" y="20" font-size="11" style="fill:var(--mute)">Họa đồ gia tốc</text>`}}
+ if(s.poly){const p=[40,50],b=[p[0]+60*n,p[1]+60*c],cc=[p[0]+60*n*(1+k2),p[1]],same=Math.hypot(cc[0]-b[0],cc[1]-b[1])<1;
+  o+=AR(...p,b[0]-p[0],b[1]-p[1],'var(--c0)','')+AR(...p,cc[0]-p[0],0,'var(--c4)','');if(!same)o+=AR(...b,cc[0]-b[0],cc[1]-b[1],'var(--c1)','');
+  o+=`<text x="${p[0]-14}" y="${p[1]-4}" font-size="13">p</text><text x="${b[0]+4}" y="${b[1]+16}" font-size="13">${same?'b ≡ c':'b'}</text>${same?'':`<text x="${cc[0]+4}" y="${cc[1]+16}" font-size="13">c</text>`}<text x="${p[0]}" y="22" font-size="11" style="fill:var(--mute)">Họa đồ vận tốc</text>`}
+ if(s.sim)o+=`<text x="20" y="320" font-size="13">θ = ${Math.round(((T*180/Math.PI)%360+360)%360)}° &nbsp; ω₂ = ${k2.toFixed(2).replace('.',',')}·ω₁ ${Math.abs(k2)<.005?'':k2>=0?'(ngược chiều ω₁)':'(cùng chiều ω₁)'}</text>`;
+ $('flink').innerHTML=o}
+/* ===== Điều khiển ===== */
+let ci=0,si=0,playing=false,gen=0,tm;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,cur=()=>CH[ci].st[si];
+function render(){
+ const c=CH[ci],s=cur(),q=CAU[c.c],h=s.h||[];
+ $('tabs').innerHTML=CH.map((x,j)=>`<button data-j="${j}" class="${j==ci?'on':''}">${x.tab}</button>`).join('');
+ $('de').innerHTML=c.all?CAU.map(x=>`<b>${x.h}</b>${x.t}<ol>${x.y.map(t=>`<li>${t}</li>`).join('')}</ol>`).join(''):`<b>${q.h}</b>${q.t}<ol>${q.y.map((t,j)=>`<li class="${j==c.y?'on':''}">${t}</li>`).join('')}</ol>`;
+ $('ttl').innerHTML=c.ttl||`${q.h.split(':')[0].split(' (')[0]}${c.c==2?' (Hình 2)':''} – ${String.fromCharCode(97+c.y)}) ${q.y[c.y]}`;
+ $('fgear').style.display=c.fig?'none':'block';$('flink').style.display=c.fig?'block':'none';
+ document.querySelectorAll('#fgear [data-i]').forEach(e=>{const on=h.includes(e.dataset.i);if(e.classList.contains('mk'))e.classList.toggle('on',on);else e.classList.toggle('dim',h.length>0&&!on)});
+ let Ls=[],n=0;for(let j=0;j<=si;j++){const t=c.st[j];if(t.clr)Ls=[];Ls.push(...t.a);n=t.a.length}
+ $('lines').innerHTML=Ls.map((x,j)=>`<div class="${j>=Ls.length-n?'new':''}">${x}</div>`).join('');
+ $('sub').textContent=s.s;$('bar').firstChild.style.width=((si+1)/c.st.length*100)+'%';
+ $('play').textContent=playing?'Tạm dừng':'Phát';
+ if(c.fig)drawLink(s)}
+function frame(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;
+ if(!RM){if(CH[ci].fig){if(cur().sim)th-=dt*.9}else phi+=dt*50}
+ if(CH[ci].fig)drawLink(cur());else drawGear();
+ requestAnimationFrame(frame)}
+function speak(){
+ clearTimeout(tm);const gg=++gen,txt=cur().s;let done=false;
+ const fin=()=>{if(done||gg!==gen||!playing)return;done=true;clearTimeout(tm);tm=setTimeout(()=>{if(gg===gen&&playing)step(1)},900)};
+ let ss=window.speechSynthesis,v=null;
+ try{ss.cancel();v=ss.getVoices().find(x=>/^vi/i.test(x.lang))}catch(e){}
+ if(!ss||!v){tm=setTimeout(fin,txt.length*70+1800);return}
+ const u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang='vi-VN';u.rate=.95;u.onend=fin;u.onerror=fin;
+ ss.speak(u);tm=setTimeout(fin,txt.length*220+4000)}
+function step(d){
+ if(d>0){if(si<CH[ci].st.length-1)si++;else if(ci<CH.length-1){ci++;si=0}else{pause();return}}
+ else{if(si>0)si--;else if(ci>0){ci--;si=CH[ci].st.length-1}}
+ render();if(playing)speak()}
+function pause(){playing=false;gen++;clearTimeout(tm);try{speechSynthesis.cancel()}catch(e){}render()}
+$('play').onclick=()=>{if(playing)pause();else{if(ci==CH.length-1&&si==CH[ci].st.length-1){ci=0;si=0}playing=true;render();speak()}};
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+$('tabs').onclick=e=>{const j=e.target.dataset&&e.target.dataset.j;if(j==null)return;ci=+j;si=0;render();if(playing)speak()};
+render();requestAnimationFrame(frame);
+</script></body></html>
