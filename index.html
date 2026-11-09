@@ -1052,7 +1052,9 @@ $("copyBtn").addEventListener("click", async () => {
     var baiTap = [
       { t: 'Bài tập / bài giảng bổ sung (đang cập nhật)', u: null }
     ];
-    var chapters = [];
+    var chapters = [
+      { t: 'Chương 1 – Phần tử và hệ thống điều khiển tự động', u: 'ly-thuyet-dieu-khien-tu-dong/Chương 1 – Phần tử và hệ thống điều khiển tự động.html' }
+    ];
 
     function renderItem(x, idx) {
       if (x.u) {
@@ -1264,10 +1266,13 @@ $("copyBtn").addEventListener("click", async () => {
   function showCasioGuide(s) {
     var closeSvg = CK.svg("M6 6l12 12M18 6 6 18");
     var backSvg = CK.svg("M14.4 6 8.4 12l6 6");
+    /* Chương 1 dùng file riêng "CHƯƠNG 1. MA TRẬN - ĐỊNH THỨC.html". */
     var casioFiles = [
-      "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 1.html",
-      "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 2.html",
-      "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 3.html"
+      { u: "dai-so-tuyen-tinh/CHƯƠNG 1. MA TRẬN - ĐỊNH THỨC.html", t: "CHƯƠNG 1. MA TRẬN - ĐỊNH THỨC" },
+      { u: "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 2.html", t: "Chương 2" },
+      { u: "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 3.html", t: "Chương 3" },
+      { u: "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 4.html", t: "Chương 4" },
+      { u: "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 5.html", t: "Chương 5" }
     ];
     mbody.innerHTML =
       '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
@@ -1279,10 +1284,10 @@ $("copyBtn").addEventListener("click", async () => {
         '<div class="exam-parts">' +
           '<span class="pl">Chương</span>' +
           '<div class="seg" style="flex-direction:column;align-items:stretch;gap:6px;">' +
-            casioFiles.map(function (u, idx) {
-              return '<a class="opt" href="' + CK.url(u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
+            casioFiles.map(function (f, idx) {
+              return '<a class="opt" href="' + CK.url(f.u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
                 '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx + 1) + '</span>' +
-                '<span style="flex:1;min-width:0;">Chương ' + (idx + 1) + '</span>' +
+                '<span style="flex:1;min-width:0;">' + f.t + '</span>' +
                 '<span style="flex:none;opacity:.6;">↗</span>' +
               '</a>';
             }).join("") +

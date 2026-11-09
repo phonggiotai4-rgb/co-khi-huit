@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casio fx-580VN X: bấm Ma trận</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9ece6;--card:#fff;--fg:#1d2321;--mut:#5d6762;--line:#cfd5cd;--acc:#0b7a68;--accfg:#fff;--ok:#14762f;--okfg:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--card:#1e2421;--fg:#e8ede9;--mut:#9aa6a0;--line:#34403a;--acc:#2fd3b4;--accfg:#06241d;--ok:#5fd17f;--okfg:#06210f}}
+:root[data-theme="dark"]{--bg:#141816;--card:#1e2421;--fg:#e8ede9;--mut:#9aa6a0;--line:#34403a;--acc:#2fd3b4;--accfg:#06241d;--ok:#5fd17f;--okfg:#06210f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.5 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:960px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.4rem;margin:0 0 4px;font-weight:800}
+.sub{margin:0 0 16px;color:var(--mut);font-size:.92rem}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.9rem;font-family:inherit;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tab:focus-visible,.ctl button:focus-visible,.key:focus-visible,.chip:focus-visible{outline:3px solid #ffb000;outline-offset:2px}
+.wrap{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}
+@media (max-width:760px){.wrap{display:flex;flex-direction:column;align-items:stretch;gap:0}.side{display:contents}.calc{order:2;margin:0 auto 14px}.p1{order:0}.p2{order:1;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}.p3,.tip{order:3}}
+.calc{width:330px;max-width:100%;margin:0 auto;background:#3b3f3c;border-radius:26px 26px 40px 40px;padding:16px 16px 20px;box-shadow:0 10px 30px rgba(0,0,0,.35);border:3px solid #cfd2d0}
+.brand{display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:.8rem;margin-bottom:8px}
+.brand span:last-child{font-weight:400;opacity:.8}
+.bezel{background:#111;border-radius:14px;padding:10px}
+.lcd{background:#d4dccb;border-radius:6px;height:104px;padding:6px 8px;color:#1a1f17;font-family:"Courier New",monospace;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.ex{font-size:19px;min-height:26px;word-break:break-all}
+.rs{text-align:right;font-size:24px;font-weight:700;min-height:30px}
+.cur{display:inline-block;width:2px;height:1em;background:#1a1f17;vertical-align:-2px;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.8em;line-height:1.1;margin:0 2px}
+.fr i{font-style:normal;padding:0 3px}.fr i:first-child{border-bottom:2px solid currentColor}
+.top{display:flex;align-items:center;justify-content:space-between;margin:26px 0 22px}
+.dp{display:grid;grid-template-columns:repeat(3,36px);grid-template-rows:repeat(3,26px);gap:2px}
+.dp .key{height:100%;border-radius:10px;background:#9a9d9a}.dp .up{grid-area:1/2}.dp .left{grid-area:2/1}.dp .right{grid-area:2/3}.dp .down{grid-area:3/2}
+.dp .mid{grid-area:2/2;background:#2a2c2b;border-radius:6px}
+.rows{display:flex;flex-direction:column;gap:20px}
+.row{display:grid;gap:8px}
+.key{position:relative;border:0;border-radius:8px;height:34px;background:#1b1d1e;color:#fff;font:600 13px/1 "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;padding:0;transition:transform .12s,filter .12s}
+.key .s{position:absolute;top:-14px;left:-4px;right:-4px;text-align:center;font-size:9px;font-weight:600;color:#f2a93b;white-space:nowrap;line-height:12px}
+.n .key,.key.n{background:#f1f1f1;color:#1e1e1e;height:40px;font-size:18px;font-weight:700}
+.key.blue{background:#2f6bff;color:#fff}
+.key.eq{background:#1b1d1e;color:#fff;font-size:20px}
+.key.rnd{font-size:10px;border-radius:50%;width:38px;height:38px;background:#9a9d9a}
+.key.rnd.on{background:#9a9d9a}
+.key.press{transform:scale(.88);filter:brightness(1.7)}
+.key.hl{z-index:2;outline:3px solid #00e6c8;outline-offset:2px;animation:ping 1.1s infinite}
+.key.hl.sh{outline-color:#ffb000}
+.key.hl.sh .s{background:#ffb000;color:#111;border-radius:3px;font-weight:800;font-size:10px}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(0,230,200,.8)}100%{box-shadow:0 0 0 14px rgba(0,230,200,0)}}
+.key.hl.sh{animation-name:ping2}@keyframes ping2{0%{box-shadow:0 0 0 0 rgba(255,176,0,.85)}100%{box-shadow:0 0 0 14px rgba(255,176,0,0)}}
+@media (prefers-reduced-motion:reduce){.key.hl,.cur{animation:none}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.qt{font-size:1.2rem;font-weight:800;margin:0 0 4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.opt{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-weight:600}
+.opt.right{background:var(--ok);color:var(--okfg);border-color:var(--ok)}
+.cap{font-size:1.15rem;min-height:84px}
+.cap b{background:var(--acc);color:var(--accfg);border-radius:6px;padding:1px 9px;white-space:nowrap}
+.cap small{display:block;color:var(--mut);font-size:.88rem;margin-top:6px}
+.st{color:var(--mut);font-size:.85rem;margin-bottom:4px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin:10px 0}.bar div{height:100%;background:var(--acc);border-radius:3px;transition:width .3s}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ctl button,.ctl select{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:8px 12px;font-weight:600;font-size:.9rem;font-family:inherit;cursor:pointer}
+.ctl button.main{background:var(--acc);color:var(--accfg);border-color:var(--acc);min-width:96px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:6px;min-width:34px;padding:4px 8px;font-weight:600;font-size:.85rem;font-family:inherit;cursor:pointer}
+.chip.done{background:var(--line)}.chip.now{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tip{color:var(--mut);font-size:.85rem;margin:0}
+.mt{display:inline-table;vertical-align:middle;margin:0 4px;border-left:2px solid currentColor;border-right:2px solid currentColor;border-radius:4px;border-collapse:collapse;font-size:1.02em}
+.mt.dt{border-radius:0;margin:6px 4px} .mt:not(.dt){border-radius:0;background:linear-gradient(currentColor,currentColor) 0 0/6px 2px no-repeat,linear-gradient(currentColor,currentColor) 0 100%/6px 2px no-repeat,linear-gradient(currentColor,currentColor) 100% 0/6px 2px no-repeat,linear-gradient(currentColor,currentColor) 100% 100%/6px 2px no-repeat} .mt td{padding:2px 9px;text-align:center;white-space:nowrap}
+.mt .fr{font-size:.82em}
+sup{line-height:0;font-size:.7em}
+.cap b{display:inline-block;vertical-align:middle;line-height:1.3;padding:4px 12px;border-radius:8px}
+.cap b .mt{margin:2px 4px}
+.opt{display:flex;align-items:center;gap:4px}
+.mx{border-left:2px solid #1a1f17;border-right:2px solid #1a1f17;font-size:15px;border-collapse:collapse;display:inline-table}.mx td{padding:0 7px;text-align:right}.mx td.c{background:#1a1f17;color:#d4dccb}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+details.tip summary{cursor:pointer;font-weight:600;color:var(--fg)}
+details.tip ul{margin:8px 0 0;padding-left:20px}details.tip li{margin-bottom:4px}
+@media (max-width:760px){.p2{padding:10px 12px}.cap{min-height:56px;font-size:1.05rem}.ctl button,.ctl select{padding:6px 10px}}
+</style>
+</head>
+<body>
+<main>
+<h1>CHƯƠNG 1. MA TRẬN - ĐỊNH THỨC</h1>
+<p class="sub">Bấm theo phím đang sáng trên máy. Bấm Phát để xem tự chạy, hoặc tự bấm vào phím sáng để sang bước tiếp.</p>
+<div class="tabs" role="tablist" aria-label="Chọn câu hỏi" id="tabs"></div>
+<div class="wrap">
+  <div class="calc" aria-label="Máy tính Casio fx-580VN X">
+    <div class="brand"><span>CASIO</span><span>fx-580VN X</span></div>
+    <div class="bezel"><div class="lcd"><div class="ex" id="ex"></div><div class="rs" id="rs"></div></div></div>
+    <div class="top" id="top"></div>
+    <div class="rows" id="rows"></div>
+  </div>
+  <div class="side">
+    <div class="panel p1"><p class="qt" id="qt"></p><div class="opts" id="opts"></div></div>
+    <div class="panel p2">
+      <div class="st" id="st"></div>
+      <div class="cap" id="cap" aria-live="polite"></div>
+      <div class="bar"><div id="bar"></div></div>
+      <div class="st" id="vn" role="status"></div>
+      <div class="ctl">
+        <button id="rst" title="Về đầu">⏮ Đầu</button>
+        <button id="prv">◀ Lùi</button>
+        <button id="ply" class="main">▶ Phát</button>
+        <button id="nxt">Tiếp ▶</button>
+        <select id="spd" aria-label="Tốc độ"><option value="2400">Chậm</option><option value="1700" selected>Vừa</option><option value="900">Nhanh</option></select>
+        <button id="vox" aria-pressed="false">🔇 Giọng đọc: Tắt</button>
+      </div>
+    </div>
+    <div class="panel p3"><div class="st">Dãy phím của câu này (bấm vào để nhảy tới bước đó)</div><div class="chips" id="chips"></div></div>
+    <p class="tip">Chữ vàng trên phím là chức năng SHIFT. Các màn hình menu và bảng nhập ma trận được dựng theo ảnh máy thật; trang 2 của OPTN (MatAns, Định thức, Mtrận chuyển vị, Ma trận đơn vị) và màn hình MatAns⁻¹ đã đối chiếu với máy thật. Bước có dấu ⚠ (OPTN → 1 để tạo ma trận) là phần suy ra, chưa thấy màn hình thật.</p>
+    <details class="tip"><summary>Ghi chú từng câu</summary><ul><li><b>Câu 3</b> nhập MatA, MatB mới; câu 4 và 5 dùng lại hai ma trận đó.</li><li><b>Câu 14</b> là câu lý thuyết (ma trận 100×100 vượt giới hạn 4×4 của máy) nên không bấm phím nhập ma trận.</li><li><b>Câu 19</b> có mũ 2009 quá lớn để bấm trực tiếp, nên dãy phím kiểm tra A² = I và A³ = A rồi suy ra A²⁰⁰⁹ = A.</li><li><b>Câu 27</b> nhập MatA, MatB mới, bấm MatA×MatB trước rồi lấy MatAns⁻¹ (máy không cho nghịch đảo cả biểu thức trong ngoặc).</li><li><b>Câu 37</b> giải XA = B bằng X = MatB × MatA⁻¹ (nhập lại MatA, MatB mới).</li><li><b>Câu 51</b> có chữ m nên thay m = 0 và m = 1 vào hai ma trận, tính định thức rồi suy ra Δ = 12 − 6m.</li><li><b>Câu 75</b> nhập hai ma trận 4×4 rồi so sánh Det(MatA) với Det(MatB).</li><li><b>Câu 81</b> là định thức cấp 4 nhập trực tiếp rồi bấm Det.</li><li><b>Câu 89</b> có chữ a, b, c nên thay a = 1, b = 2, c = 3 rồi tính Det.</li><li><b>Câu 94</b> có chữ x nên thay x = 0, 1, 2 vào ba ma trận 4×4 và tính Det.</li><li><b>Câu 98</b> có chữ x nên thay x = 2 vào ma trận 4×4 rồi tính Det.</li><li><b>Câu 103</b> nhập cả bốn ma trận A, B, C, D rồi tính Det từng ma trận; ma trận khả nghịch là ma trận có Det khác 0.</li><li><b>Câu 116</b> có ma trận 4×5 vượt giới hạn 4×4 của máy nên không nhập cả ma trận: máy chỉ tính định thức con 2×2 (cột 1 và cột 5) rồi kết hợp lập luận bốn cột đầu tỉ lệ, kèm cách kiểm tra thứ hai bằng Det(MatBᵀ × MatB).</li><li><b>Câu 131</b> có chữ m nên thử m = 0 và m = 1 bằng các định thức con 3×3 (dòng 4 = 2 × dòng 1 nên hạng không quá 3).</li></ul></details>
+  </div>
+</div>
+</main>
+<script>
+const R=[
+{c:4,k:[["optn","OPTN"],["calc","CALC","SOLVE"],["integ","∫▫"],["varx","𝒙"]]},
+{c:6,k:[["frac","▫/▫","÷R"],["sqrt","√▫","∛"],["sq","x²","x³"],["pow","x▫","√▫"],["log","log▫","10ˣ"],["ln","ln","eˣ"]]},
+{c:6,k:[["neg","(−)","log"],["dms","°′″","FACT"],["inv","x⁻¹","x!"],["sin","sin","sin⁻¹"],["cos","cos","cos⁻¹"],["tan","tan","tan⁻¹"]]},
+{c:6,k:[["sto","STO","RECALL"],["eng","ENG","←i"],["lp","(","Abs"],["rp",")"],["sd","S⇔D"],["mp","M+","M−"]]},
+{c:5,n:1,k:[["d7","7","CONST"],["d8","8","CONV"],["d9","9","RESET"],["del","DEL","INS"],["ac","AC","OFF"]]},
+{c:5,n:1,k:[["d4","4"],["d5","5"],["d6","6"],["mul","×","nPr"],["div","÷","nCr"]]},
+{c:5,n:1,k:[["d1","1"],["d2","2"],["d3","3"],["add","+","Pol"],["sub","−","Rec"]]},
+{c:5,n:1,k:[["d0","0","Rnd"],["dot","."],["exp","×10ˣ","π"],["ans","Ans","%"],["eq","=","≈"]]}];
+const L={shift:["SHIFT"],alpha:["ALPHA"],menu:["MENU","SETUP"],on:["ON"],up:["▲"],down:["▼"],left:["◀"],right:["▶"]};
+R.forEach(r=>r.k.forEach(k=>L[k[0]]=[k[1],k[2]]));
+const E={};
+function mk(id,cls){const b=document.createElement("button");b.className="key "+(cls||"");b.dataset.id=id;
+ const l=L[id];b.innerHTML=(l[1]?'<span class="s">'+l[1]+"</span>":"")+l[0];b.setAttribute("aria-label",l[0]);b.onclick=()=>keyClick(id);E[id]=b;return b}
+const topEl=document.getElementById("top");
+const left=document.createElement("div");left.style.cssText="display:flex;gap:10px";
+[["shift","rnd"],["alpha","rnd"]].forEach(a=>left.append(mk(a[0],a[1])));
+const dp=document.createElement("div");dp.className="dp";
+["up","left","right","down"].forEach(i=>dp.append(mk(i,i)));dp.insertAdjacentHTML("beforeend",'<div class="mid"></div>');
+const rt=document.createElement("div");rt.style.cssText="display:flex;gap:10px";
+rt.append(mk("menu","rnd"),mk("on","rnd on"));
+topEl.append(left,dp,rt);
+E.shift.innerHTML="";E.alpha.innerHTML="";
+E.shift.style.cssText=E.alpha.style.cssText="";
+const sl=document.createElement("span");sl.className="s";sl.style.color="#f2a93b";sl.textContent="SHIFT";E.shift.append(sl);
+const al=document.createElement("span");al.className="s";al.style.color="#ff7b9c";al.textContent="ALPHA";E.alpha.append(al);
+const rows=document.getElementById("rows");
+R.forEach(r=>{const d=document.createElement("div");d.className="row"+(r.n?" n":"");d.style.gridTemplateColumns="repeat("+r.c+",1fr)";
+ r.k.forEach(k=>{const b=mk(k[0],r.n?"n":"");if(k[0]=="del"||k[0]=="ac")b.classList.add("blue");if(k[0]=="eq")b.classList.add("eq");d.append(b)});rows.append(d)});
+document.querySelectorAll(".n .key.blue").forEach(b=>b.style.color="#fff");
+
+const W=t=>"⚠ Chưa kiểm chứng: "+t;
+const A=["2","1","1","3"],B=["1","0","2","1"];
+const sc=(...l)=>l.join("<br>");
+const SM=sc("Tạo ma trận","1:MatA 2:MatB","3:MatC 4:MatD");
+const P1=sc("1:Tạo ma trận","2:Sửa ma trận","3:MatA 4:MatB","5:MatC 6:MatD");
+const P2=sc("1:MatAns","2:Định thức","3:Mtrận chuyển vị","4:Ma trận đơn vị");
+function mx(v,r,c,j,t,nm){let h=(nm?'<div style="font-size:11px">'+nm+"=</div>":"")+'<table class="mx">';for(let a=0;a<r;a++){h+="<tr>";for(let b=0;b<c;b++){const k=a*c+b;const x=k<j?v[k]:(k==j?(t||"0"):"0");h+="<td"+(k==j?' class="c"':"")+">"+fx(x.replace(/^-/,"−"))+"</td>"}h+="</tr>"}return h+"</table>"}
+function ent(v,r,c,nm){const s=[];v.forEach((x,j)=>{let t="";[...x].forEach((ch,n)=>{t+=ch=="-"?"−":ch;s.push([ch=="-"?"neg":"d"+ch,"",n?"":"Ô hàng "+(Math.floor(j/c)+1)+", cột "+(j%c+1),0,"",mx(v,r,c,j,t,nm)])});s.push(["eq","",j==v.length-1?"Lưu ô cuối cùng":"Lưu số này, máy nhảy sang ô kế tiếp",0,"",mx(v,r,c,j+1,"",nm)])});return s}
+const sel=(nm,r,c,v)=>[["d"+r,"","Số dòng = "+r,0,"",sc(nm,"Số cột?","Chọn 1~4")],["d"+c,"","Số cột = "+c+". Máy mở bảng nhập, các ô đang là 0",0,"",mx(v,r,c,0,"",nm)]];
+const OUT=["ac","","Bấm AC để thoát bảng nhập. Góc phải màn hình hiện chữ Ma trận",0,"",'<div style="margin-top:44px;text-align:right">Ma trận</div>'];
+const enterM=[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận (vào chế độ Ma trận)",0,"",SM]];
+const first=(v,r,c)=>[...enterM,["d1","","Chọn 1: MatA",0,"",sc("MatA","Số dòng?","Chọn 1~4")],...sel("MatA",r,c,v),...ent(v,r,c,"MatA"),OUT];
+const more=(n,v,r,c)=>{const nm="Mat"+"ABCD"[n-1];return[["optn","","Mở OPTN",0,"",P1],["d1","",W("chọn 1: Tạo ma trận (mình suy ra từ danh sách OPTN của máy bạn)"),0,"",SM],["d"+n,"","Chọn "+n+": "+nm,0,"",sc(nm,"Số dòng?","Chọn 1~4")],...sel(nm,r,c,v),...ent(v,r,c,nm),OUT]};
+const ref=(k,t)=>[["optn","","Mở OPTN: danh sách ma trận",0,"",P1],["d"+k,t,"Chọn "+k+": "+t]];
+const ref2=(k,t,nl)=>[["optn","","Mở OPTN",0,"",P1],["down","","Bấm ▼ để sang trang 2 của danh sách OPTN",0,"",P2],["d"+k,t,"Chọn "+k+": "+nl]];
+const R2=(v,f)=>mx(v,2,2,4);
+const Q=[
+{n:1,t:"Câu 1. Tính ma trận tổng A = [1 2 1; 3 0 2] + [1 0; 1 1]",o:["A = [1 2 1; 4 0 3]","A = [1 2 1; 4 1 2]","A = [1 3 0; 3 1 3]","Không tồn tại A"],a:3,
+ st:[...first(["1","2","1","3","0","2"],2,3),...more(2,["1","0","1","1"],2,2),...ref(3,"MatA"),["add","+"],...ref(4,"MatB"),["eq","","MatA cấp 2×3, MatB cấp 2×2: khác cấp nên không cộng được. Máy báo lỗi (chữ báo lỗi trên máy bạn có thể khác). Bấm AC để thoát. Đáp án D",0,"Lỗi kích thước"]]},
+{n:2,t:"Câu 2. Cho ma trận A = [1 1; 0 1]. Tính B = A³",o:["B = A","B = [1 3; 0 1]","B = [3 3; 0 3]","Các kết quả trên đều sai"],a:1,
+ st:[...first(["1","1","0","1"],2,2),...ref(3,"MatA"),["sq","³","Phím x³ là chữ vàng phía trên phím x²",1],["eq","","Lập phương ma trận. Quy nạp: Aⁿ = [1 n; 0 1] nên A³ = [1 3; 0 1]",0,R2(["1","3","0","1"])]]},
+{n:3,t:"Câu 3. Cho A = [2 1; 1 3], B = [1 0; 2 1]. Tính A × B",o:["[4 1; 7 3]","[2 0; 2 3]","[5 1; 7 4]","[4 7; 1 3]"],a:0,
+ st:[...first(A,2,2),...more(2,B,2,2),...ref(3,"MatA"),["mul","×"],...ref(4,"MatB"),["eq","","Hàng nhân cột. Không phải nhân từng ô",0,R2(["4","1","7","3"])]]},
+{n:4,t:"Câu 4. Tìm ma trận nghịch đảo A⁻¹",o:["[3/5 −1/5; −1/5 2/5]","[3 −1; −1 2]","[2/5 −1/5; −1/5 3/5]","[3/5 1/5; 1/5 2/5]"],a:0,
+ st:[...enterM,...ref(3,"MatA"),["inv","⁻¹","Phím x⁻¹ là nghịch đảo"],["eq","","A⁻¹ = (1/5)·[3 −1; −1 2]",0,R2(["{3/5}","−{1/5}","−{1/5}","{2/5}"])]]},
+{n:5,t:"Câu 5. Tìm ma trận chuyển vị của A × B",o:["[4 7; 1 3]","[4 1; 7 3]","[3 1; 7 4]","[1 3; 4 7]"],a:0,
+ st:[...enterM,...ref2(3,"Trn(","Ma trận chuyển vị"),...ref(3,"MatA"),["mul","×"],...ref(4,"MatB"),["rp",")"],["eq","","Chuyển vị: đổi hàng thành cột",0,R2(["4","7","1","3"])]]},
+{n:8,t:"Câu 8. Cho hai ma trận A = [1 2 3; -2 0 1] và B = [1 1 0; 2 0 0; 3 2 0]. Khẳng định nào sau đây là đúng?",o:["AB = [14 7; 1 0]","AB = [14 7 0; 1 0 1]","AB = [14 7 0; 1 0 0]","BA xác định nhưng AB không xác định"],a:2,
+ st:[...first(["1","2","3","-2","0","1"],2,3),...more(2,["1","1","0","2","0","0","3","2","0"],3,3),...ref(3,"MatA"),["mul","×"],...ref(4,"MatB"),["eq","","MatA cấp 2×3 nhân MatB cấp 3×3 (số cột A = số hàng B) nên AB xác định, cấp 2×3. BA không xác định vì số cột B (3) khác số hàng A (2)",0,mx(["14","7","0","1","0","0"],2,3,6)]]},
+ {n:14,t:"Câu 14. Cho A là ma trận vuông cấp 100 mà phần tử ở dòng i là i. Tìm phần tử ở dòng 1 cột 3 của ma trận A².",o:["5000","5050","5051","5052"],a:1,st:[],
+  th:`<p style="margin:0 0 8px"><b>Cách suy luận</b> — ma trận 100×100 vượt giới hạn 4×4 của máy nên câu này giải bằng lý thuyết, không bấm phím nhập ma trận.</p>
+  <p style="margin:0 0 6px">Dòng i của A có mọi phần tử đều bằng i, tức A<sub>ik</sub> = i với mọi k.</p>
+  <p style="margin:0 0 6px">Phần tử ở dòng 1, cột 3 của A² là:</p>
+  <p style="margin:0 0 6px;text-align:center">(A²)<sub>1,3</sub> = ∑<sub>k=1</sub><sup>100</sup> A<sub>1k</sub>·A<sub>k3</sub> = ∑<sub>k=1</sub><sup>100</sup> 1·k = 1 + 2 + … + 100</p>
+  <p style="margin:0 0 6px;text-align:center">= 100·101/2 = <b>5050</b></p>
+  <p style="margin:0">Vậy đáp án đúng là <b>B. 5050</b>.</p>`},
+ {n:19,t:"Câu 19. Cho ma trận A = [0 1; 1 0]. Tìm ma trận A²⁰⁰⁹.",o:["[0 2009; 2009 0]","[0 -1; -1 0]","[1 0; 0 1]","[0 1; 1 0]"],a:3,
+  st:[...first(["0","1","1","0"],2,2),...ref(3,"MatA"),["sq","²","Phím x²: bình phương ma trận A"],
+   ["eq","","A² = [0 1; 1 0] × [0 1; 1 0] = [1 0; 0 1] = I (ma trận đơn vị)",0,R2(["1","0","0","1"])],
+   ...ref(3,"MatA"),["sq","³","Phím x³ là chữ vàng phía trên phím x²",1],
+   ["eq","","A³ = A² × A = I × A = A. Mũ chẵn cho I, mũ lẻ cho A. 2009 là số lẻ nên A²⁰⁰⁹ = A",0,R2(["0","1","1","0"])]]},
+ {n:27,t:"Câu 27. Tính ma trận nghịch đảo của ma trận A = [0 1; 1 0] × [3 4; 2 -1].",o:["A⁻¹ = [4 1; -3 2]","A⁻¹ = [4/11 1/11; -3/11 2/11]","A⁻¹ = [-3/11 2/11; 4/11 1/11]","A⁻¹ = [4/11 2/11; -3/11 4/11]"],a:1,
+  st:[...first(["0","1","1","0"],2,2),...more(2,["3","4","2","-1"],2,2),
+   ...ref(3,"MatA"),["mul","×"],...ref(4,"MatB"),
+   ["eq","","Tính tích trước. Máy không cho nghịch đảo cả biểu thức (MatA×MatB)⁻¹ (báo lỗi cú pháp), nên phải tính tích rồi dùng MatAns. A = [2 -1; 3 4]",0,R2(["2","−1","3","4"])],
+   ...ref2(1,"MatAns","MatAns (kết quả ma trận vừa tính)"),
+   ["inv","⁻¹","Phím x⁻¹: nghịch đảo của MatAns"],
+   ["eq","","det A = 2·4 − (−1)·3 = 11. A⁻¹ = (1/11)·[4 1; -3 2]",0,R2(["{4/11}","{1/11}","−{3/11}","{2/11}"])]]},
+ {n:37,t:"Câu 37. Cho hai ma trận A = [2 3; -1 -1]; B = [2 6; 2 0]. Tìm ma trận X thỏa XA = B.",o:["X = [4 6; -2 -6]","X = [4 6; -2 6]","X = [-4 6; -2 -6]","Không có ma trận X."],a:0,
+  st:[...first(["2","3","-1","-1"],2,2),...more(2,["2","6","2","0"],2,2),
+   ...ref(4,"MatB"),["mul","×"],...ref(3,"MatA"),
+   ["inv","⁻¹","Từ XA = B, nhân bên phải với A⁻¹ ta được X = B·A⁻¹. Thứ tự là MatB × MatA⁻¹, không được đảo chỗ"],
+   ["eq","","det A = 2·(−1) − 3·(−1) = 1 ≠ 0 nên A khả nghịch. A⁻¹ = [-1 -3; 1 2], X = B·A⁻¹ = [4 6; -2 -6]",0,R2(["4","6","−2","−6"])]]},
+ {n:51,t:"Câu 51. Tính định thức Δ của ma trận [2 m 4; 3 0 0; 1 1 2]. Tìm m để Δ ≤ 0.",o:["m ≤ 2","m ≥ 2","m ≤ 1","m ≥ 1"],a:1,
+  st:[...first(["2","0","4","3","0","0","1","1","2"],3,3),...more(2,["2","1","4","3","0","0","1","1","2"],3,3),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Máy không nhập được chữ m, nên thay m = 0 (MatA): Δ(0) = 12. Δ là hàm bậc nhất theo m",0,"12"],
+   ...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],
+   ["eq","","Thay m = 1 (MatB): Δ(1) = 6. Hệ số của m là 6 − 12 = −6, nên Δ = 12 − 6m. Δ ≤ 0 ⇔ 12 − 6m ≤ 0 ⇔ m ≥ 2",0,"6"]]},
+ {n:75,t:"Câu 75. Cho hai định thức:<br>Δ₁ = |1 2 3 4; 2 5 4 7; 3 6 8 4; 4 8 12 17|<br>Δ₂ = |2 5 4 7; 1 2 3 4; 4 8 12 17; 3 6 8 4|<br>Khẳng định nào sau đây đúng?",o:["Δ₁ = Δ₂","Δ₁ = −Δ₂","Δ₂ = 2Δ₁","Δ₂ = −2Δ₁"],a:0,
+  st:[...first(["1","2","3","4","2","5","4","7","3","6","8","4","4","8","12","17"],4,4),...more(2,["2","5","4","7","1","2","3","4","4","8","12","17","3","6","8","4"],4,4),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Δ₁ = det MatA = −1",0,"−1"],
+   ...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],
+   ["eq","","Δ₂ = det MatB = −1. Hai giá trị bằng nhau nên Δ₁ = Δ₂. Đáp án A. (Cách nhìn nhanh: Δ₂ có từ Δ₁ bằng 2 lần đổi chỗ dòng (dòng 1 ↔ dòng 2 và dòng 3 ↔ dòng 4), mỗi lần đổi dấu một lần nên hai lần thì giữ nguyên)",0,"−1"]]},
+ {n:94,t:"Câu 94. Tìm số nghiệm phân biệt r của phương trình:<br>|1 x -1 -1; 1 x² -1 -1; 0 1 1 1; 0 2 0 2| = 0",o:["r = 1","r = 2","r = 3","r = 4"],a:1,
+  st:[...first(["1","0","-1","-1","1","0","-1","-1","0","1","1","1","0","2","0","2"],4,4),
+   ...more(2,["1","1","-1","-1","1","1","-1","-1","0","1","1","1","0","2","0","2"],4,4),
+   ...more(3,["1","2","-1","-1","1","4","-1","-1","0","1","1","1","0","2","0","2"],4,4),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Máy không nhập được chữ x, nên thay giá trị. x = 0 (MatA): Δ(0) = 0 (dòng 1 trùng dòng 2)",0,"0"],
+   ...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],
+   ["eq","","x = 1 (MatB): Δ(1) = 0 (dòng 1 trùng dòng 2). Vậy x = 0 và x = 1 đều là nghiệm",0,"0"],
+   ...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],
+   ["eq","","x = 2 (MatC): Δ(2) = 4 ≠ 0. Cột 2 chứa x và x² nên Δ là đa thức bậc nhỏ hơn hoặc bằng 2 theo x, không đồng nhất 0 nên có tối đa 2 nghiệm. Đã tìm được 2 nghiệm (0 và 1) nên r = 2. Đáp án B. (Kiểm tra: lấy dòng 2 trừ dòng 1 được Δ = 2x(x − 1))",0,"4"]]},
+ {n:103,t:"Câu 103. Ma trận nào sau đây khả nghịch ?",o:["A = [1 1 2; 2 2 4; 1 2 0]","B = [1 2 0; -3 0 0; 1 0 2]","C = [1 1 -2; -2 0 2; 3 0 -3]","D = [-2 1 2; 4 3 -1; 2 4 1]"],a:1,
+  st:[...first(["1","1","2","2","2","4","1","2","0"],3,3),...more(2,["1","2","0","-3","0","0","1","0","2"],3,3),...more(3,["1","1","-2","-2","0","2","3","0","-3"],3,3),...more(4,["-2","1","2","4","3","-1","2","4","1"],3,3),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","det A = 0 (dòng 2 = 2 × dòng 1) nên A không khả nghịch. Loại A",0,"0"],
+   ...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],
+   ["eq","","det B = 12 ≠ 0 nên B khả nghịch",0,"12"],
+   ...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],
+   ["eq","","det C = 0 (dòng 3 = −3/2 × dòng 2) nên C không khả nghịch. Loại C",0,"0"],
+   ...ref2(2,"Det(","Định thức"),...ref(6,"MatD"),["rp",")"],
+   ["eq","","det D = 0 (dòng 3 = dòng 1 + dòng 2) nên D không khả nghịch. Loại D. Chỉ có B có định thức khác 0 nên đáp án B. (Ma trận vuông khả nghịch ⇔ định thức khác 0)",0,"0"]]},
+ {n:116,t:"Câu 116. Tính hạng r(A) của ma trận A = [1 2 3 4 5; 2 4 6 8 11; 3 6 9 12 14; 4 8 12 16 20]",o:["r(A) = 1","r(A) = 2","r(A) = 3","r(A) = 4"],a:1,
+  st:[...first(["1","5","2","11"],2,2),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Máy chỉ nhập được ma trận tối đa 4×4 nên không nhập cả A (4×5). Lấy định thức con 2×2 gồm cột 1, cột 5 của hai dòng đầu. Δ = 1·11 − 5·2 = 1 ≠ 0 nên r(A) ≥ 2. Bốn cột đầu của A tỉ lệ với cột 1 nên A chỉ có tối đa 2 cột độc lập, r(A) ≤ 2. Vậy r(A) = 2",0,"1"],
+   ...more(2,["1","5","2","11","3","14","4","20"],4,2),
+   ...ref2(3,"Trn(","Ma trận chuyển vị"),...ref(4,"MatB"),["rp",")"],["mul","×"],...ref(4,"MatB"),
+   ["eq","","Cách kiểm tra thứ hai: MatB là ma trận 4×2 gồm cột 1 và cột 5 của A. Tính MatBᵀ × MatB (ma trận 2×2)",0,R2(["30","149","149","742"])],
+   ...ref2(2,"Det(","Định thức"),...ref2(1,"MatAns","MatAns (kết quả ma trận vừa tính)"),["rp",")"],
+   ["eq","","det(MatBᵀ·MatB) = 30·742 − 149² = 59 ≠ 0 nên MatB có hạng 2. Vì r(A) ≤ 2 nên r(A) = 2, đáp án B",0,"59"]],
+  th2:`<div class="th2" style="margin-top:10px;font-weight:400"><p style="margin:0 0 6px"><strong>Giải thích bằng biến đổi sơ cấp:</strong> d₂ → d₂ − 2d₁, d₃ → d₃ − 3d₁, d₄ → d₄ − 4d₁ được</p>
+  <p style="margin:0 0 6px;text-align:center">${mth("[1 2 3 4 5; 0 0 0 0 1; 0 0 0 0 -1; 0 0 0 0 0]")}</p>
+  <p style="margin:0">Rồi d₃ → d₃ + d₂ thì dòng 3 thành dòng 0, còn 2 dòng khác 0 nên r(A) = 2.</p></div>`},
+ {n:131,t:"Câu 131. Tìm m để ma trận sau đây có hạng bằng 3:<br>A = [1 m 1 2; 2 3m−1 2 m+4; 4 5m−1 m+4 2m+7; 2 2m 2 4]",o:["m ≠ 0","m ≠ 1","m ≠ 0; m ≠ 1","m tùy ý"],a:3,
+  st:[...first(["1","0","2","2","-1","4","4","-1","7"],3,3),...more(2,["1","1","2","2","2","5","4","5","9"],3,3),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Máy không nhập được chữ m nên thử từng giá trị. Dòng 4 = 2 × dòng 1 nên r(A) ≤ 3. Thử m = 0: lấy định thức con 3×3 gồm dòng 1 đến 3 và cột 1, 2, 4. Δ = 1 ≠ 0 nên r(A) ≥ 3. Vậy m = 0 vẫn có r(A) = 3, loại A và C",0,"1"],
+   ...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],
+   ["eq","","Thử m = 1: định thức con 3×3 gồm dòng 1 đến 3 và cột 1, 3, 4. Δ = −1 ≠ 0 nên r(A) = 3. Vậy m = 1 cũng thỏa, loại B. Cả m = 0 và m = 1 đều có r(A) = 3 nên chọn D",0,"−1"]],
+  th2:`<div style="margin-top:10px;font-weight:400"><p style="margin:0 0 6px"><strong>Giải thích:</strong> dòng 4 = 2 × dòng 1 nên r(A) ≤ 3. Lấy d₂ → d₂ − 2d₁ và d₃ → d₃ − 4d₁ được hai dòng (0, m−1, 0, m) và (0, m−1, m, 2m−1).</p>
+  <p style="margin:0 0 6px">Hiệu của hai dòng này là (0, 0, m, m−1) luôn khác 0 vì m và m−1 không đồng thời bằng 0. Nếu m ≠ 1 thì dòng thứ nhất có cột 2 khác 0 còn hiệu có cột 2 bằng 0, nên độc lập. Nếu m = 1 thì hai dòng là (0,0,0,1) và (0,0,1,1), cũng độc lập.</p>
+  <p style="margin:0">Vậy ba dòng đầu độc lập với mọi m, nên r(A) = 3 với mọi m.</p></div>`},
+ {n:98,t:"Câu 98. Giải phương trình:<br>|x x -1 -1; 1 x² 1 1; 1 1 1 1; 1 0 1 1| = 0",o:["x = 0","x = 1; x = −1","x = 0; x = 1; x = −1","Phương trình có nghiệm x tùy ý"],a:3,
+  st:[...first(["2","2","-1","-1","1","4","1","1","1","1","1","1","1","0","1","1"],4,4),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Máy không nhập được chữ x nên thay x = 2 (một giá trị nằm ngoài 0, 1, −1). Δ(2) = 0 nên x = 2 cũng là nghiệm. Đáp án A, B, C đều là tập hữu hạn không chứa 2 nên đều sai, chọn D (cột 3 và cột 4 giống nhau nên Δ = 0 với mọi x)",0,"0"]],
+  th2:`<div style="margin-top:10px;font-weight:400"><p style="margin:0 0 6px"><strong>Giải thích:</strong> cột 3 và cột 4 của định thức giống hệt nhau (cùng là −1, 1, 1, 1) nên Δ = 0 với mọi x. Vậy phương trình có nghiệm x tùy ý, đáp án D.</p>
+  <p style="margin:0"><strong>Lưu ý:</strong> đáp án và hướng dẫn trong tài liệu gốc ghi B (Δ = −2(x−1)(x+1)) không khớp với ma trận này, vì x² chỉ ở một ô mà phần phụ đại số của ô đó bằng 0. Phần này theo tính toán thực tế.</p></div>`},
+ {n:89,t:"Câu 89. Tính định thức:<br>Δ = |1 1 1; a b c; b+c c+a a+b|",o:["Δ = 0","Δ = abc","Δ = abc(a+b+c)","Δ = (a+b)(b+c)(c+a)"],a:0,
+  st:[...first(["1","1","1","1","2","3","5","4","3"],3,3),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Máy không nhập được chữ a, b, c nên chọn a = 1, b = 2, c = 3 (dòng 3 = [b+c, c+a, a+b] = [5, 4, 3]). Δ = 0. Trong khi abc = 6, abc(a+b+c) = 36, (a+b)(b+c)(c+a) = 60 đều khác 0, nên B, C, D sai, chọn A",0,"0"]],
+  th2:`<div style="margin-top:10px;font-weight:400"><p style="margin:0"><strong>Giải thích:</strong> d₃ → d₃ + d₂ được dòng (a+b+c, a+b+c, a+b+c) = (a+b+c) × d₁, tỉ lệ với dòng 1 nên Δ = 0.</p></div>`},
+ {n:81,t:"Câu 81. Tính định thức:<br>Δ = |1 1 2 0; 2 3 4 1; 1 1 7 0; 2 2 2 1|",o:["Δ = −5","Δ = 5","Δ = −1","Δ = 1"],a:1,
+  st:[...first(["1","1","2","0","2","3","4","1","1","1","7","0","2","2","2","1"],4,4),
+   ...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],
+   ["eq","","Định thức cấp 4 nhập trực tiếp được vì máy nhận ma trận tối đa 4×4. Δ = 5, chọn B",0,"5"]],
+  th2:`<div style="margin-top:10px;font-weight:400"><p style="margin:0"><strong>Kiểm tra bằng tay:</strong> d₃ → d₃ − d₁ được dòng (0, 0, 5, 0). Khai triển theo dòng này: Δ = 5 · det[1 1 0; 2 3 1; 2 2 1] = 5 · 1 = 5.</p></div>`}
+];
+Q.sort((a,b)=>a.n-b.n);
+let q=0,i=0,pl=false,tm=null,last=null,vo=false,rd=0;
+const TTS=!!window.speechSynthesis;
+const SK={"−":"trừ","×":"nhân","÷":"chia","=":"bằng","+":"cộng","(−)":"dấu âm","x⁻¹":"x mũ trừ một","▲":"mũi tên lên","▼":"mũi tên xuống","◀":"mũi tên trái","▶":"mũi tên phải",".":"dấu chấm","(":"mở ngoặc",")":"đóng ngoặc","OPTN":"ốp tần","MENU":"menu"};
+function spk(t){
+ t=t.replace(/<[^>]+>/g,"").replace(/\|([^|]+)\|/g,(m,b)=>{const r=b.split(";");return " định thức "+r.length+" hàng: "+r.map((x,k)=>"hàng "+(k+1)+": "+x.trim().split(/\s+/).join(", ")).join("; ")+". "}).replace(/x²/g,"x bình phương").replace(/Δ₁/g,"đen-ta 1").replace(/Δ₂/g,"đen-ta 2").replace(/Δ/g,"đen-ta").replace(/\[([^\[\]]+)\]/g,(m,b)=>{const r=b.split(";");return " ma trận "+r.length+" hàng: "+r.map((x,k)=>"hàng "+(k+1)+": "+x.trim().split(/\s+/).join(", ")).join("; ")+". "});
+ return t.replace(/Mat([A-D])/g,"ma trận $1").replace(/([A-Z])⁻¹/g,"$1 nghịch đảo").replace(/([A-Z])³/g,"$1 mũ 3").replace(/([A-Z])ⁿ/g,"$1 mũ n").replace(/(\d+)\/(\d+)/g,"$1 phần $2").replace(/([A-Za-z0-9])−(?=\d)/g,"$1 trừ ").replace(/[−-](?=\d)/g," âm ").replace(/×/g," nhân ").replace(/\+/g," cộng ").replace(/=/g," bằng ").replace(/Trn\(/g,"chuyển vị ");
+}
+function viVoice(){return TTS&&speechSynthesis.getVoices().find(v=>/^vi/i.test(v.lang))}
+function say(t){if(!vo||!TTS)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="vi-VN";const v=viVoice();if(v)u.voice=v;u.rate=.95;speechSynthesis.speak(u)}catch(e){}}
+function speakNow(){if(!vo)return;const S=Q[q].st,n=S.length;let t=rd?spk(Q[q].t)+". ":"";rd=0;
+ if(i<n){const s=S[i],l=L[s[0]],nm=s[3]?l[1]:l[0];t+="Bấm "+(s[3]?"SHIFT rồi ":"")+(SK[nm]||nm)+(s[2]?". "+spk(s[2]):"")}
+ else t+="Hoàn thành. Đáp án đúng là "+"ABCD"[Q[q].a]+": "+spk(Q[q].o[Q[q].a]);
+ say(t)}
+function vnote(){$("vn").textContent=vo&&!viVoice()?"Thiết bị chưa có giọng tiếng Việt nên đang dùng giọng mặc định. Bạn có thể cài giọng Vietnamese trong cài đặt hệ thống.":""}
+const $=id=>document.getElementById(id);
+function fr2(t){return t.replace(/(\d+)\/(\d+)/g,'<span class="fr"><i>$1</i><i>$2</i></span>')}
+function mth(t){
+ return t.split(/(\[[^\[\]]+\]|\|[^|]+\|)/).map(p=>{
+  if(p[0]=="["||p[0]=="|")return '<table class="mt'+(p[0]=="|"?' dt':'')+'">'+p.slice(1,-1).split(";").map(r=>"<tr>"+r.trim().split(/\s+/).map(c=>"<td>"+fr2(c.replace(/^-/,"−"))+"</td>").join("")+"</tr>").join("")+"</table>";
+  return fr2(p.replace(/([A-Z])⁻¹/g,"$1<sup>−1</sup>"));
+ }).join("");
+}
+function fx(s){return s.replace(/\{/g,'<span class="fr"><i>').replace(/\//g,"</i><i>").replace(/\}/g,"</i></span>")}
+function press(id){const b=E[id];if(b&&b.animate)b.animate([{transform:"scale(.86)",filter:"brightness(1.8)"},{transform:"scale(1)",filter:"brightness(1)"}],{duration:220})}
+function render(){
+ const S=Q[q].st,n=S.length;
+ Object.values(E).forEach(b=>b.classList.remove("hl","sh"));
+ if(Q[q].th){
+  $("ex").innerHTML="";$("rs").innerHTML="";
+  $("qt").innerHTML=mth(Q[q].t);
+  $("opts").innerHTML=Q[q].o.map((t,k)=>'<div class="opt'+(k==Q[q].a?" right":"")+'">'+"ABCD"[k]+". "+mth(t)+"</div>").join("");
+  $("st").textContent="Câu lý thuyết";
+  $("cap").innerHTML=Q[q].th;
+  $("bar").style.width="100%";
+  $("vn").textContent="";
+  $("chips").innerHTML='<span class="tip">'+(Q[q].tn||"Câu này giải bằng lý thuyết (ma trận 100×100 vượt giới hạn 4×4 của máy).")+'</span>';
+  $("prv").disabled=true;$("nxt").disabled=true;
+  stop();
+  if(vo)say(spk(Q[q].t)+". Đáp án đúng là "+"ABCD"[Q[q].a]+": "+spk(Q[q].o[Q[q].a]));
+  return;
+ }
+ let ex="",rs="";
+ for(let k=0;k<i;k++){if(k>0&&S[k-1][4]&&!["add","sub","mul","div","inv","sq","pow"].includes(S[k][0])){ex="";rs=""}ex+=S[k][1];if(S[k][4])rs=S[k][4];}
+ const m=i>0&&S[i-1][5]?S[i-1][5]:"";
+ $("ex").innerHTML=rs[0]=="<"?"":m?'<div style="font-size:13px;line-height:1.2">'+m+'</div>':fx(ex)+(rs?"":'<span class="cur"></span>');
+ $("rs").innerHTML=rs[0]=="<"?rs:fx(rs);
+ $("qt").innerHTML=mth(Q[q].t);
+ $("opts").innerHTML=Q[q].o.map((t,k)=>'<div class="opt'+(i==n&&k==Q[q].a?" right":"")+'">'+"ABCD"[k]+". "+mth(t)+"</div>").join("");
+ if(i<n){const s=S[i],id=s[0],l=L[id];const e=E[id];e.classList.add("hl");if(s[3])e.classList.add("sh");
+  $("st").textContent="Bước "+(i+1)+" / "+n;
+  $("cap").innerHTML=(s[3]?"Bấm <b>"+l[1]+"</b> <small>(chữ vàng phía trên phím "+l[0]+")</small>":"Bấm <b>"+l[0]+"</b>")+(s[2]?"<small>"+mth(s[2])+"</small>":"");
+ }else{$("st").textContent="Xong";$("cap").innerHTML="Hoàn thành. Đáp án đúng là <b>"+"ABCD"[Q[q].a]+". "+mth(Q[q].o[Q[q].a])+"</b>"+(Q[q].th2||"");stop()}
+ $("bar").style.width=(i/n*100)+"%";
+ $("chips").innerHTML=S.map((s,k)=>'<button class="chip'+(k<i?" done":"")+(k==i?" now":"")+'" data-k="'+k+'">'+(s[3]?L[s[0]][1]:L[s[0]][0])+"</button>").join("");
+ document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{i=+c.dataset.k;render()});
+ $("prv").disabled=i==0;$("nxt").disabled=i==n;
+ speakNow();
+}
+function next(){const n=Q[q].st.length;if(i<n){press(Q[q].st[i][0]);i++;render()}}
+function keyClick(id){const S=Q[q].st;if(i<S.length&&S[i][0]==id)next();else press(id)}
+function play(){if(Q[q].th)return;if(i>=Q[q].st.length)i=0;pl=true;$("ply").textContent="⏸ Dừng";render();tick()}
+function tick(){clearTimeout(tm);if(!pl)return;tm=setTimeout(function w(){if(!pl)return;if(vo&&speechSynthesis.speaking){tm=setTimeout(w,200);return}next();tick()},+$("spd").value)}
+function stop(){pl=false;clearTimeout(tm);$("ply").textContent="▶ Phát"}
+if(!TTS)$("vox").style.display="none";
+else{speechSynthesis.onvoiceschanged=vnote;
+$("vox").onclick=()=>{vo=!vo;$("vox").textContent=vo?"🔊 Giọng đọc: Bật":"🔇 Giọng đọc: Tắt";$("vox").setAttribute("aria-pressed",vo);if(vo){vnote();speakNow()}else{speechSynthesis.cancel();vnote()}}}
+$("ply").onclick=()=>pl?stop():play();
+$("nxt").onclick=()=>{stop();next()};
+$("prv").onclick=()=>{stop();if(i>0)i--;render()};
+$("rst").onclick=()=>{stop();i=0;render()};
+$("spd").onchange=()=>{if(pl)tick()};
+$("tabs").innerHTML=Q.map((_,k)=>'<button class="tab" role="tab" data-q="'+k+'">Câu '+(Q[k].n||k+1)+"</button>").join("");
+function tabs(){document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",+t.dataset.q==q))}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{stop();q=+t.dataset.q;i=0;rd=1;tabs();render()});
+tabs();render();
+</script>
+</body>
+</html>
