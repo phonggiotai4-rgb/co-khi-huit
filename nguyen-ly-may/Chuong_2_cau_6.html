@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bài giảng: ω₂, v_D2, v₃, ε₂ và a₃</title>
+<style>
+:root{--bg:#fff;--fg:#1f1f1d;--mut:#6b6a64;--card:#f4f3ee;--bd:#d8d6cc;--ac:#185FA5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1c1a;--fg:#ecece6;--mut:#a3a29a;--card:#2a2a27;--bd:#44433e;--ac:#85B7EB}}
+:root[data-theme="dark"]{--bg:#1c1c1a;--fg:#ecece6;--mut:#a3a29a;--card:#2a2a27;--bd:#44433e;--ac:#85B7EB}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:12px}
+h1{font-size:17px;font-weight:500;margin:4px 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px}
+svg{display:block;width:100%;height:auto}
+.s{font-size:12px;fill:var(--fg)}.sb{font-size:13px;font-weight:500}
+.e{opacity:0;transition:opacity .5s;transition-delay:var(--d,0s)}
+.e.on{opacity:1}
+.v{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease;transition-delay:var(--d,0s)}
+.e.on .v{stroke-dashoffset:0}
+.bar{height:3px;background:var(--bd);border-radius:2px;margin:10px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac)}
+#info{padding:12px 14px;margin-top:10px;min-height:190px}
+#step{font-size:12px;color:var(--mut)}
+#title{font-size:17px;font-weight:500;margin:2px 0 6px}
+#formula{font-size:15px;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--bd);margin-bottom:8px;overflow-x:auto}
+#narr{font-size:15px;margin:0;color:var(--fg)}
+.ctl{display:flex;gap:8px;align-items:center;margin-top:10px}
+button{font:inherit;font-size:15px;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 14px;cursor:pointer;min-height:40px}
+button.p{background:var(--ac);color:var(--bg);border-color:var(--ac);flex:1;font-weight:500}
+button.on{border-color:var(--ac);color:var(--ac)}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dots button{padding:0;flex:1;max-width:26px;min-width:0;min-height:8px;height:8px;border-radius:4px}
+.dots button.cur{background:var(--ac);border-color:var(--ac)}
+.sim{padding:12px 14px;margin-top:12px}
+.sim h2{font-size:15px;font-weight:500;margin:0 0 6px}
+#rd{font-size:13px;margin:6px 0 0;min-height:40px}
+.sc{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font-size:13px}
+.sc label{display:flex;align-items:center;gap:6px;flex:1;min-width:140px}
+.sc input[type=range]{flex:1;min-width:0;accent-color:var(--ac)}
+@media (min-width:820px){main{max-width:1080px;display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:0 20px;align-items:start}main>h1{grid-column:1/-1}.sim{position:sticky;top:12px;margin-top:0}}
+</style></head><body><main>
+<h1>Tìm ω₂, v_D2, v₃, ε₂ và a₃</h1>
+<div class="lec">
+<div class="card"><svg viewBox="0 0 380 340" role="img" aria-label="Minh hoạ từng bước giải bài toán">
+<defs>
+<marker id="mb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#378ADD"/></marker>
+<marker id="mt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1D9E75"/></marker>
+<marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E24B4A"/></marker>
+<marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#BA7517"/></marker>
+</defs>
+<g class="e" data-s="0,1,2,3,4">
+<line x1="20" y1="280" x2="350" y2="280" stroke="#888780" stroke-width="1.5"/>
+<polygon points="60,200 198.6,200 198.6,280" fill="rgba(136,135,128,.14)" stroke="#888780" stroke-width="2"/>
+<line x1="60" y1="280" x2="60" y2="200" stroke="#888780" stroke-width="4"/>
+<rect x="183" y="268" width="31" height="24" fill="var(--bg)" stroke="#888780"/>
+<polygon points="48,294 72,294 60,280" fill="var(--bg)" stroke="#888780"/>
+<circle cx="60" cy="280" r="3" fill="var(--fg)"/><circle cx="60" cy="200" r="3" fill="var(--fg)"/><circle cx="198.6" cy="200" r="3" fill="var(--fg)"/><circle cx="198.6" cy="280" r="3" fill="var(--fg)"/>
+<text class="s sb" x="36" y="296">A</text><text class="s sb" x="44" y="198">B</text><text class="s sb" x="204" y="196">D</text><text class="s sb" x="168" y="264">C</text>
+<path d="M40.7 257 A30 30 0 0 1 79.3 257" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#ma)"/><text class="s" x="86" y="252">ω₁ = ω ↻</text>
+</g>
+<g class="e" data-s="0"><text class="s" x="12" y="24">CD = AB = l, BC = 2l, BD = √3·l</text><text class="s" x="12" y="42">∠CAB = ∠BDC = 90°, ∠CBD = 30°</text><text class="s" x="12" y="60">ω₁ = ω (↻), khâu 3 trượt dọc AC</text><text class="s sb" x="12" y="82">Tìm ω₂, v_D2, v₃, ε₂, a₃</text></g>
+<g class="e" data-s="1"><text class="s" x="12" y="24">AC = √(BC² − AB²) = √3·l, ∠ABC = 60°</text><text class="s" x="12" y="42">BD ∥ AC, BD = AC, CD = AB</text><text class="s sb" x="12" y="60">⇒ ABDC là hình chữ nhật</text>
+<text class="s" x="52" y="245" text-anchor="end">l</text><text class="s" x="129" y="192" text-anchor="middle">√3·l</text><text class="s" x="206" y="244">l</text><text class="s" x="140" y="264">2l</text><text class="s" x="106" y="217">30°</text></g>
+<g class="e" data-s="2,3"><line class="v" pathLength="1" x1="60" y1="200" x2="120" y2="200" stroke="#378ADD" stroke-width="2.5" marker-end="url(#mb)"/><text class="s" x="64" y="186" style="fill:#378ADD">v_B = lω</text></g>
+<g class="e" data-s="2"><line stroke="#888780" stroke-dasharray="4 3" x1="198.6" y1="280" x2="236" y2="215"/><text class="s" x="240" y="226" style="fill:#BA7517">v_CB ⊥ BC (?)</text><text class="s" x="222" y="274" style="fill:#E24B4A">v₃ ∥ AC (?)</text></g>
+<g class="e" data-s="3"><text class="s" x="12" y="24">Hai đường vuông góc với v_B và v_C song song nhau</text><text class="s sb" x="12" y="42">⇒ tâm vận tốc tức thời ở vô cùng ⇒ ω₂ = 0</text>
+<line stroke="#888780" stroke-dasharray="4 3" x1="198.6" y1="150" x2="198.6" y2="270"/>
+<line class="v" pathLength="1" x1="198.6" y1="200" x2="258.6" y2="200" stroke="#BA7517" stroke-width="2.5" marker-end="url(#ma)" style="--d:.8s"/><text class="s" x="206" y="186" style="fill:#BA7517">v_D2 = lω</text>
+<line class="v" pathLength="1" x1="198.6" y1="280" x2="258.6" y2="280" stroke="#E24B4A" stroke-width="3" marker-end="url(#mr)" style="--d:1.4s"/><text class="s sb" x="224" y="272" style="fill:#E24B4A">v₃ = lω</text></g>
+<g class="e" data-s="4"><text class="s" x="12" y="24">ε₁ = 0 ⇒ a_B = AB·ω² = lω² (↓)</text><text class="s" x="12" y="42">ω₂ = 0 ⇒ aⁿ_CB = BC·ω₂² = 0</text>
+<line class="v" pathLength="1" x1="60" y1="200" x2="60" y2="260" stroke="#378ADD" stroke-width="2.5" marker-end="url(#mb)"/><text class="s" x="68" y="238" style="fill:#378ADD">a_B = lω²</text>
+<line stroke="#888780" stroke-dasharray="4 3" x1="198.6" y1="280" x2="236" y2="215"/><text class="s" x="240" y="226" style="fill:#BA7517">aᵗ_CB ⊥ BC (?)</text><text class="s" x="222" y="274" style="fill:#E24B4A">a₃ ∥ AC (?)</text></g>
+<g class="e" data-s="5,6,7"><line x1="14" y1="70" x2="366" y2="70" stroke="#888780" stroke-dasharray="4 3"/><circle cx="120" cy="70" r="3" fill="var(--fg)"/><text class="s sb" x="104" y="64">π</text></g>
+<g class="e" data-s="5,6,7"><line class="v" pathLength="1" x1="120" y1="70" x2="120" y2="200" stroke="#378ADD" stroke-width="2.5" marker-end="url(#mb)"/><text class="s" x="128" y="140" style="fill:#378ADD">a_B = lω²</text></g>
+<g class="e" data-s="5,6,7" style="--d:1s"><line class="v" pathLength="1" x1="120" y1="200" x2="195" y2="70" stroke="#BA7517" stroke-width="2.5" marker-end="url(#ma)"/><text class="s" x="170" y="150" style="fill:#BA7517">aᵗ_CB</text></g>
+<g class="e" data-s="5,6,7" style="--d:2s"><line class="v" pathLength="1" x1="120" y1="70" x2="195" y2="70" stroke="#E24B4A" stroke-width="3" marker-end="url(#mr)"/><text class="s sb" x="158" y="58" text-anchor="middle" style="fill:#E24B4A">a₃</text></g>
+<g class="e" data-s="5"><text class="s" x="20" y="250">a_B ↓, aⁿ_CB = 0, aᵗ_CB ⊥ BC (↗), a₃ nằm ngang</text></g>
+<g class="e" data-s="6"><text class="s sb" x="20" y="250" style="fill:#BA7517">aᵗ_CB = 2lω²/√3 ⇒ ε₂ = √3ω²/3 (↺)</text><text class="s sb" x="20" y="272" style="fill:#E24B4A">a₃ = lω²/√3 = √3·lω²/3 (→)</text></g>
+<g class="e" data-s="7"><text class="s sb" x="20" y="250" style="fill:#E24B4A">ω₂ = 0 · v_D2 = ωl → · v₃ = ωl →</text><text class="s sb" x="20" y="272" style="fill:#E24B4A">ε₂ = √3ω²/3 ↺ · a₃ = √3·lω²/3 →</text></g>
+</svg></div>
+<div class="bar"><i id="fill"></i></div>
+<div class="card" id="info"><div id="step"></div><div id="title"></div><div id="formula"></div><p id="narr"></p></div>
+<div class="ctl"><button id="prev" aria-label="Bước trước">‹</button><button id="play" class="p">▶ Phát</button><button id="next" aria-label="Bước sau">›</button><button id="voice">Đọc</button></div>
+<div class="dots" id="dots"></div>
+</div>
+<aside class="sim card">
+<h2>Mô phỏng chuyển động (l = 1, ω = 1)</h2>
+<svg viewBox="0 0 380 270" role="img" aria-label="Mô phỏng tay quay AB, tấm BCD và con trượt C">
+<defs>
+<marker id="sb2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#378ADD"/></marker>
+<marker id="sa2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#BA7517"/></marker>
+<marker id="sr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E24B4A"/></marker>
+</defs>
+<line x1="20" y1="140" x2="370" y2="140" stroke="#888780" stroke-dasharray="4 3"/>
+<polygon id="sPl" fill="rgba(136,135,128,.14)" stroke="#888780" stroke-width="2"/>
+<line id="sAB" stroke="#888780" stroke-width="4" stroke-linecap="round"/>
+<rect id="sSl" width="30" height="22" fill="var(--bg)" stroke="#888780"/>
+<polygon points="78,154 102,154 90,140" fill="var(--bg)" stroke="#888780"/>
+<circle cx="90" cy="140" r="3" fill="var(--fg)"/><circle id="sB" r="3" fill="var(--fg)"/><circle id="sC" r="3" fill="var(--fg)"/><circle id="sD" r="3" fill="var(--fg)"/>
+<text class="s sb" x="68" y="162">A</text><text class="s sb" id="tB">B</text><text class="s sb" id="tC">C</text><text class="s sb" id="tD">D</text>
+<line id="v1" stroke="#378ADD" stroke-width="2.5" marker-end="url(#sb2)"/>
+<line id="v2" stroke="#BA7517" stroke-width="2.5" marker-end="url(#sa2)"/>
+<line id="v3" stroke="#E24B4A" stroke-width="3" marker-end="url(#sr2)"/>
+<text class="s" x="12" y="20" style="fill:#378ADD">v_B</text><text class="s" x="12" y="36" style="fill:#BA7517">v_D2</text><text class="s" x="12" y="52" style="fill:#E24B4A">v₃</text>
+</svg>
+<div id="rd" aria-live="off"></div>
+<div class="sc"><button id="sPlay">❚❚ Dừng</button><button id="sReset">Về φ = 0°</button><button id="sVec" class="on">Vectơ</button></div>
+<div class="sc"><label>Tốc độ <input type="range" id="sSp" min="0.2" max="2" step="0.1" value="0.6"></label><label>Góc φ <input type="range" id="sTh" min="0" max="360" step="1" value="0"></label></div>
+<div class="s" style="margin-top:8px;opacity:.75">φ là góc quay của AB tính từ vị trí thẳng đứng trong đề bài (φ = 0°), quay đều cùng chiều kim đồng hồ.</div>
+</aside>
+</main>
+<script>
+var S=[
+{t:"Đề bài",f:"CD = AB = l · BC = 2l · BD = √3·l · ∠CBD = 30° · ω₁ = ω",n:"Tay quay AB (khâu 1) quay quanh A cùng chiều kim đồng hồ với tốc độ góc ω₁ = ω. Tấm 2 là tam giác BCD nối bản lề với AB tại B. Con trượt 3 gắn với tấm 2 tại C và trượt dọc đường nằm ngang AC. Cần tìm ω₂, v_D2, v₃, ε₂ và a₃."},
+{t:"Hình học của cơ cấu",f:"AC = √3·l · ∠ABC = 60° · ABDC là hình chữ nhật",n:"Tam giác ABC vuông tại A có AB = l, BC = 2l nên AC = √3·l và ∠ABC = 60°. Vì ∠CBD = 30° nên BD nằm ngang, BD = √3·l = AC và CD = l = AB, suy ra ABDC là hình chữ nhật. BC nghiêng 30° so với phương ngang."},
+{t:"Phương trình vận tốc",f:"v_C = v_B + v_CB · v_C = v₃ ∥ AC · v_B = lω (→) · v_CB ⊥ BC",n:"B thuộc khâu 1 nên v_B = AB·ω₁ = lω, hướng sang phải vì B nằm trên A và quay cùng chiều kim đồng hồ. C thuộc tấm 2 và con trượt 3 nên v_C = v₃ song song AC. Thành phần quay v_CB vuông góc BC, chưa biết độ lớn."},
+{t:"Tìm ω₂, v_D2 và v₃",f:"ω₂ = 0 ⇒ v₃ = v_D2 = v_B = lω (→)",n:"Chiếu phương trình lên phương thẳng đứng: 0 = 0 + v_CB·cos30°, nên v_CB = 0 và ω₂ = 0. Cách khác: v_B và v_C song song, hai đường vuông góc với chúng cũng song song nên tâm vận tốc tức thời ở vô cùng. Tấm 2 tịnh tiến tức thời, mọi điểm có cùng vận tốc: v₃ = v_D2 = v_B = lω, hướng sang phải."},
+{t:"Phương trình gia tốc",f:"a_C = a_B + aⁿ_CB + aᵗ_CB · a_B = lω² (↓) · aⁿ_CB = 0",n:"Đề không cho ε₁ nên coi ε₁ = 0. Khi đó a_B = AB·ω² = lω², hướng xuống về A. Vì ω₂ = 0 nên aⁿ_CB = BC·ω₂² = 0. Còn aᵗ_CB vuông góc BC và a₃ = a_C song song AC, hai đại lượng chưa biết độ lớn."},
+{t:"Đa giác gia tốc",f:"π → a_B, từ mút kẻ đường ⊥ BC, từ π kẻ đường nằm ngang",n:"Từ cực π vẽ a_B hướng xuống. Từ mút của a_B kẻ đường vuông góc BC cho aᵗ_CB, hướng lên-phải và hợp với phương ngang góc 60°. Từ π kẻ đường nằm ngang cho a₃. Giao điểm của hai đường khép đa giác."},
+{t:"Tìm ε₂ và a₃",f:"aᵗ_CB = 2lω²/√3 ⇒ ε₂ = √3ω²/3 · a₃ = √3·lω²/3",n:"Tính theo đơn vị lω². Chiếu lên phương thẳng đứng: −1 + (√3/2)·aᵗ = 0 nên aᵗ = 2/√3. Chiếu lên phương ngang: a₃ = aᵗ/2 = 1/√3. Từ đó ε₂ = aᵗ/BC = (2lω²/√3)/(2l) = ω²/√3 = √3ω²/3, ngược chiều kim đồng hồ vì aᵗ hướng lên-phải."},
+{t:"Kết quả",f:"ω₂ = 0 · v_D2 = v₃ = ωl · ε₂ = √3ω²/3 · a₃ = √3·lω²/3",n:"Kết quả: ω₂ = 0, v_D2 = ωl hướng sang phải, v₃ = ωl hướng sang phải, ε₂ = √3ω²/3 ngược chiều kim đồng hồ và a₃ = √3·lω²/3 hướng sang phải."}
+];
+var i=0,playing=false,timer=null,voice=false,es=document.querySelectorAll(".lec .e"),fill=document.getElementById("fill");
+var dots=document.getElementById("dots");
+S.forEach(function(_,k){var b=document.createElement("button");b.setAttribute("aria-label","Bước "+(k+1));b.onclick=function(){go(k)};dots.appendChild(b)});
+function dur(k){return 2500+S[k].n.length*45}
+function sched(ms){clearTimeout(timer);timer=setTimeout(function(){if(i<S.length-1)go(i+1);else stop()},ms)}
+function stop(){playing=false;clearTimeout(timer);try{speechSynthesis.cancel()}catch(e){}
+document.getElementById("play").textContent=i===S.length-1?"↻ Xem lại":"▶ Phát";fill.style.transition="none";fill.style.width="0"}
+function go(k){i=k;clearTimeout(timer);try{speechSynthesis.cancel()}catch(e){}
+es.forEach(function(e){var s=e.getAttribute("data-s").split(",");e.classList.toggle("on",s.indexOf(String(k))>-1)});
+document.getElementById("step").textContent="Bước "+(k+1)+" / "+S.length;
+document.getElementById("title").textContent=S[k].t;
+document.getElementById("formula").textContent=S[k].f;
+document.getElementById("narr").textContent=S[k].n;
+Array.prototype.forEach.call(dots.children,function(d,j){d.className=j===k?"cur":""});
+fill.style.transition="none";fill.style.width="0";
+if(playing){document.getElementById("play").textContent="❚❚ Dừng";void fill.offsetWidth;
+if(voice&&window.speechSynthesis){fill.style.width="0";var u=new SpeechSynthesisUtterance(S[k].n);u.lang="vi-VN";
+u.onend=function(){if(playing)finish()};u.onerror=function(){sched(dur(k))};speechSynthesis.speak(u)}
+else{fill.style.transition="width "+dur(k)+"ms linear";fill.style.width="100%";sched(dur(k))}}
+else document.getElementById("play").textContent=k===S.length-1?"↻ Xem lại":"▶ Phát"}
+function finish(){if(i<S.length-1)timer=setTimeout(function(){go(i+1)},1200);else stop()}
+document.getElementById("play").onclick=function(){if(playing){stop();return}
+playing=true;go(i===S.length-1?0:i)};
+document.getElementById("prev").onclick=function(){var p=playing;playing=false;go(Math.max(0,i-1));if(p){playing=true;go(i)}};
+document.getElementById("next").onclick=function(){var p=playing;playing=false;go(Math.min(S.length-1,i+1));if(p){playing=true;go(i)}};
+var vb=document.getElementById("voice");
+if(!window.speechSynthesis)vb.style.display="none";
+vb.onclick=function(){voice=!voice;vb.classList.toggle("on",voice);if(playing)go(i)};
+go(0);
+(function(){var AX=90,AY=140,L=80,ph=0,run=true,sp=.6,show=true,last=null,K=40,dl=1e-3;var $=function(i){return document.getElementById(i)};
+function f3(x){return x.toFixed(3).replace('.',',')}
+function dirs(x,p,n){return x>=0?p:n}
+function Cx(f){return Math.sin(f)+Math.sqrt(4-Math.cos(f)*Math.cos(f))}
+function psi(f){return Math.atan2(-Math.cos(f),Math.sqrt(4-Math.cos(f)*Math.cos(f)))}
+function Dp(f){var bx=Math.sin(f),by=Math.cos(f),c=Cx(f),ux=(c-bx)/2,uy=-by/2,ca=Math.cos(Math.PI/6),sa=.5,k=Math.sqrt(3);return[bx+k*(ux*ca-uy*sa),by+k*(ux*sa+uy*ca)]}
+function X(x){return AX+L*x}function Y(y){return AY-L*y}
+function setL(id,x1,y1,x2,y2){var e=$(id);e.setAttribute('x1',x1);e.setAttribute('y1',y1);e.setAttribute('x2',x2);e.setAttribute('y2',y2)}
+function put(id,x,y){var e=$(id);e.setAttribute('cx',x);e.setAttribute('cy',y)}
+function txt(id,x,y){var e=$(id);e.setAttribute('x',x);e.setAttribute('y',y)}
+function draw(){var f=ph,bx=Math.sin(f),by=Math.cos(f),c=Cx(f),d=Dp(f),BX=X(bx),BY=Y(by),CX=X(c),CY=AY,DX=X(d[0]),DY=Y(d[1]);
+setL('sAB',AX,AY,BX,BY);$('sPl').setAttribute('points',BX+','+BY+' '+DX+','+DY+' '+CX+','+CY);
+var r=$('sSl');r.setAttribute('x',CX-15);r.setAttribute('y',CY-11);
+put('sB',BX,BY);put('sC',CX,CY);put('sD',DX,DY);txt('tB',BX-16,BY-8);txt('tC',CX-4,CY+30);txt('tD',DX+6,DY-8);
+var dp=Dp(f+dl),dm=Dp(f-dl),vdx=(dp[0]-dm[0])/(2*dl),vdy=(dp[1]-dm[1])/(2*dl),vbx=Math.cos(f),vby=-Math.sin(f),vc=(Cx(f+dl)-Cx(f-dl))/(2*dl);
+var ac=(Cx(f+dl)-2*c+Cx(f-dl))/(dl*dl),w2=(psi(f+dl)-psi(f-dl))/(2*dl),e2=(psi(f+dl)-2*psi(f)+psi(f-dl))/(dl*dl);
+['v1','v2','v3'].forEach(function(id){$(id).style.display=show?'':'none'});
+setL('v1',BX,BY,BX+K*vbx,BY-K*vby);setL('v2',DX,DY,DX+K*vdx,DY-K*vdy);setL('v3',CX,CY,CX+K*vc,CY);
+var deg=((f*180/Math.PI)%360+360)%360;
+$('rd').innerHTML='φ = '+Math.round(deg)+'° · v₃ = '+f3(vc)+' lω · ω₂ = '+f3(w2)+' ω<br>ε₂ = '+f3(e2)+' ω² ('+dirs(e2,'↺','↻')+') · a₃ = '+f3(ac)+' lω² ('+dirs(ac,'→','←')+')';
+$('sTh').value=deg}
+function tick(t){if(last===null)last=t;var dt=Math.min((t-last)/1000,.1);last=t;if(run){ph+=dt*sp;draw()}requestAnimationFrame(tick)}
+$('sPlay').onclick=function(){run=!run;this.textContent=run?'❚❚ Dừng':'▶ Chạy'};
+$('sReset').onclick=function(){ph=0;run=false;$('sPlay').textContent='▶ Chạy';draw()};
+$('sVec').onclick=function(){show=!show;this.classList.toggle('on',show);draw()};
+$('sSp').oninput=function(){sp=parseFloat(this.value)};
+$('sTh').oninput=function(){run=false;$('sPlay').textContent='▶ Chạy';ph=parseFloat(this.value)*Math.PI/180;draw()};
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){run=false;$('sPlay').textContent='▶ Chạy'}
+draw();requestAnimationFrame(tick)})();
+</script></body></html>

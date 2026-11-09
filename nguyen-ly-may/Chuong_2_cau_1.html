@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bài giảng: vận tốc và gia tốc điểm B₂</title>
+<style>
+:root{--bg:#fff;--fg:#1f1f1d;--mut:#6b6a64;--card:#f4f3ee;--bd:#d8d6cc;--ac:#185FA5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1c1a;--fg:#ecece6;--mut:#a3a29a;--card:#2a2a27;--bd:#44433e;--ac:#85B7EB}}
+:root[data-theme="dark"]{--bg:#1c1c1a;--fg:#ecece6;--mut:#a3a29a;--card:#2a2a27;--bd:#44433e;--ac:#85B7EB}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:12px}
+h1{font-size:17px;font-weight:500;margin:4px 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px}
+svg{display:block;width:100%;height:auto}
+.s{font-size:12px;fill:var(--fg)}.sb{font-size:13px;font-weight:500}
+.e{opacity:0;transition:opacity .5s;transition-delay:var(--d,0s)}
+.e.on{opacity:1}
+.v{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease;transition-delay:var(--d,0s)}
+.e.on .v{stroke-dashoffset:0}
+.bar{height:3px;background:var(--bd);border-radius:2px;margin:10px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac)}
+#info{padding:12px 14px;margin-top:10px;min-height:190px}
+#step{font-size:12px;color:var(--mut)}
+#title{font-size:17px;font-weight:500;margin:2px 0 6px}
+#formula{font-size:15px;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--bd);margin-bottom:8px;overflow-x:auto}
+#narr{font-size:15px;margin:0;color:var(--fg)}
+.ctl{display:flex;gap:8px;align-items:center;margin-top:10px}
+button{font:inherit;font-size:15px;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 14px;cursor:pointer;min-height:40px}
+button.p{background:var(--ac);color:var(--bg);border-color:var(--ac);flex:1;font-weight:500}
+button.on{border-color:var(--ac);color:var(--ac)}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dots button{padding:0;width:26px;min-height:8px;height:8px;border-radius:4px}
+.dots button.cur{background:var(--ac);border-color:var(--ac)}
+</style></head><body><main>
+<h1>Vận tốc và gia tốc điểm B₂</h1>
+<div class="card"><svg viewBox="0 0 380 340" role="img" aria-label="Minh hoạ từng bước giải bài toán">
+<defs>
+<marker id="mb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#378ADD"/></marker>
+<marker id="mt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1D9E75"/></marker>
+<marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E24B4A"/></marker>
+<marker id="mp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#7F77DD"/></marker>
+<marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#BA7517"/></marker>
+</defs>
+<g class="e" data-s="0,1,2,3,4">
+<line x1="70" y1="300" x2="204" y2="166" stroke="#888780" stroke-width="3"/>
+<polygon points="171.3,211.5 158.5,198.7 138.7,218.5 151.5,231.3" fill="var(--bg)" stroke="#888780" stroke-width="1"/>
+<polygon points="58,314 82,314 70,300" fill="var(--bg)" stroke="#888780" stroke-width="1"/>
+<circle cx="155" cy="215" r="3" fill="var(--fg)"/>
+<path d="M40 280 A36 36 0 0 1 90 270" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#ma)"/>
+<text class="s sb" x="46" y="304">A</text><text class="s sb" x="176" y="204">B</text>
+<text class="s" x="12" y="262">ω₁, ε₁</text>
+<text class="s" x="210" y="160">AB = l</text>
+</g>
+<g class="e" data-s="0"><text class="s" x="12" y="30">Cho: ω₁ = ω, ε₁ = ω², AB = l</text><text class="s" x="12" y="48">v₂₁ = lω, a₂₁ = lω² (dọc AB)</text></g>
+<g class="e" data-s="1,2"><line class="v" pathLength="1" x1="155" y1="215" x2="197.4" y2="257.4" stroke="#378ADD" stroke-width="2.5" marker-end="url(#mb)"/><text class="s" x="203" y="262" fill="#378ADD" style="fill:#378ADD">v_B1 = lω</text></g>
+<g class="e" data-s="2" style="--d:.8s"><line stroke="#888780" stroke-dasharray="3 3" x1="197.4" y1="257.4" x2="155" y2="300"/><line stroke="#888780" stroke-dasharray="3 3" x1="112.6" y1="257.4" x2="155" y2="300"/>
+<line class="v" pathLength="1" x1="155" y1="215" x2="112.6" y2="257.4" stroke="#1D9E75" stroke-width="2.5" marker-end="url(#mt)"/><text class="s" x="108" y="252" text-anchor="end" style="fill:#1D9E75">v₂₁ = lω</text>
+<line class="v" pathLength="1" x1="155" y1="215" x2="155" y2="300" stroke="#E24B4A" stroke-width="3" marker-end="url(#mr)" style="--d:1.2s"/><text class="s sb" x="162" y="318" style="fill:#E24B4A">v_B2 = √2·lω</text></g>
+<g class="e" data-s="3"><line class="v" pathLength="1" x1="155" y1="215" x2="112.6" y2="257.4" stroke="#7F77DD" stroke-width="2.5" marker-end="url(#mp)"/><text class="s" x="108" y="252" text-anchor="end" style="fill:#7F77DD">aⁿ = lω²</text>
+<line class="v" pathLength="1" x1="155" y1="215" x2="197.4" y2="257.4" stroke="#7F77DD" stroke-width="2.5" marker-end="url(#mp)" style="--d:.6s"/><text class="s" x="203" y="262" style="fill:#7F77DD">aᵗ = lω²</text></g>
+<g class="e" data-s="3,4" style="--d:1.2s"><line class="v" pathLength="1" x1="155" y1="215" x2="155" y2="300" stroke="#378ADD" stroke-width="3" marker-end="url(#mb)"/><text class="s sb" x="162" y="318" style="fill:#378ADD">a_B1 = √2·lω²</text></g>
+<g class="e" data-s="4"><line class="v" pathLength="1" x1="155" y1="215" x2="70.1" y2="130.1" stroke="#BA7517" stroke-width="2.5" marker-end="url(#ma)"/><text class="s" x="78" y="122" style="fill:#BA7517">aᵏ = 2lω²</text>
+<line class="v" pathLength="1" x1="155" y1="215" x2="112.6" y2="257.4" stroke="#1D9E75" stroke-width="2.5" marker-end="url(#mt)" style="--d:.8s"/><text class="s" x="108" y="252" text-anchor="end" style="fill:#1D9E75">aʳ = lω²</text></g>
+<g class="e" data-s="5,6,7">
+<g stroke="#888780" stroke-width="1" stroke-dasharray="4 3" fill="none"><line x1="120" y1="120" x2="300" y2="120"/><line x1="120" y1="180" x2="300" y2="180"/><line x1="120" y1="240" x2="300" y2="240"/><line x1="120" y1="120" x2="120" y2="240"/><line x1="180" y1="120" x2="180" y2="240"/><line x1="240" y1="120" x2="240" y2="240"/><line x1="300" y1="120" x2="300" y2="240"/></g>
+<text class="s" x="120" y="262">1 ô = lω²/√2</text>
+</g>
+<g class="e" data-s="5,6,7"><line class="v" pathLength="1" x1="300" y1="120" x2="300" y2="240" stroke="#378ADD" stroke-width="2.5" marker-end="url(#mb)"/><text class="s" x="308" y="184" style="fill:#378ADD">a_B1</text></g>
+<g class="e" data-s="5,6,7" style="--d:1s"><line class="v" pathLength="1" x1="300" y1="240" x2="180" y2="120" stroke="#BA7517" stroke-width="2.5" marker-end="url(#ma)"/><text class="s" x="176" y="110" text-anchor="end" style="fill:#BA7517">aᵏ</text></g>
+<g class="e" data-s="5,6,7" style="--d:2s"><line class="v" pathLength="1" x1="180" y1="120" x2="120" y2="180" stroke="#1D9E75" stroke-width="2.5" marker-end="url(#mt)"/><text class="s" x="112" y="168" text-anchor="end" style="fill:#1D9E75">aʳ</text></g>
+<g class="e" data-s="6,7"><line class="v" pathLength="1" x1="300" y1="120" x2="120" y2="180" stroke="#E24B4A" stroke-width="3" marker-end="url(#mr)"/><text class="s sb" x="238" y="168" style="fill:#E24B4A">a_B2</text></g>
+<g class="e" data-s="6"><text class="s sb" x="120" y="288" style="fill:#E24B4A">a_B2 = √(3²+1²) = √10 ô</text></g>
+<g class="e" data-s="7"><text class="s sb" x="120" y="288" style="fill:#E24B4A">a_B2 = √5·lω²</text><text class="s sb" x="120" y="308" style="fill:#E24B4A">v_B2 = √2·lω</text></g>
+</svg></div>
+<div class="bar"><i id="fill"></i></div>
+<div class="card" id="info"><div id="step"></div><div id="title"></div><div id="formula"></div><p id="narr"></p></div>
+<div class="ctl"><button id="prev" aria-label="Bước trước">‹</button><button id="play" class="p">▶ Phát</button><button id="next" aria-label="Bước sau">›</button><button id="voice">Đọc</button></div>
+<div class="dots" id="dots"></div>
+</main>
+<script>
+var S=[
+{t:"Đề bài",f:"AB = l · ω₁ = ω · ε₁ = ω² · v₂₁ = lω · a₂₁ = lω²",n:"Thanh AB quay quanh A cùng chiều kim đồng hồ với ω₁ = ω và ε₁ = ω². Khâu 2 trượt dọc AB với vận tốc tương đối lω và gia tốc tương đối lω². Cần tìm vận tốc và gia tốc của B₂, điểm thuộc khâu 2 trùng với B₁ thuộc khâu 1."},
+{t:"Vận tốc của B₁",f:"v_B1 = AB · ω₁ = lω",n:"B₁ thuộc khâu 1 nên chuyển động tròn quanh A. Vectơ vận tốc vuông góc AB, theo chiều quay, độ lớn lω."},
+{t:"Hợp vận tốc",f:"v_B2 = v_B1 + v₂₁ ⇒ v_B2 = √2·lω",n:"Khâu 2 vừa chuyển động theo khâu 1 vừa trượt dọc AB. Vận tốc tuyệt đối bằng vận tốc theo cộng vận tốc tương đối. Hai vectơ vuông góc và cùng độ lớn lω nên tổng là đường chéo hình vuông, bằng √2·lω và hướng thẳng đứng."},
+{t:"Gia tốc của B₁",f:"a_B1 = aⁿ + aᵗ, aⁿ = AB·ω₁² = lω², aᵗ = AB·ε₁ = lω² ⇒ a_B1 = √2·lω²",n:"Thành phần pháp tuyến aⁿ hướng về A, độ lớn lω². Thành phần tiếp tuyến aᵗ vuông góc AB, độ lớn lω². Hai thành phần vuông góc nên a_B1 = √2·lω², thẳng đứng hướng xuống."},
+{t:"Hợp gia tốc có Coriolis",f:"a_B2 = a_B1 + aᵏ₂₁ + aʳ₂₁",n:"Vì khâu 1 quay nên xuất hiện gia tốc Coriolis aᵏ = 2·ω₁·v₂₁ = 2lω², vuông góc AB, hướng bằng cách quay v₂₁ một góc 90° theo chiều ω₁. Gia tốc tương đối aʳ = a₂₁ = lω², dọc theo AB."},
+{t:"Vẽ đa giác gia tốc",f:"Chọn 1 ô = lω²/√2",n:"Vẽ nối đuôi trên lưới ô vuông. a_B1 đi xuống 2 ô. aᵏ đi lên-trái 2 ô ngang và 2 ô dọc. aʳ đi xuống-trái 1 ô ngang và 1 ô dọc."},
+{t:"Vectơ tổng",f:"a_B2 = √(3² + 1²) = √10 ô",n:"Nối gốc với điểm cuối của đa giác, ta được a_B2: dịch 3 ô sang trái và 1 ô xuống, độ dài √10 ô."},
+{t:"Kết quả",f:"a_B2 = √10 · lω²/√2 = √5·lω² ; v_B2 = √2·lω",n:"Đổi từ ô ra đơn vị thật bằng cách nhân với lω²/√2. Kết luận: vận tốc v_B2 = √2·lω và gia tốc a_B2 = √5·lω²."}
+];
+var i=0,playing=false,timer=null,voice=false,es=document.querySelectorAll(".e"),fill=document.getElementById("fill");
+var dots=document.getElementById("dots");
+S.forEach(function(_,k){var b=document.createElement("button");b.setAttribute("aria-label","Bước "+(k+1));b.onclick=function(){go(k)};dots.appendChild(b)});
+function dur(k){return 2500+S[k].n.length*45}
+function sched(ms){clearTimeout(timer);timer=setTimeout(function(){if(i<S.length-1)go(i+1);else stop()},ms)}
+function stop(){playing=false;clearTimeout(timer);try{speechSynthesis.cancel()}catch(e){}
+document.getElementById("play").textContent=i===S.length-1?"↻ Xem lại":"▶ Phát";fill.style.transition="none";fill.style.width="0"}
+function go(k){i=k;clearTimeout(timer);try{speechSynthesis.cancel()}catch(e){}
+es.forEach(function(e){var s=e.getAttribute("data-s").split(",");e.classList.toggle("on",s.indexOf(String(k))>-1)});
+document.getElementById("step").textContent="Bước "+(k+1)+" / "+S.length;
+document.getElementById("title").textContent=S[k].t;
+document.getElementById("formula").textContent=S[k].f;
+document.getElementById("narr").textContent=S[k].n;
+Array.prototype.forEach.call(dots.children,function(d,j){d.className=j===k?"cur":""});
+fill.style.transition="none";fill.style.width="0";
+if(playing){document.getElementById("play").textContent="❚❚ Dừng";void fill.offsetWidth;
+if(voice&&window.speechSynthesis){fill.style.width="0";var u=new SpeechSynthesisUtterance(S[k].n);u.lang="vi-VN";
+u.onend=function(){if(playing)finish()};u.onerror=function(){sched(dur(k))};speechSynthesis.speak(u)}
+else{fill.style.transition="width "+dur(k)+"ms linear";fill.style.width="100%";sched(dur(k))}}
+else document.getElementById("play").textContent=k===S.length-1?"↻ Xem lại":"▶ Phát"}
+function finish(){if(i<S.length-1)timer=setTimeout(function(){go(i+1)},1200);else stop()}
+document.getElementById("play").onclick=function(){if(playing){stop();return}
+playing=true;go(i===S.length-1?0:i)};
+document.getElementById("prev").onclick=function(){var p=playing;playing=false;go(Math.max(0,i-1));if(p){playing=true;go(i)}};
+document.getElementById("next").onclick=function(){var p=playing;playing=false;go(Math.min(S.length-1,i+1));if(p){playing=true;go(i)}};
+var vb=document.getElementById("voice");
+if(!window.speechSynthesis)vb.style.display="none";
+vb.onclick=function(){voice=!voice;vb.classList.toggle("on",voice);if(playing)go(i)};
+go(0);
+</script></body></html>

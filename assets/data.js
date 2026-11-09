@@ -541,8 +541,7 @@
     "anh-van-2": "anh-van-2/index.html",
     /* Kỹ thuật số: mở thẳng trang ôn tập chuyên đề, không mở popup. */
     "ky-thuat-so": "ky-thuat-so/index.html",
-    /* Kỹ thuật điện tử: mở thẳng trang tổng quan 4 chương (Chương 4–7). */
-    "ky-thuat-dien-tu": "ky-thuat-dien-tu/index.html",
+    /* Kỹ thuật điện tử: dùng popup (giống Nguyên lý máy). */
     /* ForumFlash: mở thẳng trang ôn tập bên ngoài. */
     "forumflash": "https://www.forumflashstudy.com/?fbclid=IwY2xjawVS905leHRuA2FlbQIxMABwZG9mBWJyaWQRMXBLTUZIR240MkR1Vkp3aEtzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfd6gX57_h1C3RgaBIFbH4EyepItk5DFCSmpTxadaXPxC1YyXSW9sxJXYbUPg_aem_PGbex1SgiJDVuyuNv4rktw",
     /* ByeTOIEC: mở thẳng trang ôn tập bên ngoài. */

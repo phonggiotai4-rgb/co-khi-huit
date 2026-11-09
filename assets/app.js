@@ -153,6 +153,15 @@
       icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
     { id: "game-xuyen-khong-nong-trai", href: "https://time.aigame3d.com/?fbclid=IwdGRjcAUnBFxjbGNrBScEJWV4dG4DYWVtAjExAHBkb2YFc3J0YwZhcHBfaWQMMzUwNjg1NTMxNzI4AAEetRpAv3L4lTdBcWq0QUY5NmgGmZbxPajbuCStNx2d3ZwR6ZL-3uuCKh29UIM_aem_4cDbpRMhN9gLA4cRgEqUGQ", label: "GAME XUYÊN KHÔNG NÔNG TRẠI",
       desc: "Game nông trại xuyên không",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "sach-nguyen-nhat-anh", href: "https://khoaverse.fun/", label: "SÁCH NGUYỄN NHẬT ÁNH",
+      desc: "Kho sách Nguyễn Nhật Ánh",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "that-hung-tranh-ba", href: "https://thtb.haovaly.click/?fbclid=IwdGRjcAVcWL5leHRuA2FlbQIxMQBwZG9mBWZkaWQWURyweO7bFS_xI_hc7DIH2RCEzctPmHNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR8PzsqgqOPuyFgl7ln9hwhQ85KzES4yjRNhw1MCB-G9oL85dTL1nL4tyVM9Aw_aem_Q-PpvWFc781KjMhXqXipow", label: "THẤT HÙNG TRANH BÁ",
+      desc: "Game Thất Hùng Tranh Bá",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "electronics-101", href: "https://electronics-101-six.vercel.app/?fbclid=IwdGRjcAVdNOBleHRuA2FlbQIxMQBwZG9mBWZkaWQWUR20_PwtR6Ljn31aHZ0YpOnARxIvrHNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR_ItJ68Xoio9qeULVH_CPjYrzl0tGRSUHL8PzLYXyn6GxNKaSfhfmYCxKXn3g_aem_ez9a4xir2DT7F8-rpq7xTQ", label: "Electronics 101",
+      desc: "Học điện tử cơ bản",
       icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" }
   ];
 

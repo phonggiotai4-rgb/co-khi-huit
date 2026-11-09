@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bài giảng: ω₃, ε₃, v₃₂ và aʳ₃₂</title>
+<style>
+:root{--bg:#fff;--fg:#1f1f1d;--mut:#6b6a64;--card:#f4f3ee;--bd:#d8d6cc;--ac:#185FA5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1c1a;--fg:#ecece6;--mut:#a3a29a;--card:#2a2a27;--bd:#44433e;--ac:#85B7EB}}
+:root[data-theme="dark"]{--bg:#1c1c1a;--fg:#ecece6;--mut:#a3a29a;--card:#2a2a27;--bd:#44433e;--ac:#85B7EB}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:12px}
+h1{font-size:17px;font-weight:500;margin:4px 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px}
+svg{display:block;width:100%;height:auto}
+.s{font-size:12px;fill:var(--fg)}.sb{font-size:13px;font-weight:500}
+.e{opacity:0;transition:opacity .5s;transition-delay:var(--d,0s)}
+.e.on{opacity:1}
+.v{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease;transition-delay:var(--d,0s)}
+.e.on .v{stroke-dashoffset:0}
+.bar{height:3px;background:var(--bd);border-radius:2px;margin:10px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac)}
+#info{padding:12px 14px;margin-top:10px;min-height:190px}
+#step{font-size:12px;color:var(--mut)}
+#title{font-size:17px;font-weight:500;margin:2px 0 6px}
+#formula{font-size:15px;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--bd);margin-bottom:8px;overflow-x:auto}
+#narr{font-size:15px;margin:0;color:var(--fg)}
+.ctl{display:flex;gap:8px;align-items:center;margin-top:10px}
+button{font:inherit;font-size:15px;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 14px;cursor:pointer;min-height:40px}
+button.p{background:var(--ac);color:var(--bg);border-color:var(--ac);flex:1;font-weight:500}
+button.on{border-color:var(--ac);color:var(--ac)}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dots button{padding:0;flex:1;max-width:26px;min-width:0;min-height:8px;height:8px;border-radius:4px}
+.dots button.cur{background:var(--ac);border-color:var(--ac)}
+</style></head><body><main>
+<h1>Tìm ω₃, ε₃, v₃₂ và aʳ₃₂</h1>
+<div class="card"><svg viewBox="0 0 380 340" role="img" aria-label="Minh hoạ từng bước giải bài toán">
+<defs>
+<marker id="mb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#378ADD"/></marker>
+<marker id="mt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1D9E75"/></marker>
+<marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E24B4A"/></marker>
+<marker id="mp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#7F77DD"/></marker>
+<marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#BA7517"/></marker>
+</defs>
+<g class="e" data-s="0,1,2,3,4">
+<line x1="60" y1="290" x2="265" y2="85" stroke="#888780" stroke-width="3"/>
+<polygon points="226.3,136.5 213.5,123.7 193.7,143.5 206.5,156.3" fill="var(--bg)" stroke="#888780"/>
+<polygon points="48,304 72,304 60,290" fill="var(--bg)" stroke="#888780"/>
+<circle cx="60" cy="290" r="3" fill="var(--fg)"/><circle cx="210" cy="140" r="3" fill="var(--fg)"/>
+<text class="s sb" x="34" y="300">B</text><text class="s sb" x="176" y="152">C</text>
+<text class="s" x="120" y="236" transform="rotate(-45 120 236)" style="opacity:.7">BC = a√2</text>
+</g>
+<g class="e" data-s="0"><text class="s" x="12" y="24">BC quay quanh B, nghiêng 45°</text><text class="s" x="12" y="42">v_C2 = aω (↓), a_C2 = aω² (←)</text><text class="s" x="12" y="60">Tìm ω₃, ε₃, v₃₂, aʳ₃₂</text></g>
+<g class="e" data-s="0,1,2"><line class="v" pathLength="1" x1="210" y1="140" x2="210" y2="220" stroke="#378ADD" stroke-width="2.5" marker-end="url(#mb)"/><text class="s" x="204" y="236" text-anchor="end" style="fill:#378ADD">v_C2 = aω</text></g>
+<g class="e" data-s="1"><line stroke="#888780" stroke-dasharray="4 3" x1="170" y1="100" x2="262" y2="192"/><text class="s" x="266" y="200" style="fill:#E24B4A">v_C3 ⊥ BC (?)</text><text class="s" x="270" y="92" style="fill:#1D9E75">v₃₂ ∥ BC (?)</text></g>
+<g class="e" data-s="2"><line class="v" pathLength="1" x1="210" y1="220" x2="250" y2="180" stroke="#1D9E75" stroke-width="2.5" marker-end="url(#mt)"/><text class="s" x="256" y="216" style="fill:#1D9E75">v₃₂ = aω/√2</text></g>
+<g class="e" data-s="2,3" style="--d:.8s"><line class="v" pathLength="1" x1="210" y1="140" x2="250" y2="180" stroke="#E24B4A" stroke-width="3" marker-end="url(#mr)"/><text class="s sb" x="258" y="160" style="fill:#E24B4A">v_C3 = aω/√2</text></g>
+<g class="e" data-s="3"><path d="M60 256 A34 34 0 0 1 94 290" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#ma)"/><text class="s sb" x="104" y="282" style="fill:#E24B4A">ω₃ = ω/2</text><text class="s sb" x="12" y="30" style="fill:#E24B4A">ω₃ = v_C3 / BC = (aω/√2) / (a√2)</text></g>
+<g class="e" data-s="0,4"><line class="v" pathLength="1" x1="210" y1="140" x2="130" y2="140" stroke="#7F77DD" stroke-width="2.5" marker-end="url(#mp)"/><text class="s" x="204" y="128" text-anchor="end" style="fill:#7F77DD">a_C2 = aω²</text></g>
+<g class="e" data-s="4"><line class="v" pathLength="1" x1="210" y1="140" x2="190" y2="160" stroke="#E24B4A" stroke-width="2.5" marker-end="url(#mr)" style="--d:.6s"/><text class="s" x="168" y="170" text-anchor="end" style="fill:#E24B4A">aⁿ_C3</text>
+<line class="v" pathLength="1" x1="210" y1="140" x2="250" y2="180" stroke="#BA7517" stroke-width="2.5" marker-end="url(#ma)" style="--d:1.2s"/><text class="s" x="256" y="188" style="fill:#BA7517">aᵏ₃₂</text></g>
+<g class="e" data-s="5,6,7"><circle cx="300" cy="120" r="3" fill="var(--fg)"/><text class="s sb" x="306" y="112">π</text></g>
+<g class="e" data-s="5,6,7"><line class="v" pathLength="1" x1="300" y1="120" x2="60" y2="120" stroke="#7F77DD" stroke-width="2.5" marker-end="url(#mp)"/><text class="s" x="180" y="108" text-anchor="middle" style="fill:#7F77DD">a_C2 = aω²</text></g>
+<g class="e" data-s="5,6,7" style="--d:1s"><line class="v" pathLength="1" x1="60" y1="120" x2="180" y2="240" stroke="#BA7517" stroke-width="2.5" marker-end="url(#ma)"/><text class="s" x="112" y="196" text-anchor="end" style="fill:#BA7517">aᵏ₃₂ = aω²/√2</text></g>
+<g class="e" data-s="5,6,7" style="--d:2s"><line class="v" pathLength="1" x1="180" y1="240" x2="240" y2="180" stroke="#1D9E75" stroke-width="2.5" marker-end="url(#mt)"/><text class="s" x="190" y="262" style="fill:#1D9E75">aʳ₃₂ = √2·aω²/4</text></g>
+<g class="e" data-s="5,6,7" style="--d:3.2s"><line class="v" pathLength="1" x1="300" y1="120" x2="240" y2="180" stroke="#E24B4A" stroke-width="3" marker-end="url(#mr)"/><text class="s sb" x="262" y="198" style="fill:#E24B4A">aⁿ_C3 = √2·aω²/4</text></g>
+<g class="e" data-s="5"><text class="s sb" x="60" y="306" style="fill:#E24B4A">Khép kín về mút aⁿ_C3 ⇒ aᵗ_C3 = 0</text></g>
+<g class="e" data-s="6"><text class="s sb" x="60" y="296" style="fill:#E24B4A">aʳ₃₂ = (√2/4)·aω²</text><text class="s sb" x="60" y="318" style="fill:#E24B4A">aᵗ_C3 = 0 ⇒ ε₃ = 0</text></g>
+<g class="e" data-s="7"><text class="s sb" x="60" y="296" style="fill:#E24B4A">ω₃ = ω/2 ↻ · v₃₂ = aω/√2</text><text class="s sb" x="60" y="318" style="fill:#E24B4A">ε₃ = 0 · aʳ₃₂ = (√2/4)·aω²</text></g>
+</svg></div>
+<div class="bar"><i id="fill"></i></div>
+<div class="card" id="info"><div id="step"></div><div id="title"></div><div id="formula"></div><p id="narr"></p></div>
+<div class="ctl"><button id="prev" aria-label="Bước trước">‹</button><button id="play" class="p">▶ Phát</button><button id="next" aria-label="Bước sau">›</button><button id="voice">Đọc</button></div>
+<div class="dots" id="dots"></div>
+</main>
+<script>
+var S=[
+{t:"Đề bài",f:"BC = a√2 · v_C2 = aω (↓) · a_C2 = aω² (←)",n:"Thanh BC (khâu 3) quay quanh B cố định và nghiêng 45°. Con trượt 2 tại C có vận tốc v_C2 = aω hướng xuống, gia tốc a_C2 = aω² hướng sang trái, đồng thời trượt dọc BC. Cần tìm bốn đại lượng: ω₃, ε₃, v₃₂ và aʳ₃₂."},
+{t:"Phương trình vận tốc",f:"v_C3 = v_C2 + v₃₂",n:"C₃ thuộc thanh BC, vận tốc tuyệt đối bằng vận tốc theo (của C₂) cộng vận tốc tương đối. Đã biết v_C2 = aω hướng xuống. v_C3 vuông góc BC, v₃₂ song song BC, cả hai chưa biết độ lớn. Ta giả thiết v_C3 hướng xuống-phải và v₃₂ hướng lên-phải."},
+{t:"Giải bằng cách chiếu",f:"Ox: v_C3·cos45° = v₃₂·cos45° · Oy: −v_C3·sin45° = −aω + v₃₂·sin45° ⇒ v_C3 = v₃₂ = aω/√2",n:"Chiếu lên Ox được v_C3 = v₃₂. Thay vào phương trình chiếu lên Oy: 2v/√2 = aω, nên v = aω/√2. Kết quả dương nên chiều giả thiết là đúng. Trên hình, ba vectơ tạo thành tam giác vuông cân với cạnh huyền v_C2."},
+{t:"Tìm ω₃",f:"ω₃ = v_C3 / BC = (aω/√2) / (a√2) = ω/2",n:"C₃ chuyển động tròn quanh B với bán kính BC = a√2, nên ω₃ = v_C3/BC = ω/2. Vì v_C3 hướng xuống-phải và C nằm phía trên-phải B nên thanh quay cùng chiều kim đồng hồ."},
+{t:"Phương trình gia tốc",f:"aⁿ_C3 + aᵗ_C3 = a_C2 + aᵏ₃₂ + aʳ₃₂",n:"Thành phần pháp aⁿ_C3 = BC·ω₃² = (√2/4)·aω², hướng về B. a_C2 = aω² hướng sang trái. Coriolis aᵏ₃₂ = 2ω₃·v₃₂ = aω²/√2, hướng của v₃₂ quay 90° theo chiều ω₃, tức vuông góc BC hướng xuống-phải. Hai ẩn còn lại: aᵗ_C3 vuông góc BC và aʳ₃₂ dọc BC."},
+{t:"Đa giác gia tốc",f:"π → a_C2 → aᵏ₃₂ → aʳ₃₂, khép về mút aⁿ_C3",n:"Từ cực π vẽ a_C2 sang trái, rồi aᵏ₃₂ xuống-phải vuông góc BC, rồi aʳ₃₂ dọc BC đi lên-phải. Mút của aʳ₃₂ trùng mút của aⁿ_C3 vẽ từ π theo phương CB, nên đa giác khép kín mà không cần đoạn aᵗ_C3."},
+{t:"Tìm aʳ₃₂ và ε₃",f:"Dọc BC: −√2/4 = −1/√2 + aʳ ⇒ aʳ₃₂ = √2/4 · Vuông góc BC: aᵗ_C3 = 0 ⇒ ε₃ = 0",n:"Chiếu lên phương BC (đơn vị aω²): −√2/4 = −1/√2 + aʳ, suy ra aʳ₃₂ = (√2/4)·aω², hướng lên-phải dọc BC. Chiếu lên phương vuông góc BC cho aᵗ_C3 = 0, mà aᵗ = BC·ε₃ nên ε₃ = 0."},
+{t:"Kết quả",f:"ω₃ = ω/2 ↻ · v₃₂ = aω/√2 · ε₃ = 0 · aʳ₃₂ = (√2/4)·aω²",n:"Bốn đại lượng cần tìm: ω₃ = ω/2 cùng chiều kim đồng hồ, v₃₂ = aω/√2, ε₃ = 0 và aʳ₃₂ = (√2/4)·aω². Nếu đề cho a = 2, ω = 4 thì ω₃ = 2, v₃₂ = 4√2 ≈ 5,66 và aʳ₃₂ = 8√2 ≈ 11,31."}
+];
+var i=0,playing=false,timer=null,voice=false,es=document.querySelectorAll(".e"),fill=document.getElementById("fill");
+var dots=document.getElementById("dots");
+S.forEach(function(_,k){var b=document.createElement("button");b.setAttribute("aria-label","Bước "+(k+1));b.onclick=function(){go(k)};dots.appendChild(b)});
+function dur(k){return 2500+S[k].n.length*45}
+function sched(ms){clearTimeout(timer);timer=setTimeout(function(){if(i<S.length-1)go(i+1);else stop()},ms)}
+function stop(){playing=false;clearTimeout(timer);try{speechSynthesis.cancel()}catch(e){}
+document.getElementById("play").textContent=i===S.length-1?"↻ Xem lại":"▶ Phát";fill.style.transition="none";fill.style.width="0"}
+function go(k){i=k;clearTimeout(timer);try{speechSynthesis.cancel()}catch(e){}
+es.forEach(function(e){var s=e.getAttribute("data-s").split(",");e.classList.toggle("on",s.indexOf(String(k))>-1)});
+document.getElementById("step").textContent="Bước "+(k+1)+" / "+S.length;
+document.getElementById("title").textContent=S[k].t;
+document.getElementById("formula").textContent=S[k].f;
+document.getElementById("narr").textContent=S[k].n;
+Array.prototype.forEach.call(dots.children,function(d,j){d.className=j===k?"cur":""});
+fill.style.transition="none";fill.style.width="0";
+if(playing){document.getElementById("play").textContent="❚❚ Dừng";void fill.offsetWidth;
+if(voice&&window.speechSynthesis){fill.style.width="0";var u=new SpeechSynthesisUtterance(S[k].n);u.lang="vi-VN";
+u.onend=function(){if(playing)finish()};u.onerror=function(){sched(dur(k))};speechSynthesis.speak(u)}
+else{fill.style.transition="width "+dur(k)+"ms linear";fill.style.width="100%";sched(dur(k))}}
+else document.getElementById("play").textContent=k===S.length-1?"↻ Xem lại":"▶ Phát"}
+function finish(){if(i<S.length-1)timer=setTimeout(function(){go(i+1)},1200);else stop()}
+document.getElementById("play").onclick=function(){if(playing){stop();return}
+playing=true;go(i===S.length-1?0:i)};
+document.getElementById("prev").onclick=function(){var p=playing;playing=false;go(Math.max(0,i-1));if(p){playing=true;go(i)}};
+document.getElementById("next").onclick=function(){var p=playing;playing=false;go(Math.min(S.length-1,i+1));if(p){playing=true;go(i)}};
+var vb=document.getElementById("voice");
+if(!window.speechSynthesis)vb.style.display="none";
+vb.onclick=function(){voice=!voice;vb.classList.toggle("on",voice);if(playing)go(i)};
+go(0);
+</script></body></html>

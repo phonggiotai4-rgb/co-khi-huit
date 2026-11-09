@@ -153,6 +153,51 @@
 
 .empty{padding:34px 20px;text-align:center;color:var(--text-muted)}
 .empty b{display:block;color:var(--text-strong);font-size:15px;margin-bottom:6px}
+
+/* ── Popup NGUYÊN LÝ MÁY — menu chính ─────────────────────── */
+.nlm-menu { display: grid; gap: 10px; margin-top: 22px; text-align: left; }
+.nlm-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: var(--r-lg); cursor: pointer;
+  background: rgba(255,255,255,.55); border: 1px solid var(--brand-25);
+  box-shadow: var(--sh-xs); text-align: left; width: 100%;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.nlm-item:hover { background: var(--glass-3-bg); transform: translateY(-2px); box-shadow: var(--sh-md); }
+.nlm-item:active { transform: scale(.98); }
+.nlm-ico {
+  flex: none; width: 44px; height: 44px; border-radius: var(--r-md);
+  display: grid; place-items: center; background: var(--brand-10); color: var(--text-strong);
+}
+.nlm-ico svg { width: 22px; height: 22px; }
+.nlm-tx { flex: 1; min-width: 0; }
+.nlm-tx b { display: block; font: 700 14.5px/1.3 var(--font-display); color: var(--text-strong); letter-spacing: -.005em; }
+.nlm-tx span { display: block; margin-top: 2px; font: 400 12px/1.4 var(--font-display); color: var(--text-muted); }
+.nlm-arrow { flex: none; color: var(--text-muted); transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.nlm-item:hover .nlm-arrow { color: var(--text-strong); transform: translateX(4px); }
+.nlm-item:hover .nlm-arrow svg { width: 18px; height: 18px; }
+.nlm-arrow svg { width: 18px; height: 18px; }
+/* ── Popup NLM — danh sách con ───────────────────────────── */
+.nlm-list { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; text-align: left; }
+.nlm-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--r-md); text-decoration: none; color: inherit;
+  background: rgba(255,255,255,.55); border: 1px solid var(--brand-06);
+  box-shadow: var(--sh-xs);
+  transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.nlm-row:hover { background: var(--glass-3-bg); transform: translateY(-1px); box-shadow: var(--sh-sm); }
+.nlm-row .nlm-no {
+  flex: none; min-width: 28px; height: 28px; border-radius: var(--r-full);
+  display: grid; place-items: center; background: var(--brand); color: var(--text-invert);
+  font: 700 11px/1 var(--font-mono);
+}
+.nlm-row .nlm-name { flex: 1; min-width: 0; font: 500 13.5px/1.4 var(--font-display); color: var(--text); }
+.nlm-row .nlm-go { flex: none; color: var(--text-muted); }
+.nlm-row:hover .nlm-go { color: var(--text-strong); transform: translateX(3px); }
+.nlm-row .nlm-go svg { width: 15px; height: 15px; transition: transform var(--dur-fast) var(--ease-out); }
 </style>
 </head>
 <body data-depth="0">
@@ -677,7 +722,12 @@ $("copyBtn").addEventListener("click", async () => {
     var exams = [
       { t: 'Nguyên lý máy – Giải đề cuối kỳ 2 (2024–2025)', u: 'nguyen-ly-may/Nguyên lý máy – Giải đề cuối kỳ 2 (2024–2025).html' },
       { t: 'Nguyên lý máy – Đề 2 (đề luyện tập)', u: 'nguyen-ly-may/Nguyên lý máy – Đề 2 (đề luyện tập).html' },
-      { t: 'Nguyên lý máy – Đề 3 (đề luyện tập nâng cao)', u: 'nguyen-ly-may/Nguyên lý máy – Đề 3 (đề luyện tập nâng cao).html' }
+      { t: 'Nguyên lý máy – Đề 3 (đề luyện tập nâng cao)', u: 'nguyen-ly-may/Nguyên lý máy – Đề 3 (đề luyện tập nâng cao).html' },
+      { t: 'Chương 2 - Câu 1', u: 'nguyen-ly-may/Chuong_2_cau_1.html' },
+      { t: 'Chương 2 - Câu 2', u: 'nguyen-ly-may/Chuong_2_cau_2.html' },
+      { t: 'Chương 2 - Câu 3', u: 'nguyen-ly-may/Chuong_2_cau_3.html' },
+      { t: 'Chương 2 - Câu 4', u: 'nguyen-ly-may/Chuong_2_cau_4.html' },
+      { t: 'Chương 2 - Câu 5', u: 'nguyen-ly-may/Chuong_2_cau_5.html' }
     ];
 
     function mainView() {
@@ -686,15 +736,15 @@ $("copyBtn").addEventListener("click", async () => {
           '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
           '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
           '<p class="exam-lead">Chọn nội dung để xem. Các mục đang được cập nhật.</p>' +
-          '<div class="exam-parts">' +
-            '<span class="pl">Nội dung</span>' +
-            '<div class="seg">' +
+          '<div class="nlm-menu">' +
               items.map(function (it) {
                 var hint = it.hint.replace("@@CHAPCOUNT@@", chapters.length).replace("@@VIDCOUNT@@", videos.length).replace("@@EXAMCOUNT@@", exams.length);
-                return '<button class="opt" type="button" data-cm="' + it.id + '">' +
-                  it.label + '<em>' + hint + '</em></button>';
+                return '<button class="nlm-item" type="button" data-cm="' + it.id + '">' +
+                  '<span class="nlm-ico">' + CK.svg(it.icon) + '</span>' +
+                  '<span class="nlm-tx"><b>' + it.label + '</b><span>' + hint + '</span></span>' +
+                  '<span class="nlm-arrow">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
+                '</button>';
               }).join("") +
-            '</div>' +
           '</div>' +
         '</section>' +
         '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
@@ -722,12 +772,12 @@ $("copyBtn").addEventListener("click", async () => {
           '<p class="exam-lead">' + chapters.length + ' bài giảng theo chương. Bấm để mở.</p>' +
           '<div class="exam-parts">' +
             '<span class="pl">Danh sách bài giảng</span>' +
-            '<div class="seg" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+            '<div class="nlm-list">' +
               chapters.map(function (c, idx) {
-                return '<a class="opt" href="' + CK.url(c.u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
-                  '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx+1) + '</span>' +
-                  '<span style="flex:1;min-width:0;">' + c.t + '</span>' +
-                  '<span style="flex:none;opacity:.6;">↗</span>' +
+                return '<a class="nlm-row" href="' + CK.url(c.u) + '" target="_blank" rel="noopener">' +
+                  '<span class="nlm-no">' + (idx+1) + '</span>' +
+                  '<span class="nlm-name">' + c.t + '</span>' +
+                  '<span class="nlm-go">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
                 '</a>';
               }).join("") +
             '</div>' +
@@ -751,12 +801,12 @@ $("copyBtn").addEventListener("click", async () => {
           '<p class="exam-lead">' + exams.length + ' đề thi. Bấm để mở.</p>' +
           '<div class="exam-parts">' +
             '<span class="pl">Danh sách đề</span>' +
-            '<div class="seg" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+            '<div class="nlm-list">' +
               exams.map(function (e, idx) {
-                return '<a class="opt" href="' + CK.url(e.u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
-                  '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx+1) + '</span>' +
-                  '<span style="flex:1;min-width:0;">' + e.t + '</span>' +
-                  '<span style="flex:none;opacity:.6;">↗</span>' +
+                return '<a class="nlm-row" href="' + CK.url(e.u) + '" target="_blank" rel="noopener">' +
+                  '<span class="nlm-no">' + (idx+1) + '</span>' +
+                  '<span class="nlm-name">' + e.t + '</span>' +
+                  '<span class="nlm-go">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
                 '</a>';
               }).join("") +
             '</div>' +
@@ -780,12 +830,12 @@ $("copyBtn").addEventListener("click", async () => {
           '<p class="exam-lead">' + videos.length + ' video bài giảng theo tuần/chương. Bấm để mở YouTube.</p>' +
           '<div class="exam-parts">' +
             '<span class="pl">Danh sách video</span>' +
-            '<div class="seg" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+            '<div class="nlm-list">' +
               videos.map(function (v, idx) {
-                return '<a class="opt" href="' + v.u + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
-                  '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx+1) + '</span>' +
-                  '<span style="flex:1;min-width:0;">' + v.t + '</span>' +
-                  '<span style="flex:none;opacity:.6;">↗</span>' +
+                return '<a class="nlm-row" href="' + v.u + '" target="_blank" rel="noopener">' +
+                  '<span class="nlm-no">' + (idx+1) + '</span>' +
+                  '<span class="nlm-name">' + v.t + '</span>' +
+                  '<span class="nlm-go">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
                 '</a>';
               }).join("") +
             '</div>' +
@@ -804,14 +854,361 @@ $("copyBtn").addEventListener("click", async () => {
     focusFirst("[data-exam-close]");
   }
 
+  /* Popup riêng cho môn KỸ THUẬT ĐIỆN TỬ: 3 mục nội dung (Bài giảng / Video YouTube / Bài tập thêm). */
+  function showCustomKyThuatDienTu(s) {
+    var closeSvg = CK.svg("M6 6l12 12M18 6 6 18");
+    var backSvg = CK.svg("M14.4 6 8.4 12l6 6");
+    var items = [
+      { id: "bai-giang", label: "Bài giảng", hint: "@@CHAPCOUNT@@ chương", icon: "M4.5 6.5h15M4.5 12h15M4.5 17.5h9" },
+      { id: "video", label: "Video YouTube", hint: "@@VIDCOUNT@@ video", icon: "M4 6.5h16v11H4zM10 9.5l4 2.5-4 2.5z" },
+      { id: "bai-tap", label: "Bài tập thêm", hint: "@@BTACOUNT@@ bài", icon: "M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3" }
+    ];
+    var videoGroups = [
+      { title: 'Chương 4 – Linh kiện điện tử', items: [
+        { t: 'Điện tử cơ bản #2: Mạch xén và mạch ổn áp Zener Diode', u: 'https://www.youtube.com/watch?v=4fEPmlLIm2E' },
+        { t: 'Điện tử cơ bản – Phân cực cho BJT', u: 'https://www.youtube.com/watch?v=Q2n60DHzkQ8' }
+      ]},
+      { title: 'Chương 5 – Mạch nguồn ổn áp', items: [
+        { t: 'Bài 15: Ứng dụng diode trong chỉnh lưu cả chu kỳ, cầu diode', u: 'https://www.youtube.com/watch?v=c92ijSDks7s' },
+        { t: 'Bài 4: Phân tích mạch chỉnh lưu – lọc nguồn dùng Diode', u: 'https://www.youtube.com/watch?v=OXDHyu2Vytc' },
+        { t: 'Giải bài tập mạch chỉnh lưu toàn sóng sơ đồ cầu (Bộ môn Kỹ thuật điện tử)', u: 'https://www.youtube.com/watch?v=9kDt67tXZzQ' },
+        { t: 'Giải bài tập mạch chỉnh lưu toàn sóng có điểm trung tính (tương ứng kiểu tia)', u: 'https://www.youtube.com/watch?v=ePF4AtT-Iy8' },
+        { t: 'Tính toán, phân tích mạch chỉnh lưu cầu, chọn tụ lọc', u: 'https://www.youtube.com/watch?v=USpM64FtIJo' },
+        { t: 'Phân tích mạch ổn áp dùng diode Zener – Bài 1', u: 'https://www.youtube.com/watch?v=VCqN_7yApCI' },
+        { t: 'Mạch điều chỉnh điện áp DC dùng LM317', u: 'https://www.youtube.com/watch?v=BOO5q9xmQBk' },
+        { t: 'LM7812 Voltage Regulator Tutorial (tiếng Anh)', u: 'https://www.youtube.com/watch?v=fI9Y_tY8E2o' }
+      ]},
+      { title: 'Chương 6 – Khuếch đại tín hiệu nhỏ dùng BJT', items: [
+        { t: 'Điện tử cơ bản – Phân cực cho BJT', u: 'https://www.youtube.com/watch?v=Q2n60DHzkQ8' },
+        { t: 'B chung, C chung, E chung – sơ đồ tương đương', u: 'https://www.youtube.com/watch?v=twd0TzxF5U4' },
+        { t: 'E chung: giải bài tập khuếch đại tín hiệu nhỏ (DC và AC)', u: 'https://www.youtube.com/watch?v=L1XUHZDqNJM' },
+        { t: 'Ôn tập phân cực BJT và khuếch đại tín hiệu nhỏ (DCLL, ACLL)', u: 'https://www.youtube.com/watch?v=66DX8MsvcZA' },
+        { t: 'Transistor cơ bản (phần 8) – Mạch khuếch đại cực B chung', u: 'https://www.youtube.com/watch?v=k8j-jkCvDug' }
+      ]},
+      { title: 'Chương 7 – Mạch ứng dụng Op-Amp', items: [
+        { t: 'Chương 5. Khuếch đại thuật toán (op-amp) – Phần 1', u: 'https://www.youtube.com/watch?v=IKN-Lu7Gs5Y' },
+        { t: 'Giải thích về Op-Amp', u: 'https://www.youtube.com/watch?v=nNs5EW_cdQo' },
+        { t: 'Các dạng mạch khuếch đại dùng Op-Amp, phần 1', u: 'https://www.youtube.com/watch?v=Opohm5CQllk' },
+        { t: 'Khuếch đại đảo (bài tập)', u: 'https://www.youtube.com/watch?v=sY4CAdxoaQQ' },
+        { t: 'Khuếch đại không đảo', u: 'https://www.youtube.com/watch?v=-OsinFtH79U' },
+        { t: 'Khuếch đại tổng đảo / tổng không đảo (tiếng Anh, có chứng minh)', u: 'https://www.youtube.com/watch?v=jsKSfaFQ4d4' },
+        { t: 'The summing amplifier, clearly explained (tiếng Anh)', u: 'https://www.youtube.com/watch?v=VgKiTD-fG_I' },
+        { t: 'Khuếch đại vi sai (bài tập)', u: 'https://www.youtube.com/watch?v=VDFMw3c2iA0' },
+        { t: 'Mạch lặp điện áp – Voltage Follower (tiếng Anh)', u: 'https://www.youtube.com/watch?v=C1ftAg4Gb-Y' },
+        { t: 'Non-inverting Amplifier và Voltage Follower, có ví dụ (tiếng Anh)', u: 'https://www.youtube.com/watch?v=ccLAljNy36E' },
+        { t: 'Bài tập phần mạch khuếch đại thuật toán (cô Nguyễn Thị Hải Ninh)', u: 'https://www.youtube.com/watch?v=E5071o2DBc4' }
+      ]}
+    ];
+    var videos = videoGroups.reduce(function (a, g) { return a.concat(g.items); }, []);
+    var baiTap = [
+      { t: 'Bài tập / bài giảng bổ sung (đang cập nhật)', u: null }
+    ];
+    var chapters = [
+      { t: 'Chương 4 – Linh kiện điện tử', u: 'ky-thuat-dien-tu/Chuong_4_Linh_kien_dien_tu_vid.html' },
+      { t: 'Chương 5 – Mạch nguồn ổn áp', u: 'ky-thuat-dien-tu/Chuong_5_Mach_nguon_on_ap_vid.html' },
+      { t: 'Chương 6 – Khuếch đại tín hiệu nhỏ dùng BJT', u: 'ky-thuat-dien-tu/Chuong_6_Mach_khuech_dai_dung_BJT_vid.html' },
+      { t: 'Chương 7 – Mạch ứng dụng Op-Amp', u: 'ky-thuat-dien-tu/Chuong_7_cac_mach_Op-Amp_vid.html' }
+    ];
 
-  function showPicker(s) {
+    function renderItem(x, idx) {
+      if (x.u) {
+        return '<a class="nlm-row" href="' + CK.url(x.u) + '" target="_blank" rel="noopener">' +
+          '<span class="nlm-no">' + (idx + 1) + '</span>' +
+          '<span class="nlm-name">' + x.t + '</span>' +
+          '<span class="nlm-go">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
+        '</a>';
+      }
+      return '<span class="nlm-row" style="opacity:.5;cursor:not-allowed;">' +
+        '<span class="nlm-no">' + (idx + 1) + '</span>' +
+        '<span class="nlm-name">' + x.t + '</span>' +
+        '<span class="nlm-go">…</span>' +
+      '</span>';
+    }
+
+    function mainView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<p class="exam-lead">Chọn nội dung để xem. Các mục đang được cập nhật.</p>' +
+          '<div class="nlm-menu">' +
+            items.map(function (it) {
+              var hint = it.hint.replace("@@CHAPCOUNT@@", chapters.length).replace("@@VIDCOUNT@@", videos.length).replace("@@BTACOUNT@@", baiTap.length);
+              return '<button class="nlm-item" type="button" data-cm="' + it.id + '">' +
+                '<span class="nlm-ico">' + CK.svg(it.icon) + '</span>' +
+                '<span class="nlm-tx"><b>' + it.label + '</b><span>' + hint + '</span></span>' +
+                '<span class="nlm-arrow">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
+              '</button>';
+            }).join("") +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+
+      [].forEach.call(mbody.querySelectorAll("[data-cm]"), function (b) {
+        b.addEventListener("click", function () {
+          if (b.dataset.cm === "video") { videoView(); return; }
+          if (b.dataset.cm === "bai-giang") { baiGiangView(); return; }
+          if (b.dataset.cm === "bai-tap") { baiTapView(); return; }
+          CK.toast("Nội dung này đang được cập nhật.", "Đang cập nhật");
+        });
+      });
+    }
+
+    function baiGiangView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M4.5 6.5h15M4.5 12h15M4.5 17.5h9") + ' Bài giảng</span>' +
+          '<p class="exam-lead">' + chapters.length + ' bài giảng theo chương. Bấm để mở.</p>' +
+          '<div class="exam-parts">' +
+            '<span class="pl">Danh sách bài giảng</span>' +
+            '<div class="nlm-list">' +
+              chapters.map(function (c, idx) { return renderItem(c, idx); }).join("") +
+            '</div>' +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    function videoView() {
+      var videoIdx = 0;
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M4 6.5h16v11H4zM10 9.5l4 2.5-4 2.5z") + ' Video YouTube</span>' +
+          '<p class="exam-lead">' + videos.length + ' video bài giảng. Bấm để mở YouTube.</p>' +
+          '<div class="exam-parts">' +
+            videoGroups.map(function (g) {
+              var html = '<span class="pl">' + g.title + '</span>' +
+                '<div class="nlm-list">';
+              g.items.forEach(function (v) {
+                html += renderItem(v, videoIdx++);
+              });
+              html += '</div>';
+              return html;
+            }).join("") +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    function baiTapView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3") + ' Bài tập thêm</span>' +
+          '<p class="exam-lead">' + baiTap.length + ' bài tập / bài giảng bổ sung.</p>' +
+          '<div class="exam-parts">' +
+            '<span class="pl">Danh sách bài tập</span>' +
+            '<div class="nlm-list">' +
+              baiTap.map(function (b, idx) { return renderItem(b, idx); }).join("") +
+            '</div>' +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    mainView();
+    showModal();
+    focusFirst("[data-exam-close]");
+  }
+
+
+/* Popup riêng cho môn LÝ THUYẾT ĐIỀU KHIỂN TỰ ĐỘNG: 3 mục nội dung (Bài giảng / Video YouTube / Bài tập thêm). */
+  function showCustomLyThuyetDieuKhienTuDong(s) {
+    var closeSvg = CK.svg("M6 6l12 12M18 6 6 18");
+    var backSvg = CK.svg("M14.4 6 8.4 12l6 6");
+    var items = [
+      { id: "bai-giang", label: "Bài giảng", hint: "@@CHAPCOUNT@@ chương", icon: "M4.5 6.5h15M4.5 12h15M4.5 17.5h9" },
+      { id: "video", label: "Video YouTube", hint: "@@VIDCOUNT@@ video", icon: "M4 6.5h16v11H4zM10 9.5l4 2.5-4 2.5z" },
+      { id: "bai-tap", label: "Bài tập thêm", hint: "@@BTACOUNT@@ bài", icon: "M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3" }
+    ];
+    var videoGroups = [];
+    var videos = videoGroups.reduce(function (a, g) { return a.concat(g.items); }, []);
+    var baiTap = [
+      { t: 'Bài tập / bài giảng bổ sung (đang cập nhật)', u: null }
+    ];
+    var chapters = [];
+
+    function renderItem(x, idx) {
+      if (x.u) {
+        return '<a class="nlm-row" href="' + CK.url(x.u) + '" target="_blank" rel="noopener">' +
+          '<span class="nlm-no">' + (idx + 1) + '</span>' +
+          '<span class="nlm-name">' + x.t + '</span>' +
+          '<span class="nlm-go">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
+        '</a>';
+      }
+      return '<span class="nlm-row" style="opacity:.5;cursor:not-allowed;">' +
+        '<span class="nlm-no">' + (idx + 1) + '</span>' +
+        '<span class="nlm-name">' + x.t + '</span>' +
+        '<span class="nlm-go">…</span>' +
+      '</span>';
+    }
+
+    function mainView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<p class="exam-lead">Chọn nội dung để xem. Các mục đang được cập nhật.</p>' +
+          '<div class="nlm-menu">' +
+            items.map(function (it) {
+              var hint = it.hint.replace("@@CHAPCOUNT@@", chapters.length).replace("@@VIDCOUNT@@", videos.length).replace("@@BTACOUNT@@", baiTap.length);
+              return '<button class="nlm-item" type="button" data-cm="' + it.id + '">' +
+                '<span class="nlm-ico">' + CK.svg(it.icon) + '</span>' +
+                '<span class="nlm-tx"><b>' + it.label + '</b><span>' + hint + '</span></span>' +
+                '<span class="nlm-arrow">' + CK.svg("M9.6 6.6 15 12l-5.4 5.4") + '</span>' +
+              '</button>';
+            }).join("") +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+
+      [].forEach.call(mbody.querySelectorAll("[data-cm]"), function (b) {
+        b.addEventListener("click", function () {
+          if (b.dataset.cm === "video") { videoView(); return; }
+          if (b.dataset.cm === "bai-giang") { baiGiangView(); return; }
+          if (b.dataset.cm === "bai-tap") { baiTapView(); return; }
+          CK.toast("Nội dung này đang được cập nhật.", "Đang cập nhật");
+        });
+      });
+    }
+
+    function baiGiangView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M4.5 6.5h15M4.5 12h15M4.5 17.5h9") + ' Bài giảng</span>' +
+          '<p class="exam-lead">' + chapters.length + ' bài giảng theo chương. Bấm để mở.</p>' +
+          '<div class="exam-parts">' +
+            '<span class="pl">Danh sách bài giảng</span>' +
+            '<div class="nlm-list">' +
+              chapters.map(function (c, idx) { return renderItem(c, idx); }).join("") +
+            '</div>' +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    function videoView() {
+      var videoIdx = 0;
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M4 6.5h16v11H4zM10 9.5l4 2.5-4 2.5z") + ' Video YouTube</span>' +
+          '<p class="exam-lead">' + videos.length + ' video bài giảng. Bấm để mở YouTube.</p>' +
+          '<div class="exam-parts">' +
+            videoGroups.map(function (g) {
+              var html = '<span class="pl">' + g.title + '</span>' +
+                '<div class="nlm-list">';
+              g.items.forEach(function (v) {
+                html += renderItem(v, videoIdx++);
+              });
+              html += '</div>';
+              return html;
+            }).join("") +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    function baiTapView() {
+      mbody.innerHTML =
+        '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+          '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+          '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+          '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+          '<span class="ck-pill light exam-part">' + CK.svg("M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3") + ' Bài tập thêm</span>' +
+          '<p class="exam-lead">' + baiTap.length + ' bài tập / bài giảng bổ sung.</p>' +
+          '<div class="exam-parts">' +
+            '<span class="pl">Danh sách bài tập</span>' +
+            '<div class="nlm-list">' +
+              baiTap.map(function (b, idx) { return renderItem(b, idx); }).join("") +
+            '</div>' +
+          '</div>' +
+        '</section>' +
+        '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+      var x = mbody.querySelector("[data-exam-close]");
+      if (x) x.addEventListener("click", closeExam);
+      var bk = mbody.querySelector("[data-exam-back]");
+      if (bk) bk.addEventListener("click", mainView);
+    }
+
+    mainView();
+    showModal();
+    focusFirst("[data-exam-close]");
+  }
+
+
+    function showPicker(s) {
     if (!CK.partsOf(s).length) { showCard(s); return; }
     CK.exam.renderPicker(mbody, s, {
       glass: "glass g2", close: true, titleId: "examTitle",
       onMode: function (sub, mode) { showParts(sub, mode); },
       onClose: closeExam
     });
+    if (s.slug === "dai-so-tuyen-tinh") {
+      var modes = mbody.querySelector(".exam-modes");
+      if (modes) {
+        modes.style.gridTemplateColumns = "repeat(3, 1fr)";
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "mode";
+        btn.style.gridColumn = "1 / -1";
+        btn.style.minHeight = "auto";
+        btn.style.gridTemplateColumns = "auto 1fr";
+        btn.style.justifyItems = "start";
+        btn.style.textAlign = "left";
+        btn.innerHTML = '<span class="mico">' + CK.svg("M7 4.6h10v14.8H7zM9.6 8.6h4.8M9.6 12h4.8M9.6 15.4h3") + '</span>' +
+          '<div><b>Hướng dẫn giải trắc nghiệm bằng máy tính Casio fx-580VN-X</b><small style="display:block;">chọn chương</small></div>';
+        btn.addEventListener("click", function () {
+          showCasioGuide(s);
+        });
+        modes.appendChild(btn);
+      }
+    }
     showModal();
     focusFirst(".mode");
   }
@@ -843,8 +1240,60 @@ $("copyBtn").addEventListener("click", async () => {
       onBack: function () { showPicker(s); },
       onClose: closeExam
     });
+    if (s.slug === "dai-so-tuyen-tinh") {
+      var extraP2 = document.createElement("div");
+      extraP2.className = "exam-below";
+      extraP2.style.marginTop = "10px";
+      var pmbtn = document.createElement("button");
+      pmbtn.type = "button";
+      pmbtn.className = "ck-btn ghost";
+      pmbtn.style.width = "100%";
+      pmbtn.textContent = "Hướng dẫn giải trắc nghiệm bằng máy tính Casio fx-580VN-X";
+      pmbtn.addEventListener("click", function () {
+        showCasioGuide(s);
+      });
+      extraP2.appendChild(pmbtn);
+      mbody.appendChild(extraP2);
+    }
     showModal();
     focusFirst(".opt:not([disabled])");
+  }
+
+  /* Màn chọn chương cho HƯỚNG DẪN CASIO — giống showParts (chọn chương để mở
+     hướng dẫn tương ứng). */
+  function showCasioGuide(s) {
+    var closeSvg = CK.svg("M6 6l12 12M18 6 6 18");
+    var backSvg = CK.svg("M14.4 6 8.4 12l6 6");
+    var casioFiles = [
+      "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 1.html",
+      "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 2.html",
+      "dai-so-tuyen-tinh/Casio fx-580VN X – Đại số tuyến tính Chương 3.html"
+    ];
+    mbody.innerHTML =
+      '<section class="exam glass g2" data-exam-custom data-slug="' + s.slug + '">' +
+        '<button class="exam-back ck-icon-btn" type="button" data-exam-back aria-label="Quay lại">' + backSvg + '</button>' +
+        '<button class="exam-close ck-icon-btn" type="button" data-exam-close aria-label="Đóng">' + closeSvg + '</button>' +
+        '<h3 class="exam-title" id="examTitle">' + s.name + '</h3>' +
+        '<span class="ck-pill light exam-part">Hướng dẫn giải trắc nghiệm bằng máy tính Casio fx-580VN-X</span>' +
+        '<p class="exam-lead">Chọn chương để mở hướng dẫn.</p>' +
+        '<div class="exam-parts">' +
+          '<span class="pl">Chương</span>' +
+          '<div class="seg" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+            casioFiles.map(function (u, idx) {
+              return '<a class="opt" href="' + CK.url(u) + '" target="_blank" rel="noopener" style="width:100%;justify-content:flex-start;text-align:left;flex-direction:row;gap:10px;">' +
+                '<span style="flex:none;font:700 11px/1 var(--font-mono);opacity:.6;">' + (idx + 1) + '</span>' +
+                '<span style="flex:1;min-width:0;">Chương ' + (idx + 1) + '</span>' +
+                '<span style="flex:none;opacity:.6;">↗</span>' +
+              '</a>';
+            }).join("") +
+          '</div>' +
+      '</section>' +
+      '<div class="exam-below"><a class="ck-btn ghost" href="' + CK.url("lich-su-lam-bai.html") + '">Xem lịch sử làm bài</a></div>';
+
+    var x = mbody.querySelector("[data-exam-close]");
+    if (x) x.addEventListener("click", closeExam);
+    var bk = mbody.querySelector("[data-exam-back]");
+    if (bk) bk.addEventListener("click", function () { showPicker(s); });
   }
 
   $("cats").addEventListener("click", function (e) {
@@ -858,6 +1307,9 @@ $("copyBtn").addEventListener("click", async () => {
     e.preventDefault();
     lastFocus = a;
     if (s.slug === "nguyen-ly-may") { showCustomNguyenLyMay(s); return; }
+    if (s.slug === "ky-thuat-dien-tu") { showCustomKyThuatDienTu(s); return; }
+    if (s.slug === "ly-thuyet-dieu-khien-tu-dong") { showCustomLyThuyetDieuKhienTuDong(s); return; }
+    if (s.slug === "dai-so-tuyen-tinh") { showPicker(s); return; }
     showPicker(s);
   });
 
@@ -871,6 +1323,9 @@ $("copyBtn").addEventListener("click", async () => {
     if (CK.exam.MODES.map(function (x) { return x.id; }).indexOf(mode) === -1) mode = "learn";
     var p = CK.partById(s, qs.get("d") || "");
     if (s.slug === "nguyen-ly-may") { showCustomNguyenLyMay(s); }
+    else if (s.slug === "ky-thuat-dien-tu") { showCustomKyThuatDienTu(s); }
+    else if (s.slug === "ly-thuyet-dieu-khien-tu-dong") { showCustomLyThuyetDieuKhienTuDong(s); }
+    else if (s.slug === "dai-so-tuyen-tinh" && !p) { showPicker(s); }
     else if (p) showCard(s, p, mode);
     else if (CK.partsOf(s).length) showParts(s, mode);
     else showCard(s, null, mode);
