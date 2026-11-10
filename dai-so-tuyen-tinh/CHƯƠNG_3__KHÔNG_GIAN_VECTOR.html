@@ -20,6 +20,36 @@ h1{font-size:1.4rem;margin:0 0 4px;font-weight:800}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .tab{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;font:600 .9rem inherit;font-family:inherit;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tab.g1:not([aria-selected="true"]){background:#d6ecff;border-color:#4f9be0;color:#0b3a66}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g1:not([aria-selected="true"]){background:#17324d;border-color:#4f9be0;color:#cfe6ff}}
+:root[data-theme="dark"] .tab.g1:not([aria-selected="true"]){background:#17324d;border-color:#4f9be0;color:#cfe6ff}
+.tab.g2:not([aria-selected="true"]){background:#ffe6c7;border-color:#e08a1e;color:#6b3a00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g2:not([aria-selected="true"]){background:#4a3217;border-color:#e08a1e;color:#ffe2bd}}
+:root[data-theme="dark"] .tab.g2:not([aria-selected="true"]){background:#4a3217;border-color:#e08a1e;color:#ffe2bd}
+.tab.g3:not([aria-selected="true"]){background:#eadcff;border-color:#8a55d6;color:#3d1a73}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g3:not([aria-selected="true"]){background:#34244f;border-color:#8a55d6;color:#e6d6ff}}
+:root[data-theme="dark"] .tab.g3:not([aria-selected="true"]){background:#34244f;border-color:#8a55d6;color:#e6d6ff}
+.tab.g4:not([aria-selected="true"]){background:#ffd9e2;border-color:#d6416a;color:#6b0f2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g4:not([aria-selected="true"]){background:#4d1f2c;border-color:#d6416a;color:#ffd6e0}}
+:root[data-theme="dark"] .tab.g4:not([aria-selected="true"]){background:#4d1f2c;border-color:#d6416a;color:#ffd6e0}
+.tab.g5:not([aria-selected="true"]){background:#d4f3dd;border-color:#2e9e57;color:#0c4a22}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g5:not([aria-selected="true"]){background:#1b3d27;border-color:#2e9e57;color:#cdf5d9}}
+:root[data-theme="dark"] .tab.g5:not([aria-selected="true"]){background:#1b3d27;border-color:#2e9e57;color:#cdf5d9}
+.tab.g6:not([aria-selected="true"]){background:#fff6a8;border-color:#b8a000;color:#4d4200}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g6:not([aria-selected="true"]){background:#443f12;border-color:#b8a000;color:#fff3a0}}
+:root[data-theme="dark"] .tab.g6:not([aria-selected="true"]){background:#443f12;border-color:#b8a000;color:#fff3a0}
+.tab.g7:not([aria-selected="true"]){background:#e8d6c2;border-color:#8f5f33;color:#4a2b0e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g7:not([aria-selected="true"]){background:#44301f;border-color:#b07a4a;color:#f0dcc6}}
+:root[data-theme="dark"] .tab.g7:not([aria-selected="true"]){background:#44301f;border-color:#b07a4a;color:#f0dcc6}
+.tab.g8:not([aria-selected="true"]){background:#c6f0f0;border-color:#0f9a9a;color:#054545}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g8:not([aria-selected="true"]){background:#124040;border-color:#2fb8b8;color:#c8f5f5}}
+:root[data-theme="dark"] .tab.g8:not([aria-selected="true"]){background:#124040;border-color:#2fb8b8;color:#c8f5f5}
+.tab.g9:not([aria-selected="true"]){background:#e3f5a6;border-color:#7fa300;color:#2f4000}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g9:not([aria-selected="true"]){background:#374512;border-color:#9cc61a;color:#eaf8b8}}
+:root[data-theme="dark"] .tab.g9:not([aria-selected="true"]){background:#374512;border-color:#9cc61a;color:#eaf8b8}
+.tab.g10:not([aria-selected="true"]){background:#f6dcc8;border-color:#c0642a;color:#5a2a0a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.g10:not([aria-selected="true"]){background:#4a2c18;border-color:#e08a4f;color:#ffe0c8}}
+:root[data-theme="dark"] .tab.g10:not([aria-selected="true"]){background:#4a2c18;border-color:#e08a4f;color:#ffe0c8}
 .tab:focus-visible,.ctl button:focus-visible,.key:focus-visible,.chip:focus-visible{outline:3px solid #ffb000;outline-offset:2px}
 .wrap{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}
 @media (max-width:760px){.wrap{grid-template-columns:1fr}.side{display:contents}.calc{order:2}.p1{order:0}.p2{order:1;position:sticky;top:0;z-index:5}.p3,.tip{order:3}}
@@ -76,6 +106,16 @@ h1{font-size:1.4rem;margin:0 0 4px;font-weight:800}
 .mt .fr{font-size:.82em}
 sup{line-height:0;font-size:.7em}
 .mx{border-left:2px solid #1a1f17;border-right:2px solid #1a1f17;font-size:15px;border-collapse:collapse;display:inline-table}.mx td{padding:0 7px;text-align:right}.mx td.c{background:#1a1f17;color:#d4dccb}
+.scr{position:relative;font-size:13px;line-height:1.2;white-space:pre}
+.scr .sb{position:absolute;right:0;width:4px;height:14px;background:#1a1f17;border-radius:2px}
+.scr .tri{position:absolute;right:14px;top:-3px;font-size:9px}
+.rs .scr{font-weight:400;text-align:left;line-height:1.2}
+.ex:empty{min-height:0}
+.eqt{border-collapse:collapse;font-size:12px;line-height:1.15;width:100%}
+.eqt td{padding:0 2px;text-align:right;white-space:nowrap}
+.eqt td.l{text-align:left;padding-right:6px}
+.eqt td.c{background:#1a1f17;color:#d4dccb}
+.eqt td.br{font-size:38px;line-height:.9;text-align:left;padding:0 4px 0 0;font-weight:300;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -104,10 +144,12 @@ sup{line-height:0;font-size:.7em}
         <button id="nxt">Tiếp ▶</button>
         <select id="spd" aria-label="Tốc độ"><option value="2400">Chậm</option><option value="1700" selected>Vừa</option><option value="900">Nhanh</option></select>
         <button id="vox" aria-pressed="false">🔇 Giọng đọc: Tắt</button>
+        <select id="vsel" aria-label="Chọn giọng"></select>
+        <select id="vrate" aria-label="Tốc độ đọc"><option value="0.75">Đọc chậm</option><option value="0.9" selected>Đọc vừa</option><option value="1.05">Đọc nhanh</option></select>
       </div>
     </div>
     <div class="panel p3"><div class="st">Dãy phím của câu này (bấm vào để nhảy tới bước đó)</div><div class="chips" id="chips"></div></div>
-    <p class="tip">Chữ vàng trên phím là chức năng SHIFT. Các màn hình menu và bảng nhập ma trận được dựng theo ảnh máy thật của bạn. Bước có dấu ⚠ là phần mình suy ra, chưa thấy màn hình thật. Mỗi câu tự nhập lại các ma trận cần dùng.</p>
+    <p class="tip">Chữ vàng trên phím là chức năng SHIFT. Các màn hình danh sách OPTN, Tạo ma trận, Số dòng?, Số cột? và bảng nhập ma trận được dựng theo ảnh máy thật của bạn. Mỗi câu tự nhập lại các ma trận cần dùng. Câu 215 đến 219 dùng chế độ Hệ phương trình (thế đáp án vào vế phải).</p>
   </div>
 </div>
 </main>
@@ -146,69 +188,177 @@ document.querySelectorAll(".n .key.blue").forEach(b=>b.style.color="#fff");
 const W=t=>"⚠ Chưa kiểm chứng: "+t;
 const A=["2","1","1","3"],B=["1","0","2","1"];
 const sc=(...l)=>l.join("<br>");
-const SM=sc("Tạo ma trận","1:MatA 2:MatB","3:MatC 4:MatD");
-const P1=sc("1:Tạo ma trận","2:Sửa ma trận","3:MatA 4:MatB","5:MatC 6:MatD");
-const P2=sc("1:MatAns","2:Định thức","3:Ma trận chuyển vị","4:Ma trận đơn vị");
+const lcd=(l,bar,tri)=>'<div class="scr">'+l.join("<br>")+(bar==null?"":'<span class="sb" style="top:'+bar+'px"></span>')+(tri?'<span class="tri">◂</span>':"")+"</div>";
+const SM=lcd(["Tạo ma trận","1:MatA  2:MatB","3:MatC  4:MatD"],null,1);
+const P1=lcd(["1:Tạo ma trận","2:Sửa ma trận","3:MatA  4:MatB","5:MatC  6:MatD"],0);
+const P2=lcd(["1:MatAns","2:Định thức","3:Mtrận chuyển vị","4:Ma trận đơn vị"],24);
+const DONG=n=>lcd([n,"Số dòng?","","Chọn 1~4"],null,1);
+const COT=n=>lcd([n,"Số cột?","","Chọn 1~4"],null,1);
 function mx(v,r,c,j,t,nm){let h=(nm?'<div style="font-size:11px">'+nm+"=</div>":"")+'<table class="mx">';for(let a=0;a<r;a++){h+="<tr>";for(let b=0;b<c;b++){const k=a*c+b;const x=k<j?v[k]:(k==j?(t||"0"):"0");h+="<td"+(k==j?' class="c"':"")+">"+fx(x)+"</td>"}h+="</tr>"}return h+"</table>"}
 function ent(v,r,c,nm){const s=[];v.forEach((x,j)=>{let t="";[...x].forEach((ch,n)=>{t+=ch=="-"?"−":ch;s.push([ch=="-"?"neg":"d"+ch,"",n?"":"Ô hàng "+(Math.floor(j/c)+1)+", cột "+(j%c+1),0,"",mx(v,r,c,j,t,nm)])});s.push(["eq","",j==v.length-1?"Lưu ô cuối cùng":"Lưu số này, máy nhảy sang ô kế tiếp",0,"",mx(v,r,c,j+1,"",nm)])});return s}
-const sel=(nm,r,c,v)=>[["d"+r,"","Số dòng = "+r,0,"",sc(nm,"Số cột?","Chọn 1~4")],["d"+c,"","Số cột = "+c+". Máy mở bảng nhập, các ô đang là 0",0,"",mx(v,r,c,0,"",nm)]];
+const sel=(nm,r,c,v)=>[["d"+r,"","Số dòng = "+r,0,"",COT(nm)],["d"+c,"","Số cột = "+c+". Máy mở bảng nhập, các ô đang là 0",0,"",mx(v,r,c,0,"",nm)]];
 const OUT=["ac","","Bấm AC để thoát bảng nhập. Góc phải màn hình hiện chữ Ma trận",0,"",'<div style="margin-top:44px;text-align:right">Ma trận</div>'];
-const first=(v,r,c)=>[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận",0,"",SM],["d1","","Chọn 1: MatA",0,"",sc("MatA","Số dòng?","Chọn 1~4")],...sel("MatA",r,c,v),...ent(v,r,c,"MatA"),OUT];
-const more=(n,v,r,c)=>{const nm="Mat"+"ABCD"[n-1];return[["optn","","Mở OPTN",0,"",P1],["d1","",W("chọn 1: Tạo ma trận (mình suy ra từ danh sách OPTN của máy bạn)"),0,"",SM],["d"+n,"","Chọn "+n+": "+nm,0,"",sc(nm,"Số dòng?","Chọn 1~4")],...sel(nm,r,c,v),...ent(v,r,c,nm),OUT]};
+const first=(v,r,c)=>[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận",0,"",SM],["d1","","Chọn 1: MatA",0,"",DONG("MatA")],...sel("MatA",r,c,v),...ent(v,r,c,"MatA"),OUT];
+const more=(n,v,r,c)=>{const nm="Mat"+"ABCD"[n-1];return[["optn","","Mở OPTN",0,"",P1],["d1","","Chọn 1: Tạo ma trận",0,"",SM],["d"+n,"","Chọn "+n+": "+nm,0,"",DONG(nm)],...sel(nm,r,c,v),...ent(v,r,c,nm),OUT]};
 const ref=(k,t)=>[["optn","","Mở OPTN: danh sách ma trận",0,"",P1],["d"+k,t,"Chọn "+k+": "+t]];
-const ref2=(k,t,nl)=>[["optn","","Mở OPTN",0,"",P1],["down","",W("bấm ▼ để sang trang kế của danh sách OPTN"),0,"",P2],["d"+k,t,"Chọn "+k+": "+nl]];
+const ref2=(k,t,nl)=>[["optn","","Mở OPTN",0,"",P1],["down","","Bấm ▼ để sang trang kế của danh sách (thanh cuộn bên phải dịch xuống)",0,"",P2],["d"+k,t,"Chọn "+k+": "+nl]];
 const R2=(v,f)=>mx(v,2,2,4);
+
+const MENU9=lcd(["MENU: chọn chế độ","9:Ptrình/HệPtrình"]);
+const EQ1=lcd(["1:Hệ phương trình","2:Phương trình"]);
+const SOLN=lcd(["Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4"],null,1);
+const STB='<div style="font-size:9px;padding-left:34px;line-height:1">√▫⁄ ▫ D</div>';
+const RES=t=>'<div class="scr" style="height:66px;white-space:normal">'+STB+'<div style="position:absolute;right:0;bottom:0;font-size:21px;font-weight:700">'+t+'</div></div>';
+const VS=RES("Vô số nghiệm"),VN=RES("Vô nghiệm");
+const zero=Array(12).fill("0"),sub=["₁","₂","₃"];
+function EQT(v,j,t){
+ const cv=(t?t:v[j]).replace("-","−");
+ const C=k=>'<td'+(k==j?' class="c"':'')+'>'+((k==j&&t?t:v[k]).replace("-","−"))+'</td>';
+ const dv=j%4==3;let h='<div class="scr" style="white-space:normal">'+STB+'<table class="eqt">';
+ for(let r=0;r<3;r++){const b=4*r;h+="<tr>"+(dv?'<td class="l">+</td>'+C(b+1)+'<td class="l">y +</td>'+C(b+2)+'<td class="l">z=</td>'+C(b+3)
+  :(r==0?'<td rowspan="3" class="br">{</td>':"")+C(b)+'<td class="l">x +</td>'+C(b+1)+'<td class="l">y +</td>'+C(b+2)+'<td class="l">z</td>')+"</tr>"}
+ return h+'</table><div style="text-align:right;font-size:15px;line-height:1.1">'+cv+"</div></div>"}
+function eqRun(old,nw,res,fin,typeAll,fl){
+ const s=[],cur=old.slice();
+ let L=11;if(!typeAll){L=-1;for(let j=0;j<12;j++)if(old[j]!==nw[j])L=j}
+ for(let j=0;j<12;j++){
+  const r=j>>2,c=j&3;
+  const lab=c<3?"Hệ số của "+"xyz"[c]+" ở hàng "+(r+1)+" = "+"uvw"[c]+sub[r]:"Vế phải hàng "+(r+1)+" = b"+sub[r];
+  if(j>L){s.push(["eq","","Không gõ số, bấm = ở ô này: máy giải hệ luôn, không cần đi hết các ô còn lại. "+fin,0,res]);break}
+  if(!typeAll&&old[j]===nw[j]){
+   cur[j]=nw[j];
+   let cp="Bấm ▶ để giữ nguyên ô này ("+lab+") và sang ô kế";
+   if(!fl.d){cp="Bấm ▶ để giữ nguyên ô này ("+lab+") và sang ô kế. ▶ đi lần lượt qua các ô, hết hàng thì xuống đầu hàng kế";fl.d=1}
+   s.push(["right","",cp,0,EQT(cur,j+1,"")]);
+  }else{
+   let t="";
+   [...nw[j]].forEach((ch,n)=>{t+=ch;s.push([ch=="-"?"neg":"d"+ch,"",n?"":lab,0,EQT(cur,j,t)])});
+   cur[j]=nw[j];
+   const last=j==11;
+   s.push(["eq","",last?"Lưu ô cuối rồi máy giải hệ. "+fin:"Lưu ô này, sang ô kế",0,last?res:EQT(cur,j+1,"")]);
+  }
+ }
+ return s}
+function EQQ(rc,trials){
+ const mk=d=>[rc[0],rc[1],rc[2],d[0],rc[3],rc[4],rc[5],d[1],rc[6],rc[7],rc[8],d[2]];
+ let s=[["menu","","Mở MENU. Ý tưởng: b là tổ hợp tuyến tính của u, v, w ⇔ hệ x·u + y·v + z·w = b có nghiệm. Ta thế từng đáp án vào vế phải rồi xem máy báo gì",0,MENU9],
+  ["d9","","Chọn 9: Ptrình/HệPtrình",0,EQ1],["d1","","Chọn 1: Hệ phương trình",0,SOLN],
+  ["d3","","Số ẩn = 3 (x, y, z là hệ số của u, v, w). Máy mở bảng nhập, các ô đang là 0. Mỗi hàng nhập thành phần thứ i của u, v, w rồi đến vế phải",0,EQT(zero,0,"")]];
+ let prev=zero;const fl={d:0};
+ trials.forEach((t,k)=>{const nv=mk(t.d);
+  if(k)s.push(["ac","","Bấm AC: máy quay lại bảng nhập, giữ nguyên số liệu cũ, con trỏ về ô đầu tiên",0,EQT(prev,0,"")]);
+  s=s.concat(eqRun(prev,nv,t.r,t.c,k==0,fl));prev=nv});
+ return s}
+const NV=t=>"Máy báo Vô nghiệm. "+t;
 const Q=[
 {n:215,t:"Câu 215. Xác định m để vectơ (1, m, 1) là một tổ hợp tuyến tính của u = (1, 1, 0), v = (2, 1, 1), w = (3, 2, 1)",o:["m ≠ 0, 1","m = 1","m = 0","m = −1"],a:2,
- st:[...first(["1","1","0","2","1","1","1","0","1"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có hàng 1 = u, hàng 2 = v, hàng 3 = (1, 0, 1) (thử m = 0). Định thức = 0 nên (1, 0, 1) nằm trong không gian sinh bởi u, v, w (w = u + v). Với m tổng quát, định thức = −m nên chỉ m = 0 thỏa. Đáp án C",0,"0"]]},
+ st:EQQ(["1","2","3","1","1","2","0","1","1"],[
+  {d:["1","0","1"],r:VS,c:"Thử m = 0 (đáp án C): vế phải (1, 0, 1). Máy báo Vô số nghiệm, tức có nghiệm nên (1, 0, 1) là tổ hợp tuyến tính. m = 0 thỏa"},
+  {d:["1","1","1"],r:VN,c:NV("Thử m = 1 (đáp án B): vế phải (1, 1, 1) không là tổ hợp tuyến tính nên m = 1 không thỏa. A (m ≠ 0, 1) và D (m = −1) đều không chứa m = 0 nên cũng sai. Đáp án C")}])},
 {n:216,t:"Câu 216. Xác định m để vectơ (2, m + 4, m + 6) là một tổ hợp tuyến tính của u = (1,2,3), v = (3,8,11), w = (1,3,4)",o:["m = 0","m = 1","m tùy ý","Không có giá trị m nào"],a:2,
- st:[...more(1,["1","2","3","3","8","11","1","3","4"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 3 hàng u, v, w. Det = 0 nên w phụ thuộc u, v. Do đó chỉ cần xét u, v",0,"0"],
-  ...more(2,["1","2","3","3","8","11","2","4","6"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: hàng 3 = (2, 4, 6) ứng với m = 0. Det = 0 nên m = 0 thỏa",0,"0"],
-  ...more(3,["1","2","3","3","8","11","2","5","7"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: hàng 3 = (2, 5, 7) ứng với m = 1. Det = 0 nên m = 1 cũng thỏa. Tính tay: (2, m+4, m+6) = 2u + m·(0,1,1) và (0,1,1) = (v − 3u)/2 nên luôn là tổ hợp của u, v với mọi m. Đáp án C",0,"0"]]},
+ st:EQQ(["1","3","1","2","8","3","3","11","4"],[
+  {d:["2","4","6"],r:VS,c:"Thử m = 0 (đáp án A): vế phải (2, 4, 6). Máy báo Vô số nghiệm nên có nghiệm, m = 0 thỏa"},
+  {d:["2","5","7"],r:VS,c:"Thử m = 1 (đáp án B): vế phải (2, 5, 7). Máy cũng báo Vô số nghiệm nên m = 1 cũng thỏa. Hai giá trị đều thỏa nên A, B (chỉ một giá trị) sai và D sai. Tính tay: (2, m + 4, m + 6) = 2u + m·(0,1,1) và (0,1,1) là tổ hợp của u, v nên m nào cũng thỏa. Đáp án C"}])},
 {n:217,t:"Câu 217. Xác định m để vectơ (m, 2m + 2, m + 3) là một tổ hợp tuyến tính của u = (3,6,3), v = (2,5,3), w = (1,4,3)",o:["m = 2","m = 4","m tùy ý","Không có giá trị m nào"],a:3,
- st:[...more(1,["3","6","3","2","5","3","1","4","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 3 hàng u, v, w. Det = 0 nên w phụ thuộc u, v (thật vậy w = 2v − u). Do đó chỉ cần xét u, v",0,"0"],
-  ...more(2,["3","6","3","2","5","3","2","6","5"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: hàng 3 = (2, 6, 5) ứng với m = 2. Det = 3 ≠ 0 nên m = 2 không thỏa",0,"3"],
-  ...more(3,["3","6","3","2","5","3","4","10","7"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: hàng 3 = (4, 10, 7) ứng với m = 4. Det = 3 ≠ 0 nên m = 4 không thỏa. Tính tay: det của u, v, (m, 2m+2, m+3) luôn bằng 3 với mọi m, khác 0 nên không có m nào thỏa. Đáp án D",0,"3"]]},
+ st:EQQ(["3","2","1","6","5","4","3","3","3"],[
+  {d:["2","6","5"],r:VN,c:NV("Thử m = 2 (đáp án A): vế phải (2, 6, 5) không là tổ hợp tuyến tính nên m = 2 không thỏa")},
+  {d:["4","10","7"],r:VN,c:NV("Thử m = 4 (đáp án B): vế phải (4, 10, 7) cũng không là tổ hợp tuyến tính nên m = 4 không thỏa. Hai giá trị khác nhau đều không thỏa, nên C (m tùy ý) sai. Tính tay: det của u, v, (m, 2m + 2, m + 3) luôn bằng 3, khác 0 nên không có m nào thỏa. Đáp án D")}])},
 {n:218,t:"Câu 218. Tìm điều kiện để vectơ (x₁, x₂, x₃) là một tổ hợp tuyến tính của u = (1,2,3), v = (2,4,5), w = (3,6,7)",o:["x₃ = x₁ + x₂","x₁ = 2x₂","2x₁ = x₂","x₃, x₁, x₂ tùy ý"],a:2,
- st:[...more(1,["1","2","3","2","4","5","3","6","7"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 3 hàng u, v, w. Det = 0 nên w phụ thuộc u, v, không gian sinh chỉ là một mặt phẳng nên có điều kiện ràng buộc. Ta thử từng đáp án bằng một vectơ thỏa điều kiện đó",0,"0"],
-  ...more(2,["1","2","3","2","4","5","1","2","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: hàng 3 = (1, 2, 0) thỏa 2x₁ = x₂. Det = 0 nên (1, 2, 0) là tổ hợp của u, v. Đáp án C phù hợp",0,"0"],
-  ...more(3,["1","2","3","2","4","5","1","1","2"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: hàng 3 = (1, 1, 2) thỏa x₃ = x₁ + x₂. Det = −1 ≠ 0 nên không phải tổ hợp, loại A",0,"−1"],
-  ...more(4,["1","2","3","2","4","5","2","1","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(6,"MatD"),["rp",")"],["eq","","MatD: hàng 3 = (2, 1, 0) thỏa x₁ = 2x₂. Det = −3 ≠ 0 nên loại B. Tính tay: det của u, v, (x₁, x₂, x₃) = x₂ − 2x₁, bằng 0 khi 2x₁ = x₂ (x₃ tùy ý). Đáp án C",0,"−3"]]},
+ st:EQQ(["1","2","3","2","4","6","3","5","7"],[
+  {d:["1","1","2"],r:VN,c:NV("Thử vectơ (1, 1, 2) thỏa x₃ = x₁ + x₂ (đáp án A): không là tổ hợp tuyến tính nên loại A. Cũng loại D vì D nói vectơ nào cũng được")},
+  {d:["2","1","0"],r:VN,c:NV("Thử vectơ (2, 1, 0) thỏa x₁ = 2x₂ (đáp án B): không là tổ hợp tuyến tính nên loại B")},
+  {d:["1","2","0"],r:VS,c:"Thử vectơ (1, 2, 0) thỏa 2x₁ = x₂ (đáp án C): máy báo Vô số nghiệm nên là tổ hợp tuyến tính. Đáp án C"}])},
 {n:219,t:"Câu 219. Tìm điều kiện để vectơ (x₁, x₂, x₃) là một tổ hợp tuyến tính của u = (1,2,3), v = (2,4,6), w = (3,5,7).",o:["x₃ = 2x₂ − x₁","x₁ = 2x₂","2x₁ = x₂","6x₁ = 3x₂ = 2x₃"],a:0,
- st:[...more(1,["1","2","3","2","4","6","3","5","7"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 3 hàng u, v, w. Det = 0 vì v = 2u, nên không gian sinh chỉ là mặt phẳng sinh bởi u, w. Ta thử từng đáp án bằng một vectơ thỏa điều kiện đó, xếp cùng u, w thành 3 hàng",0,"0"],
-  ...more(2,["1","2","3","3","5","7","1","1","1"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: hàng 3 = (1, 1, 1) thỏa x₃ = 2x₂ − x₁. Det = 0 nên là tổ hợp của u, w. Đáp án A phù hợp",0,"0"],
-  ...more(3,["1","2","3","3","5","7","2","1","5"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: hàng 3 = (2, 1, 5) thỏa x₁ = 2x₂. Det = −5 ≠ 0 nên loại B",0,"−5"],
-  ...more(4,["1","2","3","3","5","7","1","2","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(6,"MatD"),["rp",")"],["eq","","MatD: hàng 3 = (1, 2, 0) thỏa 2x₁ = x₂. Det = 3 ≠ 0 nên loại C. Đáp án D chỉ mô tả đường thẳng sinh bởi u, trong khi w = (3,5,7) thuộc mặt phẳng mà 6·3 ≠ 3·5, nên D loại. Tính tay: det của u, w, (x₁, x₂, x₃) = −x₁ + 2x₂ − x₃, bằng 0 khi x₃ = 2x₂ − x₁. Đáp án A",0,"3"]]},
+ st:EQQ(["1","2","3","2","4","5","3","6","7"],[
+  {d:["1","1","1"],r:VS,c:"Thử vectơ (1, 1, 1) thỏa x₃ = 2x₂ − x₁ (đáp án A): máy báo Vô số nghiệm nên là tổ hợp tuyến tính. Vectơ này không thỏa 6x₁ = 3x₂ = 2x₃ nên đáp án D sai"},
+  {d:["2","1","5"],r:VN,c:NV("Thử vectơ (2, 1, 5) thỏa x₁ = 2x₂ (đáp án B): không là tổ hợp tuyến tính nên loại B")},
+  {d:["1","2","0"],r:VN,c:NV("Thử vectơ (1, 2, 0) thỏa 2x₁ = x₂ (đáp án C): không là tổ hợp tuyến tính nên loại C. Đáp án A")}])},
+{n:224,t:"Câu 224. Xác định m để vectơ (1, m, 1) không phải là một tổ hợp tuyến tính của u = (1,1,3), v = (2,2,5), w = (3,4,3).",o:["m ≠ 0, ±1","m ≠ 0","m tùy ý","Không có giá trị m nào"],a:3,
+ st:EQQ(["1","2","3","1","2","4","3","5","3"],[
+  {d:["1","2","1"],r:RES("x = 6"),c:"Thử m = 2 (thuộc đáp án A và B): vế phải (1, 2, 1). Máy báo nghiệm duy nhất x = 6 (bấm ▼ xem y = −4, z = 1), tức có nghiệm nên (1, 2, 1) VẪN là tổ hợp tuyến tính. Vậy m = 2 không thỏa yêu cầu \"không phải\", loại A, B. C (m tùy ý) cũng sai. Tính tay: det của u, v, w bằng 1 ≠ 0 nên u, v, w là cơ sở của ℝ³, vectơ nào cũng là tổ hợp tuyến tính, không có m nào để nó không phải. Đáp án D"}])},
+{n:228,t:"Câu 228. Cho các vectơ u₁, u₂, u₃ độc lập tuyến tính trong ℝ⁴ và θ là vectơ không của ℝ⁴. Trong 4 mệnh đề sau, mệnh đề nào là đúng?",o:["u₁, u₂, θ độc lập tuyến tính.","u₁, u₃, θ độc lập tuyến tính.","u₂, u₃, θ độc lập tuyến tính.","u₁, u₂, u₃, θ phụ thuộc tuyến tính."],a:3,
+ st:[...more(1,["1","0","0","0","0","1","0","0","0","0","1","0","0","0","0","0"],4,4),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","Lấy ví dụ u₁ = (1,0,0,0), u₂ = (0,1,0,0), u₃ = (0,0,1,0) độc lập tuyến tính, θ = (0,0,0,0). MatA có 4 hàng u₁, u₂, u₃, θ. Det = 0 nên bốn vectơ phụ thuộc tuyến tính. Lý thuyết: mọi hệ có chứa vectơ không đều phụ thuộc tuyến tính (0·u₁ + 0·u₂ + 0·u₃ + 1·θ = 0 với hệ số của θ khác 0), nên A, B, C sai. Đáp án D",0,"0"]]},
+{n:229,t:"Câu 229. Xác định m để 3 vectơ sau đây phụ thuộc tuyến tính: u = (1,2,m), v = (0,2,m), w = (0,0,3)",o:["m = 1","m = 0","m tùy ý","Không có giá trị m nào thỏa"],a:3,
+ st:[...more(1,["1","2","0","0","2","0","0","0","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 0 (đáp án B). Det = 6 ≠ 0 nên độc lập tuyến tính, m = 0 không thỏa. Ba vectơ phụ thuộc tuyến tính khi và chỉ khi Det = 0",0,"6"],
+  ...more(2,["1","2","1","0","2","1","0","0","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w với m = 1 (đáp án A). Det = 6 ≠ 0 nên m = 1 cũng không thỏa, loại A, B và C. Tính tay: ma trận tam giác nên det = 1·2·3 = 6 với mọi m, không bao giờ bằng 0. Đáp án D",0,"6"]]},
+{n:230,t:"Câu 230. Xác định m để 3 vectơ sau đây phụ thuộc tuyến tính: u = (m + 1, m, m − 1), v = (2, m, 1), w = (1, m, m − 1)",o:["m = 2","m = 0","m = 2 hoặc m = 0","m = 1 hoặc m = 2"],a:2,
+ st:[...more(1,["3","2","1","2","2","1","1","2","1"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 2 (đáp án A, D). Det = 0 nên phụ thuộc tuyến tính, m = 2 thỏa. Ba vectơ phụ thuộc tuyến tính khi và chỉ khi Det = 0",0,"0"],
+  ...more(2,["1","0","-1","2","0","1","1","0","-1"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w với m = 0 (đáp án B). Det = 0 nên m = 0 cũng thỏa, vậy A và B đều thiếu một giá trị",0,"0"],
+  ...more(3,["2","1","0","2","1","1","1","1","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: 3 hàng u, v, w với m = 1 (đáp án D). Det = −1 ≠ 0 nên m = 1 không thỏa, loại D. Tính tay: lấy u − w = (m, 0, 0) nên det = m²(m − 2), bằng 0 khi m = 0 hoặc m = 2. Đáp án C",0,"−1"]]},
+{n:238,t:"Câu 238. Xác định m để 3 vectơ sau đây độc lập tuyến tính: u = (m + 1, 1, m + 1), v = (1, 1, 1), w = (2, 0, m + 2)",o:["m ≠ 0; ±1","m ≠ 0","m ≠ 1","m = ±1"],a:1,
+ st:[...more(1,["2","1","2","1","1","1","2","0","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 1. Det = 1 ≠ 0 nên độc lập tuyến tính, m = 1 thỏa. Vậy A (m ≠ 0; ±1) và C (m ≠ 1) đều sai vì loại m = 1. Ba vectơ độc lập tuyến tính khi và chỉ khi Det ≠ 0",0,"1"],
+  ...more(2,["3","1","3","1","1","1","2","0","4"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w với m = 2. Det = 4 ≠ 0 nên m = 2 cũng thỏa, mà D (m = ±1) không chứa m = 2 nên D sai. Tính tay: det = m², khác 0 khi và chỉ khi m ≠ 0. Đáp án B",0,"4"]]},
+{n:240,t:"Câu 240. Xác định m để 3 vectơ sau đây độc lập tuyến tính: u = (2,1,1,m), v = (2,1,4,m), w = (m,1,0,0)",o:["m ≠ 0","m ≠ 0; 1","m ≠ 0; 2","m tùy ý"],a:3,
+ st:[...more(1,["2","1","1","2","1","4","0","1","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","Ba vectơ trong ℝ⁴ độc lập tuyến tính khi ma trận 3×4 có hạng 3, tức có một định thức con cấp 3 khác 0. Với m = 0, lấy 3 cột đầu: MatA có 3 hàng u, v, w. Det = −6 ≠ 0 nên độc lập tuyến tính, m = 0 thỏa. Vậy A, B, C (đều loại m = 0) sai",0,"−6"],
+  ...more(2,["1","1","2","1","4","2","1","0","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","Với m = 2, lấy 3 cột sau (cột 2, 3, 4): MatB có 3 hàng u, v, w. Det = −6 ≠ 0 nên m = 2 cũng thỏa, C sai. Tính tay: định thức con cột 1, 2, 3 bằng 3m − 6 và định thức con cột 2, 3, 4 bằng −3m, hai giá trị này không bao giờ cùng bằng 0 nên luôn có hạng 3. Đáp án D",0,"−6"]]},
+{n:243,t:"Câu 243. Xác định m để 3 vectơ sau đây độc lập tuyến tính: u = (2,1,1,m), v = (2,1,−1,m), w = (10,5,−1,5m)",o:["m ≠ 0","m ≠ 0; 1","m tùy ý","Không có giá trị m nào"],a:3,
+ st:[...more(1,["2","1","1","2","1","-1","10","5","-1"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w, lấy 3 cột đầu (không chứa m). Det = 0, định thức con này bằng 0 với mọi m",0,"0"],
+  ...more(2,["1","1","1","1","-1","1","5","-1","5"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w, lấy 3 cột sau (cột 2, 3, 4) với m = 1. Det = 0 nên các vectơ phụ thuộc tuyến tính, m = 1 không thỏa (loại B, C). Tính tay: 2u + 3v = (10, 5, −1, 5m) = w với mọi m, nên w luôn là tổ hợp tuyến tính của u và v, ba vectơ luôn phụ thuộc tuyến tính. Đáp án D",0,"0"]]},
+{n:244,t:"Câu 244. Xác định m để các vectơ sau đây độc lập tuyến tính: u₁ = (2,3,1,4), u₂ = (3,7,5,1), u₃ = (8,17,11,m), u₄ = (1,4,4,−3)",o:["m ≠ 6","m ≠ −6","m tùy ý","Không có giá trị m nào"],a:3,
+ st:[...more(1,["2","3","1","4","3","7","5","1","8","17","11","1","1","4","4","-3"],4,4),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 4 hàng u₁, u₂, u₃, u₄ với m = 1. Det = 0 nên phụ thuộc tuyến tính, m = 1 không thỏa. Vì 1 ≠ 6 và 1 ≠ −6 nên A, B sai, và C (m tùy ý) cũng sai. Bốn vectơ trong ℝ⁴ độc lập tuyến tính khi và chỉ khi Det ≠ 0",0,"0"],
+  ...more(2,["2","3","1","4","3","7","5","1","8","17","11","6","1","4","4","-3"],4,4),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 4 hàng u₁, u₂, u₃, u₄ với m = 6. Det = 0 nên m = 6 cũng không thỏa. Tính tay: u₄ = u₂ − u₁ = (1,4,4,−3) với mọi m, nên hệ luôn phụ thuộc tuyến tính (Det = 0 với mọi m). Đáp án D",0,"0"]]},
 {n:245,t:"Câu 245. Các vectơ nào sau đây tạo thành một cơ sở của ℝ³ ?",o:["(1,2,3); (0,2,3); (0,0,3)","(1,1,1); (1,1,0); (2,2,1)","(1,2,3); (4,5,6); (7,8,9)","(1,2,1); (2,4,2); (1,1,2)"],a:0,
  st:[...more(1,["1","2","3","0","2","3","0","0","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","Ba vectơ của đáp án A xếp thành 3 hàng của MatA. Định thức = 6 ≠ 0 nên độc lập tuyến tính, đủ 3 vectơ trong ℝ³ nên là cơ sở. Các đáp án B, C, D có định thức bằng 0 (phụ thuộc tuyến tính). Đáp án A",0,"6"]]},
+{n:246,t:"Câu 246. Tìm m để các vectơ sau tạo thành một cơ sở của ℝ³: u = (1,2,m), v = (1,m,0), w = (m,1,0)",o:["m ≠ 0; ±1","m ≠ 0","m ≠ 1","m = ±1"],a:0,
+ st:[...more(1,["1","2","0","1","0","0","0","1","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 0. Det = 0 nên không phải cơ sở, m = 0 bị loại. Ba vectơ tạo thành cơ sở của ℝ³ khi và chỉ khi Det ≠ 0. Vậy C (m ≠ 1) sai vì cho phép m = 0",0,"0"],
+  ...more(2,["1","2","1","1","1","0","1","1","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w với m = 1. Det = 0 nên m = 1 bị loại. Vậy B (m ≠ 0) và D (m = ±1) sai",0,"0"],
+  ...more(3,["1","2","-1","1","-1","0","-1","1","0"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: 3 hàng u, v, w với m = −1. Det = 0 nên m = −1 cũng bị loại. Tính tay: khai triển theo cột 3, det = m(1 − m²), bằng 0 khi m = 0 hoặc m = ±1. Đáp án A",0,"0"]]},
+{n:249,t:"Câu 249. Tìm m để các vectơ sau tạo thành một cơ sở của ℝ³: u = (1,2,m), v = (m,2m+3,3m+3), w = (4,3m+7,5m+3)",o:["m ≠ 1","m ≠ 2","Không có giá trị m nào","m tùy ý"],a:3,
+ st:[...more(1,["1","2","0","0","3","3","4","7","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 0. Det = 12 ≠ 0 nên là cơ sở, m = 0 thỏa. Vậy C (không có giá trị m nào) sai. Ba vectơ tạo thành cơ sở của ℝ³ khi và chỉ khi Det ≠ 0",0,"12"],
+  ...more(2,["1","2","1","1","5","6","4","10","8"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w với m = 1. Det = 2 ≠ 0 nên m = 1 thỏa, vậy A (m ≠ 1) sai",0,"2"],
+  ...more(3,["1","2","2","2","7","9","4","13","13"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","MatC: 3 hàng u, v, w với m = 2. Det = −10 ≠ 0 nên m = 2 thỏa, vậy B (m ≠ 2) sai. Còn lại D theo đáp án của đề. Lưu ý: tính tay ra Det = 3m³ − 10m² − 3m + 12, đa thức này vẫn có nghiệm thực (khoảng giữa −2 và −1, giữa 1 và 2, giữa 2 và 4), nên với đề như trên thì D chưa thật chính xác, bạn nên kiểm tra lại số liệu đề gốc",0,"−10"]]},
+{n:252,t:"Câu 252. Các vectơ nào sau đây tạo thành một cơ sở của không gian con W của ℝ³ sinh bởi các vectơ sau u₁ = (2,3,4), u₂ = (2,6,0), u₃ = (4,6,8).",o:["u₁, u₂","u₁, u₃","u₁","u₁, u₂, u₃"],a:0,
+ st:[...more(1,["2","3","4","2","6","0","4","6","8"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u₁, u₂, u₃. Det = 0 nên u₁, u₂, u₃ phụ thuộc tuyến tính, không phải cơ sở, loại D. Thật vậy u₃ = 2u₁ nên u₁, u₃ cũng phụ thuộc, loại B",0,"0"],
+  ...more(2,["2","3","2","6"],2,2),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: định thức con cột 1, 2 của u₁ và u₂. Det = 6 ≠ 0 nên u₁, u₂ độc lập tuyến tính. Do u₃ = 2u₁ nên W sinh bởi u₁, u₂, dim W = 2, một vectơ u₁ không đủ sinh W, loại C. Đáp án A",0,"6"]]},
+{n:254,t:"Câu 254. Các vectơ nào sau đây tạo thành một cơ sở của không gian con W của ℝ³ sinh bởi các vectơ sau u₁ = (1,2,4), u₂ = (0,1,2), u₃ = (0,0,1), u₄ = (0,0,2).",o:["u₁, u₂","u₂, u₃","u₁, u₂, u₃","u₂, u₃, u₄"],a:2,
+ st:[...more(1,["1","2","4","0","1","2","0","0","1"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u₁, u₂, u₃. Det = 1 ≠ 0 nên u₁, u₂, u₃ độc lập tuyến tính, đủ 3 vectơ trong ℝ³ nên sinh ra W = ℝ³ và là một cơ sở. Do dim W = 3, đáp án chỉ có 2 vectơ (A, B) không đủ sinh W",0,"1"],
+  ...more(2,["0","1","2","0","0","1","0","0","2"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u₂, u₃, u₄. Det = 0 nên phụ thuộc tuyến tính (u₄ = 2u₃), loại D. Đáp án C",0,"0"]]},
 {n:257,t:"Câu 257. Tìm số chiều n = dim W của không gian con W của ℝ⁴ sinh bởi các vectơ sau u₁ = (1,2,3,4), u₂ = (2,3,4,5), u₃ = (3,4,5,6), u₄ = (4,5,6,7)",o:["n = 1","n = 2","n = 3","n = 4"],a:1,
- st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận",0,"",SM],["eq","","Bấm = để xác nhận. Hạng = cấp lớn nhất của định thức con khác 0: cần một định thức con cấp r khác 0 và mọi định thức con cấp r+1 viền quanh nó bằng 0",0,"",SM],["d2","","Chọn 2: MatB",0,"",sc("MatB","Số dòng?","Chọn 1~4")],...sel("MatB",2,2,["1","2","2","3"]),...ent(["1","2","2","3"],2,2,"MatB"),OUT,...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","Có định thức con cấp 2 khác 0 (dòng 1,2, cột 1,2): Det = −1 ≠ 0, nên hạng ≥ 2",0,"−1"],
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận",0,"",SM],["eq","","Bấm = để xác nhận. Hạng = cấp lớn nhất của định thức con khác 0: cần một định thức con cấp r khác 0 và mọi định thức con cấp r+1 viền quanh nó bằng 0",0,"",SM],["d2","","Chọn 2: MatB",0,"",DONG("MatB")],...sel("MatB",2,2,["1","2","2","3"]),...ent(["1","2","2","3"],2,2,"MatB"),OUT,...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","Có định thức con cấp 2 khác 0 (dòng 1,2, cột 1,2): Det = −1 ≠ 0, nên hạng ≥ 2",0,"−1"],
  ...more(2,["1","2","3","2","3","4","3","4","5"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","Định thức con dòng 1,2,3 cột 1,2,3: Det = 0",0,"0"],
   ...more(3,["1","2","4","2","3","5","3","4","6"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","Định thức con dòng 1,2,3 cột 1,2,4: Det = 0",0,"0"],
   ...more(2,["1","2","3","2","3","4","4","5","6"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","Định thức con dòng 1,2,4 cột 1,2,3: Det = 0",0,"0"],
   ...more(3,["1","2","4","2","3","5","4","5","7"],3,3),...ref2(2,"Det(","Định thức"),...ref(5,"MatC"),["rp",")"],["eq","","Định thức con dòng 1,2,4 cột 1,2,4: Det = 0. Cả 4 định thức con cấp 3 viền quanh định thức con cấp 2 đều bằng 0 nên hạng = 2. Đáp án B",0,"0"]]},
+{n:258,t:"Câu 258. Tìm số chiều n = dim W của không gian con W của ℝ⁴ sinh bởi các vectơ sau u₁ = (2,2,3,4), u₂ = (1,3,4,5), u₃ = (3,5,7,9), u₄ = (4,8,11,15)",o:["n = 1","n = 2","n = 3","n = 4"],a:2,
+ st:[...more(1,["2","2","3","4","1","3","4","5","3","5","7","9","4","8","11","15"],4,4),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 4 hàng u₁, u₂, u₃, u₄. Det = 0 nên bốn vectơ phụ thuộc tuyến tính, hạng ≤ 3, loại D (n = 4). Hạng = cấp lớn nhất của định thức con khác 0",0,"0"],
+  ...more(2,["3","4","5","5","7","9","8","11","15"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: định thức con cấp 3 (dòng 2, 3, 4 và cột 2, 3, 4). Det = 1 ≠ 0 nên hạng ≥ 3, loại A, B. Vậy hạng = 3, n = 3. Đáp án C",0,"1"]]},
 {n:261,t:"Câu 261. Tìm hạng của hệ vectơ sau: u₁ = (3,1,5,7), u₂ = (4,−1,−2,2), u₃ = (10,1,8,17), u₄ = (13,2,13,24)",o:["r = 1","r = 2","r = 3","r = 4"],a:2,
  st:[...more(1,["3","1","5","7","4","-1","-2","2","10","1","8","17","13","2","13","24"],4,4),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 4 hàng u₁, u₂, u₃, u₄. Det = 0 nên hạng < 4, loại D (thật vậy u₄ = u₁ + u₃)",0,"0"],
   ...more(2,["3","1","7","4","-1","2","10","1","17"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","Định thức con cấp 3 (dòng 1,2,3, cột 1,2,4): Det = −7 ≠ 0 nên hạng ≥ 3. Kết hợp hạng < 4 ⇒ hạng = 3. Đáp án C",0,"−7"]]},
 {n:264,t:"Câu 264. Định m để hệ sau có hạng bằng 2: u = (1,3,1), v = (1,m + 3,3), w = (1,m + 6,m + 3)",o:["m = ±√6","m = 1","m = 0 hoặc m = 1","m tùy ý"],a:0,
- st:[...more(1,["1","3","1","1","3","3","1","6","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 0. Det = −6 ≠ 0 nên hạng = 3, m = 0 không thỏa",0,"−6"],
+ st:[...more(1,["1","3","1","1","3","3","1","6","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: 3 hàng u, v, w với m = 0. Det = −6 ≠ 0 nên hạng = 3, m = 0 không thỏa, loại D (m tùy ý)",0,"−6"],
   ...more(2,["1","3","1","1","4","3","1","7","4"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: 3 hàng u, v, w với m = 1. Det = −5 ≠ 0 nên hạng = 3, m = 1 không thỏa, loại B và C. Tính tay: det = m² − 6, bằng 0 khi m = ±√6. Lúc đó u, v không tỉ lệ nên hạng đúng bằng 2. Đáp án A (đề gốc ghi m = 0 là không khớp phép tính, đã sửa lại)",0,"−5"]]},
+{n:265,t:"Câu 265. Định m để hệ sau có hạng bằng 3: u = (m,1,0,2), v = (m,m + 1,−1,2), w = (2m,m + 2,−1,5)",o:["m = −√6","m = √6","m = ± √6","m tùy ý"],a:3,
+ st:[...more(1,["1","0","2","1","-1","2","2","-1","5"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA: định thức con cấp 3 lấy từ cột 2, 3, 4 của 3 hàng u, v, w với m = 0. Det = −1 ≠ 0 nên hạng ≥ 3. Hệ chỉ có 3 vectơ nên hạng ≤ 3, vậy hạng = 3 khi m = 0",0,"−1"],
+  ...more(2,["1","0","2","2","-1","2","3","-1","5"],3,3),...ref2(2,"Det(","Định thức"),...ref(4,"MatB"),["rp",")"],["eq","","MatB: cùng định thức con (cột 2, 3, 4) với m = 1. Det = −1 ≠ 0 nên hạng = 3, m = 1 vẫn thỏa. Tính tay: định thức con này bằng −1 với mọi m (m triệt tiêu), nên hạng luôn bằng 3 với mọi m. Loại A, B, C. Đáp án D",0,"−1"]]},
 {n:269,t:"Câu 269. Tìm tọa độ x₁, x₂, x₃ của vectơ u = (1,2,4) theo cơ sở u₁ = (1,0,0), u₂ = (0,1,0), u₃ = (0,0,1)",o:["x₁ = 1, x₂ = 2, x₃ = 2","x₁ = 1, x₂ = 2, x₃ = 4","x₁ = 1, x₂ = 2, x₃ = 3","x₁ = 2, x₂ = 1, x₃ = 3"],a:1,
  st:[...more(1,["1","0","0","0","1","0","0","0","1"],3,3),...more(2,["1","2","4"],3,1),...ref(3,"MatA"),["inv","⁻¹","Phím x⁻¹ là nghịch đảo"],["mul","×"],...ref(4,"MatB"),["eq","","MatA có các cột là u₁, u₂, u₃ (ma trận đơn vị), MatB là cột tọa độ của u theo cơ sở chuẩn. Tọa độ = MatA⁻¹ × MatB = (1, 2, 4) nên x₁ = 1, x₂ = 2, x₃ = 4. Đáp án B",0,mx(["1","2","4"],3,1,3)]]},
+{n:273,t:"Câu 273. Tìm tọa độ x₁, x₂, x₃ của vectơ u = (2,3,6) theo cơ sở u₁ = (1,2,3), u₂ = (1,3,4), u₃ = (2,4,7)",o:["x₁ = 3, x₂ = −1, x₃ = 0","x₁ = −1, x₂ = −1, x₃ = 2","x₁ = −3, x₂ = −1, x₃ = 3","x₁ = 1, x₂ = −1, x₃ = 1"],a:3,
+ st:[...more(1,["1","1","2","2","3","4","3","4","7"],3,3),...more(2,["2","3","6"],3,1),...ref(3,"MatA"),["inv","⁻¹","Phím x⁻¹ là nghịch đảo"],["mul","×"],...ref(4,"MatB"),["eq","","MatA có các cột là u₁, u₂, u₃, MatB là cột tọa độ của u theo cơ sở chuẩn. Tọa độ = MatA⁻¹ × MatB = (1, −1, 1) nên x₁ = 1, x₂ = −1, x₃ = 1. Đáp án D",0,mx(["1","-1","1"],3,1,3)]]},
 {n:277,t:"Câu 277. Trong không gian ℝ³ cho các vectơ: u₁ = (1,2,3), u₂ = (0,1,0), u₃ = (1,3,3). Khẳng định nào sau đây là đúng?",o:["u₁, u₂, u₃ độc lập tuyến tính","u₁, u₂, u₃ phụ thuộc tuyến tính","u₁, u₂, u₃ tạo thành một cơ sở của ℝ³","Hệ các vectơ u₁, u₂, u₃ có hạng bằng 3"],a:1,
- st:[...more(1,["1","2","3","0","1","0","1","3","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 3 hàng u₁, u₂, u₃. Det = 0 nên ba vectơ phụ thuộc tuyến tính (thật vậy u₃ = u₁ + u₂), hạng < 3 và không tạo thành cơ sở. Đáp án B",0,"0"]]}
+ st:[...more(1,["1","2","3","0","1","0","1","3","3"],3,3),...ref2(2,"Det(","Định thức"),...ref(3,"MatA"),["rp",")"],["eq","","MatA có 3 hàng u₁, u₂, u₃. Det = 0 nên ba vectơ phụ thuộc tuyến tính (thật vậy u₃ = u₁ + u₂), hạng < 3 và không tạo thành cơ sở. Đáp án B",0,"0"]]},
+{n:281,t:"Câu 281. Trong không gian ℝ² cho các vectơ: u₁ = (2,1), u₂ = (−1,−1). Tìm ma trận chuyển cơ sở chính tắc B₀ sang cơ sở B = {u₁, u₂} của ℝ².",o:["P = [2 1; -1 -1]","P = [2 -1; 1 -1]","P = [1 1; -1 -2]","P = [1 -1; 1 -2]"],a:1,
+ st:[...more(1,["2","-1","1","-1"],2,2),...ref(3,"MatA"),["eq","","MatA có các CỘT là u₁ = (2,1) và u₂ = (−1,−1) viết theo cơ sở chính tắc: cột 1 = (2,1), cột 2 = (−1,−1). Đây chính là ma trận chuyển P từ B₀ sang B. Đáp án B (đáp án A là xếp u₁, u₂ theo hàng nên sai)",0,mx(["2","−1","1","−1"],2,2,4,"","MatA")]]},
+{n:282,t:"Câu 282. Trong không gian ℝ² cho các vectơ: u₁ = (2,1), u₂ = (−1,−1). Tìm ma trận chuyển cơ sở B = {u₁, u₂} sang cơ sở chính tắc B₀ của ℝ².",o:["P = [2 1; -1 -1]","P = [2 -1; 1 -1]","P = [1 1; -1 -2]","P = [1 -1; 1 -2]"],a:3,
+ st:[...more(1,["2","-1","1","-1"],2,2),...ref(3,"MatA"),["inv","⁻¹","Phím x⁻¹ là nghịch đảo"],["eq","","MatA có các CỘT là u₁ = (2,1), u₂ = (−1,−1): đây là ma trận chuyển từ B₀ sang B. Ma trận chuyển ngược từ B sang B₀ là nghịch đảo: P = MatA⁻¹ = (1 −1; 1 −2). Tính tay: det = −1, nên nghịch đảo = −(−1 1; −1 2) = (1 −1; 1 −2). Đáp án D (ở câu 281 đáp án B chính là MatA, còn câu này là MatA⁻¹)",0,mx(["1","−1","1","−2"],2,2,4,"","")]]},
+{n:283,t:"Câu 283. Trong không gian ℝ² cho các vectơ: u₁ = (2,1), u₂ = (−1,−1), v₁ = (−1,0), v₂ = (0,1). Tìm ma trận chuyển cơ sở B₁ = {u₁, u₂} sang cơ sở B₂ = {v₁, v₂} của ℝ²",o:["P = [-2 1; 1 -1]","P = [2 -1; -1 1]","P = [-1 -1; -1 -2]","P = [1 1; 1 2]"],a:2,
+ st:[...more(1,["2","-1","1","-1"],2,2),...more(2,["-1","0","0","1"],2,2),...ref(3,"MatA"),["inv","⁻¹","Phím x⁻¹ là nghịch đảo"],["mul","×"],...ref(4,"MatB"),["eq","","MatA có các CỘT là u₁, u₂; MatB có các CỘT là v₁, v₂ (đều viết theo cơ sở chính tắc). Ma trận chuyển từ B₁ sang B₂ là P = MatA⁻¹ × MatB = (−1 −1; −1 −2). Tính tay: MatA⁻¹ = (1 −1; 1 −2), nhân với MatB = (−1 0; 0 1) được (−1 −1; −1 −2). Đáp án C",0,mx(["−1","−1","−1","−2"],2,2,4,"","")]]}
 ];
 let q=0,i=0,pl=false,tm=null,last=null,vo=false,rd=0;
 const TTS=!!window.speechSynthesis;
 const SK={"−":"trừ","×":"nhân","÷":"chia","=":"bằng","+":"cộng","(−)":"dấu âm","x⁻¹":"x mũ trừ một","▲":"mũi tên lên","▼":"mũi tên xuống","◀":"mũi tên trái","▶":"mũi tên phải",".":"dấu chấm","(":"mở ngoặc",")":"đóng ngoặc","OPTN":"ốp tần","MENU":"menu"};
 function spk(t){
  t=t.replace(/<[^>]+>/g,"").replace(/\[([^\[\]]+)\]/g,(m,b)=>{const r=b.split(";");return " ma trận "+r.length+" hàng: "+r.map((x,k)=>"hàng "+(k+1)+": "+x.trim().split(/\s+/).join(", ")).join("; ")+". "});
+ t=t.replace(/⚠[^:]*:\s*/g,"").replace(/[₁₂₃₄]/g,c=>" "+["một","hai","ba","bốn"]["₁₂₃₄".indexOf(c)]+" ").replace(/⇔/g," tương đương ").replace(/≠/g," khác ").replace(/·/g," nhân ").replace(/√/g," căn ").replace(/Det\(/g,"định thức ").replace(/\bAC\b/g,"A C");
  return t.replace(/Mat([A-D])/g,"ma trận $1").replace(/([A-Z])⁻¹/g,"$1 nghịch đảo").replace(/(\d+)\/(\d+)/g,"$1 phần $2").replace(/[−-](?=\d)/g," âm ").replace(/×/g," nhân ").replace(/\+/g," cộng ").replace(/=/g," bằng ").replace(/Trn\(/g,"chuyển vị ");
 }
-function viVoice(){return TTS&&speechSynthesis.getVoices().find(v=>/^vi/i.test(v.lang))}
-function say(t){if(!vo||!TTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="vi-VN";const v=viVoice();if(v)u.voice=v;u.rate=.95;speechSynthesis.speak(u)}
+function vsc(v){return /natural|online/i.test(v.name)?3:/google/i.test(v.name)?2:1}
+function viVoices(){return TTS?speechSynthesis.getVoices().filter(v=>/^vi/i.test(v.lang)).sort((a,b)=>vsc(b)-vsc(a)):[]}
+function viVoice(){const l=viVoices();const n=$("vsel")&&$("vsel").value;return l.find(v=>v.name==n)||l[0]}
+function fillV(){const l=viVoices(),s=$("vsel"),old=s.value;s.innerHTML=l.length?l.map(v=>"<option>"+v.name+"</option>").join(""):"<option>Giọng mặc định</option>";if(old&&l.some(v=>v.name==old))s.value=old}
+function say(t){if(!vo||!TTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="vi-VN";const v=viVoice();if(v)u.voice=v;u.rate=+$("vrate").value;speechSynthesis.speak(u)}
 function speakNow(){if(!vo)return;const S=Q[q].st,n=S.length;let t=rd?spk(Q[q].t)+". ":"";rd=0;
- if(i<n){const s=S[i],l=L[s[0]],nm=s[3]?l[1]:l[0];t+="Bấm "+(s[3]?"SHIFT rồi ":"")+(SK[nm]||nm)+(s[2]?". "+spk(s[2]):"")}
+ if(i<n){const s=S[i],l=L[s[0]],nm=s[3]?l[1]:l[0];t+="Bấm "+(s[3]?"SHIFT rồi ":"")+(SK[nm]||nm)+(s[2]?". "+spk(s[2]).split(/\. /)[0].slice(0,160):"")}
  else t+="Hoàn thành. Đáp án đúng là "+"ABCD"[Q[q].a]+": "+spk(Q[q].o[Q[q].a]);
  say(t)}
 function vnote(){$("vn").textContent=vo&&!viVoice()?"Thiết bị chưa có giọng tiếng Việt nên đang dùng giọng mặc định. Bạn có thể cài giọng Vietnamese trong cài đặt hệ thống.":""}
@@ -248,14 +398,15 @@ function play(){if(i>=Q[q].st.length)i=0;pl=true;$("ply").textContent="⏸ Dừn
 function tick(){clearTimeout(tm);if(!pl)return;tm=setTimeout(function w(){if(!pl)return;if(vo&&speechSynthesis.speaking){tm=setTimeout(w,200);return}next();tick()},+$("spd").value)}
 function stop(){pl=false;clearTimeout(tm);$("ply").textContent="▶ Phát"}
 if(!TTS)$("vox").style.display="none";
-else{speechSynthesis.onvoiceschanged=vnote;
+else{speechSynthesis.onvoiceschanged=()=>{fillV();vnote()};fillV();
 $("vox").onclick=()=>{vo=!vo;$("vox").textContent=vo?"🔊 Giọng đọc: Bật":"🔇 Giọng đọc: Tắt";$("vox").setAttribute("aria-pressed",vo);if(vo){vnote();speakNow()}else{speechSynthesis.cancel();vnote()}}}
+$("vsel").onchange=()=>{if(vo)speakNow()};$("vrate").onchange=()=>{if(vo)speakNow()};
 $("ply").onclick=()=>pl?stop():play();
 $("nxt").onclick=()=>{stop();next()};
 $("prv").onclick=()=>{stop();if(i>0)i--;render()};
 $("rst").onclick=()=>{stop();i=0;render()};
 $("spd").onchange=()=>{if(pl)tick()};
-$("tabs").innerHTML=Q.map((x,k)=>'<button class="tab" role="tab" data-q="'+k+'">Câu '+(x.n||k+1)+"</button>").join("");
+$("tabs").innerHTML=Q.map((x,k)=>'<button class="tab'+([215,216,217,218,219,224].includes(x.n)?" g1":"")+([228,229,230].includes(x.n)?" g2":"")+([238,240,243,244].includes(x.n)?" g3":"")+([245,246,249,252,254].includes(x.n)?" g4":"")+([257,258,261].includes(x.n)?" g5":"")+([264,265].includes(x.n)?" g7":"")+([269,273].includes(x.n)?" g8":"")+(x.n==277?" g9":"")+([281,282,283].includes(x.n)?" g10":"")+'" role="tab" data-q="'+k+'">Câu '+(x.n||k+1)+"</button>").join("");
 function tabs(){document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",+t.dataset.q==q))}
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{stop();q=+t.dataset.q;i=0;rd=1;tabs();render()});
 tabs();render();
