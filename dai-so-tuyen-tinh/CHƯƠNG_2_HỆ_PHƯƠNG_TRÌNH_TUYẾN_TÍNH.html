@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CHƯƠNG 2 HỆ PHƯƠNG TRÌNH TUYẾN TÍNH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9ece6;--card:#fff;--fg:#1d2321;--mut:#5d6762;--line:#cfd5cd;--acc:#0b7a68;--accfg:#fff;--ok:#1b8a3c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--card:#1e2421;--fg:#e8ede9;--mut:#9aa6a0;--line:#34403a;--acc:#2fd3b4;--accfg:#06241d;--ok:#5fd17f}}
+:root[data-theme="dark"]{--bg:#141816;--card:#1e2421;--fg:#e8ede9;--mut:#9aa6a0;--line:#34403a;--acc:#2fd3b4;--accfg:#06241d;--ok:#5fd17f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.5 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:960px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.4rem;margin:0 0 4px;font-weight:800}
+.sub{margin:0 0 16px;color:var(--mut);font-size:.92rem}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;font:600 .9rem inherit;font-family:inherit;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tab:focus-visible,.ctl button:focus-visible,.key:focus-visible,.chip:focus-visible{outline:3px solid #ffb000;outline-offset:2px}
+.wrap{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}.side{display:contents}.calc{order:2}.p1{order:0}.p2{order:1;position:sticky;top:0;z-index:5}.p3,.tip{order:3}}
+.calc{width:330px;max-width:100%;margin:0 auto;background:#3b3f3c;border-radius:26px 26px 40px 40px;padding:16px 16px 20px;box-shadow:0 10px 30px rgba(0,0,0,.35);border:3px solid #cfd2d0}
+.brand{display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:.8rem;margin-bottom:8px}
+.brand span:last-child{font-weight:400;opacity:.8}
+.bezel{background:#111;border-radius:14px;padding:10px}
+.lcd{background:#d4dccb;border-radius:6px;height:92px;padding:6px 8px;color:#1a1f17;font-family:"Courier New",monospace;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.ex{font-size:19px;min-height:26px;word-break:break-all}
+.rs{text-align:right;font-size:24px;font-weight:700;min-height:30px}
+.cur{display:inline-block;width:2px;height:1em;background:#1a1f17;vertical-align:-2px;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.8em;line-height:1.1;margin:0 2px}
+.fr i{font-style:normal;padding:0 3px}.fr i:first-child{border-bottom:2px solid currentColor}
+.top{display:flex;align-items:center;justify-content:space-between;margin:26px 0 22px}
+.dp{display:grid;grid-template-columns:repeat(3,36px);grid-template-rows:repeat(3,26px);gap:2px}
+.dp .key{height:100%;border-radius:10px;background:#9a9d9a}.dp .up{grid-area:1/2}.dp .left{grid-area:2/1}.dp .right{grid-area:2/3}.dp .down{grid-area:3/2}
+.dp .mid{grid-area:2/2;background:#2a2c2b;border-radius:6px}
+.rows{display:flex;flex-direction:column;gap:20px}
+.row{display:grid;gap:8px}
+.key{position:relative;border:0;border-radius:8px;height:34px;background:#1b1d1e;color:#fff;font:600 13px/1 "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;padding:0;transition:transform .12s,filter .12s}
+.key .s{position:absolute;top:-14px;left:-4px;right:-4px;text-align:center;font-size:9px;font-weight:600;color:#f2a93b;white-space:nowrap;line-height:12px}
+.n .key,.key.n{background:#f1f1f1;color:#1e1e1e;height:40px;font-size:18px;font-weight:700}
+.key.blue{background:#2f6bff;color:#fff}
+.key.eq{background:#1b1d1e;color:#fff;font-size:20px}
+.key.rnd{font-size:10px;border-radius:50%;width:38px;height:38px;background:#9a9d9a}
+.key.rnd.on{background:#9a9d9a}
+.key.press{transform:scale(.88);filter:brightness(1.7)}
+.key.hl{z-index:2;outline:3px solid #00e6c8;outline-offset:2px;animation:ping 1.1s infinite}
+.key.hl.sh{outline-color:#ffb000}
+.key.hl.sh .s{background:#ffb000;color:#111;border-radius:3px;font-weight:800;font-size:10px}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(0,230,200,.8)}100%{box-shadow:0 0 0 14px rgba(0,230,200,0)}}
+.key.hl.sh{animation-name:ping2}@keyframes ping2{0%{box-shadow:0 0 0 0 rgba(255,176,0,.85)}100%{box-shadow:0 0 0 14px rgba(255,176,0,0)}}
+@media (prefers-reduced-motion:reduce){.key.hl,.cur{animation:none}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.qt{font-size:1.2rem;font-weight:800;margin:0 0 4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.opt{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-weight:600}
+.opt.right{background:var(--ok);color:#fff;border-color:var(--ok)}
+.cap{font-size:1.15rem;min-height:84px}
+.cap b{background:var(--acc);color:var(--accfg);border-radius:6px;padding:1px 9px;white-space:nowrap}
+.cap small{display:block;color:var(--mut);font-size:.88rem;margin-top:6px}
+.st{color:var(--mut);font-size:.85rem;margin-bottom:4px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin:10px 0}.bar div{height:100%;background:var(--acc);border-radius:3px;transition:width .3s}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ctl button,.ctl select{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:8px 12px;font:600 .9rem inherit;font-family:inherit;cursor:pointer}
+.ctl button.main{background:var(--acc);color:var(--accfg);border-color:var(--acc);min-width:96px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:6px;min-width:34px;padding:4px 8px;font:600 .85rem inherit;font-family:inherit;cursor:pointer}
+.chip.done{background:var(--line)}.chip.now{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tip{color:var(--mut);font-size:.85rem;margin:0}
+.mt{display:inline-table;vertical-align:middle;margin:0 4px;border-left:2px solid currentColor;border-right:2px solid currentColor;border-radius:4px;border-collapse:collapse;font-size:1.02em}
+.mt td{padding:2px 9px;text-align:center;white-space:nowrap}
+.mt .fr{font-size:.82em}
+sup{line-height:0;font-size:.7em}
+.mx{border-left:2px solid #1a1f17;border-right:2px solid #1a1f17;font-size:15px;border-collapse:collapse;display:inline-table}.mx td{padding:0 7px;text-align:right}.mx td.c{background:#1a1f17;color:#d4dccb}
+.sys{display:inline-flex;align-items:center;vertical-align:middle;margin:2px 6px}.sys .br{font-size:3em;font-weight:200;line-height:1;margin-right:4px;transform:scaleX(.7)}.sys .eqs{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:1.05rem}var{font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:1.08em}
+</style>
+</head>
+<body>
+<main>
+<h1>CHƯƠNG 2 HỆ PHƯƠNG TRÌNH TUYẾN TÍNH</h1>
+<p class="sub">Bấm theo phím đang sáng trên máy. Bấm Phát để xem tự chạy, hoặc tự bấm vào phím sáng để sang bước tiếp.</p>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div class="wrap">
+  <div class="calc" aria-label="Máy tính Casio fx-580VN X">
+    <div class="brand"><span>CASIO</span><span>fx-580VN X</span></div>
+    <div class="bezel"><div class="lcd"><div class="ex" id="ex"></div><div class="rs" id="rs"></div></div></div>
+    <div class="top" id="top"></div>
+    <div class="rows" id="rows"></div>
+  </div>
+  <div class="side">
+    <div class="panel p1"><p class="qt" id="qt"></p><div class="opts" id="opts"></div></div>
+    <div class="panel p2">
+      <div class="st" id="st"></div>
+      <div class="cap" id="cap" aria-live="polite"></div>
+      <div class="bar"><div id="bar"></div></div>
+      <div class="st" id="vn" role="status"></div>
+      <div class="ctl">
+        <button id="rst" title="Về đầu">⏮ Đầu</button>
+        <button id="prv">◀ Lùi</button>
+        <button id="ply" class="main">▶ Phát</button>
+        <button id="nxt">Tiếp ▶</button>
+        <select id="spd" aria-label="Tốc độ"><option value="2400">Chậm</option><option value="1700" selected>Vừa</option><option value="900">Nhanh</option></select>
+        <button id="vox" aria-pressed="false">🔇 Giọng đọc: Tắt</button>
+      </div>
+    </div>
+    <div class="panel p3"><div class="st">Dãy phím của câu này (bấm vào để nhảy tới bước đó)</div><div class="chips" id="chips"></div></div>
+    <p class="tip">Chữ vàng trên phím là chức năng SHIFT. Các màn hình menu và bảng nhập ma trận được dựng theo ảnh máy thật của bạn. Bước có dấu ⚠ là phần mình suy ra, chưa thấy màn hình thật.</p>
+  </div>
+</div>
+</main>
+<script>
+const R=[
+{c:4,k:[["optn","OPTN"],["calc","CALC","SOLVE"],["integ","∫▫"],["varx","𝒙"]]},
+{c:6,k:[["frac","▫/▫","÷R"],["sqrt","√▫","∛"],["sq","x²","x³"],["pow","x▫","√▫"],["log","log▫","10ˣ"],["ln","ln","eˣ"]]},
+{c:6,k:[["neg","(−)","log"],["dms","°′″","FACT"],["inv","x⁻¹","x!"],["sin","sin","sin⁻¹"],["cos","cos","cos⁻¹"],["tan","tan","tan⁻¹"]]},
+{c:6,k:[["sto","STO","RECALL"],["eng","ENG","←i"],["lp","(","Abs"],["rp",")"],["sd","S⇔D"],["mp","M+","M−"]]},
+{c:5,n:1,k:[["d7","7","CONST"],["d8","8","CONV"],["d9","9","RESET"],["del","DEL","INS"],["ac","AC","OFF"]]},
+{c:5,n:1,k:[["d4","4"],["d5","5"],["d6","6"],["mul","×","nPr"],["div","÷","nCr"]]},
+{c:5,n:1,k:[["d1","1"],["d2","2"],["d3","3"],["add","+","Pol"],["sub","−","Rec"]]},
+{c:5,n:1,k:[["d0","0","Rnd"],["dot","."],["exp","×10ˣ","π"],["ans","Ans","%"],["eq","=","≈"]]}];
+const L={shift:["SHIFT"],alpha:["ALPHA"],menu:["MENU","SETUP"],on:["ON"],up:["▲"],down:["▼"],left:["◀"],right:["▶"]};
+R.forEach(r=>r.k.forEach(k=>L[k[0]]=[k[1],k[2]]));
+const E={};
+function mk(id,cls){const b=document.createElement("button");b.className="key "+(cls||"");b.dataset.id=id;
+ const l=L[id];b.innerHTML=(l[1]?'<span class="s">'+l[1]+"</span>":"")+l[0];b.setAttribute("aria-label",l[0]);b.onclick=()=>keyClick(id);E[id]=b;return b}
+const topEl=document.getElementById("top");
+const left=document.createElement("div");left.style.cssText="display:flex;gap:10px";
+[["shift","rnd"],["alpha","rnd"]].forEach(a=>left.append(mk(a[0],a[1])));
+const dp=document.createElement("div");dp.className="dp";
+["up","left","right","down"].forEach(i=>dp.append(mk(i,i)));dp.insertAdjacentHTML("beforeend",'<div class="mid"></div>');
+const rt=document.createElement("div");rt.style.cssText="display:flex;gap:10px";
+rt.append(mk("menu","rnd"),mk("on","rnd on"));
+topEl.append(left,dp,rt);
+E.shift.innerHTML="";E.alpha.innerHTML="";
+E.shift.style.cssText=E.alpha.style.cssText="";
+const sl=document.createElement("span");sl.className="s";sl.style.color="#f2a93b";sl.textContent="SHIFT";E.shift.append(sl);
+const al=document.createElement("span");al.className="s";al.style.color="#ff7b9c";al.textContent="ALPHA";E.alpha.append(al);
+const rows=document.getElementById("rows");
+R.forEach(r=>{const d=document.createElement("div");d.className="row"+(r.n?" n":"");d.style.gridTemplateColumns="repeat("+r.c+",1fr)";
+ r.k.forEach(k=>{const b=mk(k[0],r.n?"n":"");if(k[0]=="del"||k[0]=="ac")b.classList.add("blue");if(k[0]=="eq")b.classList.add("eq");d.append(b)});rows.append(d)});
+document.querySelectorAll(".n .key.blue").forEach(b=>b.style.color="#fff");
+
+const W=t=>"⚠ Chưa kiểm chứng: "+t;
+const A=["2","1","1","3"],B=["1","0","2","1"];
+const sc=(...l)=>l.join("<br>");
+const SM=sc("Tạo ma trận","1:MatA 2:MatB","3:MatC 4:MatD");
+const P1=sc("1:Tạo ma trận","2:Sửa ma trận","3:MatA 4:MatB","5:MatC 6:MatD");
+const P2=sc("1:MatAns","2:Định thức","3:Ma trận chuyển vị","4:Ma trận đơn vị");
+function mx(v,r,c,j,t,nm){let h=(nm?'<div style="font-size:11px">'+nm+"=</div>":"")+'<table class="mx">';for(let a=0;a<r;a++){h+="<tr>";for(let b=0;b<c;b++){const k=a*c+b;const x=k<j?v[k]:(k==j?(t||"0"):"0");h+="<td"+(k==j?' class="c"':"")+">"+fx(x)+"</td>"}h+="</tr>"}return h+"</table>"}
+function ent(v,r,c,nm){const s=[];v.forEach((x,j)=>{let t="";[...x].forEach((ch,n)=>{t+=ch=="-"?"−":ch;s.push([ch=="-"?"neg":"d"+ch,"",n?"":"Ô hàng "+(Math.floor(j/c)+1)+", cột "+(j%c+1),0,"",mx(v,r,c,j,t,nm)])});s.push(["eq","",j==v.length-1?"Lưu ô cuối cùng":"Lưu số này, máy nhảy sang ô kế tiếp",0,"",mx(v,r,c,j+1,"",nm)])});return s}
+const sel=(nm,r,c,v)=>[["d"+r,"","Số dòng = "+r,0,"",sc(nm,"Số cột?","Chọn 1~4")],["d"+c,"","Số cột = "+c+". Máy mở bảng nhập, các ô đang là 0",0,"",mx(v,r,c,0,"",nm)]];
+const OUT=["ac","","Bấm AC để thoát bảng nhập. Góc phải màn hình hiện chữ Ma trận",0,"",'<div style="margin-top:44px;text-align:right">Ma trận</div>'];
+const first=(v,r,c)=>[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận",0,"",SM],["d1","","Chọn 1: MatA",0,"",sc("MatA","Số dòng?","Chọn 1~4")],...sel("MatA",r,c,v),...ent(v,r,c,"MatA"),OUT];
+const more=(n,v,r,c)=>{const nm="Mat"+"ABCD"[n-1];return[["optn","","Mở OPTN",0,"",P1],["d1","",W("chọn 1: Tạo ma trận (mình suy ra từ danh sách OPTN của máy bạn)"),0,"",SM],["d"+n,"","Chọn "+n+": "+nm,0,"",sc(nm,"Số dòng?","Chọn 1~4")],...sel(nm,r,c,v),...ent(v,r,c,nm),OUT]};
+const ref=(k,t)=>[["optn","","Mở OPTN: danh sách ma trận",0,"",P1],["d"+k,t,"Chọn "+k+": "+t]];
+const ref2=(k,t,nl)=>[["optn","","Mở OPTN",0,"",P1],["down","",W("bấm ▼ để sang trang kế của danh sách OPTN"),0,"",P2],["d"+k,t,"Chọn "+k+": "+nl]];
+const R2=(v,f)=>mx(v,2,2,4);
+const CN=["a₁","b₁","c₁","a₂","b₂","c₂"];
+const mn=t=>t.replace("-","−");
+function ed(v,j,p,t){const w=[];for(let k=0;k<6;k++)w.push(k<j?v[k]:(k==j?(t==null?p[k]:t):p[k]));
+const hc=k=>k==j?' style="background:#1a1f17;color:#d4dccb"':"";
+const row=r=>{const a=w[r*3],b=w[r*3+1],c=w[r*3+2],bn=b[0]=="-";return "<td"+hc(r*3)+">"+mn(a)+"x</td><td>"+(bn?"−":"+")+"</td><td"+hc(r*3+1)+">"+b.replace("-","")+"y=</td><td"+" style=\"text-align:right"+(r*3+2==j?";background:#1a1f17;color:#d4dccb":"")+"\">"+mn(c)+"</td>"};
+return '<table style="border-collapse:collapse;font-size:13px;width:100%"><tr><td rowspan="2" style="font-size:34px;font-weight:200;padding:0 4px">{</td>'+row(0)+"</tr><tr>"+row(1)+"</tr></table>"}
+function entE(v,p,intro,fin){const s=[];v.forEach((x,j)=>{[...x].forEach((ch,n)=>{const t=x.slice(0,n+1);s.push([ch=="-"?"neg":"d"+ch,"",(n?"":(j==0&&intro?intro+" ":"")+"Ô "+CN[j]+" = "+x),0,mn(t),ed(v,j,p,t)])});s.push(j==5?["eq","",fin[0],0,fin[1],fin[2]]:["eq","","Lưu số này, máy nhảy sang ô kế tiếp",0,mn(p[j+1]),ed(v,j+1,p)])});return s}
+const lab=t=>'<div style="font-weight:700;font-size:16px">'+t+"</div>";
+const T1=["0","0","1","1","1","0"],T2=["-1","-1","1","1","0","0"],T3=["-2","-2","1","1","-1","0"],Z=["0","0","0","0","0","0"];
+const EQ0=()=>[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d2","","Số ẩn = 2. Máy mở bảng nhập, các ô đang là 0",0,"0",ed(Z,0,Z)]];
+const U1=["2","3","5","2","5","7"],U2=["2","3","7","2","5","9"];
+const V1=["1","1","0","1","0","0"],V2=["2","2","0","1","1","0"],V3=["0","0","0","1","-1","0"];
+const K1=["6","12","2","2","4","4"],K2=["-2","8","-2","-2","0","-4"],K3=["2","10","0","0","2","0"];
+const N1=["0","1","1","1","0","2"],N2=["0","1","0","1","0","0"],N3=["1","0","1","0","-1","2"];
+const M1=["2","2","1","3","3","1"],M2=["0","2","1","1","3","1"],M3=["-1","2","1","0","3","1"];
+const CN3=["a₁","b₁","c₁","d₁","a₂","b₂","c₂","d₂","a₃","b₃","c₃","d₃"];
+function ed3(v,j,p,t){const w=[];for(let k=0;k<12;k++)w.push(k<j?v[k]:(k==j?(t==null?p[k]:t):p[k]));
+const hc=k=>k==j?' style="background:#1a1f17;color:#d4dccb"':"";
+const sg=s=>s[0]=="-"?"−":"+",ab=s=>s.replace("-","");
+const row=r=>{const a=w[r*4],b=w[r*4+1],c=w[r*4+2],d=w[r*4+3],k=r*4;return "<td"+hc(k)+">"+mn(a)+"x</td><td>"+sg(b)+"</td><td"+hc(k+1)+">"+ab(b)+"y</td><td>"+sg(c)+"</td><td"+hc(k+2)+">"+ab(c)+"z=</td><td style=\"text-align:right"+(k+3==j?";background:#1a1f17;color:#d4dccb":"")+"\">"+mn(d)+"</td>"};
+return '<table style="border-collapse:collapse;font-size:11px;width:100%;white-space:nowrap"><tr><td rowspan="3" style="font-size:44px;font-weight:200;padding:0 3px">{</td>'+row(0)+"</tr><tr>"+row(1)+"</tr><tr>"+row(2)+"</tr></table>"}
+function entE3(v,p,intro,fin){const s=[];v.forEach((x,j)=>{[...x].forEach((ch,n)=>{const t=x.slice(0,n+1);s.push([ch=="-"?"neg":"d"+ch,"",(n?"":(j==0&&intro?intro+" ":"")+"Ô "+CN3[j]+" = "+x),0,mn(t),ed3(v,j,p,t)])});s.push(j==11?["eq","",fin[0],0,fin[1],fin[2]]:["eq","","Lưu số này, máy nhảy sang ô kế tiếp",0,mn(p[j+1]),ed3(v,j+1,p)])});return s}
+const Z3=["0","0","0","0","0","0","0","0","0","0","0","0"];
+const S1=["1","4","5","1","2","7","-11","2","3","11","-6","0"];
+const Q=[
+{n:141,t:"Câu 141. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>(<var>m</var>−1)<var>x</var> + (<var>m</var>−1)<var>y</var> = 1</span><span><var>x</var> + <var>m</var><var>y</var> = 0</span></span></span> vô nghiệm khi và chỉ khi:",o:["<var>m</var> = 1","<var>m</var> = 0, <var>m</var> = 1","<var>m</var> = ±1","<var>m</var> = −1"],a:0,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d2","","Số ẩn = 2. Máy mở bảng nhập, các ô đang là 0",0,"0",ed(Z,0,Z)],
+ ...entE(T1,Z,"Thử <var>m</var> = 1: hệ thành 0<var>x</var> + 0<var>y</var> = 1 và <var>x</var> + <var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, đúng với <var>m</var> = 1","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"0",ed(T1,0,T1)],
+ ...entE(T2,T1,"Thử <var>m</var> = 0: hệ thành −<var>x</var> − <var>y</var> = 1 và <var>x</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 0, nên <var>m</var> = 0 không làm hệ vô nghiệm","0",lab("x=")]),
+ ["down","","Bấm ▼ để xem <var>y</var> = −1. Loại đáp án B",0,"−1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"−1",ed(T2,0,T2)],
+ ...entE(T3,T2,"Thử <var>m</var> = −1: hệ thành −2<var>x</var> − 2<var>y</var> = 1 và <var>x</var> − <var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/4","−{1/4}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = −1/4. Hệ có nghiệm, nên <var>m</var> = −1 không làm hệ vô nghiệm. Loại C và D. Chỉ <var>m</var> = 1 làm máy báo Vô nghiệm. Đáp án A. Cách làm tay: <var>D</var> = (<var>m</var>−1)² = 0 ⇔ <var>m</var> = 1, thay <var>m</var> = 1 vào phương trình đầu được 0 = 1.",0,"−{1/4}",lab("y=")]]},
+{n:142,t:"Câu 142. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>(<var>m</var>+1)<var>x</var> + (<var>m</var>+1)<var>y</var> = 0</span><span><var>x</var> + <var>m</var><var>y</var> = 0</span></span></span> có vô số nghiệm khi và chỉ khi:",
+ o:["<var>m</var> = 0","<var>m</var> = 1","<var>m</var> = −1","<var>m</var> = ±1"],a:3,
+ st:[...EQ0(),
+ ...entE(V1,Z,"Thử <var>m</var> = 0: hệ thành <var>x</var> + <var>y</var> = 0 và <var>x</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 0","0",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 0. Nghiệm duy nhất, nên <var>m</var> = 0 không làm hệ vô số nghiệm. Loại đáp án A",0,"0",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed(V1,0,V1)],
+ ...entE(V2,V1,"Thử <var>m</var> = 1: hệ thành 2<var>x</var> + 2<var>y</var> = 0 và <var>x</var> + <var>y</var> = 0.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Hai phương trình trùng nhau nên máy báo vô số nghiệm","Vô số nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"2",ed(V2,0,V2)],
+ ...entE(V3,V2,"Thử <var>m</var> = −1: hệ thành 0<var>x</var> + 0<var>y</var> = 0 và <var>x</var> − <var>y</var> = 0.",[W("chữ máy báo trên máy bạn có thể khác")+" Phương trình đầu là 0 = 0 nên hệ cũng vô số nghiệm. Cả <var>m</var> = 1 và <var>m</var> = −1 đều đúng, chọn <var>m</var> = ±1. Đáp án D. Cách làm tay: hệ thuần nhất có vô số nghiệm ⇔ <var>D</var> = <var>m</var>² − 1 = 0 ⇔ <var>m</var> = ±1.","Vô số nghiệm",""])]},
+{n:143,t:"Câu 143. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>2(<var>m</var>+1)<var>x</var> + (<var>m</var>+10)<var>y</var> = <var>m</var></span><span><var>m</var><var>x</var> + (<var>m</var>+2)<var>y</var> = 2<var>m</var></span></span></span> có duy nhất một nghiệm khi và chỉ khi:",
+ o:["<var>m</var> = 2","<var>m</var> ≠ 2","<var>m</var> = −2","<var>m</var> ≠ −2"],a:1,
+ st:[...EQ0(),
+ ...entE(K1,Z,"Thử <var>m</var> = 2: hệ thành 6<var>x</var> + 12<var>y</var> = 2 và 2<var>x</var> + 4<var>y</var> = 4.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 2 không cho nghiệm duy nhất. Loại đáp án A","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"6",ed(K1,0,K1)],
+ ...entE(K2,K1,"Thử <var>m</var> = −2: hệ thành −2<var>x</var> + 8<var>y</var> = −2 và −2<var>x</var> + 0<var>y</var> = −4.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1/4. Có nghiệm duy nhất, nên <var>m</var> = −2 vẫn thỏa. Loại đáp án D",0,"{1/4}",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"−2",ed(K2,0,K2)],
+ ...entE(K3,K2,"Thử <var>m</var> = 0: hệ thành 2<var>x</var> + 10<var>y</var> = 0 và 0<var>x</var> + 2<var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 0","0",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 0. <var>m</var> = 0 cũng có nghiệm duy nhất nên loại C. Chỉ <var>m</var> = 2 mới không duy nhất. Đáp án B. Cách làm tay: <var>D</var> = 2(<var>m</var>+1)(<var>m</var>+2) − <var>m</var>(<var>m</var>+10) = (<var>m</var>−2)² ≠ 0 ⇔ <var>m</var> ≠ 2.",0,"0",lab("y=")]]},
+{n:144,t:"Câu 144. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> sin <var>α</var> + <var>y</var> cos <var>α</var> = <var>m</var></span><span><var>x</var> cos <var>α</var> − <var>y</var> sin <var>α</var> = 2<var>m</var></span></span></span> có duy nhất một nghiệm khi và chỉ khi:",
+ o:["<var>m</var> = 0; <var>α</var> tùy ý","<var>m</var> ≠ 0; <var>α</var> tùy ý","<var>m</var> = −2; <var>α</var> tùy ý","<var>m</var> và <var>α</var> tùy ý"],a:3,
+ st:[...EQ0(),
+ ...entE(N1,Z,"Thử <var>α</var> = 0°, <var>m</var> = 1: sin <var>α</var> = 0, cos <var>α</var> = 1, hệ thành 0<var>x</var> + 1<var>y</var> = 1 và 1<var>x</var> + 0<var>y</var> = 2.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1. <var>m</var> = 1 có nghiệm duy nhất, nên loại A và C",0,"1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"0",ed(N1,0,N1)],
+ ...entE(N2,N1,"Thử <var>α</var> = 0°, <var>m</var> = 0: hệ thành 0<var>x</var> + 1<var>y</var> = 0 và 1<var>x</var> + 0<var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 0","0",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 0. <var>m</var> = 0 cũng có nghiệm duy nhất, nên loại B",0,"0",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"0",ed(N2,0,N2)],
+ ...entE(N3,N2,"Đổi góc, thử <var>α</var> = 90°, <var>m</var> = 1: sin <var>α</var> = 1, cos <var>α</var> = 0, hệ thành 1<var>x</var> + 0<var>y</var> = 1 và 0<var>x</var> − 1<var>y</var> = 2.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 1","1",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = −2. Góc khác vẫn có nghiệm duy nhất. Đáp án D. Cách làm tay: <var>D</var> = −sin²<var>α</var> − cos²<var>α</var> = −1 ≠ 0 với mọi <var>α</var>, nên hệ luôn có nghiệm duy nhất với mọi <var>m</var>, <var>α</var>.",0,"−2",lab("y=")]]},
+{n:145,t:"Câu 145. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>m</var><var>x</var> + 2<var>y</var> = 1</span><span>(<var>m</var>+1)<var>x</var> + 3<var>y</var> = 1</span></span></span> có nghiệm khi và chỉ khi:",
+ o:["<var>m</var> ≠ 2","<var>m</var> ∈ ℝ","<var>m</var> ≠ 0","<var>m</var> ≠ −1"],a:0,
+ st:[...EQ0(),
+ ...entE(M1,Z,"Thử <var>m</var> = 2: hệ thành 2<var>x</var> + 2<var>y</var> = 1 và 3<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 2 không thỏa. Loại đáp án B","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed(M1,0,M1)],
+ ...entE(M2,M1,"Thử <var>m</var> = 0: hệ thành 0<var>x</var> + 2<var>y</var> = 1 và 1<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/2","−{1/2}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1/2. <var>m</var> = 0 có nghiệm, nên loại đáp án C",0,"{1/2}",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"0",ed(M2,0,M2)],
+ ...entE(M3,M2,"Thử <var>m</var> = −1: hệ thành −1<var>x</var> + 2<var>y</var> = 1 và 0<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/3","−{1/3}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1/3. <var>m</var> = −1 có nghiệm, nên loại đáp án D. Chỉ <var>m</var> = 2 làm hệ vô nghiệm. Đáp án A. Cách làm tay: <var>D</var> = 3<var>m</var> − 2(<var>m</var>+1) = <var>m</var> − 2. Khi <var>m</var> = 2 hệ thành <var>x</var> + <var>y</var> = 1/2 và <var>x</var> + <var>y</var> = 1/3 (vô nghiệm). Hệ có nghiệm ⇔ <var>m</var> ≠ 2.",0,"{1/3}",lab("y=")]]},
+{n:160,t:"Câu 160. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>2<var>x</var> + 3<var>y</var> − 2<var>z</var> = 5</span><span>2<var>x</var> + 5<var>y</var> − 2<var>z</var> = 7</span></span></span>",
+ o:["<var>x</var> = 1 − 3<var>α</var> + 2<var>β</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 1 + <var>α</var>, <var>y</var> = 1, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 1 − <var>α</var>, <var>y</var> = −<var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 2, <var>y</var> = 1, <var>z</var> = 1"],a:1,
+ st:[...EQ0(),
+ ...entE(U1,Z,"Máy chỉ giải hệ 2 ẩn, nên cho <var>z</var> = 0 để thử: hệ thành 2<var>x</var> + 3<var>y</var> = 5 và 2<var>x</var> + 5<var>y</var> = 7.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 1","1",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1. Vậy <var>z</var> = 0 cho <var>x</var> = 1, <var>y</var> = 1",0,"1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed(U1,0,U1)],
+ ...entE(U2,U1,"Thử <var>z</var> = 1: chuyển 2<var>z</var> sang vế phải, hệ thành 2<var>x</var> + 3<var>y</var> = 7 và 2<var>x</var> + 5<var>y</var> = 9.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1. Vậy <var>z</var> = 1 cho <var>x</var> = 2, <var>y</var> = 1. Như thế <var>y</var> luôn bằng 1 còn <var>x</var> = 1 + <var>z</var>, loại A, C, D. Đáp án B. Cách làm tay: trừ hai phương trình được 2<var>y</var> = 2 nên <var>y</var> = 1, rồi 2<var>x</var> − 2<var>z</var> = 2 nên <var>x</var> = 1 + <var>z</var>, đặt <var>z</var> = <var>α</var>.",0,"1",lab("y=")]]},
+{n:162,t:"Câu 162. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 4<var>y</var> + 5<var>z</var> = 1</span><span>2<var>x</var> + 7<var>y</var> − 11<var>z</var> = 2</span><span>3<var>x</var> + 11<var>y</var> − 6<var>z</var> = 0</span></span></span>",
+ o:["<var>x</var> = 1, <var>y</var> = 0, <var>z</var> = 0.","<var>x</var> = −3, <var>y</var> = 1, <var>z</var> = 0.","<var>x</var> = 1 + 79<var>α</var>, <var>y</var> = −21<var>α</var>, <var>z</var> = <var>α</var>.","Hệ vô nghiệm"],a:3,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(S1,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, 4, 5, 1; dòng 2 là 2, 7, −11, 2; dòng 3 là 3, 11, −6, 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm. Đáp án D. Cách làm tay: lấy pt 1 + pt 2 được 3<var>x</var> + 11<var>y</var> − 6<var>z</var> = 3, mâu thuẫn với pt 3 là 3<var>x</var> + 11<var>y</var> − 6<var>z</var> = 0","Vô nghiệm",""])]},
+{n:166,t:"Câu 166. Giải hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> − <var>y</var> − <var>z</var> = 3</span><span>2<var>x</var> − 2<var>y</var> − 2<var>z</var> = 6</span><span>5<var>x</var> − 5<var>y</var> − 5<var>z</var> = 15</span></span></span>",
+ o:["<var>x</var> = 3 + <var>α</var> + <var>β</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var> ; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 3 + 2<var>α</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>α</var> ; <var>α</var> ∈ ℝ.","<var>x</var> = 3, <var>y</var> = 0, <var>z</var> = 0.","Hệ trên vô nghiệm"],a:0,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(["1","-1","-1","3","2","-2","-2","6","5","-5","-5","15"],Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, −1, −1, 3; dòng 2 là 2, −2, −2, 6; dòng 3 là 5, −5, −5, 15.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô số nghiệm (đã đối chiếu trên máy thật), vì 3 phương trình chỉ là một. Loại đáp án D. Đáp án A. Cách làm tay: cả 3 phương trình đều tương đương với <var>x</var> − <var>y</var> − <var>z</var> = 3 nên <var>x</var> = 3 + <var>y</var> + <var>z</var>. Đặt <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>. B và C chỉ là các trường hợp riêng (<var>β</var> = <var>α</var>; <var>α</var> = <var>β</var> = 0)","Vô số nghiệm",""])]},
+{n:190,t:"Câu 190. Định <var>m</var> để hệ phương trình có vô số nghiệm: <span class='sys'><span class='br'>{</span><span class='eqs'><span>2<var>x</var> + 2<var>y</var> − 4<var>z</var> = <var>m</var></span><span>−3<var>x</var> + 5<var>y</var> − <var>z</var> = 3</span><span>−4<var>x</var> − 4<var>y</var> + 8<var>z</var> = −2</span></span></span>",
+ o:["<var>m</var> = −2","<var>m</var> = −1","<var>m</var> = 2","<var>m</var> = 1."],a:3,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"],Z3,"Thử <var>m</var> = −2: dòng 1 là 2, 2, −4, −2; dòng 2 là −3, 5, −1, 3; dòng 3 là −4, −4, 8, −2.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = −2 không thỏa. Loại đáp án A (<var>m</var> = −1 và <var>m</var> = 2 cũng cho vế phải dòng 1 khác 1 nên vô nghiệm tương tự, loại B và C)","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed3(["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"],0,["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"])],
+ ...entE3(["2","2","-4","1","-3","5","-1","3","-4","-4","8","-2"],["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"],"Thử <var>m</var> = 1: chỉ ô <var>d</var>₁ đổi thành 1, các ô khác giữ nguyên, nên nhập lại như cũ.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Lần này máy không báo Vô nghiệm, tức hệ có nghiệm, và vì định thức bằng 0 nên có vô số nghiệm. Đáp án D. Cách làm tay: hàng 3 bằng −2 lần hàng 1 về vế trái, nên cần −2<var>m</var> = −2 ⇔ <var>m</var> = 1","Vô số nghiệm",""])]},
+{n:214,t:"Câu 214. Định <var>m</var> để hệ phương trình có nghiệm duy nhất: <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 2<var>y</var> + (<var>m</var> − 5)<var>z</var> = 2</span><span>2<var>x</var> − <var>y</var> = 1</span><span>(5 − <var>m</var>)<var>x</var> + <var>y</var> + (<var>m</var> − 5)<var>z</var> = 6.</span></span></span>",
+ o:["<var>m</var> ≠ 2","<var>m</var> ≠ 4","<var>m</var> ≠ 5","<var>m</var> ≠ 2 ∧ <var>m</var> ≠ 5."],a:3,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(["1","2","-3","2","2","-1","0","1","3","1","-3","6"],Z3,"Thử <var>m</var> = 2: hệ thành <var>x</var> + 2<var>y</var> − 3<var>z</var> = 2; 2<var>x</var> − <var>y</var> = 1; 3<var>x</var> + <var>y</var> − 3<var>z</var> = 6.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 2 không cho nghiệm duy nhất. Loại B và C, vì hai đáp án này vẫn cho phép <var>m</var> = 2","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed3(["1","2","-3","2","2","-1","0","1","3","1","-3","6"],0,["1","2","-3","2","2","-1","0","1","3","1","-3","6"])],
+ ...entE3(["1","2","0","2","2","-1","0","1","0","1","0","6"],["1","2","-3","2","2","-1","0","1","3","1","-3","6"],"Thử <var>m</var> = 5: hệ thành <var>x</var> + 2<var>y</var> = 2; 2<var>x</var> − <var>y</var> = 1; <var>y</var> = 6 (các hệ số của <var>z</var> đều bằng 0).",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 5 cũng không cho nghiệm duy nhất. Loại A. Vậy phải loại cả <var>m</var> = 2 lẫn <var>m</var> = 5. Đáp án D. Cách làm tay: <var>D</var> = (<var>m</var> − 5)(2 − <var>m</var>) ≠ 0 ⇔ <var>m</var> ≠ 5 và <var>m</var> ≠ 2","Vô nghiệm",""])]}];
+let q=0,i=0,pl=false,tm=null,last=null,vo=false,rd=0;
+const TTS=!!window.speechSynthesis;
+const SK={"−":"trừ","×":"nhân","÷":"chia","=":"bằng","+":"cộng","(−)":"dấu âm","x⁻¹":"x mũ trừ một","▲":"mũi tên lên","▼":"mũi tên xuống","◀":"mũi tên trái","▶":"mũi tên phải",".":"dấu chấm","(":"mở ngoặc",")":"đóng ngoặc","OPTN":"ốp tần","MENU":"menu"};
+function spk(t){
+ t=t.replace(/<[^>]+>/g,"").replace(/\[([^\[\]]+)\]/g,(m,b)=>{const r=b.split(";");return " ma trận "+r.length+" hàng: "+r.map((x,k)=>"hàng "+(k+1)+": "+x.trim().split(/\s+/).join(", ")).join("; ")+". "});
+ return t.replace(/Mat([A-D])/g,"ma trận $1").replace(/([A-Z])⁻¹/g,"$1 nghịch đảo").replace(/(\d+)\/(\d+)/g,"$1 phần $2").replace(/[−-](?=\d)/g," âm ").replace(/×/g," nhân ").replace(/\+/g," cộng ").replace(/=/g," bằng ").replace(/Trn\(/g,"chuyển vị ");
+}
+function viVoice(){return TTS&&speechSynthesis.getVoices().find(v=>/^vi/i.test(v.lang))}
+function say(t){if(!vo||!TTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="vi-VN";const v=viVoice();if(v)u.voice=v;u.rate=.95;speechSynthesis.speak(u)}
+function speakNow(){if(!vo)return;const S=Q[q].st,n=S.length;let t=rd?spk(Q[q].t)+". ":"";rd=0;
+ if(i<n){const s=S[i],l=L[s[0]],nm=s[3]?l[1]:l[0];t+="Bấm "+(s[3]?"SHIFT rồi ":"")+(SK[nm]||nm)+(s[2]?". "+spk(s[2]):"")}
+ else t+="Hoàn thành. Đáp án đúng là "+"ABCD"[Q[q].a]+": "+spk(Q[q].o[Q[q].a]);
+ say(t)}
+function vnote(){$("vn").textContent=vo&&!viVoice()?"Thiết bị chưa có giọng tiếng Việt nên đang dùng giọng mặc định. Bạn có thể cài giọng Vietnamese trong cài đặt hệ thống.":""}
+const $=id=>document.getElementById(id);
+function fr2(t){return t.replace(/(\d+)\/(\d+)/g,'<span class="fr"><i>$1</i><i>$2</i></span>')}
+function mth(t){
+ return t.split(/(\[[^\[\]]+\])/).map(p=>{
+  if(p[0]=="[")return '<table class="mt">'+p.slice(1,-1).split(";").map(r=>"<tr>"+r.trim().split(/\s+/).map(c=>"<td>"+fr2(c.replace(/^-/,"−"))+"</td>").join("")+"</tr>").join("")+"</table>";
+  return fr2(p.replace(/([A-Z])⁻¹/g,"$1<sup>−1</sup>"));
+ }).join("");
+}
+function fx(s){return s.replace(/\{/g,'<span class="fr"><i>').replace(/\//g,"</i><i>").replace(/\}/g,"</i></span>")}
+function press(id){const b=E[id];if(b&&b.animate)b.animate([{transform:"scale(.86)",filter:"brightness(1.8)"},{transform:"scale(1)",filter:"brightness(1)"}],{duration:220})}
+function render(){
+ const S=Q[q].st,n=S.length;
+ Object.values(E).forEach(b=>b.classList.remove("hl","sh"));
+ let ex="",rs="";
+ for(let k=0;k<i;k++){ex+=S[k][1];if(S[k][4])rs=S[k][4];}
+ const m=i>0&&S[i-1][5]?S[i-1][5]:"";
+ $("ex").innerHTML=rs[0]=="<"?"":m?'<div style="font-size:13px;line-height:1.2">'+m+'</div>':fx(ex)+(rs?"":'<span class="cur"></span>');
+ $("rs").innerHTML=rs[0]=="<"?rs:fx(rs);
+ $("qt").innerHTML=mth(Q[q].t);
+ $("opts").innerHTML=Q[q].o.map((t,k)=>'<div class="opt'+(i==n&&k==Q[q].a?" right":"")+'">'+"ABCD"[k]+". "+mth(t)+"</div>").join("");
+ if(i<n){const s=S[i],id=s[0],l=L[id];const e=E[id];e.classList.add("hl");if(s[3])e.classList.add("sh");
+  $("st").textContent="Bước "+(i+1)+" / "+n;
+  $("cap").innerHTML=(s[3]?"Bấm <b>"+l[1]+"</b> <small>(chữ vàng phía trên phím "+l[0]+")</small>":"Bấm <b>"+l[0]+"</b>")+(s[2]?"<small>"+mth(s[2])+"</small>":"");
+ }else{$("st").textContent="Xong";$("cap").innerHTML="Hoàn thành. Đáp án đúng là <b>"+"ABCD"[Q[q].a]+". "+mth(Q[q].o[Q[q].a])+"</b>";stop()}
+ $("bar").style.width=(i/n*100)+"%";
+ $("chips").innerHTML=S.map((s,k)=>'<button class="chip'+(k<i?" done":"")+(k==i?" now":"")+'" data-k="'+k+'">'+(s[3]?L[s[0]][1]:L[s[0]][0])+"</button>").join("");
+ document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{i=+c.dataset.k;render()});
+ $("prv").disabled=i==0;$("nxt").disabled=i==n;
+ speakNow();
+}
+function next(){const n=Q[q].st.length;if(i<n){press(Q[q].st[i][0]);i++;render()}}
+function keyClick(id){const S=Q[q].st;if(i<S.length&&S[i][0]==id)next();else press(id)}
+function play(){if(i>=Q[q].st.length)i=0;pl=true;$("ply").textContent="⏸ Dừng";render();tick()}
+function tick(){clearTimeout(tm);if(!pl)return;tm=setTimeout(function w(){if(!pl)return;if(vo&&speechSynthesis.speaking){tm=setTimeout(w,200);return}next();tick()},+$("spd").value)}
+function stop(){pl=false;clearTimeout(tm);$("ply").textContent="▶ Phát"}
+if(!TTS)$("vox").style.display="none";
+else{speechSynthesis.onvoiceschanged=vnote;
+$("vox").onclick=()=>{vo=!vo;$("vox").textContent=vo?"🔊 Giọng đọc: Bật":"🔇 Giọng đọc: Tắt";$("vox").setAttribute("aria-pressed",vo);if(vo){vnote();speakNow()}else{speechSynthesis.cancel();vnote()}}}
+$("ply").onclick=()=>pl?stop():play();
+$("nxt").onclick=()=>{stop();next()};
+$("prv").onclick=()=>{stop();if(i>0)i--;render()};
+$("rst").onclick=()=>{stop();i=0;render()};
+$("spd").onchange=()=>{if(pl)tick()};
+$("tabs").innerHTML=Q.map((_,k)=>'<button class="tab" role="tab" data-q="'+k+'">Câu '+(Q[k].n||k+1)+"</button>").join("");
+function tabs(){document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",+t.dataset.q==q))}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{stop();q=+t.dataset.q;i=0;rd=1;tabs();render()});
+tabs();render();
+</script>
+</body>
+</html>
