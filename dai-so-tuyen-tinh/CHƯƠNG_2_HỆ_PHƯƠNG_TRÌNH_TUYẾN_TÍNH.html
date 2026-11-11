@@ -20,6 +20,26 @@ h1{font-size:1.4rem;margin:0 0 4px;font-weight:800}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .tab{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;font:600 .9rem inherit;font-family:inherit;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tab.alt{background:#fff1d6;border-color:#e0a526;color:#5a3b00}
+.tab.alt[aria-selected="true"]{background:#d9480f;border-color:#d9480f;color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.alt{background:#3a2d12;border-color:#c58a1a;color:#ffd98a}:root:not([data-theme="light"]) .tab.alt[aria-selected="true"]{background:#ffb347;border-color:#ffb347;color:#2a1700}}
+:root[data-theme="dark"] .tab.alt{background:#3a2d12;border-color:#c58a1a;color:#ffd98a}
+:root[data-theme="dark"] .tab.alt[aria-selected="true"]{background:#ffb347;border-color:#ffb347;color:#2a1700}
+.tab.alt2{background:#e8e1fb;border-color:#7c5cd6;color:#2e1a6b}
+.tab.alt2[aria-selected="true"]{background:#5b3fc4;border-color:#5b3fc4;color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.alt2{background:#2a2147;border-color:#8b6fe0;color:#d6c9ff}:root:not([data-theme="light"]) .tab.alt2[aria-selected="true"]{background:#b39dff;border-color:#b39dff;color:#1a0f40}}
+:root[data-theme="dark"] .tab.alt2{background:#2a2147;border-color:#8b6fe0;color:#d6c9ff}
+:root[data-theme="dark"] .tab.alt2[aria-selected="true"]{background:#b39dff;border-color:#b39dff;color:#1a0f40}
+.tab.alt3{background:#dcebff;border-color:#2f6bd6;color:#0f2e66}
+.tab.alt3[aria-selected="true"]{background:#1d5bd8;border-color:#1d5bd8;color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.alt3{background:#16294a;border-color:#4f8ef0;color:#bcd6ff}:root:not([data-theme="light"]) .tab.alt3[aria-selected="true"]{background:#7fb0ff;border-color:#7fb0ff;color:#0a1c3d}}
+:root[data-theme="dark"] .tab.alt3{background:#16294a;border-color:#4f8ef0;color:#bcd6ff}
+:root[data-theme="dark"] .tab.alt3[aria-selected="true"]{background:#7fb0ff;border-color:#7fb0ff;color:#0a1c3d}
+.tab.alt4{background:#ffe1ea;border-color:#d6336c;color:#6b0f2e}
+.tab.alt4[aria-selected="true"]{background:#c2255c;border-color:#c2255c;color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab.alt4{background:#451726;border-color:#e0679a;color:#ffc9dc}:root:not([data-theme="light"]) .tab.alt4[aria-selected="true"]{background:#ff8fb8;border-color:#ff8fb8;color:#3d0a1d}}
+:root[data-theme="dark"] .tab.alt4{background:#451726;border-color:#e0679a;color:#ffc9dc}
+:root[data-theme="dark"] .tab.alt4[aria-selected="true"]{background:#ff8fb8;border-color:#ff8fb8;color:#3d0a1d}
 .tab:focus-visible,.ctl button:focus-visible,.key:focus-visible,.chip:focus-visible{outline:3px solid #ffb000;outline-offset:2px}
 .wrap{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}
 @media (max-width:760px){.wrap{grid-template-columns:1fr}.side{display:contents}.calc{order:2}.p1{order:0}.p2{order:1;position:sticky;top:0;z-index:5}.p3,.tip{order:3}}
@@ -184,6 +204,21 @@ const sg=s=>s[0]=="-"?"−":"+",ab=s=>s.replace("-","");
 const row=r=>{const a=w[r*4],b=w[r*4+1],c=w[r*4+2],d=w[r*4+3],k=r*4;return "<td"+hc(k)+">"+mn(a)+"x</td><td>"+sg(b)+"</td><td"+hc(k+1)+">"+ab(b)+"y</td><td>"+sg(c)+"</td><td"+hc(k+2)+">"+ab(c)+"z=</td><td style=\"text-align:right"+(k+3==j?";background:#1a1f17;color:#d4dccb":"")+"\">"+mn(d)+"</td>"};
 return '<table style="border-collapse:collapse;font-size:11px;width:100%;white-space:nowrap"><tr><td rowspan="3" style="font-size:44px;font-weight:200;padding:0 3px">{</td>'+row(0)+"</tr><tr>"+row(1)+"</tr><tr>"+row(2)+"</tr></table>"}
 function entE3(v,p,intro,fin){const s=[];v.forEach((x,j)=>{[...x].forEach((ch,n)=>{const t=x.slice(0,n+1);s.push([ch=="-"?"neg":"d"+ch,"",(n?"":(j==0&&intro?intro+" ":"")+"Ô "+CN3[j]+" = "+x),0,mn(t),ed3(v,j,p,t)])});s.push(j==11?["eq","",fin[0],0,fin[1],fin[2]]:["eq","","Lưu số này, máy nhảy sang ô kế tiếp",0,mn(p[j+1]),ed3(v,j+1,p)])});return s}
+const Y1=["3","-1","3","2","1","7"],Y2=["3","-1","1","2","1","9"];
+const G1=["1","-1","3","-1","2","2"],G2=["1","-1","1","-1","2","1"];
+const J1=["1","3","-2","2","-1","-3"],J2=["1","3","-14","2","-1","-21"];
+const H1=["1","1","-1","2","2","1","-3","1","3","2","-4","3"],L1=["1","1","2","2","1","1"],L2=["1","1","3","2","1","4"];
+const C5=["1","2","1","1","2","6","3","2","1","5","3","0"];
+const F1=["2","2","-1","3","2","5","-2","7","6","6","-3","5"],F2=["2","2","-1","3","2","5","-2","7","6","6","-3","9"];
+const C7=["3","6","2","11","4","9","4","17","1","3","1","5"];
+const Rm1=["-1","1","0","1","-1","0"],Rm4=["-4","-2","-3","-2","-1","0"];
+const Sm0=["1","1","2","1","1","0"],Sm1=["2","1","3","1","2","0"],Sm2=["0","1","1","1","0","0"];
+const Tm0=["0","1","0","1","0","0"],Tm1=["1","1","1","1","1","1"],Tm2=["-1","1","-1","1","-1","-1"];
+const Ga1=["2","3","3","0","1","-2","1","1","3","1","4","1"],Ga2=["2","3","27","1","-2","10"];
+const Gb1=["1","3","-4","4","1","-2","1","-1","1","2","-3","3"],Gb2=["1","3","8","1","-2","-2"];
+const Gc1=["1","2","-2","0","2","5","-5","1","3","7","-7","1"],Gc2=["1","2","0","2","5","1"],Gc3=["1","2","2","2","5","6"];
+const Hm1=["1","2","-2","0","2","4","-5","1","3","6","7","1"],Hm2=["1","2","-2","0","2","4","-5","1","3","6","-7","1"];
+const Jm1=["1","1","1","0","1","2","1","1","2","3","2","1"];
 const Z3=["0","0","0","0","0","0","0","0","0","0","0","0"];
 const S1=["1","4","5","1","2","7","-11","2","3","11","-6","0"];
 const Q=[
@@ -239,6 +274,53 @@ const Q=[
  ["ac","","Bấm AC để quay lại bảng nhập",0,"0",ed(M2,0,M2)],
  ...entE(M3,M2,"Thử <var>m</var> = −1: hệ thành −1<var>x</var> + 2<var>y</var> = 1 và 0<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/3","−{1/3}",lab("x=")]),
  ["down","","Bấm ▼ được <var>y</var> = 1/3. <var>m</var> = −1 có nghiệm, nên loại đáp án D. Chỉ <var>m</var> = 2 làm hệ vô nghiệm. Đáp án A. Cách làm tay: <var>D</var> = 3<var>m</var> − 2(<var>m</var>+1) = <var>m</var> − 2. Khi <var>m</var> = 2 hệ thành <var>x</var> + <var>y</var> = 1/2 và <var>x</var> + <var>y</var> = 1/3 (vô nghiệm). Hệ có nghiệm ⇔ <var>m</var> ≠ 2.",0,"{1/3}",lab("y=")]]},
+{n:146,t:"Câu 146. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>m</var><var>x</var> + (<var>m</var>+2)<var>y</var> = <var>m</var>+1</span><span>(<var>m</var>+2)<var>x</var> − <var>y</var> = 0</span></span></span> có nghiệm duy nhất khi và chỉ khi:",
+ o:["<var>m</var> ≠ 1.","<var>m</var> ≠ −1 & <var>m</var> ≠ −4.","<var>m</var> ≠ −1.","<var>m</var> ≠ −1 & <var>m</var> ≠ −2."],a:1,
+ st:[...EQ0(),
+ ...entE(Rm1,Z,"Thử <var>m</var> = −1: hệ thành −<var>x</var> + <var>y</var> = 0 và <var>x</var> − <var>y</var> = 0.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Hai phương trình thực chất là một nên máy không cho nghiệm duy nhất mà báo vô số nghiệm, nên <var>m</var> = −1 không thỏa. Loại đáp án A (vì A vẫn cho phép <var>m</var> = −1)","Vô số nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"−1",ed(Rm1,0,Rm1)],
+ ...entE(Rm4,Rm1,"Thử <var>m</var> = −4: hệ thành −4<var>x</var> − 2<var>y</var> = −3 và −2<var>x</var> − <var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = −4 cũng không thỏa. Loại C và D, vì hai đáp án này vẫn cho phép <var>m</var> = −4. Đáp án B. Cách làm tay: <var>D</var> = −<var>m</var> − (<var>m</var>+2)² = −(<var>m</var>+1)(<var>m</var>+4) ≠ 0 ⇔ <var>m</var> ≠ −1 và <var>m</var> ≠ −4","Vô nghiệm",""])]},
+{n:147,t:"Câu 147. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>(<var>m</var>+1)<var>x</var> + <var>y</var> = <var>m</var>+2</span><span><var>x</var> + (<var>m</var>+1)<var>y</var> = 0</span></span></span> có vô số nghiệm khi và chỉ khi:",
+ o:["<var>m</var> = 0","<var>m</var> = 1","<var>m</var> = −1","<var>m</var> = −2."],a:3,
+ st:[...EQ0(),
+ ...entE(Sm0,Z,"Thử <var>m</var> = 0: hệ thành <var>x</var> + <var>y</var> = 2 và <var>x</var> + <var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 0 không thỏa. Loại đáp án A","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed(Sm0,0,Sm0)],
+ ...entE(Sm1,Sm0,"Thử <var>m</var> = 1: hệ thành 2<var>x</var> + <var>y</var> = 3 và <var>x</var> + 2<var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = −1. Nghiệm duy nhất, nên <var>m</var> = 1 không thỏa. Loại đáp án B",0,"−1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"2",ed(Sm1,0,Sm1)],
+ ...entE(Sm2,Sm1,"Thử <var>m</var> = −1: hệ thành 0<var>x</var> + <var>y</var> = 1 và <var>x</var> + 0<var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 0","0",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1. Nghiệm duy nhất, nên <var>m</var> = −1 không thỏa. Loại đáp án C",0,"1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"0",ed(Sm2,0,Sm2)],
+ ...entE(Rm1,Sm2,"Thử <var>m</var> = −2: hệ thành −<var>x</var> + <var>y</var> = 0 và <var>x</var> − <var>y</var> = 0.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Hai phương trình thực chất là một nên máy báo vô số nghiệm. Đáp án D. Cách làm tay: <var>D</var> = (<var>m</var>+1)² − 1 = <var>m</var>(<var>m</var>+2) = 0 ⇔ <var>m</var> = 0 hoặc <var>m</var> = −2. Với <var>m</var> = 0 hệ vô nghiệm, với <var>m</var> = −2 hai phương trình trùng nhau nên vô số nghiệm","Vô số nghiệm",""])]},
+{n:148,t:"Câu 148. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>(<var>m</var>−1)<var>x</var> + (<var>m</var>−1)<var>y</var> = 1</span><span><var>x</var> + <var>m</var><var>y</var> = 0</span></span></span> vô nghiệm khi và chỉ khi:",
+ o:["<var>m</var> = 1","<var>m</var> = 1; <var>m</var> = 0","<var>m</var> = ±1","<var>m</var> ≠ 1."],a:0,
+ st:[...EQ0(),
+ ...entE(T1,Z,"Thử <var>m</var> = 1: hệ thành 0<var>x</var> + 0<var>y</var> = 1 và <var>x</var> + <var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, đúng với <var>m</var> = 1. Loại đáp án D (vì D không cho <var>m</var> = 1)","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"0",ed(T1,0,T1)],
+ ...entE(T2,T1,"Thử <var>m</var> = 0: hệ thành −<var>x</var> − <var>y</var> = 1 và <var>x</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 0, nên <var>m</var> = 0 không làm hệ vô nghiệm","0",lab("x=")]),
+ ["down","","Bấm ▼ để xem <var>y</var> = −1. Loại đáp án B",0,"−1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"−1",ed(T2,0,T2)],
+ ...entE(T3,T2,"Thử <var>m</var> = −1: hệ thành −2<var>x</var> − 2<var>y</var> = 1 và <var>x</var> − <var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/4","−{1/4}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = −1/4. Hệ có nghiệm, nên <var>m</var> = −1 không làm hệ vô nghiệm. Loại đáp án C. Chỉ <var>m</var> = 1 làm máy báo Vô nghiệm. Đáp án A. Cách làm tay: <var>D</var> = (<var>m</var>−1)² = 0 ⇔ <var>m</var> = 1, thay <var>m</var> = 1 vào phương trình đầu được 0 = 1.",0,"−{1/4}",lab("y=")]]},
+{n:149,t:"Câu 149. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>m</var><var>x</var> + 2<var>y</var> = 1</span><span>(<var>m</var>+1)<var>x</var> + 3<var>y</var> = 1</span></span></span> có nghiệm khi và chỉ khi:",
+ o:["<var>m</var> ≠ 2","<var>m</var> ∈ ℝ","<var>m</var> ≠ 0","<var>m</var> ≠ −1"],a:0,
+ st:[...EQ0(),
+ ...entE(M1,Z,"Thử <var>m</var> = 2: hệ thành 2<var>x</var> + 2<var>y</var> = 1 và 3<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 2 không thỏa. Loại đáp án B","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed(M1,0,M1)],
+ ...entE(M2,M1,"Thử <var>m</var> = 0: hệ thành 0<var>x</var> + 2<var>y</var> = 1 và 1<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/2","−{1/2}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1/2. <var>m</var> = 0 có nghiệm, nên loại đáp án C",0,"{1/2}",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"0",ed(M2,0,M2)],
+ ...entE(M3,M2,"Thử <var>m</var> = −1: hệ thành −1<var>x</var> + 2<var>y</var> = 1 và 0<var>x</var> + 3<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = −1/3","−{1/3}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1/3. <var>m</var> = −1 có nghiệm, nên loại đáp án D. Chỉ <var>m</var> = 2 làm hệ vô nghiệm. Đáp án A. Cách làm tay: <var>D</var> = 3<var>m</var> − 2(<var>m</var>+1) = <var>m</var> − 2. Khi <var>m</var> = 2 hệ thành <var>x</var> + <var>y</var> = 1/2 và <var>x</var> + <var>y</var> = 1/3 (vô nghiệm). Hệ có nghiệm ⇔ <var>m</var> ≠ 2.",0,"{1/3}",lab("y=")]]},
+{n:150,t:"Câu 150. Hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>m</var><var>x</var> + <var>y</var> = <var>m</var></span><span><var>x</var> + <var>m</var><var>y</var> = <var>m</var></span></span></span> vô nghiệm khi và chỉ khi:",
+ o:["<var>m</var> ≠ ±1","<var>m</var> = ±1","<var>m</var> = 1","<var>m</var> = −1."],a:3,
+ st:[...EQ0(),
+ ...entE(Tm0,Z,"Thử <var>m</var> = 0: hệ thành 0<var>x</var> + <var>y</var> = 0 và <var>x</var> + 0<var>y</var> = 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 0","0",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 0. Hệ có nghiệm, nên <var>m</var> = 0 không làm hệ vô nghiệm. Loại đáp án A (vì A cho <var>m</var> = 0)",0,"0",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"0",ed(Tm0,0,Tm0)],
+ ...entE(Tm1,Tm0,"Thử <var>m</var> = 1: hệ thành <var>x</var> + <var>y</var> = 1 và <var>x</var> + <var>y</var> = 1.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Hai phương trình trùng nhau nên máy báo vô số nghiệm, không phải vô nghiệm. Loại đáp án B và C, vì cả hai đều chứa <var>m</var> = 1","Vô số nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập",0,"1",ed(Tm1,0,Tm1)],
+ ...entE(Tm2,Tm1,"Thử <var>m</var> = −1: hệ thành −<var>x</var> + <var>y</var> = −1 và <var>x</var> − <var>y</var> = −1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm. Đáp án D. Cách làm tay: <var>D</var> = <var>m</var>² − 1 = 0 ⇔ <var>m</var> = ±1. Với <var>m</var> = 1 hai phương trình trùng nhau nên vô số nghiệm, với <var>m</var> = −1 hai phương trình mâu thuẫn nhau nên vô nghiệm","Vô nghiệm",""])]},
 {n:160,t:"Câu 160. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>2<var>x</var> + 3<var>y</var> − 2<var>z</var> = 5</span><span>2<var>x</var> + 5<var>y</var> − 2<var>z</var> = 7</span></span></span>",
  o:["<var>x</var> = 1 − 3<var>α</var> + 2<var>β</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 1 + <var>α</var>, <var>y</var> = 1, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 1 − <var>α</var>, <var>y</var> = −<var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 2, <var>y</var> = 1, <var>z</var> = 1"],a:1,
  st:[...EQ0(),
@@ -247,6 +329,14 @@ const Q=[
  ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed(U1,0,U1)],
  ...entE(U2,U1,"Thử <var>z</var> = 1: chuyển 2<var>z</var> sang vế phải, hệ thành 2<var>x</var> + 3<var>y</var> = 7 và 2<var>x</var> + 5<var>y</var> = 9.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = 2","2",lab("x=")]),
  ["down","","Bấm ▼ được <var>y</var> = 1. Vậy <var>z</var> = 1 cho <var>x</var> = 2, <var>y</var> = 1. Như thế <var>y</var> luôn bằng 1 còn <var>x</var> = 1 + <var>z</var>, loại A, C, D. Đáp án B. Cách làm tay: trừ hai phương trình được 2<var>y</var> = 2 nên <var>y</var> = 1, rồi 2<var>x</var> − 2<var>z</var> = 2 nên <var>x</var> = 1 + <var>z</var>, đặt <var>z</var> = <var>α</var>.",0,"1",lab("y=")]]},
+{n:161,t:"Câu 161. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>3<var>x</var> − <var>y</var> + 2<var>z</var> = 3</span><span>2<var>x</var> + <var>y</var> − 2<var>z</var> = 7</span></span></span>",
+ o:["<var>x</var> = 1 − <var>α</var>/3 − 2<var>β</var>/3, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 1 + <var>α</var>, <var>y</var> = 0, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 1 − <var>α</var>, <var>y</var> = −<var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 2, <var>y</var> = 3 + 2<var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ"],a:3,
+ st:[...EQ0(),
+ ...entE(Y1,Z,"Máy chỉ giải hệ 2 ẩn, nên cho <var>z</var> = 0 để thử: hệ thành 3<var>x</var> − <var>y</var> = 3 và 2<var>x</var> + <var>y</var> = 7.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 3. Vậy <var>z</var> = 0 cho <var>x</var> = 2, <var>y</var> = 3",0,"3",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"3",ed(Y1,0,Y1)],
+ ...entE(Y2,Y1,"Thử <var>z</var> = 1: chuyển 2<var>z</var> sang vế phải, hệ thành 3<var>x</var> − <var>y</var> = 1 và 2<var>x</var> + <var>y</var> = 9.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 5. Vậy <var>z</var> = 1 cho <var>x</var> = 2, <var>y</var> = 5. Như thế <var>x</var> luôn bằng 2 còn <var>y</var> = 3 + 2<var>z</var>, loại A, B, C. Đáp án D. Cách làm tay: cộng hai phương trình được 5<var>x</var> = 10 nên <var>x</var> = 2, rồi thay vào phương trình đầu: <var>y</var> = 3 + 2<var>z</var>, đặt <var>z</var> = <var>α</var>.",0,"5",lab("y=")]]},
 {n:162,t:"Câu 162. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 4<var>y</var> + 5<var>z</var> = 1</span><span>2<var>x</var> + 7<var>y</var> − 11<var>z</var> = 2</span><span>3<var>x</var> + 11<var>y</var> − 6<var>z</var> = 0</span></span></span>",
  o:["<var>x</var> = 1, <var>y</var> = 0, <var>z</var> = 0.","<var>x</var> = −3, <var>y</var> = 1, <var>z</var> = 0.","<var>x</var> = 1 + 79<var>α</var>, <var>y</var> = −21<var>α</var>, <var>z</var> = <var>α</var>.","Hệ vô nghiệm"],a:3,
  st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
@@ -254,6 +344,36 @@ const Q=[
  ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
  ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
  ...entE3(S1,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, 4, 5, 1; dòng 2 là 2, 7, −11, 2; dòng 3 là 3, 11, −6, 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm. Đáp án D. Cách làm tay: lấy pt 1 + pt 2 được 3<var>x</var> + 11<var>y</var> − 6<var>z</var> = 3, mâu thuẫn với pt 3 là 3<var>x</var> + 11<var>y</var> − 6<var>z</var> = 0","Vô nghiệm",""])]},
+{n:163,t:"Câu 163. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + <var>y</var> − <var>z</var> = 2</span><span>2<var>x</var> + <var>y</var> − 3<var>z</var> = 1</span><span>3<var>x</var> + 2<var>y</var> − 4<var>z</var> = 3</span></span></span>",
+ o:["<var>x</var> = 1, <var>y</var> = 2, <var>z</var> = 1;","<var>x</var> = 1 + 2<var>α</var>, <var>y</var> = 1 − <var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ.","<var>x</var> = −1 + 2<var>α</var>, <var>y</var> = −<var>α</var> + 3, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ.","<var>x</var> = −1, <var>y</var> = 1 + 2<var>α</var>, <var>z</var> = 0; <var>α</var> ∈ ℝ."],a:2,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(H1,Z3,"Nhập từng dòng: dòng 1 là 1, 1, −1, 2; dòng 2 là 2, 1, −3, 1; dòng 3 là 3, 2, −4, 3.",[W("chữ máy báo trên máy bạn có thể khác")+" Bấm = ở ô cuối: máy giải hệ luôn. Máy báo Vô số nghiệm, nhưng không cho dạng nghiệm. Muốn biết dạng nghiệm, ta cho <var>z</var> các giá trị cụ thể rồi giải hệ 2 ẩn","Vô số nghiệm",""]),
+ ...EQ0(),
+ ...entE(L1,Z,"Dùng hai phương trình đầu (pt 3 = pt 1 + pt 2 nên không cần). Cho <var>z</var> = 0: hệ thành <var>x</var> + <var>y</var> = 2 và 2<var>x</var> + <var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = −1","−1",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 3. Vậy <var>z</var> = 0 cho <var>x</var> = −1, <var>y</var> = 3. Loại B (cho <var>x</var> = 1, <var>y</var> = 1) và D (<var>y</var> = 3 chỉ là một giá trị, không phải cả họ nghiệm)",0,"3",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed(L1,0,L1)],
+ ...entE(L2,L1,"Thử <var>z</var> = 1: chuyển <var>z</var> và 3<var>z</var> sang vế phải, hệ thành <var>x</var> + <var>y</var> = 3 và 2<var>x</var> + <var>y</var> = 4.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = 1","1",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 2. Vậy <var>z</var> = 1 cho <var>x</var> = 1, <var>y</var> = 2. Hai lần thử khớp <var>x</var> = −1 + 2<var>z</var>, <var>y</var> = 3 − <var>z</var>. Đáp án C. Cách làm tay: pt 1 − pt 2 được −<var>x</var> + 2<var>z</var> = 1 nên <var>x</var> = −1 + 2<var>z</var>, rồi <var>y</var> = 2 − <var>x</var> + <var>z</var> = 3 − <var>z</var>, đặt <var>z</var> = <var>α</var>. Pt 3 bằng pt 1 + pt 2 nên không thêm điều kiện",0,"2",lab("y=")]]},
+{n:164,t:"Câu 164. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> − <var>y</var> + 2<var>z</var> = 3</span><span>−<var>x</var> + 2<var>y</var> + <var>z</var> = 2</span></span></span>",
+ o:["<var>x</var> = 3 + <var>α</var> − 2<var>β</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 3 − 2<var>α</var>, <var>y</var> = 0, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 1 + <var>α</var>, <var>y</var> = −<var>α</var>, <var>z</var> = −<var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 8 − 5<var>α</var>, <var>y</var> = 5 − 3<var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ"],a:3,
+ st:[...EQ0(),
+ ...entE(G1,Z,"Máy chỉ giải hệ 2 ẩn, nên cho <var>z</var> = 0 để thử: hệ thành <var>x</var> − <var>y</var> = 3 và −<var>x</var> + 2<var>y</var> = 2.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 8","8",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 5. Vậy <var>z</var> = 0 cho <var>x</var> = 8, <var>y</var> = 5",0,"5",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed(G1,0,G1)],
+ ...entE(G2,G1,"Thử <var>z</var> = 1: chuyển 2<var>z</var> và <var>z</var> sang vế phải, hệ thành <var>x</var> − <var>y</var> = 1 và −<var>x</var> + 2<var>y</var> = 1.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = 3","3",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 2. Vậy <var>z</var> = 1 cho <var>x</var> = 3, <var>y</var> = 2. Từ hai lần thử, <var>z</var> tăng 1 thì <var>x</var> giảm 5 và <var>y</var> giảm 3, tức <var>x</var> = 8 − 5<var>z</var>, <var>y</var> = 5 − 3<var>z</var>. Loại A, B, C. Đáp án D. Cách làm tay: cộng hai phương trình được <var>y</var> + 3<var>z</var> = 5 nên <var>y</var> = 5 − 3<var>z</var>, rồi <var>x</var> = 3 + <var>y</var> − 2<var>z</var> = 8 − 5<var>z</var>, đặt <var>z</var> = <var>α</var>.",0,"2",lab("y=")]]},
+{n:165,t:"Câu 165. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 2<var>y</var> + <var>z</var> = 1</span><span>2<var>x</var> + 6<var>y</var> + 3<var>z</var> = 2</span><span><var>x</var> + 5<var>y</var> + 3<var>z</var> = 0</span></span></span>",
+ o:["<var>x</var> = 1, <var>y</var> = −<var>α</var>/2, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = 1 + <var>α</var>, <var>y</var> = 1 − <var>α</var>, <var>z</var> = −2 + <var>α</var>; <var>α</var> ∈ ℝ.","<var>x</var> = 1, <var>y</var> = 1, <var>z</var> = −2.","Hệ trên vô nghiệm"],a:2,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(C5,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, 2, 1, 1; dòng 2 là 2, 6, 3, 2; dòng 3 là 1, 5, 3, 0.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 1","1",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1",0,"1",lab("y=")],
+ ["down","","Bấm ▼ được <var>z</var> = −2. Máy cho một nghiệm duy nhất <var>x</var> = 1, <var>y</var> = 1, <var>z</var> = −2, nên loại A, B (có tham số) và D (vô nghiệm). Đáp án C. Cách làm tay: pt 2 − 2·pt 1 được 2<var>y</var> + <var>z</var> = 0 nên <var>z</var> = −2<var>y</var>; pt 3 − pt 1 được 3<var>y</var> + 2<var>z</var> = −1, thế vào có −<var>y</var> = −1 nên <var>y</var> = 1, <var>z</var> = −2, <var>x</var> = 1 − 2 + 2 = 1.",0,"−2",lab("z=")]]},
 {n:166,t:"Câu 166. Giải hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> − <var>y</var> − <var>z</var> = 3</span><span>2<var>x</var> − 2<var>y</var> − 2<var>z</var> = 6</span><span>5<var>x</var> − 5<var>y</var> − 5<var>z</var> = 15</span></span></span>",
  o:["<var>x</var> = 3 + <var>α</var> + <var>β</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var> ; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 3 + 2<var>α</var>, <var>y</var> = <var>α</var>, <var>z</var> = <var>α</var> ; <var>α</var> ∈ ℝ.","<var>x</var> = 3, <var>y</var> = 0, <var>z</var> = 0.","Hệ trên vô nghiệm"],a:0,
  st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
@@ -261,6 +381,56 @@ const Q=[
  ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
  ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
  ...entE3(["1","-1","-1","3","2","-2","-2","6","5","-5","-5","15"],Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, −1, −1, 3; dòng 2 là 2, −2, −2, 6; dòng 3 là 5, −5, −5, 15.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô số nghiệm (đã đối chiếu trên máy thật), vì 3 phương trình chỉ là một. Loại đáp án D. Đáp án A. Cách làm tay: cả 3 phương trình đều tương đương với <var>x</var> − <var>y</var> − <var>z</var> = 3 nên <var>x</var> = 3 + <var>y</var> + <var>z</var>. Đặt <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>. B và C chỉ là các trường hợp riêng (<var>β</var> = <var>α</var>; <var>α</var> = <var>β</var> = 0)","Vô số nghiệm",""])]},
+{n:167,t:"Câu 167. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>3<var>x</var> + 6<var>y</var> + 2<var>z</var> = 11</span><span>4<var>x</var> + 9<var>y</var> + 4<var>z</var> = 17</span><span><var>x</var> + 3<var>y</var> + <var>z</var> = 5</span></span></span>",
+ o:["<var>x</var> = 1, <var>y</var> = 2, <var>z</var> = −2.","<var>x</var> = 1, <var>y</var> = 1, <var>z</var> = 1.","<var>x</var> = 2, <var>y</var> = 2, <var>z</var> = 1.","Hệ vô nghiệm"],a:1,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(C7,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 3, 6, 2, 11; dòng 2 là 4, 9, 4, 17; dòng 3 là 1, 3, 1, 5.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra nghiệm <var>x</var> = 1","1",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1",0,"1",lab("y=")],
+ ["down","","Bấm ▼ được <var>z</var> = 1. Máy cho một nghiệm duy nhất <var>x</var> = 1, <var>y</var> = 1, <var>z</var> = 1, nên loại A, C và D (vô nghiệm). Đáp án B. Cách làm tay: từ pt 3, <var>x</var> = 5 − 3<var>y</var> − <var>z</var>; thế vào pt 1 được −3<var>y</var> − <var>z</var> = −4, thế vào pt 2 được −3<var>y</var> = −3 nên <var>y</var> = 1, <var>z</var> = 1, <var>x</var> = 1.",0,"1",lab("z=")]]},
+{n:168,t:"Câu 168. Giải hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span>2<var>x</var> + 3<var>y</var> + 3<var>z</var> = 0</span><span><var>x</var> − 2<var>y</var> + <var>z</var> = 1</span><span>3<var>x</var> + <var>y</var> + 4<var>z</var> = 1</span></span></span>",
+ o:["<var>x</var> = −3(<var>α</var> + <var>β</var>)/2, <var>y</var> = <var>α</var>, <var>z</var> = <var>β</var>; <var>α</var>, <var>β</var> ∈ ℝ","<var>x</var> = 3, <var>y</var> = 0, <var>z</var> = −2.","<var>x</var> = 3 + 9<var>α</var>, <var>y</var> = <var>α</var>, <var>z</var> = −2 − 7<var>α</var>; <var>α</var> ∈ ℝ.","Các kết quả trên đều sai."],a:2,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(Ga1,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 2, 3, 3, 0; dòng 2 là 1, −2, 1, 1; dòng 3 là 3, 1, 4, 1.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Bấm = ở ô cuối: máy giải hệ luôn. Máy báo Vô số nghiệm (pt 3 = pt 1 + pt 2), nhưng không cho dạng nghiệm. Muốn biết dạng nghiệm, ta cho <var>z</var> một giá trị cụ thể rồi giải hệ 2 ẩn bằng pt 1 và pt 2","Vô số nghiệm",""]),
+ ...EQ0(),
+ ...entE(Ga2,Z,"Cho <var>z</var> = −9 (ứng với <var>α</var> = 1 của đáp án C): chuyển 3<var>z</var> và <var>z</var> sang vế phải, hệ thành 2<var>x</var> + 3<var>y</var> = 27 và <var>x</var> − 2<var>y</var> = 10.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 12","12",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1. Vậy <var>z</var> = −9 cho <var>x</var> = 12, <var>y</var> = 1, khớp đáp án C với <var>α</var> = 1 (<var>x</var> = 3 + 9 = 12, <var>z</var> = −2 − 7 = −9). Với <var>z</var> = −9, đáp án A cho <var>y</var> tùy ý nhưng máy chỉ cho một giá trị <var>y</var> = 1, nên loại A. Đáp án B chỉ có điểm <var>z</var> = −2 nên loại B. Đáp án C. Cách làm tay: pt 3 = pt 1 + pt 2 nên bỏ; từ pt 2, <var>x</var> = 1 + 2<var>y</var> − <var>z</var>, thế vào pt 1 được 7<var>y</var> + <var>z</var> = −2, nên <var>z</var> = −2 − 7<var>y</var> và <var>x</var> = 3 + 9<var>y</var>, đặt <var>y</var> = <var>α</var>.",0,"1",lab("y=")]]},
+{n:169,t:"Câu 169. Giải hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 3<var>y</var> − 4<var>z</var> = 4</span><span><var>x</var> − 2<var>y</var> + <var>z</var> = −1</span><span><var>x</var> + 2<var>y</var> − 3<var>z</var> = 3</span></span></span>",
+ o:["<var>x</var> = 1, <var>y</var> = 1, <var>z</var> = 0.","<var>x</var> = 1 − <var>α</var>, <var>y</var> = 1 + <var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ.","<var>x</var> = 1 + <var>α</var>, <var>y</var> = 1 + <var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ.","Các kết quả trên đều sai"],a:2,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(Gb1,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, 3, −4, 4; dòng 2 là 1, −2, 1, −1; dòng 3 là 1, 2, −3, 3.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Bấm = ở ô cuối: máy giải hệ luôn. Máy báo Vô số nghiệm (vì 5·pt 3 = 4·pt 1 + pt 2), nhưng không cho dạng nghiệm. Muốn biết dạng nghiệm, ta cho <var>z</var> một giá trị cụ thể rồi giải hệ 2 ẩn bằng pt 1 và pt 2","Vô số nghiệm",""]),
+ ...EQ0(),
+ ...entE(Gb2,Z,"Cho <var>z</var> = 1 (<var>z</var> = 0 chỉ ra (1, 1, 0), trùng với <var>α</var> = 0 của cả A, B, C nên không phân biệt được): chuyển −4<var>z</var> và <var>z</var> sang vế phải, hệ thành <var>x</var> + 3<var>y</var> = 8 và <var>x</var> − 2<var>y</var> = −2.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = 2","2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 2. Vậy <var>z</var> = 1 cho <var>x</var> = 2, <var>y</var> = 2, khớp đáp án C với <var>α</var> = 1 (<var>x</var> = 1 + 1, <var>y</var> = 1 + 1). Đáp án B với <var>α</var> = 1 cho <var>x</var> = 0 nên loại B; đáp án A chỉ có điểm <var>z</var> = 0 nên loại A. Đáp án C. Cách làm tay: pt 1 − pt 2 được 5<var>y</var> − 5<var>z</var> = 5 nên <var>y</var> = 1 + <var>z</var>; từ pt 2, <var>x</var> = −1 + 2<var>y</var> − <var>z</var> = 1 + <var>z</var>; đặt <var>z</var> = <var>α</var>.",0,"2",lab("y=")]]},
+{n:"169.1",t:"Câu 169.1. Tìm nghiệm của hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 3<var>y</var> + 2<var>z</var> = 0</span><span>2<var>x</var> − <var>y</var> + 3<var>z</var> = 0</span></span></span>",
+ o:["<var>x</var> = 11<var>t</var>/7, <var>y</var> = <var>t</var>/7, <var>z</var> = <var>t</var> ∈ ℝ","<var>x</var> = −11<var>t</var>/7, <var>y</var> = −<var>t</var>/7, <var>z</var> = <var>t</var> ∈ ℝ","<var>x</var> = 11<var>t</var>/7, <var>y</var> = −<var>t</var>/7, <var>z</var> = <var>t</var> ∈ ℝ","<var>x</var> = <var>t</var>/7, <var>y</var> = −11<var>t</var>/7, <var>z</var> = <var>t</var> ∈ ℝ"],a:1,
+ st:[...EQ0(),
+ ...entE(J1,Z,"Máy chỉ giải hệ 2 ẩn, nên cho <var>z</var> = 1 để thử (<var>z</var> = 0 chỉ ra nghiệm 0, không giúp ích): hệ thành <var>x</var> + 3<var>y</var> = −2 và 2<var>x</var> − <var>y</var> = −3.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = −11/7","−{11/7}",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = −1/7. Vậy <var>z</var> = 1 cho <var>x</var> = −11/7, <var>y</var> = −1/7",0,"−{1/7}",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed(J1,0,J1)],
+ ...entE(J2,J1,"Thử <var>z</var> = 7: hệ thành <var>x</var> + 3<var>y</var> = −14 và 2<var>x</var> − <var>y</var> = −21.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = −11","−11",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = −1. Vậy <var>z</var> = 7 cho <var>x</var> = −11, <var>y</var> = −1. Hai lần thử khớp <var>x</var> = −11<var>z</var>/7, <var>y</var> = −<var>z</var>/7, loại A, C, D. Đáp án B. Cách làm tay: từ phương trình đầu <var>x</var> = −3<var>y</var> − 2<var>z</var>, thế vào phương trình sau được −7<var>y</var> − <var>z</var> = 0 nên <var>y</var> = −<var>z</var>/7, <var>x</var> = −11<var>z</var>/7, đặt <var>z</var> = <var>t</var>.",0,"−1",lab("y=")]]},
+{n:170,t:"Câu 170. Giải hệ phương trình tuyến tính <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 2<var>y</var> − 2<var>z</var> = 0</span><span>2<var>x</var> + 5<var>y</var> − 5<var>z</var> = 1</span><span>3<var>x</var> + 7<var>y</var> − 7<var>z</var> = 1</span></span></span>",
+ o:["<var>x</var> = 2 − 2<var>α</var>, <var>y</var> = 2, <var>z</var> = 1 + <var>α</var>; <var>α</var> ∈ ℝ","<var>x</var> = −2, <var>y</var> = 1 + <var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ.","<var>x</var> = −2 − <var>α</var>, <var>y</var> = 1 + <var>α</var>, <var>z</var> = <var>α</var>; <var>α</var> ∈ ℝ.","<var>x</var> = −2, <var>y</var> = 2, <var>z</var> = 1."],a:1,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(Gc1,Z3,"Nhập từng dòng theo dạng <var>a</var><var>x</var> + <var>b</var><var>y</var> + <var>c</var><var>z</var> = <var>d</var>: dòng 1 là 1, 2, −2, 0; dòng 2 là 2, 5, −5, 1; dòng 3 là 3, 7, −7, 1.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Bấm = ở ô cuối: máy giải hệ luôn. Máy báo Vô số nghiệm (vì pt 3 = pt 1 + pt 2), nhưng không cho dạng nghiệm. Muốn biết dạng nghiệm, ta cho <var>z</var> các giá trị cụ thể rồi giải hệ 2 ẩn bằng pt 1 và pt 2","Vô số nghiệm",""]),
+ ...EQ0(),
+ ...entE(Gc2,Z,"Cho <var>z</var> = 0: hệ thành <var>x</var> + 2<var>y</var> = 0 và 2<var>x</var> + 5<var>y</var> = 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy ra <var>x</var> = −2","−2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 1. Vậy <var>z</var> = 0 cho <var>x</var> = −2, <var>y</var> = 1. Đáp án D chỉ có điểm <var>z</var> = 1 nên loại D. Đáp án A với <var>z</var> = 0 (<var>α</var> = −1) cho <var>x</var> = 4, <var>y</var> = 2 nên loại A",0,"1",lab("y=")],
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed(Gc2,0,Gc2)],
+ ...entE(Gc3,Gc2,"Thử <var>z</var> = 1: chuyển −2<var>z</var> và −5<var>z</var> sang vế phải, hệ thành <var>x</var> + 2<var>y</var> = 2 và 2<var>x</var> + 5<var>y</var> = 6.",["Bấm = ở ô cuối để giải. Máy ra <var>x</var> = −2","−2",lab("x=")]),
+ ["down","","Bấm ▼ được <var>y</var> = 2. Vậy <var>z</var> = 1 cho <var>x</var> = −2, <var>y</var> = 2. Cả hai lần <var>x</var> đều bằng −2 và <var>y</var> = 1 + <var>z</var>, khớp đáp án B. Đáp án C với <var>α</var> = 1 cho <var>x</var> = −3 nên loại C. Đáp án B. Cách làm tay: pt 3 = pt 1 + pt 2 nên bỏ; pt 2 − 2·pt 1 được <var>y</var> − <var>z</var> = 1 nên <var>y</var> = 1 + <var>z</var>; thế vào pt 1 được <var>x</var> = −2<var>y</var> + 2<var>z</var> = −2; đặt <var>z</var> = <var>α</var>.",0,"2",lab("y=")]]},
 {n:190,t:"Câu 190. Định <var>m</var> để hệ phương trình có vô số nghiệm: <span class='sys'><span class='br'>{</span><span class='eqs'><span>2<var>x</var> + 2<var>y</var> − 4<var>z</var> = <var>m</var></span><span>−3<var>x</var> + 5<var>y</var> − <var>z</var> = 3</span><span>−4<var>x</var> − 4<var>y</var> + 8<var>z</var> = −2</span></span></span>",
  o:["<var>m</var> = −2","<var>m</var> = −1","<var>m</var> = 2","<var>m</var> = 1."],a:3,
  st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
@@ -270,6 +440,31 @@ const Q=[
  ...entE3(["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"],Z3,"Thử <var>m</var> = −2: dòng 1 là 2, 2, −4, −2; dòng 2 là −3, 5, −1, 3; dòng 3 là −4, −4, 8, −2.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = −2 không thỏa. Loại đáp án A (<var>m</var> = −1 và <var>m</var> = 2 cũng cho vế phải dòng 1 khác 1 nên vô nghiệm tương tự, loại B và C)","Vô nghiệm",""]),
  ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed3(["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"],0,["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"])],
  ...entE3(["2","2","-4","1","-3","5","-1","3","-4","-4","8","-2"],["2","2","-4","-2","-3","5","-1","3","-4","-4","8","-2"],"Thử <var>m</var> = 1: chỉ ô <var>d</var>₁ đổi thành 1, các ô khác giữ nguyên, nên nhập lại như cũ.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Lần này máy không báo Vô nghiệm, tức hệ có nghiệm, và vì định thức bằng 0 nên có vô số nghiệm. Đáp án D. Cách làm tay: hàng 3 bằng −2 lần hàng 1 về vế trái, nên cần −2<var>m</var> = −2 ⇔ <var>m</var> = 1","Vô số nghiệm",""])]},
+{n:191,t:"Câu 191. Tìm <var>m</var> để hệ phương trình tuyến tính sau có nghiệm <span class='sys'><span class='br'>{</span><span class='eqs'><span>2<var>x</var> + 2<var>y</var> − <var>z</var> = 3</span><span>2<var>x</var> + 5<var>y</var> − 2<var>z</var> = 7</span><span>6<var>x</var> + 6<var>y</var> − 3<var>z</var> = 2<var>m</var> + 1</span></span></span>",
+ o:["<var>m</var> = 2","<var>m</var> = 4","<var>m</var> = 6","<var>m</var> = 8."],a:1,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(F1,Z3,"Thử <var>m</var> = 2: vế phải dòng 3 là 2·2 + 1 = 5. Dòng 1 là 2, 2, −1, 3; dòng 2 là 2, 5, −2, 7; dòng 3 là 6, 6, −3, 5.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 2 không thỏa. Loại đáp án A (<var>m</var> = 6 và <var>m</var> = 8 cho vế phải dòng 3 là 13 và 17, cũng khác 9 nên vô nghiệm tương tự, loại C và D)","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"2",ed3(F1,0,F1)],
+ ...entE3(F2,F1,"Thử <var>m</var> = 4: vế phải dòng 3 là 2·4 + 1 = 9, chỉ ô <var>d</var>₃ đổi thành 9, các ô khác giữ nguyên, nên nhập lại như cũ.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Lần này máy không báo Vô nghiệm, tức hệ có nghiệm (vô số nghiệm vì vế trái dòng 3 bằng 3 lần dòng 1). Đáp án B. Cách làm tay: 3 × pt 1 được 6<var>x</var> + 6<var>y</var> − 3<var>z</var> = 9, nên để có nghiệm cần 2<var>m</var> + 1 = 9 ⇔ <var>m</var> = 4","Vô số nghiệm",""])]},
+{n:192,t:"Câu 192. Định <var>m</var> để hệ phương trình có nghiệm: <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 2<var>y</var> − 2<var>z</var> = 0</span><span>2<var>x</var> + 4<var>y</var> − 5<var>z</var> = 1</span><span>3<var>x</var> + 6<var>y</var> + <var>m</var><var>z</var> = 1</span></span></span>",
+ o:["<var>m</var> = 7","<var>m</var> = −7","<var>m</var> = 6","<var>m</var> = −6."],a:1,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(Hm1,Z3,"Thử <var>m</var> = 7: dòng 1 là 1, 2, −2, 0; dòng 2 là 2, 4, −5, 1; dòng 3 là 3, 6, 7, 1.",["Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô nghiệm, nên <var>m</var> = 7 không thỏa. Loại đáp án A (<var>m</var> = 6 và <var>m</var> = −6 cũng cho hệ vô nghiệm tương tự, loại C và D)","Vô nghiệm",""]),
+ ["ac","","Bấm AC để quay lại bảng nhập, các số cũ vẫn còn",0,"1",ed3(Hm1,0,Hm1)],
+ ...entE3(Hm2,Hm1,"Thử <var>m</var> = −7: chỉ ô <var>c</var>₃ đổi thành −7, các ô khác giữ nguyên, nên nhập lại như cũ.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Lần này máy không báo Vô nghiệm, tức hệ có nghiệm (vô số nghiệm). Đáp án B. Cách làm tay: pt 2 − 2·pt 1 được −<var>z</var> = 1 nên <var>z</var> = −1 và <var>x</var> + 2<var>y</var> = −2; thế vào pt 3: 3(<var>x</var> + 2<var>y</var>) + <var>m</var><var>z</var> = −6 − <var>m</var> = 1 ⇔ <var>m</var> = −7","Vô số nghiệm",""])]},
+{n:193,t:"Câu 193. Định <var>m</var> để hệ phương trình có nghiệm duy nhất: <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + <var>y</var> + <var>z</var> = 0</span><span><var>x</var> + 2<var>y</var> − <var>m</var><var>z</var> = 1</span><span>2<var>x</var> + 3<var>y</var> + 2<var>z</var> = 1</span></span></span>",
+ o:["<var>m</var> ≠ 1","<var>m</var> ≠ −1","<var>m</var> ≠ 2","<var>m</var> = −1."],a:1,
+ st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
+ ["d9","","Chọn 9: Ptrình/HệPtrình",0,"",sc("1:Hệ phương trình","2:Phương trình")],
+ ["d1","","Chọn 1: Hệ phương trình",0,"",sc("Hệ phương trình","Số lượng ẩn số?","","Chọn 2~4")],
+ ["d3","","Số ẩn = 3. Máy mở bảng nhập 3 dòng, mỗi dòng 4 ô a, b, c, d. Các ô đang là 0",0,"0",ed3(Z3,0,Z3)],
+ ...entE3(Jm1,Z3,"Thử <var>m</var> = −1: hệ thành <var>x</var> + <var>y</var> + <var>z</var> = 0; <var>x</var> + 2<var>y</var> + <var>z</var> = 1; 2<var>x</var> + 3<var>y</var> + 2<var>z</var> = 1. Dòng 1 là 1, 1, 1, 0; dòng 2 là 1, 2, 1, 1; dòng 3 là 2, 3, 2, 1.",[W("chữ máy báo khi vô số nghiệm trên máy bạn có thể khác")+" Bấm = ở ô cuối: máy lưu số rồi giải hệ luôn. Máy báo Vô số nghiệm, tức hệ không có nghiệm duy nhất, nên <var>m</var> = −1 không thỏa. Loại D. Loại A và C vì hai đáp án này vẫn cho phép <var>m</var> = −1. Đáp án B. Cách làm tay: <var>D</var> = <var>m</var> + 1 ≠ 0 ⇔ <var>m</var> ≠ −1","Vô số nghiệm",""])]},
 {n:214,t:"Câu 214. Định <var>m</var> để hệ phương trình có nghiệm duy nhất: <span class='sys'><span class='br'>{</span><span class='eqs'><span><var>x</var> + 2<var>y</var> + (<var>m</var> − 5)<var>z</var> = 2</span><span>2<var>x</var> − <var>y</var> = 1</span><span>(5 − <var>m</var>)<var>x</var> + <var>y</var> + (<var>m</var> − 5)<var>z</var> = 6.</span></span></span>",
  o:["<var>m</var> ≠ 2","<var>m</var> ≠ 4","<var>m</var> ≠ 5","<var>m</var> ≠ 2 ∧ <var>m</var> ≠ 5."],a:3,
  st:[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>9:Ptrình/HệPtrình"],
@@ -336,7 +531,7 @@ $("nxt").onclick=()=>{stop();next()};
 $("prv").onclick=()=>{stop();if(i>0)i--;render()};
 $("rst").onclick=()=>{stop();i=0;render()};
 $("spd").onchange=()=>{if(pl)tick()};
-$("tabs").innerHTML=Q.map((_,k)=>'<button class="tab" role="tab" data-q="'+k+'">Câu '+(Q[k].n||k+1)+"</button>").join("");
+$("tabs").innerHTML=Q.map((_,k)=>'<button class="tab'+((Q[k].n>=141&&Q[k].n<=150)?' alt':(Q[k].n==160||Q[k].n==161||Q[k].n==164||Q[k].n=="169.1")?' alt2':(Q[k].n==162||Q[k].n==163||Q[k].n==165||Q[k].n==166||Q[k].n==167||Q[k].n==168||Q[k].n==169||Q[k].n==170)?' alt3':(Q[k].n==190||Q[k].n==191||Q[k].n==192||Q[k].n==193||Q[k].n==214)?' alt4':'')+'" role="tab" data-q="'+k+'">Câu '+(Q[k].n||k+1)+"</button>").join("");
 function tabs(){document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",+t.dataset.q==q))}
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{stop();q=+t.dataset.q;i=0;rd=1;tabs();render()});
 tabs();render();
