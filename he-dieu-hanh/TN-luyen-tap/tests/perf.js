@@ -6,7 +6,7 @@ const fs = require('fs');
 const os = require('os');
 const { launch, sleep, fileUrl } = require('./cdp.js');
 
-const PAGE = fileUrl(path.join(__dirname, '..', 'index.html'));
+const PAGE = fileUrl(path.join(__dirname, '..', 'template-quiz.html'));
 
 const MEASURE = `
 (async () => {

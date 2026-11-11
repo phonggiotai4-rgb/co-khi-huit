@@ -213,8 +213,31 @@
       "quan-tri-he-thong-mang-k14": {
         label: "Chương",
         names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5", "Chương 6", "Chương 7", "Chương 8", "File 2"]
+      },
+      /* Chứng chỉ Kỹ năng số: 6 mô đun theo khung năng lực số. `descs` là tên
+         chuyên đề in nhỏ dưới tên mô đun trong popup chọn bài thi. */
+      "chung-chi-ky-nang-so": {
+        label: "Mô đun",
+        names: ["Mô đun 1", "Mô đun 2", "Mô đun 3", "Mô đun 4", "Mô đun 5", "Mô đun 6"],
+        descs: [
+          "Khai thác dữ liệu và thông tin",
+          "Giao tiếp và hợp tác trong môi trường số",
+          "Sáng tạo nội dung số",
+          "An toàn",
+          "Giải quyết vấn đề",
+          "Ứng dụng trí tuệ nhân tạo"
+        ]
       }
    };
+
+  /* Nhãn riêng cho từng chế độ học của một môn (mặc định lấy từ CK.exam.MODES).
+     Ví dụ Chứng chỉ Kỹ năng số gọi "Xem đề cương" là "Xem bài giảng" vì nội
+     dung là bài giảng lý thuyết chứ không phải ngân hàng câu hỏi. */
+  var MODE_LABELS = {
+    "chung-chi-ky-nang-so": {
+      sylabus: { label: "Xem bài giảng", hint: "Lý thuyết từng mô đun" }
+    }
+  };
 
   var CATS = RAW.map(function (row, i) {
     return {
@@ -224,10 +247,14 @@
       name: row[1],           // chữ thường — dùng cho chip lọc
       subjects: row[2].map(function (s) {
         var o = { name: s, slug: slug(s), cat: row[0], catName: row[1] };
+        if (MODE_LABELS[o.slug]) o.modeLabels = MODE_LABELS[o.slug];
         var p = PARTS_BY_SUBJECT[slug(s)] || PARTS[row[0]];
         if (p) {
           o.parts = p.names.map(function (n, k) {
-            return { id: slug(n), name: n, label: p.label, index: k };
+            var part = { id: slug(n), name: n, label: p.label, index: k };
+            /* Tên chuyên đề (tuỳ chọn) — hiển thị nhỏ dưới tên bài thi. */
+            if (p.descs && p.descs[k]) part.desc = p.descs[k];
+            return part;
           });
         }
         return o;
@@ -403,10 +430,18 @@
       }
    };
 
-  /* Bài thi có sẵn trang XEM ĐỀ CƯƠNG riêng thì khai ở đây.
-     Khác PART_FILES: mọi bài thi dùng chung MỘT trang, bài thi nào nằm ở
-     tham số `?d=<slug bài thi>` — nên không nhân bản 10 file gần như giống hệt. */
+  /* Bài thi có sẵn trang XEM ĐỀ CƯƠNG / BÀI GIẢNG riêng thì khai ở đây.
+     Hai dạng giá trị:
+       - chuỗi  : mọi bài thi dùng chung MỘT trang, bài thi nào nằm ở tham số
+                  `?d=<slug bài thi>` — không nhân bản 10 file gần như giống hệt.
+       - object : mỗi bài thi một file riêng (bài giảng độc lập); bài thi không
+                  khai thì không có trang, bấm vào chỉ hiện thẻ thông tin đề. */
   var PART_SYLLABUS = {
+    /* Chứng chỉ Kỹ năng số: mỗi mô đun là một bài giảng HTML riêng trong
+       thư mục ky-nang-so/. Mô đun chưa có file thì bỏ trống, thêm sau. */
+    "chung-chi-ky-nang-so": {
+      "mo-dun-1": "ky-nang-so/MODULE_1_KHAI_THÁC_DỮ_LIỆU_VÀ_THÔNG_TIN.html"
+    },
     "qpan1": "qp-an/qpan1-de-cuong.html",
     "qpan2": "qp-an/qpan2-de-cuong.html",
     /* Quản trị học: trang đề cương dùng chung cho cả 7 chương — thêm `?d=` để
@@ -513,13 +548,14 @@
     return (m && m[partId]) || null;
   };
 
-  /* Đường dẫn tới trang xem đề cương (câu hỏi + đáp án + lời giải thích) của một
-     bài thi, hoặc null nếu môn đó không có trang đề cương. Trang nhận `?d=` để biết
-     đang xem bài thi nào — cùng kiểu mở như CK.partFile nên trang chủ gọi được
-     bằng đúng một đường dẫn cho mọi bài thi. */
+  /* Đường dẫn tới trang xem đề cương / bài giảng của một bài thi, hoặc null nếu
+     môn đó không có trang. Môn dùng chung một trang thì nhận thêm `?d=` để biết
+     đang xem bài thi nào; môn khai theo object (mỗi bài một file) thì trả đúng
+     file của bài đó, không thêm tham số. */
   g.CK.partSyllabus = function (slug, partId) {
     var f = PART_SYLLABUS[slug];
     if (!f) return null;
+    if (typeof f === "object") return f[partId] || null;
     return f + (f.indexOf("?") === -1 ? "?" : "&") + "d=" + encodeURIComponent(partId);
   };
 

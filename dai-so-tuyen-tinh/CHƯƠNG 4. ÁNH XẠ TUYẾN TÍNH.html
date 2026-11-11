@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CHƯƠNG 4. ÁNH XẠ TUYẾN TÍNH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9ece6;--card:#fff;--fg:#1d2321;--mut:#5d6762;--line:#cfd5cd;--acc:#0b7a68;--accfg:#fff;--ok:#1b8a3c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--card:#1e2421;--fg:#e8ede9;--mut:#9aa6a0;--line:#34403a;--acc:#2fd3b4;--accfg:#06241d;--ok:#5fd17f}}
+:root[data-theme="dark"]{--bg:#141816;--card:#1e2421;--fg:#e8ede9;--mut:#9aa6a0;--line:#34403a;--acc:#2fd3b4;--accfg:#06241d;--ok:#5fd17f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.5 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:960px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.4rem;margin:0 0 4px;font-weight:800}
+.sub{margin:0 0 16px;color:var(--mut);font-size:.92rem}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;font:600 .9rem inherit;font-family:inherit;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tab:focus-visible,.ctl button:focus-visible,.key:focus-visible,.chip:focus-visible{outline:3px solid #ffb000;outline-offset:2px}
+.wrap{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}.side{display:contents}.calc{order:2}.p1{order:0}.p2{order:1;position:sticky;top:0;z-index:5}.p3,.tip{order:3}}
+.calc{width:330px;max-width:100%;margin:0 auto;background:#3b3f3c;border-radius:26px 26px 40px 40px;padding:16px 16px 20px;box-shadow:0 10px 30px rgba(0,0,0,.35);border:3px solid #cfd2d0}
+.brand{display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:.8rem;margin-bottom:8px}
+.brand span:last-child{font-weight:400;opacity:.8}
+.bezel{background:#111;border-radius:14px;padding:10px}
+.lcd{background:#d4dccb;border-radius:6px;height:92px;padding:6px 8px;color:#1a1f17;font-family:"Courier New",monospace;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.ex{font-size:19px;min-height:26px;word-break:break-all}
+.rs{text-align:right;font-size:24px;font-weight:700;min-height:30px}
+.cur{display:inline-block;width:2px;height:1em;background:#1a1f17;vertical-align:-2px;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.8em;line-height:1.1;margin:0 2px}
+.fr i{font-style:normal;padding:0 3px}.fr i:first-child{border-bottom:2px solid currentColor}
+.top{display:flex;align-items:center;justify-content:space-between;margin:26px 0 22px}
+.dp{display:grid;grid-template-columns:repeat(3,36px);grid-template-rows:repeat(3,26px);gap:2px}
+.dp .key{height:100%;border-radius:10px;background:#9a9d9a}.dp .up{grid-area:1/2}.dp .left{grid-area:2/1}.dp .right{grid-area:2/3}.dp .down{grid-area:3/2}
+.dp .mid{grid-area:2/2;background:#2a2c2b;border-radius:6px}
+.rows{display:flex;flex-direction:column;gap:20px}
+.row{display:grid;gap:8px}
+.key{position:relative;border:0;border-radius:8px;height:34px;background:#1b1d1e;color:#fff;font:600 13px/1 "Be Vietnam Pro",system-ui,sans-serif;cursor:pointer;padding:0;transition:transform .12s,filter .12s}
+.key .s{position:absolute;top:-14px;left:-4px;right:-4px;text-align:center;font-size:9px;font-weight:600;color:#f2a93b;white-space:nowrap;line-height:12px}
+.n .key,.key.n{background:#f1f1f1;color:#1e1e1e;height:40px;font-size:18px;font-weight:700}
+.key.blue{background:#2f6bff;color:#fff}
+.key.eq{background:#1b1d1e;color:#fff;font-size:20px}
+.key.rnd{font-size:10px;border-radius:50%;width:38px;height:38px;background:#9a9d9a}
+.key.rnd.on{background:#9a9d9a}
+.key.press{transform:scale(.88);filter:brightness(1.7)}
+.key.hl{z-index:2;outline:3px solid #00e6c8;outline-offset:2px;animation:ping 1.1s infinite}
+.key.hl.sh{outline-color:#ffb000}
+.key.hl.sh .s{background:#ffb000;color:#111;border-radius:3px;font-weight:800;font-size:10px}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(0,230,200,.8)}100%{box-shadow:0 0 0 14px rgba(0,230,200,0)}}
+.key.hl.sh{animation-name:ping2}@keyframes ping2{0%{box-shadow:0 0 0 0 rgba(255,176,0,.85)}100%{box-shadow:0 0 0 14px rgba(255,176,0,0)}}
+@media (prefers-reduced-motion:reduce){.key.hl,.cur{animation:none}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.qt{font-size:1.2rem;font-weight:800;margin:0 0 4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.opt{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-weight:600}
+.opt.right{background:var(--ok);color:#fff;border-color:var(--ok)}
+.cap{font-size:1.15rem;min-height:84px}
+.cap b{background:var(--acc);color:var(--accfg);border-radius:6px;padding:1px 9px;white-space:nowrap}
+.cap small{display:block;color:var(--mut);font-size:.88rem;margin-top:6px}
+.st{color:var(--mut);font-size:.85rem;margin-bottom:4px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin:10px 0}.bar div{height:100%;background:var(--acc);border-radius:3px;transition:width .3s}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ctl button,.ctl select{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:8px 12px;font:600 .9rem inherit;font-family:inherit;cursor:pointer}
+.ctl button.main{background:var(--acc);color:var(--accfg);border-color:var(--acc);min-width:96px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:6px;min-width:34px;padding:4px 8px;font:600 .85rem inherit;font-family:inherit;cursor:pointer}
+.chip.done{background:var(--line)}.chip.now{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tip{color:var(--mut);font-size:.85rem;margin:0}
+.mt{display:inline-table;vertical-align:middle;margin:0 4px;border-left:2px solid currentColor;border-right:2px solid currentColor;border-radius:4px;border-collapse:collapse;font-size:1.02em}
+.mt td{padding:2px 9px;text-align:center;white-space:nowrap}
+.mt .fr{font-size:.82em}
+sup{line-height:0;font-size:.7em}
+.mx{border-left:2px solid #1a1f17;border-right:2px solid #1a1f17;font-size:15px;border-collapse:collapse;display:inline-table}.mx td{padding:0 7px;text-align:right}.mx td.c{background:#1a1f17;color:#d4dccb}
+</style>
+</head>
+<body>
+<main>
+<h1>CHƯƠNG 4. ÁNH XẠ TUYẾN TÍNH</h1>
+<p class="sub">Bấm theo phím đang sáng trên máy. Bấm Phát để xem tự chạy, hoặc tự bấm vào phím sáng để sang bước tiếp.</p>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div class="wrap">
+  <div class="calc" aria-label="Máy tính Casio fx-580VN X">
+    <div class="brand"><span>CASIO</span><span>fx-580VN X</span></div>
+    <div class="bezel"><div class="lcd"><div class="ex" id="ex"></div><div class="rs" id="rs"></div></div></div>
+    <div class="top" id="top"></div>
+    <div class="rows" id="rows"></div>
+  </div>
+  <div class="side">
+    <div class="panel p1"><p class="qt" id="qt"></p><div class="opts" id="opts"></div></div>
+    <div class="panel p2">
+      <div class="st" id="st"></div>
+      <div class="cap" id="cap" aria-live="polite"></div>
+      <div class="bar"><div id="bar"></div></div>
+      <div class="st" id="vn" role="status"></div>
+      <div class="ctl">
+        <button id="rst" title="Về đầu">⏮ Đầu</button>
+        <button id="prv">◀ Lùi</button>
+        <button id="ply" class="main">▶ Phát</button>
+        <button id="nxt">Tiếp ▶</button>
+        <select id="spd" aria-label="Tốc độ"><option value="2400">Chậm</option><option value="1700" selected>Vừa</option><option value="900">Nhanh</option></select>
+        <button id="vox" aria-pressed="false">🔇 Giọng đọc: Tắt</button>
+      </div>
+    </div>
+    <div class="panel p3"><div class="st">Dãy phím của câu này (bấm vào để nhảy tới bước đó)</div><div class="chips" id="chips"></div></div>
+    <p class="tip">Chữ vàng trên phím là chức năng SHIFT. Các màn hình menu và bảng nhập ma trận được dựng theo ảnh máy thật của bạn. Bước có dấu ⚠ là phần mình suy ra, chưa thấy màn hình thật. Câu 3 đến 5 dùng lại MatA, MatB đã nhập ở câu 2.</p>
+  </div>
+</div>
+</main>
+<script>
+const R=[
+{c:4,k:[["optn","OPTN"],["calc","CALC","SOLVE"],["integ","∫▫"],["varx","𝒙"]]},
+{c:6,k:[["frac","▫/▫","÷R"],["sqrt","√▫","∛"],["sq","x²","x³"],["pow","x▫","√▫"],["log","log▫","10ˣ"],["ln","ln","eˣ"]]},
+{c:6,k:[["neg","(−)","log"],["dms","°′″","FACT"],["inv","x⁻¹","x!"],["sin","sin","sin⁻¹"],["cos","cos","cos⁻¹"],["tan","tan","tan⁻¹"]]},
+{c:6,k:[["sto","STO","RECALL"],["eng","ENG","←i"],["lp","(","Abs"],["rp",")"],["sd","S⇔D"],["mp","M+","M−"]]},
+{c:5,n:1,k:[["d7","7","CONST"],["d8","8","CONV"],["d9","9","RESET"],["del","DEL","INS"],["ac","AC","OFF"]]},
+{c:5,n:1,k:[["d4","4"],["d5","5"],["d6","6"],["mul","×","nPr"],["div","÷","nCr"]]},
+{c:5,n:1,k:[["d1","1"],["d2","2"],["d3","3"],["add","+","Pol"],["sub","−","Rec"]]},
+{c:5,n:1,k:[["d0","0","Rnd"],["dot","."],["exp","×10ˣ","π"],["ans","Ans","%"],["eq","=","≈"]]}];
+const L={shift:["SHIFT"],alpha:["ALPHA"],menu:["MENU","SETUP"],on:["ON"],up:["▲"],down:["▼"],left:["◀"],right:["▶"]};
+R.forEach(r=>r.k.forEach(k=>L[k[0]]=[k[1],k[2]]));
+const E={};
+function mk(id,cls){const b=document.createElement("button");b.className="key "+(cls||"");b.dataset.id=id;
+ const l=L[id];b.innerHTML=(l[1]?'<span class="s">'+l[1]+"</span>":"")+l[0];b.setAttribute("aria-label",l[0]);b.onclick=()=>keyClick(id);E[id]=b;return b}
+const topEl=document.getElementById("top");
+const left=document.createElement("div");left.style.cssText="display:flex;gap:10px";
+[["shift","rnd"],["alpha","rnd"]].forEach(a=>left.append(mk(a[0],a[1])));
+const dp=document.createElement("div");dp.className="dp";
+["up","left","right","down"].forEach(i=>dp.append(mk(i,i)));dp.insertAdjacentHTML("beforeend",'<div class="mid"></div>');
+const rt=document.createElement("div");rt.style.cssText="display:flex;gap:10px";
+rt.append(mk("menu","rnd"),mk("on","rnd on"));
+topEl.append(left,dp,rt);
+E.shift.innerHTML="";E.alpha.innerHTML="";
+E.shift.style.cssText=E.alpha.style.cssText="";
+const sl=document.createElement("span");sl.className="s";sl.style.color="#f2a93b";sl.textContent="SHIFT";E.shift.append(sl);
+const al=document.createElement("span");al.className="s";al.style.color="#ff7b9c";al.textContent="ALPHA";E.alpha.append(al);
+const rows=document.getElementById("rows");
+R.forEach(r=>{const d=document.createElement("div");d.className="row"+(r.n?" n":"");d.style.gridTemplateColumns="repeat("+r.c+",1fr)";
+ r.k.forEach(k=>{const b=mk(k[0],r.n?"n":"");if(k[0]=="del"||k[0]=="ac")b.classList.add("blue");if(k[0]=="eq")b.classList.add("eq");d.append(b)});rows.append(d)});
+document.querySelectorAll(".n .key.blue").forEach(b=>b.style.color="#fff");
+
+const W=t=>"⚠ Chưa kiểm chứng: "+t;
+const A=["2","1","1","3"],B=["1","0","2","1"];
+const sc=(...l)=>l.join("<br>");
+const SM=sc("Tạo ma trận","1:MatA 2:MatB","3:MatC 4:MatD");
+const P1=sc("1:Tạo ma trận","2:Sửa ma trận","3:MatA 4:MatB","5:MatC 6:MatD");
+const P2=sc("1:MatAns","2:Định thức","3:Ma trận chuyển vị","4:Ma trận đơn vị");
+function mx(v,r,c,j,t,nm){let h=(nm?'<div style="font-size:11px">'+nm+"=</div>":"")+'<table class="mx">';for(let a=0;a<r;a++){h+="<tr>";for(let b=0;b<c;b++){const k=a*c+b;const x=k<j?v[k]:(k==j?(t||"0"):"0");h+="<td"+(k==j?' class="c"':"")+">"+fx(x)+"</td>"}h+="</tr>"}return h+"</table>"}
+function ent(v,r,c,nm){const s=[];v.forEach((x,j)=>{let t="";[...x].forEach((ch,n)=>{t+=ch=="-"?"−":ch;s.push([ch=="-"?"neg":"d"+ch,"",n?"":"Ô hàng "+(Math.floor(j/c)+1)+", cột "+(j%c+1),0,"",mx(v,r,c,j,t,nm)])});s.push(["eq","",j==v.length-1?"Lưu ô cuối cùng":"Lưu số này, máy nhảy sang ô kế tiếp",0,"",mx(v,r,c,j+1,"",nm)])});return s}
+const sel=(nm,r,c,v)=>[["d"+r,"","Số dòng = "+r,0,"",sc(nm,"Số cột?","Chọn 1~4")],["d"+c,"","Số cột = "+c+". Máy mở bảng nhập, các ô đang là 0",0,"",mx(v,r,c,0,"",nm)]];
+const OUT=["ac","","Bấm AC để thoát bảng nhập. Góc phải màn hình hiện chữ Ma trận",0,"",'<div style="margin-top:44px;text-align:right">Ma trận</div>'];
+const first=(v,r,c)=>[["menu","","Mở MENU: bảng chọn chế độ",0,"","MENU: chọn chế độ<br>4:Ma trận"],["d4","","Chọn 4: Ma trận",0,"",SM],["d1","","Chọn 1: MatA",0,"",sc("MatA","Số dòng?","Chọn 1~4")],...sel("MatA",r,c,v),...ent(v,r,c,"MatA"),OUT];
+const more=(n,v,r,c)=>{const nm="Mat"+"ABCD"[n-1];return[["optn","","Mở OPTN",0,"",P1],["d1","",W("chọn 1: Tạo ma trận (mình suy ra từ danh sách OPTN của máy bạn)"),0,"",SM],["d"+n,"","Chọn "+n+": "+nm,0,"",sc(nm,"Số dòng?","Chọn 1~4")],...sel(nm,r,c,v),...ent(v,r,c,nm),OUT]};
+const ref=(k,t)=>[["optn","","Mở OPTN: danh sách ma trận",0,"",P1],["d"+k,t,"Chọn "+k+": "+t]];
+const ref2=(k,t,nl)=>[["optn","","Mở OPTN",0,"",P1],["down","",W("bấm ▼ để sang trang kế của danh sách OPTN"),0,"",P2],["d"+k,t,"Chọn "+k+": "+nl]];
+const R2=(v,f)=>mx(v,2,2,4);
+const Q=[
+{t:"Câu 1. Tính ma trận tổng A = [1 2 1; 3 0 2] + [1 0; 1 1]",o:["A = [1 2 1; 4 0 3]","A = [1 2 1; 4 1 2]","A = [1 3 0; 3 1 3]","Không tồn tại A"],a:3,
+ st:[...first(["1","2","1","3","0","2"],2,3),...more(2,["1","0","1","1"],2,2),...ref(3,"MatA"),["add","+"],...ref(4,"MatB"),["eq","","MatA cấp 2×3, MatB cấp 2×2: khác cấp nên không cộng được. Máy báo lỗi (chữ báo lỗi trên máy bạn có thể khác). Bấm AC để thoát. Đáp án D",0,"Lỗi kích thước"]]},
+{t:"Câu 2. Đặt lại MatA = [2 1; 1 3], MatB = [1 0; 2 1]. Tính A + B",o:["[3 1; 3 4]","[3 1; 4 3]","[2 0; 2 3]","[3 0; 3 4]"],a:0,
+ st:[...more(1,A,2,2),...more(2,B,2,2),...ref(3,"MatA"),["add","+"],...ref(4,"MatB"),["eq","","Cộng từng ô tương ứng",0,R2(["3","1","3","4"])]]},
+{t:"Câu 3. Tính A × B (dùng lại MatA, MatB)",o:["[4 1; 7 3]","[2 0; 2 3]","[5 1; 7 4]","[4 7; 1 3]"],a:0,
+ st:[...ref(3,"MatA"),["mul","×"],...ref(4,"MatB"),["eq","","Hàng nhân cột. Không phải nhân từng ô",0,R2(["4","1","7","3"])]]},
+{t:"Câu 4. Tìm ma trận nghịch đảo A⁻¹",o:["[3/5 −1/5; −1/5 2/5]","[3 −1; −1 2]","[2/5 −1/5; −1/5 3/5]","[3/5 1/5; 1/5 2/5]"],a:0,
+ st:[...ref(3,"MatA"),["inv","⁻¹","Phím x⁻¹ là nghịch đảo"],["eq","","A⁻¹ = (1/5)·[3 −1; −1 2]",0,R2(["{3/5}","−{1/5}","−{1/5}","{2/5}"])]]},
+{t:"Câu 5. Tìm ma trận chuyển vị của A × B",o:["[4 7; 1 3]","[4 1; 7 3]","[3 1; 7 4]","[1 3; 4 7]"],a:0,
+ st:[...ref2(3,"Trn(","Ma trận chuyển vị"),...ref(3,"MatA"),["mul","×"],...ref(4,"MatB"),["rp",")"],["eq","","Chuyển vị: đổi hàng thành cột",0,R2(["4","7","1","3"])]]}];
+let q=0,i=0,pl=false,tm=null,last=null,vo=false,rd=0;
+const TTS=!!window.speechSynthesis;
+const SK={"−":"trừ","×":"nhân","÷":"chia","=":"bằng","+":"cộng","(−)":"dấu âm","x⁻¹":"x mũ trừ một","▲":"mũi tên lên","▼":"mũi tên xuống","◀":"mũi tên trái","▶":"mũi tên phải",".":"dấu chấm","(":"mở ngoặc",")":"đóng ngoặc","OPTN":"ốp tần","MENU":"menu"};
+function spk(t){
+ t=t.replace(/<[^>]+>/g,"").replace(/\[([^\[\]]+)\]/g,(m,b)=>{const r=b.split(";");return " ma trận "+r.length+" hàng: "+r.map((x,k)=>"hàng "+(k+1)+": "+x.trim().split(/\s+/).join(", ")).join("; ")+". "});
+ return t.replace(/Mat([A-D])/g,"ma trận $1").replace(/([A-Z])⁻¹/g,"$1 nghịch đảo").replace(/(\d+)\/(\d+)/g,"$1 phần $2").replace(/[−-](?=\d)/g," âm ").replace(/×/g," nhân ").replace(/\+/g," cộng ").replace(/=/g," bằng ").replace(/Trn\(/g,"chuyển vị ");
+}
+function viVoice(){return TTS&&speechSynthesis.getVoices().find(v=>/^vi/i.test(v.lang))}
+function say(t){if(!vo||!TTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="vi-VN";const v=viVoice();if(v)u.voice=v;u.rate=.95;speechSynthesis.speak(u)}
+function speakNow(){if(!vo)return;const S=Q[q].st,n=S.length;let t=rd?spk(Q[q].t)+". ":"";rd=0;
+ if(i<n){const s=S[i],l=L[s[0]],nm=s[3]?l[1]:l[0];t+="Bấm "+(s[3]?"SHIFT rồi ":"")+(SK[nm]||nm)+(s[2]?". "+spk(s[2]):"")}
+ else t+="Hoàn thành. Đáp án đúng là "+"ABCD"[Q[q].a]+": "+spk(Q[q].o[Q[q].a]);
+ say(t)}
+function vnote(){$("vn").textContent=vo&&!viVoice()?"Thiết bị chưa có giọng tiếng Việt nên đang dùng giọng mặc định. Bạn có thể cài giọng Vietnamese trong cài đặt hệ thống.":""}
+const $=id=>document.getElementById(id);
+function fr2(t){return t.replace(/(\d+)\/(\d+)/g,'<span class="fr"><i>$1</i><i>$2</i></span>')}
+function mth(t){
+ return t.split(/(\[[^\[\]]+\])/).map(p=>{
+  if(p[0]=="[")return '<table class="mt">'+p.slice(1,-1).split(";").map(r=>"<tr>"+r.trim().split(/\s+/).map(c=>"<td>"+fr2(c.replace(/^-/,"−"))+"</td>").join("")+"</tr>").join("")+"</table>";
+  return fr2(p.replace(/([A-Z])⁻¹/g,"$1<sup>−1</sup>"));
+ }).join("");
+}
+function fx(s){return s.replace(/\{/g,'<span class="fr"><i>').replace(/\//g,"</i><i>").replace(/\}/g,"</i></span>")}
+function press(id){const b=E[id];if(b&&b.animate)b.animate([{transform:"scale(.86)",filter:"brightness(1.8)"},{transform:"scale(1)",filter:"brightness(1)"}],{duration:220})}
+function render(){
+ const S=Q[q].st,n=S.length;
+ Object.values(E).forEach(b=>b.classList.remove("hl","sh"));
+ let ex="",rs="";
+ for(let k=0;k<i;k++){ex+=S[k][1];if(S[k][4])rs=S[k][4];}
+ const m=i>0&&S[i-1][5]?S[i-1][5]:"";
+ $("ex").innerHTML=rs[0]=="<"?"":m?'<div style="font-size:13px;line-height:1.2">'+m+'</div>':fx(ex)+(rs?"":'<span class="cur"></span>');
+ $("rs").innerHTML=rs[0]=="<"?rs:fx(rs);
+ $("qt").innerHTML=mth(Q[q].t);
+ $("opts").innerHTML=Q[q].o.map((t,k)=>'<div class="opt'+(i==n&&k==Q[q].a?" right":"")+'">'+"ABCD"[k]+". "+mth(t)+"</div>").join("");
+ if(i<n){const s=S[i],id=s[0],l=L[id];const e=E[id];e.classList.add("hl");if(s[3])e.classList.add("sh");
+  $("st").textContent="Bước "+(i+1)+" / "+n;
+  $("cap").innerHTML=(s[3]?"Bấm <b>"+l[1]+"</b> <small>(chữ vàng phía trên phím "+l[0]+")</small>":"Bấm <b>"+l[0]+"</b>")+(s[2]?"<small>"+mth(s[2])+"</small>":"");
+ }else{$("st").textContent="Xong";$("cap").innerHTML="Hoàn thành. Đáp án đúng là <b>"+"ABCD"[Q[q].a]+". "+mth(Q[q].o[Q[q].a])+"</b>";stop()}
+ $("bar").style.width=(i/n*100)+"%";
+ $("chips").innerHTML=S.map((s,k)=>'<button class="chip'+(k<i?" done":"")+(k==i?" now":"")+'" data-k="'+k+'">'+(s[3]?L[s[0]][1]:L[s[0]][0])+"</button>").join("");
+ document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{i=+c.dataset.k;render()});
+ $("prv").disabled=i==0;$("nxt").disabled=i==n;
+ speakNow();
+}
+function next(){const n=Q[q].st.length;if(i<n){press(Q[q].st[i][0]);i++;render()}}
+function keyClick(id){const S=Q[q].st;if(i<S.length&&S[i][0]==id)next();else press(id)}
+function play(){if(i>=Q[q].st.length)i=0;pl=true;$("ply").textContent="⏸ Dừng";render();tick()}
+function tick(){clearTimeout(tm);if(!pl)return;tm=setTimeout(function w(){if(!pl)return;if(vo&&speechSynthesis.speaking){tm=setTimeout(w,200);return}next();tick()},+$("spd").value)}
+function stop(){pl=false;clearTimeout(tm);$("ply").textContent="▶ Phát"}
+if(!TTS)$("vox").style.display="none";
+else{speechSynthesis.onvoiceschanged=vnote;
+$("vox").onclick=()=>{vo=!vo;$("vox").textContent=vo?"🔊 Giọng đọc: Bật":"🔇 Giọng đọc: Tắt";$("vox").setAttribute("aria-pressed",vo);if(vo){vnote();speakNow()}else{speechSynthesis.cancel();vnote()}}}
+$("ply").onclick=()=>pl?stop():play();
+$("nxt").onclick=()=>{stop();next()};
+$("prv").onclick=()=>{stop();if(i>0)i--;render()};
+$("rst").onclick=()=>{stop();i=0;render()};
+$("spd").onchange=()=>{if(pl)tick()};
+$("tabs").innerHTML=Q.map((_,k)=>'<button class="tab" role="tab" data-q="'+k+'">Câu '+(k+1)+"</button>").join("");
+function tabs(){document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",+t.dataset.q==q))}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{stop();q=+t.dataset.q;i=0;rd=1;tabs();render()});
+tabs();render();
+</script>
+</body>
+</html>

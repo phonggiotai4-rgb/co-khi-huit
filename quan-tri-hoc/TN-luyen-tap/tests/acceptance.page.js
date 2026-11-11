@@ -1,7 +1,7 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const src = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const src = fs.readFileSync(path.join(__dirname, '..', 'template-quiz.html'), 'utf8');
 
 const harness = `
 <script>

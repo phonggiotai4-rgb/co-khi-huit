@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chứng chỉ kỹ năng số – Video bài giảng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8EFF7;--panel:#FFFFFF;--ink:#16243B;--mut:#5A6B85;--line:#C9D5E4;--c1:#2F5BEA;--c2:#F26B5B;--c3:#1FA38A;--c4:#E9A722;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5}
+.player{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+h2{font:700 clamp(22px,3.4vw,32px)/1.2 Lexend,"Be Vietnam Pro",sans-serif;margin:0}
+.fig svg{width:100%;height:auto;max-height:54vh;display:block}
+.cap{margin:0;min-height:3.3em;color:var(--mut);font-size:clamp(14px,2vw,17px);max-width:72ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+button{font:600 14px "Be Vietnam Pro",sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--c1)}
+button:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+#play{background:var(--c1);border-color:var(--c1);color:#fff;min-width:110px}
+.sp{flex:1}
+.cnt{color:var(--mut);font-size:14px}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1;height:10px;padding:0;border-radius:5px;border:0;background:var(--line);position:relative;overflow:hidden}
+.seg button::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:var(--c1)}
+/* SVG */
+svg text{font-family:inherit;fill:var(--ink);font-size:15px}
+.b{font-weight:600}.m{fill:var(--mut);font-size:12.5px}.big{font-size:17px}.h1{font-size:34px;font-weight:700}.h2{font-size:19px;font-weight:700;fill:var(--c1)}
+.brand{background:#1F6FB5;color:#fff;text-align:center;border-radius:14px;padding:10px 16px;margin-bottom:12px;line-height:1.35}
+.brand b{display:block;font:700 clamp(13px,2.2vw,18px) Lexend,sans-serif}.brand span{font-size:clamp(12px,1.8vw,15px)}
+.url{margin:8px 0 0;color:var(--mut);font-size:12px}
+.st{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.5;stroke:var(--mut)}
+.s1{stroke:var(--c1)}.s2{stroke:var(--c2)}.s3{stroke:var(--c3)}.s4{stroke:var(--c4)}
+.f1{fill:var(--c1);fill-opacity:.16}.f2{fill:var(--c2);fill-opacity:.16}.f3{fill:var(--c3);fill-opacity:.16}.f4{fill:var(--c4);fill-opacity:.2}
+.fp{fill:var(--panel)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s ease var(--d,0s) forwards}
+.r{opacity:0;animation:rv .6s ease var(--d,0s) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes rv{to{opacity:1}}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.draw{animation:none;stroke-dashoffset:0}.r{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<main class="player">
+  <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
+  <section class="stage" id="stage" aria-live="off">
+    <h2 id="ttl"></h2>
+    <div class="fig" id="fig"></div>
+    <p class="cap" id="cap"></p>
+  </section>
+  <div class="ctl">
+    <button id="prev">Trước</button>
+    <button id="play">Tạm dừng</button>
+    <button id="next">Sau</button>
+    <button id="voice" aria-pressed="false">Giọng đọc: Tắt</button>
+    <span class="sp"></span>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="seg" id="seg"></div>
+  <p class="url">https://huit.edu.vn</p>
+</main>
+
+<script>
+/* ====== NỘI DUNG: chỉnh sửa mảng SCENES bên dưới ======
+   t: tiêu đề | d: thời lượng (ms) | n: lời giảng (phụ đề + giọng đọc) | v: hàm vẽ hình SVG
+   Mỗi phần tử vẽ có thể có độ trễ riêng (tham số cuối) để hình hiện ra theo lời giảng. */
+const D=n=>`style="--d:${n}s"`;
+const T=(x,y,s,c='',n=0,a='middle')=>`<text class="r ${c}" ${D(n)} x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const P=(tag,attrs,c='',n=0)=>`<${tag} pathLength="1" class="st draw ${c}" ${D(n)} ${attrs}/>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" class="st" style="stroke-width:2"/></marker></defs>`;
+
+const AR=(x1,x2,y,n)=>`<path pathLength="1" class="st draw" ${D(n)} d="M${x1} ${y}H${x2}" marker-end="url(#ah)"/>`;
+const BOX=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b big',n+.3)+L.map((l,j)=>T(x+w/2,y+62+j*22,l,'m',n+.6+j*.3)).join('');
+const GRID=(C,x)=>{let s='';C.forEach((o,i)=>{const X=30+i%2*300,Y=40+Math.floor(i/2)*140,n=.3+i*2.8,k=o[0];
+ s+=P('rect',`x="${X}" y="${Y}" width="280" height="110" rx="16"`,`s${k} f${k}`,n)+(x?P('path',`d="M${X+28} ${Y+39}l20 20M${X+48} ${Y+39}l-20 20"`,`s${k}`,n+.3):P('circle',`cx="${X+38}" cy="${Y+55}" r="16"`,`s${k}`,n+.3))+
+ T(X+68,Y+44,o[1],'b',n+.6,'start')+T(X+68,Y+68,o[2],'m',n+.8,'start')+(o[3]?T(X+68,Y+86,o[3],'m',n+.9,'start'):'');});return s;};
+const BOXS=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b',n+.3)+L.map((l,j)=>T(x+w/2,y+58+j*22,l,'m',n+.6+j*.3)).join('');
+const ROWS=(R,pt=64)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=.3+i*3,m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+const SCENES=[
+{t:"Khoa Công nghệ thông tin",d:10000,
+ n:"Chào mừng các bạn đến với Module 1: Khai thác dữ liệu và thông tin, thuộc Khoa Công nghệ thông tin, Trường Đại học Công Thương Thành phố Hồ Chí Minh. Module này giúp ta biến dữ liệu thô thành thông tin hữu ích.",
+ v:()=>
+  T(320,60,'MODULE 1','h1',0)+T(320,100,'KHAI THÁC DỮ LIỆU VÀ THÔNG TIN','h2',.5)+
+  P('ellipse','cx="130" cy="205" rx="40" ry="10"','s1 f1',1.5)+P('path','d="M90 205v50a40 10 0 0 0 80 0v-50"','s1 f1',1.8)+T(130,315,'Dữ liệu','b',2.2)+
+  `<path pathLength="1" class="st draw" ${D(3)} d="M185 240h60" marker-end="url(#ah)"/>`+
+  P('path','d="M260 200h80l-30 35v30l-20-10v-20z"','s4 f4',3.6)+T(300,315,'Tìm, lọc, đánh giá','b',4.2)+
+  `<path pathLength="1" class="st draw" ${D(5)} d="M355 240h60" marker-end="url(#ah)"/>`+
+  P('rect','x="430" y="200" width="60" height="70" rx="6"','s3 f3',5.6)+P('path','d="M442 220h36M442 234h26M442 248h32"','s3',6.2)+P('circle','cx="490" cy="270" r="14"','s2 fp',6.6)+P('path','d="M483 270l5 5 9-10"','s3',7)+T(460,315,'Thông tin','b',7.4)},
+{t:"Nội dung Module 1",d:16000,
+ n:"Module 1 gồm sáu nội dung chính: dữ liệu, thông tin và tri thức trong môi trường số; kỹ thuật duyệt, tìm kiếm và lọc thông tin; kỹ thuật làm sạch dữ liệu; đánh giá độ tin cậy của dữ liệu; quản lý, tổ chức và lưu trữ dữ liệu; cuối cùng là sao lưu, bảo mật và chia sẻ dữ liệu an toàn.",
+ v:()=>{
+  const L=[[4,'Dữ liệu – thông tin – tri thức trong môi trường số'],[3,'Kỹ thuật duyệt, tìm kiếm và lọc thông tin'],[1,'Kỹ thuật làm sạch dữ liệu'],[3,'Đánh giá độ tin cậy của dữ liệu'],[2,'Quản lý, tổ chức và lưu trữ dữ liệu'],[4,'Sao lưu, bảo mật và chia sẻ dữ liệu an toàn']];
+  let s='';
+  L.forEach((o,i)=>{const y=12+i*56,n=.3+i*2.4;
+   s+=P('rect',`x="62" y="${y}" width="560" height="44" rx="22"`,'thin',n)+
+      P('circle',`cx="42" cy="${y+22}" r="22"`,`s${o[0]} f${o[0]}`,n)+T(42,y+28,String(i+1),'b big',n+.3)+
+      T(88,y+28,o[1],'b',n+.6,'start');});
+  return s;}},
+{t:"Vì sao dữ liệu quan trọng?",d:11000,
+ n:"Dữ liệu là nền tảng cho mọi quyết định trong thế giới hiện đại. Từ marketing đến y tế, mọi nghề đều liên quan đến dữ liệu. Biết khai thác dữ liệu giúp bạn quyết định thông minh và hiệu quả hơn.",
+ v:()=>
+  P('rect','x="60" y="40" width="130" height="34" rx="17"','thin',.3)+T(125,62,'Marketing','m',.6)+
+  P('rect','x="205" y="40" width="130" height="34" rx="17"','thin',.9)+T(270,62,'Y tế','m',1.2)+
+  P('rect','x="350" y="40" width="170" height="34" rx="17"','thin',1.5)+T(435,62,'Mọi nghề đều dùng','m',1.8)+
+  P('circle','cx="120" cy="190" r="70"','s1 f1',2.5)+T(120,196,'Dữ liệu','b big',3.2)+AR(200,300,190,4.5)+
+  P('rect','x="310" y="145" width="300" height="90" rx="18"','s3 f3',5.5)+T(460,184,'Quyết định thông minh','b big',6.2)+T(460,210,'hiệu quả hơn','b big',6.4)},
+{t:"Dữ liệu – Thông tin – Tri thức",d:22000,
+ n:"Dữ liệu là những giá trị thô, chưa xử lý, ví dụ dãy điểm 7, 5, 9, 10. Khi được tính toán và tổ chức, nó trở thành thông tin, như điểm trung bình môn Toán là 7,8. Kết hợp thông tin với kinh nghiệm, ta có tri thức: nếu điểm trung bình dưới 6, cần điều chỉnh phương pháp học. Giá trị tăng dần từ thấp, trung bình đến cao.",
+ v:()=>
+  BOX(20,40,170,120,4,'Dữ liệu',['Thô, chưa xử lý','7, 5, 9, 10'],.3)+AR(193,232,100,3)+
+  BOX(235,40,170,120,1,'Thông tin',['Đã xử lý, có ý nghĩa','TB môn Toán: 7.8'],4)+AR(408,447,100,8)+
+  BOX(450,40,170,120,3,'Tri thức',['Hiểu sâu, hành động','TB dưới 6 → đổi cách học'],9)+
+  P('rect','x="75" y="270" width="60" height="30"','s4 f4',13)+T(105,322,'Giá trị thấp','m',13.5)+
+  P('rect','x="290" y="240" width="60" height="60"','s1 f1',15)+T(320,322,'Trung bình','m',15.5)+
+  P('rect','x="505" y="200" width="60" height="100"','s3 f3',17)+T(535,322,'Giá trị cao','m',17.5)},
+{t:"Ba loại dữ liệu",d:18000,
+ n:"Dữ liệu có cấu trúc được tổ chức theo hàng và cột cố định, như bảng Excel hay cơ sở dữ liệu SQL. Dữ liệu bán cấu trúc có thẻ hoặc dấu phân cách nhưng không có sơ đồ cứng, như JSON, XML. Dữ liệu phi cấu trúc gồm văn bản, hình ảnh, video, âm thanh, chiếm khoảng 80 phần trăm dữ liệu số hiện nay.",
+ v:()=>
+  P('rect','x="62" y="40" width="90" height="70"','s1 f1',.3)+P('path','d="M62 63h90M62 86h90M92 40v70M122 40v70"','s1',.8)+
+  T(107,150,'Có cấu trúc','b big',1.5)+T(107,172,'Bảng, Excel, SQL','m',1.8)+T(107,190,'Hàng và cột rõ ràng','m',1.8)+
+  T(320,100,'{ }','h1',5)+T(320,150,'Bán cấu trúc','b big',5.5)+T(320,172,'JSON, XML, NoSQL','m',5.8)+T(320,190,'Có thẻ, không sơ đồ cứng','m',5.8)+
+  P('rect','x="476" y="48" width="30" height="42" rx="3"','s2',9.5)+P('rect','x="514" y="52" width="40" height="34" rx="3"','s2',9.8)+P('path','d="M518 82l10-14l8 8l6-6l8 12"','s2',10.1)+P('path','d="M562 70v10M568 62v26M574 66v18M580 72v6"','s2',10.4)+
+  T(533,150,'Phi cấu trúc','b big',10.8)+T(533,172,'Văn bản, ảnh, video,','m',11.1)+T(533,190,'âm thanh','m',11.1)+
+  P('rect','x="60" y="240" width="520" height="22" rx="11"','thin',13)+P('rect','x="60" y="240" width="416" height="22" rx="11"','s2 f2',13.5)+T(320,295,'Phi cấu trúc chiếm khoảng 80% dữ liệu số hiện nay','b',14.5)},
+{t:"Đặc điểm dữ liệu số",d:13000,
+ n:"Dữ liệu số có bốn đặc điểm: dễ sao chép và phân tán mà không mất chất lượng; không bị hao mòn theo thời gian; được tạo mới rất nhanh với khối lượng khổng lồ mỗi giây; và có thể xử lý tự động bằng trí tuệ nhân tạo.",
+ v:()=>{const C=[[1,'Dễ sao chép và phân tán','Nhân bản mà không mất chất lượng'],[4,'Không bị hao mòn','Không hư hỏng theo thời gian'],[3,'Tạo mới rất nhanh','Khối lượng khổng lồ mỗi giây'],[2,'Xử lý tự động bằng AI','Phân tích bằng trí tuệ nhân tạo']];let s='';
+  C.forEach((o,i)=>{const x=30+i%2*300,y=50+Math.floor(i/2)*140,n=.3+i*2.8;
+   s+=P('rect',`x="${x}" y="${y}" width="280" height="110" rx="16"`,`s${o[0]} f${o[0]}`,n)+P('circle',`cx="${x+36}" cy="${y+55}" r="16"`,`s${o[0]}`,n+.3)+
+      T(x+66,y+50,o[1],'b',n+.6,'start')+T(x+66,y+74,o[2],'m',n+.8,'start');});return s;}},
+{t:"Chu trình dữ liệu",d:19000,
+ n:"Dữ liệu đi qua sáu giai đoạn: thu thập từ nhiều nguồn, lưu trữ an toàn, xử lý bằng cách làm sạch và biến đổi, phân tích để khám phá quy luật, trích xuất thông tin, và cuối cùng là ứng dụng tri thức để hành động.",
+ v:()=>{const C=[['1. Thu thập','từ nhiều nguồn'],['2. Lưu trữ','an toàn'],['3. Xử lý','làm sạch, biến đổi'],['4. Phân tích','khám phá quy luật'],['5. Trích xuất thông tin','từ dữ liệu đã phân tích'],['6. Ứng dụng tri thức','hiểu sâu và hành động']];
+  let s=P('ellipse','cx="320" cy="180" rx="230" ry="120"','thin',0)+T(320,186,'Vòng đời dữ liệu','b big',.5);
+  C.forEach((o,i)=>{const g=(-90+60*i)*Math.PI/180,x=Math.round(320+230*Math.cos(g)),y=Math.round(180+120*Math.sin(g)),n=1+i*2.7,k=[4,1,3,2,1,3][i];
+   s+=P('rect',`x="${x-85}" y="${y-28}" width="170" height="56" rx="14"`,`s${k} f${k} fp`,n)+T(x,y-4,o[0],'b',n+.4)+T(x,y+16,o[1],'m',n+.6);});return s;}},
+{t:"Ví dụ: một buổi học online",d:17000,
+ n:"Lấy ví dụ buổi học trực tuyến. Dữ liệu gồm giờ đăng nhập, lịch sử trò chuyện và điểm danh tự động. Từ đó ta có thông tin như báo cáo số sinh viên vắng hoặc vào muộn và các chủ đề được thảo luận nhiều. Cuối cùng là tri thức: tiết đầu sau kỳ nghỉ lễ thường có nhiều sinh viên vào muộn, nên cần nhắc nhở hoặc khởi động hấp dẫn.",
+ v:()=>
+  BOX(20,40,170,190,4,'Dữ liệu',['Giờ đăng nhập','Lịch sử trò chuyện','Điểm danh tự động'],.3)+AR(193,232,135,3)+
+  BOX(235,40,170,190,1,'Thông tin',['Báo cáo sinh viên','vắng hoặc vào muộn','Chủ đề thảo luận','nhiều nhất'],5)+AR(408,447,135,9)+
+  BOX(450,40,170,190,3,'Tri thức',['Tiết đầu sau kỳ nghỉ','thường vào lớp muộn','→ Cần nhắc nhở hoặc','hoạt động khởi động'],11)},
+{t:"Một số sai lầm phổ biến",d:15000,
+ n:"Hiểu chu trình dữ liệu cần đi kèm việc tránh sai lầm. Một: nhầm dữ liệu thô với tri thức, trong khi tri thức là kết quả của phân tích và tổng hợp. Hai: dùng dữ liệu thiếu ngữ cảnh, dễ dẫn đến diễn giải sai lệch. Ba: đánh giá chủ quan, cảm tính; hãy để dữ liệu lên tiếng bằng chứng cứ cụ thể.",
+ v:()=>
+  BOXS(20,30,190,200,2,'Sai lầm 1',['Nhầm dữ liệu thô','với tri thức','Tri thức là kết quả','của phân tích, tổng hợp'],.3)+
+  BOXS(225,30,190,200,4,'Sai lầm 2',['Dùng dữ liệu','thiếu ngữ cảnh','Luôn hiểu rõ nguồn gốc','và ý nghĩa của dữ liệu'],5)+
+  BOXS(430,30,190,200,1,'Sai lầm 3',['Đánh giá chủ quan','Tránh kết luận cảm tính,','để dữ liệu “lên tiếng”','bằng chứng cụ thể'],10)},
+{t:"Thực hành khai phá dữ liệu",d:17000,
+ n:"Bài tập 1: phân loại mỗi mục là dữ liệu, thông tin hay tri thức: video TikTok, bài báo khoa học, nhật ký máy chủ, ảnh chụp bảng điểm. Bài tập 2: từ kinh nghiệm của bạn, tìm ví dụ cho dữ liệu, thông tin và tri thức; chẳng hạn phiếu khảo sát chưa xử lý, báo cáo tổng hợp khảo sát, và nhận định sinh viên ưu tiên khóa học thực hành hơn lý thuyết.",
+ v:()=>
+  BOXS(20,25,300,260,1,'Bài tập 1: Phân loại dữ liệu',['Dữ liệu, Thông tin hay Tri thức?','• Video TikTok','• Bài báo khoa học','• Nhật ký máy chủ (Server log)','• Ảnh chụp bảng điểm'],.3)+
+  BOXS(335,25,285,260,3,'Bài tập 2: Tìm ví dụ',['Một ví dụ cho mỗi khái niệm:','• Dữ liệu: phiếu khảo sát','   chưa xử lý','• Thông tin: báo cáo tổng hợp','• Tri thức: “SV ưu tiên khóa','   học thực hành hơn lý thuyết”'],6)},
+{t:"Kỹ thuật duyệt, tìm kiếm và lọc thông tin",d:14000,
+ n:"Phần 2: khám phá cách làm chủ thông tin trong thời đại số. Trước hết là bốn vấn đề thường gặp: thông tin quá tải, kết quả không liên quan, nội dung bị nhiễu bởi quảng cáo, và tin giả, nội dung rác.",
+ v:()=>GRID([[2,'Thông tin quá tải','Khó xác định điều cần thiết'],[4,'Kết quả không liên quan','Không đúng nhu cầu'],[1,'Nội dung bị nhiễu','Quảng cáo, thông tin sai lệch'],[3,'Fake news và spam','Cần kỹ năng đánh giá']])},
+{t:"Kỹ thuật đọc lướt: Skimming",d:20000,
+ n:"Skimming giúp nắm ý chính trong khoảng 10 đến 20 giây, qua bốn bước: xem tiêu đề, xem mục lục và các đề mục, đọc câu mở đầu mỗi đoạn, và nhận diện từ khóa lặp lại. Ví dụ trên trang VNExpress: chú ý tiêu đề phụ, lời dẫn, hình ảnh và các đoạn in đậm. Sinh viên phải chỉ ra đoạn chính trong vòng 15 giây.",
+ v:()=>{const C=[['01 Xem tiêu đề',['Tiêu đề chính, phụ','hiểu chủ đề chung']],['02 Xem mục lục',['Lướt các đề mục','nắm cấu trúc']],['03 Câu mở đầu',['Mỗi đoạn có','chứa ý chính']],['04 Từ khóa',['Cụm từ quan trọng','lặp lại nhiều lần']]];
+  let s=P('circle','cx="250" cy="34" r="18"','s2',0)+P('path','d="M250 34v-10M250 34l8 5"','s2',.4)+T(278,40,'10–20 giây','b big',.8,'start');
+  C.forEach((o,i)=>{s+=BOX(20+i*155,70,140,130,[1,3,4,2][i],o[0],o[1],1.5+i*2.4).replace(/class="r b big"/g,'class="r b"');});
+  return s+T(320,250,'Ví dụ: trang VNExpress – tiêu đề phụ, lời dẫn, hình ảnh, đoạn in đậm','m',11)+T(320,276,'Thử thách: chỉ ra đoạn chính trong 15 giây','b',12.5);}},
+{t:"Kỹ thuật Scanning",d:11000,
+ n:"Scanning là kỹ năng tìm nhanh thông tin cụ thể như số liệu, tên, ngày tháng trong một văn bản dài. Ví dụ: tìm năm 1975 trong một bài viết mười nghìn chữ.",
+ v:()=>{let s=P('rect','x="140" y="30" width="360" height="230" rx="10"','',0);
+  for(let i=0;i<9;i++)s+=P('path',`d="M165 ${65+i*22}h${i%3==1?250:300}"`,'thin',.3+i*.1);
+  return s+P('rect','x="290" y="127" width="64" height="22" rx="4"','s4 f4',2)+T(322,143,'1975','b',2.6)+P('circle','cx="430" cy="170" r="30"','s1',3.5)+P('path','d="M452 192l22 22"','s1',3.9)+T(320,305,'Tìm đúng số liệu, tên, ngày tháng cần thiết','b',5)}},
+{t:"Chiến lược duyệt web hiệu quả",d:18000,
+ n:"Để tránh thông tin sai lệch, hãy xem tên miền như gov, edu, org, com; kiểm tra uy tín của tác giả và tổ chức; phân biệt thông tin với quảng cáo; cảnh giác tiêu đề giật tít; và đảm bảo thông tin còn mới nhất.",
+ v:()=>{const R=[['Xem domain','Kiểm tra đuôi .gov, .edu, .org, .com'],['Độ uy tín','Tìm thông tin về tác giả, tổ chức'],['Nhận diện quảng cáo','Phân biệt thông tin với quảng cáo'],['Nhận diện clickbait','Cảnh giác tiêu đề giật tít, phóng đại'],['Ngày cập nhật','Đảm bảo thông tin còn mới nhất']];let s='';
+  R.forEach((o,i)=>{const y=20+i*64,n=.3+i*3.2;s+=P('circle',`cx="60" cy="${y+22}" r="20"`,'s3 f3',n)+P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4)+T(100,y+18,o[0],'b big',n+.7,'start')+T(100,y+40,o[1],'m',n+.9,'start');});return s;}},
+{t:"Google Search nâng cao",d:20000,
+ n:"Dùng cú pháp đặc biệt để thu hẹp kết quả: dấu ngoặc kép để tìm đúng cụm từ; site để chỉ tìm trong một tên miền; filetype để tìm theo định dạng tệp; intitle để tìm trong tiêu đề; AND để bắt buộc nhiều cụm; và dấu trừ để loại từ khóa không mong muốn.",
+ v:()=>{const R=[['“từ khóa”','Tìm đúng cụm từ'],['site:edu.vn','Chỉ tìm trong một miền'],['filetype:pdf','Tìm tệp theo định dạng'],['intitle:','Tìm trong tiêu đề trang'],['“A” AND “B”','Bắt buộc cả hai cụm'],['-từ khóa','Loại từ khóa không muốn']];
+  let s=P('rect','x="60" y="14" width="520" height="44" rx="22"','s1',0)+P('circle','cx="90" cy="36" r="8"','s1',.3)+P('path','d="M96 42l8 8"','s1',.5)+T(120,42,'“Python data analysis” filetype:pdf','b',.8,'start');
+  R.forEach((o,i)=>{const y=100+i*41,n=2+i*2.8;s+=P('rect',`x="60" y="${y-22}" width="200" height="32" rx="8"`,`s${[1,3,4,2,1,3][i]} f${[1,3,4,2,1,3][i]}`,n)+T(160,y,o[0],'b',n+.3)+T(290,y,o[1],'m',n+.6,'start');});return s;}},
+{t:"Tìm kiếm học thuật và dataset",d:17000,
+ n:"Để nghiên cứu sâu hơn, dùng các nền tảng học thuật như Google Scholar, RefSeek, ScienceDirect, Springer Link, ProQuest. Ví dụ tìm bài Convolutional Neural Network từ 2019 đến 2023 trên Google Scholar. Còn bộ dữ liệu công khai thì dùng Google Dataset Search, nhập chủ đề như Dengue cases CSV rồi thu hẹp bằng định dạng hoặc nguồn.",
+ v:()=>{let s=P('rect','x="20" y="30" width="300" height="270" rx="14"','s1 f1',.3)+T(170,62,'Tài liệu học thuật','b big',.8);
+  ['Google Scholar','RefSeek','ScienceDirect','Springer Link','ProQuest'].forEach((a,j)=>s+=T(170,100+j*28,a,'',1.4+j*.6));
+  s+=T(170,252,'Ví dụ: “Convolutional Neural Network”','m',5)+T(170,272,'năm 2019 – 2023 trên Google Scholar','m',5);
+  return s+P('rect','x="340" y="30" width="280" height="270" rx="14"','s3 f3',8)+T(480,62,'Google Dataset Search','b big',8.5)+
+   T(480,100,'Hàng triệu dataset công khai','',9.2)+T(480,150,'Ví dụ: “Dengue cases CSV”','b',10.5)+T(480,200,'Thu hẹp kết quả bằng','m',12)+T(480,220,'định dạng file hoặc nguồn dữ liệu','m',12);}},
+{t:"Lọc nội dung theo định dạng file",d:14000,
+ n:"Lọc theo định dạng giúp tìm đúng loại tài liệu: filetype pdf cho báo cáo và sách điện tử; xlsx cho bảng tính thống kê; json cho dữ liệu API; và mp4, jpg, png cho video và hình ảnh.",
+ v:()=>GRID([[1,'filetype:pdf','Báo cáo, sách điện tử, tài liệu'],[3,'filetype:xlsx','Bảng tính thống kê, tài chính'],[4,'filetype:json','Dữ liệu API, lập trình'],[2,'filetype:mp4, jpg, png','Video và hình ảnh']])},
+{t:"Web scraping",d:14000,
+ n:"Web scraping là tự động trích xuất dữ liệu từ các trang web. Trong Python, thư viện BeautifulSoup giúp phân tích HTML và lấy dữ liệu. Ứng dụng gồm thu thập tin tức, giá sản phẩm và dữ liệu học thuật.",
+ v:()=>
+  P('rect','x="30" y="40" width="150" height="110" rx="10"','s1 f1',.3)+P('path','d="M30 62h150M48 85h110M48 105h90M48 125h100"','s1',.8)+T(105,178,'Trang web','b',1.4)+AR(190,240,95,2)+
+  P('rect','x="245" y="55" width="150" height="80" rx="14"','s4 f4',2.6)+T(320,90,'Python','b big',3)+T(320,114,'BeautifulSoup','m',3.2)+AR(400,450,95,4.2)+
+  P('rect','x="460" y="40" width="150" height="110" rx="10"','s3 f3',5)+P('path','d="M460 77h150M460 113h150M510 40v110M560 40v110"','s3',5.4)+T(535,178,'Dữ liệu','b',6)+
+  T(30,236,'Ứng dụng:','b',7,'start')+
+  P('rect','x="30" y="252" width="170" height="40" rx="20"','thin',7.4)+T(115,277,'Tin tức','m',7.6)+P('rect','x="235" y="252" width="170" height="40" rx="20"','thin',8.2)+T(320,277,'Giá sản phẩm','m',8.4)+P('rect','x="440" y="252" width="170" height="40" rx="20"','thin',9)+T(525,277,'Dữ liệu học thuật','m',9.2)},
+{t:"Sai lầm phổ biến khi tìm kiếm",d:14000,
+ n:"Bốn sai lầm hay gặp: dùng từ khóa quá dài và chung chung; không dùng toán tử tìm kiếm; tin vào kết quả đầu tiên mà không kiểm chứng; và không xem xét nguồn của thông tin.",
+ v:()=>GRID([[2,'Từ khóa quá dài','Chung chung, không có trọng tâm','Kết quả thiếu chính xác'],[2,'Không dùng toán tử','AND, OR, NOT, dấu “ ”, dấu -','Phải sàng lọc thủ công'],[2,'Tin kết quả đầu tiên','Chưa chắc chính xác','Cần kiểm chứng'],[2,'Không xem nguồn','Nguồn học thuật, chính phủ','thường đáng tin hơn']],1)},
+{t:"Bài thực hành tìm kiếm",d:18000,
+ n:"Ba bài thực hành. Một: tìm tài liệu PDF chất lượng cao về Digital literacy, ghi lại cú pháp và liên kết tốt nhất. Hai: tìm ba dataset đáng tin cậy về Traffic prediction trên Google Dataset Search, Kaggle hoặc UCI. Ba: lọc bài viết AI in education trên tên miền chính phủ và ghi lại cú pháp đã dùng.",
+ v:()=>
+  BOX(20,40,190,200,1,'Thực hành 1',['Tìm tài liệu PDF','“Digital literacy”','Gợi ý: filetype:pdf','Chọn theo nguồn gốc'],.3)+
+  BOX(225,40,190,200,3,'Thực hành 2',['Tìm 3 dataset tin cậy','“Traffic prediction”','Dataset Search, Kaggle,','UCI ML Repository'],6)+
+  BOX(430,40,190,200,4,'Thực hành 3',['Lọc bài viết','“AI in education”','Gợi ý: site:gov','Ghi lại cú pháp'],12)},
+{t:"Vì sao cần làm sạch dữ liệu?",d:17000,
+ n:"Phần 3: Kỹ thuật làm sạch dữ liệu. Sau phần này bạn nêu được vai trò của dữ liệu sạch, nhận diện lỗi phổ biến, dùng Excel hoặc Google Sheets để xử lý, và hiểu quy trình làm sạch thực tế. Vì sao cần làm sạch? Vì phần lớn thời gian phân tích dành cho việc này, dữ liệu thô thường có lỗi, dữ liệu bẩn dẫn đến kết luận sai, và dữ liệu sạch mới đáng tin cậy.",
+ v:()=>GRID([[4,'80% thời gian phân tích','Dành cho chuẩn bị và làm sạch'],[2,'Dữ liệu thô hay bị lỗi','Sai lệch, thiếu sót, trùng lặp'],[2,'Dữ liệu bẩn','Dẫn đến kết luận sai'],[3,'Dữ liệu sạch','Nền tảng cho quyết định sáng suốt']])},
+{t:"Các lỗi dữ liệu phổ biến",d:13000,
+ n:"Sáu lỗi thường gặp: thiếu dữ liệu, trùng lặp, sai định dạng, không nhất quán, ngoại lai và giá trị không hợp lệ.",
+ v:()=>{const E=[[2,'Thiếu dữ liệu','Missing values'],[4,'Trùng lặp','Duplicates'],[1,'Sai định dạng','Ngày, số, chữ hoa/thường'],[3,'Không nhất quán','Cùng ý, nhiều cách ghi'],[2,'Ngoại lai','Outliers'],[4,'Giá trị không hợp lệ','Ngoài phạm vi cho phép']];let s='';
+  E.forEach((o,i)=>{const X=30+i%2*300,Y=30+Math.floor(i/2)*100,n=.3+i*1.8;s+=P('rect',`x="${X}" y="${Y}" width="280" height="80" rx="16"`,`s${o[0]} f${o[0]}`,n)+T(X+24,Y+36,o[1],'b big',n+.4,'start')+T(X+24,Y+60,o[2],'m',n+.6,'start');});return s;}},
+{t:"Ví dụ dữ liệu thô: bảng điểm lớp A",d:20000,
+ n:"Đây là bảng điểm lớp A chứa nhiều lỗi. Mã số 01 xuất hiện hai dòng nên bị trùng. Ngày sinh định dạng không thống nhất, và có ô bị trống. Điểm 200 là sai, một ô điểm bị thiếu. Cột ngành ghi CNTT, CN.TT, IT và Công nghệ thông tin, không đồng bộ.",
+ v:()=>{const H=['MSSV','Họ tên','Ngày sinh','Điểm','Ngành'],X=[30,95,235,365,435],W=[60,135,120,60,185];
+  const R=[['01','Nguyễn An','1/12/2003','7','CNTT'],['01','Nguyễn An','01-12-2003','7','CN.TT'],['02','Lê Minh','','200','IT'],['03','Trần Bình','12/10/2002','','Công nghệ thông tin']];
+  const HL={'0,2':4,'1,2':4,'3,2':4,'2,2':2,'2,3':2,'3,3':2,'0,4':1,'1,4':1,'2,4':1,'3,4':1};
+  let s='';H.forEach((h,j)=>s+=T(X[j],40,h,'b',.2,'start'))+s;s+=P('path','d="M24 52H622"','thin',.4);
+  R.forEach((r,i)=>r.forEach((c,j)=>{const k=HL[i+','+j],n=1+i*.8+j*.15,y=62+i*44;
+   if(k)s+=P('rect',`x="${X[j]-6}" y="${y}" width="${W[j]}" height="34" rx="6"`,`s${k} f${k}`,n);
+   s+=T(X[j],y+23,c||'(trống)',c?'':'m',n+.2,'start');}));
+  [[4,'Ngày không nhất quán',30],[2,'Thiếu hoặc sai giá trị',215],[1,'Ngành không đồng bộ',410]].forEach((l,i)=>{const n=6+i*2;s+=P('rect',`x="${l[2]}" y="268" width="16" height="16" rx="3"`,`s${l[0]} f${l[0]}`,n)+T(l[2]+24,281,l[1],'m',n+.2,'start');});
+  return s+T(320,326,'Hai dòng đầu cùng MSSV 01: dữ liệu trùng lặp','b',12);}},
+{t:"Dữ liệu thiếu (Missing values)",d:24000,
+ n:"Dữ liệu thiếu do người nhập bỏ sót, không thu thập được lúc khảo sát, hoặc sai định dạng khiến ô bị trống. Cách xử lý: điền giá trị trung bình, median hoặc mode với dữ liệu số; điền giá trị phổ biến nhất với dữ liệu danh mục; suy luận từ trường liên quan; hoặc loại bỏ dòng nếu thiếu quá nhiều. Ví dụ: ngày sinh trống thì đối chiếu hệ thống trung tâm; điểm trống thì dùng trung bình môn học hoặc nhờ giảng viên bổ sung.",
+ v:()=>{let s=P('rect','x="20" y="20" width="250" height="190" rx="14"','s2 f2',.3)+T(145,50,'Nguyên nhân','b big',.6);
+  ['• Người nhập bỏ sót','• Không thu thập được','   lúc khảo sát','• Sai định dạng, ô bị trống'].forEach((a,j)=>s+=T(36,88+j*26,a,'',1+j*.6,'start'));
+  s+=P('rect','x="290" y="20" width="330" height="190" rx="14"','s3 f3',4)+T(455,50,'Giải pháp','b big',4.3);
+  ['• Trung bình / median / mode (số)','• Giá trị phổ biến nhất (danh mục)','• Suy luận từ trường liên quan','• Bỏ dòng nếu thiếu quá nhiều'].forEach((a,j)=>s+=T(306,88+j*30,a,'',5+j*1.2,'start'));
+  return s+P('rect','x="20" y="232" width="290" height="98" rx="14"','thin',11)+T(36,260,'Cột “Ngày sinh” trống','b',11.4,'start')+T(36,284,'Đối chiếu hệ thống trung tâm','m',11.8,'start')+
+   P('rect','x="330" y="232" width="290" height="98" rx="14"','thin',15)+T(346,260,'Cột “Điểm” trống','b',15.4,'start')+T(346,284,'Dùng trung bình môn học hoặc','m',15.8,'start')+T(346,304,'nhờ giảng viên bổ sung','m',15.8,'start');}},
+{t:"Dữ liệu trùng lặp (Duplicates)",d:20000,
+ n:"Dữ liệu trùng gây sai lệch khi tổng hợp, ví dụ số lượng sinh viên. Có thể là hai dòng giống hệt, hoặc trùng nhưng khác vài ký tự, rất khó thấy bằng mắt. Ví dụ MSSV 01 có hai dòng cho Nguyễn An, cần hợp nhất thành một. Trong Excel hoặc Google Sheets dùng Data, Remove Duplicates, hoặc COUNTIF để phát hiện. Trong Python dùng drop_duplicates của Pandas.",
+ v:()=>
+  P('rect','x="40" y="30" width="260" height="34"','s2 f2',.3)+T(60,53,'01 · Nguyễn An · 7','',.6,'start')+
+  P('rect','x="40" y="70" width="260" height="34"','s2 f2',1)+T(60,93,'01 · Nguyễn An · 7','',1.3,'start')+
+  T(345,60,'Hợp nhất','m',2.2)+AR(310,380,80,2)+
+  P('rect','x="390" y="50" width="230" height="34"','s3 f3',3.2)+T(410,73,'01 · Nguyễn An · 7','',3.5,'start')+
+  T(320,140,'Trùng gây sai lệch khi tổng hợp, ví dụ số lượng sinh viên','m',4.5)+
+  BOXS(20,165,300,150,1,'Excel / Google Sheets',['Data → Remove Duplicates','COUNTIF: phát hiện giá trị lặp'],6)+
+  BOXS(340,165,280,150,4,'Python (Pandas)',['df.drop_duplicates()','Xoá các dòng trùng lặp'],11)},
+{t:"Lỗi định dạng và cách chuẩn hoá",d:20000,
+ n:"Lỗi định dạng gồm ngày, số và chữ hoa chữ thường. Ví dụ 01/12/2003 và 1-12-03 là cùng một ngày; 7,5 và 7.5 có thể bị Excel hiểu sai; CNTT và cntt cũng gây vấn đề. Để chuẩn hoá, dùng hàm TEXT chuyển số thành văn bản theo định dạng, VALUE chuyển văn bản thành số, và TRIM loại khoảng trắng thừa.",
+ v:()=>
+  BOXS(20,20,190,120,2,'Định dạng ngày',['01/12/2003 và 1-12-03','cùng ngày, khác định dạng'],.3)+
+  BOXS(225,20,190,120,4,'Định dạng số',['7,5 và 7.5','Excel có thể hiểu sai'],3)+
+  BOXS(430,20,190,120,1,'Chữ hoa / thường',['CNTT và cntt','khác nhau khi phân tích'],6)+
+  `<path pathLength="1" class="st draw" ${D(8.5)} d="M320 150V185" marker-end="url(#ah)"/>`+
+  P('rect','x="20" y="195" width="600" height="130" rx="14"','s3 f3',9.5)+T(320,222,'Chuẩn hoá bằng hàm','b big',10)+
+  [['TEXT()','số → văn bản theo định dạng'],['VALUE()','văn bản → số'],['TRIM()','bỏ khoảng trắng thừa']].map((o,i)=>P('rect',`x="${40+i*195}" y="238" width="180" height="70" rx="10"`,'thin fp',11+i*2.4)+T(130+i*195,266,o[0],'b',11.4+i*2.4)+T(130+i*195,288,o[1],'m',11.8+i*2.4)).join('')},
+{t:"Dữ liệu không nhất quán",d:17000,
+ n:"Khi cùng một khái niệm được nhập nhiều cách, như CNTT, IT, Công nghệ thông tin, ta cần chuẩn hoá. Tạo bảng ánh xạ đưa các giá trị về một giá trị chuẩn, dùng VLOOKUP hoặc XLOOKUP với bảng đó để tự động thay thế, và xây dựng danh mục chuẩn, gồm mã và tên, cho các trường quan trọng.",
+ v:()=>{let s='';
+  ['CNTT','IT','Công nghệ thông tin'].forEach((a,i)=>{const y=50+i*70;s+=P('rect',`x="30" y="${y}" width="190" height="44" rx="22"`,'s2 f2',.3+i*.6)+T(125,y+28,a,'b',.6+i*.6)+`<path pathLength="1" class="st draw thin" ${D(2.5+i*.4)} d="M222 ${y+22}L268 ${130+(i-1)*14}" marker-end="url(#ah)"/>`;});
+  return s+P('rect','x="275" y="95" width="150" height="90" rx="14"','s4 f4',3.8)+T(350,132,'Bảng ánh xạ','b',4.2)+T(350,156,'VLOOKUP / XLOOKUP','m',4.5)+AR(430,455,140,6)+
+   P('rect','x="460" y="108" width="160" height="64" rx="14"','s3 f3',7)+T(540,135,'Công nghệ','b',7.4)+T(540,156,'thông tin','b',7.4)+
+   T(320,280,'Danh mục chuẩn (code – name) cho các trường quan trọng','m',10)}},
+{t:"Dữ liệu ngoại lai (Outliers)",d:22000,
+ n:"Ngoại lai là giá trị nằm ngoài phạm vi bình thường, thường do lỗi nhập liệu hoặc lỗi hệ thống. Ví dụ điểm thi thang 0 đến 10 mà xuất hiện 200. Giải pháp: kiểm tra phạm vi hợp lệ, rồi loại bỏ hoặc sửa. Trong Excel có thể phát hiện bằng Conditional Formatting, Number Filters, hoặc tính khoảng tứ phân vị IQR bằng hàm QUARTILE.INC.",
+ v:()=>{let s=P('path','d="M50 100H590"','',0)+P('rect','x="100" y="72" width="200" height="56" rx="8"','s3 f3',.6)+T(200,62,'Hợp lệ: 0 – 10','m',1)+T(100,150,'0','m',1.2)+T(300,150,'10','m',1.2);
+  [140,175,210,245,275].forEach((x,i)=>s+=P('circle',`cx="${x}" cy="100" r="6"`,'s1 f1',1.5+i*.2));
+  return s+P('circle','cx="540" cy="100" r="10"','s2 f2',3)+T(540,135,'200','b big',3.5)+T(540,155,'Ngoại lai','m',3.7)+
+   BOXS(20,195,190,125,1,'Conditional Formatting',['Tô sáng ô vượt ngưỡng'],6)+BOXS(225,195,190,125,4,'Number Filters',['Lọc lớn hơn, nhỏ hơn,','top 10'],10)+BOXS(430,195,190,125,3,'Hàm IQR',['QUARTILE.INC tính','khoảng tứ phân vị'],14);}},
+{t:"Công cụ làm sạch dữ liệu",d:20000,
+ n:"Google Sheets và Excel có các hàm TRIM, CLEAN, UPPER, LOWER, PROPER, cùng Remove Duplicates và Data Validation để chặn lỗi ngay khi nhập. Power Query nhập dữ liệu từ nhiều nguồn, ghi nhớ các bước làm sạch và tự áp dụng khi làm mới. Với Python, Pandas có dropna, fillna, drop_duplicates và astype.",
+ v:()=>
+  BOXS(20,25,190,290,1,'Sheets / Excel',['TRIM(): bỏ khoảng trắng','CLEAN(): xoá ký tự ẩn','UPPER(), LOWER()','PROPER(): viết hoa đầu từ','Remove Duplicates','Data Validation'],.3)+
+  BOXS(225,25,190,290,4,'Power Query',['Nhập CSV, Excel, CSDL','Ghi nhớ các bước','Tự áp dụng khi','làm mới dữ liệu','Điền thiếu, xoá trùng'],6)+
+  BOXS(430,25,190,290,3,'Python + Pandas',['dropna(): bỏ dòng thiếu','fillna(): điền giá trị','drop_duplicates()','astype(): đổi kiểu'],12)},
+{t:"Demo: làm sạch dữ liệu lớp học",d:14000,
+ n:"Demo làm sạch dữ liệu lớp học qua ba bước: loại bỏ dữ liệu trùng lặp để mỗi học sinh chỉ xuất hiện một lần; chuẩn hoá cột ngành học, ví dụ CNTT và IT thành Công nghệ thông tin; và sửa định dạng ngày tháng về dd/mm/yyyy. Kết quả là dữ liệu sạch, sẵn sàng phân tích.",
+ v:()=>
+  BOX(20,30,180,170,2,'1. Bỏ trùng',['Mỗi học sinh','chỉ xuất hiện','một lần'],.3)+AR(203,222,115,3)+
+  BOX(225,30,190,170,1,'2. Chuẩn hoá ngành',['CNTT, IT','→ Công nghệ','thông tin'],4)+AR(418,437,115,8)+
+  BOX(440,30,180,170,4,'3. Sửa ngày',['Về một định dạng','dd/mm/yyyy'],9)+
+  P('rect','x="120" y="245" width="400" height="60" rx="30"','s3 f3',13)+T(320,282,'Dữ liệu sạch, sẵn sàng phân tích','b big',13.5)},
+{t:"Bài tập: làm sạch dữ liệu sinh viên",d:18000,
+ n:"Bài tập với file DiemSV chấm xlsx: tìm dữ liệu trùng lặp; chuẩn hoá cột ngành bằng bảng ánh xạ và VLOOKUP hoặc XLOOKUP; sửa ngày về dd/mm/yyyy; phát hiện điểm bất thường bằng Conditional Formatting hoặc IQR; và lưu kết quả vào một file sạch mới.",
+ v:()=>{const R=[['Tìm dữ liệu trùng lặp','Remove Duplicates hoặc hàm phù hợp'],['Chuẩn hoá cột ngành','Bảng ánh xạ + VLOOKUP / XLOOKUP'],['Sửa định dạng ngày','Tất cả về dd/mm/yyyy'],['Phát hiện điểm bất thường','Conditional Formatting hoặc IQR'],['Tạo file sạch','Lưu kết quả vào file mới']];let s='';
+  R.forEach((o,i)=>{const y=20+i*64,n=.3+i*3;s+=P('circle',`cx="60" cy="${y+22}" r="20"`,'s3 f3',n)+P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4)+T(100,y+18,o[0],'b big',n+.7,'start')+T(100,y+40,o[1],'m',n+.9,'start');});return s;}},
+{t:"Đánh giá độ tin cậy thông tin trong môi trường số",d:15000,
+ n:"Phần 4: Đánh giá độ tin cậy thông tin. Thế giới đang chìm trong biển thông tin nhưng không phải thứ gì cũng đáng tin. Mỗi ngày có hơn 2,5 tỉ GB dữ liệu được tạo ra, và tin giả lan truyền nhanh gấp 6 lần tin thật. Mạng xã hội là môi trường màu mỡ cho thông tin sai lệch, nên kỹ năng kiểm chứng là thiết yếu.",
+ v:()=>
+  P('rect','x="20" y="30" width="290" height="190" rx="16"','s1 f1',.3)+T(165,115,'2,5 tỷ GB','h1',.8)+T(165,150,'dữ liệu được tạo ra mỗi ngày','m',1.2)+
+  P('rect','x="330" y="30" width="290" height="190" rx="16"','s2 f2',3)+T(475,115,'6 lần','h1',3.5)+T(475,150,'tin giả lan nhanh hơn tin thật','m',3.9)+
+  T(320,275,'Mạng xã hội là môi trường màu mỡ cho thông tin sai lệch','b',7)+T(320,300,'Kiểm chứng thông tin là kỹ năng thiết yếu','m',8)},
+{t:"Các loại thông tin không đáng tin",d:21000,
+ n:"Thông tin sai lệch có nhiều dạng: tin giả là bịa đặt hoàn toàn; tin giật gân dùng tiêu đề gây sốc nhưng nội dung không tương xứng; tin sai lệch là thông tin không chính xác nhưng không có ý xấu; tin bịa đặt có chủ đích thì cố ý gây hiểu lầm hoặc thao túng; và deepfake là ảnh, video giả do AI tạo ra.",
+ v:()=>ROWS([['1','Tin giả (Fake news)','Bịa đặt hoàn toàn, thường mang mục đích xấu'],['2','Tin giật gân (Clickbait)','Tiêu đề gây sốc, nội dung không tương xứng'],['3','Tin sai lệch (Misinformation)','Không chính xác nhưng không có chủ ý xấu'],['4','Tin bịa đặt có chủ đích (Disinformation)','Cố ý gây hiểu lầm hoặc thao túng'],['5','Deepfake','Ảnh, video giả được AI chỉnh sửa']])},
+{t:"Đánh giá nguồn tin",d:18000,
+ n:"Trước khi tin một thông tin, hãy hỏi: ai tạo ra nó, họ có chuyên môn không, đây có phải trang chính thức không, và trang này từng đăng thông tin sai chưa. Các trang đuôi gov hoặc edu thường đáng tin hơn blog cá nhân như blogspot, hay tên miền không rõ ràng như xyz.",
+ v:()=>{const Q=['Ai tạo ra thông tin?','Họ có chuyên môn không?','Có phải trang chính thức?','Từng đăng tin sai chưa?'];let s='';
+  Q.forEach((q,i)=>{const X=30+i%2*300,Y=20+Math.floor(i/2)*75,n=.3+i*1.5;s+=P('rect',`x="${X}" y="${Y}" width="280" height="58" rx="29"`,'s1 f1',n)+T(X+140,Y+35,q,'b',n+.3);});
+  return s+P('rect','x="30" y="190" width="280" height="110" rx="16"','s3 f3',7)+T(170,225,'Thường đáng tin hơn','b',7.4)+T(170,258,'.gov   .edu','b big',7.8)+
+   P('rect','x="330" y="190" width="280" height="110" rx="16"','s2 f2',10)+T(470,225,'Cần dè chừng','b',10.4)+T(470,258,'.blogspot   .xyz','b big',10.8);}},
+{t:"Mô hình CRAAP",d:19000,
+ n:"Mô hình CRAAP đánh giá thông tin toàn diện qua năm tiêu chí: Currency, tính cập nhật; Relevance, mức độ liên quan; Authority, tác giả hoặc đơn vị uy tín; Accuracy, độ chính xác; và Purpose, mục đích là giáo dục hay câu view.",
+ v:()=>{const C=[['C','Currency',['Tính cập nhật']],['R','Relevance',['Mức độ','liên quan']],['A','Authority',['Tác giả,','đơn vị uy tín']],['A','Accuracy',['Độ chính xác']],['P','Purpose',['Giáo dục hay','câu view?']]];let s='';
+  C.forEach((o,i)=>{const x=14+i*126,cx=x+59,k=[1,3,4,2,1][i],n=.3+i*3.2;
+   s+=P('rect',`x="${x}" y="40" width="118" height="220" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${cx}" cy="100" r="28"`,`s${k} fp`,n+.2)+T(cx,110,o[0],'b big',n+.5)+T(cx,170,o[1],'b',n+.8)+o[2].map((l,j)=>T(cx,198+j*20,l,'m',n+1)).join('');});return s;}},
+{t:"Ví dụ áp dụng CRAAP",d:18000,
+ n:"Ba ví dụ. Bài báo năm 2017 về ChatGPT không còn phù hợp vì AI phát triển rất nhanh, nên Currency thấp. Blog cá nhân báo giá xăng tăng gấp đôi là nguồn không chính thức, thiếu xác minh, nên Accuracy thấp. Còn Bộ Giáo dục và Đào tạo công bố lịch thi là nguồn chính thống, có thẩm quyền, nên Authority cao.",
+ v:()=>
+  BOXS(20,30,190,140,2,'Báo 2017 về ChatGPT',['Không còn phù hợp:','AI thay đổi rất nhanh'],.3)+P('rect','x="20" y="195" width="190" height="50" rx="25"','s2 f2',3)+T(115,226,'Currency thấp','b',3.4)+
+  BOXS(225,30,190,140,2,'Blog: giá xăng gấp đôi',['Nguồn không chính thức,','thiếu xác minh'],6)+P('rect','x="225" y="195" width="190" height="50" rx="25"','s2 f2',9)+T(320,226,'Accuracy thấp','b',9.4)+
+  BOXS(430,30,190,140,3,'Bộ GD-ĐT: lịch thi',['Nguồn chính thống,','có thẩm quyền'],12)+P('rect','x="430" y="195" width="190" height="50" rx="25"','s3 f3',15)+T(525,226,'Authority cao','b',15.4)},
+{t:"Mô hình SIFT",d:20000,
+ n:"Mô hình SIFT kiểm chứng nhanh bốn bước. Stop: dừng lại, đừng chia sẻ hay tin ngay. Investigate the source: tìm hiểu trang web, tác giả, tổ chức. Find better coverage: xem các nguồn uy tín khác nói gì. Trace claims to the original: truy ngược về bằng chứng gốc.",
+ v:()=>ROWS([['S','Stop','Dừng lại, đừng chia sẻ hay tin ngay'],['I','Investigate the source','Tìm hiểu trang web, tác giả, tổ chức'],['F','Find better coverage','Xem các nguồn uy tín khác nói gì'],['T','Trace claims to the original','Truy ngược về bằng chứng gốc']],78)},
+{t:"Kiểm tra tác giả",d:18000,
+ n:"Độ tin cậy gắn với người tạo ra thông tin. Hãy kiểm tra hồ sơ cá nhân của tác giả, kiểm tra tính xác thực của các trích dẫn, và xem tổ chức đứng sau có uy tín và mục đích gì. Một bài báo chỉ ghi một chuyên gia y tế cho biết mà không nêu tên hay bằng cấp thì không đáng tin.",
+ v:()=>ROWS([['✓','Kiểm tra hồ sơ cá nhân','Lý lịch, kinh nghiệm, công việc trước đây'],['✓','Kiểm tra các trích dẫn','Xác thực và uy tín của nguồn được trích'],['✓','Kiểm tra tổ chức đứng sau','Có uy tín không? Mục đích là gì?']],64)+
+  P('rect','x="30" y="230" width="580" height="90" rx="16"','s2 f2',10)+T(320,262,'“Một chuyên gia y tế cho biết…”','b big',10.5)+T(320,292,'Không nêu tên, bằng cấp: không đáng tin, cần thông tin xác minh được','m',11)},
+{t:"Kiểm chứng nội dung",d:15000,
+ n:"Để kiểm chứng nội dung, hãy tìm nguồn thứ hai: đối chiếu ít nhất hai nguồn độc lập đáng tin cậy. Dùng Google Fact Check để tra cứu tin đã được kiểm chứng. Và ưu tiên báo chí chính thống, các trang khoa học có minh chứng rõ ràng.",
+ v:()=>
+  BOX(20,40,190,200,1,'Nguồn thứ 2',['Đối chiếu ít nhất','hai nguồn độc lập,','đáng tin cậy'],.3)+
+  BOX(225,40,190,200,3,'Fact Check',['Công cụ của Google','tra cứu tin đã','được kiểm chứng'],5)+
+  BOX(430,40,190,200,4,'Báo chí chính thống',['Ưu tiên báo lớn, uy tín','và trang khoa học','có minh chứng rõ'],10)},
+{t:"Dấu hiệu nhận biết tin giả",d:20000,
+ n:"Năm dấu hiệu của tin giả: tiêu đề giật gân dùng từ ngữ gây sốc; không có nguồn, thiếu dẫn chứng; hình ảnh mập mờ, chất lượng kém hoặc đã chỉnh sửa; lỗi chính tả, nội dung cẩu thả; và gây hoang mang, kích động. Ví dụ tiêu đề: sốc, tìm thấy rồng ba đầu ở Quảng Bình.",
+ v:()=>
+  P('rect','x="30" y="15" width="580" height="48" rx="12"','s2 f2',.3)+T(320,45,'“SỐC! TÌM THẤY RỒNG 3 ĐẦU Ở QUẢNG BÌNH!”','b',.6)+
+  BOXS(20,80,190,100,2,'Tiêu đề giật gân',['Từ ngữ gây sốc,','kịch tính'],2)+BOXS(225,80,190,100,4,'Không có nguồn',['Thiếu dẫn chứng,','số liệu cụ thể'],5)+BOXS(430,80,190,100,1,'Hình ảnh mập mờ',['Chất lượng kém,','đã qua chỉnh sửa'],8)+
+  BOXS(122,195,190,100,3,'Lỗi chính tả',['Nội dung cẩu thả,','nhiều lỗi ngữ pháp'],11)+BOXS(327,195,190,100,2,'Gây hoang mang',['Kích động, gây lo lắng','hoặc chia rẽ'],14)},
+{t:"Nhận diện hình ảnh giả",d:15000,
+ n:"Hình ảnh có thể bị thao túng theo ba cách: ảnh cũ được gắn vào sự kiện mới; ảnh deepfake do AI tạo hoặc chỉnh sửa, trông thật đến đáng kinh ngạc; và ảnh cắt ghép từ nhiều hình thành một nội dung sai lệch. Hãy dùng công cụ kiểm chứng hình ảnh chuyên dụng.",
+ v:()=>
+  BOX(20,40,190,190,4,'Ảnh cũ, sự kiện mới',['Dùng ảnh quá khứ','để minh hoạ cho','tin tức hiện tại'],.3)+
+  BOX(225,40,190,190,2,'Ảnh deepfake',['AI tạo hoặc chỉnh','sửa, khuôn mặt, cơ thể','trông rất thật'],5)+
+  BOX(430,40,190,190,1,'Ảnh cắt ghép',['Ghép nhiều hình','thành một để tạo','nội dung sai lệch'],10)+T(320,280,'Kiểm tra bằng công cụ kiểm chứng hình ảnh chuyên dụng','b',14)},
+{t:"Google Reverse Image Search",d:22000,
+ n:"Google Reverse Image Search giúp biết nguồn gốc và thời gian xuất hiện của ảnh: tải ảnh lên hoặc dán URL, Google tìm các trang đã đăng ảnh đó, rồi đối chiếu xem ảnh có bị dùng sai ngữ cảnh không. Ví dụ thực hành: ảnh được gọi là lốc xoáy tại Hà Nội năm 2023 thực chất là một cơn lốc xoáy ở Mỹ năm 2015.",
+ v:()=>
+  BOX(20,25,180,125,1,'Tải ảnh lên',['hoặc dán URL ảnh'],.3)+AR(203,222,90,3)+
+  BOX(225,25,190,125,4,'Google tìm',['các trang đã','đăng ảnh đó'],4)+AR(418,437,90,8)+
+  BOX(440,25,180,125,3,'Đối chiếu',['ngữ cảnh sử dụng','có bị sai không?'],9)+
+  P('rect','x="30" y="185" width="580" height="125" rx="16"','s2 f2',14)+T(320,222,'Ảnh “lốc xoáy tại Hà Nội 2023”','b big',14.5)+T(320,254,'thực chất là lốc xoáy xảy ra ở Mỹ năm 2015','b',16)+T(320,288,'Luôn xác minh hình ảnh trước khi chia sẻ','m',17.5)},
+{t:"Công cụ kiểm chứng tin giả",d:15000,
+ n:"Một số công cụ kiểm chứng tin giả: Google Fact Check tổng hợp bài kiểm chứng từ nhiều tổ chức uy tín; Snopes là trang kiểm chứng lâu đời và nổi tiếng; Hoaxy trực quan hoá sự lan truyền của tin giả trên mạng xã hội; và cổng thông tin Tin giả Việt Nam của Bộ Thông tin và Truyền thông để cảnh báo và xử lý tin giả.",
+ v:()=>GRID([[1,'Google Fact Check','Tổng hợp bài kiểm chứng','từ nhiều tổ chức uy tín'],[3,'Snopes','Trang kiểm chứng lâu đời','và nổi tiếng nhất'],[4,'Hoaxy','Trực quan hoá sự lan truyền','của tin giả trên mạng xã hội'],[2,'Tin giả Việt Nam','Cổng thông tin của Bộ TT&TT','cảnh báo và xử lý tin giả']])},
+{t:"Kiểm tra độ tin cậy của website",d:19000,
+ n:"Để đánh giá website: kiểm tra HTTPS, biểu tượng ổ khóa trên thanh địa chỉ; xem thông tin liên hệ rõ ràng; tìm chính sách biên tập; chú ý bài viết có tác giả rõ ràng; và cảnh giác khi quá nhiều quảng cáo pop-up, dấu hiệu của trang kém chất lượng.",
+ v:()=>ROWS([['✓','Kiểm tra HTTPS','Có biểu tượng ổ khóa trên thanh địa chỉ'],['✓','Thông tin liên hệ','Địa chỉ, số điện thoại, email rõ ràng'],['✓','Chính sách biên tập','Tiêu chuẩn và quy trình kiểm duyệt nội dung'],['✓','Tác giả rõ ràng','Có tên, chuyên môn hoặc tiểu sử'],['✗','Quảng cáo pop-up','Quá nhiều hoặc phản cảm: trang kém chất lượng']])},
+{t:"Thiên lệch (Bias)",d:20000,
+ n:"Thiên lệch ảnh hưởng đến cách tin tức được trình bày. Thiên lệch chính trị chỉ đưa tin có lợi cho một phe. Thiên lệch tôn giáo trình bày sự kiện từ một góc độ tôn giáo, làm méo sự thật. Thiên lệch cảm xúc dùng ngôn ngữ kích động để thao túng độc giả. Ví dụ: một trang báo chỉ đăng tin xấu về A và chỉ đăng tin tốt về B.",
+ v:()=>
+  BOXS(20,20,190,150,1,'Thiên lệch chính trị',['Chỉ đưa tin có lợi','cho một phe, bỏ qua','phía đối lập'],.3)+
+  BOXS(225,20,190,150,4,'Thiên lệch tôn giáo',['Nhìn sự kiện qua','một góc độ tôn giáo,','làm méo sự thật'],5)+
+  BOXS(430,20,190,150,2,'Thiên lệch cảm xúc',['Ngôn ngữ kích động,','khơi gợi cảm xúc','để thao túng'],10)+
+  P('rect','x="30" y="200" width="580" height="100" rx="16"','thin',15)+T(320,236,'Ví dụ: trang báo “chỉ đăng tin xấu về A,','b',15.5)+T(320,264,'chỉ đăng tin tốt về B” → thiên lệch rõ ràng','b',16)},
+{t:"Deepfake và bài viết do AI",d:21000,
+ n:"Deepfake có thể tạo video giả mạo người nổi tiếng nói hoặc làm điều họ chưa từng làm, và mô phỏng giọng nói rất khó phân biệt; ví dụ video deepfake của cựu Tổng thống Obama. Bài viết do AI thường có câu từ chung chung, lỗi logic nhỏ dù văn phong trôi chảy, và không dẫn nguồn hoặc dẫn nguồn không tồn tại. Gặp các dấu hiệu này, luôn kiểm chứng thêm.",
+ v:()=>{let s=P('rect','x="20" y="20" width="300" height="230" rx="14"','s2 f2',.3)+T(170,52,'Deepfake','b big',.6);
+  ['• Video giả: người nổi tiếng nói,','   làm điều chưa từng làm','• Giọng nói mô phỏng, khó phân biệt','• Ví dụ: video deepfake Obama'].forEach((a,j)=>s+=T(36,92+j*30,a,'',1.2+j*1.2,'start'));
+  s+=P('rect','x="340" y="20" width="280" height="230" rx="14"','s1 f1',7)+T(480,52,'Bài viết do AI','b big',7.3);
+  ['• Câu từ chung chung','• Lỗi logic nhỏ dù văn trôi chảy','• Không dẫn nguồn, hoặc','   nguồn không tồn tại'].forEach((a,j)=>s+=T(356,92+j*30,a,'',8+j*1.2,'start'));
+  return s+T(320,296,'Gặp dấu hiệu này: luôn kiểm chứng thêm','b big',14);}},
+{t:"Bộ câu hỏi kiểm tra nhanh",d:20000,
+ n:"Khi đọc một tin tức, hãy tự hỏi năm câu: ai là tác giả; họ có chuyên môn không; nguồn có đáng tin cậy không; có nguồn khác nói tương tự không; và mục đích bài viết là thông báo, thuyết phục, giải trí hay thao túng.",
+ v:()=>ROWS([['1','Ai là tác giả?','Kiểm tra thông tin về người viết hoặc tổ chức xuất bản'],['2','Họ có chuyên môn không?','Đủ kiến thức, kinh nghiệm về chủ đề đang viết?'],['3','Nguồn có đáng tin cậy không?','Uy tín của trang web hoặc phương tiện truyền thông'],['4','Có nguồn khác nói tương tự không?','Tìm thông tin từ các nguồn khác để đối chiếu'],['5','Mục đích bài viết là gì?','Thông báo, thuyết phục, giải trí hay thao túng?']])},
+{t:"Thực hành và bài tập về nhà",d:20000,
+ n:"Thực hành 1: phân tích bài báo Giá xăng tăng gấp 3 lần từ ngày mai, xét nguồn tin, tác giả, số liệu và kiểm tra chéo. Thực hành 2: kiểm tra hình ảnh bằng Reverse Image Search. Thực hành 3: chọn một bài đăng trong nhóm Facebook, nhận xét độ tin cậy và nêu lý do. Bài tập về nhà: thu thập 5 bài đăng cần kiểm chứng và đánh giá theo CRAAP.",
+ v:()=>GRID([[1,'Thực hành 1: Bài báo','Phân tích “Giá xăng tăng gấp','3 lần từ ngày mai”'],[3,'Thực hành 2: Hình ảnh','Reverse Image Search','Ví dụ: “lốc xoáy Hà Nội 2023”'],[4,'Thực hành 3: Facebook','Chọn một bài đăng trong nhóm','nhận xét độ tin cậy, nêu lý do'],[2,'Bài tập về nhà: CRAAP','Thu thập 5 bài đăng đáng ngờ','đánh giá theo CRAAP, giải thích']])},
+{t:"Quản lý, tổ chức và lưu trữ dữ liệu",d:17000,
+ n:"Phần 5: Quản lý, tổ chức và lưu trữ dữ liệu. Trong kỷ nguyên số, dữ liệu là tài sản vô giá. Quản lý tốt giúp tránh thất lạc tài liệu, dễ tìm kiếm, giảm trùng lặp và dễ chia sẻ với đồng nghiệp.",
+ v:()=>GRID([[2,'Tránh thất lạc','Ngăn mất mát tài liệu','quan trọng'],[1,'Dễ tìm kiếm','Sắp xếp khoa học, truy cập','nhanh chóng'],[4,'Giảm trùng lặp','Tiết kiệm dung lượng,','tránh nhầm lẫn'],[3,'Dễ chia sẻ','Thuận tiện cho làm việc','nhóm, cộng tác']])},
+{t:"Quy tắc đặt tên file",d:17000,
+ n:"Cấu trúc chuẩn: năm tháng ngày, gạch dưới, tên tài liệu, gạch dưới, phiên bản. Ví dụ 2025-03-10_BaoCaoNghienCuu_v2.docx. Cách này giúp sắp xếp theo thời gian, nội dung và phiên bản. Tránh những tên như file_moi, quá chung chung, hay final_final_v7, gây nhầm lẫn bản cuối cùng.",
+ v:()=>
+  P('rect','x="30" y="40" width="170" height="60" rx="12"','s1 f1',.3)+T(115,77,'2025-03-10','b',.6)+T(115,125,'Ngày','m',.9)+T(212,77,'_','b big',1.2)+
+  P('rect','x="225" y="40" width="240" height="60" rx="12"','s3 f3',1.5)+T(345,77,'BaoCaoNghienCuu','b',1.8)+T(345,125,'Tên tài liệu','m',2.1)+T(477,77,'_','b big',2.4)+
+  P('rect','x="490" y="40" width="120" height="60" rx="12"','s4 f4',2.7)+T(550,77,'v2.docx','b',3)+T(550,125,'Phiên bản','m',3.3)+
+  P('rect','x="30" y="180" width="280" height="110" rx="16"','s2 f2',5)+P('path','d="M52 215l14 14M66 215l-14 14"','s2',5.4)+T(80,230,'file_moi','b big',5.6,'start')+T(52,262,'Tên chung chung, không rõ ràng','m',5.8,'start')+
+  P('rect','x="330" y="180" width="280" height="110" rx="16"','s2 f2',8)+P('path','d="M352 215l14 14M366 215l-14 14"','s2',8.4)+T(380,230,'final_final_v7','b big',8.6,'start')+T(352,262,'Nhầm lẫn bản cuối cùng','m',8.8,'start')},
+{t:"Tổ chức thư mục khoa học",d:15000,
+ n:"Một cấu trúc thư mục logic giúp quản lý dự án hiệu quả. Gợi ý: thư mục Dự án gồm bốn thư mục con: 01 Tài liệu, 02 Dữ liệu, 03 Mã nguồn và 04 Kết quả. Phân chia rõ ràng giúp giảm thời gian tìm kiếm.",
+ v:()=>{let s=P('rect','x="30" y="25" width="180" height="40" rx="10"','s4 f4',.3)+T(120,52,'Dự_Án/','b',.6)+P('path','d="M50 65V280"','thin',1);
+  ['01_Tài_liệu','02_Dữ_liệu','03_Mã_nguồn','04_Kết_quả'].forEach((a,i)=>{const y=95+i*55,n=1.5+i*1.4;s+=P('path',`d="M50 ${y+20}H90"`,'thin',n)+P('rect',`x="95" y="${y}" width="220" height="40" rx="10"`,`s${[1,3,2,4][i]} f${[1,3,2,4][i]}`,n+.2)+T(205,y+27,a,'b',n+.5);});
+  return s+T(480,150,'Phân chia rõ tài liệu,','m',7)+T(480,172,'dữ liệu, mã nguồn, kết quả','m',7)+T(480,206,'→ giảm thời gian tìm kiếm','b',8);}},
+{t:"Công cụ quản lý dữ liệu",d:19000,
+ n:"Một số công cụ hiệu quả: Google Drive, lưu trữ đám mây tích hợp Google Workspace; OneDrive của Microsoft, đồng bộ với Windows và Office 365; Dropbox, đơn giản và dễ dùng; Notion, không gian làm việc linh hoạt cho ghi chú, dự án và wiki; và Zotero để quản lý tài liệu học thuật và trích dẫn.",
+ v:()=>
+  BOXS(20,20,190,130,1,'Google Drive',['Lưu trữ đám mây phổ biến,','tích hợp Google Workspace'],.3)+
+  BOXS(225,20,190,130,3,'OneDrive',['Của Microsoft, đồng bộ','với Windows, Office 365'],3)+
+  BOXS(430,20,190,130,4,'Dropbox',['Lưu trữ, chia sẻ file','đơn giản, dễ dùng'],6)+
+  BOXS(122,170,190,130,2,'Notion',['Ghi chú, quản lý dự án,','wiki linh hoạt'],9)+
+  BOXS(327,170,190,130,1,'Zotero',['Quản lý tài liệu học thuật,','trích dẫn, thư mục tham khảo'],12)},
+{t:"Quản lý phiên bản",d:15000,
+ n:"Quản lý phiên bản giúp theo dõi thay đổi, phục hồi bản cũ và cộng tác mà không lo mất dữ liệu. Git theo dõi mọi thay đổi mã nguồn; Google Docs lưu lịch sử chỉnh sửa để xem lại và khôi phục; OneDrive cũng cho phục hồi các phiên bản file cũ.",
+ v:()=>ROWS([['✓','Git','Hệ thống kiểm soát phiên bản, theo dõi mọi thay đổi mã nguồn'],['✓','Google Docs version history','Lưu lịch sử chỉnh sửa, xem lại và khôi phục bản trước'],['✓','OneDrive restore versions','Phục hồi các phiên bản file cũ']],78)},
+{t:"Lưu trữ dữ liệu dài hạn",d:16000,
+ n:"Để dữ liệu truy cập được nhiều năm, hãy chọn định dạng bền vững theo chuẩn quốc tế: PDF/A cho tài liệu và CSV cho dữ liệu bảng. Tránh định dạng độc quyền như DOC hay XLS, vì dễ lỗi, khó tương thích với phần mềm mới và cần phần mềm cụ thể để mở.",
+ v:()=>
+  BOXS(20,30,290,220,3,'Định dạng bền vững',['Chuẩn quốc tế','PDF/A cho tài liệu','CSV cho dữ liệu bảng','Giữ toàn vẹn, truy cập được','dù công nghệ thay đổi'],.3)+
+  BOXS(330,30,290,220,2,'Tránh định dạng dễ lỗi',['Độc quyền: DOC (Word),','XLS (Excel)','Khó tương thích phần mềm mới','Cần phần mềm cụ thể để mở','→ rủi ro mất dữ liệu'],6)},
+{t:"Bài tập: sắp xếp dữ liệu cá nhân",d:12000,
+ n:"Bài tập: sắp xếp lại thư mục dữ liệu cá nhân theo cấu trúc đã học, phân loại theo dự án, loại tài liệu hoặc thời gian; rồi chụp ảnh minh chứng cấu trúc thư mục để nộp bài.",
+ v:()=>ROWS([['✓','Sắp xếp lại thư mục cá nhân','Theo dự án, loại tài liệu, thời gian'],['✓','Chụp ảnh minh chứng','Cấu trúc thư mục đã sắp xếp, để nộp bài']],80)},
+{t:"Sao lưu, bảo mật và chia sẻ dữ liệu an toàn: mô hình 3-2-1",d:22000,
+ n:"Phần 6: Sao lưu, bảo mật và chia sẻ dữ liệu an toàn. Mô hình sao lưu 3-2-1: giữ ít nhất 3 bản sao, gồm bản gốc và 2 bản sao lưu; dùng 2 loại thiết bị khác nhau, như ổ cứng ngoài, đám mây, USB; và giữ 1 bản ở địa điểm khác phòng thảm họa. Ví dụ: laptop là bản gốc, sao lưu lên Google Drive, thêm một bản vào USB.",
+ v:()=>{const C=[[1,'3','bản sao dữ liệu',['Bản gốc + 2 bản sao lưu']],[3,'2','loại thiết bị',['Ổ cứng ngoài, đám mây,','USB…']],[4,'1','bản ngoại vi',['Ở địa điểm khác, phòng','thảm họa tại chỗ']]];let s='';
+  C.forEach((o,i)=>{const x=20+i*205,cx=x+95,n=.3+i*3;s+=P('rect',`x="${x}" y="20" width="190" height="170" rx="16"`,`s${o[0]} f${o[0]}`,n)+T(cx,90,o[1],'h1',n+.3)+T(cx,118,o[2],'b',n+.5)+o[3].map((l,j)=>T(cx,145+j*18,l,'m',n+.7)).join('');});
+  return s+P('rect','x="30" y="235" width="150" height="44" rx="22"','thin',10)+T(105,263,'Laptop (bản gốc)','m',10.3)+AR(185,240,257,11)+P('rect','x="245" y="235" width="150" height="44" rx="22"','thin',12)+T(320,263,'Google Drive','m',12.3)+AR(400,455,257,13)+P('rect','x="460" y="235" width="150" height="44" rx="22"','thin',14)+T(535,263,'USB','m',14.3);}},
+{t:"Công cụ sao lưu dữ liệu",d:17000,
+ n:"Các công cụ sao lưu phổ biến: Google Backup and Sync đồng bộ máy tính lên Google Drive; OneDrive Sync tích hợp Windows; iCloud dành cho iPhone, iPad và Mac; và AOMEI Backupper, phần mềm chuyên nghiệp sao lưu hệ thống, ổ đĩa, phân vùng với nhiều tùy chọn.",
+ v:()=>GRID([[1,'Google Backup & Sync','Đồng bộ máy tính lên','Google Drive, truy cập mọi thiết bị'],[3,'OneDrive Sync','Tích hợp sâu vào Windows,','đồng bộ liền mạch giữa thiết bị'],[4,'iCloud','Dành cho iPhone, iPad, Mac:','ảnh, danh bạ, tài liệu'],[2,'AOMEI Backupper','Sao lưu hệ thống, ổ đĩa;','toàn bộ, tăng cường, khác biệt']])},
+{t:"Tạo mật khẩu mạnh",d:20000,
+ n:"Mật khẩu là tuyến phòng thủ đầu tiên. Quy tắc: tối thiểu 12 ký tự, ưu tiên độ dài hơn sự phức tạp; kết hợp chữ hoa, chữ thường, số và ký tự đặc biệt; và không chứa thông tin cá nhân như tên, ngày sinh, tên thú cưng. Dùng trình quản lý mật khẩu như 1Password hoặc Bitwarden, mã nguồn mở và miễn phí.",
+ v:()=>
+  BOXS(20,20,190,150,1,'Tối thiểu 12 ký tự',['Càng dài càng khó đoán','Ưu tiên độ dài hơn','ký tự đặc biệt'],.3)+
+  BOXS(225,20,190,150,3,'Kết hợp ký tự',['Chữ hoa, chữ thường,','số và ký tự','đặc biệt (!@#$%^&*)'],4)+
+  BOXS(430,20,190,150,2,'Tránh dữ liệu cá nhân',['Không dùng tên,','ngày sinh, tên thú cưng','dễ đoán từ hồ sơ'],8)+
+  P('rect','x="20" y="195" width="600" height="115" rx="16"','thin',12)+T(320,224,'Trình quản lý mật khẩu','b',12.4)+
+  P('rect','x="50" y="242" width="260" height="46" rx="23"','s4 f4',13)+T(180,271,'1Password','b',13.3)+P('rect','x="330" y="242" width="260" height="46" rx="23"','s3 f3',14)+T(460,271,'Bitwarden (mã nguồn mở, miễn phí)','m',14.3)},
+{t:"Xác thực đa yếu tố (MFA)",d:20000,
+ n:"MFA thêm một lớp bảo vệ ngoài mật khẩu: dù mật khẩu bị lộ, kẻ tấn công vẫn không vào được nếu thiếu yếu tố thứ hai. Có OTP gửi qua SMS hoặc email, dễ dùng nhưng có thể bị tấn công SIM swap; ứng dụng xác thực như Google Authenticator hoặc Authy, an toàn hơn; và khóa vật lý như Yubikey, mức bảo mật cao nhất. Hãy bật MFA cho mọi tài khoản quan trọng.",
+ v:()=>
+  BOXS(20,30,190,200,4,'OTP (SMS / email)',['Mật khẩu dùng một lần','Dễ dùng nhưng có thể','bị tấn công SIM swap'],.3)+
+  BOXS(225,30,190,200,1,'App Authenticator',['Google Authenticator,','Authy: mã theo thời gian','An toàn hơn OTP qua SMS'],5)+
+  BOXS(430,30,190,200,3,'Khóa vật lý (Yubikey)',['Thiết bị cắm cổng USB','Bảo mật cao nhất,','rất khó giả mạo'],10)+T(320,280,'Bật MFA cho mọi tài khoản quan trọng','b big',15)},
+{t:"Phân quyền truy cập",d:22000,
+ n:"Phân quyền đúng giúp chỉ người có thẩm quyền mới xem, sửa hoặc quản lý tài liệu. Có bốn mức: Người xem chỉ được xem; Người bình luận xem và góp ý nhưng không đổi nội dung; Người chỉnh sửa có toàn quyền sửa, nên cấp thận trọng; Chủ sở hữu có quyền cao nhất, gồm quản lý quyền, xóa và chuyển sở hữu. Ví dụ trên Google Drive: chỉnh sửa cho thành viên chính, bình luận cho bên góp ý, xem cho người tham khảo.",
+ v:()=>{const L=[[1,'Xem (View)',['Chỉ xem, không sửa','hoặc tải xuống'],70],[3,'Bình luận',['Xem và bình luận,','không đổi nội dung'],110],[4,'Chỉnh sửa (Edit)',['Toàn quyền xem','và chỉnh sửa'],150],[2,'Chủ sở hữu',['Quản lý quyền, xóa,','chuyển sở hữu'],190]];let s='';
+  L.forEach((o,i)=>{const x=20+i*155,y=240-o[3],n=.3+i*3;s+=P('rect',`x="${x}" y="${y}" width="145" height="${o[3]}" rx="10"`,`s${o[0]} f${o[0]}`,n)+T(x+72,y+26,o[1],'b',n+.3)+o[2].map((l,j)=>T(x+72,y+48+j*18,l,'m',n+.5)).join('');});
+  return s+T(320,280,'Ví dụ: Chỉnh sửa cho thành viên chính, Bình luận cho bên góp ý,','m',13)+T(320,300,'Xem cho người chỉ cần tham khảo','m',13.2);}},
+{t:"Chia sẻ dữ liệu an toàn",d:18000,
+ n:"Ba lưu ý khi chia sẻ: không gửi mật khẩu, mã OTP qua các kênh không an toàn như Messenger hay Zalo, hãy dùng trình quản lý mật khẩu; tránh để liên kết công khai Anyone with the link, chỉ định quyền cho từng người hoặc nhóm; và kiểm tra quyền trước khi gửi, không cấp quá mức cần thiết.",
+ v:()=>ROWS([['✗','Đừng gửi mật khẩu, mã OTP','qua Messenger, Zalo; dùng trình quản lý mật khẩu'],['✗','Tránh link “Anyone with the link”','Chỉ định quyền cho từng người hoặc nhóm'],['✓','Kiểm tra quyền trước khi gửi','Chỉ cấp quyền cần thiết, không cấp quá mức']],78)},
+{t:"Bảo mật dữ liệu cá nhân",d:17000,
+ n:"Bảo vệ dữ liệu cá nhân là kỹ năng của mỗi người. Không dùng USB lạ vì có thể chứa mã độc. Hạn chế Wi-Fi công cộng vì dễ bị theo dõi và đánh cắp thông tin; dùng VPN khi cần. Và mã hóa dữ liệu nhạy cảm, ví dụ nén ZIP với chuẩn AES-256.",
+ v:()=>
+  BOXS(20,30,190,200,2,'Không dùng USB lạ',['USB không rõ nguồn gốc','có thể chứa mã độc,','virus lây vào máy'],.3)+
+  BOXS(225,30,190,200,4,'Hạn chế Wi-Fi công cộng',['Dễ bị tin tặc theo dõi,','đánh cắp thông tin','Dùng VPN khi cần'],5)+
+  BOXS(430,30,190,200,3,'Mã hóa dữ liệu nhạy cảm',['Dùng công cụ mã hóa','Ví dụ: ZIP AES-256','bảo vệ khỏi người lạ'],10)},
+{t:"Bài tập: nâng cao bảo mật cá nhân",d:17000,
+ n:"Bài tập cuối: thiết lập sao lưu 3-2-1 cho một thư mục quan trọng; tạo một mật khẩu mạnh, duy nhất cho một tài khoản, bằng trình tạo mật khẩu; bật MFA cho tài khoản Google hoặc Facebook; và rà soát quyền chia sẻ của 5 file cá nhân quan trọng. Chúc các bạn học tốt!",
+ v:()=>GRID([[1,'Thiết lập sao lưu 3-2-1','3 bản sao, 2 loại phương tiện,','1 bản ngoại tuyến'],[3,'Tạo mật khẩu mạnh','Đa dạng, đủ dài, ngẫu nhiên','cho một tài khoản'],[4,'Bật MFA','Cho tài khoản Google','hoặc Facebook'],[2,'Kiểm tra quyền chia sẻ','Rà soát 5 file cá nhân','quan trọng']])}
+];
+
+/* ====== BỘ PHÁT ====== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),fig=$('fig'),ttl=$('ttl'),cap=$('cap'),seg=$('seg'),btn=$('play'),vb=$('voice'),cnt=$('cnt');
+let i=0,el=0,last=performance.now(),playing=true,done=false,voice=false,sd=true,tok=0;
+
+SCENES.forEach((s,k)=>{const b=document.createElement('button');b.setAttribute('aria-label','Phần '+(k+1)+': '+s.t);b.onclick=()=>jump(k);seg.appendChild(b)});
+
+function speak(){
+  if(!('speechSynthesis' in window)){sd=true;return}
+  speechSynthesis.cancel();const k=++tok;
+  const u=new SpeechSynthesisUtterance(SCENES[i].n);u.lang='vi-VN';u.rate=.95;sd=false;
+  u.onend=u.onerror=()=>{if(k===tok)sd=true};
+  speechSynthesis.speak(u);if(!playing)speechSynthesis.pause();
+}
+function show(n){
+  i=n;el=0;sd=true;const s=SCENES[n];
+  fig.innerHTML=`<svg viewBox="0 0 640 360" role="img" aria-label="${s.t}">${DEFS}${s.v()}</svg>`;
+  ttl.textContent=s.t;cap.textContent=s.n;cnt.textContent=(n+1)+' / '+SCENES.length;
+  if(voice)speak();
+}
+function sync(){stage.classList.toggle('paused',!playing);btn.textContent=done?'Xem lại':playing?'Tạm dừng':'Phát'}
+function jump(n){done=false;playing=true;show(n);sync()}
+btn.onclick=()=>{
+  if(done){jump(0);return}
+  playing=!playing;sync();
+  if(voice&&'speechSynthesis' in window)playing?speechSynthesis.resume():speechSynthesis.pause();
+};
+$('prev').onclick=()=>jump(Math.max(0,i-(el>2000?0:1)));
+$('next').onclick=()=>jump(Math.min(SCENES.length-1,i+1));
+vb.onclick=()=>{
+  voice=!voice;vb.textContent='Giọng đọc: '+(voice?'Bật':'Tắt');vb.setAttribute('aria-pressed',voice);
+  if(voice)speak();else{tok++;sd=true;if('speechSynthesis' in window)speechSynthesis.cancel()}
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON')return;
+  if(e.code==='Space'){e.preventDefault();btn.click()}
+  if(e.code==='ArrowRight')$('next').click();
+  if(e.code==='ArrowLeft')$('prev').click();
+});
+
+function tick(ts){
+  const dt=Math.min(ts-last,100);last=ts;
+  if(playing){
+    el+=dt;const d=SCENES[i].d;
+    if(el>=d&&(sd||el>d+6000)){
+      if(i<SCENES.length-1)show(i+1);else{playing=false;done=true;sync()}
+    }
+  }
+  [...seg.children].forEach((b,k)=>b.style.setProperty('--p',(k<i||(done&&k===i)?100:k===i?Math.min(el/SCENES[i].d,1)*100:0)+'%'));
+  requestAnimationFrame(tick);
+}
+show(0);sync();requestAnimationFrame(tick);
+</script>
+</body>
+</html>

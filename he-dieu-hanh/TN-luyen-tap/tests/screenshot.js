@@ -6,7 +6,7 @@ const path = require('path');
 const os = require('os');
 
 const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const PAGE_URL = 'file:///' + path.join(__dirname, '..', 'index.html').replace(/\\/g, '/').replace(/^\//, '');
+const PAGE_URL = 'file:///' + path.join(__dirname, '..', 'template-quiz.html').replace(/\\/g, '/').replace(/^\//, '');
 const OUT = path.join(process.env.TEMP || os.tmpdir(), 'opencode', process.env.QUIZ_OUT || 'quiz-shots');
 const SIZE = process.env.QUIZ_SIZE || '1600,900';
 const STATES = (process.env.QUIZ_STATES || 'initial,wrong,right,map,confirm,result,review,marks').split(',').map(s => s.trim()).filter(Boolean);
@@ -141,7 +141,7 @@ const DRIVE = `
     await sleep(300);
     try {
       const list = await (await fetch('http://127.0.0.1:' + PORT + '/json/list')).json();
-      target = list.find(t => t.type === 'page' && t.url.includes('index.html')) || null;
+      target = list.find(t => t.type === 'page' && t.url.includes('template-quiz.html')) || null;
     } catch (_) {}
   }
   if (!target) { console.log('khong ket noi duoc chrome'); chrome.kill(); process.exit(1); }

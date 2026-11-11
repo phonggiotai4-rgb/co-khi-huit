@@ -52,6 +52,16 @@
 
   function ic(name) { return '<span class="ico">' + CK.svg(ICON[name]) + '</span>'; }
 
+  /* Chế độ học của một môn — môn có thể đổi nhãn/mô tả riêng (subject.modeLabels,
+     xem data.js) mà vẫn giữ nguyên id để mọi liên kết ?mode= cũ hoạt động. */
+  function modesOf(subject) {
+    var ov = (subject && subject.modeLabels) || {};
+    return MODES.map(function (m) {
+      var o = ov[m.id];
+      return o ? { id: m.id, label: o.label || m.label, hint: o.hint || m.hint, icon: m.icon } : m;
+    });
+  }
+
   /* Mã đề: 6 ký tự, sinh ổn định từ khoá nên không đổi giữa các lần mở.
      Khoá là "slug môn" với môn thường, "slug môn:slug bài thi" với môn chia đề. */
   function code(key) {
@@ -121,7 +131,7 @@
       '<h3 class="exam-title"' + (o.titleId ? ' id="' + o.titleId + '"' : '') + '>' + subject.name + '</h3>' +
       '<p class="exam-lead">' + lead + '</p>' +
       '<div class="exam-modes">' +
-        MODES.map(function (m) {
+        modesOf(subject).map(function (m) {
           return '<button class="mode" type="button" data-mode="' + m.id + '">' +
             '<span class="mico">' + CK.svg(m.icon) + '</span>' +
             '<b>' + m.label + '</b><small>' + m.hint + '</small>' +
@@ -156,7 +166,8 @@
     var mode = o.mode || "learn";
     var parts = CK.partsOf(subject);
     var pl = (parts[0] && parts[0].label) || "Đề";
-    var cur = MODES.filter(function (m) { return m.id === mode; })[0] || MODES[1];
+    var modes = modesOf(subject);
+    var cur = modes.filter(function (m) { return m.id === mode; })[0] || modes[1];
 
     var examPage = mode === "exam" && CK.partExam && CK.partExam(subject.slug);
     var lead = examPage
@@ -180,14 +191,16 @@
               /* Trang riêng của bài thi — bấm vào thì mở thẳng trang đó. */
               var fLearn = mode === "learn" && CK.partFile && CK.partFile(subject.slug, p.id);
               var fSyl = mode === "sylabus" && CK.partSyllabus && CK.partSyllabus(subject.slug, p.id);
-              var openable = !!(fLearn || fSyl);
               var tip = n ? n + ' câu hỏi' + (r ? ' · đã làm ' + r + ' lượt' : '') : 'đang được bổ sung';
               if (fLearn) tip += ' · mở trang làm đề';
-              if (fSyl) tip += ' · mở trang đề cương';
-              /* Bài thi chưa có câu hỏi vẫn bấm được nếu đã có trang riêng —
-                 vào trang đó sẽ thấy thông báo "đang được bổ sung". */
-              return '<button class="opt" type="button" data-part="' + p.id + '" title="' + tip + '"' +
-                (n || openable ? '' : ' disabled') + '>' + p.name + '<em>' + (n ? n + ' câu' : 'đang bổ sung') + '</em></button>';
+              if (fSyl) tip += ' · mở trang ' + cur.label.replace(/^Xem\s+/i, "").toLowerCase();
+              /* Bài thi chưa có câu hỏi vẫn bấm được để xem thẻ thông tin đề
+                 (thẻ sẽ báo "đang được bổ sung"), tránh nút chết trong popup. */
+              var label = p.desc
+                ? '<span class="pn">' + p.name + '</span><span class="pdesc">' + p.desc + '</span>'
+                : p.name;
+              return '<button class="opt' + (p.desc ? ' wide' : '') + '" type="button" data-part="' + p.id + '" title="' + tip + '">' +
+                label + '<em>' + (n ? n + ' câu' : 'đang bổ sung') + '</em></button>';
             }).join("") +
           '</div>' +
         '</div>';
@@ -199,7 +212,7 @@
       picker +
       '<div class="pickmodes">' +
         '<span class="pl">Cách học</span>' +
-        MODES.map(function (m) {
+        modes.map(function (m) {
           return '<button class="pm" type="button" data-pm="' + m.id + '"' +
             (m.id === mode ? ' aria-current="true"' : '') + '>' + CK.svg(m.icon) + m.label + '</button>';
         }).join("") +
@@ -255,6 +268,7 @@
     var body =
       '<h3 class="exam-title"' + (o.titleId ? ' id="' + o.titleId + '"' : '') + '>' + subject.name + '</h3>' +
       (part ? '<span class="ck-pill light exam-part">' + CK.svg(ICON.doc) + part.name + '</span>' : '') +
+      (part && part.desc ? '<p class="exam-lead">' + part.desc + '</p>' : '') +
       '<div class="exam-code">' +
         '<span>Mã đề thi:</span><b>' + c + '</b>' +
         '<button type="button" data-exam-code aria-label="Sao chép mã đề thi ' + c + '" title="Sao chép mã đề thi">' +

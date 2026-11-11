@@ -9,7 +9,7 @@ require('./acceptance.page.js');   // sinh trang thu nghiem trong thu muc TEMP
 (function assertCssSane() {
   const fs = require('fs');
   const path = require('path');
-  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'template-quiz.html'), 'utf8');
   const css = (html.match(/<style>([\s\S]*?)<\/style>/) || ['', ''])[1];
   const problems = [];
 
