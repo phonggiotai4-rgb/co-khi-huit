@@ -273,11 +273,16 @@
      khoá ngoài = slug môn, khoá trong = slug bài thi. Trang chủ dùng CK.partFile
      để biết bấm bài thi nào thì mở trang riêng thay vì dựng thẻ trong popup. */
   var PART_FILES = {
-    /* Chứng chỉ Kỹ năng số: mỗi mô đun có trang làm bài riêng trong ky-nang-so/.
-       Mô đun chưa có trang thì bấm vào chỉ hiện thẻ thông tin đề. */
+    /* Chứng chỉ Kỹ năng số: MỘT trang làm bài dùng chung cho cả 6 mô đun —
+       bài thi nào thì nạp tham số `?d=mo-dun-N`. Câu hỏi đọc từ
+       assets/quiz-bank-ky-nang-so.js (360 câu, 6 mô đun × 60 câu). */
     "chung-chi-ky-nang-so": {
-      "mo-dun-1": "ky-nang-so/MODULE1-quiz.html",
-      "mo-dun-2": "ky-nang-so/MODULE2-quiz.html"
+      "mo-dun-1": "ky-nang-so/luyen-tap.html?d=mo-dun-1",
+      "mo-dun-2": "ky-nang-so/luyen-tap.html?d=mo-dun-2",
+      "mo-dun-3": "ky-nang-so/luyen-tap.html?d=mo-dun-3",
+      "mo-dun-4": "ky-nang-so/luyen-tap.html?d=mo-dun-4",
+      "mo-dun-5": "ky-nang-so/luyen-tap.html?d=mo-dun-5",
+      "mo-dun-6": "ky-nang-so/luyen-tap.html?d=mo-dun-6"
     },
     "qpan1": {
       "de-1": "qp-an/qpan1-de-1-quiz.html",
@@ -496,6 +501,9 @@
     "quan-tri-chat-luong": "pmt-ems/pmt-ems.html",
     "ky-nang-giao-tiep": "pmt-ems/pmt-ems.html",
     "marketing-can-ban": "pmt-ems/pmt-ems.html",
+    /* Chứng chỉ Kỹ năng số: đi qua pmt-ems (chọn lớp học phần / lịch thi) rồi
+       sang trang thi thử ngẫu nhiên 40 câu / 60 phút. */
+    "chung-chi-ky-nang-so": "pmt-ems/pmt-ems.html",
     /* Lịch sử Đảng Cộng sản Việt Nam: đi qua pmt-ems rồi sang trang thi thử
        ngẫu nhiên 40 câu / 60 phút. */
     "lich-su-dang-cong-san-viet-nam": "pmt-ems/pmt-ems.html",
@@ -530,6 +538,9 @@
     "qpan2": "qp-an/thi-QPAN2-ngau-nhien.html",
     /* Quản trị học: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */
     "quan-tri-hoc": "quan-tri-hoc/thi-quan-tri-hoc-ngau-nhien.html",
+    /* Chứng chỉ Kỹ năng số: trang làm bài = đề thi thử ngẫu nhiên
+       (40 câu / 60 phút, rút từ 360 câu của 6 mô đun). */
+    "chung-chi-ky-nang-so": "ky-nang-so/thi-chung-chi-ky-nang-so-ngau-nhien.html",
     "quan-tri-chuoi-cung-ung": "quan-tri-chuoi-cung-ung/thi-quan-tri-chuoi-cung-ung-ngau-nhien.html",
     "quan-tri-chat-luong": "quan-tri-chat-luong/thi-quan-tri-chat-luong-ngau-nhien.html",
     "ky-nang-giao-tiep": "ky-nang-giao-tiep/thi-ky-nang-giao-tiep-ngau-nhien.html",

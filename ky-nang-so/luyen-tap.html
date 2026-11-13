@@ -18,7 +18,8 @@
   };
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Bài trắc nghiệm trực tuyến</title>
+<title>Chứng chỉ Kỹ năng số — Luyện tập | CƠ KHÍ HUIT</title>
+<link rel="icon" href="../assets/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- Font nap khong chan render: trang van hien thi ngay voi font he thong neu mang cham/offline -->
@@ -1420,95 +1421,70 @@ body.is-result .stage, body.is-result .bottombar,
   </div>
 </div>
 
+<script src="../assets/quiz-bank-ky-nang-so.js"></script>
+<script src="../assets/history.js"></script>
 <script>
 (() => {
   'use strict';
 
   /* ========================= CẤU HÌNH ========================= */
   const CONFIG = {
-    questionCount: 60,             // = QUESTIONS.length
-    candidateName: '',           // tên thí sinh hiển thị ở màn kết quả
-    subjectName: 'Module 1 - Khai thác dữ liệu và thông tin',// tên môn học hiển thị ở màn kết quả và trang xem đáp án
+    questionCount: 0,              // = QUESTIONS.length, gán ngay sau khi nạp dữ liệu
+    candidateName: '',            // tên thí sinh hiển thị ở màn kết quả
+    subjectName: '',              // gán theo mô đun đang làm (xem bên dưới)
     timeLimitSeconds: null,       // null = không giới hạn
     dotWindow: 15,                // số chấm tròn hiển thị trên thanh dưới
     startSound: true,
-    exitUrl: null,                // đường dẫn sau khi xác nhận thoát (null = quay lại trang trước)
-    onExit: null,                 // hàm tuỳ biến, ưu tiên hơn exitUrl (vd: gửi kết quả về server)
+    exitUrl: null,                // không dùng — xem onExit ngay dưới
+    onExit: function () {         // xác nhận thoát: quay lại popup chọn mô đun
+      if (window.history.length > 1) { window.history.back(); return; }
+      window.location.href = '../index.html?m=chung-chi-ky-nang-so&mode=learn#lb';
+    },
     leaderboard: null,           // dữ liệu thật sẵn có: [{ name, score, seconds, total }]
     leaderboardUrl: null,        // URL trả về JSON: mảng, hoặc { rows: [...] } — nguồn ưu tiên hơn leaderboard
     shareUrl: null,               // link chia sẻ (mặc định = location.href của trang)
     messengerAppId: null,         // App ID Facebook để mở hộp thoại Messenger trên web
-    onFinish: null                // nhận kết quả khi hoàn thành: ({ total, correct, score, wrongCount, seconds, ratio, name, subject, answers })
+    onFinish: function (r) {      // nhận kết quả khi hoàn thành: ({ total, correct, score, wrongCount, seconds, ratio, name, subject, answers })
+      CK.recordHistory(r, {
+        slug: 'chung-chi-ky-nang-so',
+        part: partId,
+        partName: PART_NAMES[partId],
+        subject: 'CHỨNG CHỈ KỸ NĂNG SỐ',
+        cat: 'CHỨNG CHỈ',
+        catName: 'Chứng chỉ'
+      });
+    }
   };
 
   const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   /* ========================= CÂU HỎI =========================
-     Nguồn: TN_MODULE_1.docx — nạp 2026-11-13 (đáp án đúng = phương án tô vàng trong file Word)
-     Xem scoring.md cho quy tắc tính điểm (tự động, không cần cấu hình). */
-  const QUESTIONS = [
-    { id: 1, text: "Ví dụ nào là dữ liệu?", options: ["Báo cáo doanh thu", "Điểm trung bình lớp 7.8", "Dãy số 7, 5, 9, 10", "Kết luận nghiên cứu"], correct: 2 },
-    { id: 2, text: "Ví dụ nào là thông tin?", options: ["Nhật ký giao dịch", "File log", "“Doanh số tăng 20%”", "Video camera"], correct: 2 },
-    { id: 3, text: "Ví dụ nào là tri thức?", options: ["100 bản ghi dữ liệu", "File Excel", "“Điểm thấp cần đổi phương pháp học”", "Hình ảnh thô"], correct: 2 },
-    { id: 4, text: "Dữ liệu có cấu trúc thường được lưu ở dạng nào?", options: ["Video", "Âm thanh", "Bảng hàng cột", "Podcast"], correct: 2 },
-    { id: 5, text: "JSON thuộc loại dữ liệu nào?", options: ["Phi cấu trúc", "Có cấu trúc", "Bán cấu trúc", "Không xác định"], correct: 2 },
-    { id: 6, text: "XML là ví dụ của:", options: ["Dữ liệu bán cấu trúc", "Dữ liệu âm thanh", "Dữ liệu giấy", "Dữ liệu ảnh"], correct: 0 },
-    { id: 7, text: "Email thuộc loại dữ liệu nào?", options: ["Có cấu trúc", "Phi cấu trúc", "Bán cấu trúc", "Không phải dữ liệu"], correct: 1 },
-    { id: 8, text: "Dữ liệu phi cấu trúc chiếm khoảng bao nhiêu dữ liệu số hiện nay?", options: ["10%", "30%", "50%", "80%"], correct: 3 },
-    { id: 9, text: "Bước đầu tiên trong chu trình dữ liệu là:", options: ["Phân tích", "Thu thập", "Ứng dụng", "Xóa dữ liệu"], correct: 1 },
-    { id: 10, text: "Sau bước lưu trữ là bước nào?", options: ["Thu thập", "Xử lý", "Tri thức", "Chia sẻ"], correct: 1 },
-    { id: 11, text: "Bước cuối của chu trình dữ liệu là:", options: ["Phân tích", "Lưu trữ", "Ứng dụng tri thức", "Thu thập"], correct: 2 },
-    { id: 12, text: "Điểm danh tự động trong lớp online là:", options: ["Tri thức", "Dữ liệu", "Kết luận", "Dự đoán"], correct: 1 },
-    { id: 13, text: "“Tiết học sau lễ thường đi học muộn” là:", options: ["Dữ liệu", "Báo cáo", "Tri thức", "File log"], correct: 2 },
-    { id: 14, text: "Sai lầm phổ biến khi khai thác dữ liệu là:", options: ["Đánh giá dựa trên bằng chứng", "Dùng dữ liệu có ngữ cảnh", "Đánh giá chủ quan", "Phân tích dữ liệu"], correct: 2 },
-    { id: 15, text: "Dữ liệu thô cần làm gì để có ý nghĩa?", options: ["Xóa bỏ", "Phân tích và tổ chức", "In ra giấy", "Chia sẻ ngay"], correct: 1 },
-    { id: 16, text: "Video TikTok thường là dữ liệu:", options: ["Có cấu trúc", "Phi cấu trúc", "Bán cấu trúc", "Quan hệ"], correct: 1 },
-    { id: 17, text: "Cơ sở dữ liệu SQL lưu trữ loại dữ liệu nào?", options: ["Phi cấu trúc", "Có cấu trúc", "Âm thanh", "Hình ảnh"], correct: 1 },
-    { id: 18, text: "AI có thể hỗ trợ gì với dữ liệu?", options: ["Xử lý tự động", "Làm hỏng dữ liệu", "Xóa toàn bộ dữ liệu", "In dữ liệu"], correct: 0 },
-    { id: 19, text: "Thông tin có mức độ giá trị như thế nào?", options: ["Thấp", "Trung bình", "Cao nhất", "Không có giá trị"], correct: 1 },
-    { id: 20, text: "Tri thức giúp con người:", options: ["Hiểu sâu và hành động", "Tăng dữ liệu thô", "Giảm phân tích", "Tạo lỗi"], correct: 0 },
-    { id: 21, text: "Scanning dùng để:", options: ["Tìm thông tin cụ thể", "Xóa dữ liệu", "Tạo file", "Nén dữ liệu"], correct: 0 },
-    { id: 22, text: "Khi skimming nên xem gì đầu tiên?", options: ["Footer", "Tiêu đề", "Quảng cáo", "Bình luận"], correct: 1 },
-    { id: 23, text: "Topic sentence thường nằm ở đâu?", options: ["Cuối bài", "Đầu đoạn", "Giữa bảng", "Trong hình"], correct: 1 },
-    { id: 24, text: "intitle: dùng để:", options: ["Tìm tiêu đề trang", "Tìm file Word", "Tìm IP", "Tìm hình ảnh"], correct: 0 },
-    { id: 25, text: "Dấu trừ (-keyword) dùng để:", options: ["Cộng từ khóa", "Loại trừ từ khóa", "Mở rộng tìm kiếm", "Tìm chính xác"], correct: 1 },
-    { id: 26, text: "Google Scholar chuyên dùng để:", options: ["Chơi game", "Tìm học thuật", "Tìm nhạc", "Xem phim"], correct: 1 },
-    { id: 27, text: "RefSeek là công cụ:", options: ["Thiết kế ảnh", "Tìm kiếm học thuật", "Chỉnh video", "Mạng xã hội"], correct: 1 },
-    { id: 28, text: "Web scraping là gì?", options: ["Xóa web", "Tự động trích xuất dữ liệu web", "Tạo website", "Cài Windows"], correct: 1 },
-    { id: 29, text: "BeautifulSoup dùng để:", options: ["Chơi game", "Phân tích HTML/XML", "Tạo video", "Nén file"], correct: 1 },
-    { id: 30, text: "Đuôi domain nào thường đáng tin cậy hơn?", options: [".xyz", ".random", ".gov", ".abc"], correct: 2 },
-    { id: 31, text: "Clickbait là gì?", options: ["Tin chính phủ", "Tiêu đề giật gân", "File PDF", "Công cụ AI"], correct: 1 },
-    { id: 32, text: "Một lỗi phổ biến khi tìm kiếm là:", options: ["Dùng toán tử tìm kiếm", "Kiểm tra nguồn", "Tin ngay kết quả đầu tiên", "Tìm nhiều nguồn"], correct: 2 },
-    { id: 33, text: "Scanning phù hợp để tìm:", options: ["Ý chính", "Cảm xúc", "Số liệu cụ thể", "Hình minh họa"], correct: 2 },
-    { id: 34, text: "Skimming thường mất khoảng:", options: ["10 - 20 giây", "1 giờ", "2 giờ", "5 phút/1 dòng"], correct: 0 },
-    { id: 35, text: "Từ khóa quá dài thường gây:", options: ["Kết quả chính xác hơn", "Khó tìm đúng thông tin", "Tăng tốc internet", "Giảm dữ liệu"], correct: 1 },
-    { id: 36, text: "ScienceDirect là nền tảng:", options: ["Giải trí", "Học thuật", "Chat", "Thiết kế"], correct: 1 },
-    { id: 37, text: "Kết quả tìm kiếm cần được:", options: ["Tin ngay", "Kiểm chứng", "Xóa bỏ", "In ra"], correct: 1 },
-    { id: 38, text: "Lọc file Excel dùng cú pháp nào?", options: ["filetype:xlsx", "site:xlsx", "intitle:xlsx", "scan:xlsx"], correct: 0 },
-    { id: 39, text: "Nội dung quảng cáo có thể làm gì?", options: ["Tăng độ chính xác", "Gây nhiễu thông tin", "Chuẩn hóa dữ liệu", "Tạo AI"], correct: 1 },
-    { id: 40, text: "Google Dataset Search phù hợp cho:", options: ["Phân tích dữ liệu", "Xem phim", "Nghe nhạc", "Thiết kế logo"], correct: 0 },
-    { id: 41, text: "Mục đích của làm sạch dữ liệu là:", options: ["Tăng lỗi dữ liệu", "Có dữ liệu đáng tin cậy", "Xóa toàn bộ dữ liệu", "Giảm dung lượng RAM"], correct: 1 },
-    { id: 42, text: "Dữ liệu trùng lặp gọi là:", options: ["Missing values", "Outliers", "Duplicates", "Validation"], correct: 2 },
-    { id: 43, text: "Outliers nghĩa là:", options: ["Dữ liệu thiếu", "Dữ liệu ngoại lai", "Dữ liệu mã hóa", "Dữ liệu chuẩn"], correct: 1 },
-    { id: 44, text: "CLEAN() dùng để:", options: ["Xóa ký tự không in được", "Tạo biểu đồ", "Tìm kiếm web", "Tạo mật khẩu"], correct: 0 },
-    { id: 45, text: "UPPER() có chức năng:", options: ["Chuyển chữ thành hoa", "Chuyển số thành chữ", "Tạo file PDF", "Tính trung bình"], correct: 0 },
-    { id: 46, text: "LOWER() dùng để:", options: ["Chuyển chữ hoa thành thường", "Xóa dữ liệu", "Tạo mã QR", "Chia cột"], correct: 0 },
-    { id: 47, text: "PROPER() giúp:", options: ["Viết hoa chữ cái đầu", "Tính điểm", "Mã hóa file", "Xóa ảnh"], correct: 0 },
-    { id: 48, text: "VALUE() dùng để:", options: ["Đổi văn bản thành số", "Tạo biểu đồ", "Xóa khoảng trắng", "Chia sẻ file"], correct: 0 },
-    { id: 49, text: "DATEVALUE() dùng để:", options: ["Tạo video", "Chuyển văn bản thành ngày", "Tính tổng", "Tạo password"], correct: 1 },
-    { id: 50, text: "COUNTIF thường dùng để:", options: ["Tìm dữ liệu trùng", "Chơi game", "Xóa sheet", "Nén file"], correct: 0 },
-    { id: 51, text: "Dữ liệu \"CNTT\", \"IT\", \"Công nghệ thông tin\" là lỗi:", options: ["Thiếu dữ liệu", "Không nhất quán", "Dư dữ liệu", "Không hợp lệ"], correct: 1 },
-    { id: 52, text: "VLOOKUP dùng để:", options: ["Ánh xạ dữ liệu", "Vẽ hình", "Tạo email", "Mã hóa"], correct: 0 },
-    { id: 53, text: "Conditional Formatting giúp:", options: ["Tạo AI", "Phát hiện ngoại lai", "Tạo mật khẩu", "Tăng tốc máy tính"], correct: 1 },
-    { id: 54, text: "IQR là kỹ thuật dùng để:", options: ["Tạo website", "Tìm ngoại lai", "Xóa dữ liệu", "Mã hóa file"], correct: 1 },
-    { id: 55, text: "Power Query dùng để:", options: ["Chơi game", "Tự động làm sạch dữ liệu", "Vẽ sơ đồ", "Xem phim"], correct: 1 },
-    { id: 56, text: "Pandas là thư viện của ngôn ngữ nào?", options: ["Java", "Python", "PHP", "C++"], correct: 1 },
-    { id: 57, text: "drop_duplicates() dùng để:", options: ["Thêm dữ liệu", "Xóa dữ liệu trùng", "Tạo đồ thị", "Tính toán AI"], correct: 1 },
-    { id: 58, text: "fillna() dùng để:", options: ["Điền giá trị thiếu", "Xóa file", "Tạo website", "Mã hóa dữ liệu"], correct: 0 },
-    { id: 59, text: "astype() dùng để:", options: ["Đổi kiểu dữ liệu", "Chia sẻ dữ liệu", "Tạo biểu đồ", "Xóa cột"], correct: 0 },
-    { id: 60, text: "Data Validation có tác dụng:", options: ["Ngăn lỗi nhập liệu", "Xóa dữ liệu", "Tạo game", "Tạo virus"], correct: 0 }
-  ];
+     Nguồn: ../assets/quiz-bank-ky-nang-so.js — 360 câu, 6 mô đun × 60 câu.
+     Mô đun đang làm lấy từ tham số ?d=mo-dun-N; thiếu hoặc sai thì mặc định mô đun đầu.
+     Sinh tự động bởi gen-luyen-tap.js — không sửa tay. */
+  const PART_NAMES = {
+    "mo-dun-1": "Mô đun 1 — Khai thác dữ liệu và thông tin",
+    "mo-dun-2": "Mô đun 2 — Giao tiếp và hợp tác trong môi trường số",
+    "mo-dun-3": "Mô đun 3 — Sáng tạo nội dung số",
+    "mo-dun-4": "Mô đun 4 — An toàn",
+    "mo-dun-5": "Mô đun 5 — Giải quyết vấn đề",
+    "mo-dun-6": "Mô đun 6 — Ứng dụng trí tuệ nhân tạo"
+  };
 
+  const BANK = (function () {
+    var src = (window.CK && CK.PART_QUIZ && CK.PART_QUIZ['chung-chi-ky-nang-so']) || {};
+    var out = {};
+    Object.keys(PART_NAMES).forEach(function (id) {
+      out[id] = (src[id] || []).map(function (q, i) {
+        return { id: i + 1, text: q.q, options: q.o.slice(), correct: q.a };
+      });
+    });
+    return out;
+  })();
+
+  const PART_PARAM = new URLSearchParams(location.search).get('d');
+  const partId = Object.prototype.hasOwnProperty.call(BANK, PART_PARAM) ? PART_PARAM : Object.keys(BANK)[0];
+  const QUESTIONS = BANK[partId];
 const ICONS = {
     wrong: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/></svg>',
     skipped: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
@@ -1546,6 +1522,10 @@ const ICONS = {
   };
 
   /* ========================= TRẠNG THÁI ========================= */
+  CONFIG.questionCount = QUESTIONS.length;
+  CONFIG.subjectName = 'Chứng chỉ Kỹ năng số — ' + PART_NAMES[partId];
+  document.title = PART_NAMES[partId] + ' — Chứng chỉ Kỹ năng số | CƠ KHÍ HUIT';
+
   const ALL_QUESTIONS = QUESTIONS;
   let SESSION = ALL_QUESTIONS;      // danh sách câu của phiên làm bài hiện tại
   let startedAt = Date.now();       // mốc bắt đầu, dùng tính thời gian làm bài

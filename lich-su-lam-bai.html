@@ -200,15 +200,10 @@
     return "";
   }
 
-  /* Điểm luôn hiển thị theo thang 10: pct là % đạt được nên điểm = pct / 10 */
-  function score10(pct) {
-    return Math.round(pct) / 10;
-  }
-
   function badge(pct) {
     var lvl = pct >= 80 ? "solid" : pct >= 50 ? "mid" : "light";
     var lbl = pct >= 80 ? "Tốt" : pct >= 50 ? "Khá" : "Cần ôn";
-    return '<span class="ck-pill ' + lvl + '"><i class="dot"></i>' + score10(pct) + "/10 · " + lbl + '</span>';
+    return '<span class="ck-pill ' + lvl + '"><i class="dot"></i>' + pct + "% · " + lbl + '</span>';
   }
 
   function render() {
@@ -334,7 +329,7 @@
     ctx.fillStyle = "#4B5563"; ctx.font = "16px sans-serif";
     var y = 100;
     CK.history.all().slice(0, 12).forEach(function (e) {
-      ctx.fillText(CK.fmtDate(e.ts) + " · " + (e.subject || "—") + " · " + score10(e.pct || 0) + "/10 · " +
+      ctx.fillText(CK.fmtDate(e.ts) + " · " + (e.subject || "—") + " · " + (e.pct || 0) + "% · " +
         (e.correct || 0) + "/" + (e.total || 0), 40, y);
       y += 26;
     });
