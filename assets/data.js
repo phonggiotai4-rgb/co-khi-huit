@@ -276,7 +276,8 @@
     /* Chứng chỉ Kỹ năng số: mỗi mô đun có trang làm bài riêng trong ky-nang-so/.
        Mô đun chưa có trang thì bấm vào chỉ hiện thẻ thông tin đề. */
     "chung-chi-ky-nang-so": {
-      "mo-dun-1": "ky-nang-so/MODULE1-quiz.html"
+      "mo-dun-1": "ky-nang-so/MODULE1-quiz.html",
+      "mo-dun-2": "ky-nang-so/MODULE2-quiz.html"
     },
     "qpan1": {
       "de-1": "qp-an/qpan1-de-1-quiz.html",
@@ -449,7 +450,8 @@
       "mo-dun-2": "ky-nang-so/MODULE_2_GIAO_TIẾP_VÀ_HỢP_TÁC_TRONG_MÔI_TRƯỜNG_SỐ.html",
       "mo-dun-3": "ky-nang-so/MODULE_3_SÁNG_TẠO_NỘI_DUNG_SỐ.html",
       "mo-dun-4": "ky-nang-so/MODULE_4_AN TOÀN.html",
-      "mo-dun-5": "ky-nang-so/MODULE_5_GIẢI_QUYẾT_VẤN_ĐỀ.html"
+      "mo-dun-5": "ky-nang-so/MODULE_5_GIẢI_QUYẾT_VẤN_ĐỀ.html",
+      "mo-dun-6": "ky-nang-so/MODULE_6_ỨNG_DỤNG_TRÍ_TUỆ_NHÂN_TẠO.html"
     },
     "qpan1": "qp-an/qpan1-de-cuong.html",
     "qpan2": "qp-an/qpan2-de-cuong.html",

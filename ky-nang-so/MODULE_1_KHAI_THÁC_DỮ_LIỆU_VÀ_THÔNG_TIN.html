@@ -47,10 +47,17 @@ svg text{font-family:inherit;fill:var(--ink);font-size:15px}
 @keyframes rv{to{opacity:1}}
 .paused *{animation-play-state:paused!important}
 @media (prefers-reduced-motion:reduce){.draw{animation:none;stroke-dashoffset:0}.r{animation:none;opacity:1}}
+/* Nút quay lại trang chủ (đặt trên cùng, cạnh logo) */
+.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:600 13.5px "Be Vietnam Pro",system-ui,sans-serif;text-decoration:none;transition:border-color .15s,color .15s,transform .15s}
+.home:hover{border-color:var(--c1);color:var(--c1)}
+.home:active{transform:scale(.97)}
+.home:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
 </style>
 </head>
 <body>
 <main class="player">
+  <a class="home" href="../index.html" aria-label="Quay lại trang chủ"><span aria-hidden="true">←</span> Trang chủ</a>
+
   <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
   <section class="stage" id="stage" aria-live="off">
     <h2 id="ttl"></h2>

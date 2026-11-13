@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 6 – Ứng dụng trí tuệ nhân tạo – Video bài giảng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8EFF7;--panel:#FFFFFF;--ink:#16243B;--mut:#5A6B85;--line:#C9D5E4;--c1:#2F5BEA;--c2:#F26B5B;--c3:#1FA38A;--c4:#E9A722;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5}
+.player{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+h2{font:700 clamp(22px,3.4vw,32px)/1.2 Lexend,"Be Vietnam Pro",sans-serif;margin:0}
+.fig svg{width:100%;height:auto;max-height:54vh;display:block}
+.cap{margin:0;min-height:3.3em;color:var(--mut);font-size:clamp(14px,2vw,17px);max-width:72ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+button{font:600 14px "Be Vietnam Pro",sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--c1)}
+button:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+#play{background:var(--c1);border-color:var(--c1);color:#fff;min-width:110px}
+.sp{flex:1}
+.cnt{color:var(--mut);font-size:14px}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1;height:10px;padding:0;border-radius:5px;border:0;background:var(--line);position:relative;overflow:hidden}
+.seg button::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:var(--c1)}
+/* SVG */
+svg text{font-family:inherit;fill:var(--ink);font-size:15px}
+.b{font-weight:600}.m{fill:var(--mut);font-size:12.5px}.big{font-size:17px}.h1{font-size:34px;font-weight:700}.h2{font-size:19px;font-weight:700;fill:var(--c1)}
+.brand{background:#1F6FB5;color:#fff;text-align:center;border-radius:14px;padding:10px 16px;margin-bottom:12px;line-height:1.35}
+.brand b{display:block;font:700 clamp(13px,2.2vw,18px) Lexend,sans-serif}.brand span{font-size:clamp(12px,1.8vw,15px)}
+.url{margin:8px 0 0;color:var(--mut);font-size:12px}
+.st{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.5;stroke:var(--mut)}
+.s1{stroke:var(--c1)}.s2{stroke:var(--c2)}.s3{stroke:var(--c3)}.s4{stroke:var(--c4)}
+.f1{fill:var(--c1);fill-opacity:.16}.f2{fill:var(--c2);fill-opacity:.16}.f3{fill:var(--c3);fill-opacity:.16}.f4{fill:var(--c4);fill-opacity:.2}
+.fp{fill:var(--panel)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s ease var(--d,0s) forwards}
+.r{opacity:0;animation:rv .6s ease var(--d,0s) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes rv{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fi{from{fill-opacity:0}}
+@keyframes pop{from{transform:scale(.93)}}
+@keyframes pulse{50%{stroke-width:3.6}}
+@keyframes sc{from{opacity:0;transform:translateY(10px)}}
+@keyframes tt{from{opacity:0;transform:translateX(-12px)}}
+@keyframes bp{50%{box-shadow:0 0 0 7px rgba(47,91,234,.22)}}
+rect.draw,circle.draw{transform-box:fill-box;transform-origin:center}
+rect.draw{animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards}
+circle.draw{animation:dr 1.1s ease var(--d,0s) forwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+rect.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards,fi .8s ease calc(var(--d,0s) + .45s) backwards}
+circle.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,fi .8s ease calc(var(--d,0s) + .45s) backwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+.fig svg{animation:sc .5s ease}
+.t{animation:tt .55s ease}
+button{transition:transform .15s,border-color .15s}button:active{transform:scale(.96)}
+.paused #play{animation:bp 1.8s ease-in-out infinite}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.draw,rect.draw,circle.draw{animation:none!important;stroke-dashoffset:0}.r{animation:none;opacity:1;transform:none}.fig svg,.t,.paused #play{animation:none!important}}
+/* Nút quay lại trang chủ (đặt trên cùng, cạnh logo) */
+.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:600 13.5px "Be Vietnam Pro",system-ui,sans-serif;text-decoration:none;transition:border-color .15s,color .15s,transform .15s}
+.home:hover{border-color:var(--c1);color:var(--c1)}
+.home:active{transform:scale(.97)}
+.home:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+</style>
+</head>
+<body>
+<main class="player">
+  <a class="home" href="../index.html" aria-label="Quay lại trang chủ"><span aria-hidden="true">←</span> Trang chủ</a>
+
+  <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
+  <section class="stage" id="stage" aria-live="off">
+    <h2 id="ttl"></h2>
+    <div class="fig" id="fig"></div>
+    <p class="cap" id="cap"></p>
+  </section>
+  <div class="ctl">
+    <button id="prev">Trước</button>
+    <button id="play">Tạm dừng</button>
+    <button id="next">Sau</button>
+    <button id="voice" aria-pressed="false">Giọng đọc: Tắt</button>
+    <span class="sp"></span>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="seg" id="seg"></div>
+  <p class="url">https://huit.edu.vn</p>
+</main>
+
+<script>
+/* ====== NỘI DUNG: chỉnh sửa mảng SCENES bên dưới ======
+   t: tiêu đề | d: thời lượng (ms) | n: lời giảng (phụ đề + giọng đọc) | v: hàm vẽ hình SVG
+   Mỗi phần tử vẽ có thể có độ trễ riêng (tham số cuối) để hình hiện ra theo lời giảng. */
+const D=n=>`style="--d:${n}s"`;
+const T=(x,y,s,c='',n=0,a='middle')=>`<text class="r ${c}" ${D(n)} x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const P=(tag,attrs,c='',n=0)=>`<${tag} pathLength="1" class="st draw ${c}" ${D(n)} ${attrs}/>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" class="st" style="stroke-width:2"/></marker></defs>`;
+
+const AR=(x1,x2,y,n)=>`<path pathLength="1" class="st draw" ${D(n)} d="M${x1} ${y}H${x2}" marker-end="url(#ah)"/>`;
+const BOX=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b big',n+.3)+L.map((l,j)=>T(x+w/2,y+62+j*22,l,'m',n+.6+j*.3)).join('');
+const GRID=(C,x)=>{let s='';C.forEach((o,i)=>{const X=30+i%2*300,Y=40+Math.floor(i/2)*140,n=.3+i*2.8,k=o[0];
+ s+=P('rect',`x="${X}" y="${Y}" width="280" height="110" rx="16"`,`s${k} f${k}`,n)+(x?P('path',`d="M${X+28} ${Y+39}l20 20M${X+48} ${Y+39}l-20 20"`,`s${k}`,n+.3):P('circle',`cx="${X+38}" cy="${Y+55}" r="16"`,`s${k}`,n+.3))+
+ T(X+68,Y+44,o[1],'b',n+.6,'start')+T(X+68,Y+68,o[2],'m',n+.8,'start')+(o[3]?T(X+68,Y+86,o[3],'m',n+.9,'start'):'');});return s;};
+const BOXS=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b',n+.3)+L.map((l,j)=>T(x+w/2,y+58+j*22,l,'m',n+.6+j*.3)).join('');
+const ROWS=(R,pt=64)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=.3+i*3,m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+const cc=(x,y,r)=>`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
+const IC={chat:'M-10 -8h20v13h-9l-5 5v-5h-6zM-5 -1h1M0 -1h1M5 -1h1',users:cc(0,-5,4)+'M-9 10v-2a6 5 0 0 1 6-5h6a6 5 0 0 1 6 5v2zM-10 -3h-1M10 -3h1',laptop:'M-8 -8h16v11h-16zM-12 6h24l-2 3h-20zM-3 -4l-3 2.5 3 2.5M3 -4l3 2.5-3 2.5',clock:cc(0,0,10)+'M0 -6v6l4 3',search:cc(-2,-2,7)+'M3 3l8 8',chart:'M-10 -10v20h20M-7 4l5-6 4 3 7-8',book:'M0 -7c-3-3-7-3-10-2v15c3-1 7-1 10 2c3-3 7-3 10-2v-15c-3-1-7-1-10 2zM0 -7v15',home:'M-11 0l11-10 11 10M-7 -3v12h14v-12M-2 9v-6h4v6',mail:'M-10 -7h20v14h-20zM-10 -7l10 8 10-8',video:'M-10 -6h13v12h-13zM3 -1l7-5v12l-7-5',share:cc(6,-7,3)+cc(-7,0,3)+cc(6,7,3)+'M-4 -1l7 -5M-4 1l7 5',shield:'M0 -10l9 3v6c0 6-4 9-9 11-5-2-9-5-9-11v-6zM-4 1l3 3 6-6',hub:cc(0,-7,3)+cc(-8,6,3)+cc(8,6,3)+'M0 -4l-6 8M0 -4l6 8M-5 6h10',list:'M-10 -6h1M-5 -6h14M-10 0h1M-5 0h14M-10 6h1M-5 6h14',cap:'M0 -8l11 5-11 5-11-5zM-6 0v6c3 3 9 3 12 0v-6'};
+const I=(nm,x,y,s,k,n)=>P('path',`d="${IC[nm]}" transform="translate(${x} ${y}) scale(${s})"`,`s${k}`,n);
+const IBOX=(x,y,w,h,k,ic,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+w/2}" cy="${y+30}" r="22"`,`s${k}`,n+.2)+I(ic,x+w/2,y+30,1.2,k,n+.4)+T(x+w/2,y+78,title,'b big',n+.6)+L.map((l,j)=>T(x+w/2,y+102+j*20,l,'m',n+.9+j*.3)).join('');
+const OV=(a,pt,d0)=>a.map((nm,i)=>I(nm,60,42+i*pt,.9,[1,3,4,2][i%4],d0+i*3)).join('');
+Object.assign(IC,{warn:'M0 -10l10 18h-20zM0 -3v5M0 5h1',cloud:'M-7 7a5 5 0 0 1 0 -10a7 7 0 0 1 13 -2a5 5 0 0 1 1 12z',heart:'M0 9c-12-8-12-17-5-17 3 0 5 2 5 4 0-2 2-4 5-4 7 0 7 9-5 17z',build:'M-7 10v-18h14v18zM-7 10h14M-3 -4h1M2 -4h1M-3 1h1M2 1h1',gear:cc(0,0,3.5)+'M0 -10v4M0 6v4M-10 0h4M6 0h4M-7 -7l3 3M4 4l3 3M7 -7l-3 3M-4 4l-3 3',star:'M0 -10l3 7h7l-6 5 2 8-6-4-6 4 2-8-6-5h7z',target:cc(0,0,10)+cc(0,0,5)+'M0 0h1'});
+const HI={'Ứng dụng':'laptop','Lợi ích':'star','Thách thức':'warn','Nền tảng học tập':'cap','Công cụ giao tiếp':'chat','Tương tác, cộng tác':'users','Họp trực tuyến':'video','Hệ thống ERP':'build','Quản lý dự án':'list','Kiến thức cần có':'book','Kỹ năng thực hành':'gear','Phẩm chất cần có':'heart','Lưu trữ & chia sẻ':'cloud','Văn phòng trực tuyến':'laptop','Kết nối cảm xúc':'heart','Bảo mật thông tin':'shield','Quá tải thông tin':'warn'};
+const COL=(x,hd,k,L,n)=>(HI[hd]?I(HI[hd],x+13,24,.75,k,n)+T(x+28,29,hd,'b',n+.2,'start'):T(x+95,28,hd,'b big',n))+L.map((o,i)=>BOXS(x,44+i*72,190,66,k,o[0],[o[1]],n+.5+i*1.6)).join('');
+/* ---- hàm bổ sung cho Module 6 ---- */
+const DEF=(x,y,w,h,k,title,L,n,p=17,dl=.4)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+12,y+26,title,'b',n+.3,'start')+L.map((l,j)=>T(x+12,y+50+j*p,l,'m',n+.6+j*dl,'start')).join('');
+const CHIP=(x,y,w,h,k,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="12"`,`s${k} f${k}`,n)+L.map((l,j)=>T(x+w/2,y+h/2+5-(L.length-1)*9+j*18,l,'b',n+.3+j*.2)).join('');
+const NR=(x,y,num,k,l1,l2,n)=>P('circle',`cx="${x}" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+T(x,y+28,num,'b big',n+.3)+T(x+34,y+20,l1,'b',n+.5,'start')+(l2?T(x+34,y+40,l2,'m',n+.7,'start'):'');
+const PILL=(x,y,w,k,s,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="40" rx="12"`,`s${k} f${k}`,n)+T(x+14,y+26,s,'',n+.3,'start');
+const RW=(x,y,w,h,k,a,b,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+14,y+27,a,'b',n+.3,'start')+T(x+14,y+50,b,'m',n+.6,'start');
+const COLT=(x,w,k,per,E,n,dl,gap)=>{let s=P('rect',`x="${x}" y="14" width="${w}" height="30" rx="10"`,`s${k} f${k}`,n)+T(x+w/2,34,per,'b',n+.3)+P('rect',`x="${x}" y="52" width="${w}" height="262" rx="12"`,`s${k} f${k}`,n+.2);let y=82;E.forEach((e,i)=>{const t=n+.8+i*dl;s+=T(x+w/2,y,e[0],'b',t)+e[1].map((l,j)=>T(x+w/2,y+17+j*15,l,'m',t+.2)).join('');y+=17+e[1].length*15+gap;});return s;};
+const COLF=(x,k,num,title,paras,n,dl)=>{let s=P('rect',`x="${x}" y="20" width="190" height="296" rx="16"`,`s${k} f${k}`,n)+P('circle',`cx="${x+95}" cy="54" r="18"`,`s${k}`,n+.3)+T(x+95,60,num,'b big',n+.6)+T(x+95,102,title,'b big',n+.9);let y=134,i=0;paras.forEach(p=>{p.forEach(l=>{s+=T(x+12,y,l,'m',n+1.6+i*dl,'start');y+=17;i++;});y+=10;});return s;};
+const CELL=(x,y,w,k,L,c,n,a)=>P('rect',`x="${x}" y="${y}" width="${w}" height="56" rx="10"`,`s${k} f${k}`,n)+L.map((l,j)=>T(a==='middle'?x+w/2:x+10,y+32-(L.length-1)*8+j*16,l,c,n+.3+j*.3,a)).join('');
+const SCENES=[
+{t:"Giới thiệu Module 6",d:11500,
+ n:"Chào mừng các bạn đến với Module sáu: Ứng dụng trí tuệ nhân tạo, do Khoa Công nghệ thông tin, Trường Đại học Công Thương Thành phố Hồ Chí Minh thực hiện.",
+ v:()=>T(320,58,'MODULE 6','h1',0)+T(320,96,'ỨNG DỤNG TRÍ TUỆ NHÂN TẠO','h2',.6)+P('circle','cx="320" cy="205" r="58"','s1 f1',1.8)+T(320,218,'AI','h1',2.6)+I('gear',190,205,2.2,3,3.4)+I('chart',450,205,2.2,4,4.6)+T(320,300,'KHOA CÔNG NGHỆ THÔNG TIN','b',6.5)+T(320,324,'Trường Đại học Công Thương TP. Hồ Chí Minh','m',8)},
+{t:"Nội dung của Module 6",d:28000,
+ n:"Nội dung module gồm chín phần. Một, tổng quan về trí tuệ nhân tạo. Hai, các khái niệm. Ba, nguyên tắc hoạt động của hệ thống AI. Bốn, ứng dụng AI trong đời sống và công nghệ. Năm, công cụ AI tạo sinh. Sáu, thực hành minh họa về công cụ AI. Bảy, cơ hội, thách thức, đạo đức và nghề nghiệp. Tám, thực hành tổng hợp, ứng dụng AI vào công việc. Chín, tổng kết và định hướng.",
+ v:()=>[['1','Tổng quan','về trí tuệ nhân tạo'],['2','Các khái niệm','về trí tuệ nhân tạo'],['3','Nguyên tắc hoạt động','của hệ thống AI'],['4','Ứng dụng AI','trong đời sống và công nghệ'],['5','Công cụ AI tạo sinh','(Generative AI)'],['6','Thực hành minh họa','về công cụ AI'],['7','Cơ hội – Thách thức','Đạo đức và nghề nghiệp'],['8','Thực hành tổng hợp','Ứng dụng AI vào công việc'],['9','Tổng kết và định hướng','']].map((o,i)=>NR(i<5?40:350,16+(i<5?i:i-5)*62,o[0],[1,3,4,2][i%4],o[1],o[2],.4+i*2.6)).join('')},
+{t:"Động lực của chuyển đổi số và CMCN 4.0",d:22500,
+ n:"Phần một: Tổng quan về trí tuệ nhân tạo, hay Artificial Intelligence. Động lực của chuyển đổi số và cách mạng công nghiệp bốn chấm không gồm ba điều: tự động hóa quy trình phức tạp, phân tích dữ liệu khổng lồ và tạo mô hình kinh doanh mới. Vì vậy, ứng dụng AI là bắt buộc để duy trì cạnh tranh.",
+ v:()=>T(320,26,'1. TỔNG QUAN VỀ TRÍ TUỆ NHÂN TẠO · ARTIFICIAL INTELLIGENCE','m',0)+T(320,62,'Động lực của chuyển đổi số và CMCN 4.0','h2',5.5)+IBOX(20,84,190,138,1,'gear','Tự động hóa',['quy trình phức tạp'],12.6)+IBOX(225,84,190,138,3,'chart','Phân tích',['dữ liệu khổng lồ'],14.8)+IBOX(430,84,190,138,4,'star','Tạo mô hình',['kinh doanh mới'],17)+P('rect','x="60" y="252" width="520" height="64" rx="14"','s2 f2',19.5)+T(320,291,'Ứng dụng AI là bắt buộc để duy trì cạnh tranh','b big',19.9)},
+{t:"Mục tiêu của Module 6",d:21500,
+ n:"Mục tiêu của module chia làm hai nhóm. Nhóm nền tảng gồm: các khái niệm, nguyên tắc hoạt động, tầm quan trọng của dữ liệu, nguyên tắc của các ứng dụng phổ biến và rủi ro. Nhóm thực thi gồm: các công cụ, vận dụng ChatGPT, đánh giá kết quả, áp dụng vào công việc, cải tiến và trách nhiệm.",
+ v:()=>P('rect','x="20" y="16" width="290" height="44" rx="14"','s1 f1',.4)+T(165,45,'Nền tảng','b big',.7)+['Các khái niệm','Nguyên tắc hoạt động','Tầm quan trọng dữ liệu','Nguyên tắc của các ứng dụng phổ biến','Rủi ro'].map((s,i)=>PILL(20,76+i*50,290,1,s,4.5+i*1.7)).join('')+P('rect','x="330" y="16" width="290" height="44" rx="14"','s3 f3',12.8)+T(475,45,'Thực thi','b big',13.1)+['Các công cụ','Vận dụng ChatGPT','Đánh giá kết quả','Áp dụng vào công việc','Cải tiến và trách nhiệm'].map((s,i)=>PILL(330,76+i*50,290,3,s,14.4+i*1.2)).join('')},
+{t:"Trí tuệ nhân tạo là gì?",d:17500,
+ n:"Trí tuệ nhân tạo là lĩnh vực khoa học và kỹ thuật chế tạo các máy móc thông minh, đặc biệt là các chương trình máy tính thông minh. Đây là định nghĩa gắn với John McCarthy, người được xem là cha đẻ của AI, vào năm một chín năm sáu.",
+ v:()=>P('rect','x="40" y="30" width="560" height="170" rx="18"','s1 f1',.3)+['Trí tuệ nhân tạo là lĩnh vực khoa học','và kỹ thuật chế tạo các máy móc thông minh,','đặc biệt là các chương trình máy tính','thông minh.'].map((l,j)=>T(320,78+j*34,l,'big',1.2+j*2.2)).join('')+P('circle','cx="150" cy="262" r="36"','s4 f4',10.5)+I('users',150,262,1.8,4,10.9)+T(210,256,'John McCarthy','b big',11.4,'start')+T(210,282,'Cha đẻ của AI, 1956','m',12.2,'start')},
+{t:"Xây dựng hệ thống AI và mục tiêu của AI",d:21500,
+ n:"Một hệ thống AI được xây dựng để có năm năng lực: giải quyết vấn đề, học hỏi, nhận thức, lập luận và giao tiếp. Mục tiêu của AI trải rộng trên nhiều hướng: hệ thống tri giác, mạng lưới thần kinh, quy hoạch, robotics, machine learning, nhận thức, kiến thức và xử lý ngôn ngữ tự nhiên.",
+ v:()=>T(160,42,'Xây dựng hệ thống AI','h2',.3)+['Giải quyết vấn đề','Học hỏi','Nhận thức','Lập luận','Giao tiếp'].map((s,i)=>CHIP(20,60+i*54,280,44,[1,3,4,2,1][i],[s],3+i*1.5)).join('')+P('path','d="M320 30V330"','thin',9.5)+T(480,42,'Mục tiêu của AI','h2',10.8)+[[1,['Hệ thống','tri giác']],[3,['Mạng lưới','thần kinh']],[4,['Quy hoạch']],[2,['Robotics']],[3,['Machine','Learning']],[1,['Nhận thức']],[2,['Kiến thức']],[4,['Xử lý ngôn ngữ','tự nhiên']]].map((o,i)=>CHIP(i<4?340:485,60+(i%4)*66,135,56,o[0],o[1],11.6+i*1)).join('')},
+{t:"Bốn khái niệm lồng nhau: AI, học máy, học sâu, AI tạo sinh",d:38500,
+ n:"Bốn khái niệm lồng vào nhau. Trí tuệ nhân tạo là công nghệ mô phỏng trí thông minh của con người trên máy tính để ra quyết định hoặc giải quyết vấn đề. Học máy là một nhánh của AI, cho phép hệ thống tự động học hỏi từ dữ liệu và cải thiện mà không cần lập trình cụ thể. Học sâu là kỹ thuật cao cấp của học máy, dùng mạng nơ-ron nhân tạo giống cấu trúc não người để phân tích các mẫu rất phức tạp. AI tạo sinh, thường dùng học sâu, có khả năng tạo ra nội dung hoàn toàn mới như văn bản, hình ảnh, âm nhạc và mã.",
+ v:()=>P('circle','cx="320" cy="210" r="120"','s1 f1',1)+T(320,128,'Trí tuệ nhân tạo','b',1.6)+P('circle','cx="320" cy="242" r="88"','s3 f3',10)+T(320,190,'Học máy','b',10.6)+P('circle','cx="320" cy="272" r="58"','s4 f4',20)+T(320,246,'Học sâu','b',20.6)+P('circle','cx="320" cy="298" r="32"','s2 f2',29.5)+T(320,296,'AI tạo','m b',30)+T(320,312,'sinh','m b',30.2)+
+  DEF(20,16,178,130,1,'Trí tuệ nhân tạo',['Công nghệ mô phỏng trí','thông minh của con người','trên máy tính để ra quyết','định hoặc giải quyết','vấn đề.'],3,17,1.4)+P('path','d="M198 70L232 128"','thin',2.4)+
+  DEF(442,16,178,130,3,'Học máy',['Một nhánh của AI, cho','phép hệ thống tự động học','hỏi từ dữ liệu và cải','thiện mà không cần lập','trình cụ thể.'],11,17,1.7)+P('path','d="M442 70L387 185"','thin',10.4)+
+  DEF(20,186,178,146,4,'Học sâu',['Một kỹ thuật cao cấp của','Học máy, sử dụng mạng','nơ-ron nhân tạo (giống','cấu trúc não người) để','phân tích các mẫu rất','phức tạp.'],21,17,1.4)+P('path','d="M198 262L262 272"','thin',20.4)+
+  DEF(442,186,178,130,2,'AI tạo sinh',['AI (thường dùng Học sâu)','có khả năng tạo ra nội','dung hoàn toàn mới như','văn bản, hình ảnh,','âm nhạc và mã (code).'],30,17,1.4)+P('path','d="M442 258L352 298"','thin',29.9)},
+{t:"Xử lý ngôn ngữ tự nhiên (NLP)",d:36500,
+ n:"Xử lý ngôn ngữ tự nhiên, gọi tắt là NLP, là lĩnh vực AI trao cho máy tính khả năng hiểu, diễn giải và tạo ra ngôn ngữ của con người, cả văn bản và giọng nói. Ứng dụng gồm: dịch ngôn ngữ như Google Translate; trợ lý ảo như Siri và Google Assistant; phân tích cảm xúc từ bình luận mạng xã hội; và AI tạo sinh như ChatGPT, Gemini. Trên sơ đồ là các bài toán quen thuộc của NLP: chatbot, lọc email, dịch, phân tích cảm xúc, dự đoán từ tiếp theo, tóm tắt văn bản, trợ lý ảo và mã hóa AES.",
+ v:()=>DEF(20,16,290,108,1,'Định nghĩa',['Lĩnh vực AI trao cho máy tính khả năng','hiểu, diễn giải và tạo ra ngôn ngữ của','con người (cả văn bản và giọng nói).'],.5,17,1.8)+
+  DEF(20,128,290,190,3,'Ứng dụng',['• Dịch ngôn ngữ: Google Translate.','• Trợ lý ảo: Siri, Google Assistant.','• Phân tích cảm xúc: phân tích bình','luận mạng xã hội.','• AI tạo sinh: ChatGPT, Gemini.'],11,24,2.4)+
+  P('circle','cx="475" cy="164" r="34"','s1 f1',24)+T(475,170,'NLP','b big',24.4)+
+  [[0,0,['Mã hóa','AES'],4],[1,0,['Chat bot'],1],[2,0,['Lọc email'],3],[2,1,['Dịch'],4],[2,2,['Phân tích','cảm xúc'],2],[1,2,['Dự đoán từ','tiếp theo'],3],[0,2,['Tóm tắt','văn bản'],1],[0,1,['Trợ lý ảo'],2]].map((o,i)=>CHIP(330+o[0]*100,24+o[1]*102,90,76,o[3],o[2],25.2+i*1)).join('')},
+{t:"Thị giác máy tính (Computer Vision)",d:29000,
+ n:"Thị giác máy tính là lĩnh vực AI cho phép máy tính “nhìn” và trích xuất thông tin có ý nghĩa từ hình ảnh kỹ thuật số, video và các đầu vào hình ảnh khác. Ứng dụng gồm: nhận diện khuôn mặt để mở khóa điện thoại; xe tự lái nhận diện người đi bộ, làn đường và biển báo; y tế, phân tích ảnh X-quang, MRI để phát hiện khối u; và kiểm soát chất lượng, phát hiện lỗi trên dây chuyền sản xuất.",
+ v:()=>DEF(20,20,280,150,1,'Thị giác máy tính',['Computer Vision','Lĩnh vực AI cho phép máy tính','“nhìn” và trích xuất thông tin có','ý nghĩa từ hình ảnh kỹ thuật số,','video và các đầu vào hình ảnh khác.'],.5,17,1.7)+P('path','d="M110 255Q160 215 210 255Q160 295 110 255Z"','s1 f1',9)+P('circle','cx="160" cy="255" r="16"','s1',9.6)+P('circle','cx="160" cy="255" r="6"','s1 f1',10.2)+[['Nhận diện khuôn mặt','Mở khóa điện thoại.',1],['Xe tự lái','Nhận diện người đi bộ, làn đường, biển báo.',3],['Y tế','Phân tích ảnh X-quang, MRI để phát hiện khối u.',4],['Kiểm soát chất lượng','Phát hiện lỗi trên dây chuyền sản xuất.',2]].map((o,i)=>RW(320,20+i*78,300,66,o[2],o[0],o[1],[12,16.5,21,25.5][i])).join('')},
+{t:"Robotics và Học tăng cường",d:36500,
+ n:"Robotics kết hợp AI với kỹ thuật cơ khí để tạo ra các robot có thể tương tác vật lý với môi trường. Ứng dụng gồm robot phẫu thuật, robot trong dây chuyền sản xuất, máy bay không người lái tự hành và robot hút bụi thông minh. Học tăng cường mô phỏng cách con người và động vật học: nhận phần thưởng cho hành động đúng, hình phạt cho hành động sai, từ đó tối ưu hóa chiến lược. Ứng dụng gồm AI chơi game như AlphaGo, tối ưu hóa chuỗi cung ứng và tối ưu hóa hệ thống giao dịch tự động.",
+ v:()=>DEF(20,16,290,134,1,'Robotics',['Kết hợp AI với kỹ thuật cơ khí để tạo ra','các robot có thể tương tác vật lý với','môi trường.'],.5,17,1.5)+DEF(20,162,290,136,1,'Ứng dụng',['• Robot phẫu thuật','• Robot trong dây chuyền sản xuất','• Máy bay không người lái tự hành','• Robot hút bụi thông minh'],8,24,1.9)+
+  DEF(330,16,290,134,2,'Học tăng cường',['Reinforcement Learning: mô phỏng cách','con người và động vật. Nhận “phần','thưởng” cho hành động đúng và “hình','phạt” cho hành động sai, từ đó tối','ưu hóa chiến lược.'],16.2,17,2.6)+DEF(330,162,290,136,2,'Ứng dụng',['• AI chơi game (AlphaGo).','• Tối ưu hóa chuỗi cung ứng','• Tối ưu hóa hệ thống giao dịch tự động.'],30,24,1.8)},
+{t:"Lịch sử AI: từ 1900 đến 2000",d:47500,
+ n:"Lịch sử AI đi qua nhiều giai đoạn. Từ một chín không không đến một chín năm không: ống chân không Triode, robot đầu tiên, logic số, điều khiển học, rồi phép thử Turing. Từ một chín năm không đến một chín bảy ba: thuật ngữ AI ra đời năm một chín năm sáu, perceptron đầu tiên, chương trình AI đầu tiên, robot công nghiệp đầu tiên và chatbot Eliza. Sau đó là mùa đông AI thứ nhất. Thập niên một chín tám không có WABOT hai, mạng Hopfield, xử lý song song, lan truyền ngược và mạng tích chập, trước mùa đông AI thứ hai. Giai đoạn một chín chín ba đến hai nghìn có Robocup, Deep Blue thắng Kasparov, LSTM, robot chó AIBO và robot Kismet.",
+ v:()=>COLT(20,128,1,'1900 – 1950',[['1900',['Triode Vacuum Tube']],['1920',['First ever robot']],['1938',['Digital Logic']],['1948',['Cybernetics']],['1950',['Turing Test']]],2.6,1.6,14)+
+  COLT(172,128,3,'1950 – 1973',[['1956',['AI term born']],['1957',['First Perceptron']],['1957',['First AI program']],['1965',['First Ind. Robot']],['1965',['Eliza ChatBot']]],12.7,2.2,14)+T(312,330,'Mùa đông AI thứ nhất','m',26)+
+  COLT(324,128,4,'1980 – 1987',[['1980',['WABOT-2']],['1982',['Hopfield ANN']],['1986',['Parallel Processing']],['1986',['Back propagation']],['1989',['Convolutional NN']]],28.3,1.7,14)+T(464,330,'Mùa đông AI thứ hai','m',37)+
+  COLT(476,128,2,'1993 – 2000',[['1994',['Robocup']],['1997',['Deep Blue']],['1997',['LSTM ANN']],['1999',['Sony AIBO']],['2000',['Kismet Robot']]],38.7,1.2,14)},
+{t:"Lịch sử AI: từ 2000 đến nay",d:41000,
+ n:"Từ hai nghìn đến hai không một hai: thử thách DARPA, mạng Deep Belief, IBM Blue Brain, trợ lý Siri của Apple và AlexNet. Từ hai không một hai đến hai không một bảy: DeepMind, Generative A N, TensorFlow và AlphaGo. Giai đoạn hai không một bảy đến hai không hai không: Transformers, WaveNet, GPT một, BERT, GPT ba và DALL-E. Từ hai không hai không đến hai không hai lăm: xe tự lái Tesla, quy định và đạo đức AI, ChatGPT, Sora và Đạo luật AI của châu Âu. Từ hai không hai lăm trở đi: DeepSeek, rồi các hướng AGI, ASI, Singularity và siêu nhân loại.",
+ v:()=>COLT(20,116,1,'2000 – 2012',[['2003–2005',['DARPA Challenges']],['2006',['Deep Belief ANN']],['2008',['IBM Blue Brain']],['2010',['Apple Siri']],['2012',['AlexNet']]],.5,1.7,10)+
+  COLT(141,116,3,'2012 – 2017',[['2013',['DeepMind']],['2014',['Generative AN']],['2015',['Tensorflow']],['2016',['Alpha Go']]],9.4,1.4,10)+
+  COLT(262,116,4,'2017 – 2020',[['2017',['Transformers']],['2017',['WaveNet']],['2019',['GPT-1']],['2020',['BERT LM']],['2020',['GPT-3']],['2020',['DALL-E']]],15.8,1.3,4)+
+  COLT(383,116,2,'2020 – 2025',[['2020',['Tesla Self drive']],['2021',['Regulation','&amp; Ethics']],['2022',['ChatGPT']],['2024',['Sora LVM']],['2024',['EU AI Act']]],24.1,1.7,10)+
+  COLT(504,116,1,'2025 – …',[['2025',['deepseek']],['+2025',['AGI','ASI','Singularity','SuperHumans','&amp; Beyond']]],33.5,2.5,10)}
+,
+{t:"Hoạt động của hệ thống AI",d:12500,
+ n:"Phần ba: Nguyên tắc hoạt động. Một hệ thống AI hoạt động theo chuỗi: dữ liệu đi qua thuật toán để tạo ra mô hình; từ mô hình, hệ thống đưa ra dự đoán hoặc quyết định.",
+ v:()=>T(320,26,'3. NGUYÊN TẮC HOẠT ĐỘNG','m',0)+T(320,62,'Hoạt động của hệ thống AI','h2',1)+I('cloud',85,104,1.6,1,3.5)+P('rect','x="20" y="140" width="130" height="60" rx="14"','s1 f1',3.5)+T(85,177,'Dữ liệu','b big',3.9)+AR(150,188,170,5)+I('gear',255,104,1.6,3,5.3)+P('rect','x="190" y="140" width="130" height="60" rx="14"','s3 f3',5.3)+T(255,177,'Thuật toán','b big',5.7)+AR(320,358,170,7)+I('build',425,104,1.6,4,7.5)+P('rect','x="360" y="140" width="130" height="60" rx="14"','s4 f4',7.5)+T(425,177,'Mô hình','b big',7.9)+P('path','d="M490 160L518 105" marker-end="url(#ah)"','',9.2)+P('rect','x="520" y="76" width="100" height="56" rx="14"','s2 f2',9.5)+T(570,109,'Dự đoán','b',9.8)+P('path','d="M490 180L518 235" marker-end="url(#ah)"','',9.7)+P('rect','x="520" y="214" width="100" height="56" rx="14"','s2 f2',10)+T(570,247,'Quyết định','b',10.2)},
+{t:"Các yếu tố quyết định hiệu quả của AI",d:37500,
+ n:"Ba yếu tố quyết định hiệu quả của AI. Một, chất lượng dữ liệu: quan trọng nhất, rác vào thì rác ra, nghĩa là dữ liệu cần sạch, đầy đủ, đa dạng và đại diện. Hai, độ thiên lệch: AI học từ dữ liệu, nếu dữ liệu có định kiến thì AI tái tạo định kiến đó, chẳng hạn dữ liệu huấn luyện bác sĩ là nam, y tá là nữ gây phân biệt đối xử trong tuyển dụng. Ba, thuật toán: cần chọn thuật toán phù hợp với bài toán; Deep Learning không phải lúc nào cũng tốt nhất, bài toán đơn giản thì thuật toán đơn giản là đủ.",
+ v:()=>COLF(20,1,'01','Chất lượng dữ liệu',[['• Quan trọng nhất: “Rác','vào, rác ra” (GIGO).'],['• Dữ liệu cần: sạch, đầy','đủ, đa dạng, đại diện.']],1,1.7)+COLF(225,2,'02','Độ thiên lệch',[['• AI học từ dữ liệu; nếu','dữ liệu có định kiến, AI','tái tạo định kiến đó.'],['• Dữ liệu huấn luyện','“bác sĩ = nam, y tá = nữ”','gây phân biệt đối xử','trong tuyển dụng.']],13,1.6)+COLF(430,3,'03','Thuật toán',[['• Lựa chọn thuật toán','phù hợp với bài toán.'],['• Không phải lúc nào Deep','Learning cũng là tốt nhất;','thuật toán đơn giản phù','hợp cho bài toán đơn giản.']],25.5,1.5)},
+{t:"So sánh cơ chế học: con người và máy",d:43000,
+ n:"So sánh cách học của con người và máy. Nguồn học: người học từ kinh nghiệm, quan sát, sách vở và chỉ cần ít ví dụ; máy học từ dữ liệu và cần lượng rất lớn. Tốc độ: người chậm, cần lặp lại; máy rất nhanh, xử lý song song hàng triệu điểm dữ liệu mỗi giây. Khả năng: người có trực giác, hiểu ngữ cảnh, sáng tạo; máy giỏi nhận diện mẫu phức tạp, tối ưu hóa và dự đoán quy mô lớn. Thiên lệch: người có định kiến cá nhân, văn hóa; máy thiên lệch từ dữ liệu và thuật toán. Cuối cùng, người bị mệt mỏi, cảm xúc chi phối, còn máy hoạt động hai bốn trên bảy, hiệu suất nhất quán.",
+ v:()=>P('rect','x="20" y="12" width="108" height="28" rx="8"','s1 f1',.3)+T(74,31,'Tiêu chí','b',.5)+P('rect','x="136" y="12" width="238" height="28" rx="8"','s3 f3',.7)+T(255,31,'Con người','b',.9)+P('rect','x="382" y="12" width="238" height="28" rx="8"','s2 f2',1.1)+T(501,31,'Máy (Machine Learning)','b',1.3)+
+  [['Nguồn học',['Nguồn học'],['Kinh nghiệm, quan sát, sách vở,','hướng dẫn (cần ít ví dụ).'],['Dữ liệu có cấu trúc hoặc phi cấu','trúc (cần lượng dữ liệu rất lớn).'],3],['Tốc độ học',['Tốc độ học'],['Chậm, cần lặp lại, tư duy.'],['Rất nhanh, xử lý song song hàng','triệu điểm dữ liệu / giây.'],11],['Khả năng',['Khả năng'],['Trực giác, hiểu ngữ cảnh, sáng','tạo, thông thường (common sense).'],['Nhận diện mẫu (pattern) phức tạp,','tối ưu hóa, dự đoán quy mô lớn.'],19],['Thiên lệch',['Thiên lệch'],['Cảm tính, định kiến cá nhân,','văn hóa.'],['Thiên lệch toán học từ dữ liệu','(data bias) và thuật toán','(algorithmic bias).'],27.5],['Mệt mỏi',['Mệt mỏi /','Cảm xúc'],['Bị ảnh hưởng bởi mệt mỏi,','cảm xúc, sức khỏe.'],['Không, hoạt động 24/7 với hiệu','suất nhất quán.'],36]].map((o,i)=>CELL(20,44+i*58,108,1,o[1],'b',o[4],'middle')+CELL(136,44+i*58,238,3,o[2],'m',o[4]+.8,'start')+CELL(382,44+i*58,238,2,o[3],'m',o[4]+3.5,'start')).join('')},
+{t:"Ứng dụng AI trong kỹ thuật",d:11000,
+ n:"Phần bốn: Ứng dụng của AI trong thực tế. Trong kỹ thuật, AI được dùng cho nhận diện cá nhân, hệ thống giao thông thông minh, xe tự lái và robot.",
+ v:()=>T(320,26,'4. ỨNG DỤNG CỦA AI TRONG THỰC TẾ','m',0)+T(320,62,'Trong kỹ thuật','h2',1)+[['1','Nhận diện cá nhân',''],['2','Hệ thống giao thông thông minh',''],['3','Xe tự lái',''],['4','Robot','']].map((o,i)=>NR(150,92+i*60,o[0],[1,3,4,2][i],o[1],o[2],4.5+i*1.3)).join('')},
+{t:"Nguyên tắc hoạt động: nhận diện bằng AI",d:29500,
+ n:"Nguyên tắc hoạt động gồm bốn bước: thu thập dữ liệu, xử lý ảnh, so sánh với dữ liệu đã học và đưa ra quyết định. Camera hoặc cảm biến thu thập hình ảnh. AI phân tích đặc điểm. Sau đó đối chiếu với dữ liệu đã học: ảnh đầu vào được so với dữ liệu để cho kết quả đầu ra. Cuối cùng là nhận diện người, phương tiện giao thông, lái xe tự động, dựa trên thị giác máy tính, học sâu và mạng nơ-ron.",
+ v:()=>[[1,['Thu thập','dữ liệu']],[3,['Xử lý ảnh']],[4,['So sánh với','dữ liệu đã học']],[2,['Đưa ra','quyết định']]].map((o,i)=>CHIP(20,16+i*72,190,62,o[0],o[1],1.5+i*1.6)).join('')+
+  RW(240,16,380,62,1,'Camera / cảm biến','thu thập hình ảnh',9.5)+AR(210,238,47,9.3)+RW(240,88,380,62,3,'AI phân tích đặc điểm','',13)+AR(210,238,119,12.8)+RW(240,160,380,62,4,'Đối chiếu với dữ liệu đã học','Đầu vào (Input) → Đầu ra (Output)',16.5)+AR(210,238,191,16.3)+
+  DEF(240,232,380,100,2,'Nhận diện',['Người, phương tiện giao thông, lái xe tự động','Computer Vision (thị giác máy tính),','Deep Learning (học sâu), Neural Networks (mạng nơ-ron)'],21,17,2.2)+AR(210,238,263,20.8)},
+{t:"Ứng dụng AI trong y tế",d:14500,
+ n:"Trong y tế, AI hỗ trợ chẩn đoán và phân loại ảnh X-quang. AI cũng được tích hợp vào các thiết bị thông minh để lấy dữ liệu nhịp tim, huyết áp và nồng độ glucose. Ngoài ra còn có chatbot y tế.",
+ v:()=>T(320,34,'Trong y tế','h2',0)+[['1','Hỗ trợ chẩn đoán',''],['2','Phân loại X-quang',''],['3','Tích hợp vào thiết bị thông minh','Lấy dữ liệu nhịp tim, huyết áp, nồng độ glucose'],['4','Chatbot y tế','']].map((o,i)=>NR(100,64+i*66,o[0],[1,3,4,2][i],o[1],o[2],[1.5,4,6.5,11][i])).join('')},
+{t:"Nguyên tắc hoạt động: AI hỗ trợ chẩn đoán",d:27000,
+ n:"Nguyên tắc hoạt động gồm bốn bước. Huấn luyện: AI học từ hàng triệu ảnh X-quang, CT, MRI đã được bác sĩ chẩn đoán. Nhận dạng mẫu: phát hiện các dấu hiệu bất thường như khối u, tổn thương. So sánh: đối chiếu với các trường hợp tương tự. Đưa ra kết quả: gợi ý chẩn đoán cho bác sĩ. Công nghệ sử dụng là Machine Learning và nhận dạng mẫu, Pattern Recognition.",
+ v:()=>BOXS(20,30,130,160,1,'Huấn luyện',['AI học từ hàng','triệu ảnh X-quang,','CT, MRI đã được','bác sĩ chẩn đoán'],2)+AR(150,174,110,7.5)+BOXS(176,30,130,160,3,'Nhận dạng mẫu',['Phát hiện các dấu','hiệu bất thường','(khối u, tổn','thương)'],8.5)+AR(306,330,110,13)+BOXS(332,30,130,160,4,'So sánh',['Đối chiếu với các','trường hợp','tương tự'],14)+AR(462,486,110,17.5)+BOXS(488,30,130,160,2,'Đưa ra kết quả',['Gợi ý chẩn đoán','cho bác sĩ'],18.5)+P('rect','x="60" y="236" width="520" height="60" rx="14"','s4 f4',23)+T(320,271,'Công nghệ: Machine Learning, Pattern Recognition (nhận dạng mẫu)','',23.4)}
+,
+{t:"Ứng dụng AI trong kinh tế",d:9500,
+ n:"Trong kinh tế, AI được ứng dụng ở chatbot chăm sóc khách hàng, dự báo doanh thu, phát hiện gian lận và nhiều ứng dụng khác.",
+ v:()=>T(320,62,'Trong kinh tế','h2',0)+[['1','Chatbot CSKH','Chăm sóc khách hàng'],['2','Dự báo doanh thu',''],['3','Phát hiện gian lận',''],['4','…','Và nhiều ứng dụng khác']].map((o,i)=>NR(150,92+i*60,o[0],[1,3,4,2][i],o[1],o[2],2.5+i*1.4)).join('')},
+{t:"Nguyên tắc hoạt động: chatbot chăm sóc khách hàng",d:22000,
+ n:"Nguyên tắc hoạt động gồm năm bước. Xử lý ngôn ngữ tự nhiên: hiểu câu hỏi của người dùng. Phân tích ngữ cảnh: xác định ý định người dùng. Tìm kiếm thông tin: tra cứu trong dữ liệu huấn luyện. Tạo phản hồi: đưa ra câu trả lời phù hợp. Cuối cùng là học hỏi: cải thiện qua mỗi lần tương tác.",
+ v:()=>[['Xử lý ngôn ngữ tự nhiên (NLP)','Hiểu câu hỏi của người dùng'],['Phân tích ngữ cảnh','Xác định ý định người dùng'],['Tìm kiếm thông tin','Tra cứu trong dữ liệu huấn luyện'],['Tạo phản hồi','Đưa ra câu trả lời phù hợp'],['Học hỏi','Cải thiện qua mỗi lần tương tác']].map((o,i)=>{const n=3.2+i*3.8,x=20+i*16,y=16+i*64;return P('rect',`x="${x}" y="${y}" width="250" height="50" rx="12"`,`s${[1,3,4,2,1][i]} f${[1,3,4,2,1][i]}`,n)+T(x+125,y+31,o[0],'b',n+.3)+AR(x+250,330,y+25,n+.5)+T(342,y+30,o[1],'',n+.9,'start');}).join('')},
+{t:"Ứng dụng AI trong giáo dục và truyền thông",d:18000,
+ n:"Trong giáo dục, AI giúp xây dựng lộ trình cá nhân hóa, làm trợ giảng AI, phát hiện đạo văn, tra cứu tài liệu và tóm tắt. Trong truyền thông, AI được dùng để viết nội dung, lồng tiếng, tạo video tự động, tạo mã QR tự động và nhiều việc khác.",
+ v:()=>P('rect','x="20" y="16" width="290" height="44" rx="14"','s1 f1',.4)+T(165,45,'Trong giáo dục','b big',.7)+['Lộ trình cá nhân hóa','Trợ giảng AI','Phát hiện đạo văn','Tra cứu tài liệu, tóm tắt'].map((s,i)=>PILL(20,76+i*50,290,1,s,2.5+i*1.9)).join('')+P('rect','x="330" y="16" width="290" height="44" rx="14"','s4 f4',10)+T(475,45,'Trong truyền thông','b big',10.3)+['Viết nội dung','Lồng tiếng','Video tự động','QR tự động','…'].map((s,i)=>PILL(330,76+i*50,290,4,s,10.8+i*1.1)).join('')},
+{t:"Lợi ích của AI trong thực tế",d:10000,
+ n:"Lợi ích của việc ứng dụng AI gồm năm điều: tiết kiệm thời gian, tăng hiệu quả, giảm sai sót, an toàn và tuân thủ, và tăng doanh thu.",
+ v:()=>T(320,34,'Lợi ích','h2',0)+[[20,50,1,'clock','Tiết kiệm thời gian'],[225,50,3,'chart','Tăng hiệu quả'],[430,50,4,'target','Giảm sai sót'],[122,185,2,'shield','An toàn và tuân thủ'],[328,185,1,'star','Tăng doanh thu']].map((o,i)=>IBOX(o[0],o[1],190,110,o[2],o[3],o[4],[],1.2+i*1.3)).join('')},
+{t:"GenAI là gì?",d:20500,
+ n:"Phần năm: Một số AI tạo sinh phổ biến. Generative AI, hay AI tạo sinh, là hệ thống học mẫu từ dữ liệu và tạo ra nội dung mới như văn bản, hình ảnh, âm thanh, video, mã nguồn, dữ liệu tổng hợp, có tính hợp lý và giống người. Không chỉ tìm kiếm hay trích xuất, mà sáng tạo.",
+ v:()=>DEF(20,16,590,104,1,'Generative AI (AI tạo sinh)',['Là hệ thống học mẫu (patterns) từ dữ liệu và tạo ra nội dung mới','(văn bản, hình ảnh, âm thanh, video, mã nguồn, dữ liệu tổng hợp)','có tính hợp lý và “giống người”.'],2,17,2.8)+[['Văn bản'],['Hình ảnh'],['Âm thanh'],['Video'],['Mã nguồn'],['Dữ liệu','tổng hợp']].map((l,i)=>CHIP(20+i*102,150,90,64,[1,3,4,2][i%4],l,10.5+i*1)).join('')+P('rect','x="60" y="250" width="520" height="64" rx="14"','s2 f2',17)+T(320,288,'Không chỉ “tìm kiếm” hay “trích xuất”, mà sáng tạo','b big',17.4)},
+{t:"Các thể loại công cụ AI tạo sinh (1)",d:28500,
+ n:"Các thể loại công cụ AI tạo sinh. AI nghiên cứu và đánh giá: ChatGPT, Perplexity, Claude, Gemini Deep Research, Copilot, DeepSeek. AI làm ảnh chuyên nghiệp: Midjourney, Stable Diffusion, Nano Banana, Adobe Firefly, Krea AI. AI sáng tạo video: Canva Video hai chấm không, Veo ba, Sora, MidJourney, HeyGen, Pika AI. AI tối ưu hóa SEO: Surfer SEO, Jasper, NeuronWriter, ChatGPT.",
+ v:()=>DEF(20,16,290,148,1,'AI nghiên cứu và đánh giá',['ChatGPT, Perplexity, Claude,','Gemini Deep Research,','Copilot, DeepSeek'],2.5,17,1.2)+DEF(330,16,290,148,3,'AI làm ảnh chuyên nghiệp',['Midjourney, Stable Diffusion,','Nano Banana, Adobe Firefly,','Krea AI'],9.8,17,1.2)+DEF(20,178,290,148,4,'AI sáng tạo video',['Canva Video 2.0, Veo 3, Sora,','MidJourney, HeyGen, Pika AI'],16.8,17,1.2)+DEF(330,178,290,148,2,'AI tối ưu hóa SEO',['Surfer SEO, Jasper,','NeuronWriter, ChatGPT'],23.6,17,1.2)},
+{t:"Các thể loại công cụ AI tạo sinh (2)",d:11500,
+ n:"AI quản lý cá nhân và ghi chú gồm Notion AI, Mem.ai, Fathom AI và Taskade. AI hỗ trợ phát triển web và code gồm GitHub Copilot, Durable, Ten Web và Framer.",
+ v:()=>P('rect','x="20" y="30" width="290" height="250" rx="16"','s1 f1',.3)+T(165,62,'AI quản lý cá nhân và ghi chú','b',.6)+['Notion AI','Mem.ai','Fathom AI','Taskade'].map((s,i)=>CHIP(34+(i%2)*137,90+Math.floor(i/2)*84,125,56,[1,3,4,2][i],[s],1.5+i*.9)).join('')+P('rect','x="330" y="30" width="290" height="250" rx="16"','s3 f3',6)+T(475,62,'AI hỗ trợ phát triển web và code','b',6.3)+['GitHub Copilot','Durable','10Web','Framer'].map((s,i)=>CHIP(344+(i%2)*137,90+Math.floor(i/2)*84,125,56,[3,4,2,1][i],[s],7+i*.6)).join('')}
+,
+{t:"NotebookLM là gì?",d:13000,
+ n:"Phần năm điểm một: ứng dụng GenAI trong xử lý và phân tích văn bản. NotebookLM là một công cụ trợ lý nghiên cứu và ghi chú do Google phát triển, dựa trên các model Gemini.",
+ v:()=>T(320,26,'5.1 ỨNG DỤNG GENAI TRONG XỬ LÝ VÀ PHÂN TÍCH VĂN BẢN','m',0)+T(320,92,'NotebookLM','h1',3.5)+T(320,130,'Công cụ trợ lý nghiên cứu / ghi chú do Google phát triển','big',6)+T(320,158,'(dựa trên các model Gemini)','m',7.5)+P('rect','x="120" y="200" width="140" height="60" rx="14"','s1 f1',8)+T(190,237,'Gemini','b big',8.3)+AR(260,378,230,9)+P('rect','x="380" y="200" width="140" height="60" rx="14"','s3 f3',9.4)+T(450,237,'NotebookLM','b big',9.7)+T(320,300,'Google phát triển','m',9.9)},
+{t:"NotebookLM cho phép làm gì?",d:10500,
+ n:"NotebookLM cho phép đưa vào tài liệu như PDF, trang web, slide; AI sẽ phân tích và tóm tắt, tạo study guide, trả lời câu hỏi và tạo FAQ.",
+ v:()=>BOXS(20,100,150,110,1,'Tài liệu',['PDF, trang web,','slide,...'],.5)+AR(170,208,155,2)+P('circle','cx="250" cy="155" r="40"','s1 f1',2.4)+T(250,162,'AI','b big',2.8)+['Phân tích, tóm tắt','Tạo study guide','Trả lời câu hỏi','FAQ'].map((s,i)=>P('path',`d="M288 ${150+i*2}L376 ${48+i*80}" marker-end="url(#ah)"`,'',4+i*1)+CHIP(380,20+i*80,240,56,[1,3,4,2][i],[s],4.3+i*1)).join('')},
+{t:"Các chức năng chính của NotebookLM",d:46500,
+ n:"Các chức năng chính. Một, import nhiều nguồn như PDF, slide, trang web, văn bản về một notebook để AI đọc và nghiên cứu. Hai, chat với tài liệu: hỏi trực tiếp về nội dung, AI trích nguồn và giải thích. Ba, tạo study guide, FAQ, briefing: tóm tắt có cấu trúc, danh sách khái niệm chính, câu hỏi ôn tập. Bốn, audio overviews, tức podcast AI: chuyển nội dung thành hội thoại giữa hai host AI, tùy chỉnh độ dài, giọng, tông. Năm, chia sẻ notebook và hợp tác, hiện hỗ trợ public link và quyền xem hoặc chỉnh sửa. Sáu, context và memory nâng cao: mở rộng độ dài ngữ cảnh, lưu ngữ cảnh qua các session để đối thoại dài hơi hơn.",
+ v:()=>DEF(20,16,290,100,1,'Import nhiều nguồn',['PDF, slide, trang web, văn bản — gom về','một notebook để AI đọc/nghiên cứu.'],1.7,17,1.5)+DEF(20,124,290,100,3,'Chat với tài liệu',['Hỏi trực tiếp về nội dung tài liệu,','AI trích nguồn và giải thích.'],9.2,17,1.5)+DEF(20,232,290,100,4,'Study Guide / FAQ / Briefing',['Tạo tóm tắt có cấu trúc, danh sách khái','niệm chính, câu hỏi ôn tập.'],15.2,17,1.5)+DEF(330,16,290,100,2,'Audio Overviews (AI podcast)',['Chuyển nội dung thành audio hội thoại','giữa hai “host” AI, tùy chỉnh độ','dài/giọng/tông.'],22.8,17,1.5)+DEF(330,124,290,100,1,'Chia sẻ notebook / hợp tác',['Hỗ trợ chia sẻ public link và quyền','truy cập (view / edit).'],31.7,17,1.5)+DEF(330,232,290,100,3,'Context &amp; memory nâng cao',['Bản mới mở rộng độ dài ngữ cảnh, lưu','ngữ cảnh qua session để đối thoại','dài hơi hơn.'],38.2,17,1.5)},
+{t:"Ưu điểm của NotebookLM",d:13000,
+ n:"Ưu điểm của NotebookLM: tập trung vào tài liệu của bạn để phân tích sâu, tiết kiệm thời gian, có audio và nhiều dạng đầu ra, và tích hợp với hệ sinh thái Google của bạn.",
+ v:()=>GRID([[1,'Tập trung tài liệu','Phân tích sâu'],[3,'Tiết kiệm thời gian',''],[4,'Audio &amp; đa dạng đầu ra',''],[2,'Tích hợp hệ sinh thái','Google']])},
+{t:"Nhược điểm của NotebookLM",d:38500,
+ n:"Nhược điểm của NotebookLM. Một, chưa hoàn hảo về độ chính xác: như nhiều công cụ LLM, đôi khi tạo thông tin không chính xác, nên cần kiểm tra chéo với nguồn gốc. Hai, giới hạn định dạng và đa phương tiện: phiên bản đầu có thể chưa hỗ trợ video dài hay biểu đồ tương tác. Ba, quyền riêng tư: nếu tải tài liệu nhạy cảm, cần cẩn trọng khi chia sẻ và luôn kiểm tra cài đặt trước khi share. Bốn, mức phù hợp với môn học: tốt với môn cần đọc hiểu và tóm tắt, kém hơn ở bài toán logic cần bước chứng minh chi tiết.",
+ v:()=>DEF(20,16,290,128,2,'Chưa hoàn hảo về độ chính xác',['Như nhiều công cụ LLM, đôi khi tạo ra','thông tin không chính xác','(hallucination) — cần kiểm tra chéo','với nguồn gốc.'],2.1,17,1.6)+DEF(330,16,290,128,2,'Giới hạn đa phương tiện',['Phiên bản đầu có thể chưa hỗ trợ một số','media phức tạp (video trong thời lượng','dài, biểu đồ tương tác).'],12.2,17,1.6)+DEF(20,160,290,128,2,'Quyền riêng tư và chia sẻ',['Nếu upload tài liệu nhạy cảm, cần cẩn','trọng khi dùng tính năng chia sẻ (luôn','kiểm tra setting trước khi share).'],20.4,17,1.6)+DEF(330,160,290,128,2,'Phù hợp môn học',['Tốt với môn cần đọc hiểu và tóm tắt;','kém hơn ở bài toán logic/giải bài tập','cần bước chứng minh chi tiết.'],29.1,17,1.6)},
+{t:"Thực hành NotebookLM: đăng nhập và tạo notebook",d:18000,
+ n:"Thực hành với NotebookLM. Bước một, đăng nhập: vào trang notebooklm chấm google bằng tài khoản Google, có thể cần quyền Workspace tùy tài khoản. Bước hai, tạo notebook mới, rồi tải lên tài liệu như PDF, slide, liên kết, hoặc dán văn bản.",
+ v:()=>T(320,26,'5.1 THỰC HÀNH VỚI NOTEBOOKLM','m',0)+DEF(20,44,590,100,1,'1. Đăng nhập',['Vào https://notebooklm.google/ bằng Google account','(có thể cần quyền Workspace tùy tài khoản).'],2.0,17,2.2)+DEF(20,176,590,84,3,'2. Tạo notebook mới',['Upload tài liệu (PDF, slide, link) hoặc dán văn bản'],11.0,17,2.2)},
+{t:"Thu thập nguồn và chọn nguồn cùng chủ đề",d:30000,
+ n:"Bước hai chấm một: thu thập nguồn. Chọn một Youtuber bạn yêu thích, vào NotebookLM tạo notebook mới, bắt đầu với khoảng mười nguồn là video YouTube, ưu tiên video trên hai mươi phút vì lượng kiến thức cao hơn. Tiếp theo, chọn nguồn cùng một chủ đề: NotebookLM hoạt động tốt nhất khi các nguồn xoay quanh cùng một topic; có thể tải link YouTube trực tiếp, thêm PDF, Google Docs hoặc dán nội dung vào.",
+ v:()=>DEF(20,30,290,200,1,'2.1 Thu thập nguồn',['• Chọn một Youtuber bạn yêu thích','• Vào NotebookLM và tạo notebook mới','• Bắt đầu với khoảng 10 nguồn (video','YouTube) bạn thích nhất','• Ưu tiên video trên 20 phút vì lượng','kiến thức cao hơn.'],1,28,2.0)+DEF(330,30,290,200,4,'2.1 Chọn nguồn cùng một chủ đề',['• NotebookLM hoạt động tốt nhất khi tất','cả nguồn xoay quanh cùng một topic','hoặc các chủ đề liên quan','• Upload link YouTube trực tiếp.','• Có thể thêm PDF, Google Docs, hoặc','copy-paste nội dung vào.'],15.8,28,2.0)},
+{t:"Chat với tài liệu: giao diện NotebookLM",d:27000,
+ n:"Giao diện NotebookLM có bốn vùng. Vùng một quản lý và hiển thị các tài liệu bạn tải lên để NotebookLM đọc và phân tích. Vùng hai là vùng chính của trang làm việc, dùng để tải tài liệu đầu tiên. Vùng ba là Studio, các công cụ AI tạo nội dung tự động dựa trên nguồn dữ liệu bạn đã thêm. Vùng bốn là nơi lưu kết quả đầu ra từ Studio hoặc các ghi chú bạn viết tay.",
+ v:()=>P('rect','x="20" y="40" width="80" height="250" rx="10"','s1 f1',.5)+P('rect','x="108" y="40" width="120" height="250" rx="10"','s3 f3',.8)+P('rect','x="236" y="40" width="84" height="160" rx="10"','s4 f4',1.1)+P('rect','x="236" y="208" width="84" height="82" rx="10"','s2 f2',1.4)+[[60,165,'1',1,2.6],[168,165,'2',3,9.1],[278,120,'3',4,14.6],[278,249,'4',2,21.5]].map(o=>P('circle',`cx="${o[0]}" cy="${o[1]}" r="15"`,`s${o[3]}`,o[4])+T(o[0],o[1]+6,o[2],'b big',o[4]+.3)).join('')+[['1 · Nguồn',['Quản lý và hiển thị các tài liệu bạn tải','lên để NotebookLM đọc và phân tích.'],1,2.6],['2 · Vùng làm việc chính',['Dùng để tải tài liệu đầu tiên.'],3,9.1],['3 · Studio',['Các công cụ AI tạo nội dung tự động dựa','trên nguồn dữ liệu bạn đã thêm.'],4,14.6],['4 · Lưu kết quả',['Nơi lưu kết quả đầu ra từ Studio hoặc','các ghi chú bạn viết tay.'],2,21.5]].map((o,i)=>DEF(330,16+i*80,290,72,o[2],o[0],o[1],o[3],17,1.2)).join('')},
+{t:"Sáu công cụ trong Studio",d:24500,
+ n:"Studio có sáu công cụ. Một, tổng quan bằng âm thanh: tạo bản tóm tắt dạng podcast, hội thoại AI. Hai, tổng quan bằng video: tạo video tóm tắt nội dung. Ba, bản đồ tư duy: sinh sơ đồ ý tưởng chính. Bốn, báo cáo ngắn gọn, có cấu trúc. Năm, thẻ ghi nhớ: tạo flashcard dạng câu hỏi và trả lời. Sáu, bài kiểm tra: tạo quiz ôn tập.",
+ v:()=>[['1','Tổng quan bằng âm thanh','Tóm tắt dạng podcast, hội thoại AI',1.8],['2','Tổng quan bằng video','Video tóm tắt nội dung',7.4],['3','Bản đồ tư duy','Sinh sơ đồ ý tưởng chính',11.5],['4','Báo cáo','Báo cáo ngắn gọn, có cấu trúc',14.9],['5','Thẻ ghi nhớ','Flashcard (câu hỏi – trả lời)',17.6],['6','Bài kiểm tra','Quiz ôn tập',21.9]].map((o,i)=>NR(i<3?40:350,30+(i%3)*96,o[0],[1,3,4,2,1,3][i],o[1],o[2],o[3])).join('')},
+{t:"Chat với NotebookLM như thế nào?",d:24000,
+ n:"Cách chat với NotebookLM. Bắt đầu bằng câu hỏi rộng, chẳng hạn: những ý tưởng chính từ các nguồn này là gì? Tiếp theo, yêu cầu NotebookLM tạo sơ đồ tư duy. Sau khi có cái nhìn tổng quan, hỏi những câu cụ thể hơn, ví dụ: chiến lược nào được đề cập nhiều nhất, hoặc làm thế nào để áp dụng ý này vào tình huống của tôi?",
+ v:()=>DEF(20,16,590,84,1,'1. Bắt đầu bằng câu hỏi rộng',['Ví dụ: “Những ý tưởng chính từ các nguồn này là gì?”'],2.0,17,1.5)+DEF(20,112,590,56,3,'2. Yêu cầu NotebookLM tạo sơ đồ tư duy',[],8.2,17,1.5)+DEF(20,180,590,120,4,'3. Sau khi có cái nhìn tổng quan, hỏi câu cụ thể hơn',['Ví dụ: “Chiến lược nào được đề cập nhiều nhất?”','Ví dụ: “Làm thế nào để áp dụng ý này vào tình huống của tôi?”'],11.8,17,2.4)},
+{t:"Thực hành và một số kết quả",d:12500,
+ n:"Thực hành và một số kết quả. Trên một notebook mẫu, ta thử ba công cụ của Studio: tạo sơ đồ tư duy, tạo thẻ ghi nhớ, và tạo bài trắc nghiệm.",
+ v:()=>T(320,40,'Thực hành và một số kết quả','h2',0)+IBOX(20,80,190,150,1,'chart','Sơ đồ tư duy',['Sinh sơ đồ ý tưởng','chính'],6.2)+IBOX(225,80,190,150,3,'book','Thẻ ghi nhớ',['Flashcard câu hỏi','– trả lời'],7.6)+IBOX(430,80,190,150,4,'list','Bài trắc nghiệm',['Quiz ôn tập'],9.1)},
+{t:"Shakkeral: sáng tạo hình ảnh bằng AI",d:32500,
+ n:"Phần năm điểm hai: ứng dụng GenAI trong xử lý và sáng tạo hình ảnh. Shakkeral là một nền tảng trực tuyến cho phép tạo và chỉnh sửa hình ảnh bằng trí tuệ nhân tạo, dùng mô hình tương tự Stable Diffusion, Lora, checkpoint. Điểm mạnh: thư viện hơn năm mươi nghìn mô hình có sẵn, gồm nhiều phong cách, lĩnh vực khác nhau; giao diện web, không cần tải phần mềm phức tạp; miễn phí để bắt đầu, có gói miễn phí, ảnh tạo ra không bị watermark.",
+ v:()=>T(320,24,'5.2 ỨNG DỤNG GENAI TRONG XỬ LÝ VÀ SÁNG TẠO HÌNH ẢNH','m',0)+T(320,92,'Shakkeral','h1',3)+T(320,130,'Nền tảng tạo và chỉnh sửa ảnh bằng AI','big',6)+T(320,158,'(mô hình tương tự Stable Diffusion, Lora, checkpoint)','m',8)+CHIP(20,205,190,80,1,['Hơn 50.000 mô hình','nhiều phong cách'],14)+CHIP(225,205,190,80,3,['Giao diện web','không cần cài đặt'],19)+CHIP(430,205,190,80,4,['Miễn phí bắt đầu','ảnh không watermark'],24)},
+{t:"Shakkeral: chức năng chính và nhược điểm",d:39000,
+ n:"Các chức năng chính của Shakkeral: tạo ảnh từ văn bản, tùy chỉnh mô hình và phong cách, chỉnh sửa ảnh, quản lý và lưu lại lịch sử tạo ảnh, chia sẻ và kiếm mô hình. Về nhược điểm: gói miễn phí giới hạn số credits hoặc số lần tạo ảnh mỗi ngày; một số tính năng nâng cao như controlnet, attention có thể hạn chế hơn các công cụ chuyên sâu; vì là nền tảng trực tuyến nên phụ thuộc kết nối Internet ổn định; và tùy chỉnh chuyên sâu như tự huấn luyện mô hình lớn trên dữ liệu riêng không mạnh bằng dùng mô hình cài đặt riêng.",
+ v:()=>DEF(20,16,290,230,1,'Chức năng chính',['Tạo ảnh từ văn bản (text-to-image)','Tùy chỉnh mô hình và phong cách','Chỉnh sửa ảnh','Quản lý, lưu lại lịch sử tạo ảnh','Chia sẻ và kiếm mô hình'],1,30,2.6)+DEF(330,16,290,300,2,'Nhược điểm',['Gói miễn phí giới hạn “credits” hoặc','số lần tạo ảnh mỗi ngày.','Tính năng nâng cao (controlnet,','attention…) kém công cụ chuyên sâu.','Phụ thuộc kết nối Internet ổn định.','Tùy chỉnh chuyên sâu (tự huấn luyện','mô hình lớn, dữ liệu riêng) không','mạnh bằng cài đặt mô hình riêng.'],17,24,2.2)},
+{t:"Thực hành Shakkeral: đăng nhập và chọn mô hình",d:23500,
+ n:"Thực hành với Shakkeral. Bước một, đăng ký hoặc đăng nhập: truy cập trang web chính thức, chọn Sign in. Bạn có thể đăng nhập bằng tài khoản Google hoặc Discord. Bước hai, chọn mô hình hoặc tải ảnh tham khảo: bạn có thể chọn một trong các mô hình có sẵn, hoặc tải ảnh của bạn làm tham khảo, gọi là image reference.",
+ v:()=>T(320,30,'Thực hành với Shakkeral','h2',0)+NR(60,60,'1',1,'Đăng ký / đăng nhập','Vào trang web chính thức, chọn “Sign in”',2)+PILL(94,115,170,1,'Tài khoản Google',8)+PILL(280,115,170,4,'Tài khoản Discord',10)+NR(60,195,'2',3,'Chọn mô hình hoặc tải ảnh tham khảo','Dùng mô hình có sẵn hoặc ảnh của bạn (image reference)',13)+PILL(94,250,200,3,'Chọn mô hình có sẵn',18)+PILL(310,250,200,4,'Tải ảnh tham khảo',20)},
+{t:"Thực hành Shakkeral: nhập prompt và thông số",d:50000,
+ n:"Bước ba, nhập prompt và tùy chỉnh thông số: nhập mô tả bạn muốn tạo, chọn mô hình Lora hoặc checkpoint, điều chỉnh phong cách, hiệu ứng, kích thước. Ô nhập prompt chính là nơi bạn mô tả nội dung bức ảnh muốn AI tạo. Image to Image: tải một ảnh gốc để AI biến đổi dựa trên đó. Image Reference: tải ảnh làm mẫu phong cách hoặc khuôn mặt. Color Palette: chọn bảng màu tổng thể như pastel, warm, cold tone. Image Size: chọn kích thước ảnh đầu ra, ví dụ bảy sáu tám nhân một không hai bốn, hoặc một không hai bốn nhân một không hai bốn. Advanced: bật để tùy chỉnh sâu như seed, sampler, CFG scale, steps. Cuối cùng là nút khởi tạo ảnh.",
+ v:()=>T(320,28,'Bước 3: nhập prompt và tùy chỉnh thông số','h2',0)+T(320,52,'Nhập mô tả, chọn mô hình (Lora, checkpoint), chỉnh phong cách, hiệu ứng, kích thước','m',1.5)+RW(20,72,290,66,1,'Ô nhập Prompt','Nơi mô tả nội dung bức ảnh muốn tạo',6)+RW(330,72,290,66,3,'Image to Image','Tải ảnh gốc để AI biến đổi theo đó',12.5)+RW(20,146,290,66,4,'Image Reference','Tải ảnh làm mẫu phong cách, khuôn mặt',19)+RW(330,146,290,66,2,'Color Palette','Chọn bảng màu: pastel, warm, cold…',25.5)+RW(20,220,290,66,1,'Image Size','Kích thước: 768×1024, 1024×1024…',32)+RW(330,220,290,66,3,'Advanced','Seed, sampler, CFG scale, steps…',38.5)+PILL(200,295,240,4,'Nút khởi tạo ảnh',46)},
+{t:"Shakkeral: hai ví dụ prompt",d:33000,
+ n:"Hai ví dụ prompt. Phong cách chân thực, Realistic Portrait: một cô gái trẻ đứng dưới ánh nắng dịu trong công viên, da tự nhiên, ánh sáng điện ảnh, ống kính tám mươi lăm mi li mét, siêu thực, bốn K, chi tiết cao, độ sâu trường ảnh nông. Phong cách anime: cô gái anime dễ thương mặc kimono đỏ, đứng dưới hoa anh đào, nụ cười nhẹ, nền chi tiết, phong cách Studio Ghibli, màu sắc rực rỡ. Hai slide sau đó cho thấy ảnh kết quả của từng prompt.",
+ v:()=>T(320,36,'Hai ví dụ prompt','h2',0)+DEF(20,64,290,190,1,'Chân thực (Realistic Portrait)',['“A young woman standing under soft','sunlight in a park, natural skin','texture, cinematic lighting, 85mm','lens, ultra realistic, 4K, high','detail, shallow depth of field”'],2,22,1.8)+DEF(330,64,290,190,4,'Phong cách anime',['“Cute anime girl wearing a red','kimono, standing under cherry','blossoms, gentle smile, detailed','background, Studio Ghibli style,','vibrant colors”'],17,22,1.8)+T(165,290,'Kết quả: ảnh chân thực','m',12)+T(475,290,'Kết quả: ảnh anime','m',27)},
+{t:"Sora: sáng tạo video bằng AI",d:41500,
+ n:"Phần năm điểm ba: ứng dụng GenAI trong xử lý và sáng tạo video. Sora là dòng sản phẩm của OpenAI, cho phép chuyển prompt bằng văn bản, hoặc ảnh, clip tham chiếu, thành video ngắn với nhiều phong cách: điện ảnh, hoạt hình, photoreal. Các chức năng chính: tạo video từ văn bản; Remix hoặc Blend, sửa đổi hoặc hoán đổi chi tiết video đã tạo, như thay nhân vật, đổi không khí; Cameo hoặc avatar tái hiện, cho phép chèn hình, clip của người thật vào cảnh, cần xác minh bằng ghi hình; và công cụ chỉnh sửa trim, recut, loop, extend để tối ưu độ dài và mạch cảnh.",
+ v:()=>T(320,24,'5.3 ỨNG DỤNG GENAI TRONG XỬ LÝ VÀ SÁNG TẠO VIDEO','m',0)+T(320,80,'Sora','h1',2.5)+T(320,112,'Sản phẩm / ứng dụng của OpenAI','big',5)+T(320,136,'Chuyển prompt (hoặc ảnh/clip tham chiếu) thành video ngắn','m',6.5)+T(320,156,'(điện ảnh, hoạt hình, photoreal…)','m',8)+CHIP(20,190,140,90,1,['Tạo video','từ văn bản'],16)+CHIP(173,190,140,90,3,['Remix / Blend','sửa, hoán đổi'],22)+CHIP(326,190,140,90,4,['Cameo / avatar','người thật'],28)+CHIP(479,190,140,90,2,['Trim, recut,','loop, extend'],34)+T(320,314,'Remix: thay nhân vật, đổi không khí. Cameo: cần xác minh bằng ghi hình','m',38)},
+{t:"Sora: ưu điểm và nhược điểm",d:44500,
+ n:"Ưu điểm của Sora: tạo video nhiều phong cách; dễ dùng, chỉ cần prompt ngắn là tạo ngay, có app và feed kiểu mạng xã hội trên iOS và Android; có công cụ remix, chỉnh sửa giúp biến ý tưởng thành sản phẩm gần hoàn chỉnh. Nhược điểm: hạn chế về người thật và deepfake, OpenAI đã giới hạn việc tạo và đăng video người thật để giảm lạm dụng, vẫn có lo ngại về deepfake và bản quyền; chất lượng và kiểm soát chuyển động phức tạp còn giới hạn so với quay thực tế, có thể xảy ra artefact; và quyền truy cập, giá: ban đầu là nhóm tester, gói trả phí hoặc giới hạn khu vực, còn hạn chế ở vài thị trường.",
+ v:()=>DEF(20,16,290,300,3,'Ưu điểm',['Tạo video nhiều phong cách','Dễ dùng: prompt ngắn là tạo ngay;','có app / feed kiểu mạng xã hội','(iOS/Android).','Có công cụ remix, chỉnh sửa giúp ý','tưởng thành sản phẩm gần hoàn chỉnh.'],1,24,2.4)+DEF(330,16,290,300,2,'Nhược điểm',['Người thật / deepfake: OpenAI giới','hạn tạo, đăng video người thật; còn','lo ngại deepfake và bản quyền.','Chất lượng, kiểm soát chuyển động phức','tạp còn giới hạn so với quay thực tế;','có thể có artefact.','Quyền truy cập / giá: ban đầu nhóm','tester, gói trả phí hoặc giới hạn khu','vực; còn hạn chế ở vài thị trường.'],18,24,2.2)},
+{t:"Thực hành Sora",d:43500,
+ n:"Thực hành với Sora. Bước một, cài app Sora trên iOS hoặc Android, hoặc truy cập trang Sora của OpenAI. Bước hai, viết prompt mô tả cảnh, ngắn gọn kèm từ khóa phong cách; ví dụ: một cảnh điện ảnh mười giây ở khu phố neon sau cơn mưa, camera dolly chậm, photoreal, nhạc piano kịch tính. Bước ba, chọn style, aspect ratio, length; nếu có ảnh hoặc clip tham chiếu thì tải lên để Sora lấy làm nền. Bước bốn, bấm Generate, xem preview, và dùng Remix hoặc Recut nếu cần chỉnh sửa. Bước năm, nếu dùng Cameo thì làm theo bước ghi hình, ghi âm để xác minh và tạo avatar, lưu ý quyền riêng tư.",
+ v:()=>NR(40,16,'1',1,'Cài app Sora hoặc vào trang Sora','App iOS/Android, hoặc trang Sora của OpenAI',1)+NR(40,78,'2',3,'Viết prompt mô tả cảnh','Ngắn gọn + từ khóa phong cách (cinematic, photoreal…)',8.5)+NR(40,140,'3',4,'Chọn style, aspect ratio, length','Có ảnh/clip tham chiếu thì tải lên làm nền',16)+NR(40,202,'4',2,'Generate → xem preview','Cần chỉnh sửa thì dùng Remix / Recut',23.5)+NR(40,264,'5',1,'Nếu dùng Cameo: ghi hình, ghi âm','Để xác minh, tạo avatar; lưu ý quyền riêng tư',31)},
+{t:"Prompt là gì?",d:11500,
+ n:"Phần sáu: thực hành minh họa prompt. Prompt là đoạn văn bản, câu lệnh hoặc câu hỏi mà người dùng gửi đến AI để nhận lại phản hồi phù hợp.",
+ v:()=>T(320,28,'THỰC HÀNH MINH HỌA PROMPT','m',0)+T(320,96,'Prompt','h1',2)+T(320,134,'Đoạn văn bản, câu lệnh hoặc câu hỏi','big',4)+T(320,160,'người dùng gửi đến AI để nhận lại phản hồi phù hợp','m',5.5)+CHIP(40,215,140,60,1,['Người dùng'],6.5)+AR(180,245,245,7.2)+T(212,235,'prompt','m',7.4)+CHIP(250,215,140,60,3,['AI'],7.8)+AR(390,455,245,8.4)+CHIP(460,215,140,60,4,['Phản hồi'],8.8)},
+{t:"Cấu trúc prompt: tám thành phần",d:46500,
+ n:"Cấu trúc prompt gồm tám thành phần. Một, vai trò: xác định AI sẽ đóng vai ai để định hướng cách trả lời. Hai, mục tiêu: nêu rõ mục đích hoặc kết quả mong muốn của cuộc hội thoại. Ba, thông tin đầu vào: cung cấp dữ kiện, bối cảnh hoặc nội dung để AI xử lý. Bốn, nhiệm vụ cụ thể: mô tả hành động AI cần thực hiện. Năm, giới hạn: nêu rõ những điều cần tránh hoặc ràng buộc về định dạng, độ dài, nội dung. Sáu, phong cách diễn đạt: xác định giọng văn, cảm xúc hoặc phong cách giao tiếp mà AI nên dùng. Bảy, định dạng đầu ra: chỉ định cách trình bày kết quả. Tám, mẫu minh họa: cung cấp ví dụ để AI học phong cách mong muốn.",
+ v:()=>RW(20,16,290,70,1,'1. Vai trò','Xác định AI sẽ đóng vai ai',1.5)+RW(20,94,290,70,3,'2. Mục tiêu','Mục đích, kết quả mong muốn',7.1)+RW(20,172,290,70,4,'3. Thông tin đầu vào','Dữ kiện, bối cảnh, nội dung để xử lý',12.7)+RW(20,250,290,70,2,'4. Nhiệm vụ cụ thể','Hành động AI cần thực hiện',18.3)+RW(330,16,290,70,1,'5. Giới hạn','Điều cần tránh, ràng buộc định dạng, độ dài',23.9)+RW(330,94,290,70,3,'6. Phong cách diễn đạt','Giọng văn, cảm xúc, phong cách giao tiếp',29.5)+RW(330,172,290,70,4,'7. Định dạng đầu ra','Cách trình bày kết quả',35.1)+RW(330,250,290,70,2,'8. Mẫu minh họa','Ví dụ để AI học phong cách mong muốn',40.7)},
+{t:"Ví dụ prompt: tư vấn tài chính cá nhân",d:66000,
+ n:"Ví dụ prompt hoàn chỉnh về tư vấn tài chính. Vai trò: bạn là chuyên gia tư vấn tài chính cá nhân với hơn mười năm kinh nghiệm, am hiểu đầu tư, tiết kiệm và quản lý rủi ro. Mục tiêu: giúp người dùng lập kế hoạch tài chính cá nhân tối ưu và đưa ra lời khuyên đầu tư an toàn, hiệu quả. Thông tin đầu vào: người dùng ba mươi tuổi, thu nhập hàng tháng ba mươi triệu đồng, muốn đầu tư hai trăm triệu đồng trong năm năm tới, chấp nhận rủi ro trung bình. Nhiệm vụ: phân tích tình hình tài chính hiện tại và đề xuất ba chiến lược đầu tư phù hợp, kèm lợi ích và rủi ro của từng phương án. Giới hạn: trả lời không quá hai trăm từ, tránh thuật ngữ tài chính khó hiểu. Phong cách: thân thiện, dễ hiểu, như một người bạn đáng tin cậy. Định dạng đầu ra: danh sách gạch đầu dòng, mỗi chiến lược có tiêu đề, mô tả ngắn, lợi ích và rủi ro. Phần mẫu minh họa được thể hiện ở ví dụ đầu ra ngay sau đây.",
+ v:()=>DEF(20,16,290,76,1,'1. Vai trò',['Chuyên gia tư vấn tài chính cá nhân,', 'hơn 10 năm kinh nghiệm'],1,17,.4)+DEF(20,96,290,76,3,'2. Mục tiêu',['Lập kế hoạch tài chính tối ưu, lời', 'khuyên đầu tư an toàn, hiệu quả'],8,17,.4)+DEF(20,176,290,76,4,'3. Thông tin đầu vào',['30 tuổi, thu nhập 30 triệu/tháng,', 'đầu tư 200 triệu/5 năm, rủi ro trung bình'],15,17,.4)+DEF(20,256,290,76,2,'4. Nhiệm vụ cụ thể',['Phân tích tình hình tài chính, đề xuất', '3 chiến lược kèm lợi ích và rủi ro'],22,17,.4)+DEF(330,16,290,76,1,'5. Giới hạn',['Không quá 200 từ, tránh thuật ngữ', 'tài chính khó hiểu'],29,17,.4)+DEF(330,96,290,76,3,'6. Phong cách',['Thân thiện, dễ hiểu, như một người', 'bạn đáng tin cậy'],36,17,.4)+DEF(330,176,290,76,4,'7. Định dạng đầu ra',['Gạch đầu dòng: tiêu đề, mô tả ngắn,', 'lợi ích và rủi ro'],43,17,.4)+DEF(330,256,290,76,2,'8. Mẫu minh họa',['Thể hiện ở ví dụ đầu ra', 'ở cảnh kế tiếp'],50,17,.4)},
+{t:"Ví dụ về đầu ra của prompt",d:22500,
+ n:"Ví dụ về đầu ra của prompt này. Chiến lược một, gửi tiết kiệm ngân hàng: lợi ích là an toàn, lãi suất ổn định; rủi ro là lãi suất thấp, lợi nhuận hạn chế. Chiến lược hai, đầu tư quỹ mở: lợi ích là lợi nhuận cao hơn lãi suất tiết kiệm, đa dạng danh mục; rủi ro là biến động thị trường, có thể lỗ vốn.",
+ v:()=>T(320,36,'Ví dụ về đầu ra','h2',0)+DEF(20,70,290,190,3,'Chiến lược 1: Tiết kiệm',['Gửi tiết kiệm ngân hàng','Lợi ích: an toàn, lãi suất ổn định.','Rủi ro: lãi suất thấp, lợi nhuận','hạn chế.'],1.5,26,1.6)+DEF(330,70,290,190,4,'Chiến lược 2: Quỹ mở',['Đầu tư quỹ mở','Lợi ích: lợi nhuận cao hơn lãi suất','tiết kiệm, đa dạng danh mục.','Rủi ro: biến động thị trường,','có thể lỗ vốn.'],11,26,1.3)},
+{t:"Các kỹ thuật trong prompt",d:9000,
+ n:"Các kỹ thuật trong prompt. Có ba kỹ thuật chính: kỹ thuật vai trò, kỹ thuật cấu trúc, và kỹ thuật tạo sản phẩm.",
+ v:()=>T(320,40,'CÁC KỸ THUẬT TRONG PROMPT','h2',0)+CHIP(20,120,190,100,1,['Kỹ thuật','Vai trò'],2.5)+CHIP(225,120,190,100,3,['Kỹ thuật','Cấu trúc'],4.5)+CHIP(430,120,190,100,4,['Kỹ thuật','Tạo sản phẩm'],6.5)},
+{t:"Kỹ thuật Vai trò",d:36500,
+ n:"Kỹ thuật vai trò là giao vai trò cho AI để hướng nó trả lời đúng góc nhìn, chuyên môn hoặc phong cách bạn muốn. Lợi ích: câu trả lời sâu hơn, thực tế hơn, vì AI nhập vai chuyên gia, giảng viên, nhà nghiên cứu, sinh viên; và giảm lỗi trả lời chung chung. Cấu trúc prompt: hãy đóng vai là chuyên gia hoặc người trong vai trò cụ thể, và nhiệm vụ bạn muốn AI làm. Ví dụ: hãy đóng vai là một giảng viên kinh tế, giải thích khái niệm chi phí cơ hội cho sinh viên năm nhất bằng ví dụ dễ hiểu.",
+ v:()=>DEF(20,16,600,74,1,'Kỹ thuật Vai trò',['Giao vai trò cho AI để trả lời đúng góc nhìn, chuyên môn hoặc phong cách bạn muốn.'],1,17,1)+DEF(20,100,600,104,3,'Lợi ích',['Câu trả lời sâu hơn, thực tế hơn vì AI “nhập vai” chuyên gia, giảng viên,','nhà nghiên cứu, sinh viên…','Giảm lỗi “trả lời chung chung”.'],9,17,1.6)+DEF(20,214,600,110,4,'Cấu trúc prompt',['Hãy đóng vai là [chuyên gia/vai trò cụ thể], và [nhiệm vụ bạn muốn AI làm].','Ví dụ: Hãy đóng vai là một giảng viên kinh tế, giải thích khái niệm','“chi phí cơ hội” cho sinh viên năm nhất bằng ví dụ dễ hiểu.'],22,17,2.2)},
+{t:"Kỹ thuật Cấu trúc",d:46000,
+ n:"Kỹ thuật cấu trúc là đưa ra khung định dạng rõ ràng để AI sắp xếp câu trả lời logic, có trình tự, như What, Why, How, ba bước, năm ý. Kỹ thuật này giúp AI tư duy mạch lạc, không lan man. Nó phù hợp khi bạn cần lập dàn ý, kế hoạch, quy trình hoặc phân tích, và khi soạn bài thuyết trình, báo cáo, outline, đề cương. Cấu trúc prompt: hãy trình bày câu trả lời theo cấu trúc What, Why, How; hoặc chia câu trả lời thành ba phần: giới thiệu, nội dung, kết luận. Ví dụ: hãy lập dàn ý phân tích quyết định mua laptop mới cho sinh viên. What: lợi ích trực tiếp. Why: chi phí cơ hội là gì. How: các bước ra quyết định hợp lý.",
+ v:()=>DEF(20,16,290,150,1,'Kỹ thuật Cấu trúc',['Đưa khung định dạng rõ ràng để AI','sắp xếp câu trả lời có trình tự','(What – Why – How, 3 bước, 5 ý…).','Giúp AI tư duy mạch lạc, không lan man.'],1,20,1.8)+DEF(330,16,290,150,3,'Phù hợp khi cần',['Lập dàn ý, kế hoạch, quy trình,','hoặc phân tích.','Soạn bài thuyết trình, báo cáo,','outline, đề cương.'],14,20,1.8)+DEF(20,176,290,150,4,'Cấu trúc prompt',['Hãy trình bày câu trả lời theo cấu','trúc: (What) … (Why) … (How) …','Hoặc: chia câu trả lời thành 3 phần:','Giới thiệu – Nội dung – Kết luận.'],26,20,1.8)+DEF(330,176,290,150,2,'Ví dụ: mua laptop cho sinh viên',['Lập dàn ý quyết định mua laptop mới:','What: lợi ích trực tiếp.','Why: chi phí cơ hội là gì.','How: các bước ra quyết định hợp lý.'],38,20,1.8)},
+{t:"Kỹ thuật Tạo sản phẩm",d:51000,
+ n:"Kỹ thuật tạo sản phẩm là yêu cầu AI tạo ra một sản phẩm cụ thể như bảng, checklist, đoạn văn, bài đăng mạng xã hội, infographic nội dung, câu hỏi, đoạn hội thoại. Mục tiêu: từ lý thuyết hoặc thông tin, biến thành sản phẩm thực tế, dùng được ngay. Kỹ thuật này dùng trong học tập, truyền thông hoặc công việc, để tạo nội dung, tóm tắt, thiết kế ý tưởng, giúp người học thấy kết quả cụ thể thay vì chỉ lý thuyết. Cấu trúc prompt: hãy tạo dạng sản phẩm về chủ đề nội dung cụ thể, có các phần theo yêu cầu định dạng. Ví dụ: hãy tạo bảng so sánh hai lựa chọn chi tiêu, mua khóa học tiếng Anh online và đi du lịch ba ngày, gồm các cột chi phí, lợi ích ngắn hạn, lợi ích dài hạn, rủi ro.",
+ v:()=>DEF(20,16,600,100,1,'Kỹ thuật Tạo sản phẩm',['Yêu cầu AI tạo sản phẩm cụ thể: bảng, checklist, đoạn văn, bài đăng','mạng xã hội, infographic nội dung, câu hỏi, đoạn hội thoại…','Mục tiêu: biến lý thuyết, thông tin thành sản phẩm dùng ngay.'],1,17,3)+DEF(20,126,600,86,3,'Dùng trong học tập, truyền thông, công việc',['Tạo nội dung, tóm tắt, thiết kế ý tưởng.','Giúp người học thấy kết quả cụ thể thay vì chỉ lý thuyết.'],20,17,3)+DEF(20,222,600,106,4,'Cấu trúc prompt và ví dụ',['Hãy tạo [dạng sản phẩm] về chủ đề [nội dung cụ thể], có các phần: [yêu cầu định dạng].','Ví dụ: tạo bảng so sánh “Mua khóa học tiếng Anh online” và “Đi du lịch 3 ngày”,','gồm các cột: Chi phí, Lợi ích ngắn hạn, Lợi ích dài hạn, Rủi ro.'],40,17,4)},
+{t:"ChatGPT: giao diện",d:18500,
+ n:"Phần thực hành minh họa với ChatGPT. Giao diện ChatGPT gồm các khu vực chính. Nút thu nhỏ sidebar. Công cụ hỗ trợ như tạo chat mới, tìm kiếm. Danh sách các đoạn chat đã tạo. Nơi viết prompt. Chức năng hỗ trợ nâng cao. Và thông tin về tài khoản.",
+ v:()=>T(320,34,'THỰC HÀNH MINH HỌA: CHATGPT','h2',0)+RW(20,60,290,70,1,'Thu nhỏ thanh bên','Nút thu nhỏ sidebar',2.0)+RW(330,60,290,70,3,'Công cụ hỗ trợ','Tạo chat mới, tìm kiếm…',4.4)+RW(20,146,290,70,4,'Danh sách đoạn chat','Các đoạn chat đã tạo',6.8)+RW(330,146,290,70,2,'Nơi viết prompt','Ô nhập câu hỏi, câu lệnh',9.2)+RW(20,232,290,70,1,'Chức năng nâng cao','Các chức năng hỗ trợ nâng cao',11.6)+RW(330,232,290,70,3,'Thông tin tài khoản','Thông tin về tài khoản',14.0)},
+{t:"Thực hành ChatGPT: hỏi đáp",d:15000,
+ n:"Thử hỏi ChatGPT bằng một prompt đơn giản: hãy cho tôi biết cách học tiếng Anh hiệu quả. Đây là prompt đã gửi. ChatGPT trả về phản hồi, chia câu trả lời thành nhiều nhóm gợi ý kèm các gạch đầu dòng.",
+ v:()=>T(320,44,'Hỏi đáp với ChatGPT','h2',0)+BOX(30,90,270,130,1,'Prompt đã gửi',['“Hãy cho tôi biết cách','học tiếng Anh hiệu quả”'],2)+AR(300,340,155,6.5)+BOX(340,90,270,130,3,'Phản hồi prompt',['Chia thành nhiều nhóm gợi ý,','kèm các gạch đầu dòng'],7.5)},
+{t:"Thực hành ChatGPT: nghiên cứu",d:18500,
+ n:"Tiếp theo là chức năng nghiên cứu. Đầu tiên là prompt đã gửi, mô tả yêu cầu nghiên cứu về học tiếng Anh giao tiếp. Trong lúc ChatGPT làm việc, ta theo dõi tiến độ nghiên cứu, rồi xem chi tiết nghiên cứu. Kết quả là một bài hoàn chỉnh, học tiếng Anh giao tiếp hiệu quả cho người mới bắt đầu. Cuối cùng là phần nguồn trích dẫn.",
+ v:()=>ROWS([['1','Prompt đã gửi','Mô tả yêu cầu nghiên cứu về học tiếng Anh giao tiếp'],['2','Tiến độ nghiên cứu','Thanh hiển thị tiến độ trong lúc ChatGPT làm việc'],['3','Chi tiết nghiên cứu','Danh sách các bước và nguồn đã tìm'],['4','Kết quả nghiên cứu','Bài “Học tiếng Anh giao tiếp hiệu quả cho người mới bắt đầu”'],['5','Nguồn trích dẫn','Danh sách các nguồn đã dùng']],62)},
+{t:"Prompt đơn giản và prompt đầy đủ",d:22000,
+ n:"So sánh hai cách viết prompt. Prompt đơn giản: hãy tư vấn giúp tôi cách đầu tư hai trăm triệu đồng trong năm năm tới. ChatGPT trả về phản hồi chung chung. Prompt đầy đủ: bạn là chuyên gia tài chính mười năm kinh nghiệm, và tiếp theo là các thành phần đã học. Phản hồi lần này giống yêu cầu.",
+ v:()=>DEF(20,30,290,110,2,'Prompt đơn giản',['“Hãy tư vấn giúp tôi cách đầu','tư 200 triệu đồng trong 5 năm','tới để…”'],1.5,22,1)+CHIP(20,170,290,70,2,['Phản hồi chung chung'],8)+DEF(330,30,290,110,3,'Prompt đầy đủ',['“Bạn là chuyên gia tài chính 10','năm kinh nghiệm…”'],13,22,1)+CHIP(330,170,290,70,3,['Phản hồi giống yêu cầu'],19)},
+{t:"Đánh giá kết quả prompt",d:55500,
+ n:"Đánh giá kết quả prompt, với ví dụ đầu tư hai trăm triệu đồng. Về mức độ chi tiết đầu ra: prompt đơn giản cho kết quả chung chung, chỉ gợi ý một hai hướng đầu tư tổng quát; prompt phức tạp cho ba chiến lược rõ ràng, có cấu trúc tiêu đề, lợi ích, rủi ro. Về độ chính xác: trung bình, phụ thuộc cách ChatGPT diễn giải, so với cao nhờ có mục tiêu và giới hạn rõ ràng. Về giọng văn và phong cách: có thể quá ngắn hoặc khô khan, so với thân thiện, đúng tông tư vấn tài chính, dễ hiểu. Về khả năng kiểm soát kết quả: thấp, khó dự đoán nội dung, so với cao vì người dùng định hướng rõ kết cấu và phong cách. Về ứng dụng thực tế: prompt đơn giản thích hợp hỏi nhanh, tham khảo sơ bộ; prompt phức tạp phù hợp báo cáo, bài viết hoặc tư vấn chuyên sâu.",
+ v:()=>T(80,20,'Tiêu chí','b',.3)+T(262,20,'Prompt đơn giản','b',.5)+T(502,20,'Prompt phức tạp','b',.7)+CELL(20,28,120,1,['Mức độ chi tiết', 'đầu ra'],'m',2.0,'middle')+CELL(145,28,235,2,['Chung chung, chỉ gợi ý 1–2', 'hướng đầu tư tổng quát'],'m',3.5,'middle')+CELL(385,28,235,3,['Cụ thể, 3 chiến lược rõ ràng,', 'tiêu đề – lợi ích – rủi ro'],'m',5.0,'middle')+CELL(20,87,120,4,['Độ chính xác'],'m',12.5,'middle')+CELL(145,87,235,2,['Trung bình – phụ thuộc cách', 'ChatGPT diễn giải'],'m',14.0,'middle')+CELL(385,87,235,3,['Cao – có mục tiêu và', 'giới hạn rõ ràng'],'m',15.5,'middle')+CELL(20,146,120,1,['Giọng văn,', 'phong cách'],'m',23.0,'middle')+CELL(145,146,235,2,['Có thể quá ngắn hoặc khô khan'],'m',24.5,'middle')+CELL(385,146,235,3,['Thân thiện, đúng tông tư vấn', 'tài chính, dễ hiểu'],'m',26.0,'middle')+CELL(20,205,120,4,['Khả năng kiểm', 'soát kết quả'],'m',33.5,'middle')+CELL(145,205,235,2,['Thấp – khó dự đoán nội dung'],'m',35.0,'middle')+CELL(385,205,235,3,['Cao – người dùng định hướng rõ', 'kết cấu và phong cách'],'m',36.5,'middle')+CELL(20,264,120,1,['Ứng dụng', 'thực tế'],'m',44.0,'middle')+CELL(145,264,235,2,['Thích hợp hỏi nhanh,', 'tham khảo sơ bộ'],'m',45.5,'middle')+CELL(385,264,235,3,['Phù hợp báo cáo, bài viết,', 'hoặc tư vấn chuyên sâu'],'m',47.0,'middle')},
+{t:"Tiêu chí đánh giá và lỗi thường gặp",d:15000,
+ n:"Tiêu chí đánh giá kết quả. Có ba tiêu chí: độ chính xác, Accuracy; mức phù hợp, Relevance; và độ thiên lệch, Bias. Các lỗi thường gặp gồm: ảo giác, Hallucination; thiên lệch, Bias; và hiểu sai ngữ cảnh.",
+ v:()=>T(320,34,'TIÊU CHÍ ĐÁNH GIÁ KẾT QUẢ','h2',0)+DEF(20,60,290,170,1,'Đánh giá kết quả',['Độ chính xác (Accuracy)','Mức phù hợp (Relevance)','Độ thiên lệch (Bias)'],1.5,34,2.2)+DEF(330,60,290,170,2,'Các lỗi thường gặp',['Ảo giác (Hallucination)','Thiên lệch (Bias)','Hiểu sai ngữ cảnh'],9,34,1.6)},
+{t:"Cơ hội của AI",d:47000,
+ n:"Phần bảy: cơ hội và thách thức. Cơ hội thứ nhất: AI có khả năng thay thế nhiều vị trí việc làm. AI có thể tự động hóa nhiều công việc lặp lại, xử lý dữ liệu nhanh hơn con người, ví dụ chăm sóc khách hàng tự động và phân tích dữ liệu. Cơ hội thứ hai: AI hỗ trợ, không hoàn toàn thay thế con người. Dù AI mạnh, vẫn cần con người điều khiển, giám sát và đưa ra quyết định trong các tình huống phức tạp hoặc liên quan đến đạo đức, cảm xúc, sáng tạo. AI chỉ xử lý theo dữ liệu sẵn có, còn con người mới có tư duy sáng tạo, khả năng phán đoán và chịu trách nhiệm. Vì vậy, vai trò của con người vẫn là trung tâm trong việc ứng dụng AI.",
+ v:()=>DEF(20,16,600,62,1,'Cơ hội: AI có khả năng thay thế nhiều vị trí việc làm',['Tự động hóa nhiều công việc lặp lại, xử lý dữ liệu nhanh hơn con người.'],1,17,1)+CHIP(20,86,190,56,3,['Nhanh'],8)+CHIP(225,86,190,56,4,['Chăm sóc khách hàng','tự động'],10)+CHIP(430,86,190,56,2,['Phân tích dữ liệu'],12)+DEF(20,158,600,150,3,'Cơ hội: AI hỗ trợ, không hoàn toàn thay thế con người',['Vẫn cần con người điều khiển, giám sát và quyết định trong các tình huống phức tạp','hoặc liên quan đến đạo đức, cảm xúc, sáng tạo.','AI chỉ xử lý theo dữ liệu sẵn có; con người có tư duy sáng tạo, khả năng phán đoán','và chịu trách nhiệm. Vai trò của con người vẫn là trung tâm.'],20,20,3)},
+{t:"Thách thức của AI",d:38500,
+ n:"Thách thức của AI. Thứ nhất, quyền riêng tư: AI thu thập và phân tích dữ liệu như khuôn mặt, giọng nói, vị trí; cần có biện pháp bảo mật, quy định rõ ràng để bảo vệ quyền riêng tư. Thứ hai, đạo đức: AI có thể đưa ra quyết định không công bằng hoặc sai lệch nếu dữ liệu bị thiên vị; cần đảm bảo AI được lập trình theo nguyên tắc đạo đức, tôn trọng con người và xã hội. Thứ ba, rủi ro: AI có thể bị lạm dụng, như deepfake, cuộc gọi giả mạo, tin giả; cần kiểm soát, giám sát và có quy định pháp lý chặt chẽ khi dùng AI.",
+ v:()=>T(320,32,'THÁCH THỨC','h2',0)+DEF(20,50,190,270,1,'Quyền riêng tư',['Thu thập, phân tích','dữ liệu: khuôn mặt,','giọng nói, vị trí.','Cần bảo mật, quy định rõ','ràng để bảo vệ quyền','riêng tư.'],1.5,22,1.6)+DEF(225,50,190,270,2,'Đạo đức',['AI có thể ra quyết định','không công bằng, sai lệch','nếu dữ liệu bị thiên vị.','Cần lập trình AI theo','nguyên tắc đạo đức, tôn','trọng con người, xã hội.'],14,22,1.6)+DEF(430,50,190,270,4,'Rủi ro',['AI có thể bị lạm dụng:','deepfake, cuộc gọi giả','mạo, tin giả.','Cần kiểm soát, giám sát','và có quy định pháp lý','chặt chẽ khi dùng AI.'],26.5,22,1.6)},
+{t:"Bài tập thực hành: nhiệm vụ",d:26000,
+ n:"Phần bài tập thực hành. Nhiệm vụ: mỗi nhóm thảo luận và đưa ra một tình huống thực tế riêng để làm bối cảnh cho bài tập. Nhóm viết ba câu lệnh, tức prompt, thông minh khác nhau để giải quyết các yêu cầu trong tình huống đó. Quan trọng: mỗi prompt phải áp dụng một kỹ thuật khác nhau mà chúng ta đã học, gồm vai trò, cấu trúc, tạo sản phẩm, nâng cấp.",
+ v:()=>T(320,34,'BÀI TẬP THỰC HÀNH: NHIỆM VỤ','h2',0)+NR(40,70,'1',1,'Mỗi nhóm đưa ra một “Tình huống thực tế”','Làm bối cảnh riêng cho bài tập',2)+NR(40,140,'2',3,'Viết 3 câu lệnh (prompt) thông minh khác nhau','Giải quyết các yêu cầu trong tình huống đó',12)+NR(40,210,'3',4,'Mỗi prompt áp dụng một kỹ thuật khác nhau','Vai trò, Cấu trúc, Tạo sản phẩm, Nâng cấp',22)},
+{t:"Bài tập thực hành: sản phẩm, thời gian, trình bày",d:27500,
+ n:"Sản phẩm cần nộp: tạo một file Google Docs hoặc Word. Với mỗi yêu cầu, trình bày theo cấu trúc: prompt đã viết, tức copy và dán câu lệnh của bạn vào đây; và kết quả từ AI, tức copy và dán toàn bộ câu trả lời của ChatGPT hoặc Gemini. Thời gian làm việc: ba mươi phút. Trình bày: sau ba mươi phút, mỗi nhóm có hai phút để chia sẻ prompt mà nhóm thấy hay và hiệu quả nhất.",
+ v:()=>DEF(20,16,600,118,1,'2. Sản phẩm cần nộp',['Tạo một file Google Docs/Word. Với mỗi yêu cầu, trình bày theo cấu trúc:','• Prompt đã viết: copy–paste câu lệnh của bạn vào đây.','• Kết quả từ AI: copy–paste toàn bộ câu trả lời của ChatGPT/Gemini.'],1,20,3)+CHIP(20,150,290,90,3,['3. Thời gian làm việc','30 phút'],17)+CHIP(330,150,290,90,4,['4. Trình bày','Mỗi nhóm có 2 phút chia sẻ','prompt hay, hiệu quả nhất'],23)},
+{t:"Bài tập thực hành: các đề tài",d:15500,
+ n:"Các đề tài. Một, lập thời khóa biểu và lộ trình B hai, bốn hoặc tám tuần. Hai, xây dựng kế hoạch học tập ôn thi cuối kỳ trong một khoảng thời gian. Ba, biên bản và tóm tắt cuộc họp khoa, phòng. Bốn, đề xuất.",
+ v:()=>ROWS([['1','Lập thời khóa biểu và lộ trình B2','(4/8 tuần)'],['2','Xây dựng kế hoạch học tập ôn thi','cuối kỳ trong một khoảng thời gian'],['3','Biên bản và tóm tắt cuộc họp','khoa/phòng'],['4','Đề xuất','…']],70)},
+{t:"Đề tài 1: Thời khóa biểu và lộ trình B2",d:27500,
+ n:"Đề tài một: lập thời khóa biểu và lộ trình B hai, bốn hoặc tám tuần. Thứ nhất, khảo sát nhanh: mục tiêu và kỹ năng ưu tiên, quỹ thời gian mỗi tuần, deadline. Thứ hai, tạo thời khóa biểu tuần với các cột: ngày giờ, kỹ năng, mục tiêu vi mô, tài nguyên, bài tập về nhà, thời lượng. Thứ ba, checklist kỹ năng đọc, nghe, viết, nói, với ít nhất năm tiêu chí cho mỗi kỹ năng.",
+ v:()=>T(320,30,'Đề tài 1: Thời khóa biểu và lộ trình B2','h2',0)+DEF(20,50,600,76,1,'Khảo sát nhanh',['Mục tiêu / kỹ năng ưu tiên, quỹ thời gian mỗi tuần, deadline.'],2,17,1)+DEF(20,138,600,76,3,'Tạo thời khóa biểu tuần',['Ngày/Giờ | Kỹ năng | Mục tiêu vi mô | Tài nguyên | BTVN | Thời lượng'],12,17,1)+DEF(20,226,600,76,4,'Checklist kỹ năng R/L/W/S',['Ít nhất 5 tiêu chí cho mỗi kỹ năng.'],22,17,1)},
+{t:"Kết thúc Module 6",d:9000,
+ n:"Thank you. Xin cảm ơn các bạn đã theo dõi, đến đây là kết thúc Module sáu.",
+ v:()=>T(320,170,'THANK YOU!','h1',1)+T(320,215,'Module 6 – Ứng dụng trí tuệ nhân tạo','m',3)}
+];
+
+/* ====== BỘ PHÁT ====== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),fig=$('fig'),ttl=$('ttl'),cap=$('cap'),seg=$('seg'),btn=$('play'),vb=$('voice'),cnt=$('cnt');
+let i=0,el=0,last=performance.now(),playing=true,done=false,voice=false,sd=true,tok=0;
+
+SCENES.forEach((s,k)=>{const b=document.createElement('button');b.setAttribute('aria-label','Phần '+(k+1)+': '+s.t);b.onclick=()=>jump(k);seg.appendChild(b)});
+
+function speak(){
+  if(!('speechSynthesis' in window)){sd=true;return}
+  speechSynthesis.cancel();const k=++tok;
+  const u=new SpeechSynthesisUtterance(SCENES[i].n);u.lang='vi-VN';u.rate=.95;sd=false;
+  u.onend=u.onerror=()=>{if(k===tok)sd=true};
+  speechSynthesis.speak(u);if(!playing)speechSynthesis.pause();
+}
+function fit(svg){const rs=[...svg.querySelectorAll('rect')].map(r=>({x:+r.getAttribute('x'),y:+r.getAttribute('y'),w:+r.getAttribute('width'),h:+r.getAttribute('height')})).filter(r=>r.w<600);
+  svg.querySelectorAll('text').forEach(t=>{const w=t.getComputedTextLength();if(!w)return;const x=+t.getAttribute('x'),y=+t.getAttribute('y'),mid=t.getAttribute('text-anchor')==='middle';
+    const r=rs.filter(r=>x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h).sort((p,q)=>p.w-q.w)[0];if(!r)return;
+    const room=mid?r.w-16:r.x+r.w-8-x;if(w>room){t.setAttribute('textLength',room);t.setAttribute('lengthAdjust','spacingAndGlyphs')}})}
+function show(n){
+  i=n;el=0;sd=true;const s=SCENES[n];
+  fig.innerHTML=`<svg viewBox="0 0 640 360" role="img" aria-label="${s.t}">${DEFS}${s.v()}</svg>`;
+  fit(fig.firstChild);
+  ttl.classList.remove('t');cap.classList.remove('t');void ttl.offsetWidth;ttl.classList.add('t');cap.classList.add('t');
+  ttl.textContent=s.t;cap.textContent=s.n;cnt.textContent=(n+1)+' / '+SCENES.length;
+  if(voice)speak();
+}
+function sync(){stage.classList.toggle('paused',!playing);btn.textContent=done?'Xem lại':playing?'Tạm dừng':'Phát'}
+function jump(n){done=false;playing=true;show(n);sync()}
+btn.onclick=()=>{
+  if(done){jump(0);return}
+  playing=!playing;sync();
+  if(voice&&'speechSynthesis' in window)playing?speechSynthesis.resume():speechSynthesis.pause();
+};
+$('prev').onclick=()=>jump(Math.max(0,i-(el>2000?0:1)));
+$('next').onclick=()=>jump(Math.min(SCENES.length-1,i+1));
+vb.onclick=()=>{
+  voice=!voice;vb.textContent='Giọng đọc: '+(voice?'Bật':'Tắt');vb.setAttribute('aria-pressed',voice);
+  if(voice)speak();else{tok++;sd=true;if('speechSynthesis' in window)speechSynthesis.cancel()}
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON')return;
+  if(e.code==='Space'){e.preventDefault();btn.click()}
+  if(e.code==='ArrowRight')$('next').click();
+  if(e.code==='ArrowLeft')$('prev').click();
+});
+
+function tick(ts){
+  const dt=Math.min(ts-last,100);last=ts;
+  if(playing){
+    el+=dt;const d=SCENES[i].d;
+    if(el>=d&&(sd||el>d+6000)){
+      if(i<SCENES.length-1)show(i+1);else{playing=false;done=true;sync()}
+    }
+  }
+  [...seg.children].forEach((b,k)=>b.style.setProperty('--p',(k<i||(done&&k===i)?100:k===i?Math.min(el/SCENES[i].d,1)*100:0)+'%'));
+  requestAnimationFrame(tick);
+}
+show(0);sync();requestAnimationFrame(tick);
+</script>
+</body>
+</html>

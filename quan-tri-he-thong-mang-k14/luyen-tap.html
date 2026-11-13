@@ -2432,7 +2432,7 @@ const skipCurrent = () => {
       li.querySelector('.rank-no').textContent = row.rank;
       li.querySelector('.rank-avatar').textContent = initialsOf(row.name);
       li.querySelector('.rank-name').textContent = row.name + (row.isMe ? ' (bạn)' : '');
-      li.querySelector('.rank-score').textContent = formatScore(row.score) + ' điểm';
+      li.querySelector('.rank-score').textContent = formatScore(row.score) + '/' + MAX_SCORE + ' điểm';
       li.querySelector('.rank-ratio').textContent =
         (row.ratio === null ? '' : row.ratio + '%') +
         (row.total ? ' · ' + row.correct + '/' + row.total + ' câu đúng' : '');
@@ -2451,7 +2451,7 @@ const skipCurrent = () => {
     el.resCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
     el.resName.textContent = r.name;
     el.resTime.textContent = formatDuration(r.seconds);
-    el.resCorrect.textContent = r.correct + '/' + r.total + ' câu · ' + formatScore(r.score) + ' điểm';
+    el.resCorrect.textContent = r.correct + '/' + r.total + ' câu · ' + formatScore(r.score) + '/' + MAX_SCORE + ' điểm';
     renderRanking(r);
     renderBackLink();
     hideToast();
@@ -2579,7 +2579,7 @@ if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
     el.rvSubmit.textContent = r.submittedAt;
     el.rvCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
     el.rvPartScore.textContent = formatScore(r.score) + ' / ' + MAX_SCORE;
-    el.rvPartSub.textContent = r.total + ' câu (' + r.correct + ' đúng - ' + wrongCount + ' sai) · ' + formatScore(r.score) + ' điểm';
+    el.rvPartSub.textContent = r.total + ' câu (' + r.correct + ' đúng - ' + wrongCount + ' sai) · ' + formatScore(r.score) + '/' + MAX_SCORE + ' điểm';
 
 reviewState.filter = 0;
     reviewState.showAnswer = true;
