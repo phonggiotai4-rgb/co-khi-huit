@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 2 – Giao tiếp và hợp tác trong môi trường số – Video bài giảng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8EFF7;--panel:#FFFFFF;--ink:#16243B;--mut:#5A6B85;--line:#C9D5E4;--c1:#2F5BEA;--c2:#F26B5B;--c3:#1FA38A;--c4:#E9A722;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5}
+.player{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+h2{font:700 clamp(22px,3.4vw,32px)/1.2 Lexend,"Be Vietnam Pro",sans-serif;margin:0}
+.fig svg{width:100%;height:auto;max-height:54vh;display:block}
+.cap{margin:0;min-height:3.3em;color:var(--mut);font-size:clamp(14px,2vw,17px);max-width:72ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+button{font:600 14px "Be Vietnam Pro",sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--c1)}
+button:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+#play{background:var(--c1);border-color:var(--c1);color:#fff;min-width:110px}
+.sp{flex:1}
+.cnt{color:var(--mut);font-size:14px}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1;height:10px;padding:0;border-radius:5px;border:0;background:var(--line);position:relative;overflow:hidden}
+.seg button::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:var(--c1)}
+/* SVG */
+svg text{font-family:inherit;fill:var(--ink);font-size:15px}
+.b{font-weight:600}.m{fill:var(--mut);font-size:12.5px}.big{font-size:17px}.h1{font-size:34px;font-weight:700}.h2{font-size:19px;font-weight:700;fill:var(--c1)}
+.brand{background:#1F6FB5;color:#fff;text-align:center;border-radius:14px;padding:10px 16px;margin-bottom:12px;line-height:1.35}
+.brand b{display:block;font:700 clamp(13px,2.2vw,18px) Lexend,sans-serif}.brand span{font-size:clamp(12px,1.8vw,15px)}
+.url{margin:8px 0 0;color:var(--mut);font-size:12px}
+.st{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.5;stroke:var(--mut)}
+.s1{stroke:var(--c1)}.s2{stroke:var(--c2)}.s3{stroke:var(--c3)}.s4{stroke:var(--c4)}
+.f1{fill:var(--c1);fill-opacity:.16}.f2{fill:var(--c2);fill-opacity:.16}.f3{fill:var(--c3);fill-opacity:.16}.f4{fill:var(--c4);fill-opacity:.2}
+.fp{fill:var(--panel)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s ease var(--d,0s) forwards}
+.r{opacity:0;animation:rv .6s ease var(--d,0s) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes rv{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fi{from{fill-opacity:0}}
+@keyframes pop{from{transform:scale(.93)}}
+@keyframes pulse{50%{stroke-width:3.6}}
+@keyframes sc{from{opacity:0;transform:translateY(10px)}}
+@keyframes tt{from{opacity:0;transform:translateX(-12px)}}
+@keyframes bp{50%{box-shadow:0 0 0 7px rgba(47,91,234,.22)}}
+rect.draw,circle.draw{transform-box:fill-box;transform-origin:center}
+rect.draw{animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards}
+circle.draw{animation:dr 1.1s ease var(--d,0s) forwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+rect.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards,fi .8s ease calc(var(--d,0s) + .45s) backwards}
+circle.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,fi .8s ease calc(var(--d,0s) + .45s) backwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+.fig svg{animation:sc .5s ease}
+.t{animation:tt .55s ease}
+button{transition:transform .15s,border-color .15s}button:active{transform:scale(.96)}
+.paused #play{animation:bp 1.8s ease-in-out infinite}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.draw,rect.draw,circle.draw{animation:none!important;stroke-dashoffset:0}.r{animation:none;opacity:1;transform:none}.fig svg,.t,.paused #play{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="player">
+  <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
+  <section class="stage" id="stage" aria-live="off">
+    <h2 id="ttl"></h2>
+    <div class="fig" id="fig"></div>
+    <p class="cap" id="cap"></p>
+  </section>
+  <div class="ctl">
+    <button id="prev">Trước</button>
+    <button id="play">Tạm dừng</button>
+    <button id="next">Sau</button>
+    <button id="voice" aria-pressed="false">Giọng đọc: Tắt</button>
+    <span class="sp"></span>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="seg" id="seg"></div>
+  <p class="url">https://huit.edu.vn</p>
+</main>
+
+<script>
+/* ====== NỘI DUNG: chỉnh sửa mảng SCENES bên dưới ======
+   t: tiêu đề | d: thời lượng (ms) | n: lời giảng (phụ đề + giọng đọc) | v: hàm vẽ hình SVG
+   Mỗi phần tử vẽ có thể có độ trễ riêng (tham số cuối) để hình hiện ra theo lời giảng. */
+const D=n=>`style="--d:${n}s"`;
+const T=(x,y,s,c='',n=0,a='middle')=>`<text class="r ${c}" ${D(n)} x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const P=(tag,attrs,c='',n=0)=>`<${tag} pathLength="1" class="st draw ${c}" ${D(n)} ${attrs}/>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" class="st" style="stroke-width:2"/></marker></defs>`;
+
+const AR=(x1,x2,y,n)=>`<path pathLength="1" class="st draw" ${D(n)} d="M${x1} ${y}H${x2}" marker-end="url(#ah)"/>`;
+const BOX=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b big',n+.3)+L.map((l,j)=>T(x+w/2,y+62+j*22,l,'m',n+.6+j*.3)).join('');
+const GRID=(C,x)=>{let s='';C.forEach((o,i)=>{const X=30+i%2*300,Y=40+Math.floor(i/2)*140,n=.3+i*2.8,k=o[0];
+ s+=P('rect',`x="${X}" y="${Y}" width="280" height="110" rx="16"`,`s${k} f${k}`,n)+(x?P('path',`d="M${X+28} ${Y+39}l20 20M${X+48} ${Y+39}l-20 20"`,`s${k}`,n+.3):P('circle',`cx="${X+38}" cy="${Y+55}" r="16"`,`s${k}`,n+.3))+
+ T(X+68,Y+44,o[1],'b',n+.6,'start')+T(X+68,Y+68,o[2],'m',n+.8,'start')+(o[3]?T(X+68,Y+86,o[3],'m',n+.9,'start'):'');});return s;};
+const BOXS=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b',n+.3)+L.map((l,j)=>T(x+w/2,y+58+j*22,l,'m',n+.6+j*.3)).join('');
+const ROWS=(R,pt=64)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=.3+i*3,m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+const cc=(x,y,r)=>`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
+const IC={chat:'M-10 -8h20v13h-9l-5 5v-5h-6zM-5 -1h1M0 -1h1M5 -1h1',users:cc(0,-5,4)+'M-9 10v-2a6 5 0 0 1 6-5h6a6 5 0 0 1 6 5v2zM-10 -3h-1M10 -3h1',laptop:'M-8 -8h16v11h-16zM-12 6h24l-2 3h-20zM-3 -4l-3 2.5 3 2.5M3 -4l3 2.5-3 2.5',clock:cc(0,0,10)+'M0 -6v6l4 3',search:cc(-2,-2,7)+'M3 3l8 8',chart:'M-10 -10v20h20M-7 4l5-6 4 3 7-8',book:'M0 -7c-3-3-7-3-10-2v15c3-1 7-1 10 2c3-3 7-3 10-2v-15c-3-1-7-1-10 2zM0 -7v15',home:'M-11 0l11-10 11 10M-7 -3v12h14v-12M-2 9v-6h4v6',mail:'M-10 -7h20v14h-20zM-10 -7l10 8 10-8',video:'M-10 -6h13v12h-13zM3 -1l7-5v12l-7-5',share:cc(6,-7,3)+cc(-7,0,3)+cc(6,7,3)+'M-4 -1l7 -5M-4 1l7 5',shield:'M0 -10l9 3v6c0 6-4 9-9 11-5-2-9-5-9-11v-6zM-4 1l3 3 6-6',hub:cc(0,-7,3)+cc(-8,6,3)+cc(8,6,3)+'M0 -4l-6 8M0 -4l6 8M-5 6h10',list:'M-10 -6h1M-5 -6h14M-10 0h1M-5 0h14M-10 6h1M-5 6h14',cap:'M0 -8l11 5-11 5-11-5zM-6 0v6c3 3 9 3 12 0v-6'};
+const I=(nm,x,y,s,k,n)=>P('path',`d="${IC[nm]}" transform="translate(${x} ${y}) scale(${s})"`,`s${k}`,n);
+const IBOX=(x,y,w,h,k,ic,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+w/2}" cy="${y+30}" r="22"`,`s${k}`,n+.2)+I(ic,x+w/2,y+30,1.2,k,n+.4)+T(x+w/2,y+78,title,'b big',n+.6)+L.map((l,j)=>T(x+w/2,y+102+j*20,l,'m',n+.9+j*.3)).join('');
+const OV=(a,pt,d0)=>a.map((nm,i)=>I(nm,60,42+i*pt,.9,[1,3,4,2][i%4],d0+i*3)).join('');
+Object.assign(IC,{warn:'M0 -10l10 18h-20zM0 -3v5M0 5h1',cloud:'M-7 7a5 5 0 0 1 0 -10a7 7 0 0 1 13 -2a5 5 0 0 1 1 12z',heart:'M0 9c-12-8-12-17-5-17 3 0 5 2 5 4 0-2 2-4 5-4 7 0 7 9-5 17z',build:'M-7 10v-18h14v18zM-7 10h14M-3 -4h1M2 -4h1M-3 1h1M2 1h1',gear:cc(0,0,3.5)+'M0 -10v4M0 6v4M-10 0h4M6 0h4M-7 -7l3 3M4 4l3 3M7 -7l-3 3M-4 4l-3 3',star:'M0 -10l3 7h7l-6 5 2 8-6-4-6 4 2-8-6-5h7z',target:cc(0,0,10)+cc(0,0,5)+'M0 0h1'});
+const HI={'Ứng dụng':'laptop','Lợi ích':'star','Thách thức':'warn','Nền tảng học tập':'cap','Công cụ giao tiếp':'chat','Tương tác, cộng tác':'users','Họp trực tuyến':'video','Hệ thống ERP':'build','Quản lý dự án':'list','Kiến thức cần có':'book','Kỹ năng thực hành':'gear','Phẩm chất cần có':'heart','Lưu trữ & chia sẻ':'cloud','Văn phòng trực tuyến':'laptop','Kết nối cảm xúc':'heart','Bảo mật thông tin':'shield','Quá tải thông tin':'warn'};
+const COL=(x,hd,k,L,n)=>(HI[hd]?I(HI[hd],x+13,24,.75,k,n)+T(x+28,29,hd,'b',n+.2,'start'):T(x+95,28,hd,'b big',n))+L.map((o,i)=>BOXS(x,44+i*72,190,66,k,o[0],[o[1]],n+.5+i*1.6)).join('');
+const SCENES=[
+{t:"Giới thiệu Module 2",d:10500,
+ n:"Chào mừng các bạn đến với Module 2: Giao tiếp và hợp tác trong môi trường số, khả năng then chốt cho thành công trong kỷ nguyên số hóa.",
+ v:()=>T(320,52,'MODULE 2','h1',0)+T(320,90,'GIAO TIẾP VÀ HỢP TÁC','h2',.5)+T(320,118,'TRONG MÔI TRƯỜNG SỐ','h2',.8)+
+  [[1,170,'Giao tiếp','chat'],[3,320,'Hợp tác','users'],[4,470,'Số hóa','laptop']].map((o,i)=>P('circle',`cx="${o[1]}" cy="215" r="44"`,`s${o[0]} f${o[0]}`,2+i*1.8)+I(o[3],o[1],215,1.8,o[0],2.4+i*1.8)+T(o[1],290,o[2],'b big',3+i*1.8)).join('')+T(320,330,'Khả năng then chốt trong kỷ nguyên số hóa','m',7.8)},
+{t:"Mục tiêu và tầm quan trọng",d:19500,
+ n:"Module có ba mục tiêu: trang bị kiến thức nền tảng, phát triển kỹ năng thiết yếu và đưa ra giải pháp thực tiễn. Điều này quan trọng vì giao tiếp, hợp tác hiệu quả là then chốt của chuyển đổi số, quyết định thành công của cá nhân, tổ chức và là năng lực cạnh tranh.",
+ v:()=>I('target',92,28,.9,1,0)+T(165,34,'Mục tiêu','h2',0)+I('star',372,28,.9,4,9)+T(475,34,'Tầm quan trọng','h2',9)+
+  [['Trang bị kiến thức nền tảng','Hiểu biết cơ bản về giao tiếp, hợp tác'],['Phát triển kỹ năng thiết yếu','Rèn kỹ năng ứng dụng trong môi trường số'],['Giải pháp thực tiễn','Thích nghi và phát triển trong kỷ nguyên số']].map((o,i)=>BOXS(20,50+i*88,290,76,1,o[0],[o[1]],.6+i*2.6)).join('')+
+  [['Bối cảnh chuyển đổi số','Yếu tố then chốt khi chuyển đổi số mạnh mẽ'],['Thành công cá nhân và tổ chức','Quyết định thành công trong môi trường số'],['Năng lực cạnh tranh','Giúp tổ chức duy trì cạnh tranh toàn diện']].map((o,i)=>BOXS(330,50+i*88,290,76,4,o[0],[o[1]],9.6+i*2.6)).join('')},
+{t:"Môi trường số là gì?",d:22000,
+ n:"Môi trường số, hay Digital Workplace, là không gian làm việc ảo trên nền tảng công nghệ số, giúp ta làm việc mọi nơi, mọi lúc và cộng tác hiệu quả. Năm đặc điểm cốt lõi: linh hoạt tuyệt đối, giao tiếp liền mạch, truy cập thông tin dễ dàng, tăng năng suất, và quản lý, chia sẻ kiến thức.",
+ v:()=>BOXS(20,18,600,80,4,'Môi trường số (Digital Workplace)',['Không gian làm việc ảo trên nền tảng công nghệ số: mọi nơi, mọi lúc'],.3)+
+  [['Linh hoạt','tuyệt đối','Làm việc từ xa,','giờ linh hoạt','clock'],['Giao tiếp','liền mạch','Zoom, Slack,','Google Meet','chat'],['Truy cập','thông tin','Tài liệu một nơi,','mọi thiết bị','search'],['Hiệu quả','và năng suất','Tự động hóa,','giảm thời gian tìm','chart'],['Chia sẻ','kiến thức','Bảo tồn kinh','nghiệm quý giá','book']].map((o,i)=>{const x=20+i*120,k=[1,2,3,4,1][i],n=8.5+i*2.3;
+   return P('rect',`x="${x}" y="118" width="108" height="200" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+54}" cy="158" r="24"`,`s${k}`,n+.2)+I(o[4],x+54,158,1.2,k,n+.4)+
+   T(x+54,212,o[0],'b',n+.6)+T(x+54,234,o[1],'b',n+.7)+T(x+54,272,o[2],'m',n+.9)+T(x+54,294,o[3],'m',n+1.1)}).join('')},
+{t:"Lợi ích của môi trường số",d:16200,
+ n:"Môi trường số mang lại năm lợi ích: tăng hiệu quả và năng suất; quản lý và chia sẻ kiến thức; linh hoạt tuyệt đối, cân bằng công việc và cuộc sống; giao tiếp liền mạch; và truy cập thông tin dễ dàng từ mọi thiết bị.",
+ v:()=>ROWS([[' ','Tăng hiệu quả và năng suất','Tự động hóa tác vụ, giảm thời gian di chuyển và tìm kiếm'],[' ','Quản lý và chia sẻ kiến thức','Bảo tồn và chia sẻ kinh nghiệm quý giá trong tổ chức'],[' ','Linh hoạt tuyệt đối','Làm việc từ xa, giờ giấc linh hoạt, cân bằng công việc - cuộc sống'],[' ','Giao tiếp liền mạch','Zoom, Slack, Google Meet duy trì liên lạc và cộng tác'],[' ','Truy cập thông tin dễ dàng','Tập trung tài liệu một nơi, truy cập từ mọi thiết bị']],60)+OV(['chart','book','home','chat','search'],60,.7)},
+{t:"Giao tiếp số: khái niệm và đặc điểm",d:22500,
+ n:"Giao tiếp số là trao đổi thông tin, ý tưởng và cảm xúc qua email, mạng xã hội, họp trực tuyến; nó gắn với làm việc từ xa và là chìa khóa thời toàn cầu hóa. Khác giao tiếp truyền thống có ngôn ngữ hình thể và giọng điệu, giao tiếp số dựa vào từ ngữ, ngữ cảnh, nên cần kỹ năng giải mã thông điệp.",
+ v:()=>BOXS(20,18,600,80,4,'Giao tiếp số',['Trao đổi thông tin, ý tưởng, cảm xúc qua email, mạng xã hội, họp trực tuyến'],.3)+
+  BOXS(20,118,290,96,3,'Giao tiếp truyền thống',['Toàn diện: ngôn ngữ hình thể,','giọng điệu'],7)+BOXS(330,118,290,96,2,'Giao tiếp số',['Dựa vào từ ngữ và ngữ cảnh,','thiếu yếu tố phi ngôn ngữ'],11)+
+  [['Thiếu tín hiệu','phi ngôn ngữ'],['Phụ thuộc','nhiều vào ngữ cảnh'],['Cần kỹ năng','giải mã thông điệp']].map((o,i)=>BOXS(20+i*205,236,190,84,1,o[0],[o[1]],14.5+i*2)).join('')},
+{t:"Tầm quan trọng của giao tiếp số",d:13000,
+ n:"Giao tiếp số quan trọng vì gắn liền với chuyển đổi số và làm việc hybrid, từ xa; là chìa khóa thành công thời toàn cầu hóa; nhưng thiếu ngôn ngữ hình thể và giọng điệu trực tiếp.",
+ v:()=>ROWS([['✓','Gắn liền chuyển đổi số','Xu hướng chuyển đổi số, làm việc hybrid/remote'],['✓','Chìa khóa thành công','Trong thời đại toàn cầu hóa'],['✓','Thiếu yếu tố phi ngôn ngữ','Không có ngôn ngữ hình thể, giọng điệu trực tiếp']],70)},
+{t:"Các hình thức giao tiếp số phổ biến",d:21800,
+ n:"Giao tiếp số có năm hình thức phổ biến. Email dành cho trao đổi chính thức, gửi báo cáo, thư mời. Chat như Zalo, Slack cho phản hồi nhanh. Video call như Zoom, Teams để họp từ xa. Mạng xã hội như Facebook, LinkedIn để xây dựng thương hiệu. Cộng đồng ảo như Reddit để chia sẻ kiến thức.",
+ v:()=>[[20,10,190,1,'mail','Email',['Trao đổi chính thức','Gửi báo cáo, thư mời','Tài liệu hóa thông tin'],.3],[225,10,190,3,'chat','Chat',['Zalo, Slack','Phản hồi nhanh chóng','Trao đổi tức thời'],4],[430,10,190,4,'video','Video Call',['Zoom, Microsoft Teams','Kết nối trực quan từ xa','Tổ chức cuộc họp'],8],[20,176,290,2,'share','Mạng xã hội',['Facebook, LinkedIn','Tương tác công khai','Xây dựng thương hiệu'],12.5],[330,176,290,1,'users','Cộng đồng ảo',['Reddit, diễn đàn chuyên đề','Dành cho người cùng sở thích','Chia sẻ kiến thức'],17]].map(o=>IBOX(o[0],o[1],o[2],156,o[3],o[4],o[5],o[6],o[7])).join('')},
+{t:"Năng lực giao tiếp trong môi trường số",d:24800,
+ n:"Năng lực giao tiếp số gồm hai nhóm. Về kiến thức: nhận diện các ngôn ngữ giao tiếp như văn bản, hình ảnh, âm thanh, video; sử dụng linh hoạt; phân biệt đặc điểm giao tiếp số; và giải mã thông điệp để giảm hiểu lầm. Về kỹ năng: nắm hành vi chuẩn mực, xây dựng chiến lược, dùng công cụ công nghệ, và xử lý sự cố chuyên nghiệp.",
+ v:()=>I('book',72,22,.8,1,0)+T(165,26,'Kiến thức cần có','b big',0)+I('gear',385,22,.8,4,13.6)+T(475,26,'Kỹ năng thực hành','b big',13.6)+
+  [['Ngôn ngữ giao tiếp khác nhau','Văn bản, hình ảnh, âm thanh, video'],['Sử dụng linh hoạt ngôn ngữ','Truyền tải thông điệp hiệu quả'],['Đặc điểm giao tiếp số','Khác truyền thống, thiếu phi ngôn ngữ'],['Giải mã thông điệp','Kết hợp kỹ năng và công cụ, giảm hiểu lầm']].map((o,i)=>BOXS(20,40+i*72,290,64,1,o[0],[o[1]],1.5+i*3)).join('')+
+  [['Hành vi chuẩn mực','Nhận diện nhóm công chúng khác nhau'],['Xây dựng chiến lược','Phù hợp từng nhóm công chúng, mục tiêu'],['Công cụ và công nghệ','Xác định công cụ số ảnh hưởng giao tiếp'],['Xử lý sự cố','Nhanh chóng và chuyên nghiệp']].map((o,i)=>BOXS(330,40+i*72,290,64,4,o[0],[o[1]],14.2+i*2.4)).join('')},
+{t:"Giao tiếp số trong môi trường giáo dục",d:23200,
+ n:"Trong giáo dục, giao tiếp số được ứng dụng qua email, chat, họp trực tuyến và mạng xã hội. Lợi ích gồm học từ xa, truy cập linh hoạt nhờ MOOCs, AI phân tích học tập cá nhân hóa, và kết nối giáo viên, học sinh, phụ huynh. Thách thức là chất lượng kết nối, bảo mật, gian lận khi kiểm tra, và kỹ năng số.",
+ v:()=>COL(20,'Ứng dụng',1,[['Email','Trao đổi chính thức'],['Chat','Zalo, Slack phản hồi nhanh'],['Họp trực tuyến','Zoom, Teams học trực tuyến'],['Mạng xã hội','Chia sẻ thông tin']],.3)+
+  COL(225,'Lợi ích',3,[['Học từ xa','Hỗ trợ hybrid, remote'],['Truy cập linh hoạt','MOOCs xóa rào cản địa lý'],['AI phân tích học tập','Học tập cá nhân hóa'],['Hợp tác','Kết nối thầy, trò, phụ huynh']],7.2)+
+  COL(430,'Thách thức',2,[['Chất lượng kết nối','Internet cần ổn định'],['Bảo mật','Rò rỉ thông tin học sinh'],['Bài kiểm tra','Rủi ro gian lận trực tuyến'],['Kỹ năng số','Đào tạo giáo viên, học sinh']],14.5)},
+{t:"Công cụ giao tiếp số trong giáo dục",d:22500,
+ n:"Công cụ giao tiếp số trong giáo dục chia ba nhóm. Nền tảng học tập gồm hệ thống quản lý khóa học và khóa học trực tuyến MOOCs. Công cụ giao tiếp gồm Gmail, Outlook, Zalo, Slack, Zoom, Teams, Facebook. Công cụ cộng tác gồm Reddit, Trello, Asana, Google Drive, OneDrive, Google Forms.",
+ v:()=>COL(20,'Nền tảng học tập',1,[['Hệ thống học tập','Quản lý khóa học, nội dung'],['Khóa học trực tuyến','MOOCs xóa rào cản địa lý']],.3)+
+  COL(225,'Công cụ giao tiếp',3,[['Email','Gmail, Outlook'],['Chat','Zalo, Slack'],['Họp trực tuyến','Zoom, Microsoft Teams'],['Mạng xã hội','Facebook, LinkedIn']],6.5)+
+  COL(430,'Tương tác, cộng tác',4,[['Cộng đồng ảo','Reddit, diễn đàn'],['Quản lý dự án','Trello, Asana'],['Lưu trữ đám mây','Google Drive, OneDrive'],['Công cụ khảo sát','Google Forms, MS Forms']],14.2)},
+{t:"Giao tiếp số trong môi trường doanh nghiệp",d:24800,
+ n:"Trong doanh nghiệp, giao tiếp số được ứng dụng qua email, họp trực tuyến, chat và mạng xã hội. Lợi ích gồm làm việc từ xa, cân bằng công việc và cuộc sống, hợp tác với nhiều đối tác, nhà cung cấp, và tăng năng suất. Thách thức là quá tải thông tin, bảo mật thông tin nhạy cảm, cần đào tạo lại nhân viên, và quản lý thời gian hiệu quả.",
+ v:()=>COL(20,'Ứng dụng',1,[['Email','Trao đổi chính thức'],['Họp trực tuyến','Zoom, Teams cho họp'],['Chat','Zalo, Slack phản hồi nhanh'],['Mạng xã hội','Facebook, LinkedIn chia sẻ']],.3)+
+  COL(225,'Lợi ích',3,[['Làm việc từ xa','Hỗ trợ hybrid, remote'],['Cân bằng công việc','Công việc - cuộc sống'],['Hợp tác đa bên','Đối tác, nhà cung cấp'],['Tăng năng suất','Tự động hóa, bớt tìm kiếm']],7.6)+
+  COL(430,'Thách thức',2,[['Quá tải thông tin','Dễ rối và mất tập trung'],['Bảo mật','Rò rỉ thông tin nhạy cảm'],['Kỹ năng số','Cần đào tạo lại nhân viên'],['Thời gian','Cần quản lý hiệu quả']],15.6)},
+{t:"Công cụ giao tiếp doanh nghiệp chuyên nghiệp",d:25500,
+ n:"Công cụ giao tiếp doanh nghiệp chia ba nhóm. Nền tảng họp trực tuyến gồm Zoom, Microsoft Teams và Google Meet. Hệ thống ERP như SAP và Oracle ERP Cloud giúp tích hợp, quản lý toàn bộ quy trình kinh doanh. Quản lý dự án gồm Trello, Asana, Harvest. Khuyên dùng: chọn công cụ phù hợp quy mô, nhu cầu nội bộ, bảo đảm bảo mật và khả năng tích hợp.",
+ v:()=>COL(20,'Họp trực tuyến',1,[['Zoom','Họp video chất lượng cao'],['Microsoft Teams','Họp, trao đổi nội bộ'],['Google Meet','Tích hợp Google Workspace']],.3)+
+  COL(225,'Hệ thống ERP',3,[['SAP ERP','Quản lý nguồn lực toàn diện'],['Oracle ERP Cloud','ERP đám mây, toàn cầu'],['Vai trò của ERP','Tích hợp quy trình kinh doanh']],7.5)+
+  COL(430,'Quản lý dự án',4,[['Trello','Theo dõi tiến độ, phân công'],['Asana','Lập kế hoạch, quản lý nhóm'],['Harvest','Theo dõi thời gian, năng suất']],15)+
+  BOXS(20,264,600,68,2,'Khuyên dùng',['Chọn công cụ hợp quy mô, nhu cầu nội bộ, bảo mật và tích hợp'],20.3)},
+{t:"So sánh phiên bản miễn phí và trả phí",d:25500,
+ n:"So sánh hai phiên bản: bản miễn phí thiếu dung lượng lưu trữ, tài liệu có watermark, chỉ chức năng cơ bản, hỗ trợ cộng tác giới hạn và hỗ trợ khách hàng qua quảng cáo. Bản trả phí có dung lượng lớn, không watermark, đủ chức năng, hỗ trợ toàn diện và ưu tiên. Bản miễn phí hợp cá nhân, học tập, thử nghiệm; bản trả phí hợp doanh nghiệp.",
+ v:()=>T(20,30,'Tính năng','b',0,'start')+T(215,30,'Miễn phí','b',.3,'start')+T(430,30,'Trả phí','b',.6,'start')+
+  [['Dung lượng lưu trữ','Thiếu','Dung lượng lớn'],['Tài liệu','Có watermark','Không có watermark'],['Chức năng','Chỉ chức năng cơ bản','Tất cả chức năng'],['Hỗ trợ cộng tác','Hỗ trợ giới hạn','Hỗ trợ toàn diện'],['Hỗ trợ khách hàng','Qua quảng cáo','Hỗ trợ ưu tiên']].map((o,i)=>{const y=42+i*38,n=1.5+i*3,k=i%2?4:1;
+   return P('rect',`x="20" y="${y}" width="600" height="34" rx="8"`,`s${k} f${k}`,n)+T(30,y+22,o[0],'b',n+.3,'start')+T(215,y+22,'✗ '+o[1],'m',n+.6,'start')+T(430,y+22,'✓ '+o[2],'m',n+1,'start')}).join('')+
+  BOXS(20,250,290,72,1,'Phiên bản miễn phí',['Cá nhân, học tập cơ bản, thử nghiệm'],18.5)+BOXS(330,250,290,72,2,'Phiên bản trả phí',['Doanh nghiệp, lưu trữ cao, tính năng sâu'],21.5)},
+{t:"Năng lực hợp tác số",d:26300,
+ n:"Năng lực hợp tác số gồm ba nhóm. Kiến thức: nhận diện cộng đồng trực tuyến, hiểu cấu trúc và vai trò, nắm quyền và nghĩa vụ công dân số, và vai trò của công nghệ. Kỹ năng: chọn cộng đồng phù hợp, quản lý danh tính số, tra cứu thông tin, và tối ưu công việc nhóm. Phẩm chất: linh hoạt, tư duy phản biện, thấu cảm, phán đoán và ra quyết định.",
+ v:()=>COL(20,'Kiến thức cần có',1,[['Nhận diện cộng đồng','Phân loại, hiểu mục đích'],['Cấu trúc và vai trò','Phân quyền, rủi ro tiềm ẩn'],['Công dân số','Quyền và nghĩa vụ liên quan'],['Vai trò của công nghệ','Với hợp tác làm việc số']],.3)+
+  COL(225,'Kỹ năng thực hành',3,[['Chọn cộng đồng phù hợp','Hợp nhu cầu, đa dạng văn hóa'],['Quản lý danh tính số','Khi tương tác trực tuyến'],['Tra cứu thông tin','Quyền, nghĩa vụ công dân số'],['Tối ưu công việc nhóm','Kế hoạch, thời gian, tài liệu']],8.8)+
+  COL(430,'Phẩm chất cần có',4,[['Tính linh hoạt','Thích ứng nhanh với thay đổi'],['Tư duy phản biện','Phân tích, đánh giá thông tin'],['Thấu cảm','Hiểu, tôn trọng người khác'],['Phán đoán, quyết định','Theo đạo đức và pháp luật']],17.6)},
+{t:"Phẩm chất cốt lõi cần có",d:25500,
+ n:"Sáu phẩm chất cốt lõi: tính linh hoạt, là chấp nhận thay đổi và học hỏi liên tục; tư duy phản biện, là phân tích thông tin và đánh giá nguồn tin; tự tin, là biểu đạt quan điểm rõ ràng; thấu cảm, là hiểu cảm xúc và tôn trọng sự khác biệt; khả năng thích ứng, sẵn sàng thử nghiệm; và phán đoán, ra quyết định dựa trên đạo đức, pháp luật.",
+ v:()=>[['Tính linh hoạt',['Thích ứng nhanh với thay đổi','• Chấp nhận thay đổi','• Học hỏi liên tục']],['Tư duy phản biện',['Khách quan, sáng suốt','• Phân tích thông tin','• Đánh giá nguồn tin']],['Tự tin',['Biểu đạt rõ ràng, thuyết phục','• Biểu đạt quan điểm','• Tự tin trong giao tiếp']],['Thấu cảm',['Hiểu và tôn trọng người khác','• Hiểu cảm xúc người khác','• Tôn trọng sự khác biệt']],['Khả năng thích ứng',['Điều chỉnh hành vi, cách làm','• Linh hoạt tiếp cận','• Chấp nhận thử nghiệm']],['Phán đoán, quyết định',['Theo đạo đức và pháp luật','• Đánh giá tình huống','• Lựa chọn giải pháp phù hợp']]].map((o,i)=>BOXS(20+i%3*205,18+Math.floor(i/3)*160,190,150,[1,3,4,2,1,3][i],o[0],o[1],.3+i*3.8)).join('')},
+{t:"Kỹ năng giao tiếp và hợp tác số hiện đại",d:24000,
+ n:"Bốn kỹ năng hiện đại. Một, dùng thành thạo công cụ số: chọn nền tảng đúng tình huống, tối ưu thông báo. Hai, truyền đạt rõ ràng, chuyên nghiệp: ngắn gọn, lịch sự, tránh lạm dụng emoji. Ba, lắng nghe chủ động, đặt câu hỏi làm rõ. Bốn, ứng xử văn minh, tôn trọng người khác. Mẹo: luôn thích ứng và cập nhật kỹ năng mới.",
+ v:()=>[['Dùng thành thạo công cụ số',['Chọn nền tảng đúng tình huống','Tối ưu thông báo, đặt quy tắc nhóm']],['Truyền đạt rõ ràng, chuyên nghiệp',['Ngắn gọn, lịch sự, tiêu đề rõ','Tránh lạm dụng emoji, hình ảnh']],['Lắng nghe, phản hồi thông minh',['Tập trung cao độ khi đọc','Đặt câu hỏi làm rõ, giảm hiểu lầm']],['Ứng xử văn minh',['Tôn trọng, tránh tranh luận cực đoan','Xây dựng uy tín cá nhân']]].map((o,i)=>BOXS(20+i%2*310,18+Math.floor(i/2)*118,290,106,[1,3,4,2][i],o[0],o[1],.3+i*5)).join('')+
+  BOXS(20,256,600,70,4,'Mẹo',['Luôn thích ứng và cập nhật kỹ năng mới để chuyên nghiệp hơn'],20.5)},
+{t:"Công cụ hợp tác và quản lý dự án",d:22500,
+ n:"Công cụ hợp tác chia ba nhóm. Lưu trữ và chia sẻ gồm Google Drive, Google Docs, OneDrive, Dropbox. Văn phòng trực tuyến gồm Microsoft 365, Google Workspace, Slack, Teams. Quản lý dự án gồm Trello, Asana, Harvest. Lợi ích chính: truy cập mọi nơi mọi lúc, cải thiện hiệu suất nhóm, và tối ưu quy trình làm việc.",
+ v:()=>COL(20,'Lưu trữ & chia sẻ',1,[['Google Drive','Truy cập, chia sẻ tài liệu'],['Google Docs','Soạn thảo thời gian thực'],['OneDrive / Dropbox','Lưu trữ đám mây, chia sẻ']],.3)+
+  COL(225,'Văn phòng trực tuyến',3,[['Microsoft 365','Cộng tác thời gian thực'],['Google Workspace','Tích hợp ứng dụng Google'],['Slack / Teams','Trò chuyện, họp nhóm']],6.5)+
+  COL(430,'Quản lý dự án',4,[['Trello','Theo dõi tiến độ, phân công'],['Asana','Tổ chức, lập kế hoạch nhóm'],['Harvest','Theo dõi thời gian, năng suất']],13.5)+
+  BOXS(20,264,600,68,2,'Lợi ích chính',['Truy cập mọi nơi · Hiệu suất nhóm · Tối ưu quy trình'],18.5)},
+{t:"Thách thức trong môi trường số",d:24000,
+ n:"Có ba thách thức. Một, thiếu kết nối cảm xúc: thiếu cử chỉ, giọng điệu nên dễ hiểu lầm. Hai, bảo mật thông tin: nguy cơ rò rỉ, vi phạm riêng tư, tấn công mạng. Ba, quá tải thông tin, gây căng thẳng và giảm năng suất. Ngoài ra còn thiếu chuẩn mực ứng xử, khó cân bằng công việc, và khoảng cách kỹ năng số.",
+ v:()=>COL(20,'Kết nối cảm xúc',2,[['Thiếu phi ngôn ngữ','Cử chỉ, nét mặt, giọng điệu'],['Khó truyền tải cảm xúc','Dễ gây hiểu lầm'],['Kém thân mật','Giảm tính thân mật giao tiếp']],.3)+
+  COL(225,'Bảo mật thông tin',1,[['Rò rỉ dữ liệu nhạy cảm','Qua các nền tảng số'],['Vi phạm quyền riêng tư','Khi bảo mật sai cách'],['Tấn công mạng','Thiếu kiến thức bảo mật']],6.5)+
+  COL(430,'Quá tải thông tin',4,[['Bùng nổ kênh giao tiếp','Dẫn đến quá tải'],['Mất thời gian xử lý','Căng thẳng, giảm năng suất'],['Khó phân biệt ưu tiên','Quan trọng hay không']],12.5)+
+  BOXS(20,264,600,68,3,'Thách thức khác',['Thiếu chuẩn mực ứng xử · khó cân bằng công việc · khoảng cách kỹ năng số'],19.5)},
+{t:"Thách thức: điểm nhấn cần nhớ",d:13000,
+ n:"Ba điểm nhấn: thiếu yếu tố phi ngôn ngữ là thách thức lớn nhất của giao tiếp số; bảo mật thông tin là ưu tiên hàng đầu; còn quá tải thông tin là nguyên nhân chính làm giảm hiệu suất làm việc.",
+ v:()=>[['Kết nối cảm xúc',['Thiếu yếu tố phi ngôn ngữ','là một trong những thách thức','lớn nhất của giao tiếp số']],['Bảo mật thông tin',['Bảo mật thông tin là một','trong những ưu tiên hàng đầu','khi dùng công cụ giao tiếp số']],['Quá tải thông tin',['Quá tải thông tin là một','nguyên nhân chính khiến','giảm hiệu suất làm việc']]].map((o,i)=>BOXS(20+i*205,90,190,130,[2,1,4][i],o[0],o[1],.5+i*3.8)).join('')},
+{t:"Giải pháp tối ưu hóa",d:16000,
+ n:"Năm giải pháp cốt lõi: tiêu chuẩn hóa kênh giao tiếp; xây dựng quy trình minh bạch; bảo mật và đào tạo kỹ năng số; thiết lập ranh giới, cho phép ngắt kết nối khi cần; và khuyến khích học tập liên tục.",
+ v:()=>ROWS([[' ','Tiêu chuẩn hóa kênh giao tiếp','Ít nền tảng, công cụ đáng tin, tích hợp thống nhất'],[' ','Xây dựng quy trình làm việc','Quy trình minh bạch, rõ quyền sở hữu, theo dõi tiến độ'],[' ','Bảo mật và đào tạo','Bảo mật mạnh, kiểm soát theo vai trò, đào tạo kỹ năng số'],[' ','Thiết lập ranh giới rõ ràng','Tôn trọng lịch linh hoạt, giao tiếp không đồng bộ, được ngắt kết nối'],[' ','Khuyến khích học tập liên tục','Đào tạo, hỗ trợ từ cơ bản đến nâng cao cho nhân viên']],60)+OV(['hub','list','shield','clock','cap'],60,.7)},
+{t:"Xu hướng tương lai",d:22700,
+ n:"Xu hướng giáo dục: trí tuệ nhân tạo cá nhân hóa việc học; thực tế ảo và tăng cường; học liệu số và khóa học trực tuyến; hợp tác đa bên. Xu hướng kinh doanh: làm việc hybrid; hợp tác công nghệ như AI, Web3, Blockchain; quản lý hiệu suất theo OKRs, KPIs; và tối ưu chi phí, tiếp cận nhân lực toàn cầu.",
+ v:()=>I('cap',46,24,.8,1,0)+T(165,28,'Xu hướng trong Giáo dục','b big',0)+I('build',346,24,.8,4,10.5)+T(475,28,'Xu hướng trong Kinh doanh','b big',10.5)+
+  [['Trí tuệ nhân tạo (AI)','Hỗ trợ dạy, đánh giá, cá nhân hóa'],['Thực tế ảo & tăng cường (VR/AR)','Học tập chân thực, sinh động, tương tác'],['Học liệu số, khóa học trực tuyến','Kho học liệu mở, MOOCs xóa rào cản'],['Hợp tác đa bên','Chính phủ, trường học, doanh nghiệp, NGO']].map((o,i)=>BOXS(20,44+i*72,290,66,1,o[0],[o[1]],.8+i*2.6)).join('')+
+  [['Mô hình làm việc Hybrid','Trực tiếp kết hợp trực tuyến, linh hoạt'],['Hợp tác công nghệ là chìa khóa','Đầu tư AI, Web3, Blockchain'],['Quản lý hiệu suất theo kết quả','Chuyển sang OKRs và KPIs linh hoạt'],['Tối ưu chi phí, tiếp cận toàn cầu','Tuyển dụng toàn cầu, giảm chi phí văn phòng']].map((o,i)=>BOXS(330,44+i*72,290,66,4,o[0],[o[1]],11.5+i*2.6)).join('')},
+{t:"Kết luận và thông điệp chính",d:25500,
+ n:"Kết luận: giao tiếp và hợp tác số là kỹ năng sống còn trong kỷ nguyên kỹ thuật số. Để thành công, mỗi người cần liên tục thích nghi, học hỏi và phát triển kỹ năng số. Cần có kiến thức nền tảng, kỹ năng thực hành, và các phẩm chất như linh hoạt, tư duy phản biện, thích ứng. Công nghệ chỉ là công cụ; con người mới là yếu tố quyết định.",
+ v:()=>BOX(20,15,600,90,4,'Giao tiếp và hợp tác số là kỹ năng sống còn',['Cần liên tục thích nghi, học hỏi, phát triển kỹ năng số'],.3)+
+  [['Thích nghi liên tục','Liên tục cập nhật, thích nghi thay đổi'],['Kiến thức và kỹ năng','Nền tảng và thực hành linh hoạt'],['Phẩm chất cá nhân','Linh hoạt, phản biện, thích ứng'],['Công nghệ là công cụ','Con người cùng công nghệ tạo bứt phá']].map((o,i)=>BOXS(20+i%2*310,120+Math.floor(i/2)*88,290,76,[1,3,4,2][i],o[0],[o[1]],7+i*4)).join('')+
+  T(320,312,'Con người mới là yếu tố quyết định','b big',22)}
+];
+
+/* ====== BỘ PHÁT ====== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),fig=$('fig'),ttl=$('ttl'),cap=$('cap'),seg=$('seg'),btn=$('play'),vb=$('voice'),cnt=$('cnt');
+let i=0,el=0,last=performance.now(),playing=true,done=false,voice=false,sd=true,tok=0;
+
+SCENES.forEach((s,k)=>{const b=document.createElement('button');b.setAttribute('aria-label','Phần '+(k+1)+': '+s.t);b.onclick=()=>jump(k);seg.appendChild(b)});
+
+function speak(){
+  if(!('speechSynthesis' in window)){sd=true;return}
+  speechSynthesis.cancel();const k=++tok;
+  const u=new SpeechSynthesisUtterance(SCENES[i].n);u.lang='vi-VN';u.rate=.95;sd=false;
+  u.onend=u.onerror=()=>{if(k===tok)sd=true};
+  speechSynthesis.speak(u);if(!playing)speechSynthesis.pause();
+}
+function fit(svg){const rs=[...svg.querySelectorAll('rect')].map(r=>({x:+r.getAttribute('x'),y:+r.getAttribute('y'),w:+r.getAttribute('width'),h:+r.getAttribute('height')})).filter(r=>r.w<600);
+  svg.querySelectorAll('text').forEach(t=>{const w=t.getComputedTextLength();if(!w)return;const x=+t.getAttribute('x'),y=+t.getAttribute('y'),mid=t.getAttribute('text-anchor')==='middle';
+    const r=rs.filter(r=>x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h).sort((p,q)=>p.w-q.w)[0];if(!r)return;
+    const room=mid?r.w-16:r.x+r.w-8-x;if(w>room){t.setAttribute('textLength',room);t.setAttribute('lengthAdjust','spacingAndGlyphs')}})}
+function show(n){
+  i=n;el=0;sd=true;const s=SCENES[n];
+  fig.innerHTML=`<svg viewBox="0 0 640 360" role="img" aria-label="${s.t}">${DEFS}${s.v()}</svg>`;
+  fit(fig.firstChild);
+  ttl.classList.remove('t');cap.classList.remove('t');void ttl.offsetWidth;ttl.classList.add('t');cap.classList.add('t');
+  ttl.textContent=s.t;cap.textContent=s.n;cnt.textContent=(n+1)+' / '+SCENES.length;
+  if(voice)speak();
+}
+function sync(){stage.classList.toggle('paused',!playing);btn.textContent=done?'Xem lại':playing?'Tạm dừng':'Phát'}
+function jump(n){done=false;playing=true;show(n);sync()}
+btn.onclick=()=>{
+  if(done){jump(0);return}
+  playing=!playing;sync();
+  if(voice&&'speechSynthesis' in window)playing?speechSynthesis.resume():speechSynthesis.pause();
+};
+$('prev').onclick=()=>jump(Math.max(0,i-(el>2000?0:1)));
+$('next').onclick=()=>jump(Math.min(SCENES.length-1,i+1));
+vb.onclick=()=>{
+  voice=!voice;vb.textContent='Giọng đọc: '+(voice?'Bật':'Tắt');vb.setAttribute('aria-pressed',voice);
+  if(voice)speak();else{tok++;sd=true;if('speechSynthesis' in window)speechSynthesis.cancel()}
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON')return;
+  if(e.code==='Space'){e.preventDefault();btn.click()}
+  if(e.code==='ArrowRight')$('next').click();
+  if(e.code==='ArrowLeft')$('prev').click();
+});
+
+function tick(ts){
+  const dt=Math.min(ts-last,100);last=ts;
+  if(playing){
+    el+=dt;const d=SCENES[i].d;
+    if(el>=d&&(sd||el>d+6000)){
+      if(i<SCENES.length-1)show(i+1);else{playing=false;done=true;sync()}
+    }
+  }
+  [...seg.children].forEach((b,k)=>b.style.setProperty('--p',(k<i||(done&&k===i)?100:k===i?Math.min(el/SCENES[i].d,1)*100:0)+'%'));
+  requestAnimationFrame(tick);
+}
+show(0);sync();requestAnimationFrame(tick);
+</script>
+</body>
+</html>

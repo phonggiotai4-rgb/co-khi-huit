@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 4 – An toàn – Video bài giảng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8EFF7;--panel:#FFFFFF;--ink:#16243B;--mut:#5A6B85;--line:#C9D5E4;--c1:#2F5BEA;--c2:#F26B5B;--c3:#1FA38A;--c4:#E9A722;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5}
+.player{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+h2{font:700 clamp(22px,3.4vw,32px)/1.2 Lexend,"Be Vietnam Pro",sans-serif;margin:0}
+.fig svg{width:100%;height:auto;max-height:54vh;display:block}
+.cap{margin:0;min-height:3.3em;color:var(--mut);font-size:clamp(14px,2vw,17px);max-width:72ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+button{font:600 14px "Be Vietnam Pro",sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--c1)}
+button:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+#play{background:var(--c1);border-color:var(--c1);color:#fff;min-width:110px}
+.sp{flex:1}
+.cnt{color:var(--mut);font-size:14px}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1;height:10px;padding:0;border-radius:5px;border:0;background:var(--line);position:relative;overflow:hidden}
+.seg button::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:var(--c1)}
+/* SVG */
+svg text{font-family:inherit;fill:var(--ink);font-size:15px}
+.b{font-weight:600}.m{fill:var(--mut);font-size:12.5px}.big{font-size:17px}.h1{font-size:34px;font-weight:700}.h2{font-size:19px;font-weight:700;fill:var(--c1)}
+.brand{background:#1F6FB5;color:#fff;text-align:center;border-radius:14px;padding:10px 16px;margin-bottom:12px;line-height:1.35}
+.brand b{display:block;font:700 clamp(13px,2.2vw,18px) Lexend,sans-serif}.brand span{font-size:clamp(12px,1.8vw,15px)}
+.url{margin:8px 0 0;color:var(--mut);font-size:12px}
+.st{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.5;stroke:var(--mut)}
+.s1{stroke:var(--c1)}.s2{stroke:var(--c2)}.s3{stroke:var(--c3)}.s4{stroke:var(--c4)}
+.f1{fill:var(--c1);fill-opacity:.16}.f2{fill:var(--c2);fill-opacity:.16}.f3{fill:var(--c3);fill-opacity:.16}.f4{fill:var(--c4);fill-opacity:.2}
+.fp{fill:var(--panel)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s ease var(--d,0s) forwards}
+.r{opacity:0;animation:rv .6s ease var(--d,0s) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes rv{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fi{from{fill-opacity:0}}
+@keyframes pop{from{transform:scale(.93)}}
+@keyframes pulse{50%{stroke-width:3.6}}
+@keyframes sc{from{opacity:0;transform:translateY(10px)}}
+@keyframes tt{from{opacity:0;transform:translateX(-12px)}}
+@keyframes bp{50%{box-shadow:0 0 0 7px rgba(47,91,234,.22)}}
+rect.draw,circle.draw{transform-box:fill-box;transform-origin:center}
+rect.draw{animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards}
+circle.draw{animation:dr 1.1s ease var(--d,0s) forwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+rect.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards,fi .8s ease calc(var(--d,0s) + .45s) backwards}
+circle.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,fi .8s ease calc(var(--d,0s) + .45s) backwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+.fig svg{animation:sc .5s ease}
+.t{animation:tt .55s ease}
+button{transition:transform .15s,border-color .15s}button:active{transform:scale(.96)}
+.paused #play{animation:bp 1.8s ease-in-out infinite}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.draw,rect.draw,circle.draw{animation:none!important;stroke-dashoffset:0}.r{animation:none;opacity:1;transform:none}.fig svg,.t,.paused #play{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="player">
+  <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
+  <section class="stage" id="stage" aria-live="off">
+    <h2 id="ttl"></h2>
+    <div class="fig" id="fig"></div>
+    <p class="cap" id="cap"></p>
+  </section>
+  <div class="ctl">
+    <button id="prev">Trước</button>
+    <button id="play">Tạm dừng</button>
+    <button id="next">Sau</button>
+    <button id="voice" aria-pressed="false">Giọng đọc: Tắt</button>
+    <span class="sp"></span>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="seg" id="seg"></div>
+  <p class="url">https://huit.edu.vn</p>
+</main>
+
+<script>
+/* ====== NỘI DUNG: chỉnh sửa mảng SCENES bên dưới ======
+   t: tiêu đề | d: thời lượng (ms) | n: lời giảng (phụ đề + giọng đọc) | v: hàm vẽ hình SVG
+   Mỗi phần tử vẽ có thể có độ trễ riêng (tham số cuối) để hình hiện ra theo lời giảng. */
+const D=n=>`style="--d:${n}s"`;
+const T=(x,y,s,c='',n=0,a='middle')=>`<text class="r ${c}" ${D(n)} x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const P=(tag,attrs,c='',n=0)=>`<${tag} pathLength="1" class="st draw ${c}" ${D(n)} ${attrs}/>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" class="st" style="stroke-width:2"/></marker></defs>`;
+
+const AR=(x1,x2,y,n)=>`<path pathLength="1" class="st draw" ${D(n)} d="M${x1} ${y}H${x2}" marker-end="url(#ah)"/>`;
+const BOX=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b big',n+.3)+L.map((l,j)=>T(x+w/2,y+62+j*22,l,'m',n+.6+j*.3)).join('');
+const GRID=(C,x)=>{let s='';C.forEach((o,i)=>{const X=30+i%2*300,Y=40+Math.floor(i/2)*140,n=.3+i*2.8,k=o[0];
+ s+=P('rect',`x="${X}" y="${Y}" width="280" height="110" rx="16"`,`s${k} f${k}`,n)+(x?P('path',`d="M${X+28} ${Y+39}l20 20M${X+48} ${Y+39}l-20 20"`,`s${k}`,n+.3):P('circle',`cx="${X+38}" cy="${Y+55}" r="16"`,`s${k}`,n+.3))+
+ T(X+68,Y+44,o[1],'b',n+.6,'start')+T(X+68,Y+68,o[2],'m',n+.8,'start')+(o[3]?T(X+68,Y+86,o[3],'m',n+.9,'start'):'');});return s;};
+const BOXS=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b',n+.3)+L.map((l,j)=>T(x+w/2,y+58+j*22,l,'m',n+.6+j*.3)).join('');
+const ROWS=(R,pt=64)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=.3+i*3,m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+const cc=(x,y,r)=>`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
+const IC={chat:'M-10 -8h20v13h-9l-5 5v-5h-6zM-5 -1h1M0 -1h1M5 -1h1',users:cc(0,-5,4)+'M-9 10v-2a6 5 0 0 1 6-5h6a6 5 0 0 1 6 5v2zM-10 -3h-1M10 -3h1',laptop:'M-8 -8h16v11h-16zM-12 6h24l-2 3h-20zM-3 -4l-3 2.5 3 2.5M3 -4l3 2.5-3 2.5',clock:cc(0,0,10)+'M0 -6v6l4 3',search:cc(-2,-2,7)+'M3 3l8 8',chart:'M-10 -10v20h20M-7 4l5-6 4 3 7-8',book:'M0 -7c-3-3-7-3-10-2v15c3-1 7-1 10 2c3-3 7-3 10-2v-15c-3-1-7-1-10 2zM0 -7v15',home:'M-11 0l11-10 11 10M-7 -3v12h14v-12M-2 9v-6h4v6',mail:'M-10 -7h20v14h-20zM-10 -7l10 8 10-8',video:'M-10 -6h13v12h-13zM3 -1l7-5v12l-7-5',share:cc(6,-7,3)+cc(-7,0,3)+cc(6,7,3)+'M-4 -1l7 -5M-4 1l7 5',shield:'M0 -10l9 3v6c0 6-4 9-9 11-5-2-9-5-9-11v-6zM-4 1l3 3 6-6',hub:cc(0,-7,3)+cc(-8,6,3)+cc(8,6,3)+'M0 -4l-6 8M0 -4l6 8M-5 6h10',list:'M-10 -6h1M-5 -6h14M-10 0h1M-5 0h14M-10 6h1M-5 6h14',cap:'M0 -8l11 5-11 5-11-5zM-6 0v6c3 3 9 3 12 0v-6'};
+const I=(nm,x,y,s,k,n)=>P('path',`d="${IC[nm]}" transform="translate(${x} ${y}) scale(${s})"`,`s${k}`,n);
+const IBOX=(x,y,w,h,k,ic,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+w/2}" cy="${y+30}" r="22"`,`s${k}`,n+.2)+I(ic,x+w/2,y+30,1.2,k,n+.4)+T(x+w/2,y+78,title,'b big',n+.6)+L.map((l,j)=>T(x+w/2,y+102+j*20,l,'m',n+.9+j*.3)).join('');
+const OV=(a,pt,d0)=>a.map((nm,i)=>I(nm,60,42+i*pt,.9,[1,3,4,2][i%4],d0+i*3)).join('');
+Object.assign(IC,{warn:'M0 -10l10 18h-20zM0 -3v5M0 5h1',cloud:'M-7 7a5 5 0 0 1 0 -10a7 7 0 0 1 13 -2a5 5 0 0 1 1 12z',heart:'M0 9c-12-8-12-17-5-17 3 0 5 2 5 4 0-2 2-4 5-4 7 0 7 9-5 17z',build:'M-7 10v-18h14v18zM-7 10h14M-3 -4h1M2 -4h1M-3 1h1M2 1h1',gear:cc(0,0,3.5)+'M0 -10v4M0 6v4M-10 0h4M6 0h4M-7 -7l3 3M4 4l3 3M7 -7l-3 3M-4 4l-3 3',star:'M0 -10l3 7h7l-6 5 2 8-6-4-6 4 2-8-6-5h7z',target:cc(0,0,10)+cc(0,0,5)+'M0 0h1'});
+const HI={'Ứng dụng':'laptop','Lợi ích':'star','Thách thức':'warn','Nền tảng học tập':'cap','Công cụ giao tiếp':'chat','Tương tác, cộng tác':'users','Họp trực tuyến':'video','Hệ thống ERP':'build','Quản lý dự án':'list','Kiến thức cần có':'book','Kỹ năng thực hành':'gear','Phẩm chất cần có':'heart','Lưu trữ & chia sẻ':'cloud','Văn phòng trực tuyến':'laptop','Kết nối cảm xúc':'heart','Bảo mật thông tin':'shield','Quá tải thông tin':'warn'};
+const COL=(x,hd,k,L,n)=>(HI[hd]?I(HI[hd],x+13,24,.75,k,n)+T(x+28,29,hd,'b',n+.2,'start'):T(x+95,28,hd,'b big',n))+L.map((o,i)=>BOXS(x,44+i*72,190,66,k,o[0],[o[1]],n+.5+i*1.6)).join('');
+const BR=(R,sc,y0,pt,n0,st)=>R.map((o,i)=>{const y=y0+i*pt,n=n0+i*st,w=Math.round(o[1]*sc),c=o[2]||1;return T(20,y+17,o[0],'b',n,'start')+P('rect',`x="190" y="${y}" width="${w}" height="24" rx="6"`,`s${c} f${c}`,n+.2)+T(190+w+8,y+17,String(o[1]).replace('.',',')+'%','m',n+.6,'start')}).join('');
+const SCENES=[
+{t:"Thực trạng tấn công mạng",d:29100,
+ n:"Chào mừng các bạn đến với Module bốn: An toàn. Phần một là tổng quan an toàn thông tin. Về thực trạng tấn công mạng, theo thống kê tháng mười một năm hai nghìn không trăm hai mươi ba, mã độc chiếm cao nhất với bốn mươi hai phẩy một phần trăm. Kế đến là cấu hình sai hai mươi lăm phẩy chín, lỗ hổng mười một phẩy ba, tấn công có chủ đích bảy phẩy hai và chiếm quyền tài khoản năm phẩy bốn.",
+ v:()=>T(320,34,'MODULE 4 – AN TOÀN','h2',0)+T(320,60,'Phân bố tấn công mạng, tháng 11/2023','m',1)+BR([['Mã độc',42.1,2],['Cấu hình sai',25.9,4],['Lỗ hổng',11.3,1],['Tấn công có chủ đích',7.2,3],['Chiếm tài khoản',5.4,1]],8,80,44,10,3.2)+T(320,322,'Nguồn: Hackmageddon','m',22)},
+{t:"Tấn công DDoS theo quốc gia",d:22650,
+ n:"Biểu đồ thống kê tấn công DDoS tại các quốc gia: Mỹ đứng đầu với mười sáu phẩy hai phần trăm, Ấn Độ mười hai phẩy tám, Trung Quốc mười phẩy bốn, Pháp chín phẩy bảy, Đức tám phẩy ba và Anh bảy phẩy chín. Tiếp theo là Tây Ban Nha, Nga, các Tiểu vương quốc Ả Rập Thống nhất, Brazil, Nhật và các nước khác.",
+ v:()=>T(320,34,'Tấn công DDoS theo quốc gia','h2',0)+BR([['Mỹ',16.2,2],['Ấn Độ',12.8,1],['Trung Quốc',10.4,4],['Pháp',9.7,3],['Đức',8.3,1],['Anh',7.9,4]],20,50,40,5,2.6)+T(320,322,'Tiếp theo: Tây Ban Nha 6,8% · Nga 5,3% · UAE 4,7% · Brazil 4,2%…','m',19)},
+{t:"Bức tranh thế giới và Việt Nam",d:42900,
+ n:"Trên thế giới, thiệt hại từ tấn công mạng ước tính đến năm hai nghìn không trăm hai mươi lăm là mười phẩy năm nghìn tỷ đô la. Bốn mươi ba phần trăm công ty thiếu nhân lực an ninh mạng, và ba mươi phần trăm quốc gia chưa có quy định báo vi phạm dữ liệu. Tại Việt Nam, nửa đầu năm hai nghìn không trăm hai mươi bốn có hai trăm mười một nghìn cảnh báo tấn công, bốn nghìn không trăm hai mươi chín sự cố được xử lý trong tám tháng đầu năm, và chín mươi nghìn không trăm ba mươi ba điểm yếu bảo mật. Dữ liệu đặt chỗ Vietjet Air và hai mươi bốn triệu đơn hàng Shopee bị rao bán.",
+ v:()=>T(155,26,'Trên thế giới','h2',0)+T(475,26,'Tại Việt Nam','h2',9)+[['10,5 nghìn tỷ USD','Thiệt hại ước tính đến năm 2025'],['43%','Công ty thiếu nhân lực an ninh mạng'],['30%','Quốc gia chưa có quy định báo vi phạm']].map((o,i)=>BOXS(20,44+i*72,290,66,2,o[0],[o[1]],.8+i*2.6)).join('')+[['211.000 cảnh báo','Tấn công mạng, nửa đầu năm 2024'],['4.029 sự cố','Bộ TT&TT xử lý trong 8 tháng đầu 2024'],['90.033 điểm yếu','Lỗ hổng tại máy chủ, hệ thống thông tin'],['6,2 triệu thông tin','VietjetAir bị rao bán; Shopee 24 triệu đơn']].map((o,i)=>BOXS(330,44+i*72,290,66,1,o[0],[o[1]],10+i*4.2)).join('')},
+{t:"Virus phổ biến tại Việt Nam",d:32925,
+ n:"Theo Bkav, có hơn sáu triệu máy tính tại Việt Nam bị nhiễm virus. Virus lây lan chủ yếu qua USB, bốn mươi mốt phẩy năm phần trăm, rồi tài liệu độc hại hai mươi bốn phẩy chín, lỗ hổng mười chín phẩy hai, phần mềm crack tám phẩy một và các con đường khác sáu phẩy bốn. Ngoài ra có hơn bảy trăm bốn mươi lăm nghìn máy bị virus đánh cắp tài khoản, hơn hai trăm tám mươi sáu nghìn máy bị tấn công APT và hơn mười chín nghìn máy chủ bị tấn công.",
+ v:()=>T(320,50,'6.062.715','h1',0)+T(320,76,'máy tính bị nhiễm virus (Bkav)','m',.6)+BR([['USB',41.5,2],['Tài liệu độc hại',24.9,1],['Lỗ hổng',19.2,4],['Phần mềm crack',8.1,3],['Khác',6.4,1]],8,100,40,3.5,5)+T(320,325,'745 nghìn+ bị đánh cắp tài khoản · 286 nghìn+ bị APT · 19 nghìn+ server','m',22)},
+{t:"Tên miền giả mạo và lừa đảo",d:37950,
+ n:"Trung tâm VCI CTIP ghi nhận hơn bốn mươi nghìn tên miền giả mạo nhắm vào Việt Nam trong sáu tháng đầu năm hai nghìn không trăm hai mươi bốn, tăng gần một phẩy sáu lần so với cùng kỳ. Tài chính là ngành bị nhắm nhiều nhất với sáu mươi lăm phần trăm, viễn thông mười ba, thương mại điện tử bảy và các ngành khác mười lăm. Theo NCSC, Việt Nam thiệt hại từ tám nghìn đến mười nghìn tỷ đồng vì lừa đảo, với hơn một trăm hai mươi ba nghìn cảnh báo, trong đó hai mươi sáu phẩy bốn phần trăm là lừa đảo trực tuyến.",
+ v:()=>T(320,34,'40.000+ tên miền giả mạo, tăng gần 1,6 lần','h2',0)+BR([['Tài chính',65,2],['Viễn thông',13,1],['Thương mại điện tử',7,4],['Khác',15,3]],5.8,64,46,7,3.5)+T(320,290,'Thiệt hại 8.000–10.000 tỷ đồng vì lừa đảo (NCSC)','b',22)+T(320,314,'123.417 cảnh báo, trong đó 26,4% là lừa đảo trực tuyến','m',24)},
+{t:"Các chiến dịch lừa đảo năm 2024",d:32025,
+ n:"VNPT CTIP ghi nhận năm chiến dịch lừa đảo trong năm hai nghìn không trăm hai mươi bốn. Một, mạo danh cơ quan chức năng, hướng dẫn cài ứng dụng giả chứa mã độc. Hai, mạo danh cho vay vốn và thẻ tín dụng để đánh cắp thông tin. Ba, lừa đảo lấy lại tiền, nhắm vào người từng bị lừa. Bốn, lừa vay tiền bằng iCloud để chiếm tài khoản, khóa máy hoặc tống tiền. Năm, giả mạo thông báo Telegram, với hơn năm trăm tên miền được ghi nhận.",
+ v:()=>ROWS([['1','Mạo danh cơ quan chức năng','Dụ cài ứng dụng giả chứa mã độc, chiếm quyền điện thoại'],['2','Mạo danh cho vay vốn, thẻ tín dụng','Gọi điện, quảng cáo để đánh cắp thông tin cá nhân và thẻ'],['3','Lừa đảo “lấy lại tiền”','Nhắm người từng bị lừa, khiến họ tiếp tục mất tiền, ngại báo'],['4','Lừa vay tiền bằng iCloud','Chiếm tài khoản, khóa máy hoặc tống tiền người dùng'],['5','Giả mạo thông báo Telegram','Dụ nhập thông tin vào web giả; hơn 500 tên miền được ghi nhận']],64)},
+{t:"Các đối tượng tấn công mạng",d:31275,
+ n:"Phần một điểm hai nói về các đối tượng tấn công mạng, chia theo mục tiêu hành động. White Hat là người phòng thủ, kiểm thử hệ thống, được cấp phép và có đạo đức nghề nghiệp. Black Hat phá hoại, đánh cắp dữ liệu, trái phép và vi phạm pháp luật. Gray Hat pha trộn cả hai, có thể giúp nhưng không được ủy quyền. Green Hat là người mới học hacking, thiếu kinh nghiệm. Blue Hat hack để trả thù, tức giận cá nhân, cảm tính.",
+ v:()=>ROWS([['✓','White Hat','Phòng thủ, kiểm thử hệ thống; được cấp phép, đạo đức cao'],['✗','Black Hat','Phá hoại, đánh cắp dữ liệu; trái phép, vi phạm pháp luật'],['Xám','Gray Hat','Pha trộn cả hai; có thể giúp nhưng không được ủy quyền'],['Lục','Green Hat','Người mới học hacking; thiếu kinh nghiệm, dễ mắc sai lầm'],['Lam','Blue Hat','Hacking để trả thù, tức giận cá nhân; cảm tính']],64)},
+{t:"Khó khăn trong việc ngăn chặn",d:43650,
+ n:"Phần một điểm ba nêu những khó khăn trong việc ngăn chặn tấn công. Thứ nhất, tấn công ngày càng tinh vi, ẩn mình, mã hóa, đa tầng. Thứ hai, thiếu nhân lực an ninh mạng. Thứ ba, lỗ hổng khó kiểm soát vì phần mềm, thiết bị cũ không được cập nhật. Thứ tư, người dùng thiếu nhận thức, dễ bị lừa qua email giả, link độc, USB nhiễm mã độc. Thứ năm, hạ tầng phức tạp với IoT và điện toán đám mây. Thứ sáu, khó truy vết vì tin tặc ẩn danh qua VPN, proxy, botnet. Với doanh nghiệp, còn do thiết bị bảo mật chưa được đầu tư kịp thời, chính sách chưa chặt chẽ và dùng phần mềm không bản quyền.",
+ v:()=>[['Tấn công tinh vi',['Ẩn mình, mã hóa dữ liệu,','tấn công đa tầng, khó','phát hiện sớm']],['Thiếu nhân lực',['Nhiều tổ chức không có','đội chuyên trách hoặc','chuyên môn còn hạn chế']],['Lỗ hổng khó kiểm soát',['Phần mềm, thiết bị, hệ','điều hành cũ không được','cập nhật dễ bị khai thác']],['Thiếu nhận thức',['Dễ bị lừa qua email giả,','link độc, USB nhiễm mã độc']],['Hạ tầng phức tạp',['Mạng lớn, IoT, đám mây','làm tăng diện tấn công']],['Khó truy vết',['Ẩn danh qua VPN, proxy,','botnet nên khó xử lý','pháp lý']]].map((o,i)=>BOXS(20+i%3*205,25+Math.floor(i/3)*160,190,140,[1,2,3,4,1,2][i],o[0],o[1],.8+i*6)).join('')},
+{t:"Khái quát an toàn thông tin",d:15075,
+ n:"Phần hai: Một số khái niệm an toàn thông tin. Khái quát, an toàn thông tin được chia thành ba thành phần chính. Một là an toàn máy tính và dữ liệu. Hai là an ninh mạng. Ba là quản lý an toàn thông tin.",
+ v:()=>T(320,34,'An toàn thông tin gồm 3 thành phần','h2',0)+BOX(20,60,190,170,2,'An toàn máy tính',['và dữ liệu','Computer & data security'],4)+BOX(225,60,190,170,3,'An ninh mạng',['Network security'],7.5)+BOX(430,60,190,170,1,'Quản lý ATTT',['Management of','information security'],11)+T(320,285,'Phần 02 · Một số khái niệm an toàn thông tin','m',13)},
+{t:"An toàn máy tính, dữ liệu và an ninh mạng",d:30375,
+ n:"An toàn máy tính và dữ liệu đảm bảo an toàn cho phần cứng, phần mềm và dữ liệu, gồm: an toàn hệ điều hành, ứng dụng, dịch vụ; điều khiển truy nhập; mã hóa và bảo mật dữ liệu; phòng chống phần mềm độc hại; sao lưu dự phòng. An ninh mạng đảm bảo an toàn cho hệ thống mạng và thông tin truyền tải, với tường lửa, proxy, mạng riêng ảo, SSL TLS, PGP, hệ thống phát hiện và ngăn chặn xâm nhập, và giám sát mạng.",
+ v:()=>T(165,28,'An toàn máy tính và dữ liệu','b big',0)+T(475,28,'An ninh mạng','b big',12)+['An toàn HĐH, ứng dụng, dịch vụ','Điều khiển truy nhập','Mã hóa và bảo mật dữ liệu','Phòng chống phần mềm độc hại','Sao lưu, dự phòng dữ liệu'].map((o,i)=>BOXS(20,44+i*56,290,46,2,o,[],.8+i*2.2)).join('')+['Tường lửa, proxy lọc gói tin','VPN, SSL/TLS, PGP','Phát hiện, ngăn chặn xâm nhập','Giám sát mạng'].map((o,i)=>BOXS(330,44+i*56,290,46,3,o,[],13+i*3.5)).join('')},
+{t:"Quản lý ATTT và chính sách",d:25575,
+ n:"Quản lý an toàn thông tin là quản lý và giám sát việc thực thi các biện pháp bảo vệ. Cốt lõi là quản lý rủi ro, trong đó nhận dạng và đánh giá rủi ro đóng vai trò then chốt. Ngoài ra còn có các chuẩn, chính sách và đào tạo nâng cao ý thức người dùng. Chính sách an toàn thông tin là nội quy của tổ chức, gồm ba mức: vật lý, tổ chức và logic.",
+ v:()=>T(165,28,'Quản lý ATTT','b big',0)+T(475,28,'Chính sách ATTT','b big',10)+['Quản lý rủi ro','Đánh giá rủi ro (then chốt)','Chuẩn và chính sách ATTT','Đào tạo, nâng cao ý thức'].map((o,i)=>BOXS(20,44+i*62,290,50,1,o,[],.8+i*2.4)).join('')+[['Mức vật lý','Physical security policy'],['Mức tổ chức','Organizational security policy'],['Mức logic','Logical security policy']].map((o,i)=>BOXS(330,44+i*84,290,72,4,o[0],[o[1]],11+i*3)).join('')},
+{t:"Hệ thống thông tin và ba thuộc tính",d:21450,
+ n:"Hệ thống thông tin là hệ thống tích hợp các thành phần để thu thập, lưu trữ, xử lý và chuyển giao thông tin, tri thức, sản phẩm số. Trong nền kinh tế số, nó rất quan trọng với mọi tổ chức. An toàn hệ thống thông tin là đảm bảo ba thuộc tính: tính bí mật, tính toàn vẹn và tính sẵn sàng.",
+ v:()=>BOX(20,15,600,100,1,'Hệ thống thông tin',['Thu thập, lưu trữ, xử lý và chuyển giao thông tin'],.3)+T(320,148,'An toàn hệ thống thông tin = 3 thuộc tính','h2',9)+[['Tính bí mật','Confidentiality',2],['Tính toàn vẹn','Integrity',3],['Tính sẵn sàng','Availability',4]].map((o,i)=>BOXS(20+i*205,170,190,90,o[2],o[0],[o[1]],12+i*2.6)).join('')},
+{t:"Tính bí mật",d:24750,
+ n:"Tính bí mật đảm bảo chỉ người dùng có thẩm quyền mới được truy nhập thông tin và hệ thống. Thông tin bí mật gồm: dữ liệu riêng của cá nhân; thông tin thuộc sở hữu trí tuệ của doanh nghiệp, cơ quan; và thông tin liên quan đến an ninh quốc gia. Ví dụ, văn bản đóng dấu Confidential, chỉ người có thẩm quyền mới được đọc và phổ biến.",
+ v:()=>ROWS([['1','Dữ liệu riêng của cá nhân','Thông tin cá nhân cần được giữ kín'],['2','Sở hữu trí tuệ','Của doanh nghiệp, cơ quan, tổ chức'],['3','An ninh quốc gia','Thông tin liên quan đến quốc gia và chính phủ']],62)+BOX(20,215,600,100,2,'Văn bản đóng dấu Confidential (Mật)',['Chỉ người có thẩm quyền mới được đọc và phổ biến'],17)},
+{t:"Tính toàn vẹn",d:26550,
+ n:"Tính toàn vẹn đảm bảo thông tin chỉ có thể được sửa đổi bởi người dùng có thẩm quyền, liên quan đến tính hợp lệ và chính xác của dữ liệu. Dữ liệu toàn vẹn khi thỏa ba điều kiện: không bị thay đổi, hợp lệ và chính xác. Nhiều tổ chức có thông tin giá trị lớn như bản quyền phần mềm, âm nhạc, sáng chế; mọi thay đổi trái phép ảnh hưởng nhiều đến giá trị đó.",
+ v:()=>ROWS([['✓','Không bị thay đổi','Chỉ người có thẩm quyền được sửa đổi'],['✓','Hợp lệ','Validity'],['✓','Chính xác','Accuracy']],62)+BOX(20,215,600,100,2,'Thay đổi trái phép làm giảm giá trị',['Bản quyền phần mềm, âm nhạc, phát minh, sáng chế'],17)},
+{t:"Tính sẵn sàng",d:28125,
+ n:"Tính sẵn sàng đảm bảo thông tin hoặc hệ thống có thể truy nhập bởi người dùng hợp pháp bất cứ khi nào họ cần. Tính sẵn sàng đo bằng thời gian cung cấp dịch vụ, thời gian ngừng dịch vụ, và tỷ lệ phục vụ A bằng Uptime chia cho tổng Uptime và Downtime. Ngoài ra còn có thời gian trung bình giữa các sự cố, thời gian trung bình ngừng để sửa chữa và thời gian khôi phục sau sự cố.",
+ v:()=>T(320,50,'A = Uptime / (Uptime + Downtime)','h2',0)+['TG cung cấp dịch vụ','TG ngừng dịch vụ','Tỷ lệ phục vụ A','TB giữa các sự cố','TB ngừng để sửa chữa','Khôi phục sau sự cố'].map((o,i)=>BOXS(20+i%3*205,95+Math.floor(i/3)*90,190,60,[1,2,3,4,1,2][i],o,[],4+i*3.2)).join('')+T(320,300,'Uptime: thời gian hoạt động · Downtime: thời gian ngừng','m',22)},
+{t:"Mối đe dọa, điểm yếu, lỗ hổng, tấn công",d:33300,
+ n:"Phần ba: Các dạng tấn công mạng phổ biến. Mối đe dọa là hành động có thể gây hư hại tài nguyên hệ thống như phần cứng, phần mềm, dữ liệu, hạ tầng mạng. Điểm yếu là lỗi tồn tại trong hệ thống, do thiết kế, cài đặt, lập trình, quản trị hoặc cấu hình. Lỗ hổng bảo mật là điểm yếu cho phép tin tặc khai thác, gây hại tính bí mật, toàn vẹn, sẵn dùng. Tấn công là một chuỗi hành động vi phạm chính sách an ninh. Tấn công bằng mối đe dọa cộng lỗ hổng.",
+ v:()=>GRID([[1,'Mối đe dọa (Threat)','Hành động có thể gây hư hại','tài nguyên hệ thống'],[2,'Điểm yếu hệ thống','Lỗi thiết kế, cài đặt, lập','trình, quản trị, cấu hình'],[3,'Lỗ hổng bảo mật','Điểm yếu cho phép tin tặc khai','thác, gây hại bí mật, toàn vẹn'],[4,'Tấn công (Attack)','Một hoặc chuỗi hành động','vi phạm chính sách an ninh']])+T(320,325,'Tấn công = Mối đe dọa + Lỗ hổng','b big',17)},
+{t:"Mức độ lỗ hổng và quan hệ với mối đe dọa",d:26850,
+ n:"Theo Microsoft, lỗ hổng có bốn mức nghiêm trọng: nguy hiểm, quan trọng, trung bình và thấp. Mối đe dọa và lỗ hổng có quan hệ với nhau. Mối đe dọa khai thác lỗ hổng đã biết để tấn công. Nếu tồn tại lỗ hổng thì mối đe dọa có khả năng thành hiện thực. Ta không thể triệt tiêu mối đe dọa vì nó khách quan, nhưng có thể giảm lỗ hổng để giảm khả năng bị khai thác.",
+ v:()=>[['Nguy hiểm','Critical',2],['Quan trọng','Important',4],['Trung bình','Moderate',1],['Thấp','Low',3]].map((o,i)=>BOXS(20+i*155,15,140,80,o[2],o[0],[o[1]],.5+i*1.6)).join('')+T(320,150,'Quan hệ giữa mối đe dọa và lỗ hổng','h2',8)+[['Khai thác lỗ hổng',['Đe dọa dùng lỗ hổng','đã biết để tấn công'],2],['Có lỗ hổng',['Đe dọa có khả năng','thành hiện thực'],4],['Giảm lỗ hổng',['Không triệt tiêu đe dọa,','nhưng giảm khả năng','bị khai thác'],3]].map((o,i)=>BOXS(20+i*205,170,190,130,o[2],o[0],o[1],11+i*3.5)).join('')},
+{t:"Các dạng mối đe dọa thường gặp",d:16575,
+ n:"Các dạng mối đe dọa thường gặp gồm: phần mềm độc hại; kẻ tấn công ở bên trong; kẻ tấn công ở bên ngoài; hư hỏng phần cứng hoặc phần mềm; mất trộm thiết bị; tai họa thiên nhiên; gián điệp công nghiệp; và khủng bố phá hoại.",
+ v:()=>['Phần mềm độc hại','Kẻ tấn công bên trong','Kẻ tấn công bên ngoài','Hư hỏng phần cứng, phần mềm','Mất trộm thiết bị','Tai họa thiên nhiên','Gián điệp công nghiệp','Khủng bố, phá hoại'].map((o,i)=>BOXS(20+i%2*305,15+Math.floor(i/2)*76,290,62,[1,2,3,4][Math.floor(i/2)],o,[],.5+i*1.4)).join('')},
+{t:"Bốn loại tấn công theo mục đích",d:26700,
+ n:"Theo mục đích, tấn công chia thành bốn loại. Giả mạo, thường dùng để đánh lừa người dùng thông thường. Chặn bắt, nghe lén trên đường truyền và chuyển hướng thông tin để dùng trái phép. Gây ngắt quãng, làm ngắt hoặc chậm kênh truyền, hoặc quá tải hệ thống, ngăn người dùng hợp pháp truy nhập. Sửa đổi, thay đổi thông tin trên đường truyền hoặc dữ liệu file.",
+ v:()=>GRID([[2,'Giả mạo (Fabrication)','Đánh lừa người dùng','thông thường'],[1,'Chặn bắt (Interception)','Nghe lén đường truyền,','chuyển hướng thông tin'],[4,'Gây ngắt quãng','Làm ngắt, chậm kênh hoặc','quá tải, chặn truy nhập'],[3,'Sửa đổi (Modification)','Sửa thông tin trên đường','truyền hoặc dữ liệu file']])},
+{t:"Tấn công chủ động và thụ động",d:23100,
+ n:"Theo hình thức thực hiện, có hai kiểu tấn công. Tấn công chủ động là xâm nhập vào hệ thống hoặc mạng, sửa đổi dữ liệu trên đường truyền hoặc trong file, hoặc giành quyền truy nhập trái phép. Tấn công thụ động thường không gây thay đổi hệ thống, điển hình là nghe trộm và giám sát lưu lượng trên đường truyền.",
+ v:()=>BOX(20,30,290,240,2,'Tấn công chủ động',['Xâm nhập vào hệ thống hoặc mạng','Sửa dữ liệu trên đường truyền, trong file','Giành quyền truy nhập trái phép'],.5)+BOX(330,30,290,240,1,'Tấn công thụ động',['Thường không thay đổi hệ thống','Điển hình: nghe trộm','Giám sát lưu lượng đường truyền'],10)},
+{t:"Chín dạng tấn công mạng phổ biến",d:16725,
+ n:"Có chín dạng tấn công mạng phổ biến: tấn công vào mật khẩu, mã độc, từ chối dịch vụ, giả mạo địa chỉ, nghe lén, người đứng giữa, bom thư và thư rác, các kỹ thuật xã hội, và pharming. Chúng ta sẽ lần lượt tìm hiểu từng dạng.",
+ v:()=>T(320,28,'9 dạng tấn công mạng phổ biến','h2',0)+['Mật khẩu','Mã độc','Từ chối dịch vụ','Giả mạo địa chỉ','Nghe lén','Người đứng giữa','Bom thư, thư rác','Kỹ thuật xã hội','Pharming'].map((o,i)=>BOXS(20+i%3*205,45+Math.floor(i/3)*95,190,80,[1,2,3,4,1,2,3,4,1][i],o,[],1+i*1.5)).join('')},
+{t:"Tấn công vào mật khẩu",d:28500,
+ n:"Tấn công vào mật khẩu nhằm đánh cắp mật khẩu và tài khoản để lạm dụng, qua đường truyền không mã hóa, XSS hoặc lừa đảo. Có hai dạng. Tấn công từ điển khai thác việc người dùng hay chọn từ đơn giản dễ nhớ, kẻ tấn công thử các từ thông dụng. Tấn công vét cạn sinh tổ hợp ký tự, mã hóa bằng cùng thuật toán của hệ thống rồi so với chuỗi mã hóa thu được; nếu trùng thì đó là mật khẩu.",
+ v:()=>T(320,28,'Đánh cắp mật khẩu và tài khoản để lạm dụng','b big',0)+BOX(20,50,290,230,4,'Tấn công từ điển',['Người dùng hay chọn từ đơn giản','Kẻ tấn công thử các từ thông dụng','Tăng khả năng thành công'],5)+BOX(330,50,290,230,2,'Tấn công vét cạn',['Sinh tổ hợp ký tự, thử tự động','Mã hóa cùng thuật toán hệ thống','So với chuỗi mã hóa thu được','Trùng nhau thì đó là mật khẩu'],14)},
+{t:"Mật khẩu yếu và mật khẩu mạnh",d:23700,
+ n:"Mật khẩu yếu như iloveyou, sáu tám sáu tám sáu tám sáu tám là từ điển đơn giản; toyota là tên hãng xe; bob một chín sáu bảy là tên và năm sinh; Blueleaf hai ba là từ đơn giản kèm số. Mật khẩu mạnh như STC a còng hai không hai năm, hay một hai mũ h u bốn a còng một p bảy, kết hợp chữ, số, ký hiệu và có khoảng trắng.",
+ v:()=>T(165,28,'Mật khẩu yếu','b big',0)+T(475,28,'Mật khẩu mạnh','b big',11)+['iloveyou – từ điển đơn giản','68686868 – từ điển đơn giản','toyota – tên hãng xe','bob1967 – tên và năm sinh','Blueleaf23 – từ đơn giản + số'].map((o,i)=>BOXS(20,44+i*56,290,46,2,o,[],.8+i*1.8)).join('')+[['STC@2025'],['12^h u4@1p7']].map((o,i)=>BOXS(330,44+i*90,290,76,3,o[0],['Chữ, số, ký hiệu, có khoảng trắng'],12+i*4)).join('')},
+{t:"Mật khẩu phổ biến và thời gian bẻ khóa",d:21225,
+ n:"Thống kê mật khẩu phổ biến tại Việt Nam: một hai ba bốn năm sáu đứng đầu với hơn ba triệu bốn trăm nghìn lượt, bị bẻ trong dưới một giây. Hạng hai là một hai ba bốn năm sáu bảy tám chín, hạng ba là anhyeuem, đều bị bẻ trong dưới một giây. Maiyeuem mất ba giờ, khongbiet mất một ngày.",
+ v:()=>ROWS([['1','123456','Dưới 1 giây · 3.469.508 lượt dùng'],['2','123456789','Dưới 1 giây · 993.222 lượt dùng'],['3','anhyeuem','Dưới 1 giây · 194.541 lượt dùng'],['6','maiyeuem','3 giờ · 43.544 lượt dùng']],64)+T(320,295,'khongbiet: 1 ngày · password, 1234567: dưới 1 giây','m',17)},
+{t:"Biện pháp chống tấn công mật khẩu",d:29100,
+ n:"Để phòng chống, người dùng chọn mật khẩu từ tám ký tự, gồm chữ hoa, chữ thường, chữ số và ký tự đặc biệt; tránh thông tin dễ nhận dạng; cố tình viết sai chính tả; đổi thường xuyên; không ghi ra giấy để nơi dễ thấy. Người quản trị dùng mật khẩu từ mười ký tự, đổi định kỳ ba hoặc sáu tháng, lưu dạng mã hóa như hàm băm chứ không lưu rõ, và hạn chế trao đổi mật khẩu trên kênh không mã hóa.",
+ v:()=>T(165,28,'Người dùng thông thường','b big',0)+T(475,28,'Quản trị hệ thống','b big',14)+['Từ 8 ký tự, đủ 4 loại ký tự','Tránh thông tin dễ nhận dạng','Cố ý viết sai chính tả: 5mYth','Đổi mật khẩu thường xuyên','Không ghi ra giấy, để nơi dễ thấy'].map((o,i)=>BOXS(20,44+i*56,290,46,1,o,[],.8+i*2.4)).join('')+['Từ 10 ký tự, đủ 4 loại','Đổi định kỳ 3 hoặc 6 tháng','Lưu dạng băm, không lưu rõ','Không trao đổi trên kênh thô'].map((o,i)=>BOXS(330,44+i*56,290,46,3,o,[],14.8+i*3)).join('')},
+{t:"Tấn công từ chối dịch vụ (DoS)",d:12075,
+ n:"Tấn công từ chối dịch vụ, viết tắt DoS, nhằm ngăn người dùng hợp pháp truy nhập tài nguyên mạng. Nó chia thành hai loại: tấn công logic và tấn công gây ngập lụt.",
+ v:()=>T(320,34,'DoS: ngăn người dùng hợp pháp truy nhập','b big',0)+BOX(20,60,290,170,1,'Tấn công logic',['Logic attacks'],3)+BOX(330,60,290,170,2,'Tấn công gây ngập lụt',['Flooding attacks'],6)},
+{t:"Tấn công từ chối dịch vụ phân tán (DDoS)",d:22950,
+ n:"DDoS, từ chối dịch vụ phân tán, dùng một hệ thống máy tính phân bố trên Internet gửi lượng lớn yêu cầu trong một khoảng thời gian, khiến hệ thống không đáp ứng được và không thể phục vụ người dùng hợp pháp. Việc phòng chống DDoS gồm bốn giai đoạn: giám sát, phát hiện, ngăn chặn và pháp chứng sau tấn công.",
+ v:()=>BOX(20,15,600,100,2,'DDoS – từ chối dịch vụ phân tán',['Nhiều máy gửi lượng lớn yêu cầu, hệ thống không đáp ứng được'],.3)+T(320,148,'Bốn giai đoạn phòng chống','h2',9)+[['Giám sát','',1],['Phát hiện','',3],['Ngăn chặn','',4],['Pháp chứng','sau tấn công',2]].map((o,i)=>BOXS(20+i*155,170,140,80,o[2],o[0],o[1]?[o[1]]:[],11+i*2.3)).join('')},
+{t:"DDoS: giai đoạn giám sát",d:25050,
+ n:"Giai đoạn giám sát. Một cuộc tấn công khối lượng làm cạn kiệt tài nguyên như băng thông, CPU, bộ đệm, bộ nhớ. Thông tin thu thập khi giám sát được dùng để phát hiện tấn công. Không có cơ chế phát hiện duy nhất nào bắt được mọi loại DDoS, nên nơi đầu tiên cần xem là khả năng hoạt động hiện tại của phần cứng và phần mềm trong hạ tầng.",
+ v:()=>ROWS([['1','Làm cạn kiệt tài nguyên','Băng thông, CPU, bộ đệm, bộ nhớ'],['2','Thu thập thông tin giám sát','Dùng để phát hiện tấn công DDoS'],['3','Không có cơ chế duy nhất','Bắt đầu bằng kiểm tra phần cứng, phần mềm hiện có']],64)},
+{t:"DDoS: giai đoạn phát hiện",d:27525,
+ n:"Giai đoạn phát hiện có ba kỹ thuật. Dựa trên dấu hiệu: lưu mẫu tấn công trong cơ sở dữ liệu, IDS so khớp để xác định loại tấn công. Dựa trên quy tắc: chuyên gia chuyển các cuộc tấn công thành quy tắc nếu thì, rồi so với dữ liệu giám sát, thường là nhật ký. Dựa trên bất thường: thiết lập hành vi bình thường, hành động lệch đáng kể bị coi là bất thường hoặc xâm nhập.",
+ v:()=>T(320,26,'Giai đoạn phát hiện','h2',0)+[['Dựa trên dấu hiệu',['So khớp với mẫu tấn công','lưu trong cơ sở dữ liệu','IDS xác định loại tấn công'],1],['Dựa trên quy tắc',['Quy tắc nếu-thì từ','chuyên gia phân tích','so với dữ liệu, nhật ký','để phát hiện lạm dụng'],3],['Dựa trên bất thường',['Thiết lập hành vi bình','thường của đối tượng','Lệch đáng kể thì bị coi','là bất thường, xâm nhập'],4]].map((o,i)=>BOX(20+i*205,45,190,240,o[2],o[0],o[1],1+i*8)).join('')},
+{t:"DDoS: giai đoạn ngăn chặn",d:30300,
+ n:"Giai đoạn ngăn chặn. Một, ngăn từng người dùng Internet bị lợi dụng thành zombie tham gia tấn công. Hai, lọc Ingress giám sát gói đến để chặn giả mạo địa chỉ nguồn, chỉ cho phép mạng đáng tin cậy gửi lưu lượng vào. Ba, lọc Egress quét header gói IP rời khỏi mạng, chỉ gói đáp ứng thông số mới được định tuyến ra. Bốn, Honeypots là hệ thống giả giăng bẫy để kẻ tấn công đánh vào đó thay vì hệ thống chính.",
+ v:()=>T(320,28,'Giai đoạn ngăn chặn','h2',0)+GRID([[1,'Ngăn chặn zombie','Không để người dùng bị','lợi dụng thành zombie'],[2,'Lọc Ingress','Giám sát gói đến, chống giả','mạo địa chỉ nguồn'],[3,'Lọc Egress','Quét header gói IP rời','mạng, chỉ cho gói hợp lệ'],[4,'Honeypots','Hệ thống giả “giăng bẫy”','đánh lừa kẻ tấn công']])},
+{t:"DDoS: pháp chứng sau tấn công",d:22800,
+ n:"Giai đoạn pháp chứng sau tấn công. Phân tích mô hình lưu lượng truy cập để xác định đặc điểm riêng của lưu lượng tấn công. Truy nguyên gói là truy tìm lưu lượng tấn công ngược về nguồn. Phân tích nhật ký sự kiện hỗ trợ điều tra pháp lý và thực thi pháp luật, hữu ích khi thiệt hại tài chính nghiêm trọng.",
+ v:()=>ROWS([['1','Phân tích mô hình lưu lượng','Xác định đặc điểm riêng của lưu lượng tấn công'],['2','Truy nguyên gói','Truy tìm lưu lượng tấn công ngược về nguồn'],['3','Phân tích nhật ký sự kiện','Hỗ trợ điều tra pháp lý, thực thi pháp luật']],64)},
+{t:"Tấn công giả mạo địa chỉ",d:28500,
+ n:"Dạng thường gặp nhất là giả mạo địa chỉ IP, kẻ tấn công dùng IP giả làm địa chỉ nguồn của gói tin để đánh lừa máy nạn nhân, vượt hàng rào kiểm soát. Nếu giả IP cục bộ của mạng LAN, hắn dễ xâm nhập hơn vì kiểm soát trong LAN thường nhẹ. Cách phòng chống hiệu quả nhất là lọc trên tường lửa hoặc router: gói từ ngoài vào mà có nguồn là địa chỉ nội bộ thì là giả mạo và phải bị chặn.",
+ v:()=>BOX(20,30,290,240,2,'Giả mạo địa chỉ IP',['Dùng IP giả làm địa chỉ nguồn','Đánh lừa máy nạn nhân','Giả IP LAN dễ xâm nhập hơn'],.5)+BOX(330,30,290,240,3,'Cách phòng chống',['Lọc trên tường lửa hoặc router','Gói từ ngoài vào có nguồn là','IP nội bộ LAN thì bị chặn'],10)},
+{t:"Tấn công nghe lén",d:28500,
+ n:"Tấn công nghe lén, sniffing, dùng phần cứng hoặc phần mềm lắng nghe trên card mạng, hub, switch, router hoặc môi trường truyền dẫn để bắt gói tin. Đây là tấn công thụ động; tên người dùng, mật khẩu, thông tin thanh toán không mã hóa dễ bị lạm dụng, và WiFi cũng dễ bị nghe lén. Phòng chống bằng bảo vệ thiết bị ở mức vật lý, xác thực người dùng đủ mạnh và mã hóa thông tin truyền.",
+ v:()=>BOX(20,30,290,260,2,'Nghe lén (Sniffing)',['Bắt gói tin trên card mạng, hub,','switch, router, môi trường truyền','Tấn công thụ động, WiFi dễ bị nghe','Lộ tên, mật khẩu nếu không mã hóa'],.5)+BOX(330,30,290,260,3,'Phòng chống',['Bảo vệ thiết bị mạng mức vật lý','Xác thực người dùng đủ mạnh','Mã hóa thông tin truyền'],10)},
+{t:"Tấn công người đứng giữa",d:22350,
+ n:"Tấn công người đứng giữa lợi dụng việc gói tin đi qua nhiều trạm thuộc các mạng khác nhau. Kẻ tấn công chặn bắt thông điệp giữa hai bên rồi chuyển lại cho bên kia, có thể sửa đổi. Hai bên cần xác thực danh tính nhau bằng chứng chỉ số khóa công khai và dùng chữ ký số để đảm bảo toàn vẹn thông điệp.",
+ v:()=>DEFS+T(320,30,'Chặn bắt thông điệp rồi chuyển tiếp cho bên kia','b big',0)+BOXS(20,55,150,90,1,'Công ty A',[],.8)+BOXS(245,55,150,90,2,'Kẻ tấn công C',[],3)+BOXS(470,55,150,90,1,'Công ty B',[],5.5)+AR(170,245,100,4)+AR(395,470,100,6.5)+BOX(20,200,600,110,3,'Phòng chống',['Xác thực danh tính nhau bằng chứng chỉ số khóa công khai','Dùng chữ ký số để đảm bảo toàn vẹn thông điệp'],11)},
+{t:"Bom thư và thư rác",d:25350,
+ n:"Bom thư là dạng DoS, kẻ tấn công gửi lượng rất lớn email đến hộp thư nạn nhân, làm tê liệt hộp thư và cả máy chủ. Thư rác là gửi thư không mong muốn như quảng cáo, thư chứa mã độc; theo thống kê khoảng bảy mươi đến tám mươi phần trăm email trên Internet là thư rác, thường gửi từ máy bot hoặc zombie, gây lãng phí tài nguyên và thời gian.",
+ v:()=>BOX(20,30,290,250,2,'Bom thư (Mail bombing)',['Dạng tấn công DoS','Gửi lượng rất lớn email','Làm tê liệt hộp thư, máy chủ'],.5)+BOX(330,30,290,250,4,'Thư rác (Spam)',['Thư quảng cáo, thư chứa mã độc','70–80% email trên Internet','Gửi từ máy bot/zombie','Lãng phí tài nguyên, thời gian'],11)},
+{t:"Tấn công pharming",d:26175,
+ n:"Pharming là tấn công vào trình duyệt: người dùng gõ địa chỉ một website nhưng trình duyệt lại tải website khác, thường là website độc hại. Có hai dạng. Một là dùng sâu, virus hoặc phần mềm độc hại cài vào hệ thống để điều khiển trình duyệt. Hai là tấn công vào hệ thống tên miền DNS, đổi địa chỉ IP của website hợp pháp thành IP của website độc hại.",
+ v:()=>BOX(20,15,600,100,2,'Pharming',['Gõ địa chỉ web này nhưng trình duyệt tải web khác, thường độc hại'],.3)+BOXS(20,140,290,110,1,'Dạng 1: mã độc trên máy',['Sâu, virus điều khiển trình duyệt'],9)+BOXS(330,140,290,110,4,'Dạng 2: tấn công DNS',['Đổi IP web hợp pháp thành IP web độc hại'],15)},
+{t:"Tấn công bằng kỹ thuật xã hội",d:31800,
+ n:"Kỹ thuật xã hội là tấn công phi kỹ thuật nhằm vào người dùng, khai thác tính cả tin, ngây thơ, tò mò và lòng tham để người dùng tiết lộ thông tin. Phishing là dạng phát triển mạnh: giả mạo trang web ngân hàng và gửi email yêu cầu xác thực. Cách phòng hiệu quả là đào tạo nâng cao cảnh giác: thận trọng với thông báo trúng thưởng không rõ nguồn gốc, với yêu cầu cung cấp thông tin tài khoản, thẻ tín dụng, và kiểm tra kỹ URL.",
+ v:()=>BOX(20,10,600,95,2,'Kỹ thuật xã hội (Social Engineering)',['Tấn công phi kỹ thuật: khai thác cả tin, ngây thơ, tò mò, tham'],.3)+BOXS(20,118,600,70,4,'Phishing',['Giả mạo web ngân hàng, gửi email yêu cầu xác thực thông tin'],8)+[['Cảnh giác trúng thưởng',['Email, tin nhắn, quảng cáo','không rõ lý do, nguồn'],3],['Cảnh giác yêu cầu',['Xác nhận tài khoản,','thanh toán, thẻ tín dụng'],1],['Kiểm tra kỹ URL',['Đảm bảo đúng trang web','của cơ quan, tổ chức'],3]].map((o,i)=>BOXS(20+i*205,205,190,110,o[2],o[0],o[1],14+i*3)).join('')},
+{t:"Dữ liệu và dữ liệu cá nhân",d:32250,
+ n:"Phần bốn: An toàn dữ liệu. Dữ liệu là thông tin được thu thập, lưu trữ, xử lý dưới dạng số, văn bản, hình ảnh, ví dụ điểm số, ảnh, số điện thoại. Dữ liệu cá nhân là thông tin liên quan trực tiếp đến một cá nhân, giúp nhận dạng người đó, như họ tên, số căn cước, địa chỉ. Dữ liệu cá nhân nhạy cảm là dữ liệu mà khi bị lộ có thể ảnh hưởng nghiêm trọng đến quyền lợi, danh dự, tài sản, như sức khỏe, tài chính, vị trí, sinh trắc học.",
+ v:()=>T(320,28,'Phần 04 · An toàn dữ liệu','h2',0)+[['Dữ liệu (Data)',['Thông tin thu thập, lưu','trữ, xử lý dạng số, văn','bản, hình ảnh','VD: điểm số, ảnh, SĐT'],1],['Dữ liệu cá nhân',['Thông tin liên quan trực','tiếp đến cá nhân, giúp','nhận dạng người đó','VD: họ tên, CCCD, địa chỉ'],3],['Dữ liệu nhạy cảm',['Nếu lộ ảnh hưởng nghiêm','trọng đến quyền, danh dự,','tài sản','VD: sức khỏe, tài chính,','vị trí, sinh trắc học'],2]].map((o,i)=>BOX(20+i*205,45,190,250,o[2],o[0],o[1],3+i*8)).join('')},
+{t:"Các loại hình tấn công dữ liệu cá nhân",d:32400,
+ n:"Có năm loại hình tấn công dữ liệu cá nhân. Phishing gửi email, tin nhắn giả để lấy thông tin đăng nhập, gây mất tài khoản và tiền. Malware cài mã độc để đánh cắp hoặc mã hóa dữ liệu, dẫn đến mất dữ liệu và bị tống tiền. Tấn công mạng xã hội giả mạo tài khoản, lấy cắp ảnh, danh tính. Tấn công cơ sở dữ liệu lợi dụng lỗ hổng, gây lộ thông tin hàng loạt. Cuối cùng là theo dõi, thu thập trái phép bằng spyware, làm mất quyền riêng tư.",
+ v:()=>ROWS([['1','Phishing','Email, tin nhắn giả lấy thông tin đăng nhập → mất tài khoản, tiền'],['2','Malware','Cài mã độc đánh cắp hoặc mã hóa dữ liệu → mất dữ liệu, bị tống tiền'],['3','Tấn công mạng xã hội','Giả mạo tài khoản, lấy cắp ảnh, danh tính → mất uy tín'],['4','Tấn công cơ sở dữ liệu','Lợi dụng lỗ hổng truy cập trái phép → lộ thông tin hàng loạt'],['5','Theo dõi, thu thập trái phép','Spyware theo dõi hành vi khi chưa xin phép → mất riêng tư']],64)},
+{t:"Biện pháp bảo vệ dữ liệu cá nhân",d:34650,
+ n:"Sáu biện pháp bảo vệ dữ liệu cá nhân. Dùng mật khẩu mạnh và xác thực hai lớp, không trùng lặp, đổi định kỳ. Cẩn trọng khi chia sẻ, không đăng công khai căn cước, sổ hộ khẩu, vé máy bay, giấy tờ có mã QR. Không truy cập link lạ, email giả mạo. Cập nhật phần mềm, cài diệt virus, không cài ứng dụng không rõ nguồn. Mã hóa và sao lưu dữ liệu quan trọng. Và tuân thủ pháp luật, nắm rõ Nghị định mười ba năm hai nghìn không trăm hai mươi ba về bảo vệ dữ liệu cá nhân.",
+ v:()=>[['Mật khẩu mạnh, 2FA',['Không dùng trùng lặp,','đổi định kỳ, bật 2FA']],['Cẩn trọng chia sẻ',['Không đăng công khai','CCCD, sổ hộ khẩu, vé','máy bay, mã QR']],['Không bấm link lạ',['Kiểm tra kỹ địa chỉ','gửi, đường dẫn,','nội dung khả nghi']],['Cập nhật, bảo mật',['Cài diệt virus, cập nhật','hệ điều hành, không cài','app không rõ nguồn']],['Mã hóa và sao lưu',['Dùng ổ đĩa mã hóa,','lưu bản sao nơi an toàn']],['Tuân thủ pháp luật',['Nắm rõ Nghị định','13/2023/NĐ-CP về bảo','vệ dữ liệu cá nhân']]].map((o,i)=>BOXS(20+i%3*205,20+Math.floor(i/3)*155,190,140,[1,2,3,4,1,2][i],o[0],o[1],.8+i*3.6)).join('')},
+{t:"Khái niệm sức khỏe số",d:12225,
+ n:"Phần năm: Sức khỏe số. Sức khỏe số, Digital Wellbeing, là trạng thái cân bằng giữa việc sử dụng công nghệ số và sức khỏe thể chất, tinh thần, xã hội của con người.",
+ v:()=>DEFS+BOX(20,20,600,110,1,'Sức khỏe số (Digital Wellbeing)',['Trạng thái cân bằng giữa công nghệ số','và sức khỏe thể chất, tinh thần, xã hội'],.3)+BOXS(100,165,200,80,3,'Công nghệ số',[],5)+AR(300,340,205,6.5)+BOXS(340,165,200,80,4,'Sức khỏe con người',['Thể chất · tinh thần · xã hội'],7.5)+T(320,290,'Cân bằng','b big',9)},
+{t:"Các vấn đề ảnh hưởng đến sức khỏe số",d:30525,
+ n:"Sáu vấn đề ảnh hưởng sức khỏe số. Dùng thiết bị quá mức gây mỏi mắt, đau lưng, ít vận động, béo phì. Mất cân bằng giữa trực tuyến và thực tế gây cô lập xã hội, giảm kỹ năng mềm. Nghiện mạng xã hội, trò chơi giảm hiệu suất, gây căng thẳng, trầm cảm. Thông tin độc hại ảnh hưởng tâm lý. Xâm phạm quyền riêng tư dẫn đến lộ dữ liệu, bị quấy rối, lừa đảo. Và giấc ngủ bị gián đoạn do dùng thiết bị trước khi ngủ.",
+ v:()=>[['Dùng thiết bị quá mức',['Mỏi mắt, đau lưng, ít','vận động, nguy cơ béo phì']],['Lệch trực tuyến – thực',['Thiếu giao tiếp trực tiếp,','cô lập xã hội, giảm kỹ','năng mềm']],['Nghiện mạng, game',['Giảm hiệu suất học, làm','việc; căng thẳng, trầm','cảm']],['Thông tin độc hại',['Ảnh hưởng tâm lý, sợ','hãi, lo âu, stress']],['Xâm phạm riêng tư',['Lộ dữ liệu cá nhân, bị','quấy rối hoặc lừa đảo']],['Giấc ngủ gián đoạn',['Dùng thiết bị trước khi','ngủ gây mất ngủ, rối','loạn nhịp sinh học']]].map((o,i)=>BOXS(20+i%3*205,20+Math.floor(i/3)*155,190,140,2+(i%2)*2,o[0],o[1],.8+i*4.4)).join('')},
+{t:"Công cụ và kỹ năng bảo vệ sức khỏe số",d:34275,
+ n:"Các công cụ và kỹ năng bảo vệ sức khỏe số. Screen Time giới hạn thời gian dùng ứng dụng, thiết bị. Chế độ không làm phiền giảm thông báo khi học, làm việc. Ứng dụng quản lý thói quen số theo dõi thời gian online, nhắc nghỉ giải lao. Công cụ bảo vệ mắt như lọc ánh sáng xanh, quy tắc hai mươi, hai mươi, hai mươi. Cài đặt quyền riêng tư, kiểm soát nội dung để chặn nội dung xấu. Và kỹ năng số lành mạnh: lập kế hoạch dùng thiết bị, ưu tiên tương tác thực tế.",
+ v:()=>ROWS([['1','Screen Time / Thời gian sử dụng','Giới hạn thời gian dùng ứng dụng, thiết bị'],['2','Không làm phiền (Do Not Disturb)','Giảm thông báo, tránh phân tán khi học, làm việc'],['3','Ứng dụng quản lý thói quen số','Theo dõi thời gian online, nhắc nghỉ giải lao'],['4','Công cụ bảo vệ mắt','Lọc ánh sáng xanh, nhắc nghỉ mắt 20-20-20'],['5','Quyền riêng tư, kiểm soát nội dung','Chặn nội dung xấu, bảo vệ thông tin, tránh bị theo dõi'],['6','Kỹ năng số lành mạnh','Lập kế hoạch dùng thiết bị, ưu tiên tương tác thực tế']],52)},
+{t:"Khái niệm an sinh số",d:25275,
+ n:"Phần sáu: An sinh số. An sinh số là trạng thái cân bằng lành mạnh giữa việc sử dụng công nghệ số và cuộc sống thực tế, đảm bảo người dùng an toàn, hạnh phúc, năng suất và kiểm soát được hành vi số của mình. Nói cách khác, đó là khả năng sử dụng công nghệ một cách có chủ đích, an toàn và bền vững để phục vụ phát triển cá nhân và xã hội.",
+ v:()=>BOX(20,20,600,110,1,'An sinh số',['Cân bằng lành mạnh giữa công nghệ số và cuộc sống thực'],.3)+[['An toàn','',3],['Hạnh phúc','',4],['Năng suất','',1],['Kiểm soát','hành vi số',2]].map((o,i)=>BOXS(20+i*150,160,140,80,o[2],o[0],o[1]?[o[1]]:[],6+i*2.4)).join('')+T(320,290,'Dùng công nghệ có chủ đích, an toàn, bền vững','b big',17)},
+{t:"Các vấn đề ảnh hưởng đến an sinh số",d:33525,
+ n:"Sáu nhóm vấn đề ảnh hưởng an sinh số. Thể chất: ngồi lâu, nhìn màn hình nhiều, gây mỏi mắt, đau cổ, béo phì. Tâm lý, cảm xúc: phụ thuộc mạng xã hội, FOMO, dẫn đến trầm cảm, lo âu. Xã hội, giao tiếp: mất kết nối thực, giảm kỹ năng giao tiếp. Bảo mật và quyền riêng tư: lộ thông tin, mất dữ liệu, lừa đảo. Thông tin và đạo đức số: tin giả, chia sẻ thiếu kiểm chứng. Cân bằng thời gian và năng suất: nghiện smartphone, làm việc hai mươi bốn trên bảy.",
+ v:()=>[['Thể chất',['Ngồi lâu, nhìn màn hình','nhiều, thiếu vận động','Mỏi mắt, đau cổ, béo phì,','rối loạn giấc ngủ']],['Tâm lý – cảm xúc',['Phụ thuộc mạng xã hội,','FOMO, stress vì so sánh','Trầm cảm, lo âu, giảm','tập trung']],['Xã hội – giao tiếp',['Mất kết nối thực, lệch','chuẩn ứng xử online','Giảm kỹ năng giao tiếp,','dễ bị cô lập']],['Bảo mật, riêng tư',['Lộ thông tin cá nhân,','bị tấn công mạng','Mất dữ liệu, lừa đảo,','tổn hại danh dự']],['Thông tin, đạo đức số',['Tiếp nhận tin giả, chia','sẻ thiếu kiểm chứng','Lan truyền sai lệch, mất','uy tín']],['Thời gian, năng suất',['Nghiện smartphone,','làm việc 24/7','Giảm năng suất, mất','kiểm soát thời gian']]].map((o,i)=>BOXS(20+i%3*205,20+Math.floor(i/3)*155,190,140,[1,2,3,4,1,2][i],o[0],o[1],.8+i*4.6)).join('')},
+{t:"Công cụ và kỹ năng bảo vệ an sinh số",d:39600,
+ n:"Bảy kỹ năng cốt lõi. Quản lý thời gian dùng thiết bị bằng Digital Well-being trên Android hoặc Screen Time trên iOS. Bảo mật và quyền riêng tư: xác thực hai lớp, trình quản lý mật khẩu, cập nhật phần mềm. Nhận diện tin giả bằng cách kiểm tra nguồn tin chính thống. Giữ cân bằng cảm xúc số: đặt giờ tắt mạng, chọn nội dung tích cực. Quản lý dữ liệu cá nhân, kiểm tra quyền ứng dụng. Ứng xử văn minh, hiểu Luật An ninh mạng hai nghìn không trăm mười tám. Và tăng cường sức khỏe thể chất, theo quy tắc hai mươi, hai mươi, hai mươi.",
+ v:()=>ROWS([['1','Quản lý thời gian dùng thiết bị','Digital Well-being (Android), Screen Time (iOS) giới hạn ứng dụng'],['2','Bảo mật và quyền riêng tư','2FA, trình quản lý mật khẩu (Bitwarden), cập nhật thường xuyên'],['3','Nhận diện tin giả, thông tin độc hại','Kiểm tra nguồn: báo chính thống, FactCheck.org, VTV, Reuters'],['4','Giữ cân bằng cảm xúc số','Đặt giờ tắt mạng hằng ngày, chọn nội dung tích cực'],['5','Quản lý dữ liệu cá nhân','Kiểm tra quyền ứng dụng; Google Privacy Checkup, Mozilla'],['6','Ứng xử văn minh, an toàn trực tuyến','Tôn trọng người khác; hiểu Luật An ninh mạng 2018'],['7','Tăng cường sức khỏe thể chất','Quy tắc 20-20-20, bàn đứng, tập thể dục giữa giờ']],45)},
+{t:"Môi trường số lành mạnh",d:21675,
+ n:"Môi trường số lành mạnh là không gian mạng nơi người dùng giao tiếp, học tập, làm việc an toàn, tôn trọng, có đạo đức và trách nhiệm; được bảo vệ khỏi thông tin sai lệch, bạo lực mạng, xâm hại dữ liệu cá nhân; và biết dùng công nghệ để phát triển bản thân, đóng góp tích cực cho cộng đồng.",
+ v:()=>T(320,28,'Môi trường số lành mạnh','h2',0)+[['An toàn, đạo đức',['Giao tiếp, học tập, làm','việc an toàn, tôn trọng,','có đạo đức, trách nhiệm'],1],['Được bảo vệ',['Khỏi thông tin sai lệch,','bạo lực mạng, xâm hại','dữ liệu cá nhân'],3],['Phát triển bản thân',['Dùng công nghệ để phát','triển bản thân, đóng góp','tích cực cho cộng đồng'],4]].map((o,i)=>BOX(20+i*205,45,190,230,o[2],o[0],o[1],2+i*6)).join('')},
+{t:"Vai trò của người học trong môi trường số",d:36075,
+ n:"Người học có sáu vai trò. Là công dân số có trách nhiệm: tuân thủ pháp luật, tôn trọng bản quyền, quyền riêng tư. Là người truyền thông tích cực: chia sẻ nội dung giá trị, không phát tán tin giả. Là người bảo vệ bản thân và cộng đồng: nhận diện rủi ro, báo cáo tài khoản giả mạo. Là người xây dựng văn hóa ứng xử số: giao tiếp có văn hóa, phản biện văn minh. Là người giữ gìn sức khỏe và an sinh số: giới hạn hai giờ mạng xã hội mỗi ngày. Và là người dùng công nghệ xanh, bền vững.",
+ v:()=>[['Công dân số',['Tuân thủ pháp luật, tôn','trọng bản quyền, riêng tư','VD: không chia sẻ ảnh','bạn khi chưa được phép']],['Truyền thông tích cực',['Chia sẻ nội dung tích','cực, không phát tán tin','giả, bạo lực']],['Bảo vệ bản thân',['Nhận diện rủi ro, cảnh','báo bạn bè, báo cáo vi','phạm; VD: báo cáo tài','khoản giả mạo']],['Văn hóa ứng xử số',['Giao tiếp có văn hóa,','biết lắng nghe, phản','biện văn minh']],['Giữ gìn sức khỏe số',['Quản lý thời gian online,','cân bằng học – nghỉ –','tương tác thực; VD: 2 giờ','mạng xã hội/ngày']],['Công nghệ xanh, bền',['Tiết kiệm điện, hạn chế','rác điện tử, dùng thiết','bị lâu, tái chế đúng']]].map((o,i)=>BOXS(20+i%3*205,20+Math.floor(i/3)*155,190,140,[1,4,3,2,1,3][i],o[0],o[1],.8+i*5)).join('')},
+{t:"Công nghệ số và môi trường",d:29400,
+ n:"Phần bảy: Mối liên hệ giữa công nghệ số và môi trường. Công nghệ số là tập hợp công cụ, hệ thống, nền tảng dùng dữ liệu số, gồm trí tuệ nhân tạo, Internet vạn vật, dữ liệu lớn, điện toán đám mây, blockchain và mạng năm G. Môi trường là tổng hòa các yếu tố tự nhiên và nhân tạo ảnh hưởng đến con người và sinh vật. Công nghệ số phát triển làm thay đổi sản xuất, tiêu dùng và hành vi sinh thái.",
+ v:()=>BOX(20,20,290,230,1,'Công nghệ số',['Công cụ, hệ thống, nền tảng','dùng dữ liệu số: AI, IoT,','Big Data, Cloud, blockchain,','mạng 5G'],.5)+BOX(330,20,290,230,3,'Môi trường',['Tổng hòa yếu tố tự nhiên','và nhân tạo ảnh hưởng đến','con người và sinh vật'],10)+T(320,300,'Công nghệ số thay đổi sản xuất, tiêu dùng và hành vi sinh thái','m',17)},
+{t:"Tác động tích cực đến môi trường",d:33150,
+ n:"Năm tác động tích cực. Một, quản lý tài nguyên và năng lượng hiệu quả bằng IoT, dữ liệu lớn, AI, như lưới điện thông minh. Hai, giảm phát thải và ô nhiễm nhờ làm việc, học, họp từ xa và giao thông thông minh. Ba, dự báo, giám sát biến đổi khí hậu bằng vệ tinh, GIS, AI. Bốn, thúc đẩy sản xuất xanh, kinh tế tuần hoàn, như IKEA dùng blockchain quản lý nguồn gốc gỗ tái chế. Năm, tăng cường nhận thức và giáo dục môi trường qua truyền thông số.",
+ v:()=>ROWS([['1','Quản lý tài nguyên, năng lượng hiệu quả','IoT, Big Data, AI tối ưu điện, nước; VD: Smart Grid, tưới tự động'],['2','Giảm phát thải và ô nhiễm','Làm việc, học, họp từ xa; giao thông thông minh (Zoom, Singapore)'],['3','Dự báo, giám sát biến đổi khí hậu','Vệ tinh, GIS, AI theo dõi môi trường; VD: Copernicus, NASA'],['4','Sản xuất xanh, kinh tế tuần hoàn','Blockchain, in 3D, Digital Twin giảm lãng phí; VD: IKEA'],['5','Nâng cao nhận thức môi trường','Truyền thông số lan tỏa thông điệp; VD: #BeatPlasticPollution, #GoGreen']],64)},
+{t:"Tác động tiêu cực (1): rác thải, năng lượng, tài nguyên",d:35775,
+ n:"Tác động tiêu cực thứ nhất là rác thải điện tử. Thiết bị nhanh lỗi thời chứa chì, thủy ngân, cadmium; năm hai nghìn không trăm hai mươi hai toàn cầu thải hơn năm mươi bảy triệu tấn, chỉ khoảng hai mươi phần trăm được tái chế đúng cách. Thứ hai là tiêu thụ năng lượng khổng lồ: trung tâm dữ liệu chiếm khoảng một phần trăm điện toàn cầu, đào Bitcoin thải hơn sáu mươi triệu tấn CO hai mỗi năm. Thứ ba là khai thác tài nguyên cho thiết bị số, như lithium ở Chile, cobalt ở Congo.",
+ v:()=>T(320,28,'Tác động tiêu cực của công nghệ số','h2',0)+[['Rác thải điện tử',['Thiết bị lỗi thời, bỏ sớm','chứa chì, thủy ngân,','cadmium','2022: hơn 57 triệu tấn,','chỉ ~20% tái chế (UNEP)'],2],['Tiêu thụ năng lượng',['Trung tâm dữ liệu ~1%','điện toàn cầu; đào','Bitcoin thải >60 triệu','tấn CO₂/năm'],4],['Khai thác tài nguyên',['Lithium, cobalt, tantalum','cho chip, pin; mỏ lithium','Chile, cobalt Congo gây','xói mòn, ô nhiễm nước'],1]].map((o,i)=>BOX(20+i*205,45,190,250,o[2],o[0],o[1],3+i*10)).join('')},
+{t:"Tác động tiêu cực (2): tiêu dùng, sản xuất, bất bình đẳng",d:29175,
+ n:"Thứ tư là văn hóa tiêu dùng nhanh: trung bình một người thay điện thoại sau mười tám đến hai mươi bốn tháng, gây lãng phí tài nguyên. Thứ năm là ô nhiễm khi sản xuất thiết bị, như các khu công nghiệp điện tử ở Trung Quốc và Việt Nam xả nước thải chứa kim loại nặng. Thứ sáu là bất bình đẳng công nghệ: nước nghèo trở thành bãi rác công nghệ, như rác điện tử từ châu Âu sang Ghana, Nigeria.",
+ v:()=>T(320,28,'Tác động tiêu cực của công nghệ số','h2',0)+[['Tiêu dùng nhanh',['Chu kỳ nâng cấp ngắn,','thay điện thoại sau','18–24 tháng (Statista)','gây lãng phí tài nguyên'],4],['Ô nhiễm khi sản xuất',['Linh kiện, mạch in, pin','thải hóa chất, nước thải','kim loại nặng, như tại','Trung Quốc và Việt Nam'],2],['Bất bình đẳng',['Nước nghèo thành “bãi','rác công nghệ”; rác điện','tử châu Âu sang châu Phi','(Ghana, Nigeria)'],1]].map((o,i)=>BOX(20+i*205,45,190,250,o[2],o[0],o[1],3+i*8)).join('')},
+{t:"Giải pháp phát triển bền vững",d:33075,
+ n:"Năm giải pháp phát triển bền vững. Một, phát triển công nghệ xanh: năng lượng tái tạo cho trung tâm dữ liệu, sản phẩm dễ tái chế. Hai, chuyển đổi số xanh: tiêu chí carbon thấp, đo lường phát thải, văn phòng không giấy. Ba, quản lý rác thải điện tử và tái chế, áp dụng chính sách EPR. Bốn, giáo dục nâng cao nhận thức, khuyến khích sửa chữa thay vì vứt bỏ. Năm, chính sách và hợp tác quốc tế: tiêu chuẩn năng lượng, thuế xanh, nhãn sinh thái.",
+ v:()=>ROWS([['1','Phát triển công nghệ xanh','Năng lượng tái tạo cho trung tâm dữ liệu, sản phẩm dễ tái chế, AI tối ưu'],['2','Chuyển đổi số xanh','Tiêu chí carbon thấp, đo lường phát thải, văn phòng không giấy'],['3','Quản lý rác thải điện tử, tái chế','Chính sách EPR (trách nhiệm mở rộng của nhà sản xuất), thu hồi – tái chế'],['4','Giáo dục, nâng cao nhận thức','Tiêu dùng bền vững, dùng thiết bị lâu, sửa chữa thay vì vứt bỏ'],['5','Chính sách và hợp tác quốc tế','Tiêu chuẩn năng lượng, thuế xanh, nhãn sinh thái, nghiên cứu chung']],64)},
+{t:"Câu hỏi thảo luận",d:9000,
+ n:"Đến đây là phần câu hỏi thảo luận. Mời các bạn cùng trao đổi về những nội dung đã học trong Module bốn: An toàn.",
+ v:()=>BOX(20,60,600,170,1,'Câu hỏi thảo luận',['Cùng trao đổi về nội dung Module 4: An toàn'],.5)}
+];
+
+/* ====== BỘ PHÁT ====== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),fig=$('fig'),ttl=$('ttl'),cap=$('cap'),seg=$('seg'),btn=$('play'),vb=$('voice'),cnt=$('cnt');
+let i=0,el=0,last=performance.now(),playing=true,done=false,voice=false,sd=true,tok=0;
+
+SCENES.forEach((s,k)=>{const b=document.createElement('button');b.setAttribute('aria-label','Phần '+(k+1)+': '+s.t);b.onclick=()=>jump(k);seg.appendChild(b)});
+
+function speak(){
+  if(!('speechSynthesis' in window)){sd=true;return}
+  speechSynthesis.cancel();const k=++tok;
+  const u=new SpeechSynthesisUtterance(SCENES[i].n);u.lang='vi-VN';u.rate=.95;sd=false;
+  u.onend=u.onerror=()=>{if(k===tok)sd=true};
+  speechSynthesis.speak(u);if(!playing)speechSynthesis.pause();
+}
+function fit(svg){const rs=[...svg.querySelectorAll('rect')].map(r=>({x:+r.getAttribute('x'),y:+r.getAttribute('y'),w:+r.getAttribute('width'),h:+r.getAttribute('height')})).filter(r=>r.w<600);
+  svg.querySelectorAll('text').forEach(t=>{const w=t.getComputedTextLength();if(!w)return;const x=+t.getAttribute('x'),y=+t.getAttribute('y'),mid=t.getAttribute('text-anchor')==='middle';
+    const r=rs.filter(r=>x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h).sort((p,q)=>p.w-q.w)[0];if(!r)return;
+    const room=mid?r.w-16:r.x+r.w-8-x;if(w>room){t.setAttribute('textLength',room);t.setAttribute('lengthAdjust','spacingAndGlyphs')}})}
+function show(n){
+  i=n;el=0;sd=true;const s=SCENES[n];
+  fig.innerHTML=`<svg viewBox="0 0 640 360" role="img" aria-label="${s.t}">${DEFS}${s.v()}</svg>`;
+  fit(fig.firstChild);
+  ttl.classList.remove('t');cap.classList.remove('t');void ttl.offsetWidth;ttl.classList.add('t');cap.classList.add('t');
+  ttl.textContent=s.t;cap.textContent=s.n;cnt.textContent=(n+1)+' / '+SCENES.length;
+  if(voice)speak();
+}
+function sync(){stage.classList.toggle('paused',!playing);btn.textContent=done?'Xem lại':playing?'Tạm dừng':'Phát'}
+function jump(n){done=false;playing=true;show(n);sync()}
+btn.onclick=()=>{
+  if(done){jump(0);return}
+  playing=!playing;sync();
+  if(voice&&'speechSynthesis' in window)playing?speechSynthesis.resume():speechSynthesis.pause();
+};
+$('prev').onclick=()=>jump(Math.max(0,i-(el>2000?0:1)));
+$('next').onclick=()=>jump(Math.min(SCENES.length-1,i+1));
+vb.onclick=()=>{
+  voice=!voice;vb.textContent='Giọng đọc: '+(voice?'Bật':'Tắt');vb.setAttribute('aria-pressed',voice);
+  if(voice)speak();else{tok++;sd=true;if('speechSynthesis' in window)speechSynthesis.cancel()}
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON')return;
+  if(e.code==='Space'){e.preventDefault();btn.click()}
+  if(e.code==='ArrowRight')$('next').click();
+  if(e.code==='ArrowLeft')$('prev').click();
+});
+
+function tick(ts){
+  const dt=Math.min(ts-last,100);last=ts;
+  if(playing){
+    el+=dt;const d=SCENES[i].d;
+    if(el>=d&&(sd||el>d+6000)){
+      if(i<SCENES.length-1)show(i+1);else{playing=false;done=true;sync()}
+    }
+  }
+  [...seg.children].forEach((b,k)=>b.style.setProperty('--p',(k<i||(done&&k===i)?100:k===i?Math.min(el/SCENES[i].d,1)*100:0)+'%'));
+  requestAnimationFrame(tick);
+}
+show(0);sync();requestAnimationFrame(tick);
+</script>
+</body>
+</html>

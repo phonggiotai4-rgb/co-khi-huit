@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 3 – Sáng tạo nội dung số – Video bài giảng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8EFF7;--panel:#FFFFFF;--ink:#16243B;--mut:#5A6B85;--line:#C9D5E4;--c1:#2F5BEA;--c2:#F26B5B;--c3:#1FA38A;--c4:#E9A722;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5}
+.player{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+h2{font:700 clamp(22px,3.4vw,32px)/1.2 Lexend,"Be Vietnam Pro",sans-serif;margin:0}
+.fig svg{width:100%;height:auto;max-height:54vh;display:block}
+.cap{margin:0;min-height:3.3em;color:var(--mut);font-size:clamp(14px,2vw,17px);max-width:72ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+button{font:600 14px "Be Vietnam Pro",sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--c1)}
+button:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+#play{background:var(--c1);border-color:var(--c1);color:#fff;min-width:110px}
+.sp{flex:1}
+.cnt{color:var(--mut);font-size:14px}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1;height:10px;padding:0;border-radius:5px;border:0;background:var(--line);position:relative;overflow:hidden}
+.seg button::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:var(--c1)}
+/* SVG */
+svg text{font-family:inherit;fill:var(--ink);font-size:15px}
+.b{font-weight:600}.m{fill:var(--mut);font-size:12.5px}.big{font-size:17px}.h1{font-size:34px;font-weight:700}.h2{font-size:19px;font-weight:700;fill:var(--c1)}
+.brand{background:#1F6FB5;color:#fff;text-align:center;border-radius:14px;padding:10px 16px;margin-bottom:12px;line-height:1.35}
+.brand b{display:block;font:700 clamp(13px,2.2vw,18px) Lexend,sans-serif}.brand span{font-size:clamp(12px,1.8vw,15px)}
+.url{margin:8px 0 0;color:var(--mut);font-size:12px}
+.st{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.5;stroke:var(--mut)}
+.s1{stroke:var(--c1)}.s2{stroke:var(--c2)}.s3{stroke:var(--c3)}.s4{stroke:var(--c4)}
+.f1{fill:var(--c1);fill-opacity:.16}.f2{fill:var(--c2);fill-opacity:.16}.f3{fill:var(--c3);fill-opacity:.16}.f4{fill:var(--c4);fill-opacity:.2}
+.fp{fill:var(--panel)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s ease var(--d,0s) forwards}
+.r{opacity:0;animation:rv .6s ease var(--d,0s) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes rv{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fi{from{fill-opacity:0}}
+@keyframes pop{from{transform:scale(.93)}}
+@keyframes pulse{50%{stroke-width:3.6}}
+@keyframes sc{from{opacity:0;transform:translateY(10px)}}
+@keyframes tt{from{opacity:0;transform:translateX(-12px)}}
+@keyframes bp{50%{box-shadow:0 0 0 7px rgba(47,91,234,.22)}}
+rect.draw,circle.draw{transform-box:fill-box;transform-origin:center}
+rect.draw{animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards}
+circle.draw{animation:dr 1.1s ease var(--d,0s) forwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+rect.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards,fi .8s ease calc(var(--d,0s) + .45s) backwards}
+circle.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,fi .8s ease calc(var(--d,0s) + .45s) backwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+.fig svg{animation:sc .5s ease}
+.t{animation:tt .55s ease}
+button{transition:transform .15s,border-color .15s}button:active{transform:scale(.96)}
+.paused #play{animation:bp 1.8s ease-in-out infinite}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.draw,rect.draw,circle.draw{animation:none!important;stroke-dashoffset:0}.r{animation:none;opacity:1;transform:none}.fig svg,.t,.paused #play{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="player">
+  <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
+  <section class="stage" id="stage" aria-live="off">
+    <h2 id="ttl"></h2>
+    <div class="fig" id="fig"></div>
+    <p class="cap" id="cap"></p>
+  </section>
+  <div class="ctl">
+    <button id="prev">Trước</button>
+    <button id="play">Tạm dừng</button>
+    <button id="next">Sau</button>
+    <button id="voice" aria-pressed="false">Giọng đọc: Tắt</button>
+    <span class="sp"></span>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="seg" id="seg"></div>
+  <p class="url">https://huit.edu.vn</p>
+</main>
+
+<script>
+/* ====== NỘI DUNG: chỉnh sửa mảng SCENES bên dưới ======
+   t: tiêu đề | d: thời lượng (ms) | n: lời giảng (phụ đề + giọng đọc) | v: hàm vẽ hình SVG
+   Mỗi phần tử vẽ có thể có độ trễ riêng (tham số cuối) để hình hiện ra theo lời giảng. */
+const D=n=>`style="--d:${n}s"`;
+const T=(x,y,s,c='',n=0,a='middle')=>`<text class="r ${c}" ${D(n)} x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const P=(tag,attrs,c='',n=0)=>`<${tag} pathLength="1" class="st draw ${c}" ${D(n)} ${attrs}/>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" class="st" style="stroke-width:2"/></marker></defs>`;
+
+const AR=(x1,x2,y,n)=>`<path pathLength="1" class="st draw" ${D(n)} d="M${x1} ${y}H${x2}" marker-end="url(#ah)"/>`;
+const BOX=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b big',n+.3)+L.map((l,j)=>T(x+w/2,y+62+j*22,l,'m',n+.6+j*.3)).join('');
+const GRID=(C,x)=>{let s='';C.forEach((o,i)=>{const X=30+i%2*300,Y=40+Math.floor(i/2)*140,n=.3+i*2.8,k=o[0];
+ s+=P('rect',`x="${X}" y="${Y}" width="280" height="110" rx="16"`,`s${k} f${k}`,n)+(x?P('path',`d="M${X+28} ${Y+39}l20 20M${X+48} ${Y+39}l-20 20"`,`s${k}`,n+.3):P('circle',`cx="${X+38}" cy="${Y+55}" r="16"`,`s${k}`,n+.3))+
+ T(X+68,Y+44,o[1],'b',n+.6,'start')+T(X+68,Y+68,o[2],'m',n+.8,'start')+(o[3]?T(X+68,Y+86,o[3],'m',n+.9,'start'):'');});return s;};
+const BOXS=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b',n+.3)+L.map((l,j)=>T(x+w/2,y+58+j*22,l,'m',n+.6+j*.3)).join('');
+const ROWS=(R,pt=64)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=.3+i*3,m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+const cc=(x,y,r)=>`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
+const IC={chat:'M-10 -8h20v13h-9l-5 5v-5h-6zM-5 -1h1M0 -1h1M5 -1h1',users:cc(0,-5,4)+'M-9 10v-2a6 5 0 0 1 6-5h6a6 5 0 0 1 6 5v2zM-10 -3h-1M10 -3h1',laptop:'M-8 -8h16v11h-16zM-12 6h24l-2 3h-20zM-3 -4l-3 2.5 3 2.5M3 -4l3 2.5-3 2.5',clock:cc(0,0,10)+'M0 -6v6l4 3',search:cc(-2,-2,7)+'M3 3l8 8',chart:'M-10 -10v20h20M-7 4l5-6 4 3 7-8',book:'M0 -7c-3-3-7-3-10-2v15c3-1 7-1 10 2c3-3 7-3 10-2v-15c-3-1-7-1-10 2zM0 -7v15',home:'M-11 0l11-10 11 10M-7 -3v12h14v-12M-2 9v-6h4v6',mail:'M-10 -7h20v14h-20zM-10 -7l10 8 10-8',video:'M-10 -6h13v12h-13zM3 -1l7-5v12l-7-5',share:cc(6,-7,3)+cc(-7,0,3)+cc(6,7,3)+'M-4 -1l7 -5M-4 1l7 5',shield:'M0 -10l9 3v6c0 6-4 9-9 11-5-2-9-5-9-11v-6zM-4 1l3 3 6-6',hub:cc(0,-7,3)+cc(-8,6,3)+cc(8,6,3)+'M0 -4l-6 8M0 -4l6 8M-5 6h10',list:'M-10 -6h1M-5 -6h14M-10 0h1M-5 0h14M-10 6h1M-5 6h14',cap:'M0 -8l11 5-11 5-11-5zM-6 0v6c3 3 9 3 12 0v-6'};
+const I=(nm,x,y,s,k,n)=>P('path',`d="${IC[nm]}" transform="translate(${x} ${y}) scale(${s})"`,`s${k}`,n);
+const IBOX=(x,y,w,h,k,ic,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+w/2}" cy="${y+30}" r="22"`,`s${k}`,n+.2)+I(ic,x+w/2,y+30,1.2,k,n+.4)+T(x+w/2,y+78,title,'b big',n+.6)+L.map((l,j)=>T(x+w/2,y+102+j*20,l,'m',n+.9+j*.3)).join('');
+const OV=(a,pt,d0)=>a.map((nm,i)=>I(nm,60,42+i*pt,.9,[1,3,4,2][i%4],d0+i*3)).join('');
+Object.assign(IC,{warn:'M0 -10l10 18h-20zM0 -3v5M0 5h1',cloud:'M-7 7a5 5 0 0 1 0 -10a7 7 0 0 1 13 -2a5 5 0 0 1 1 12z',heart:'M0 9c-12-8-12-17-5-17 3 0 5 2 5 4 0-2 2-4 5-4 7 0 7 9-5 17z',build:'M-7 10v-18h14v18zM-7 10h14M-3 -4h1M2 -4h1M-3 1h1M2 1h1',gear:cc(0,0,3.5)+'M0 -10v4M0 6v4M-10 0h4M6 0h4M-7 -7l3 3M4 4l3 3M7 -7l-3 3M-4 4l-3 3',star:'M0 -10l3 7h7l-6 5 2 8-6-4-6 4 2-8-6-5h7z',target:cc(0,0,10)+cc(0,0,5)+'M0 0h1'});
+const HI={'Ứng dụng':'laptop','Lợi ích':'star','Thách thức':'warn','Nền tảng học tập':'cap','Công cụ giao tiếp':'chat','Tương tác, cộng tác':'users','Họp trực tuyến':'video','Hệ thống ERP':'build','Quản lý dự án':'list','Kiến thức cần có':'book','Kỹ năng thực hành':'gear','Phẩm chất cần có':'heart','Lưu trữ & chia sẻ':'cloud','Văn phòng trực tuyến':'laptop','Kết nối cảm xúc':'heart','Bảo mật thông tin':'shield','Quá tải thông tin':'warn'};
+const COL=(x,hd,k,L,n)=>(HI[hd]?I(HI[hd],x+13,24,.75,k,n)+T(x+28,29,hd,'b',n+.2,'start'):T(x+95,28,hd,'b big',n))+L.map((o,i)=>BOXS(x,44+i*72,190,66,k,o[0],[o[1]],n+.5+i*1.6)).join('');
+const RW=(R,ts,y0=15)=>R.map((o,i)=>{const y=y0+i*54,n=ts[i],k=[1,2,3,4,1,2][i];return P('circle',`cx="45" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+T(45,y+28,i+1,'b big',n+.4)+T(85,y+18,o[0],'b big',n+.7,'start')+T(85,y+40,o[1],'m',n+.9,'start')}).join('');
+const SCENES=[
+{t:"Giới thiệu Module 3",d:32500,
+ n:"Chào mừng các bạn đến với Module 3: Sáng tạo nội dung số, từ ý tưởng đến sản phẩm số. Bài học có hai phần. Phần một gồm: tổng quan về sáng tạo nội dung số; phân tích đối tượng và mục tiêu; phân loại và đánh giá nội dung số; quy trình sáng tạo và công cụ hỗ trợ. Phần hai gồm: kỹ thuật biên tập, chuyển đổi và tái sử dụng nội dung; bản quyền và giấy phép sử dụng; công cụ và công nghệ sáng tạo; đánh giá, tối ưu và xuất bản nội dung số.",
+ v:()=>T(320,40,'MODULE 3','h1',0)+T(320,72,'SÁNG TẠO NỘI DUNG SỐ','h2',.5)+T(320,98,'Từ ý tưởng đến sản phẩm số','m',.9)+
+ ['Phần 1','Phần 2'].map((p,c)=>T(170+c*300,128,p,'b big',c?20:9)).join('')+
+ ['Tổng quan nội dung số','Đối tượng và mục tiêu','Phân loại, đánh giá','Quy trình và công cụ','Biên tập, tái sử dụng','Bản quyền, giấy phép','Công cụ và công nghệ','Đánh giá, tối ưu, xuất bản'].map((s,i)=>{const c=i>3?1:0,y=142+(i%4)*46,x=20+c*305,k=[1,2,3,4][i%4],n=(c?22:11)+(i%4)*2.5;
+  return P('circle',`cx="${x+18}" cy="${y+16}" r="16"`,`s${k} f${k}`,n)+T(x+18,y+22,i+1,'b',n+.3)+T(x+42,y+22,s,'b',n+.5,'start')}).join('')},
+{t:"Mục tiêu của module",d:42500,
+ n:"Mục tiêu tổng quát: người học hiểu và áp dụng quy trình phát triển nội dung số hiệu quả, từ xác định mục tiêu đến triển khai và đánh giá chất lượng. Năm mục tiêu cụ thể: xác định rõ mục tiêu và đối tượng nội dung; xây dựng kế hoạch nội dung theo thời gian, định dạng phù hợp; tuân thủ bản quyền và sử dụng công nghệ biên tập hợp pháp; vận dụng công nghệ và công cụ số để thiết kế, triển khai và lập trình nội dung sáng tạo; bảo đảm chất lượng thiết kế, kiểm thử và xuất bản đạt chuẩn. Module tập trung vào năng lực sáng tạo, quản lý và tối ưu hóa nội dung số toàn diện.",
+ v:()=>BOXS(20,15,600,70,1,'Mục tiêu tổng quát',['Hiểu và áp dụng quy trình phát triển nội dung số hiệu quả'],0)+
+ ['Xác định mục tiêu và đối tượng nội dung','Lập kế hoạch theo thời gian, định dạng phù hợp','Tuân thủ bản quyền, biên tập hợp pháp','Dùng công nghệ, công cụ số để thiết kế, lập trình','Bảo đảm chất lượng, kiểm thử, xuất bản đạt chuẩn'].map((s,i)=>{const y=98+i*47,k=[1,3,4,2,1][i],n=12+i*5.5;
+  return P('circle',`cx="45" cy="${y+18}" r="17"`,`s${k} f${k}`,n)+T(45,y+24,i+1,'b',n+.3)+T(80,y+24,s,'b',n+.5,'start')}).join('')},
+{t:"Nội dung số là gì?",d:35000,
+ n:"Chương một: Tổng quan về sáng tạo nội dung số, vì nội dung số là linh hồn của kinh tế số. Chương này có bốn phần: tổng quan nội dung số, các loại nội dung số, các nền tảng phổ biến và xu hướng nội dung mới. Nội dung số, hay Digital Content, là toàn bộ thông tin được số hóa dưới dạng văn bản, hình ảnh, âm thanh, video, dữ liệu tương tác; được tạo, lưu trữ, phân phối và tiêu thụ trên nền tảng kỹ thuật số. Ví dụ: bài blog, video TikTok, infographic, ebook, game online.",
+ v:()=>T(320,34,'Chương 1: Tổng quan','h2',0)+T(320,58,'“Nội dung số là linh hồn của kinh tế số.”','m',1)+
+ [['Tổng quan','nội dung số'],['Các loại','nội dung số'],['Nền tảng','phổ biến'],['Xu hướng','nội dung mới']].map((o,i)=>BOXS(20+i*155,72,135,70,[1,2,3,4][i],o[0],[o[1]],9+i*1.8)).join('')+
+ BOXS(20,158,600,100,1,'Nội dung số (Digital Content)',['Thông tin số hóa: văn bản, hình ảnh, âm thanh, video, dữ liệu','Được tạo, lưu trữ, phân phối, tiêu thụ trên nền tảng kỹ thuật số'],17)+
+ ['Bài blog','Video TikTok','Infographic','Ebook','Game online'].map((s,i)=>P('rect',`x="${20+i*122}" y="278" width="112" height="40" rx="12"`,`s${[1,2,3,4,1][i]} f${[1,2,3,4,1][i]}`,29+i*.6)+T(76+i*122,303,s,'b',29.3+i*.6)).join('')},
+{t:"Đặc điểm và vai trò của nội dung số",d:38000,
+ n:"Nội dung số có bốn đặc điểm. Một: dễ sao chép, chia sẻ và lan truyền. Hai: có thể đo lường và phân tích dữ liệu người xem. Ba: cập nhật nhanh, đa định dạng, từ văn bản, ảnh, video đến tương tác. Bốn: phụ thuộc vào nền tảng công nghệ và thiết bị số. Về vai trò, nội dung số phục vụ truyền thông, quảng bá thương hiệu, giải trí, giáo dục và đào tạo trực tuyến; đồng thời kết nối cộng đồng và tạo giá trị kinh tế, như quảng cáo, thương mại điện tử và sáng tạo nội dung.",
+ v:()=>T(165,30,'Đặc điểm','h2',0)+[['Dễ sao chép, chia sẻ','Lan truyền nhanh'],['Đo lường được','Phân tích dữ liệu người xem'],['Cập nhật nhanh, đa định dạng','Văn bản, ảnh, video, tương tác'],['Phụ thuộc công nghệ','Nền tảng và thiết bị số']].map((o,i)=>BOXS(20,44+i*72,290,66,1,o[0],[o[1]],3+i*5.5)).join('')+
+ T(475,30,'Vai trò','h2',26)+BOXS(330,44,290,120,3,'Truyền thông và giáo dục',['Truyền thông, quảng bá thương hiệu','Giải trí','Giáo dục, đào tạo trực tuyến'],27)+
+ BOXS(330,180,290,120,4,'Kết nối và tạo giá trị',['Kết nối cộng đồng','Giá trị kinh tế: quảng cáo,','thương mại điện tử, sáng tạo'],33)},
+{t:"Chuỗi giá trị nội dung số",d:31000,
+ n:"Chuỗi giá trị nội dung số, Digital Content Value Chain, gồm năm bước. Một, sáng tạo ý tưởng: xác định chủ đề, mục tiêu, đối tượng. Hai, sản xuất nội dung: viết, quay, thiết kế, lập trình. Ba, phân phối nội dung: đăng tải, quảng bá. Bốn, tiêu thụ và phản hồi: người dùng xem, chia sẻ, phản hồi. Năm, đánh giá và tối ưu: phân tích dữ liệu, cải tiến nội dung.",
+ v:()=>T(320,34,'Chuỗi giá trị nội dung số','h2',0)+T(320,56,'Digital Content Value Chain','m',.4)+P('path','d="M74 106H566"','thin',1)+
+ [['Sáng tạo','ý tưởng','Ideation',['xác định chủ đề,','mục tiêu,','đối tượng']],['Sản xuất','nội dung','Production',['viết, quay,','thiết kế,','lập trình']],['Phân phối','nội dung','Distribution',['đăng tải,','quảng bá']],['Tiêu thụ','& phản hồi','Consumption',['xem, chia sẻ,','phản hồi']],['Đánh giá','& tối ưu','Optimization',['phân tích dữ','liệu, cải tiến','nội dung']]].map((o,i)=>{const x=20+i*123,k=[1,2,3,4,1][i],n=5+i*5.2;
+  return P('rect',`x="${x}" y="70" width="108" height="240" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+54}" cy="106" r="18"`,`s${k}`,n+.2)+T(x+54,112,i+1,'b big',n+.4)+T(x+54,160,o[0],'b',n+.6)+T(x+54,180,o[1],'b',n+.7)+T(x+54,206,o[2],'m',n+.9)+o[3].map((l,j)=>T(x+54,236+j*20,l,'m',n+1.1+j*.3)).join('')}).join('')},
+{t:"Yếu tố tạo giá trị trong chuỗi",d:41500,
+ n:"Có bốn yếu tố tạo giá trị trong chuỗi. Chất lượng sáng tạo: nội dung độc đáo, hấp dẫn. Công nghệ hỗ trợ: AI, Big Data, AR, VR và tự động hóa. Chiến lược phân phối: đúng kênh, đúng thời điểm. Dữ liệu người dùng: phản hồi giúp cải tiến nội dung. Giá trị được tạo ra khi nội dung chạm đến đúng nhu cầu người dùng. Kết luận: nội dung số là trung tâm của truyền thông và kinh tế sáng tạo; chuỗi giá trị giúp tối ưu hóa quy trình tạo, phân phối, cải tiến, và tối đa hóa tác động, lợi nhuận. Câu hỏi thảo luận: làm thế nào để tăng giá trị cho nội dung số của bạn?",
+ v:()=>[['Chất lượng sáng tạo','Nội dung độc đáo, hấp dẫn'],['Công nghệ hỗ trợ','AI, Big Data, AR/VR, tự động hóa'],['Chiến lược phân phối','Đúng kênh, đúng thời điểm'],['Dữ liệu người dùng','Phản hồi giúp cải tiến nội dung']].map((o,i)=>BOXS(20+i%2*310,25+Math.floor(i/2)*112,290,96,[1,2,3,4][i],o[0],[o[1]],2+i*4.5)).join('')+
+ BOXS(20,255,600,72,3,'Chạm đúng nhu cầu người dùng',['Nội dung số là trung tâm của truyền thông và kinh tế sáng tạo'],22)},
+{t:"Ba loại nội dung số",d:37000,
+ n:"Có ba loại nội dung số phổ biến; kết hợp hài hòa chúng giúp xây dựng thương hiệu bền vững. Một, nội dung sáng tạo: dựa trên ý tưởng độc đáo và tính nghệ thuật, truyền tải cảm xúc, câu chuyện, giá trị cá nhân hoặc văn hóa, như video nghệ thuật, vlog, phim ngắn. Hai, nội dung tiếp thị: phục vụ quảng bá và bán hàng, đo bằng lượt xem, CTR, chuyển đổi, doanh thu. Ba, nội dung tương tác: quiz, khảo sát, AR filter, mini game, chatbot, tạo trải nghiệm hai chiều.",
+ v:()=>T(320,34,'Các loại nội dung số','h2',0)+
+ BOXS(20,50,190,200,1,'Nội dung sáng tạo',['Gây ấn tượng','Ý tưởng độc đáo, nghệ thuật','Truyền tải cảm xúc, câu chuyện','Video nghệ thuật, vlog,','ảnh, truyện tranh, phim ngắn'],6)+
+ BOXS(225,50,190,200,2,'Nội dung tiếp thị',['Thúc đẩy hành động','Quảng bá và bán hàng','Bài PR, quảng cáo, blog SEO,','email, social post','KPI: xem, CTR, doanh thu'],19)+
+ BOXS(430,50,190,200,3,'Nội dung tương tác',['Duy trì gắn kết','Người dùng tham gia, phản hồi','Quiz, khảo sát, AR filter,','mini game, chatbot','Trải nghiệm hai chiều'],27)+
+ BOXS(20,265,600,70,4,'Kết hợp hài hòa ba loại',['Xây dựng thương hiệu bền vững'],34)},
+{t:"Các nền tảng nội dung số phổ biến",d:52000,
+ n:"Nền tảng nội dung số là nơi sáng tạo, chia sẻ và tiêu thụ nội dung trực tuyến; mỗi nền tảng có định dạng và thuật toán riêng, nên cần chọn nền tảng theo mục tiêu. TikTok: video ngắn dọc, thuật toán For You Page, hợp với nhận diện thương hiệu nhanh và viral. YouTube: nền tảng video lớn nhất thế giới, kiếm tiền bằng quảng cáo, thành viên, tài trợ. Instagram: ảnh và video ngắn, ưu tiên tương tác và thẩm mỹ. Podcast: âm thanh dạng chuỗi tập, xây dựng thương hiệu chuyên gia. Blog hoặc website: kênh sở hữu riêng, tối ưu SEO. LinkedIn: kết nối nghề nghiệp, xây thương hiệu chuyên môn.",
+ v:()=>[['TikTok','Video ngắn dọc, Gen Z','Thuật toán For You Page','Nhận diện nhanh, viral'],['YouTube','Video lớn nhất thế giới','Long-form và short-form','Quảng cáo, thành viên, tài trợ'],['Instagram','Ảnh, story, reel, live','Ưu tiên tương tác, thẩm mỹ','Hình ảnh thương hiệu'],['Podcast','Âm thanh dạng chuỗi tập','Spotify, Apple Podcasts','Thương hiệu chuyên gia'],['Blog / Website','Kênh sở hữu riêng (Owned)','Kiểm soát 100% dữ liệu','Tối ưu SEO, organic traffic'],['LinkedIn','Kết nối nghề nghiệp','Bài chia sẻ, infographic','Thương hiệu chuyên môn']].map((o,i)=>BOXS(20+(i%3)*205,20+Math.floor(i/3)*160,190,145,[1,2,4,3,1,2][i],o[0],[o[1],o[2],o[3]],[13,21,28,34,39,43.5][i])).join('')},
+{t:"Xu hướng nội dung mới",d:58500,
+ n:"Xu hướng nội dung mới thể hiện sự dịch chuyển từ xem sang tham gia, gồm năm xu hướng. Một, video ngắn: từ mười lăm giây đến một phút, dạng dọc, trên TikTok, Reels, Shorts; dễ lan truyền, hợp Gen Z, thương hiệu hợp tác với người sáng tạo. Hai, livestream: phát sóng trực tiếp, giao tiếp hai chiều, bán hàng, workshop, hỏi đáp; tích hợp AI và AR. Ba, podcast: nghe khi di chuyển, dễ xây lòng tin; kết hợp video và bản ghi tự động. Bốn, nội dung tạo bởi AI: tiết kiệm thời gian, chi phí, cá nhân hóa; thách thức về đạo đức, bản quyền, tính xác thực; hướng tới đồng sáng tạo giữa người và AI. Năm, nội dung cộng đồng, UGC: do người dùng tạo, tăng tin cậy, lan truyền tự nhiên; thương hiệu đưa UGC vào quảng cáo như Spark Ads.",
+ v:()=>[['Video ngắn','15 giây–1 phút, dọc: TikTok, Reels, Shorts; dễ lan truyền'],['Livestream','Hai chiều, chân thực: bán hàng, workshop, Q&A; có AI, AR'],['Podcast','Nghe khi di chuyển, dễ tạo tin cậy; video podcast + transcript'],['Nội dung tạo bởi AI','Tiết kiệm, cá nhân hóa; thách thức: đạo đức, bản quyền'],['Nội dung cộng đồng (UGC)','Người dùng tạo: tăng tin cậy, lan truyền; Spark Ads, Collab']].map((o,i)=>{const y=20+i*64,n=[6,18.5,26.5,34,46.5][i],k=[1,2,3,4,1][i];
+  return P('circle',`cx=\"60\" cy=\"${y+22}\" r=\"20\"`,`s${k} f${k}`,n)+T(60,y+28,i+1,'b big',n+.4)+T(100,y+18,o[0],'b big',n+.7,'start')+T(100,y+40,o[1],'m',n+.9,'start')}).join('')},
+{t:"Mục tiêu truyền thông",d:66000,
+ n:"Chương hai: phân tích đối tượng và mục tiêu nội dung. Mọi hoạt động sáng tạo bắt đầu bằng câu hỏi: mục tiêu truyền thông của chúng ta là gì? Có bốn mục tiêu phổ biến. Một, nhận diện thương hiệu: làm công chúng biết đến thương hiệu, nội dung gây ấn tượng nhanh, giàu cảm xúc, như video ngắn, meme, hashtag; đo bằng lượt hiển thị, độ phủ. Hai, tương tác: khuyến khích bình luận, chia sẻ, qua livestream, minigame, bình chọn; đo bằng like, share, comment. Ba, chuyển đổi: thúc đẩy mua hàng, đăng ký, bằng quảng cáo video, email, landing page, lời kêu gọi hành động mạnh; đo bằng tỷ lệ chuyển đổi, doanh thu. Bốn, giáo dục: truyền đạt kiến thức chính xác, dài hạn, qua blog, video hướng dẫn, podcast; đo bằng thời gian xem, tỉ lệ quay lại. Cần kết hợp linh hoạt thành chu trình bền vững: nhận diện, tương tác, chuyển đổi, duy trì giáo dục.",
+ v:()=>[['Nhận diện thương hiệu',['Gây ấn tượng nhanh, giàu cảm xúc','Video ngắn, meme, hashtag','Đo: hiển thị, độ phủ, lượt xem']],['Tương tác',['Khuyến khích bình luận, chia sẻ','Livestream, minigame, bình chọn','Đo: like, share, comment']],['Chuyển đổi',['Thúc đẩy mua hàng, đăng ký, tải app','Quảng cáo video, email, landing page','Đo: tỷ lệ chuyển đổi, doanh thu']],['Giáo dục, cung cấp giá trị',['Kiến thức chính xác, dài hạn','Blog, video hướng dẫn, podcast','Đo: thời gian xem, tỉ lệ quay lại']]].map((o,i)=>BOXS(20+(i%2)*310,15+Math.floor(i/2)*135,300,125,[1,2,3,4][i],o[0],o[1],[12,26,37,49][i])).join('')+
+ BOXS(20,283,600,45,1,'Nhận diện → Tương tác → Chuyển đổi → Giáo dục',[],54)},
+{t:"Chân dung người dùng (User Persona)",d:60000,
+ n:"Phân tích chân dung người dùng, User Persona, là chân dung điển hình đại diện cho một nhóm đối tượng mục tiêu, xây dựng từ hành vi tiêu thụ, nhu cầu, động cơ và nền tảng họ dùng. Một persona gồm: thông tin cơ bản, mục tiêu cá nhân, hành vi nội dung, điểm đau và động lực. Persona TikTok: mười sáu đến ba mươi tuổi, Gen Z; xem nhanh, lướt liên tục, dễ chạy theo trend; muốn giải trí, bắt trend; hợp video ngắn, hài hước hoặc truyền cảm hứng. Persona YouTube: mười tám đến bốn mươi tuổi; xem video sâu năm đến hai mươi phút, sẵn sàng theo dõi, bình luận; muốn học hỏi, giải trí chất lượng; hợp vlog, review, hướng dẫn. Persona blog: hai mươi hai đến bốn mươi lăm tuổi; vào từ Google, cần thông tin chính xác, đọc lý tính; hợp bài dài, infographic, hướng dẫn. Không thể tạo nội dung hiệu quả nếu không hiểu người sẽ xem nó.",
+ v:()=>BOXS(20,15,600,70,1,'Yếu tố của một User Persona',['Thông tin cơ bản · Mục tiêu · Hành vi · Điểm đau · Động lực'],10)+
+ [['TikTok',['16–30 tuổi, Gen Z','Xem nhanh, lướt liên tục','Chạy theo trend, cảm xúc','Mục tiêu: giải trí, bắt trend','Video ngắn, hài hước']],['YouTube',['18–40 tuổi, đa ngành','Xem sâu 5–20 phút','Theo dõi, bình luận, quay lại','Mục tiêu: học hỏi, giải trí','Vlog, review, hướng dẫn']],['Blog',['22–45 tuổi','Truy cập qua Google Search','Cần thông tin chính xác','Đọc lý tính, có mục tiêu','Bài dài, infographic, SEO']]].map((o,i)=>BOXS(20+i*205,98,190,225,[2,3,4][i],o[0],o[1],[20,35,46][i])).join('')},
+{t:"Phân tích hành vi người dùng",d:63000,
+ n:"Phân tích hành vi người dùng là thu thập và diễn giải dữ liệu về cách họ tìm kiếm, tương tác, chia sẻ, cùng thái độ và cảm xúc; giúp hiểu nhu cầu thực tế, định hướng chiến lược và dự đoán trào lưu. Công cụ thứ nhất: Google Trends, theo dõi tần suất tìm kiếm từ khóa theo thời gian, so sánh chủ đề, chọn chủ đề hot, lập kế hoạch SEO, phát hiện xu hướng mùa vụ; ví dụ AI-generated content tăng mạnh đầu năm hai nghìn không trăm hai mươi lăm. Công cụ thứ hai: Social Listening, theo dõi bài đăng, bình luận, hashtag, lượt đề cập và cảm xúc trên mạng xã hội. Ba công cụ phổ biến: BuzzMetrics theo dõi người dùng Việt; Talkwalker đa ngôn ngữ, theo thời gian thực, phát hiện khủng hoảng sớm; Brandwatch tích hợp AI phân tích cảm xúc. Kết hợp cả hai để ra quyết định dựa trên dữ liệu.",
+ v:()=>BOXS(20,15,300,150,1,'Google Trends',['Tần suất tìm kiếm theo thời gian','So sánh nhiều chủ đề','Chọn chủ đề hot, lên lịch SEO','Xu hướng mùa vụ'],15)+
+ BOXS(330,15,290,150,2,'Social Listening',['Bài đăng, bình luận, hashtag','Cảm xúc tích cực / tiêu cực','Đo phản hồi, hiệu quả chiến dịch','Kết hợp với Google Trends'],32)+
+ [['BuzzMetrics',['Hành vi người dùng Việt','Cảm xúc, mức độ lan tỏa','Báo cáo thương hiệu, đối thủ']],['Talkwalker',['Đa ngôn ngữ, toàn cầu','Thời gian thực, sentiment','Phát hiện khủng hoảng sớm']],['Brandwatch',['AI phân tích cảm xúc','Theo dõi brand mentions','Phân tích đối thủ']]].map((o,i)=>BOXS(20+i*205,178,190,145,[3,4,1][i],o[0],o[1],[41,46,51][i])).join('')},
+{t:"Các loại nội dung số phổ biến",d:49000,
+ n:"Chương ba: phân loại và đánh giá nội dung số. Nội dung số là linh hồn của trải nghiệm kỹ thuật số, trung tâm của truyền thông, marketing và giáo dục số. Chương gồm bốn phần: các loại nội dung, đặc điểm từng loại, tiêu chí đánh giá chất lượng, và phương pháp kiểm định tính cập nhật. Sáu loại nội dung số phổ biến. Văn bản: bài viết, blog, tin tức, e-book, caption. Hình ảnh: ảnh minh họa, infographic, meme, poster, banner. Video: video ngắn, vlog, phim, bài giảng. Âm thanh: podcast, nhạc, audiobook. Đồ họa: biểu đồ, sơ đồ, motion graphics. Tương tác: quiz, mini-game, khảo sát, bản đồ động, AR, VR.",
+ v:()=>[['Văn bản',['Bài viết, blog, tin tức,','e-book, caption MXH']],['Hình ảnh',['Ảnh minh họa, infographic,','meme, poster, banner']],['Video',['Video ngắn, vlog,','phim, bài giảng']],['Âm thanh',['Podcast, nhạc,','audiobook, voice content']],['Đồ họa',['Biểu đồ, sơ đồ, minh họa','dữ liệu, motion graphics']],['Tương tác',['Quiz, mini-game, khảo sát,','bản đồ động, AR/VR']]].map((o,i)=>BOXS(20+(i%3)*205,20+Math.floor(i/3)*160,190,145,[1,2,3,4,1,2][i],o[0],o[1],[18,23,28,33,37.5,42][i])).join('')},
+{t:"Đặc điểm của từng loại nội dung",d:42500,
+ n:"Mỗi loại nội dung có ưu điểm và hạn chế riêng. Văn bản truyền đạt thông tin chi tiết, dễ SEO, nhưng dễ nhàm chán nếu dài, ít hình ảnh. Hình ảnh trực quan, thu hút nhanh, nhưng thiếu chiều sâu nội dung. Video sinh động, cảm xúc mạnh, nhưng tốn thời gian sản xuất. Âm thanh tiện lợi, có thể nghe mọi lúc, nhưng khó lan tỏa nhanh trên mạng xã hội. Đồ họa tăng khả năng ghi nhớ, nhưng cần kỹ năng thiết kế. Tương tác tăng trải nghiệm người dùng, nhưng phức tạp về công nghệ.",
+ v:()=>T(36,36,'Loại nội dung','b',0,'start')+T(150,36,'Ưu điểm chính','b',.2,'start')+T(400,36,'Hạn chế','b',.4,'start')+
+ [['Văn bản','Truyền đạt thông tin chi tiết, dễ SEO','Dễ nhàm chán nếu dài, ít hình ảnh'],['Hình ảnh','Trực quan, thu hút nhanh','Thiếu chiều sâu nội dung'],['Video','Sinh động, cảm xúc mạnh','Tốn thời gian sản xuất'],['Âm thanh','Tiện lợi, có thể nghe mọi lúc','Khó lan tỏa nhanh trên MXH'],['Đồ họa','Tăng khả năng ghi nhớ','Cần kỹ năng thiết kế'],['Tương tác','Tăng trải nghiệm người dùng','Phức tạp về công nghệ']].map((o,i)=>{const y=50+i*47,n=[3,10,16,21.5,29,34][i],k=[1,2,3,4,1,2][i];
+  return P('rect',`x=\"20\" y=\"${y}\" width=\"600\" height=\"40\" rx=\"10\"`,`s${k} f${k}`,n)+T(36,y+26,o[0],'b',n+.3,'start')+T(150,y+26,o[1],'m',n+.6,'start')+T(400,y+26,o[2],'m',n+.9,'start')}).join('')},
+{t:"Tiêu chí đánh giá chất lượng nội dung số",d:42500,
+ n:"Năm tiêu chí đánh giá chất lượng nội dung số. Một, tính mới: nội dung độc đáo, sáng tạo, không sao chép. Hai, tính chính xác: dữ liệu, dẫn chứng, nguồn tin đáng tin cậy. Ba, tính phù hợp với mục tiêu: phù hợp đối tượng và mục tiêu truyền thông. Bốn, tính hấp dẫn: gây chú ý, gợi cảm xúc, khuyến khích tương tác. Năm, tính bản quyền: tôn trọng quyền sở hữu trí tuệ, dùng tài nguyên hợp pháp. Nội dung đạt chuẩn bằng mới, cộng chính xác, cộng phù hợp, cộng hấp dẫn, cộng hợp pháp.",
+ v:()=>RW([['Tính mới (Originality)','Độc đáo, sáng tạo, không sao chép'],['Tính chính xác (Accuracy)','Dữ liệu, dẫn chứng, nguồn tin đáng tin cậy'],['Phù hợp mục tiêu (Relevance)','Hợp đối tượng và mục tiêu truyền thông'],['Tính hấp dẫn (Engagement)','Gây chú ý, gợi cảm xúc, khuyến khích tương tác'],['Tính bản quyền (Copyright)','Tôn trọng sở hữu trí tuệ, dùng tài nguyên hợp pháp']],[2,7.5,14,21,27.5])+
+ BOXS(20,285,600,45,3,'Mới + Chính xác + Phù hợp + Hấp dẫn + Hợp pháp',[],34)},
+{t:"Kiểm định tính cập nhật",d:52000,
+ n:"Phương pháp kiểm định tính cập nhật giúp bảo đảm độ tin cậy và giữ giá trị lâu dài, gồm bốn cách. Một, truy xuất nguồn: kiểm tra độ tin cậy của tác giả, tổ chức, website gốc. Hai, kiểm tra ngày xuất bản: xem nội dung còn hợp thời, phù hợp bối cảnh hiện tại không. Ba, mức độ tương tác thực tế: đánh giá qua lượt xem, bình luận, chia sẻ, phản hồi. Bốn, cập nhật định kỳ: với website, blog, kênh YouTube cần rà soát, chỉnh sửa nội dung cũ. Ví dụ: blog tin tức cũ nhưng SEO cao, cần chỉnh lại tiêu đề, bổ sung số liệu mới. Infographic thống kê nguồn không rõ, cần truy xuất lại dữ liệu gốc từ cơ quan thống kê.",
+ v:()=>RW([['Truy xuất nguồn','Kiểm tra độ tin cậy của tác giả, tổ chức, website gốc'],['Kiểm tra ngày xuất bản','Nội dung còn hợp thời, phù hợp bối cảnh hiện tại?'],['Mức độ tương tác thực tế','Lượt xem, bình luận, chia sẻ, phản hồi người dùng'],['Cập nhật định kỳ','Website, blog, YouTube: rà soát, chỉnh sửa nội dung cũ']],[8,14,21,27.5])+
+ BOXS(20,235,300,95,2,'Ví dụ: blog tin tức',['SEO cao nhưng nội dung cũ:','chỉnh tiêu đề, thêm số liệu mới'],35)+
+ BOXS(330,235,290,95,4,'Ví dụ: infographic',['Nguồn số liệu không rõ:','truy xuất dữ liệu gốc từ thống kê'],42.5)},
+{t:"Sáu bước sáng tạo nội dung số",d:33500,
+ n:"Chương bốn: quy trình sáng tạo nội dung số và công cụ hỗ trợ. Phần một là sáu bước cơ bản. Một, nghiên cứu chủ đề và xu hướng. Hai, xác định đối tượng và mục tiêu. Ba, xây dựng outline hoặc storyboard. Bốn, sản xuất và biên tập nội dung. Năm, xuất bản và phân phối đa nền tảng. Sáu, đo lường và tối ưu hóa. Phần hai giới thiệu các công cụ hỗ trợ: viết nội dung, thiết kế, dựng video, âm thanh và quản lý dự án.",
+ v:()=>RW([['Nghiên cứu chủ đề và xu hướng','Xu hướng thị trường, hành vi người dùng'],['Xác định đối tượng và mục tiêu','Đối tượng mục tiêu, mục tiêu truyền thông'],['Xây dựng outline / storyboard','Cấu trúc nội dung, cảnh, lời thoại, hình'],['Sản xuất và biên tập nội dung','Viết, quay, ghi âm, thiết kế, dựng hậu kỳ'],['Xuất bản và phân phối đa nền tảng','Đăng đúng nền tảng, đúng thời điểm'],['Đo lường và tối ưu hóa','KPI, phản hồi khán giả, cải thiện']],[7,10.5,14,17.5,21,24.5])},
+{t:"Bước 1–2: Nghiên cứu, đối tượng và mục tiêu",d:42000,
+ n:"Bước một, nghiên cứu chủ đề và xu hướng: phân tích thị trường và hành vi người dùng qua Google Trends, TikTok Creative Center, YouTube Analytics, BuzzSumo; tìm chủ đề đang nổi, và khoảng trống nội dung mà đối thủ chưa khai thác. Đây là giai đoạn định hướng chiến lược cho toàn bộ quy trình. Bước hai, xác định đối tượng và mục tiêu: độ tuổi, giới tính, hành vi, nhu cầu, nền tảng yêu thích; xây dựng user persona; chọn mục tiêu nhận diện, tương tác, chuyển đổi hoặc giáo dục; đặt mục tiêu SMART.",
+ v:()=>BOXS(20,20,300,260,1,'Bước 1: Nghiên cứu chủ đề',['Google Trends, TikTok Creative','Center, YouTube Analytics, BuzzSumo','Tìm chủ đề đang nổi (trending)','Tìm khoảng trống nội dung','Hỏi: khán giả quan tâm gì, vì sao?'],1)+
+ BOXS(330,20,290,260,2,'Bước 2: Đối tượng, mục tiêu',['Tuổi, giới, hành vi, nhu cầu','Xây dựng User Persona','Mục tiêu: nhận diện, tương tác,','chuyển đổi, giáo dục','SMART: Cụ thể, Đo lường, Khả thi,','Phù hợp, Có thời hạn'],22)},
+{t:"Bước 3–4: Outline, sản xuất và biên tập",d:48000,
+ n:"Bước ba, xây dựng outline hoặc storyboard: outline gồm mở bài, phát triển, kết luận, câu chuyện chính, thông điệp cốt lõi, key visual; storyboard xác định từng cảnh, lời thoại, nhạc nền, hình minh họa; phối hợp biên tập viên, thiết kế, quay dựng, kịch bản, voice talent. Outline rõ ràng giúp tiết kiệm năm mươi đến bảy mươi phần trăm thời gian sản xuất. Bước bốn, sản xuất và biên tập: viết bài, quay phim, ghi âm, thiết kế, dựng hậu kỳ; biên tập theo ba tiêu chí chính xác, nhất quán, tối ưu cho từng nền tảng; dùng Canva, CapCut, Premiere, ChatGPT, Grammarly, Notion.",
+ v:()=>BOXS(20,20,300,260,3,'Bước 3: Outline / storyboard',['Mở bài – Phát triển – Kết luận','Câu chuyện chính, key visual','Storyboard: cảnh, lời thoại, nhạc','Đội: biên tập, thiết kế, quay dựng','Tiết kiệm 50–70% thời gian'],1)+
+ BOXS(330,20,290,260,4,'Bước 4: Sản xuất, biên tập',['Viết, quay, ghi âm, thiết kế, dựng','3 tiêu chí: Chính xác, Nhất quán,','Tối ưu cho từng nền tảng','Canva, CapCut, Premiere,','ChatGPT, Grammarly, Notion'],25)},
+{t:"Bước 5–6: Xuất bản, đo lường và tối ưu",d:49000,
+ n:"Bước năm, xuất bản và phân phối đa nền tảng: lên lịch theo hành vi người dùng, TikTok và Reels dùng video ngắn, giờ cao điểm buổi tối; YouTube nội dung dài, phát hành định kỳ; blog và LinkedIn bài chuyên sâu, SEO. Áp dụng nguyên tắc ba R: định dạng lại, tái sử dụng, chia sẻ lại, giữ thông điệp nhất quán trên mọi kênh. Bước sáu, đo lường và tối ưu hóa: KPI gồm độ phủ, tương tác, chuyển đổi, duy trì; dùng Google Analytics, Meta Insights, YouTube Studio, TikTok Analytics; phân tích phản hồi để cải thiện. Đo lường là khởi đầu của vòng sáng tạo mới.",
+ v:()=>BOXS(20,20,300,250,1,'Bước 5: Xuất bản, phân phối',['TikTok / Reels: video ngắn, tối','YouTube: nội dung dài, định kỳ','Blog / LinkedIn: chuyên sâu, SEO','3R: Reformat – Repurpose – Repost','Thông điệp nhất quán mọi kênh'],1)+
+ BOXS(330,20,290,250,2,'Bước 6: Đo lường, tối ưu',['KPI: Reach, Engagement,','Conversion, Retention','Google Analytics, Meta Insights,','YouTube Studio, TikTok Analytics','Phân tích phản hồi để cải thiện'],26)+
+ BOXS(20,283,600,45,3,'Đo lường là khởi đầu của vòng sáng tạo mới',[],44)},
+{t:"Công cụ hỗ trợ: nhóm viết nội dung",d:54000,
+ n:"Phần hai: các công cụ hỗ trợ sáng tạo nội dung số. Công cụ không thay thế sáng tạo, nhưng làm cho sáng tạo mạnh mẽ hơn. Có năm nhóm: viết nội dung, thiết kế, dựng video, âm thanh và quản lý dự án. Mục tiêu là hiểu chức năng, ưu điểm, cách ứng dụng từng nhóm và biết kết hợp chúng để tối ưu quy trình. Công cụ viết nội dung hỗ trợ lên ý tưởng, viết, biên tập, tối ưu nhanh hơn. Notion AI viết và tóm tắt ngay trong môi trường quản lý dự án, gợi ý cấu trúc, tiêu đề. ChatGPT giúp lên ý tưởng, viết bài, mô tả sản phẩm, kịch bản, theo giọng điệu thương hiệu hoặc chuẩn SEO. Jasper AI chuyên cho copywriting marketing, có sẵn mẫu quảng cáo, email, blog, caption.",
+ v:()=>BOXS(20,15,600,70,1,'Năm nhóm công cụ',['Viết · Thiết kế · Video · Âm thanh · Quản lý dự án'],6)+
+ [['Notion AI',['Viết, tóm tắt trong môi','trường quản lý dự án','Gợi ý cấu trúc, tiêu đề,','danh sách việc']],['ChatGPT',['Ý tưởng, bài viết, mô tả','sản phẩm, kịch bản video','Viết theo giọng thương hiệu','hoặc SEO-friendly']],['Jasper AI',['AI cho marketing copywriting','Mẫu: quảng cáo, email,','blog, caption mạng xã hội']]].map((o,i)=>BOXS(20+i*205,95,190,180,[2,3,4][i],o[0],o[1],[26,35,45][i])).join('')+
+ BOXS(20,285,600,45,3,'AI giúp tiết kiệm thời gian, mở rộng ý tưởng',[],49)},
+{t:"Công cụ thiết kế và dựng video",d:61000,
+ n:"Công cụ thiết kế hình ảnh tạo ảnh, infographic, banner, logo nhanh và chuyên nghiệp. Canva có kho template khổng lồ, dễ dùng, có ảnh AI, video ngắn, thuyết trình. Figma dành cho thiết kế giao diện, cộng tác thời gian thực, quản lý phiên bản. Adobe Express là bản đơn giản của Adobe, AI gợi ý bố cục và màu sắc. Thiết kế tốt giúp nội dung nổi bật và dễ được chia sẻ. Công cụ dựng video sản xuất video ngắn, vlog, quảng cáo, bài giảng. CapCut phổ biến trên TikTok, có hiệu ứng, template, AI cắt cảnh và phụ đề tự động. Premiere Pro chuyên nghiệp cho video dài, quảng cáo, phim. Descript biên tập video qua văn bản, xóa từ thừa, thêm phụ đề. Video là hình thức nội dung chủ đạo trong kỷ nguyên truyền thông số.",
+ v:()=>[['Canva',['Thiết kế · dễ dùng','Kho template khổng lồ','Có ảnh AI, video ngắn']],['Figma',['Thiết kế · UI/UX','Cộng tác nhóm thời gian thực','Chia sẻ, bình luận, phiên bản']],['Adobe Express',['Thiết kế · bản gọn Adobe','Dễ làm bài cho mạng xã hội','AI gợi ý bố cục, màu sắc']],['CapCut',['Dựng video · TikTok','Hiệu ứng, template sẵn','AI cắt cảnh, phụ đề tự động']],['Premiere Pro',['Dựng video · chuyên nghiệp','Video dài, quảng cáo, phim,','bài giảng chuyên sâu']],['Descript',['Dựng video · qua văn bản','Nhận diện giọng, xóa từ thừa,','thêm phụ đề']]].map((o,i)=>BOXS(20+(i%3)*205,20+Math.floor(i/3)*160,190,145,i<3?1:2,o[0],o[1],[6,13.5,19.5,36,43.5,49][i])).join('')},
+{t:"Âm thanh, quản lý dự án và tổng kết",d:62000,
+ n:"Công cụ âm thanh và nhạc nền tạo, chỉnh sửa, phối âm cho video, podcast, quảng cáo. Audacity là phần mềm mã nguồn mở, mạnh về chỉnh sửa, lọc tạp âm, hợp thu podcast. Soundraw dùng AI tạo nhạc nền độc quyền theo phong cách, tâm trạng, độ dài, giúp tránh vấn đề bản quyền. AIVA sáng tác nhạc nền phim, video, game, cho chọn cảm xúc, thể loại, tốc độ. Công cụ quản lý dự án giúp phân công và theo dõi tiến độ. Trello quản lý theo Kanban, dễ dùng, hợp nhóm nhỏ. Miro lập bản đồ tư duy, brainstorm, xây dựng chiến lược, cộng tác thời gian thực cho nhóm lớn. Tóm lại: công cụ là phương tiện, sáng tạo vẫn là linh hồn; hãy chọn công cụ phù hợp mục tiêu, kỹ năng, quy mô dự án, và kết hợp hài hòa giữa con người và công nghệ.",
+ v:()=>[['Audacity',['Âm thanh · mã nguồn mở','Chỉnh sửa, lọc tạp âm','Thu podcast, giọng đọc']],['Soundraw',['Âm thanh · AI tạo nhạc nền','Theo phong cách, tâm trạng,','độ dài; tránh lỗi bản quyền']],['AIVA',['Âm thanh · AI sáng tác','Nhạc nền phim, video, game','Chọn cảm xúc, thể loại, tốc độ']]].map((o,i)=>BOXS(20+i*205,15,190,125,3,o[0],o[1],[5,12.5,21.5][i])).join('')+
+ BOXS(20,150,300,120,1,'Trello',['Quản lý dự án · Kanban Board','Dễ dùng, trực quan','Hợp nhóm sản xuất nhỏ'],33.5)+
+ BOXS(330,150,290,120,4,'Miro',['Quản lý dự án · bản đồ tư duy','Brainstorm, xây chiến lược','Cộng tác thời gian thực, nhóm lớn'],39.5)+
+ BOXS(20,280,600,48,2,'Công cụ là phương tiện – sáng tạo vẫn là linh hồn',[],46)},
+{t:"Chuyển đổi nội dung giữa các định dạng",d:46500,
+ n:"Chương năm: kỹ thuật biên tập, chuyển đổi và tái sử dụng nội dung số, gồm chuyển đổi nội dung giữa các định dạng, kỹ năng cốt lõi làm chủ thông tin, và dùng AI trong sáng tạo nội dung. Chuyển đổi nội dung là biến một nội dung gốc sang các định dạng khác như blog, video, slide để phù hợp nhiều kênh và nhóm người xem. Lợi ích: tăng tuổi thọ và phạm vi lan tỏa trên đa nền tảng; tiết kiệm thời gian, không làm mới từ đầu; tùy chỉnh theo hành vi và nền tảng người dùng; tăng nhận diện thương hiệu và SEO. Một ý tưởng, nhiều định dạng, đa giá trị.",
+ v:()=>BOXS(20,15,600,70,1,'Chuyển đổi nội dung',['Một nội dung gốc → nhiều định dạng: blog, video, slide...'],12)+
+ [['Tăng tuổi thọ, lan tỏa','trên đa nền tảng'],['Tiết kiệm thời gian,','không làm mới từ đầu'],['Tùy chỉnh theo hành vi','và nền tảng người dùng'],['Tăng nhận diện thương','hiệu và SEO']].map((o,i)=>BOXS(20+(i%2)*310,95+Math.floor(i/2)*105,290,95,[2,3,4,1][i],['Lợi ích 1','Lợi ích 2','Lợi ích 3','Lợi ích 4'][i],o,[26,31,36.5,41][i])).join('')+
+ T(320,325,'Một ý tưởng – nhiều định dạng – đa giá trị','m',42)},
+{t:"Quy trình và mô hình chuyển đổi",d:42500,
+ n:"Quy trình tổng quát gồm bốn bước: ý tưởng gốc hoặc bài nội dung chính; phân tích giá trị cốt lõi và điểm nổi bật cần tái sử dụng; chuyển đổi sang định dạng mới như video, bài viết, slide; xuất bản trên các nền tảng phù hợp. Mỗi bước cần điều chỉnh giọng điệu, độ dài, hình thức cho phù hợp với kênh. Theo mô hình đa hướng, một nội dung gốc có thể thành bài blog, video, bài mạng xã hội, slide, tạo chuỗi sản phẩm truyền thông phong phú và tiết kiệm tài nguyên. Hãy bắt đầu từ một bài viết gốc. Create once, repurpose everywhere.",
+ v:()=>[['Bước 1',['Ý tưởng gốc,','bài nội dung chính']],['Bước 2',['Phân tích giá trị','cốt lõi, điểm nổi bật']],['Bước 3',['Chuyển sang định dạng','mới: video, bài, slide']],['Bước 4',['Xuất bản trên các','nền tảng phù hợp']]].map((o,i)=>BOXS(20+i*155,15,135,135,[1,2,3,4][i],o[0],o[1],[1,6,11.5,17][i])).join('')+
+ T(320,178,'Mô hình đa hướng: một nội dung gốc','b big',25)+
+ ['Bài blog','Video','Bài mạng xã hội','Slide'].map((s,i)=>BOXS(20+i*155,195,135,75,[1,2,3,4][i],s,[],27+i*3)).join('')+
+ BOXS(20,285,600,45,3,'Create once — repurpose everywhere',[],39.5)},
+{t:"Ba hướng chuyển đổi cụ thể",d:53000,
+ n:"Ba hướng chuyển đổi cụ thể. Từ blog sang video ngắn: chọn ba đến năm ý chính, viết lại thành kịch bản nói tự nhiên, thêm hình minh họa, đồ họa hoặc infographic, dùng CapCut, Canva Video hoặc Descript. Ví dụ: bài mười mẹo tăng tương tác thành video ba mẹo nhanh. Từ video sang bài viết hoặc blog: dùng Descript hoặc YouTube Transcript chuyển giọng nói thành văn bản, biên tập có cấu trúc mở, thân, kết, thêm hình hoặc trích dẫn, tối ưu SEO. Từ bài viết sang slide: chọn tiêu đề, trích dẫn, dữ liệu quan trọng, biến đoạn văn thành gạch đầu dòng, thêm hình, biểu đồ, icon, dùng Canva hoặc PowerPoint.",
+ v:()=>[['Blog → Video ngắn',['Chọn 3–5 ý chính','Viết kịch bản nói tự nhiên','Thêm hình, đồ họa','CapCut, Canva Video, Descript','VD: “10 mẹo” → “3 mẹo nhanh”']],['Video → Bài blog',['Chuyển giọng nói thành chữ','(Descript, YouTube Transcript)','Biên tập: mở – thân – kết','Thêm hình, trích dẫn','Tối ưu SEO']],['Bài viết → Slide',['Chọn tiêu đề, dữ liệu chính','Đoạn văn → gạch đầu dòng','Thêm hình, biểu đồ, icon','Canva hoặc PowerPoint','VD: “Xu hướng 2025” → Top 5']]].map((o,i)=>BOXS(20+i*205,40,190,230,[1,2,3][i],o[0],o[1],[1,21,37][i])).join('')},
+{t:"Lưu ý và chu trình tái sử dụng",d:46000,
+ n:"Khi chuyển đổi nội dung cần lưu ý: rút gọn cho phù hợp định dạng mới; điều chỉnh giọng điệu và phong cách theo nền tảng; thêm yếu tố trực quan; giữ thông điệp cốt lõi thống nhất giữa các phiên bản; theo dõi hiệu quả từng định dạng. Mục tiêu không chỉ là tái sử dụng mà là tái tạo giá trị. Chu trình tái sử dụng nội dung gồm sáu bước: một, nghiên cứu ý tưởng; hai, sáng tạo nội dung gốc; ba, chuyển đổi định dạng; bốn, xuất bản đa nền tảng; năm, đo lường hiệu quả; sáu, tối ưu hóa và cải tiến cho chu kỳ tiếp theo.",
+ v:()=>BOXS(20,15,285,300,2,'Lưu ý khi chuyển đổi',['Rút gọn theo định dạng mới','Giọng điệu, phong cách từng nền tảng','Thêm yếu tố trực quan','Giữ thông điệp cốt lõi thống nhất','Theo dõi hiệu quả từng định dạng','“Tái sử dụng” → “tái tạo giá trị”'],1)+
+ ['Nghiên cứu ý tưởng','Sáng tạo nội dung gốc','Chuyển đổi định dạng','Xuất bản đa nền tảng','Đo lường hiệu quả','Tối ưu hóa và cải tiến'].map((s,i)=>{const y=15+i*52,n=25.5+i*3,k=[1,3,4,2,1,3][i];
+  return P('circle',`cx=\"350\" cy=\"${y+20}\" r=\"18\"`,`s${k} f${k}`,n)+T(350,y+26,i+1,'b',n+.3)+T(382,y+26,s,'b big',n+.5,'start')}).join('')},
+{t:"Ví dụ và lưu ý triển khai chu trình",d:43000,
+ n:"Ví dụ áp dụng chu trình: một bài blog năm chiến lược xây dựng thương hiệu cá nhân được tái sử dụng thành video YouTube năm phút tóm tắt; ba đoạn ngắn cho TikTok hoặc Reels; podcast thảo luận sâu cùng khách mời; slide chia sẻ trong workshop; và bản tin email gửi người theo dõi. Một nội dung gốc, nhiều kênh, gia tăng năm lần giá trị. Khi triển khai: xác định rõ mục tiêu trước; tùy chỉnh độ dài, giọng điệu, hình thức; giữ nhất quán thương hiệu; cập nhật định kỳ theo dữ liệu. Đây là chiến lược dài hạn, áp dụng linh hoạt sáu bước.",
+ v:()=>BOXS(20,15,300,260,2,'Ví dụ: blog “5 chiến lược”',['Video YouTube 5 phút tóm tắt','3 đoạn ngắn cho TikTok/Reels','Podcast thảo luận cùng khách mời','Slide chia sẻ trong workshop','Bản tin email cho người theo dõi'],1)+
+ BOXS(330,15,290,260,3,'Lưu ý khi triển khai',['Xác định rõ mục tiêu trước','Tùy chỉnh độ dài, giọng điệu','Nhất quán thương hiệu','Cập nhật theo dữ liệu đo lường'],24)+
+ BOXS(20,285,600,45,4,'Một nội dung gốc, nhiều kênh: gia tăng 5 lần giá trị',[],36)},
+{t:"Ba kỹ năng làm chủ thông tin",d:44000,
+ n:"Phần hai: kỹ năng cốt lõi của người sáng tạo nội dung, làm chủ thông tin. Trong môi trường nội dung số, thông tin đến từ nhiều nguồn và định dạng. Ba kỹ năng giúp xử lý hiệu quả: một, tóm tắt thông tin, hiểu nhanh, diễn đạt súc tích; hai, trích xuất thông tin, chọn lọc nội dung giá trị; ba, định dạng lại nội dung, trình bày theo cách mới, phù hợp từng nền tảng. Kết hợp lại, ba kỹ năng tiết kiệm thời gian sản xuất, tăng độ hấp dẫn và dễ hiểu; thêm AI và sáng tạo, bạn biến một ý tưởng thành nhiều sản phẩm nội dung. Hiểu nhanh, chọn đúng, trình bày đẹp.",
+ v:()=>RW([['Tóm tắt thông tin','Hiểu nhanh, diễn đạt súc tích'],['Trích xuất thông tin','Chọn lọc nội dung giá trị'],['Định dạng lại nội dung','Trình bày mới, hợp từng nền tảng']],[9,13,17.5])+
+ BOXS(20,185,290,100,2,'Kết hợp ba kỹ năng',['Tiết kiệm thời gian sản xuất','Tăng hấp dẫn, dễ hiểu'],24)+
+ BOXS(330,185,290,100,3,'Thêm AI + sáng tạo',['Một ý tưởng → nhiều sản phẩm','Tiết kiệm thời gian, tăng chất lượng'],33)+
+ T(320,325,'Hiểu nhanh – chọn đúng – trình bày đẹp.','m',40)},
+{t:"Tóm tắt, trích xuất, định dạng lại",d:63000,
+ n:"Kỹ năng tóm tắt là rút gọn nội dung gốc mà vẫn giữ thông điệp chính, ngắn gọn, dễ hiểu, dễ nhớ. Phương pháp: xác định ý chính mỗi đoạn, loại bỏ ví dụ và chi tiết phụ, dùng câu ngắn, động từ mạnh, từ khóa. Ví dụ: nội dung số giúp doanh nghiệp tiếp cận khách hàng đa kênh, tóm tắt thành nội dung số mở rộng phạm vi tiếp cận. Kỹ năng trích xuất là chọn lọc, sắp xếp yếu tố quan trọng từ nguồn lớn: xác định từ khóa, dữ kiện trọng tâm, dùng mô hình năm W một H, dùng bảng, sơ đồ, mindmap; hỗ trợ bởi ChatGPT, Notion AI, Zotero, ScholarAI. Kỹ năng định dạng lại là chuyển nội dung sang định dạng mới phù hợp nền tảng, như blog sang video ngắn, báo cáo sang infographic; giữ thông điệp gốc, tối ưu độ dài và hình ảnh, điều chỉnh phong cách theo đối tượng.",
+ v:()=>[['Tóm tắt thông tin',['Rút gọn, giữ ý chính','1. Ý chính mỗi đoạn','2. Bỏ ví dụ, chi tiết phụ','3. Câu ngắn, động từ mạnh','VD: gốc dài → “Nội dung số','mở rộng phạm vi tiếp cận”']],['Trích xuất thông tin',['Chọn lọc yếu tố quan trọng','Từ khóa, dữ kiện trọng tâm','Mô hình 5W1H','Bảng, sơ đồ, mindmap','ChatGPT, Notion AI,','Zotero, ScholarAI']],['Định dạng lại nội dung',['Chuyển sang định dạng mới','Blog → video ngắn','Báo cáo → infographic','1. Giữ thông điệp gốc','2. Tối ưu độ dài, hình ảnh','3. Phong cách hợp đối tượng']]].map((o,i)=>BOXS(20+i*205,40,190,230,[1,2,3][i],o[0],o[1],[1,25,44][i])).join('')},
+{t:"AI trong sáng tạo: ChatGPT và Claude",d:67000,
+ n:"Phần ba: sử dụng trí tuệ nhân tạo trong sáng tạo nội dung số. AI đang trở thành trợ lý sáng tạo: viết, chỉnh sửa, tóm tắt; tạo video, âm thanh, hình ảnh tự động; cá nhân hóa trải nghiệm người xem. Bốn công cụ phổ biến: ChatGPT viết và biên tập ngôn ngữ; Claude tư duy logic, tóm tắt văn bản dài; Synthesia tạo video có người dẫn ảo; Runway ML chỉnh sửa video bằng AI. ChatGPT là trợ lý viết và biên tập: viết kịch bản, bài đăng, email, blog, caption; tóm tắt hoặc mở rộng; gợi ý tiêu đề, từ khóa SEO, outline; hiểu ngữ cảnh, mô phỏng phong cách viết của bạn. Claude, phát triển bởi Anthropic, hiểu văn bản dài đến hàng trăm trang, phân tích ngữ nghĩa và lập luận; dùng tóm tắt tài liệu, báo cáo, transcript, phân tích phong cách thương hiệu, soạn dàn ý hoặc brief.",
+ v:()=>BOXS(20,15,600,70,1,'AI là trợ lý sáng tạo',['Viết · Tạo video, âm thanh, hình ảnh · Cá nhân hóa'],6)+
+ [['ChatGPT','Viết & biên tập'],['Claude','Tóm tắt văn bản dài'],['Synthesia','Video người dẫn ảo'],['Runway ML','Chỉnh sửa video AI']].map((o,i)=>BOXS(20+i*155,95,135,80,[2,3,4,1][i],o[0],[o[1]],18+i*3)).join('')+
+ BOXS(20,185,300,145,2,'ChatGPT',['Viết kịch bản, bài đăng, email, blog','Tóm tắt, mở rộng văn bản','Gợi ý tiêu đề, từ khóa SEO, outline','Hiểu ngữ cảnh, mô phỏng phong cách'],35)+
+ BOXS(330,185,290,145,3,'Claude (Anthropic)',['Hiểu văn bản dài, hàng trăm trang','Phân tích ngữ nghĩa, logic, lập luận','Tóm tắt tài liệu, báo cáo, transcript','Soạn outline, brief; phân tích thương hiệu'],51)},
+{t:"Synthesia và Runway ML",d:57500,
+ n:"Synthesia biến văn bản thành video có người dẫn ảo bằng AI: chọn avatar, giọng nói, ngôn ngữ, phông nền; tạo video đào tạo, quảng cáo, hướng dẫn sản phẩm. Ưu điểm: tiết kiệm chi phí quay dựng, dễ tùy chỉnh, đa ngôn ngữ, thân thiện với marketer. Ví dụ: viết kịch bản bằng ChatGPT, tạo video người dẫn ảo bằng Synthesia, đăng TikTok hoặc YouTube Shorts. Runway ML biên tập video bằng AI: tách nền, tạo hiệu ứng, ghép cảnh, chuyển động, tạo video từ mô tả văn bản; biên tập nhanh video quảng cáo, học tập, mạng xã hội; kết hợp Premiere Pro hoặc After Effects. Điểm mạnh: tự động hóa, hỗ trợ nhà sáng tạo không chuyên kỹ thuật. Từ ý tưởng đến video hoàn chỉnh trong vài phút.",
+ v:()=>BOXS(20,15,290,170,1,'Synthesia',['Văn bản → video người dẫn ảo','Chọn avatar, giọng, ngôn ngữ, nền','Video đào tạo, quảng cáo, hướng dẫn','Tiết kiệm chi phí quay, dựng','Dễ tùy chỉnh, đa ngôn ngữ'],1)+
+ BOXS(330,15,290,170,4,'Runway ML',['Tách nền, tạo hiệu ứng, ghép cảnh','Text-to-Video: video từ mô tả chữ','Biên tập nhanh quảng cáo, học tập','Kết hợp Premiere Pro / After Effects','Tự động hóa, hợp người không chuyên'],29)+
+ BOXS(20,200,170,70,2,'ChatGPT',[],18)+AR(192,233,235,20)+BOXS(235,200,170,70,3,'Synthesia',[],21)+AR(407,448,235,23)+BOXS(450,200,170,70,1,'TikTok / Shorts',[],24)+
+ BOXS(20,285,600,45,3,'Từ ý tưởng → video hoàn chỉnh trong vài phút',[],51)},
+{t:"Bản quyền và sở hữu trí tuệ",d:69000,
+ n:"Chương sáu: bản quyền nội dung số và giấy phép sử dụng. Chương gồm năm phần: khái niệm bản quyền và sở hữu trí tuệ; các yếu tố dễ vi phạm; các loại giấy phép phổ biến; tra cứu và sử dụng tài nguyên đúng quy định; và công cụ kiểm tra bản quyền tự động. Bản quyền là quyền pháp lý bảo vệ tác phẩm sáng tạo của tác giả, gồm quyền nhân thân, tức được ghi nhận tác giả và bảo vệ danh tiếng, và quyền tài sản, tức khai thác, bán, cấp phép; áp dụng với văn bản, hình ảnh, âm nhạc, video, phần mềm, tác phẩm nghệ thuật. Sở hữu trí tuệ là khái niệm rộng hơn, gồm bản quyền, bằng sáng chế, nhãn hiệu, kiểu dáng công nghiệp, bí mật kinh doanh, nhằm bảo vệ tài sản trí tuệ khỏi sao chép trái phép. Ví dụ: logo công ty là nhãn hiệu, phần mềm và sách là bản quyền, sáng chế thiết bị là bằng sáng chế.",
+ v:()=>BOXS(20,15,290,215,1,'Bản quyền (Copyright)',['Quyền pháp lý bảo vệ tác phẩm','1. Quyền nhân thân: ghi nhận','tác giả, bảo vệ danh tiếng','2. Quyền tài sản: khai thác,','bán, cấp phép','Văn bản, ảnh, nhạc, video,','phần mềm, tác phẩm nghệ thuật'],20)+
+ BOXS(330,15,290,215,2,'Sở hữu trí tuệ (IP)',['Khái niệm rộng hơn bản quyền','Bản quyền · Bằng sáng chế','Nhãn hiệu · Kiểu dáng công nghiệp','Bí mật kinh doanh','Chống sao chép trái phép'],41)+
+ BOXS(20,245,600,85,3,'Ví dụ',['Logo công ty → nhãn hiệu · Phần mềm, sách → bản quyền','Sáng chế thiết bị → bằng sáng chế'],56)},
+{t:"Quyền nhân thân và ví dụ",d:64000,
+ n:"Quyền nhân thân là quyền của tác giả liên quan đến danh tính và uy tín tác phẩm: được ghi nhận tác giả; ngăn chặn xuyên tạc, thay đổi tác phẩm; và rút tác phẩm khỏi công bố trong một số trường hợp. Ví dụ: họa sĩ không muốn tác phẩm bị chỉnh sửa mà mất ý nghĩa ban đầu; nhạc sĩ yêu cầu tên mình luôn gắn trên bài hát. Về mối quan hệ: sở hữu trí tuệ là khái niệm rộng, bao gồm bản quyền; bản quyền bảo vệ cả quyền tài sản và quyền nhân thân. Ví dụ nhà văn: bản quyền quyết định ai được xuất bản, bán, cấp phép; quyền nhân thân bảo đảm tên tác giả luôn được gắn, không ai chỉnh sửa làm đổi ý tưởng. Nhạc sĩ: bản quyền là thu lợi từ streaming, bán bản quyền nhạc; quyền nhân thân là yêu cầu credit, không bị remix trái phép.",
+ v:()=>BOXS(20,15,290,150,1,'Quyền nhân thân',['Được ghi nhận tác giả','Ngăn xuyên tạc, thay đổi tác phẩm','Rút tác phẩm khỏi công bố','(trong một số trường hợp)'],1)+
+ BOXS(330,15,290,150,2,'Mối quan hệ',['IP: khái niệm rộng, gồm bản quyền','Bản quyền bảo vệ quyền tài sản','và cả quyền nhân thân'],29)+
+ BOXS(20,180,290,150,3,'Ví dụ: nhà văn',['Bản quyền: ai xuất bản, bán, cấp phép','Nhân thân: luôn gắn tên tác giả,','không sửa nội dung đổi ý tưởng'],42)+
+ BOXS(330,180,290,150,4,'Ví dụ: nhạc sĩ',['Bản quyền: thu lợi từ streaming, bán','Nhân thân: yêu cầu credit,','không bị remix trái phép'],53)},
+{t:"Các yếu tố dễ vi phạm bản quyền",d:80000,
+ n:"Phần hai: các yếu tố nội dung dễ vi phạm bản quyền. Năm yếu tố phổ biến: hình ảnh, nhạc nền, logo thương hiệu, đoạn văn hoặc bài viết, và giọng nói AI. Vi phạm có thể khiến video bị gỡ, bị phạt tiền, kiện tụng, mất uy tín thương hiệu. Hình ảnh: ảnh tải từ web hoặc Google Images không xin phép, hoặc ảnh stock không mua bản quyền; giải pháp là dùng ảnh Creative Commons, stock có bản quyền, tự chụp hoặc thuê nhiếp ảnh gia. Nhạc nền: bài hát phổ biến, âm thanh lấy từ phim hoặc game; dùng nhạc miễn phí bản quyền như YouTube Audio Library, Free Music Archive, hoặc mua từ nhà cung cấp nhạc stock. Logo và đoạn văn: dùng logo doanh nghiệp khác, copy nội dung từ website, blog, sách, kể cả chỉ paraphrase nhỏ; hãy xin phép, mua bản quyền, hoặc tạo nội dung gốc, dùng AI viết lại nhưng kiểm tra tính độc đáo. Giọng nói AI: dùng giọng người nổi tiếng không có quyền, hoặc giọng AI thương mại không trả phí; dùng giọng có giấy phép rõ ràng và kiểm tra điều khoản trước khi xuất bản.",
+ v:()=>[['Hình ảnh',['Vi phạm: ảnh web, Google Images,','ảnh stock chưa mua bản quyền','Giải pháp: ảnh Creative Commons,','stock có bản quyền, tự chụp']],['Nhạc nền',['Vi phạm: bài hát phổ biến,','sample từ phim, game','Giải pháp: YouTube Audio Library,','Free Music Archive, nhạc stock']],['Logo và đoạn văn',['Vi phạm: dùng logo hãng khác;','copy bài viết, paraphrase nhỏ','Giải pháp: xin phép, mua, hoặc','tạo gốc / AI viết lại + kiểm tra']],['Giọng nói AI',['Vi phạm: giọng người nổi tiếng;','giọng AI thương mại không trả phí','Giải pháp: giấy phép thương mại','rõ ràng, đọc điều khoản trước']]].map((o,i)=>BOXS(20+(i%2)*310,15+Math.floor(i/2)*143,290,135,[1,2,3,4][i],o[0],o[1],[18,34,47,63][i])).join('')+
+ BOXS(20,298,600,35,2,'Hậu quả: gỡ video · phạt, kiện · mất uy tín',[],12)},
+{t:"Ba loại giấy phép nội dung phổ biến",d:68000,
+ n:"Phần ba: các loại giấy phép nội dung phổ biến. Giấy phép xác định quyền sử dụng, chia sẻ, chỉnh sửa tác phẩm số, nhằm bảo vệ quyền tác giả, cho phép người khác dùng nội dung hợp pháp, tránh rủi ro pháp lý. Có ba loại phổ biến. Một, Creative Commons, giấy phép mở với điều kiện cụ thể: CC0 công khai hoàn toàn; CC-BY cần ghi nhận tác giả; CC-BY-SA ghi nhận tác giả và chia sẻ theo cùng điều kiện; CC-BY-NC chỉ phi thương mại; CC-BY-ND không sửa đổi nội dung; ví dụ ảnh Unsplash, Wikipedia. Hai, Royalty-free: dùng không phải trả tiền bản quyền mỗi lần, cho ảnh, nhạc, video stock; không đồng nghĩa miễn phí, không được bán lại; ví dụ AudioJungle, Shutterstock. Ba, Public Domain: tác phẩm hết hạn bản quyền hoặc tác giả từ bỏ quyền, ai cũng dùng được, không cần xin phép; ví dụ văn học cổ điển, hình ảnh lịch sử.",
+ v:()=>BOXS(20,15,300,300,1,'Creative Commons (CC)',['CC0 – công khai hoàn toàn','CC-BY – ghi nhận tác giả','CC-BY-SA – ghi nhận tác giả,','chia sẻ cùng điều kiện','CC-BY-NC – phi thương mại','CC-BY-ND – không sửa đổi','VD: Unsplash, Wikipedia media'],16)+
+ BOXS(330,15,290,140,2,'Royalty-free',['Không trả tiền bản quyền mỗi lần','Ảnh, nhạc, video stock','Không = miễn phí; không bán lại','VD: AudioJungle, Shutterstock'],38)+
+ BOXS(330,165,290,150,3,'Public Domain',['Hết hạn hoặc tác giả từ bỏ quyền','Dùng, sửa, phân phối tự do','Không cần xin phép, ghi nhận','VD: văn học cổ điển, ảnh lịch sử'],50)},
+{t:"Nguyên tắc sử dụng tài nguyên số",d:40500,
+ n:"Phần bốn: tra cứu và sử dụng tài nguyên số đúng quy định. Dùng sai có thể vi phạm bản quyền, với hình ảnh, video, nhạc nền, âm thanh, font chữ. Năm nguyên tắc: một, luôn kiểm tra loại giấy phép: CC0, CC-BY, CC-BY-SA, Royalty-Free, Public Domain. Hai, ghi nhận tác giả nếu được yêu cầu. Ba, tuân thủ mục đích sử dụng, phi thương mại hay thương mại. Bốn, tránh tải từ nguồn không chính thức hoặc không rõ giấy phép. Năm, lưu trữ chứng cứ giấy phép, như link hoặc file, để minh chứng khi cần.",
+ v:()=>RW([['Kiểm tra loại giấy phép','CC0, CC-BY, CC-BY-SA, Royalty-Free, Public Domain'],['Ghi nhận tác giả nếu yêu cầu','Attribution'],['Tuân thủ mục đích sử dụng','Phi thương mại hay thương mại'],['Tránh nguồn không chính thức','Hoặc nguồn không rõ giấy phép'],['Lưu trữ chứng cứ giấy phép','Link, file giấy phép để minh chứng']],[10,16,21.5,26.5,32])+
+ BOXS(20,283,600,45,1,'Hình ảnh · Video · Nhạc nền · Âm thanh · Font chữ',[],5)},
+{t:"Nguồn tài nguyên miễn phí bản quyền",d:53000,
+ n:"Một số nguồn tài nguyên miễn phí bản quyền. Pixabay: ảnh, video miễn phí, CC0. Pexels: ảnh và video miễn phí, dùng thương mại được. Unsplash: ảnh miễn phí, nên ghi nhận tác giả. FreeSound: hiệu ứng âm thanh, CC0 hoặc CC-BY. Bensound: nhạc nền miễn phí cho dự án phi thương mại, trả phí bản quyền khi thương mại. Về font chữ, Google Fonts có hàng nghìn font miễn phí, dùng thương mại được; hãy kiểm tra giấy phép trước khi dùng trong logo, ấn phẩm thương mại, và tải trực tiếp từ trang chính thức. Lưu ý chung: kiểm tra giấy phép, ghi nhận tác giả trước khi tải; không tải nhạc từ YouTube hay Spotify để dùng trực tiếp.",
+ v:()=>[['Pixabay',['Ảnh, video miễn phí','CC0']],['Pexels',['Ảnh, video miễn phí','Dùng thương mại được']],['Unsplash',['Ảnh miễn phí','Nên ghi nhận tác giả']],['FreeSound',['Hiệu ứng âm thanh','CC0 hoặc CC-BY']],['Bensound',['Nhạc nền miễn phí phi','thương mại; trả phí khi bán']],['Google Fonts',['Hàng nghìn font miễn phí','Dùng thương mại được']]].map((o,i)=>BOXS(20+(i%3)*205,15+Math.floor(i/3)*137,190,130,[1,2,3,4,1,2][i],o[0],o[1],[3,8.5,13,18,23,31][i])).join('')+
+ BOXS(20,290,600,42,3,'Kiểm tra giấy phép · Không tải nhạc từ YouTube/Spotify',[],47)},
+{t:"Công cụ kiểm tra bản quyền tự động",d:69500,
+ n:"Phần năm: các công cụ kiểm tra bản quyền tự động, giúp phát hiện vi phạm trước khi xuất bản, bảo vệ quyền tác giả, quản lý nội dung hiệu quả. Ba công cụ phổ biến. YouTube Content ID phát hiện video và âm thanh trùng nội dung có bản quyền, tự động chặn, gỡ hoặc kiếm tiền thay tác giả; ví dụ video dùng nhạc nổi tiếng không xin phép sẽ bị đánh dấu; chỉ áp dụng cho YouTube. Copyscape kiểm tra đạo văn văn bản, so với hàng triệu trang web; dùng kiểm tra blog trước khi xuất bản hoặc bài do freelancer viết; bản miễn phí giới hạn số lần kiểm tra. Grammarly Plagiarism Checker nằm trong Grammarly Premium, so với hàng tỷ trang web và tài liệu học thuật, báo cáo phần trùng lặp và đề xuất sửa, kết hợp chỉnh sửa ngữ pháp và văn phong. Nguyên tắc: kiểm tra trước khi xuất bản, đúng loại nội dung, lưu lại báo cáo, và xin phép bản quyền khi cần.",
+ v:()=>[['YouTube Content ID',['Phát hiện video, âm thanh','trùng nội dung có bản quyền','Chặn, gỡ hoặc kiếm tiền','thay tác giả','Chỉ áp dụng cho YouTube']],['Copyscape',['Kiểm tra đạo văn văn bản','So với hàng triệu trang web','VD: blog trước xuất bản,','bài freelancer viết','Bản miễn phí giới hạn lượt']],['Grammarly Plagiarism',['Trong Grammarly Premium','So với hàng tỷ trang web,','tài liệu học thuật','Báo cáo trùng, gợi ý sửa','Kết hợp sửa ngữ pháp']]].map((o,i)=>BOXS(20+i*205,15,190,215,[1,2,3][i],o[0],o[1],[9,28,43][i])).join('')+
+ BOXS(20,245,600,85,4,'Nguyên tắc dùng công cụ kiểm tra',['Kiểm tra trước khi xuất bản · đúng loại nội dung','Lưu báo cáo kiểm tra · kết hợp xin phép khi cần'],58)},
+{t:"Công cụ và lập trình nội dung số",d:46000,
+ n:"Chương bảy: công cụ và công nghệ sáng tạo nội dung số. Gồm hai phần: giới thiệu các công cụ và lập trình nội dung số, và ứng dụng AI cùng lập trình. Công cụ sáng tạo và lập trình giúp xây dựng nội dung tương tác, trực quan, 3D, dùng AI; tăng mức độ tham gia và trải nghiệm người dùng; tích hợp đa phương tiện và công nghệ học tập. Có ba nhóm công cụ phổ biến. Một, nền tảng tạo nội dung tương tác: H5P, Articulate, Genially, ThingLink. Hai, phần mềm lập trình 3D: Unity, Unreal, cho không gian 3D và thực tế ảo. Ba, chatbot và công cụ AI, giao tiếp người dùng thông minh.",
+ v:()=>BOXS(20,15,600,70,1,'Công cụ và lập trình giúp',['Nội dung tương tác, trực quan, 3D, AI · Tăng tham gia'],15)+
+ [['Nền tảng tương tác',['H5P, Articulate,','Genially, ThingLink','→ nội dung tương tác']],['Lập trình 3D',['Unity, Unreal','→ không gian 3D,','thực tế ảo']],['Chatbot & AI',['Chatbot, AI tools','→ giao tiếp người','dùng thông minh']]].map((o,i)=>BOXS(20+i*205,95,190,200,[2,3,4][i],o[0],o[1],[28,33,38][i])).join('')},
+{t:"H5P, Articulate, Genially, ThingLink",d:49000,
+ n:"H5P là nền tảng mã nguồn mở tạo nội dung tương tác HTML5: quiz, video tương tác, timeline, infographic; tích hợp Moodle, WordPress, LMS; dễ dùng, không cần lập trình, hỗ trợ SCORM. Articulate Storyline là công cụ chuyên nghiệp tạo bài giảng e-learning: mô phỏng, quiz, video tương tác; xuất bản chuẩn SCORM, xAPI; nhiều template. Genially là công cụ web tạo slide, infographic, game học tập, thêm hiệu ứng động, hotspot, video nhúng, dễ chia sẻ. ThingLink tạo hình ảnh, video, bản đồ ảo với điểm chạm hotspot: hướng dẫn sản phẩm, du lịch ảo, học tập mô phỏng; dễ tích hợp web, LMS hoặc kính VR.",
+ v:()=>[['H5P',['Mã nguồn mở, nội dung HTML5','Quiz, video tương tác, timeline','Tích hợp Moodle, WordPress, LMS','Dễ dùng, không cần lập trình']],['Articulate Storyline',['Bài giảng e-learning chuyên nghiệp','Mô phỏng, quiz, video tương tác','Xuất bản chuẩn SCORM, xAPI','Nhiều template, dễ tích hợp LMS']],['Genially',['Web: slide, infographic, game','Hiệu ứng động, hotspot, video nhúng','Chia sẻ trực tuyến dễ dàng','Truyền thông, đào tạo, marketing']],['ThingLink',['Ảnh, video, bản đồ ảo có hotspot','Hướng dẫn sản phẩm, du lịch ảo','Học tập mô phỏng','Tích hợp web, LMS, kính VR']]].map((o,i)=>BOXS(20+(i%2)*310,15+Math.floor(i/2)*160,290,150,[1,2,3,4][i],o[0],o[1],[1,13,24.5,36][i])).join('')},
+{t:"Unity, Unreal Engine và Chatbot",d:49000,
+ n:"Unity và Unreal Engine là hai nền tảng mạnh mẽ phát triển nội dung tương tác 3D và thực tế ảo, VR và AR, cho game học tập, triển lãm ảo, mô phỏng đào tạo. Unity linh hoạt, nhẹ, hỗ trợ nhiều nền tảng. Unreal có đồ họa mạnh, phù hợp mô phỏng chất lượng cao. Chatbot tạo trải nghiệm hội thoại tự động, dùng cho hỗ trợ khách hàng, tư vấn học tập, thu thập phản hồi. Công cụ phổ biến: Dialogflow của Google, chatbot AI học ngữ cảnh; ManyChat hoặc Chatfuel, chatbot marketing cho Facebook, Telegram; bot dùng GPT qua API ChatGPT, đối thoại tự nhiên, cá nhân hóa. Tích hợp dễ dàng với website, app, mạng xã hội.",
+ v:()=>BOXS(20,15,290,130,1,'Unity',['Linh hoạt, nhẹ','Hỗ trợ nhiều nền tảng','Game học tập, triển lãm ảo'],8)+
+ BOXS(330,15,290,130,2,'Unreal Engine',['Đồ họa mạnh','Mô phỏng chất lượng cao','Mô phỏng đào tạo'],12)+
+ T(320,168,'Chatbot tương tác: hỗ trợ, tư vấn, thu phản hồi','b big',19)+
+ [['Dialogflow',['Google','Chatbot AI học ngữ cảnh']],['ManyChat / Chatfuel',['Chatbot marketing','Facebook, Telegram']],['GPT-based bots',['Qua ChatGPT API','Đối thoại tự nhiên,','cá nhân hóa']]].map((o,i)=>BOXS(20+i*205,180,190,140,[3,4,1][i],o[0],o[1],[30,36,42][i])).join('')},
+{t:"AI và lập trình: Python, JavaScript",d:68000,
+ n:"Phần hai: ứng dụng AI và lập trình trong sáng tạo nội dung số, giúp tự động hóa và cá nhân hóa sáng tạo. Hai ngôn ngữ phổ biến: Python, mạnh về dữ liệu, AI, tự động hóa, mô phỏng; JavaScript, mạnh về tương tác web, đồ họa, AR, VR. Sinh nội dung động theo dữ liệu: nội dung thay đổi theo dữ liệu thực tế như thời tiết, giá, xu hướng; Python dùng pandas, matplotlib, jinja2; JavaScript dùng Chart.js, D3.js, Next.js. Tạo quiz, infographic: AI sinh câu hỏi, đánh giá độ khó, gợi ý đáp án; Python dùng transformers, langchain; JavaScript dùng React, Vue, H5P.js. Mô phỏng tương tác: Python dùng pygame, vpython, plotly; JavaScript dùng Three.js, Babylon.js, A-Frame. AR và VR: Unity hoặc Unreal, WebXR, Three.js, AR.js cho trình duyệt; ứng dụng giáo dục ảo, du lịch, quảng cáo tương tác, bảo tàng số.",
+ v:()=>T(320,30,'Python: dữ liệu, AI, tự động hóa · JavaScript: web tương tác, AR/VR','m',6)+
+ T(36,62,'Ứng dụng','b',12,'start')+T(190,62,'Python','b',12.3,'start')+T(400,62,'JavaScript','b',12.6,'start')+
+ [['Nội dung động','pandas, matplotlib, jinja2','Chart.js, D3.js, Next.js'],['Quiz, infographic','transformers, langchain','React, Vue, H5P.js'],['Mô phỏng','pygame, vpython, plotly','Three.js, Babylon.js, A-Frame'],['AR / VR, 3D','Unity / Unreal + script Python','WebXR, Three.js, AR.js']].map((o,i)=>{const y=75+i*62,n=[16,29.5,42.5,52.5][i],k=[1,2,3,4][i];
+  return P('rect',`x=\"20\" y=\"${y}\" width=\"600\" height=\"52\" rx=\"10\"`,`s${k} f${k}`,n)+T(36,y+31,o[0],'b',n+.3,'start')+T(190,y+31,o[1],'m',n+.6,'start')+T(400,y+31,o[2],'m',n+.9,'start')}).join('')},
+{t:"AI sinh nội dung, mở rộng và Chatbot AI",d:76000,
+ n:"AI hỗ trợ sáng tạo nhanh và hiệu quả hơn. Sinh văn bản: ChatGPT, Claude, Gemini. Sinh hình ảnh: DALL·E, Midjourney, Stable Diffusion. Sinh video: Synthesia, Runway ML. Sinh giọng nói: ElevenLabs, Play.ht. Với Python có thể dùng thư viện openai, transformers, diffusers để tạo nội dung tự động; với JavaScript tích hợp AI vào web hoặc app qua API REST hoặc WebSocket. Đề xuất mở rộng: kết hợp AI với Python hoặc JavaScript để tạo chatbot cho web học tập, video động từ dữ liệu marketing, slide hoặc infographic tự động cập nhật, mô phỏng AR hướng dẫn kỹ năng. Xu hướng: kể chuyện dựa trên dữ liệu và nội dung học tập thích ứng cá nhân hóa. Chatbot AI tạo nội dung nhanh, nhất quán, cá nhân hóa, hỗ trợ tương tác hai mươi bốn trên bảy, thu thập dữ liệu hành vi. Cần kỹ năng prompt engineering, hiểu logic hội thoại và cấu trúc dữ liệu, tích hợp API và kiểm thử. Công cụ nổi bật: ChatGPT, Claude, Gemini, LangChain, Rasa.",
+ v:()=>BOXS(20,15,300,170,1,'AI sinh nội dung',['Văn bản: ChatGPT, Claude, Gemini','Hình ảnh: DALL·E, Midjourney,','Stable Diffusion','Video: Synthesia, Runway ML','Giọng nói: ElevenLabs, Play.ht'],2)+
+ BOXS(330,15,290,170,2,'Python và JavaScript API',['Python: openai, transformers,','diffusers','JavaScript: tích hợp AI vào','web/app qua REST, WebSocket'],14)+
+ BOXS(20,195,300,135,3,'Đề xuất mở rộng',['Chatbot trên web học tập','Video động từ dữ liệu marketing','Slide, infographic tự cập nhật','Mô phỏng AR hướng dẫn kỹ năng'],26)+
+ BOXS(330,195,290,135,4,'Chatbot AI',['Nhanh, nhất quán, cá nhân hóa; 24/7','Kỹ năng: prompt engineering, API','LangChain, Rasa, ChatGPT, Claude'],50)},
+{t:"Đánh giá và tối ưu nội dung số",d:50000,
+ n:"Chương tám: đánh giá, tối ưu và xuất bản nội dung số. Gồm bốn phần: đánh giá và tối ưu nội dung số; phân tích chỉ số đo lường hiệu quả, KPI; tối ưu SEO và thuật toán phân phối theo nền tảng; chiến lược phân phối đa kênh. Phần một: mục tiêu là đo lường hiệu quả nội dung số để tối ưu hiệu suất truyền thông. Các chỉ số chính: tỷ lệ tương tác, thử nghiệm so sánh A/B, bản đồ hành vi người dùng Heatmap, tỷ lệ chuyển đổi. Cách tiếp cận: phân tích định lượng kết hợp định tính. Đánh giá không chỉ đo hiệu quả mà còn giúp hiểu hành vi người dùng và điều chỉnh chiến lược sáng tạo.",
+ v:()=>BOXS(20,15,600,70,1,'Mục tiêu',['Đo lường hiệu quả để tối ưu hiệu suất truyền thông'],17)+
+ [['Engagement','Tỷ lệ tương tác'],['A/B Testing','Thử nghiệm so sánh'],['Heatmap','Bản đồ hành vi'],['Conversion','Tỷ lệ chuyển đổi']].map((o,i)=>BOXS(20+i*155,95,135,100,[2,3,4,1][i],o[0],[o[1]],[26,29,32,35][i])).join('')+
+ BOXS(20,210,600,85,2,'Cách tiếp cận',['Định lượng + định tính để cải thiện chiến lược nội dung'],41)+
+ T(320,325,'Đánh giá = đo hiệu quả + hiểu hành vi người dùng','m',45)},
+{t:"Kỹ thuật A/B Testing",d:46000,
+ n:"Kỹ thuật A/B Testing: so sánh hai phiên bản nội dung, A và B, để xác định phiên bản hiệu quả hơn. Quy trình bốn bước: một, chọn yếu tố cần kiểm thử như tiêu đề, ảnh, CTA, bố cục; hai, tạo hai phiên bản A và B; ba, phân phối ngẫu nhiên cho hai nhóm người dùng; bốn, đo lường và so sánh kết quả như CTR, thời gian xem, chuyển đổi. Ví dụ trên slide: phiên bản A có tỷ lệ chuyển đổi năm phẩy hai phần trăm, phiên bản B bảy phẩy tám phần trăm, nên chọn B. Kết luận: A/B Testing xác định yếu tố tối ưu dựa trên dữ liệu thực tế.",
+ v:()=>RW([['Chọn yếu tố kiểm thử','Tiêu đề, ảnh, CTA, bố cục'],['Tạo hai phiên bản','Hai phiên bản nội dung A và B'],['Phân phối ngẫu nhiên','Ngẫu nhiên cho 2 nhóm người dùng'],['Đo lường, so sánh kết quả','CTR, thời gian xem, chuyển đổi']],[9,14,19.5,25])+
+ BOXS(395,15,105,170,1,'Phiên bản A',['5,2%','chuyển đổi'],33)+BOXS(515,15,105,170,3,'Phiên bản B',['7,8%','chuyển đổi'],36)+
+ BOXS(395,195,225,55,3,'Chọn B!',[],39)+
+ BOXS(20,260,600,70,4,'Kết luận',['A/B Testing giúp tối ưu dựa trên dữ liệu thực tế'],41)},
+{t:"Heatmap và Engagement Rate",d:39500,
+ n:"Heatmap là bản đồ hành vi người dùng: ghi nhận vùng người dùng click, cuộn, dừng đọc nhiều nhất; công cụ Hotjar, CrazyEgg, Microsoft Clarity; giúp tối ưu bố cục trang, vị trí CTA và yếu tố hình ảnh. Engagement Rate bằng tổng tương tác, gồm like, share, comment, chia cho tổng lượt tiếp cận, nhân một trăm phần trăm; đánh giá mức độ thu hút và lan tỏa. Gợi ý: kết hợp với Google Analytics, Meta Insights hoặc YouTube Studio để trực quan hóa dữ liệu tương tác.",
+ v:()=>BOXS(20,15,300,150,1,'Heatmap',['Ghi nhận vùng click, cuộn, dừng đọc','Hotjar, CrazyEgg, Microsoft Clarity','Tối ưu bố cục, vị trí CTA, hình ảnh'],1)+
+ BOXS(330,15,290,150,2,'Engagement Rate',['ER = (like + share + comment)','÷ tổng lượt tiếp cận × 100%','Đo mức độ thu hút và lan tỏa'],18)+
+ BOXS(20,180,600,100,3,'Gợi ý mở rộng',['Kết hợp Google Analytics, Meta Insights, YouTube Studio','để trực quan hóa dữ liệu và đề xuất cải thiện'],32)},
+{t:"Công cụ đánh giá và tối ưu nội dung",d:73000,
+ n:"Công cụ hỗ trợ đánh giá và tối ưu, bốn nhóm. Một, phân tích hành vi người dùng: Hotjar tạo heatmap, bản ghi hành vi và khảo sát; Microsoft Clarity miễn phí, hiển thị bản đồ click và cuộn trang; Google Analytics bốn theo dõi lưu lượng, nguồn truy cập, tỷ lệ chuyển đổi. Hai, kiểm thử và tối ưu: Google Optimize hoặc VWO làm A/B Testing và kiểm thử đa biến; Optimizely phân tích hành vi, cá nhân hóa trải nghiệm. Ba, đo lường tương tác mạng xã hội: Meta Insights; YouTube Studio hoặc TubeBuddy; Twitter Analytics hoặc X Pro. Bốn, công cụ sáng tạo có đo hiệu quả: Canva Analytics, Notion AI, ChatGPT gợi ý cải thiện tiêu đề, CTA. Nên kết hợp ít nhất một công cụ phân tích và một công cụ kiểm thử. Tổng kết: A/B Testing so sánh hai phiên bản, Heatmap quan sát hành vi thực, Engagement Rate đo sức hút. Thực hành: thử nghiệm nhỏ trên TikTok hoặc blog, đổi tiêu đề, thumbnail hoặc mô tả, rồi đo sự khác biệt.",
+ v:()=>[['Phân tích hành vi',['Hotjar: heatmap, bản ghi, khảo sát','Microsoft Clarity: miễn phí, click, cuộn','Google Analytics 4: lưu lượng, chuyển đổi']],['Kiểm thử, tối ưu',['Google Optimize / VWO: A/B, đa biến','Optimizely: hành vi, cá nhân hóa']],['Mạng xã hội',['Meta Insights: reach, impression','YouTube Studio / TubeBuddy','Twitter Analytics / X Pro']],['Công cụ sáng tạo',['Canva Analytics: lượt xem, chia sẻ','Notion AI / ChatGPT: gợi ý tiêu đề, CTA']]].map((o,i)=>BOXS(20+(i%2)*310,15+Math.floor(i/2)*135,290,125,[1,2,3,4][i],o[0],o[1],[5,24,35,46][i])).join('')+
+ BOXS(20,285,600,45,3,'Kết hợp ≥1 công cụ đo lường + ≥1 công cụ A/B',[],57)},
+{t:"KPI đo lường hiệu quả nội dung số",d:80000,
+ n:"Phần hai: KPI trong đánh giá và tối ưu nội dung số. KPI giúp đánh giá hiệu quả định lượng. Năm KPI phổ biến. Reach: số người tiếp cận nội dung; phân tích theo kênh, thời gian, định dạng. Watch Time hoặc Time on Page: thời lượng người dùng xem hoặc trải nghiệm; với video là tổng thời lượng xem của từng người. Retention Rate: tỷ lệ giữ chân người dùng theo thời gian, bằng người dùng giữ lại chia tổng số người dùng ban đầu, nhân một trăm phần trăm. CTR: tỷ lệ nhấp vào link hoặc CTA, bằng số lần nhấp chia số lượt hiển thị, nhân một trăm phần trăm; CTR cao nghĩa là nội dung hấp dẫn, CTA hiệu quả. Conversion Rate: tỷ lệ thực hiện hành động mong muốn như mua hàng, đăng ký, tải về, bằng số người thực hiện chia tổng lượt truy cập, nhân một trăm phần trăm. Tổng kết: Reach đo lượng tiếp cận; Watch Time và Retention đo khả năng giữ chân; CTR đo sự hấp dẫn của CTA; Conversion đo kết quả cuối cùng. Luôn so sánh KPI theo thời gian, định dạng và nền tảng.",
+ v:()=>RW([['Reach','Số người tiếp cận nội dung'],['Watch Time / Time on Page','Tổng thời lượng xem của từng người'],['Retention Rate','Người giữ lại ÷ ban đầu × 100%'],['CTR','Lượt nhấp ÷ lượt hiển thị × 100%'],['Conversion Rate','Người hành động ÷ lượt truy cập × 100%']],[8,17,27.5,38,50])+
+ BOXS(20,288,600,42,3,'Tiếp cận → Giữ chân → Hấp dẫn CTA → Chuyển đổi',[],62)},
+{t:"Tối ưu SEO nội dung số",d:67000,
+ n:"Phần ba: tối ưu SEO và thuật toán phân phối theo từng nền tảng. Mục tiêu là tăng khả năng tiếp cận, giữ chân người dùng và lan tỏa. SEO tối ưu công cụ tìm kiếm như Google, YouTube, Pinterest; thuật toán phân phối tối ưu hiển thị trên feed, explore, recommend. Cần phân tích hành vi, từ khóa, thói quen xem và mức độ tương tác. Tối ưu SEO nội dung số gồm ba nhóm. Một, nội dung chuẩn SEO: chọn từ khóa bằng Google Keyword Planner, Ubersuggest, Ahrefs; meta title, meta description, headings, alt text; nội dung dài, chất lượng, có giá trị thực tế. Hai, cấu trúc website hoặc blog: URL thân thiện, breadcrumbs, sitemap; tốc độ tải trang, giao diện responsive; liên kết nội bộ và backlink chất lượng. Ba, SEO video: tiêu đề, mô tả, tag, thumbnail hấp dẫn; caption, subtitle, playlist, CTA; tăng watch time và retention rate.",
+ v:()=>BOXS(20,15,600,70,1,'SEO + thuật toán phân phối',['Tăng tiếp cận, giữ chân, lan tỏa trên các nền tảng'],8)+
+ [['Nội dung chuẩn SEO',['Từ khóa: Keyword Planner,','Ubersuggest, Ahrefs','Meta title, description,','headings, alt text','Nội dung dài, chất lượng']],['Cấu trúc web / blog',['URL thân thiện, breadcrumbs,','sitemap','Tốc độ tải, responsive','Internal linking,','backlink chất lượng']],['SEO video',['Tiêu đề, mô tả, tag,','thumbnail hấp dẫn','Caption, subtitle, playlist','Tăng watch time,','retention rate']]].map((o,i)=>BOXS(20+i*205,95,190,230,[2,3,4][i],o[0],o[1],[25,42,55][i])).join('')},
+{t:"Thuật toán phân phối theo nền tảng",d:57000,
+ n:"Thuật toán phân phối nội dung theo nền tảng. TikTok, Reels, Shorts: thời lượng ngắn, hook trong ba đến năm giây đầu; dùng hashtag, âm thanh trending, caption hấp dẫn; thuật toán ưu tiên video có engagement nhanh. YouTube: ưu tiên watch time, CTR thumbnail, retention rate; tối ưu playlist, end screen, metadata; đăng định kỳ, tương tác với comment. Instagram và Facebook: hình ảnh, video chất lượng cao, story, carousel; hashtag phù hợp, caption ngắn, call to action; ưu tiên nội dung tạo engagement nhanh. Blog và website: tối ưu on-page SEO với từ khóa, headings, hình ảnh, internal linking; tốc độ tải trang, mobile-friendly; ưu tiên bài dài, giá trị, thời gian onsite cao.",
+ v:()=>[['TikTok / Reels / Shorts',['Ngắn, hook 3–5 giây đầu','Hashtag, âm thanh trending, caption','Ưu tiên engagement nhanh']],['YouTube',['Ưu tiên watch time, CTR, retention','Tối ưu playlist, end screen, metadata','Đăng định kỳ, tương tác comment']],['Instagram / Facebook',['Ảnh, video chất lượng cao, story, carousel','Hashtag phù hợp, caption ngắn, CTA','Ưu tiên engagement nhanh']],['Blog / Website',['On-page SEO: từ khóa, headings, link nội bộ','Tốc độ tải, mobile-friendly','Ưu tiên bài dài, giá trị, onsite lâu']]].map((o,i)=>BOXS(20+(i%2)*310,15+Math.floor(i/2)*160,290,150,[1,2,3,4][i],o[0],o[1],[1,14.5,28,42][i])).join('')},
+{t:"Chiến lược kết hợp SEO và công cụ",d:70000,
+ n:"Chiến lược kết hợp SEO và thuật toán phân phối gồm năm bước. Một, phân tích dữ liệu hành vi trên từng nền tảng. Hai, chọn định dạng phù hợp: video ngắn, carousel, blog dài, infographic. Ba, tối ưu từ khóa, tiêu đề, thumbnail, CTA và metadata. Bốn, thử nghiệm A/B Testing để xác định nội dung thu hút nhất. Năm, lặp lại liên tục: xuất bản, đo lường KPI, tối ưu. Mẹo SEO tốt cộng thuật toán phân phối hiệu quả bằng nội dung tiếp cận rộng, engagement cao, conversion tăng. Công cụ hỗ trợ: SEO có Google Keyword Planner, Ahrefs, SEMrush, Ubersuggest; video có TubeBuddy, VidIQ, Canva Analytics; mạng xã hội có TikTok Analytics, Meta Insights, Instagram Insights; blog có Yoast SEO, RankMath, Google Search Console; phân phối và thử nghiệm có Buffer, Hootsuite, Google Optimize. Hãy kết hợp phân tích dữ liệu và công cụ để nội dung vừa thân thiện SEO vừa thu hút thuật toán nền tảng.",
+ v:()=>RW([['Phân tích dữ liệu hành vi','Từng nền tảng'],['Chọn định dạng phù hợp','Video ngắn, carousel, blog dài'],['Tối ưu từ khóa, tiêu đề, CTA','Thumbnail, metadata'],['Thử nghiệm A/B Testing','Xác định nội dung thu hút nhất'],['Lặp: xuất bản → KPI → tối ưu','Liên tục']],[4,10,17,24,31])+
+ BOXS(330,15,290,265,2,'Công cụ hỗ trợ',['SEO: Keyword Planner, Ahrefs,','SEMrush, Ubersuggest','Video: TubeBuddy, VidIQ, Canva','Social: TikTok Analytics, Meta,','Instagram Insights','Blog: Yoast SEO, RankMath, GSC','Phân phối: Buffer, Hootsuite,','Google Optimize'],37)+
+ BOXS(20,288,600,42,3,'SEO tốt + thuật toán hiệu quả = tiếp cận rộng, engagement cao',[],31)},
+{t:"Chiến lược phân phối đa kênh",d:63000,
+ n:"Phần bốn: chiến lược phân phối đa kênh, Omni-channel. Mục tiêu là tối đa hóa phạm vi tiếp cận và tương tác bằng cách phân phối nội dung trên nhiều kênh một cách đồng bộ: website, blog, email, mạng xã hội, video, podcast, ứng dụng di động; đồng bộ thông điệp thương hiệu, hình ảnh, giá trị; tận dụng sức mạnh từng kênh. Omni-channel là nội dung tối ưu theo kênh nhưng nhất quán về thông điệp. Năm nguyên tắc triển khai: một, nhất quán thông điệp, tone và style. Hai, tùy biến theo nền tảng: định dạng, thời lượng, hình ảnh, CTA. Ba, tích hợp dữ liệu và phân tích: KPI chung và riêng từng nền tảng. Bốn, lập kế hoạch lịch đăng đồng bộ với chiến dịch, event, promotion. Năm, tối ưu trải nghiệm người dùng, dẫn dắt từ kênh này sang kênh khác, cross-channel journey.",
+ v:()=>T(320,26,'Omni-channel: tối ưu theo kênh, nhất quán thông điệp','b big',8)+
+ RW([['Nhất quán thông điệp','Cùng thương hiệu, tone và style'],['Tùy biến theo nền tảng','Định dạng, thời lượng, hình, CTA'],['Tích hợp dữ liệu, phân tích','KPI chung và riêng từng nền tảng'],['Lịch đăng đồng bộ','Chiến dịch, event, promotion'],['Tối ưu trải nghiệm người dùng','Cross-channel journey']],[38,43,48.5,54,59],45)},
+{t:"Các kênh phân phối phổ biến",d:26000,
+ n:"Các kênh phân phối phổ biến. Website hoặc blog: nội dung dài, SEO, bài chuyên sâu. Email marketing: newsletter, thông báo sản phẩm, nurturing leads. Mạng xã hội: TikTok, YouTube, Instagram, Facebook. Podcast hoặc audio: storytelling, phỏng vấn chuyên gia. Ứng dụng di động và thông báo đẩy. Quảng cáo trả phí và nội dung tài trợ: quảng cáo hiển thị, retargeting, native ads.",
+ v:()=>[['Website / Blog',['Nội dung dài, SEO','Bài viết chuyên sâu']],['Email Marketing',['Newsletter, thông báo SP','Nurturing leads']],['Social Media',['TikTok, YouTube,','Instagram, Facebook']],['Podcast / Audio',['Storytelling,','phỏng vấn chuyên gia']],['App & Push',['Ứng dụng di động,','thông báo đẩy']],['Paid Ads / Sponsored',['Quảng cáo hiển thị,','retargeting, native ads']]].map((o,i)=>BOXS(20+(i%3)*205,20+Math.floor(i/3)*160,190,140,[1,2,3,4,1,2][i],o[0],o[1],[1,5,9,13,17,21][i])).join('')},
+{t:"Kết hợp đa kênh và ví dụ Omni-channel",d:43000,
+ n:"Chiến lược kết hợp đa kênh: tạo nội dung chủ đề trung tâm rồi biến thể theo kênh, từ blog sang video, social post, email; dùng CTA đồng bộ dẫn người dùng qua các kênh; theo dõi KPI từng kênh và tổng thể: reach, engagement, CTR, conversion; tối ưu bằng A/B Testing và heatmap; cập nhật xu hướng và thuật toán nền tảng. Ví dụ minh họa: nội dung chủ đề trung tâm tỏa ra email hoặc newsletter, website hoặc blog, YouTube hoặc TikTok, podcast hoặc audio, Instagram hoặc Facebook. Mỗi kênh là một biến thể nhưng vẫn thống nhất thông điệp và thương hiệu.",
+ v:()=>BOXS(20,15,300,175,1,'Chiến lược kết hợp',['Chủ đề trung tâm → biến thể theo kênh','CTA đồng bộ dẫn qua các kênh','Theo dõi KPI từng kênh và tổng thể','Tối ưu bằng A/B Testing, heatmap','Cập nhật xu hướng, thuật toán'],1)+
+ BOXS(330,15,290,175,2,'Ví dụ: Omni-channel',['Trung tâm: nội dung chủ đề','Email / Newsletter','Website / Blog · YouTube / TikTok','Podcast / Audio','Instagram / Facebook'],26)+
+ BOXS(20,205,600,60,3,'Mỗi kênh một biến thể, thống nhất thông điệp, thương hiệu',[],37)},
+{t:"Tổng kết phân phối và Omni-channel",d:46000,
+ n:"Tổng kết phân phối và Omni-channel. Nguyên tắc: nhất quán thông điệp và thương hiệu; tùy biến theo định dạng và nền tảng; tích hợp dữ liệu và KPI; lập lịch đăng đồng bộ; tối ưu cross-channel journey. Kênh phổ biến: blog, email, mạng xã hội, podcast, ứng dụng di động, quảng cáo trả phí. KPI: reach, engagement rate, CTR, conversion, watch time, retention. Công cụ: Google Analytics, YouTube Studio, Meta Insights, Hotjar; TubeBuddy, VidIQ, Ahrefs, SEMrush, Yoast SEO, RankMath; Buffer, Hootsuite, Google Optimize, Optimizely. Omni-channel là nội dung chất lượng cộng SEO cộng phân phối đa kênh cộng KPI để đạt hiệu quả tối đa.",
+ v:()=>[['Nguyên tắc đa kênh',['Nhất quán thông điệp, tùy biến nền tảng','Tích hợp dữ liệu/KPI, lịch đăng đồng bộ','Tối ưu cross-channel journey']],['Kênh phổ biến',['Blog / Website, Email / Newsletter','Social Media, Podcast / Audio','App / Push, Paid Ads']],['KPI đo lường',['Reach, Engagement Rate','CTR, Conversion Rate','Watch Time, Retention Rate']],['Công cụ',['Analytics: GA, YouTube Studio, Meta, Hotjar','SEO: TubeBuddy, VidIQ, Ahrefs, SEMrush','Test: Buffer, Hootsuite, Optimizely']]].map((o,i)=>BOXS(20+(i%2)*310,15+Math.floor(i/2)*135,290,125,[1,2,3,4][i],o[0],o[1],[3,14,22,30][i])).join('')+
+ BOXS(20,285,600,45,3,'Nội dung chất lượng + SEO + đa kênh + KPI = hiệu quả tối đa',[],40)},
+{t:"Kết quả đầu ra của khóa học",d:45500,
+ n:"Kết quả đầu ra của khóa học. Sau khóa học, người học có thể: một, phân tích đối tượng và mục tiêu nội dung số: hiểu user persona, hành vi, nhu cầu, sở thích. Hai, lên kế hoạch và tạo storyboard cho nội dung mới trên nhiều kênh. Ba, sử dụng công cụ biên tập và lập trình nội dung tương tác: Notion, Canva, Figma, CapCut, Premiere Pro, Audacity, ChatGPT, các công cụ AR, VR. Bốn, đảm bảo bản quyền: kiểm tra copyright, dùng Creative Commons, royalty-free, Public Domain. Năm, xuất bản và tối ưu hóa nội dung trên Blog, YouTube, TikTok, Instagram, LinkedIn, Email.",
+ v:()=>RW([['Phân tích đối tượng, mục tiêu nội dung','User persona, hành vi, nhu cầu, sở thích'],['Lên kế hoạch, tạo storyboard','Outline, storyboard, kế hoạch đa kênh'],['Dùng công cụ biên tập, lập trình','Notion, Canva, Figma, CapCut, Premiere, ChatGPT, AR/VR'],['Đảm bảo bản quyền, tài nguyên hợp pháp','Kiểm tra copyright; CC, royalty-free, Public Domain'],['Xuất bản, tối ưu đa nền tảng','SEO, thuật toán, KPI: Blog, YouTube, TikTok, LinkedIn, Email']],[4,13,20,30,37])}
+
+];
+
+/* ====== BỘ PHÁT ====== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),fig=$('fig'),ttl=$('ttl'),cap=$('cap'),seg=$('seg'),btn=$('play'),vb=$('voice'),cnt=$('cnt');
+let i=0,el=0,last=performance.now(),playing=true,done=false,voice=false,sd=true,tok=0;
+
+SCENES.forEach((s,k)=>{const b=document.createElement('button');b.setAttribute('aria-label','Phần '+(k+1)+': '+s.t);b.onclick=()=>jump(k);seg.appendChild(b)});
+
+function speak(){
+  if(!('speechSynthesis' in window)){sd=true;return}
+  speechSynthesis.cancel();const k=++tok;
+  const u=new SpeechSynthesisUtterance(SCENES[i].n);u.lang='vi-VN';u.rate=.95;sd=false;
+  u.onend=u.onerror=()=>{if(k===tok)sd=true};
+  speechSynthesis.speak(u);if(!playing)speechSynthesis.pause();
+}
+function fit(svg){const rs=[...svg.querySelectorAll('rect')].map(r=>({x:+r.getAttribute('x'),y:+r.getAttribute('y'),w:+r.getAttribute('width'),h:+r.getAttribute('height')})).filter(r=>r.w<600);
+  svg.querySelectorAll('text').forEach(t=>{const w=t.getComputedTextLength();if(!w)return;const x=+t.getAttribute('x'),y=+t.getAttribute('y'),mid=t.getAttribute('text-anchor')==='middle';
+    const r=rs.filter(r=>x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h).sort((p,q)=>p.w-q.w)[0];if(!r)return;
+    const room=mid?r.w-16:r.x+r.w-8-x;if(w>room){t.setAttribute('textLength',room);t.setAttribute('lengthAdjust','spacingAndGlyphs')}})}
+function show(n){
+  i=n;el=0;sd=true;const s=SCENES[n];
+  fig.innerHTML=`<svg viewBox="0 0 640 360" role="img" aria-label="${s.t}">${DEFS}${s.v()}</svg>`;
+  fit(fig.firstChild);
+  ttl.classList.remove('t');cap.classList.remove('t');void ttl.offsetWidth;ttl.classList.add('t');cap.classList.add('t');
+  ttl.textContent=s.t;cap.textContent=s.n;cnt.textContent=(n+1)+' / '+SCENES.length;
+  if(voice)speak();
+}
+function sync(){stage.classList.toggle('paused',!playing);btn.textContent=done?'Xem lại':playing?'Tạm dừng':'Phát'}
+function jump(n){done=false;playing=true;show(n);sync()}
+btn.onclick=()=>{
+  if(done){jump(0);return}
+  playing=!playing;sync();
+  if(voice&&'speechSynthesis' in window)playing?speechSynthesis.resume():speechSynthesis.pause();
+};
+$('prev').onclick=()=>jump(Math.max(0,i-(el>2000?0:1)));
+$('next').onclick=()=>jump(Math.min(SCENES.length-1,i+1));
+vb.onclick=()=>{
+  voice=!voice;vb.textContent='Giọng đọc: '+(voice?'Bật':'Tắt');vb.setAttribute('aria-pressed',voice);
+  if(voice)speak();else{tok++;sd=true;if('speechSynthesis' in window)speechSynthesis.cancel()}
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON')return;
+  if(e.code==='Space'){e.preventDefault();btn.click()}
+  if(e.code==='ArrowRight')$('next').click();
+  if(e.code==='ArrowLeft')$('prev').click();
+});
+
+function tick(ts){
+  const dt=Math.min(ts-last,100);last=ts;
+  if(playing){
+    el+=dt;const d=SCENES[i].d;
+    if(el>=d&&(sd||el>d+6000)){
+      if(i<SCENES.length-1)show(i+1);else{playing=false;done=true;sync()}
+    }
+  }
+  [...seg.children].forEach((b,k)=>b.style.setProperty('--p',(k<i||(done&&k===i)?100:k===i?Math.min(el/SCENES[i].d,1)*100:0)+'%'));
+  requestAnimationFrame(tick);
+}
+show(0);sync();requestAnimationFrame(tick);
+</script>
+</body>
+</html>

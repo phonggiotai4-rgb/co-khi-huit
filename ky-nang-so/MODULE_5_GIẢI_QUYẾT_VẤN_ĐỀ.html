@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 5 – Giải quyết vấn đề – Video bài giảng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8EFF7;--panel:#FFFFFF;--ink:#16243B;--mut:#5A6B85;--line:#C9D5E4;--c1:#2F5BEA;--c2:#F26B5B;--c3:#1FA38A;--c4:#E9A722;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1828;--panel:#16253C;--ink:#EAF0F8;--mut:#9FB0C9;--line:#2A3D5A;--c1:#7B9BFF;--c2:#FF8D7E;--c3:#4CD1B6;--c4:#F4C255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5}
+.player{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 26px 18px;display:flex;flex-direction:column;gap:10px}
+h2{font:700 clamp(22px,3.4vw,32px)/1.2 Lexend,"Be Vietnam Pro",sans-serif;margin:0}
+.fig svg{width:100%;height:auto;max-height:54vh;display:block}
+.cap{margin:0;min-height:3.3em;color:var(--mut);font-size:clamp(14px,2vw,17px);max-width:72ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+button{font:600 14px "Be Vietnam Pro",sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--c1)}
+button:focus-visible{outline:3px solid var(--c1);outline-offset:2px}
+#play{background:var(--c1);border-color:var(--c1);color:#fff;min-width:110px}
+.sp{flex:1}
+.cnt{color:var(--mut);font-size:14px}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1;height:10px;padding:0;border-radius:5px;border:0;background:var(--line);position:relative;overflow:hidden}
+.seg button::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:var(--c1)}
+/* SVG */
+svg text{font-family:inherit;fill:var(--ink);font-size:15px}
+.b{font-weight:600}.m{fill:var(--mut);font-size:12.5px}.big{font-size:17px}.h1{font-size:34px;font-weight:700}.h2{font-size:19px;font-weight:700;fill:var(--c1)}
+.brand{background:#1F6FB5;color:#fff;text-align:center;border-radius:14px;padding:10px 16px;margin-bottom:12px;line-height:1.35}
+.brand b{display:block;font:700 clamp(13px,2.2vw,18px) Lexend,sans-serif}.brand span{font-size:clamp(12px,1.8vw,15px)}
+.url{margin:8px 0 0;color:var(--mut);font-size:12px}
+.st{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.5;stroke:var(--mut)}
+.s1{stroke:var(--c1)}.s2{stroke:var(--c2)}.s3{stroke:var(--c3)}.s4{stroke:var(--c4)}
+.f1{fill:var(--c1);fill-opacity:.16}.f2{fill:var(--c2);fill-opacity:.16}.f3{fill:var(--c3);fill-opacity:.16}.f4{fill:var(--c4);fill-opacity:.2}
+.fp{fill:var(--panel)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s ease var(--d,0s) forwards}
+.r{opacity:0;animation:rv .6s ease var(--d,0s) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes rv{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fi{from{fill-opacity:0}}
+@keyframes pop{from{transform:scale(.93)}}
+@keyframes pulse{50%{stroke-width:3.6}}
+@keyframes sc{from{opacity:0;transform:translateY(10px)}}
+@keyframes tt{from{opacity:0;transform:translateX(-12px)}}
+@keyframes bp{50%{box-shadow:0 0 0 7px rgba(47,91,234,.22)}}
+rect.draw,circle.draw{transform-box:fill-box;transform-origin:center}
+rect.draw{animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards}
+circle.draw{animation:dr 1.1s ease var(--d,0s) forwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+rect.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,pop .55s cubic-bezier(.2,1.3,.4,1) var(--d,0s) backwards,fi .8s ease calc(var(--d,0s) + .45s) backwards}
+circle.draw:is(.f1,.f2,.f3,.f4){animation:dr 1.1s ease var(--d,0s) forwards,fi .8s ease calc(var(--d,0s) + .45s) backwards,pulse 3.4s ease-in-out calc(var(--d,0s) + 1.8s) infinite}
+.fig svg{animation:sc .5s ease}
+.t{animation:tt .55s ease}
+button{transition:transform .15s,border-color .15s}button:active{transform:scale(.96)}
+.paused #play{animation:bp 1.8s ease-in-out infinite}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.draw,rect.draw,circle.draw{animation:none!important;stroke-dashoffset:0}.r{animation:none;opacity:1;transform:none}.fig svg,.t,.paused #play{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="player">
+  <div class="brand"><span>BỘ CÔNG THƯƠNG</span><b>TRƯỜNG ĐẠI HỌC CÔNG THƯƠNG THÀNH PHỐ HỒ CHÍ MINH</b></div>
+  <section class="stage" id="stage" aria-live="off">
+    <h2 id="ttl"></h2>
+    <div class="fig" id="fig"></div>
+    <p class="cap" id="cap"></p>
+  </section>
+  <div class="ctl">
+    <button id="prev">Trước</button>
+    <button id="play">Tạm dừng</button>
+    <button id="next">Sau</button>
+    <button id="voice" aria-pressed="false">Giọng đọc: Tắt</button>
+    <span class="sp"></span>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="seg" id="seg"></div>
+  <p class="url">https://huit.edu.vn</p>
+</main>
+
+<script>
+/* ====== NỘI DUNG: chỉnh sửa mảng SCENES bên dưới ======
+   t: tiêu đề | d: thời lượng (ms) | n: lời giảng (phụ đề + giọng đọc) | v: hàm vẽ hình SVG
+   Mỗi phần tử vẽ có thể có độ trễ riêng (tham số cuối) để hình hiện ra theo lời giảng. */
+const D=n=>`style="--d:${n}s"`;
+const T=(x,y,s,c='',n=0,a='middle')=>`<text class="r ${c}" ${D(n)} x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const P=(tag,attrs,c='',n=0)=>`<${tag} pathLength="1" class="st draw ${c}" ${D(n)} ${attrs}/>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" class="st" style="stroke-width:2"/></marker></defs>`;
+
+const AR=(x1,x2,y,n)=>`<path pathLength="1" class="st draw" ${D(n)} d="M${x1} ${y}H${x2}" marker-end="url(#ah)"/>`;
+const BOX=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b big',n+.3)+L.map((l,j)=>T(x+w/2,y+62+j*22,l,'m',n+.6+j*.3)).join('');
+const GRID=(C,x)=>{let s='';C.forEach((o,i)=>{const X=30+i%2*300,Y=40+Math.floor(i/2)*140,n=.3+i*2.8,k=o[0];
+ s+=P('rect',`x="${X}" y="${Y}" width="280" height="110" rx="16"`,`s${k} f${k}`,n)+(x?P('path',`d="M${X+28} ${Y+39}l20 20M${X+48} ${Y+39}l-20 20"`,`s${k}`,n+.3):P('circle',`cx="${X+38}" cy="${Y+55}" r="16"`,`s${k}`,n+.3))+
+ T(X+68,Y+44,o[1],'b',n+.6,'start')+T(X+68,Y+68,o[2],'m',n+.8,'start')+(o[3]?T(X+68,Y+86,o[3],'m',n+.9,'start'):'');});return s;};
+const BOXS=(x,y,w,h,k,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+T(x+w/2,y+30,title,'b',n+.3)+L.map((l,j)=>T(x+w/2,y+58+j*22,l,'m',n+.6+j*.3)).join('');
+const ROWS=(R,pt=64)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=.3+i*3,m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+const cc=(x,y,r)=>`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
+const IC={chat:'M-10 -8h20v13h-9l-5 5v-5h-6zM-5 -1h1M0 -1h1M5 -1h1',users:cc(0,-5,4)+'M-9 10v-2a6 5 0 0 1 6-5h6a6 5 0 0 1 6 5v2zM-10 -3h-1M10 -3h1',laptop:'M-8 -8h16v11h-16zM-12 6h24l-2 3h-20zM-3 -4l-3 2.5 3 2.5M3 -4l3 2.5-3 2.5',clock:cc(0,0,10)+'M0 -6v6l4 3',search:cc(-2,-2,7)+'M3 3l8 8',chart:'M-10 -10v20h20M-7 4l5-6 4 3 7-8',book:'M0 -7c-3-3-7-3-10-2v15c3-1 7-1 10 2c3-3 7-3 10-2v-15c-3-1-7-1-10 2zM0 -7v15',home:'M-11 0l11-10 11 10M-7 -3v12h14v-12M-2 9v-6h4v6',mail:'M-10 -7h20v14h-20zM-10 -7l10 8 10-8',video:'M-10 -6h13v12h-13zM3 -1l7-5v12l-7-5',share:cc(6,-7,3)+cc(-7,0,3)+cc(6,7,3)+'M-4 -1l7 -5M-4 1l7 5',shield:'M0 -10l9 3v6c0 6-4 9-9 11-5-2-9-5-9-11v-6zM-4 1l3 3 6-6',hub:cc(0,-7,3)+cc(-8,6,3)+cc(8,6,3)+'M0 -4l-6 8M0 -4l6 8M-5 6h10',list:'M-10 -6h1M-5 -6h14M-10 0h1M-5 0h14M-10 6h1M-5 6h14',cap:'M0 -8l11 5-11 5-11-5zM-6 0v6c3 3 9 3 12 0v-6'};
+const I=(nm,x,y,s,k,n)=>P('path',`d="${IC[nm]}" transform="translate(${x} ${y}) scale(${s})"`,`s${k}`,n);
+const IBOX=(x,y,w,h,k,ic,title,L,n)=>P('rect',`x="${x}" y="${y}" width="${w}" height="${h}" rx="14"`,`s${k} f${k}`,n)+P('circle',`cx="${x+w/2}" cy="${y+30}" r="22"`,`s${k}`,n+.2)+I(ic,x+w/2,y+30,1.2,k,n+.4)+T(x+w/2,y+78,title,'b big',n+.6)+L.map((l,j)=>T(x+w/2,y+102+j*20,l,'m',n+.9+j*.3)).join('');
+const OV=(a,pt,d0)=>a.map((nm,i)=>I(nm,60,42+i*pt,.9,[1,3,4,2][i%4],d0+i*3)).join('');
+Object.assign(IC,{warn:'M0 -10l10 18h-20zM0 -3v5M0 5h1',cloud:'M-7 7a5 5 0 0 1 0 -10a7 7 0 0 1 13 -2a5 5 0 0 1 1 12z',heart:'M0 9c-12-8-12-17-5-17 3 0 5 2 5 4 0-2 2-4 5-4 7 0 7 9-5 17z',build:'M-7 10v-18h14v18zM-7 10h14M-3 -4h1M2 -4h1M-3 1h1M2 1h1',gear:cc(0,0,3.5)+'M0 -10v4M0 6v4M-10 0h4M6 0h4M-7 -7l3 3M4 4l3 3M7 -7l-3 3M-4 4l-3 3',star:'M0 -10l3 7h7l-6 5 2 8-6-4-6 4 2-8-6-5h7z',target:cc(0,0,10)+cc(0,0,5)+'M0 0h1'});
+const HI={'Ứng dụng':'laptop','Lợi ích':'star','Thách thức':'warn','Nền tảng học tập':'cap','Công cụ giao tiếp':'chat','Tương tác, cộng tác':'users','Họp trực tuyến':'video','Hệ thống ERP':'build','Quản lý dự án':'list','Kiến thức cần có':'book','Kỹ năng thực hành':'gear','Phẩm chất cần có':'heart','Lưu trữ & chia sẻ':'cloud','Văn phòng trực tuyến':'laptop','Kết nối cảm xúc':'heart','Bảo mật thông tin':'shield','Quá tải thông tin':'warn'};
+const COL=(x,hd,k,L,n)=>(HI[hd]?I(HI[hd],x+13,24,.75,k,n)+T(x+28,29,hd,'b',n+.2,'start'):T(x+95,28,hd,'b big',n))+L.map((o,i)=>BOXS(x,44+i*72,190,66,k,o[0],[o[1]],n+.5+i*1.6)).join('');
+const ROWT=(R,pt,ds)=>{let s='';R.forEach((o,i)=>{const y=20+i*pt,n=ds[i],m=o[0],k=m==='✓'?3:m==='✗'?2:[1,3,4,2][i%4];
+ s+=P('circle',`cx="60" cy="${y+22}" r="20"`,`s${k} f${k}`,n)+(m==='✓'?P('path',`d="M50 ${y+22}l7 7 13-14"`,'s3',n+.4):m==='✗'?P('path',`d="M52 ${y+14}l16 16M68 ${y+14}l-16 16"`,'s2',n+.4):T(60,y+28,m,'b big',n+.4))+
+ T(100,y+18,o[1],'b big',n+.7,'start')+T(100,y+40,o[2],'m',n+.9,'start');});return s;};
+SBAR=(y,k,label,L,n)=>{const h=L.length>1?66:50,b=L.length>1?h/2-4:h/2+5;return BOXS(20,y,150,h,k,label,[],n)+AR(174,198,y+h/2,n+.8)+P('rect',`x="202" y="${y}" width="418" height="${h}" rx="25"`,`s${k} f${k}`,n+1)+L.map((o,j)=>T(411,y+b+j*20,o,'b',n+1.6+j*.3)).join('');};
+const QB=(y,k,title,O,n,st)=>P('rect',`x="21" y="${y}" width="598" height="152" rx="14"`,`s${k} f${k}`,n)+T(36,y+30,title,'b',n+.3,'start')+O.map((o,j)=>T(52,y+62+j*24,o,'',n+2+j*st,'start')).join('');
+const DATEQ=()=>BOXS(20,14,600,70,1,'Lỗi logic ở lớp xử lý ngày tháng',['Phân tích nguyên nhân phổ biến'],.5)+BOXS(20,90,270,60,4,'Người dùng nhập mm-dd-yyyy',[],6)+AR(293,327,120,9)+BOXS(330,90,290,60,2,'Hệ thống kỳ vọng dd-mm-yyyy',[],9.5)+
+  BOXS(20,176,290,76,3,'Đề xuất',['bộ kiểm tra ràng buộc đầu vào'],14)+BOXS(330,176,290,76,3,'Đề xuất',['chiến lược kiểm thử biên'],18);
+const SCENES=[
+{t:"Giới thiệu Module 5",d:14500,
+ n:"Chào mừng các bạn đến với Module năm: Giải quyết vấn đề, của tiến sĩ Trần Khải Thiện, Bộ môn Công nghệ số. Chúng ta bắt đầu với phần một: Nhận diện lỗi, do giảng viên Quách Vũ Thường trình bày.",
+ v:()=>T(320,50,'MODULE 5','h1',0)+T(320,88,'GIẢI QUYẾT VẤN ĐỀ','h2',.5)+T(320,138,'TS. Trần Khải Thiện','b big',2.5)+T(320,162,'Bộ môn Công nghệ số','m',3)+
+  BOXS(130,196,380,80,1,'Phần 01: Nhận diện lỗi',['Giảng viên: Quách Vũ Thường'],8.3)},
+{t:"Mục tiêu phần 01: Nhận diện lỗi",d:15000,
+ n:"Mục tiêu của phần này: học viên nắm bản chất lỗi phần mềm, hiểu nguyên nhân sinh lỗi và hiểu biểu hiện lỗi để không nhầm với lỗi phần cứng. Đồng thời, phân loại đúng nhóm lỗi trước khi xử lý tiếp.",
+ v:()=>I('target',255,28,.9,1,0)+T(285,34,'Mục tiêu phần 01','h2',0,'start')+
+  BOXS(20,56,600,100,1,'Nắm bản chất lỗi phần mềm',['Hiểu nguyên nhân sinh lỗi và biểu hiện lỗi','để không nhầm với lỗi phần cứng'],1.5)+
+  BOXS(20,172,600,76,3,'Phân loại đúng nhóm lỗi',['Thực hiện trước khi xử lý tiếp'],10.3)+
+  T(320,300,'Phân loại trước, xử lý sau','b big',12.3)},
+{t:"Lỗi phần mềm là gì?",d:22000,
+ n:"Lỗi phần mềm là tình huống ứng dụng không hoạt động theo đúng chức năng mong đợi. Trong thực tế, lỗi thường là sự kết hợp của nhiều điều kiện kích hoạt, không chỉ là một dòng code sai. Ví dụ, form đăng nhập báo sai mật khẩu có thể do mã hóa đầu vào không đồng nhất giữa client và server.",
+ v:()=>BOXS(20,18,600,80,4,'Lỗi phần mềm',['Ứng dụng không hoạt động theo đúng chức năng mong đợi'],.3)+
+  BOXS(20,116,290,120,2,'Kết hợp nhiều điều kiện',['kích hoạt, không chỉ là','một dòng code sai'],6.6)+
+  BOXS(330,116,290,120,3,'Ví dụ: form đăng nhập',['Báo sai mật khẩu có thể do mã hóa','đầu vào không đồng nhất','giữa client và server'],13)+
+  P('rect','x="150" y="258" width="120" height="56" rx="12"','s1 f1',16.5)+T(210,291,'Client','b',16.8)+
+  P('rect','x="370" y="258" width="120" height="56" rx="12"','s3 f3',17.2)+T(430,291,'Server','b',17.5)+
+  AR(272,368,286,18)+T(320,276,'lệch mã hóa','m',18.5)},
+{t:"Ranh giới: Error – Defect – Failure",d:28500,
+ n:"Ba khái niệm cần phân biệt. Error là sai sót do con người tạo ra, ví dụ developer viết sai công thức tính tổng. Defect là khiếm khuyết trong mã hoặc cấu hình, ví dụ thiếu kiểm tra null pointer. Failure là khi chạy thực tế cho ra kết quả sai, ví dụ app crash ngay khi nhập ký tự đặc biệt. Một error có thể sinh nhiều defect; không phải mọi defect đều kích hoạt thành failure.",
+ v:()=>BOXS(20,30,158,146,1,'Error',['Sai sót do con người','tạo ra','Ví dụ: developer viết','sai công thức tính tổng'],2)+
+  AR(181,238,103,7.5)+T(209.5,92,'dẫn đến','m',7.8)+
+  BOXS(241,30,158,146,4,'Defect',['Khiếm khuyết trong','mã hoặc cấu hình','Ví dụ: thiếu kiểm tra','null pointer'],8.8)+
+  AR(402,459,103,14)+T(430.5,92,'dẫn đến','m',14.3)+
+  BOXS(462,30,158,146,2,'Failure',['Chạy thực tế và cho ra','kết quả sai','Ví dụ: app crash ngay','khi nhập ký tự đặc biệt'],15.3)+
+  BOXS(20,200,290,76,1,'Một error',['có thể sinh nhiều defect'],22.4)+
+  BOXS(330,200,290,76,3,'Không phải mọi defect',['đều kích hoạt thành failure'],25)},
+{t:"Nguyên nhân phổ biến của lỗi",d:24500,
+ n:"Những nguyên nhân phổ biến. Thiết kế logic chưa bao quát hết điều kiện biên, xử lý sai phân nhánh. Xử lý sai kiểu dữ liệu hoặc ràng buộc giá trị đầu vào. Dữ liệu test trong lúc phát triển khác với dữ liệu người dùng thực. Ví dụ: xử lý ngày tháng dùng định dạng ngày, tháng, năm, nhưng người dùng lại nhập tháng, ngày, năm.",
+ v:()=>ROWT([['1','Thiết kế logic chưa đủ','Chưa bao quát hết điều kiện biên, xử lý sai phân nhánh'],['2','Sai kiểu dữ liệu','Xử lý sai kiểu dữ liệu hoặc ràng buộc giá trị đầu vào'],['3','Dữ liệu test khác thực tế','Dữ liệu test lúc phát triển khác dữ liệu của người dùng thực'],['VD','Ví dụ: ngày tháng','Code dùng dd-mm-yyyy, nhưng user nhập mm-dd-yyyy']],70,[2,8.6,13,18.3])},
+{t:"Phân loại lỗi thường gặp",d:22500,
+ n:"Ba nhóm lỗi thường gặp. Lỗi logic do xử lý sai điều kiện hoặc sai thuật toán. Lỗi giao diện gồm bố cục sai, font chữ vỡ, component không hiển thị đầy đủ. Lỗi treo app do vòng lặp vô hạn, dùng tài nguyên không tối ưu hoặc deadlock. Ví dụ: app tính thuế hiển thị sai số liệu vì thiếu hàm làm tròn số.",
+ v:()=>BOXS(20,30,190,125,1,'Lỗi logic',['Xử lý sai điều kiện,','sai thuật toán'],1.8)+
+  BOXS(225,30,190,125,3,'Lỗi giao diện',['Bố cục sai, font chữ vỡ,','component không hiển thị','đầy đủ'],7.2)+
+  BOXS(430,30,190,125,2,'Lỗi treo app',['Vòng lặp vô hạn, dùng','tài nguyên không tối ưu,','deadlock'],13.6)+
+  BOXS(20,190,600,76,4,'Ví dụ: app tính thuế hiển thị sai số liệu',['Nguyên nhân: thiếu hàm làm tròn số'],18.2)},
+{t:"Biểu hiện điển hình khi lỗi xảy ra",d:22000,
+ n:"Biểu hiện điển hình khi lỗi xảy ra. Ứng dụng bị treo, không phản hồi, loading mãi không xong. Kết quả tính toán sai hoặc hiển thị sai so với kỳ vọng. App random crash, người dùng phải restart app mới chạy lại được. Ví dụ: app tính BMI ra số âm vì không kiểm tra giá trị chiều cao bằng không.",
+ v:()=>ROWT([['✗','Treo, không phản hồi','Ứng dụng loading mãi không xong'],['✗','Kết quả tính toán sai','Hiển thị hoặc tính sai so với kỳ vọng'],['✗','Random crash','Người dùng restart app mới chạy lại được']],60,[2.6,7,11.7])+
+  BOXS(20,215,600,76,4,'Ví dụ: app tính BMI ra số âm',['Vì không kiểm tra giá trị chiều cao bằng 0'],16.7)},
+{t:"Phân biệt nhanh: có phải lỗi phần mềm?",d:26000,
+ n:"Cách phân biệt nhanh lỗi phần mềm. Nếu chỉ một ứng dụng lỗi trong khi các ứng dụng khác bình thường, nhiều khả năng là lỗi phần mềm. Nếu nhiều ứng dụng lỗi giống nhau cùng lúc, phải cân nhắc phần cứng hoặc hệ điều hành. Ví dụ: chỉ Google Sheets lỗi, còn YouTube và Gmail vẫn chạy bình thường, khả năng lỗi nằm ở module xử lý Sheets của ứng dụng.",
+ v:()=>BOXS(20,18,290,80,1,'Chỉ một ứng dụng lỗi',['Các ứng dụng khác bình thường'],2.5)+
+  P('path','d="M165 98V126" marker-end="url(#ah)"','',6)+
+  BOXS(20,128,290,60,3,'Nhiều khả năng: lỗi phần mềm',[],8)+
+  BOXS(330,18,290,80,2,'Nhiều ứng dụng lỗi giống nhau',['Xảy ra cùng một lúc'],12)+
+  P('path','d="M475 98V126" marker-end="url(#ah)"','',16)+
+  BOXS(330,128,290,76,4,'Phần cứng hoặc hệ điều hành',['Cần cân nhắc khả năng này'],17)+
+  BOXS(20,226,600,76,1,'Ví dụ: chỉ Google Sheets lỗi, YouTube và Gmail vẫn bình thường',['→ Khả năng lỗi nằm ở module xử lý Sheets của ứng dụng'],19.5)},
+{t:"Checklist ghi nhận lỗi phần mềm",d:25000,
+ n:"Checklist ghi nhận lỗi phần mềm. Một: ghi lại bước thao tác cụ thể, dữ liệu nhập vào và dữ liệu mong đợi. Hai: ghi lại mã lỗi hiển thị, chụp màn hình lỗi để đối chiếu sau này. Ba: kiểm tra xem lỗi có tái hiện được hay chỉ xảy ra một lần. Ví dụ: thử ba lần liên tục với cùng dữ liệu mà đều crash, thì khả năng cao là lỗi phần mềm.",
+ v:()=>ROWT([['✓','Ghi lại thao tác','Bước thao tác cụ thể, dữ liệu nhập vào, dữ liệu mong đợi'],['✓','Ghi mã lỗi, chụp màn hình','Mã lỗi hiển thị, để đối chiếu sau này'],['✓','Kiểm tra khả năng tái hiện','Tái hiện được hay chỉ xảy ra một lần']],60,[2.4,7.8,13])+
+  BOXS(20,215,600,76,3,'Ví dụ: thử 3 lần liên tục, cùng dữ liệu',['Đều crash → khả năng cao là lỗi phần mềm'],17.6)},
+{t:"Phần 02: Ảnh hưởng của phần cứng đến ứng dụng",d:26500,
+ n:"Phần hai: Lỗi phần cứng và lỗi kết nối, do giảng viên Quách Vũ Thường trình bày. Nếu phần cứng xuống cấp, hệ điều hành và ứng dụng sẽ bị ảnh hưởng theo dây chuyền. Ổ cứng đọc chậm gây load app lâu, RAM lỗi gây crash ngẫu nhiên, CPU quá nóng làm giảm xung nhịp khiến xử lý lag. Ví dụ: máy yếu dẫn tới load video bốn K giật, người dùng nghĩ ứng dụng lỗi.",
+ v:()=>T(320,26,'Phần cứng xuống cấp → ảnh hưởng dây chuyền','b big',6.2)+
+  [['Ổ cứng đọc chậm','Load app lâu',1],['RAM lỗi','Crash ngẫu nhiên',2],['CPU quá nóng','Giảm xung nhịp → xử lý lag',4]].map((o,i)=>{const y=44+i*64,n=12+i*3;return BOXS(20,y,250,52,o[2],o[0],[],n)+AR(275,345,y+26,n+1)+BOXS(350,y,270,52,o[2],o[1],[],n+1.8)}).join('')+
+  BOXS(20,244,600,76,3,'Ví dụ: máy yếu → load video 4K giật',['Người dùng nghĩ ứng dụng lỗi'],22)},
+{t:"Triệu chứng lỗi mạng thường gặp",d:23500,
+ n:"Các lỗi mạng gây cảm giác giống ứng dụng lỗi, vì app có thể chờ dữ liệu mà không có phản hồi. Triệu chứng điển hình: WiFi có chấm than, web không mở, video không load, app báo retry hoặc timeout. Ví dụ: người dùng mở Google Docs báo mất kết nối server, nhưng bản chất lỗi là mạng chứ không phải Google Docs.",
+ v:()=>BOXS(20,15,600,76,4,'Lỗi mạng giống lỗi ứng dụng',['App chờ dữ liệu mà không có phản hồi'],.3)+
+  [['WiFi','có chấm than'],['Web','không mở'],['Video','không load'],['App báo','retry hoặc timeout']].map((o,i)=>BOXS(20+i*150,110,140,82,[1,3,4,2][i],o[0],[o[1]],7.3+i*1.4)).join('')+
+  BOXS(20,215,600,76,2,'Ví dụ: Google Docs báo mất kết nối server',['Bản chất lỗi là mạng, không phải Google Docs'],15)},
+{t:"Lỗi phần cứng hay gặp",d:19500,
+ n:"Những lỗi phần cứng hay gặp. Ổ cứng có bad sector gây lỗi đọc ghi không ổn định, file mở lúc được lúc không. RAM lỗi gây crash bất thường, rất khó tái hiện và thường bị nhầm là bug logic. Nguồn yếu hoặc cáp hỏng gây tắt máy đột ngột khi chạy tác vụ nặng.",
+ v:()=>[['Ổ cứng','có bad sector','Đọc ghi không ổn định','File mở lúc được lúc không',1],['RAM lỗi','khó tái hiện','Crash bất thường','Hay bị nhầm là bug logic',2],['Nguồn yếu','hoặc cáp hỏng','Tắt máy đột ngột','Khi chạy tác vụ nặng',4]].map((o,i)=>{const y=30+i*90,n=2.2+i*5.8;return BOXS(20,y,220,76,o[4],o[0],[o[1]],n)+AR(245,305,y+38,n+1.2)+BOXS(310,y,310,76,o[4],o[2],[o[3]],n+2)}).join('')},
+{t:"Kiểm tra modem router cơ bản",d:22000,
+ n:"Kiểm tra modem router cơ bản. Quan sát đèn tín hiệu: nếu đèn DSL, Internet hoặc LOS nhấp nháy bất thường là dấu hiệu lỗi đường truyền. Thao tác chuẩn: reboot modem, chờ hai phút, rồi kiểm tra lại tình trạng. Ví dụ: người dùng nghĩ máy lỗi, nhưng reset modem xong mọi thứ hoạt động bình thường.",
+ v:()=>ROWT([['1','Quan sát đèn tín hiệu','DSL/Internet/LOS nhấp nháy bất thường = lỗi đường truyền'],['2','Reboot modem','Chờ 2 phút, kiểm tra lại tình trạng']],70,[2.4,10.3])+
+  BOXS(20,170,600,76,3,'Ví dụ: người dùng nghĩ máy lỗi',['Reset modem xong, mọi thứ hoạt động bình thường'],16.3)},
+{t:"Máy lỗi hay phần mềm lỗi?",d:23000,
+ n:"Máy lỗi hay phần mềm lỗi? Câu hỏi phân biệt là lỗi xảy ra với tất cả ứng dụng hay chỉ một ứng dụng riêng lẻ. Nếu mọi app đều lỗi thì khả năng cao vấn đề thuộc hệ điều hành, driver, phần cứng hoặc mạng. Ví dụ: Google Drive không upload được trong khi Messenger cũng không gửi ảnh được, đây là lỗi mạng.",
+ v:()=>BOXS(20,12,600,76,4,'Câu hỏi phân biệt',['Lỗi xảy ra với tất cả ứng dụng hay chỉ một ứng dụng riêng lẻ?'],2)+
+  P('path','d="M320 88V108" marker-end="url(#ah)"','',8)+BOXS(150,110,340,50,2,'Nếu mọi app đều lỗi',[],8.6)+
+  P('path','d="M320 160V178" marker-end="url(#ah)"','',10)+
+  [['Hệ điều hành',1],['Driver',3],['Phần cứng',4],['Mạng',2]].map((o,i)=>BOXS(20+i*150,180,140,50,o[1],o[0],[],10.6+i*1.1)).join('')+
+  BOXS(20,244,600,76,3,'Ví dụ: Drive không upload, Messenger cũng không gửi ảnh',['→ Đây là lỗi mạng'],17)},
+{t:"Cách suy luận nguyên nhân nhanh",d:24500,
+ n:"Cách suy luận nguyên nhân nhanh, theo ba quy tắc. Quy tắc một: kiểm tra xem lỗi có tái diễn trên nhiều ứng dụng hay không. Quy tắc hai: kiểm tra các điều kiện môi trường như nhiệt độ máy, tình trạng kết nối, đèn modem. Quy tắc ba: nếu reset modem giải quyết được vấn đề, thì nguyên nhân chắc chắn không nằm ở code ứng dụng.",
+ v:()=>ROWT([['1','Lỗi có tái diễn nhiều ứng dụng?','Kiểm tra lỗi có lặp lại trên nhiều ứng dụng hay không'],['2','Kiểm tra điều kiện môi trường','Nhiệt độ máy, tình trạng kết nối, đèn modem'],['3','Reset modem giải quyết được?','Thì nguyên nhân chắc chắn không nằm ở code ứng dụng']],90,[3.4,9,16])},
+{t:"Phần 03: Mục tiêu phân tích thông báo lỗi",d:24000,
+ n:"Phần ba: Phân tích thông báo lỗi, do giảng viên Quách Vũ Thường trình bày. Mục tiêu là sử dụng cấu trúc thông báo lỗi làm kênh thông tin định hướng điều tra nguyên nhân, thay vì đoán mò. Thông báo lỗi chính là nguồn dữ liệu mô tả trạng thái hệ thống tại thời điểm lỗi xảy ra, mỗi dòng chữ đều có giá trị để suy luận.",
+ v:()=>I('target',250,28,.9,1,0)+T(280,34,'Mục tiêu phần 03','h2',0,'start')+
+  BOXS(20,52,600,76,1,'Dùng thông báo lỗi để định hướng điều tra',['Dựa vào cấu trúc thông báo lỗi, thay vì đoán mò'],5.8)+
+  BOXS(20,144,600,100,3,'Thông báo lỗi là nguồn dữ liệu',['Mô tả trạng thái hệ thống tại thời điểm lỗi xảy ra','Mỗi dòng chữ đều có giá trị để suy luận'],13.3)+
+  T(320,290,'Đọc từng dòng lỗi, không đoán mò','b big',20.5)},
+{t:"Kiểm tra ngày giờ hệ thống",d:21000,
+ n:"Kiểm tra cài đặt hệ thống. Kiểm tra lại ngày giờ hệ thống, vùng ngôn ngữ, định dạng số, timezone, vì API phụ thuộc vào đồng bộ thời gian để xác thực request. Ví dụ: chênh lệch thời gian máy hai phút so với server có thể làm token xác thực hết hạn ngay lập tức khi gửi request.",
+ v:()=>T(320,34,'3.1 Kiểm tra cài đặt hệ thống','h2',0)+
+  [['Ngày giờ',1],['Vùng ngôn ngữ',3],['Định dạng số',4],['Timezone',2]].map((o,i)=>BOXS(20+i*150,52,140,50,o[1],o[0],[],2.2+i*1.2)).join('')+
+  BOXS(20,122,600,76,4,'Vì sao?',['API phụ thuộc vào đồng bộ thời gian để xác thực request'],7.6)+
+  BOXS(20,222,170,76,2,'Máy lệch giờ',['2 phút so với server'],12.4)+AR(193,232,260,14.7)+
+  BOXS(235,222,170,76,1,'Gửi request',['có token xác thực'],15.2)+AR(408,447,260,17.2)+
+  BOXS(450,222,170,76,2,'Token hết hạn',['ngay lập tức'],17.7)},
+{t:"Hệ điều hành chưa cập nhật",d:14500,
+ n:"Hệ điều hành chưa update có thể thiếu bản vá liên quan network stack hoặc TLS version. Ví dụ: hệ điều hành cũ không hỗ trợ TLS một chấm ba, thì app báo lỗi handshake với server là điều dễ hiểu.",
+ v:()=>BOXS(20,40,170,100,2,'HĐH chưa update',['Có thể thiếu','bản vá'],.4)+AR(193,232,90,2.6)+
+  BOXS(235,40,170,100,4,'Thiếu bản vá',['network stack hoặc','TLS version'],3.2)+AR(408,447,90,6.4)+
+  BOXS(450,40,170,100,1,'Lỗi handshake',['App báo lỗi','với server'],7)+
+  BOXS(20,170,600,76,3,'Ví dụ: hệ điều hành cũ không hỗ trợ TLS 1.3',['App báo lỗi handshake với server là điều dễ hiểu'],10.5)},
+{t:"Quyền truy cập của ứng dụng",d:15500,
+ n:"Kiểm tra cài đặt ứng dụng, trước hết là quyền truy cập camera, micro, file system và internet. Nếu quyền không được cấp đầy đủ, app không truy cập được tài nguyên và sẽ báo lỗi như “permission denied”.",
+ v:()=>T(320,34,'3.2 Kiểm tra quyền truy cập','h2',0)+
+  [['Camera',1],['Micro',3],['File system',4],['Internet',2]].map((o,i)=>BOXS(20+i*150,52,140,50,o[1],o[0],[],2.5+i*.9)).join('')+
+  BOXS(20,130,290,76,2,'Quyền không cấp đầy đủ',['App không truy cập được tài nguyên'],7.4)+AR(313,347,168,10.5)+
+  BOXS(350,130,270,76,4,'App báo lỗi',['“permission denied”'],11)},
+{t:"Kiểm tra config nội bộ của app",d:15000,
+ n:"Kiểm tra config nội bộ của app: endpoint server, key API, chế độ proxy và thông số timeout. Ví dụ: endpoint đặt nhầm sang domain staging, app vẫn kết nối được nhưng dữ liệu sai vì trỏ sai môi trường.",
+ v:()=>T(320,34,'Config nội bộ của app','h2',0)+
+  [['Endpoint','server',1],['Key','API',3],['Chế độ','proxy',4],['Thông số','timeout',2]].map((o,i)=>BOXS(20+i*150,52,140,76,o[2],o[0],[o[1]],2+i*1.2)).join('')+
+  T(30,154,'Ví dụ','b',7,'start')+
+  BOXS(20,164,170,76,2,'Endpoint nhầm',['domain staging'],7.2)+AR(193,232,202,9)+
+  BOXS(235,164,170,76,1,'App vẫn kết nối',['được'],9.4)+AR(408,447,202,11)+
+  BOXS(450,164,170,76,4,'Dữ liệu sai',['vì trỏ sai môi trường'],11.4)},
+{t:"Đọc mã lỗi, mô tả lỗi, gợi ý khắc phục",d:18000,
+ n:"Đọc mã lỗi, mô tả lỗi và gợi ý khắc phục. Mỗi mã lỗi có pattern: tên module, mã số, cụm từ then chốt. Ví dụ: E R R gạch dưới NETWORK gạch dưới CHANGED là do network bị chuyển đổi trong lúc app đang request, nên request dang dở bị drop.",
+ v:()=>T(320,28,'Mỗi mã lỗi có pattern','b big',3.2)+
+  [['Tên module',1],['Mã số',3],['Cụm từ then chốt',4]].map((o,i)=>BOXS(20+i*205,42,190,52,o[1],o[0],[],4.2+i*1.2)).join('')+
+  BOXS(20,130,600,76,2,'Ví dụ: “ERR_NETWORK_CHANGED”',['Network bị chuyển đổi trong lúc app đang request'],8.5)+
+  P('path','d="M320 206V228" marker-end="url(#ah)"','',12.5)+BOXS(150,230,340,60,4,'Request dang dở bị drop',[],13)},
+{t:"Keyword trong thông báo lỗi",d:17000,
+ n:"Chú ý keyword trong thông báo lỗi như timeout, invalid, not found, unauthorized, vì đây chính là cửa sổ để suy luận nguyên nhân. Ví dụ: invalid payload, phân tích sâu thường là do sai định dạng JSON hoặc thiếu trường bắt buộc.",
+ v:()=>[['timeout',1],['invalid',3],['not found',4],['unauthorized',2]].map((o,i)=>BOXS(20+i*150,30,140,52,o[1],o[0],[],3+i*1.1)).join('')+
+  T(320,112,'Đây là “cửa sổ” để suy luận nguyên nhân','b',7.6)+
+  BOXS(20,170,220,76,4,'Ví dụ: “invalid payload”',['Phân tích sâu thường do:'],9.6)+AR(243,297,208,11.8)+
+  BOXS(300,150,320,50,1,'Sai định dạng JSON',[],12.2)+T(460,212,'hoặc','m',13.2)+BOXS(300,216,320,50,3,'Thiếu trường bắt buộc',[],13.5)},
+{t:"Dùng thông báo lỗi để thu hẹp nguyên nhân",d:23500,
+ n:"Dùng thông báo lỗi để thu hẹp nguyên nhân. Bước một: xác định loại lỗi, như network, permission, logic hay data. Bước hai: đối chiếu với điều kiện lúc lỗi xảy ra. Ví dụ: lỗi chỉ xảy ra khi dùng 4G nhưng không xảy ra khi dùng WiFi, thì nguyên nhân nhiều khả năng nằm ở cấu hình mạng, chứ không phải logic ứng dụng.",
+ v:()=>BOXS(20,20,290,100,1,'Bước 1: xác định loại lỗi',['network, permission,','logic, data'],3.2)+AR(313,347,70,8)+
+  BOXS(350,20,270,100,3,'Bước 2: đối chiếu',['với điều kiện lúc','lỗi xảy ra'],8.4)+
+  BOXS(20,140,600,98,4,'Ví dụ: chỉ lỗi khi dùng 4G, không lỗi khi dùng WiFi',['→ Nguyên nhân nhiều khả năng nằm ở cấu hình mạng,','chứ không phải logic ứng dụng'],12.8)},
+{t:"Kỹ năng then chốt: đọc lỗi chậm",d:14000,
+ n:"Kỹ năng then chốt. Một thông báo lỗi nhìn đơn giản nhưng lại chứa tín hiệu định hướng. Cần luyện thói quen đọc lỗi chậm và phân rã câu lỗi thành từ khóa, thay vì bỏ qua và nhấn retry.",
+ v:()=>ROWT([['✓','Đọc lỗi chậm','Luyện thói quen đọc kỹ thông báo lỗi'],['✓','Phân rã câu lỗi','Thành các từ khóa để suy luận'],['✗','Không bỏ qua rồi nhấn retry','Thay vì đọc lỗi, chỉ thử lại']],70,[6.6,8.8,10.6])+
+  BOXS(20,230,600,76,4,'Kỹ năng then chốt',['Thông báo lỗi “nhìn đơn giản” nhưng chứa tín hiệu định hướng'],1.2)},
+{t:"Phần 04: Mục tiêu khai thác nguồn online",d:20500,
+ n:"Phần bốn: Khai thác nguồn online để tìm giải pháp, do giảng viên Quách Vũ Thường trình bày. Mục tiêu: thay vì hỏi người khác một cách mơ hồ, học viên biết tự khai thác nguồn online có chọn lọc và có phương pháp. Kỹ năng này quyết định tốc độ tự giải quyết lỗi thực tế.",
+ v:()=>I('target',250,28,.9,1,0)+T(280,34,'Mục tiêu phần 04','h2',0,'start')+
+  BOXS(20,52,600,100,1,'Tự khai thác nguồn online',['Có chọn lọc và có phương pháp,','thay vì hỏi người khác một cách mơ hồ'],6.8)+
+  BOXS(20,168,600,76,4,'Kỹ năng quyết định tốc độ',['tự giải quyết lỗi thực tế'],15.8)},
+{t:"Các loại tài liệu online phổ biến",d:22000,
+ n:"Các loại tài liệu online phổ biến. Một: trang chính thức của nhà cung cấp, như Google, Microsoft, Apple, Meta. Hai: tài liệu developer, gồm API reference, changelog, release note. Ba: diễn đàn thảo luận, như StackOverflow, Reddit tech. Bốn: nội dung video hướng dẫn chuyên đề trên YouTube.",
+ v:()=>ROWT([['1','Trang chính thức của nhà cung cấp','Google, Microsoft, Apple, Meta'],['2','Tài liệu developer','API reference, changelog, release note'],['3','Diễn đàn thảo luận','StackOverflow, Reddit tech'],['4','Video hướng dẫn trên YouTube','Nội dung hướng dẫn chuyên đề']],75,[2.4,8.2,13.6,18])},
+{t:"Ví dụ nguồn chính thức và tài liệu developer",d:18500,
+ n:"Hai ví dụ nguồn chính thức. Trang chính thức: ví dụ google chấm com gạch chéo android gạch chéo developers, giải thích API rõ ràng nhất. Tài liệu developer: firebase chấm google chấm com gạch chéo docs, liệt kê lỗi và giải pháp kèm ví dụ code.",
+ v:()=>T(320,34,'Ví dụ nguồn chính thức','h2',0)+
+  BOXS(20,60,290,120,1,'Trang chính thức',['google.com/android/developers','Giải thích API rõ ràng nhất'],2.5)+
+  BOXS(330,60,290,120,3,'Tài liệu developer',['firebase.google.com/docs','Liệt kê lỗi và giải pháp','kèm ví dụ code'],10.5)},
+{t:"Vì sao nên ưu tiên nguồn chính thức",d:16000,
+ n:"Vì sao nên ưu tiên nguồn chính thức. Thông tin được cập nhật theo thời gian, theo từng version update. Độ xác thực cao, không có bình luận cảm tính. Nhiều lỗi đã được ghi vào changelog nên ta không phải đoán.",
+ v:()=>ROWT([['✓','Thông tin cập nhật theo thời gian','Theo từng version update'],['✓','Độ xác thực cao','Không có bình luận cảm tính'],['✓','Nhiều lỗi đã ghi vào changelog','Nên ta không phải đoán']],85,[2.8,7.2,10.6])+
+  BOXS(20,265,600,56,3,'Ưu tiên nguồn chính thức khi tìm giải pháp',[],12.2)},
+{t:"Từ khóa tiếng Việt và tiếng Anh song song",d:18000,
+ n:"Từ khóa tiếng Việt và tiếng Anh song song. Khi tìm lỗi, từ khóa tiếng Việt thường không đủ, vì mã lỗi luôn là tiếng Anh. Ví dụ: safari cannot establish a secure connection TLS một chấm ba enable. Kết hợp ngôn ngữ giúp mở rộng tập kết quả.",
+ v:()=>BOXS(20,25,270,76,2,'Từ khóa tiếng Việt',['Thường không đủ'],3.2)+T(305,72,'+','h1',6)+
+  BOXS(320,25,300,76,1,'Từ khóa tiếng Anh',['Mã lỗi luôn là tiếng Anh'],6.5)+
+  BOXS(20,125,600,76,4,'Ví dụ tìm kiếm',['safari cannot establish a secure connection TLS 1.3 enable'],9.5)+
+  P('path','d="M320 201V222" marker-end="url(#ah)"','',14.2)+BOXS(170,224,300,60,3,'Mở rộng tập kết quả',[],14.6)},
+{t:"Toán tử tìm kiếm trên Google",d:16000,
+ n:"Toán tử tìm kiếm trên Google. Sử dụng dấu ngoặc kép để tìm chính xác dòng lỗi, ví dụ E R R gạch dưới CACHE gạch dưới MISS. Ví dụ khác: dùng site, hai chấm, stackoverflow chấm com để lọc kết quả từ StackOverflow.",
+ v:()=>[['Dấu ngoặc kép','Tìm chính xác dòng lỗi','“ERR_CACHE_MISS”',2.2,1],['site:','Lọc kết quả từ StackOverflow','site:stackoverflow.com',9.3,3]].map((o,i)=>{const y=50+i*110,n=o[3];return BOXS(20,y,250,76,o[4],o[0],[o[1]],n)+AR(274,298,y+38,n+1)+P('rect',`x="302" y="${y+14}" width="318" height="48" rx="24"`,`s${o[4]} f${o[4]}`,n+1.2)+T(461,y+44,o[2],'b',n+1.8)}).join('')+T(320,28,'Hai kỹ thuật lọc kết quả','h2',0)},
+{t:"Truy nguyên nhân bằng phiên bản",d:12000,
+ n:"Truy nguyên nhân bằng phiên bản. Nhiều lỗi chỉ xuất hiện trên một phiên bản cụ thể. Ví dụ: thêm từ khóa version và OS, như Android mười ba video decode error.",
+ v:()=>BOXS(20,18,600,60,4,'Lỗi chỉ xuất hiện trên một phiên bản cụ thể',[],2.6)+
+  T(320,116,'Thêm từ khóa version và OS','b big',6.8)+
+  P('rect','x="90" y="132" width="460" height="56" rx="28"','s1 f1',7.2)+T(320,167,'Android 13 video decode error','b big',7.8)+
+  BOXS(110,208,200,56,1,'OS',[],8.8)+BOXS(330,208,200,56,3,'Version',[],9.4)},
+{t:"Khi nào dùng video YouTube",d:13000,
+ n:"Khi nào dùng video YouTube. Khi lỗi liên quan tới thao tác bấm mở app, cài đặt hệ thống, thiết lập cấu hình GUI. Video thể hiện chuỗi thao tác, dễ nhìn hơn đọc văn bản.",
+ v:()=>T(320,28,'Dùng video khi lỗi liên quan tới','h2',1.8)+
+  [['Bấm mở app',1],['Cài đặt hệ thống',3],['Cấu hình GUI',4]].map((o,i)=>BOXS(20+i*205,44,190,52,o[1],o[0],[],2.8+i*1.2)).join('')+
+  P('path','d="M320 96V146" marker-end="url(#ah)"','',8.4)+
+  BOXS(120,150,400,76,2,'Video thể hiện chuỗi thao tác',['Dễ nhìn hơn đọc văn bản'],8.8)},
+{t:"Điểm yếu của video",d:13500,
+ n:"Điểm yếu của video. Không có cấu trúc tra cứu, khó quay lại nhanh để lấy chính xác một dòng hướng dẫn. Không phải tất cả video đều uy tín, nhiều video thiếu timestamp rõ ràng.",
+ v:()=>ROWT([['✗','Không có cấu trúc tra cứu','Khó quay lại nhanh để lấy đúng 1 dòng hướng dẫn'],['✗','Không phải video nào cũng uy tín','Nhiều video thiếu timestamp rõ ràng']],90,[2.2,8])},
+{t:"Khi nào dùng bài phân tích blog",d:15500,
+ n:"Dùng bài phân tích blog khi nào. Khi cần lý do sâu bên dưới cơ chế: vì sao lỗi xảy ra, không chỉ cách sửa. Ví dụ: blog kỹ thuật thường giải thích nguyên lý, có thể liên quan đến cơ chế HTTP, TLS, JSON.",
+ v:()=>BOXS(20,30,600,76,4,'Khi cần hiểu lý do sâu bên dưới cơ chế',['Vì sao lỗi xảy ra, không chỉ cách sửa'],2.5)+
+  T(320,150,'Blog kỹ thuật thường giải thích nguyên lý','b big',8.2)+
+  [['HTTP',1],['TLS',3],['JSON…',2]].map((o,i)=>BOXS(20+i*205,170,190,52,o[1],o[0],[],9.8+i*1.1)).join('')},
+{t:"Đánh giá độ phù hợp của nội dung",d:16000,
+ n:"Đánh giá độ phù hợp của nội dung. Nếu nội dung quá học thuật, khó áp dụng cho lỗi người dùng cuối, cần bỏ qua. Nếu nội dung chỉ là lời than phiền hoặc ý kiến cá nhân, không có log hay mã lỗi minh chứng, thì loại.",
+ v:()=>ROWT([['✗','Quá học thuật','Khó áp dụng cho lỗi người dùng cuối → bỏ qua'],['✗','Lời than phiền, ý kiến cá nhân','Không có log hay mã lỗi minh chứng → loại']],100,[2.5,9.5])},
+{t:"Nội dung tốt và nội dung không tốt",d:18000,
+ n:"Ví dụ phân biệt nội dung tốt và không tốt. Nội dung tốt: có mã lỗi, có version, có điều kiện tái hiện và có giải pháp được chứng minh. Nội dung không tốt: máy tui hôm nay tự nhiên bị chậm, ai biết fix không. Không có dữ liệu để phân tích.",
+ v:()=>BOXS(20,30,290,140,3,'Nội dung tốt',['Có mã lỗi, có version,','có điều kiện tái hiện,','có giải pháp','được chứng minh'],3.4)+
+  BOXS(330,30,290,140,2,'Nội dung không tốt',['“máy tui hôm nay tự nhiên','bị chậm, ai biết fix không”','Không có dữ liệu','để phân tích'],11)},
+{t:"Ví dụ 1: lỗi upload file",d:19500,
+ n:"Ví dụ tình huống một: lỗi upload file. Từ khóa sai: người dùng tìm tải file lên không được, kết quả lan man. Từ khóa đúng: E R R gạch dưới CONTENT gạch dưới LENGTH gạch dưới MISMATCH upload 4MB limit. Kết quả: phát hiện server có cấu hình giới hạn dung lượng.",
+ v:()=>SBAR(25,2,'Từ khóa sai',['tải file lên không được'],3)+T(411,100,'→ Kết quả lan man','m',6.5)+
+  SBAR(125,3,'Từ khóa đúng',['“ERR_CONTENT_LENGTH_MISMATCH upload 4MB limit”'],8.4)+
+  BOXS(20,205,600,60,3,'Kết quả: phát hiện server có cấu hình giới hạn dung lượng',[],16)},
+{t:"Ví dụ 2: lỗi camera",d:19500,
+ n:"Ví dụ tình huống hai: lỗi camera. Từ khóa mơ hồ: camera lỗi, hoặc người dùng tìm tải file lên không được, kết quả lan man. Từ khóa đúng: camera unauthorized permission denied android mười ba record video. Kết quả: tìm được hướng dẫn cấp lại quyền camera.",
+ v:()=>SBAR(25,2,'Từ khóa mơ hồ',['“camera lỗi”'],2.6)+T(411,98,'hoặc “tải file lên không được” → kết quả lan man','m',5.5)+
+  SBAR(125,3,'Từ khóa đúng',['“camera unauthorized permission denied','android 13 record video”'],9.8)+
+  BOXS(20,218,600,60,3,'Kết quả: tìm được hướng dẫn cấp lại quyền camera',[],16.5)},
+{t:"Thực hành: tinh chỉnh từ khóa",d:19500,
+ n:"Thực hành tinh chỉnh từ khóa. Chiến lược: bắt đầu từ từ khóa ngắn, thêm mã lỗi, thêm version, rồi thêm tên vendor. Nên lưu pattern tìm kiếm hiệu quả, ví dụ template: mã lỗi, hành động, version, platform. Mỗi lần thêm một thành phần mới để thu hẹp kết quả.",
+ v:()=>[['Từ khóa ngắn',1],['+ Mã lỗi',3],['+ Version',4],['+ Name vendor',2]].map((o,i)=>BOXS(20+i*158,40,125,56,o[1],o[0],[],2.6+i*1.6)+(i<3?AR(147+i*158,175+i*158,68,2.9+i*1.6+.8):'')).join('')+
+  BOXS(20,130,600,76,4,'Lưu pattern tìm kiếm hiệu quả',['“&lt;ERR_CODE&gt; &lt;action&gt; &lt;version&gt; &lt;platform&gt;”'],9.5)+
+  BOXS(20,230,600,60,3,'Mỗi lần thêm 1 thành phần mới để thu hẹp kết quả',[],16)},
+{t:"Phần 05: Mục tiêu đánh giá độ tin cậy nguồn",d:19500,
+ n:"Phần năm: Đánh giá độ tin cậy nguồn, do giảng viên Quách Vũ Thường trình bày. Mục tiêu: biết phân biệt nguồn đáng tin hay không, thay vì tin vào mọi kết quả tìm kiếm. Kỹ năng này giúp không bị dẫn dắt bởi thông tin sai hoặc suy đoán cảm tính trên internet.",
+ v:()=>I('target',250,28,.9,1,0)+T(280,34,'Mục tiêu phần 05','h2',0,'start')+
+  BOXS(20,56,600,76,1,'Phân biệt nguồn đáng tin hay không',['Thay vì tin vào mọi kết quả tìm kiếm'],6)+
+  BOXS(20,148,600,76,3,'Không bị dẫn dắt',['bởi thông tin sai hoặc suy đoán cảm tính trên internet'],12.5)},
+{t:"Bốn tiêu chí đánh giá nguồn",d:12000,
+ n:"Bốn tiêu chí đánh giá nguồn. Một: tác giả là ai. Hai: tổ chức nào đứng sau. Ba: ngày cập nhật có mới không. Bốn: có dẫn nguồn, có log và minh chứng không.",
+ v:()=>ROWT([['1','Tác giả là ai','Tiêu chí 1'],['2','Tổ chức nào đứng sau','Tiêu chí 2'],['3','Ngày cập nhật có mới không','Tiêu chí 3'],['4','Có dẫn nguồn, có log và minh chứng không','Tiêu chí 4']],75,[2.2,3.6,5.6,7.9])},
+{t:"Tiêu chí 1: Tác giả là ai?",d:14500,
+ n:"Tiêu chí một: tác giả là ai. Nếu không có thông tin tác giả, bài viết vô danh, không thể truy trách nhiệm học thuật. Ví dụ: bài post Facebook không có tác giả rõ ràng thì độ tin cậy rất thấp.",
+ v:()=>BOXS(20,18,600,60,1,'Tiêu chí 1: Tác giả là ai?',[],.3)+
+  BOXS(20,100,270,76,2,'Không có thông tin tác giả',[],2.3)+AR(293,347,138,4.5)+
+  BOXS(350,100,270,76,2,'Bài viết vô danh',['Không thể truy trách nhiệm học thuật'],5)+
+  BOXS(20,210,600,76,2,'Ví dụ: bài post Facebook không có tác giả rõ ràng',['Độ tin cậy rất thấp'],8.9)},
+{t:"Tiêu chí 2: Tổ chức nào đứng sau?",d:14000,
+ n:"Tiêu chí hai: tổ chức nào đứng sau. Nếu tổ chức là nhà cung cấp công nghệ hoặc trường đại học, độ tin cậy cao. Ví dụ: tài liệu guidance từ Microsoft Learn luôn có quy chuẩn biên tập.",
+ v:()=>BOXS(20,18,600,60,3,'Tiêu chí 2: Tổ chức nào đứng sau?',[],.3)+
+  BOXS(20,100,270,76,3,'Nhà cung cấp công nghệ',['hoặc trường đại học'],2.8)+AR(293,347,138,5.2)+
+  BOXS(350,108,270,60,3,'Độ tin cậy cao',[],5.7)+
+  BOXS(20,210,600,76,4,'Ví dụ: tài liệu guidance từ Microsoft Learn',['Luôn có quy chuẩn biên tập'],9.2)},
+{t:"Tiêu chí 3: Ngày cập nhật gần hay xa?",d:12500,
+ n:"Tiêu chí ba: ngày cập nhật gần hay xa. Kiến thức công nghệ thay đổi nhanh, bài viết năm năm trước có thể đã sai. Ví dụ: phiên bản TLS hỗ trợ thay đổi qua từng năm.",
+ v:()=>BOXS(20,18,600,60,4,'Tiêu chí 3: Ngày cập nhật gần hay xa?',[],.3)+
+  BOXS(20,100,270,76,4,'Kiến thức công nghệ',['thay đổi nhanh'],3)+AR(293,347,138,5.3)+
+  BOXS(350,100,270,76,2,'Bài viết 5 năm trước',['có thể đã sai'],5.8)+
+  BOXS(20,210,600,76,1,'Ví dụ: phiên bản TLS hỗ trợ',['thay đổi qua từng năm'],8.8)},
+{t:"Tiêu chí 4: Có dẫn nguồn và minh chứng không?",d:16500,
+ n:"Tiêu chí bốn: có dẫn nguồn và minh chứng hay không. Nếu chỉ nói bằng cảm giác mà không có log hoặc mã lỗi, bài viết thiếu giá trị suy luận. Ví dụ: bài viết nêu mã lỗi cộng log cụ thể giúp truy nguyên nhân chính xác.",
+ v:()=>BOXS(20,18,600,60,2,'Tiêu chí 4: Có dẫn nguồn và minh chứng không?',[],.3)+
+  BOXS(20,100,270,76,2,'Chỉ nói bằng cảm giác',['Không có log hoặc mã lỗi'],4)+AR(293,347,138,7)+
+  BOXS(350,108,270,60,2,'Thiếu giá trị suy luận',[],7.5)+
+  BOXS(20,210,600,76,3,'Ví dụ: bài viết nêu mã lỗi + log cụ thể',['Giúp truy nguyên nhân chính xác'],11.1)},
+{t:"Ưu tiên nguồn chính thống và học thuật",d:12500,
+ n:"Ưu tiên nguồn chính thống và học thuật. Nguồn chính thống thường cập nhật và có quy trình kiểm duyệt nội dung. Đây là nơi nên đọc đầu tiên khi đối chiếu thông tin.",
+ v:()=>BOXS(20,30,600,76,3,'Nguồn chính thống',['Thường cập nhật và có quy trình kiểm duyệt nội dung'],3)+
+  P('path','d="M320 106V136" marker-end="url(#ah)"','',8.2)+
+  BOXS(80,140,480,60,4,'Nơi nên đọc đầu tiên khi đối chiếu thông tin',[],8.6)},
+{t:"Ví dụ nguồn chính thống",d:17000,
+ n:"Ví dụ về nguồn chính thống: developer chấm android chấm com, firebase chấm google chấm com gạch chéo docs, learn chấm microsoft chấm com, và support chấm apple chấm com. Các trang này là chuẩn tham chiếu cho developer và user.",
+ v:()=>BOXS(20,20,290,60,1,'developer.android.com',[],1.5)+BOXS(330,20,290,60,3,'firebase.google.com/docs',[],3.5)+
+  BOXS(20,100,290,60,4,'learn.microsoft.com',[],5.5)+BOXS(330,100,290,60,2,'support.apple.com',[],7.5)+
+  P('path','d="M320 172V202" marker-end="url(#ah)"','',10)+BOXS(80,208,480,60,3,'Chuẩn tham chiếu cho developer và user',[],10.5)},
+{t:"Nguồn học thuật",d:17000,
+ n:"Nguồn học thuật. Các bài nghiên cứu phân tích cơ chế nền tảng, giúp hiểu sâu nguyên lý lỗi. Ví dụ, một bài nghiên cứu mô tả cơ chế HTTP ba giúp hiểu vì sao request có thể bị drop.",
+ v:()=>BOXS(20,30,600,100,1,'Nguồn học thuật',['Bài nghiên cứu phân tích cơ chế nền tảng','giúp hiểu sâu nguyên lý lỗi'],1.5)+
+  BOXS(20,170,600,80,3,'Ví dụ: bài nghiên cứu về HTTP/3',['Mô tả cơ chế, giúp hiểu vì sao request có thể bị drop'],9)},
+{t:"Đánh giá thông tin cộng đồng",d:15000,
+ n:"Đánh giá thông tin cộng đồng. Thông tin cộng đồng nhiều khi giúp tìm cách khắc phục nhanh, nhưng chất lượng không đồng đều. Cần lọc dựa trên tiêu chí chặt chẽ, không tin vào comment mơ hồ.",
+ v:()=>BOXS(20,30,270,76,3,'Thông tin cộng đồng',['Giúp tìm cách khắc phục nhanh'],1.5)+AR(293,347,68,5)+
+  BOXS(350,30,270,76,2,'Chất lượng không đồng đều',[],5.5)+
+  BOXS(20,150,600,100,4,'Lọc theo tiêu chí chặt chẽ',['Không tin vào comment mơ hồ'],9)},
+{t:"Case A: comment có dữ kiện → dùng được",d:16000,
+ n:"Case A: comment có dữ kiện thì dùng được. Một câu trả lời StackOverflow có mã lỗi, có version, có ví dụ log. Đây là tín hiệu đáng tin cậy hơn nhiều so với comment chung chung.",
+ v:()=>BOXS(20,18,600,60,3,'Case A: comment có dữ kiện → dùng được',[],.3)+
+  BOXS(20,100,600,80,3,'Câu trả lời StackOverflow',['Có mã lỗi, có version, có ví dụ log'],3.5)+
+  P('path','d="M320 180V204" marker-end="url(#ah)"','',8.5)+BOXS(60,208,520,60,4,'Đáng tin cậy hơn nhiều so với comment chung chung',[],9)},
+{t:"Case B: comment vô nghĩa → loại bỏ",d:14000,
+ n:"Case B: comment vô nghĩa thì loại bỏ. Comment kiểu, mình thấy hôm nay mạng dở, không có giá trị phân tích. Không dùng làm bằng chứng để kết luận nguyên nhân.",
+ v:()=>BOXS(20,18,600,60,2,'Case B: comment vô nghĩa → loại bỏ',[],.3)+
+  BOXS(20,100,600,80,2,'Comment: “mình thấy hôm nay mạng dở”',['Không có giá trị phân tích'],3.5)+
+  P('path','d="M320 180V204" marker-end="url(#ah)"','',8)+BOXS(60,208,520,60,2,'Không dùng làm bằng chứng để kết luận nguyên nhân',[],8.5)},
+{t:"Danh sách nguồn uy tín thường dùng",d:13000,
+ n:"Danh sách nguồn uy tín thường dùng. Một: trang chính thức của vendor. Hai: tài liệu API chính thức. Ba: diễn đàn developer lớn có kiểm duyệt.",
+ v:()=>BOXS(20,20,600,70,1,'1. Trang chính thức của vendor',[],1.5)+BOXS(20,110,600,70,3,'2. Tài liệu API chính thức',[],4.5)+
+  BOXS(20,200,600,70,4,'3. Diễn đàn developer lớn có kiểm duyệt',[],7.5)},
+{t:"Diễn đàn developer lớn",d:14500,
+ n:"Diễn đàn developer lớn. StackOverflow có hệ thống vote và badge giúp đánh giá uy tín người trả lời. Không gian thảo luận này có độ kiểm duyệt cao hơn Facebook group.",
+ v:()=>BOXS(20,40,290,110,1,'StackOverflow',['Hệ thống vote và badge','giúp đánh giá uy tín','người trả lời'],1.5)+AR(313,347,95,7)+
+  BOXS(350,40,270,110,3,'Độ kiểm duyệt cao hơn',['Facebook group'],7.5)},
+{t:"Tận dụng nguồn uy tín để rút ngắn thời gian",d:17500,
+ n:"Tận dụng nguồn uy tín để rút ngắn thời gian xử lý. Thay vì đọc hàng chục trang cảm tính, chỉ cần đọc hai đến ba trang chính thống có log và mã lỗi. Cách này vừa tiết kiệm thời gian, vừa tăng độ chính xác.",
+ v:()=>BOXS(20,20,270,76,2,'Hàng chục trang cảm tính',[],1.5)+AR(293,347,58,4)+
+  BOXS(350,20,270,100,3,'2 đến 3 trang chính thống',['Có log và mã lỗi'],4.5)+
+  BOXS(20,170,290,70,1,'Tiết kiệm thời gian',[],9.5)+BOXS(330,170,290,70,4,'Tăng độ chính xác',[],11.5)},
+{t:"Phần 06: Mục tiêu tìm lời giải trên diễn đàn cộng đồng",d:24000,
+ n:"Phần sáu: Giải pháp tìm lời giải trên diễn đàn cộng đồng, do giảng viên Quách Vũ Thường trình bày. Mục tiêu: biết cách đặt câu hỏi có dữ kiện đủ để nhận được câu trả lời hữu ích từ cộng đồng. Diễn đàn cộng đồng có thể là nhóm lớp, group xã hội, group chuyên môn, group phụ huynh, group sức khỏe, group nấu ăn, group xây dựng nhà cửa.",
+ v:()=>BOXS(20,14,600,76,1,'Đặt câu hỏi có dữ kiện đủ',['để nhận được câu trả lời hữu ích từ cộng đồng'],.3)+T(320,122,'Diễn đàn cộng đồng có thể là','b big',8)+
+  BOXS(20,138,140,52,3,'Nhóm lớp',[],9)+BOXS(175,138,140,52,3,'Group xã hội',[],10)+BOXS(330,138,140,52,3,'Group chuyên môn',[],11)+BOXS(485,138,135,52,3,'Group phụ huynh',[],12.2)+
+  BOXS(20,208,195,52,4,'Group sức khỏe',[],13.5)+BOXS(223,208,195,52,4,'Group nấu ăn',[],14.5)+BOXS(426,208,195,52,4,'Group xây dựng nhà cửa',[],15.5)},
+{t:"Cách đặt câu hỏi hiệu quả",d:15000,
+ n:"Cách đặt câu hỏi hiệu quả. Cộng đồng chỉ trả lời được khi mô tả vấn đề có trạng thái hệ thống và ngữ cảnh đủ cụ thể. Nếu thông tin thiếu, người khác cũng chỉ đoán mò như chính bạn.",
+ v:()=>BOXS(20,30,600,90,3,'Mô tả vấn đề đủ cụ thể',['Có trạng thái hệ thống và ngữ cảnh'],1.5)+BOXS(20,160,600,90,2,'Thông tin thiếu',['Người khác cũng chỉ đoán mò như chính bạn'],8)},
+{t:"Cấu trúc một câu hỏi chất lượng",d:14000,
+ n:"Cấu trúc một câu hỏi chất lượng gồm bốn phần. Một: thiết bị, hệ điều hành, version. Hai: bước tái hiện lỗi cụ thể. Ba: mã lỗi hoặc keyword lỗi. Bốn: những thứ đã thử nhưng không hiệu quả.",
+ v:()=>BOXS(20,14,600,60,1,'1. Thiết bị – OS – version',[],.5)+BOXS(20,86,600,60,3,'2. Bước tái hiện lỗi cụ thể',[],3.5)+BOXS(20,158,600,60,4,'3. Mã lỗi hoặc keyword lỗi',[],6.5)+BOXS(20,230,600,60,2,'4. Những thứ đã thử nhưng không hiệu quả',[],9.5)},
+{t:"Ví dụ so sánh câu hỏi",d:22000,
+ n:"Ví dụ so sánh câu hỏi. Câu sai: anh em ơi web tui không lên. Câu đúng: Chrome 120, Windows 11, form checkout, submit, báo ERR_SSL_PROTOCOL_ERROR, chỉ xảy ra khi bật VPN. Câu đúng tạo điều kiện để người đọc tái hiện, tức là vào được đúng không gian nguyên nhân.",
+ v:()=>BOXS(20,14,600,76,2,'Câu sai',['“anh em ơi web tui không lên”'],.3)+BOXS(20,104,600,100,3,'Câu đúng',['“Chrome 120 Windows 11, form checkout, submit →','ERR_SSL_PROTOCOL_ERROR, chỉ xảy ra khi bật VPN”'],5)+BOXS(20,226,600,60,4,'Người đọc tái hiện được, vào đúng không gian nguyên nhân',[],15)},
+{t:"Nguyên tắc không viết chung chung",d:14500,
+ n:"Nguyên tắc không viết chung chung. Không dùng chắc là tại, không hiểu sao. Không mô tả bằng cảm giác mà thiếu số liệu. Đây là kỹ năng loại bỏ nhiễu trước khi gửi câu hỏi.",
+ v:()=>BOXS(20,14,600,60,2,'Không dùng “chắc là tại...”, “không hiểu sao…”',[],.5)+BOXS(20,88,600,60,2,'Không mô tả bằng cảm giác mà thiếu số liệu',[],4.5)+P('path','d="M320 150V184" marker-end="url(#ah)"','',9)+BOXS(60,190,520,60,3,'Kỹ năng loại bỏ nhiễu trước khi gửi câu hỏi',[],9.5)},
+{t:"Lọc tín hiệu",d:17000,
+ n:"Lọc tín hiệu. Dùng filter vote trên StackOverflow, ưu tiên câu trả lời top. So sánh version trong câu trả lời với version hiện tại của mình. Luôn ưu tiên câu trả lời có log hoặc code sample.",
+ v:()=>BOXS(20,14,600,76,1,'Lọc theo vote trên StackOverflow',['Ưu tiên câu trả lời top'],.5)+BOXS(20,106,600,76,3,'So sánh version',['Version trong câu trả lời với version hiện tại của mình'],5)+BOXS(20,198,600,60,4,'Ưu tiên câu trả lời có log hoặc code sample',[],10.5)},
+{t:"Nhận diện câu trả lời tốt",d:13000,
+ n:"Nhận diện câu trả lời tốt: có log, có version hệ điều hành hoặc ứng dụng, có điều kiện tái hiện, và có mô tả cơ chế tại sao lỗi đó xảy ra.",
+ v:()=>T(320,30,'Câu trả lời tốt','h2',0)+BOXS(20,50,290,90,3,'Có log',[],1)+BOXS(330,50,290,90,3,'Có version OS/app',[],3.5)+BOXS(20,156,290,90,3,'Có điều kiện tái hiện',[],6)+BOXS(330,156,290,90,3,'Có mô tả cơ chế',['tại sao lỗi đó xảy ra'],8.5)},
+{t:"Nhận diện câu trả lời sai",d:12500,
+ n:"Nhận diện câu trả lời sai: không có version, không có log, không có dữ kiện, chỉ là suy đoán chủ quan.",
+ v:()=>T(320,30,'Câu trả lời sai','h2',0)+BOXS(20,50,290,90,2,'Không có version',[],1)+BOXS(330,50,290,90,2,'Không có log',[],3)+BOXS(20,156,290,90,2,'Không có dữ kiện',[],5)+BOXS(330,156,290,90,2,'Chỉ là suy đoán chủ quan',[],7)},
+{t:"Ví dụ về câu trả lời đúng",d:19000,
+ n:"Ví dụ về câu trả lời đúng: ERR_CACHE_MISS xảy ra thường do reload form POST mà không có proper cache control header. Nội dung này vừa có keyword, vừa có gợi ý nguyên nhân thuộc HTTP caching.",
+ v:()=>BOXS(20,14,600,100,3,'Câu trả lời đúng',['“ERR_CACHE_MISS xảy ra thường do reload form POST','mà không có proper cache control header”'],.3)+P('path','d="M320 114V144" marker-end="url(#ah)"','',9)+BOXS(20,150,270,60,1,'Có keyword',[],10)+BOXS(310,150,310,60,4,'Gợi ý nguyên nhân: HTTP caching',[],12.5)},
+{t:"Phương pháp đọc chuỗi comment",d:16000,
+ n:"Phương pháp đọc chuỗi comment. Đọc comment theo ba tầng: câu trả lời gốc, comment bổ sung, comment phản biện. Nếu comment phản biện có log cụ thể, đó là bằng chứng trọng lượng cao.",
+ v:()=>T(320,28,'Đọc comment theo 3 tầng','b big',0)+BOXS(20,46,180,60,1,'Câu trả lời gốc',[],1)+AR(203,227,76,3)+BOXS(230,46,180,60,3,'Comment bổ sung',[],3.5)+AR(413,437,76,5.5)+BOXS(440,46,180,60,2,'Comment phản biện',[],6)+
+  BOXS(20,150,600,80,4,'Comment phản biện có log cụ thể',['là bằng chứng trọng lượng cao'],10)},
+{t:"Tạo template đặt câu hỏi cá nhân",d:17000,
+ n:"Tạo template đặt câu hỏi cá nhân gồm: thiết bị, hệ điều hành, version, điều kiện tái hiện, log, mã lỗi, và điều kiện khác biệt. Nên lưu template này để tái sử dụng nhanh mỗi khi cần hỏi.",
+ v:()=>BOXS(20,14,195,56,1,'Thiết bị',[],.5)+BOXS(223,14,195,56,1,'OS',[],1.5)+BOXS(426,14,195,56,1,'Version',[],2.5)+
+  BOXS(20,84,195,56,3,'Điều kiện tái hiện',[],4)+BOXS(223,84,195,56,3,'Log',[],5)+BOXS(426,84,195,56,3,'Mã lỗi',[],6)+
+  BOXS(20,154,195,56,4,'Điều kiện khác biệt',[],7.5)+BOXS(223,154,398,56,2,'Lưu template để tái sử dụng nhanh',[],11)},
+{t:"Kết thúc vòng tìm kiếm và chốt một giải pháp",d:16000,
+ n:"Kết thúc vòng tìm kiếm và chốt một giải pháp. Không cần đọc năm mươi câu trả lời. Chỉ cần một câu trả lời có log, có mã lỗi, có phiên bản gần nhất. Nếu phù hợp thì triển khai ngay.",
+ v:()=>BOXS(20,14,600,60,2,'Không cần đọc 50 câu trả lời',[],.5)+BOXS(20,92,600,76,3,'Chỉ cần 1 câu trả lời',['có log, có mã lỗi, có phiên bản gần nhất'],4)+P('path','d="M320 170V198" marker-end="url(#ah)"','',9)+BOXS(60,204,520,60,4,'Nếu phù hợp thì triển khai ngay',[],9.5)},
+{t:"Phần 07: Mục tiêu giải quyết dữ liệu bằng Google Sheets",d:30000,
+ n:"Phần bảy: Giải quyết dữ liệu bằng Google Sheets, do giảng viên Quách Vũ Thường trình bày. Mục tiêu: minh họa ví dụ theo dõi chi tiêu cá nhân hàng tháng bằng Google Sheets. Tập trung vào hạng mục, số tiền, tỉ lệ phần trăm và biểu đồ minh họa. Dữ liệu gồm ăn uống, cafe, xăng xe, tiền nhà, điện, nước, internet. Từ đó tìm điểm kém hiệu quả và đề xuất cải tiến dựa trên số liệu.",
+ v:()=>BOXS(20,14,600,64,1,'Theo dõi chi tiêu cá nhân hàng tháng',['bằng Google Sheets'],.3)+
+  BOXS(20,92,140,50,3,'Hạng mục',[],8)+BOXS(175,92,140,50,3,'Số tiền',[],9.5)+BOXS(330,92,140,50,3,'Tỉ lệ phần trăm',[],11)+BOXS(485,92,135,50,3,'Biểu đồ',[],12.5)+
+  BOXS(20,156,600,64,4,'Dữ liệu',['ăn uống, cafe, xăng xe, tiền nhà, điện, nước, internet…'],16.5)+
+  BOXS(20,236,600,64,2,'Tìm điểm kém hiệu quả',['đề xuất cải tiến dựa số liệu'],22.5)},
+{t:"Thành phần giao diện chính của Google Sheets",d:17000,
+ n:"Thành phần giao diện chính của Google Sheets. Thanh menu chứa toàn bộ chức năng thao tác. Thanh công thức để đặt logic tính toán. Và tab sheet. Bảng tính mẫu có đường dẫn ngay trong slide.",
+ v:()=>BOXS(20,14,600,66,1,'Thanh menu',['Chứa toàn bộ chức năng thao tác'],1)+BOXS(20,96,600,66,3,'Thanh công thức',['Để đặt logic tính toán'],5)+BOXS(20,178,600,66,4,'Tab sheet',[],9.5)+BOXS(20,260,600,56,1,'Bảng tính mẫu: đường dẫn ghi trong slide',[],12.5)},
+{t:"Nhập liệu cơ bản",d:15000,
+ n:"Nhập liệu cơ bản. Nhập từng khoản chi theo từng dòng. Có các mục Income, Bills và Expenses. Mỗi dòng là một sự kiện chi tiêu.",
+ v:()=>BOXS(20,14,600,60,1,'Nhập từng khoản chi theo từng dòng',[],.5)+BOXS(20,88,195,52,3,'Income',[],4.5)+BOXS(223,88,195,52,3,'Bills',[],5.7)+BOXS(426,88,195,52,3,'Expenses',[],6.9)+BOXS(20,156,600,60,4,'Mỗi dòng là 1 sự kiện chi tiêu',[],10)},
+{t:"Định dạng dữ liệu",d:15000,
+ n:"Định dạng dữ liệu. Format number dạng tiền tệ. Format date để định dạng ngày tháng. Không trộn lẫn nhiều định dạng ngày.",
+ v:()=>BOXS(20,14,600,60,1,'Format number dạng tiền tệ',[],.5)+BOXS(20,88,600,60,3,'Format date: định dạng ngày tháng',[],4)+BOXS(20,162,600,60,2,'Không trộn lẫn nhiều định dạng ngày',[],8.5)},
+{t:"Tận dụng AutoFill",d:14000,
+ n:"Tận dụng AutoFill. AutoFill ngày theo pattern. AutoFill category nếu lặp lại nhiều lần. Nhờ đó giảm thời gian nhập tay.",
+ v:()=>BOXS(20,14,600,60,1,'AutoFill ngày theo pattern',[],.5)+BOXS(20,88,600,60,3,'AutoFill category nếu lặp lại nhiều lần',[],3.5)+BOXS(20,162,600,60,4,'Giảm thời gian nhập tay',[],8)},
+{t:"Data validation: kiểm tra dữ liệu",d:24000,
+ n:"Kiểm tra dữ liệu bằng Data validation. Validation phát hiện category sai và giảm sai sót khi nhập nhiều dòng liên tục. Cách làm: vào Data, chọn Data validation. Cột category chỉ chấp nhận danh sách: Food, Coffee, Transport, Rent, Utilities, Others.",
+ v:()=>BOXS(20,14,295,70,3,'Phát hiện category sai',[],.5)+BOXS(325,14,295,70,3,'Giảm sai sót khi nhập',['nhiều dòng liên tục'],3)+BOXS(20,88,600,52,1,'Data > Data validation',[],8)+
+  T(320,168,'Cột category chỉ chấp nhận danh sách','b big',12)+
+  BOXS(20,182,195,50,4,'Food',[],14)+BOXS(223,182,195,50,4,'Coffee',[],15)+BOXS(426,182,195,50,4,'Transport',[],16)+BOXS(20,244,195,50,4,'Rent',[],17)+BOXS(223,244,195,50,4,'Utilities',[],18)+BOXS(426,244,195,50,4,'Others',[],19)},
+{t:"Đặt tên cột rõ ràng",d:16000,
+ n:"Tổ chức dữ liệu khoa học: đặt tên cột rõ ràng. Description, Expected, Amount, Due-Date, Budget, Actual và Remaining.",
+ v:()=>BOXS(20,20,140,60,1,'Description',[],.5)+BOXS(175,20,140,60,1,'Expected',[],2)+BOXS(330,20,140,60,1,'Amount',[],3.5)+BOXS(485,20,135,60,1,'Due-Date',[],5)+
+  BOXS(20,110,195,60,3,'Budget',[],7)+BOXS(223,110,195,60,3,'Actual',[],8.5)+BOXS(426,110,195,60,3,'Remaining',[],10)},
+{t:"Màu sắc và căn lề",d:13000,
+ n:"Màu sắc và căn lề. Dùng màu khác nhau cho các mục. Canh lề phù hợp cho chữ và số.",
+ v:()=>BOXS(20,30,600,76,1,'Màu khác nhau cho các mục',[],.5)+BOXS(20,126,600,76,3,'Canh lề phù hợp',['cho chữ và số'],5)},
+{t:"Hàm tính toán cơ bản",d:24000,
+ n:"Hàm tính toán cơ bản. Lợi ích dùng hàm: không đoán mò ngân sách, và có con số để kiểm soát chi tiêu. Các hàm cơ bản: SUM để tính tổng chi, SUMIF để tính tổng theo category, AVERAGE để tính chi trung bình mỗi ngày.",
+ v:()=>T(165,28,'Lợi ích dùng hàm','b big',.3)+BOXS(20,44,290,66,3,'Không đoán mò ngân sách',[],1.5)+BOXS(20,124,290,66,3,'Có con số để kiểm soát chi tiêu',[],5)+
+  T(475,28,'Hàm tính toán cơ bản','b big',9)+BOXS(330,44,290,66,1,'SUM',['Tổng chi'],10)+BOXS(330,124,290,66,1,'SUMIF',['Tổng theo category'],14)+BOXS(330,204,290,66,1,'AVERAGE',['Chi mỗi ngày'],18.5)},
+{t:"Tạo biểu đồ phù hợp",d:14000,
+ n:"Tạo biểu đồ phù hợp. Dùng column chart để so sánh. Dùng pie chart để xem tỉ lệ giữa các category.",
+ v:()=>BOXS(20,40,290,110,1,'Column chart',['Cho so sánh'],.5)+BOXS(330,40,290,110,3,'Pie chart',['Tỉ lệ category'],5.5)},
+{t:"Tùy chỉnh biểu đồ",d:15000,
+ n:"Tùy chỉnh biểu đồ. Đặt title rõ ràng. Đổi màu từng category. Hiển thị data labels.",
+ v:()=>BOXS(20,14,600,60,1,'Đặt title rõ ràng',[],.5)+BOXS(20,88,600,60,3,'Đổi màu từng category',[],4.5)+BOXS(20,162,600,60,4,'Hiển thị data labels',[],8.5)},
+{t:"Đọc xu hướng từ biểu đồ và phát hiện bất thường",d:22000,
+ n:"Đọc xu hướng từ biểu đồ và phát hiện bất thường. Nếu Phone Bill tăng đều, có thể do thói quen mới. Nếu Rent chiếm bốn mươi phần trăm, phải thiết lập limit.",
+ v:()=>BOXS(20,30,250,70,1,'Phone Bill tăng đều',[],.5)+AR(273,317,65,5)+BOXS(320,30,300,70,4,'Có thể do thói quen mới',[],5.5)+
+  BOXS(20,140,250,70,1,'Rent chiếm 40%',[],11)+AR(273,317,175,15)+BOXS(320,140,300,70,2,'Phải thiết lập limit',[],15.5)},
+{t:"Phân tích quy trình chi tiêu",d:28000,
+ n:"Phân tích quy trình chi tiêu. Chi tiêu cá nhân là một quy trình ra quyết định. Muốn tối ưu, cần xem tháng này tiền đi đâu nhiều nhất. Nhiều người có cảm giác thiếu tiền nhanh nhưng không biết tiền đi đâu. Đây là bottleneck nhận thức, không phải bottleneck thu nhập.",
+ v:()=>BOXS(20,14,600,60,1,'Chi tiêu cá nhân = một quy trình ra quyết định',[],.5)+BOXS(20,84,600,60,3,'Muốn tối ưu: xem tháng này tiền đi đâu nhiều nhất',[],5.5)+BOXS(20,154,600,60,4,'Cảm giác “thiếu tiền nhanh” nhưng không biết tiền đi đâu',[],12)+BOXS(20,224,600,60,2,'Bottleneck nhận thức, không phải bottleneck thu nhập',[],19)},
+{t:"Xác định mục tiêu quy trình chi tiêu",d:14000,
+ n:"Xác định mục tiêu quy trình chi tiêu. Mục tiêu: giảm chi tiêu lãng phí. Mục tiêu phụ: tối ưu nhóm chi không mang lại giá trị.",
+ v:()=>BOXS(20,30,600,76,3,'Mục tiêu',['Giảm chi tiêu lãng phí'],.5)+BOXS(20,126,600,76,1,'Mục tiêu phụ',['Tối ưu nhóm chi không mang lại giá trị'],5.5)},
+{t:"Tìm điểm nghẽn bằng dữ liệu",d:28000,
+ n:"Tìm điểm nghẽn bằng dữ liệu. Xem category nào chiếm nhiều nhất, và biên độ dao động theo tuần. Sau đó ghi dấu bottleneck. Nếu Rent chiếm bốn mươi bảy phẩy tám phần trăm tổng tháng, đây là nơi cần giám sát. Nếu Phone Bill tăng theo tuần, đây là thói quen, không phải nhu cầu.",
+ v:()=>T(320,24,'Tìm điểm nghẽn bằng dữ liệu','b big',.3)+BOXS(20,34,295,56,1,'Category nào chiếm nhiều nhất',[],1.5)+BOXS(325,34,295,56,1,'Biên độ dao động theo tuần',[],5)+
+  T(320,128,'Ghi dấu bottleneck','b big',10)+BOXS(20,140,295,90,2,'Rent chiếm 47.8% tổng tháng',['→ nơi cần giám sát'],13)+BOXS(325,140,295,90,4,'Phone Bill tăng theo tuần',['→ thói quen, không phải nhu cầu'],20)},
+{t:"Đề xuất giải pháp số",d:22000,
+ n:"Đề xuất giải pháp số. Tạo limit cho từng category. Tách planned và spontaneous để nhìn hành vi. Thêm cột planned hoặc spontaneous. Dùng conditional format để highlight khi spontaneous lớn hơn planned.",
+ v:()=>BOXS(20,14,600,60,1,'Tạo limit từng category',[],.5)+BOXS(20,84,600,60,3,'Tách planned vs spontaneous để nhìn hành vi',[],4)+BOXS(20,154,600,60,3,'Thêm cột planned/spontaneous',[],9)+BOXS(20,224,600,60,4,'Conditional format: highlight spontaneous > planned',[],13.5)},
+{t:"Lợi ích và đánh giá hiệu quả cải tiến",d:24000,
+ n:"Lợi ích sau triển khai: ý thức chi tiêu rõ ràng, và giảm mua bốc đồng. Để đánh giá hiệu quả cải tiến: so sánh tháng trước và tháng sau, và so sánh phần trăm thay đổi của từng category.",
+ v:()=>T(165,28,'Lợi ích sau triển khai','b big',.3)+BOXS(20,44,290,66,3,'Ý thức chi tiêu rõ ràng',[],1.5)+BOXS(20,124,290,66,3,'Giảm mua bốc đồng',[],4.5)+
+  T(475,28,'Đánh giá hiệu quả cải tiến','b big',9)+BOXS(330,44,290,66,1,'So sánh tháng trước và sau',[],10.5)+BOXS(330,124,290,66,1,'So sánh % thay đổi',['của từng category'],15)},
+{t:"Thực hành: áp dụng thực tế",d:17000,
+ n:"Thực hành: áp dụng thực tế. Tạo Google Sheets để kiểm soát tiền mỗi tháng, cho bản thân hoặc gia đình. Lợi ích: giảm chi tiêu, tránh lãng phí.",
+ v:()=>BOXS(20,14,600,60,1,'Tạo Google Sheets kiểm soát tiền mỗi tháng',[],.5)+BOXS(20,88,600,60,4,'Đối tượng: bản thân hoặc gia đình',[],5.5)+P('path','d="M320 150V178" marker-end="url(#ah)"','',9.5)+BOXS(60,184,520,60,3,'Lợi ích: giảm chi tiêu, tránh lãng phí',[],10.5)},
+{t:"Phần 08: Bài tập rèn luyện",d:14000,
+ n:"Phần tám: Bài tập rèn luyện, do giảng viên Quách Vũ Thường trình bày. Phần này gồm bài tập tự luận và trắc nghiệm.",
+ v:()=>T(320,80,'PHẦN 08','h1',0)+T(320,122,'BÀI TẬP RÈN LUYỆN','h2',.5)+BOXS(20,170,290,76,1,'8.1 Bài tập tự luận',['5 bài'],5)+BOXS(330,170,290,76,3,'8.2 Trắc nghiệm',['8 câu'],8)},
+{t:"Bài tập tự luận: Bài 1",d:26000,
+ n:"Bài tập tự luận, bài một. Phân biệt ba khái niệm Error, Defect, Failure trong bối cảnh phát triển ứng dụng. Minh họa bằng một tình huống đăng nhập có mã hóa đầu vào không đồng nhất giữa client và server. Yêu cầu nêu chuỗi nhân quả: từ lỗi con người, đến khiếm khuyết cấu hình, và biểu hiện khi chạy thực tế.",
+ v:()=>BOXS(20,12,600,70,1,'Phân biệt Error, Defect, Failure',['trong bối cảnh phát triển ứng dụng'],.5)+BOXS(20,90,600,70,4,'Tình huống đăng nhập',['mã hóa đầu vào không đồng nhất giữa client và server'],6)+
+  T(320,184,'Nêu chuỗi nhân quả','b big',13)+BOXS(20,196,180,60,2,'Lỗi con người',[],15)+AR(203,227,226,17)+BOXS(230,196,180,60,4,'Khiếm khuyết cấu hình',[],17.5)+AR(413,437,226,19.5)+BOXS(440,196,180,60,2,'Biểu hiện khi chạy',[],20)},
+{t:"Bài tập tự luận: Bài 2",d:24000,
+ n:"Bài tập tự luận, bài hai. Phân tích nguyên nhân phổ biến làm phát sinh lỗi logic ở lớp xử lý ngày tháng, khi người dùng nhập tháng-ngày-năm nhưng hệ thống kỳ vọng ngày-tháng-năm. Đề xuất bộ kiểm tra ràng buộc đầu vào và chiến lược kiểm thử biên.",
+ v:()=>DATEQ()},
+{t:"Bài tập tự luận: Bài 3",d:24000,
+ n:"Bài tập tự luận, bài ba. Theo slide, đề bài giống bài hai. Phân tích nguyên nhân phổ biến làm phát sinh lỗi logic ở lớp xử lý ngày tháng, khi người dùng nhập tháng-ngày-năm nhưng hệ thống kỳ vọng ngày-tháng-năm. Đề xuất bộ kiểm tra ràng buộc đầu vào và chiến lược kiểm thử biên.",
+ v:()=>DATEQ()},
+{t:"Bài tập tự luận: Bài 4",d:24000,
+ n:"Bài tập tự luận, bài bốn. Xây dựng quy trình ra quyết định để phân biệt nhanh lỗi phần mềm, lỗi hệ điều hành, lỗi phần cứng và lỗi mạng, trong bối cảnh người dùng báo ứng dụng bị treo. Trình bày cây quyết định câu hỏi kiểm tra theo các điều kiện quan sát được.",
+ v:()=>BOXS(20,14,600,60,4,'Người dùng báo “ứng dụng bị treo”',[],.5)+
+  BOXS(20,90,290,56,1,'Lỗi phần mềm',[],5)+BOXS(330,90,290,56,1,'Lỗi hệ điều hành',[],7)+BOXS(20,160,290,56,3,'Lỗi phần cứng',[],9)+BOXS(330,160,290,56,3,'Lỗi mạng',[],11)+
+  BOXS(20,236,600,70,2,'Trình bày cây quyết định câu hỏi kiểm tra',['theo các điều kiện quan sát được'],15)},
+{t:"Bài tập tự luận: Bài 5 – Tình huống",d:22000,
+ n:"Bài tập tự luận, bài năm. Phân tích một tình huống hệ thống doanh nghiệp báo lỗi định kỳ: Application server not responding, trong giờ cao điểm. Dữ liệu log cho thấy CPU trung bình bảy mươi phần trăm, RAM ổn định, nhưng latency mạng tăng đột biến.",
+ v:()=>BOXS(20,14,600,76,2,'Lỗi định kỳ: “Application server not responding”',['Hệ thống doanh nghiệp, trong giờ cao điểm'],.5)+T(320,128,'Dữ liệu log','b big',8)+
+  BOXS(20,140,195,70,4,'CPU trung bình',['70%'],10)+BOXS(223,140,195,70,3,'RAM',['ổn định'],13)+BOXS(426,140,195,70,2,'Latency mạng',['tăng đột biến'],16)},
+{t:"Bài tập tự luận: Bài 5 – Yêu cầu",d:40000,
+ n:"Yêu cầu của bài năm. Một: xây dựng quy trình điều tra nguyên nhân gốc theo ba lớp, phần mềm, hạ tầng mạng, và tác nhân con người. Hai: xác định tối thiểu năm giả thuyết khả dĩ, và mô tả cách kiểm chứng từng giả thuyết bằng công cụ giám sát hoặc log thực nghiệm. Ba: đề xuất giải pháp ngắn hạn và dài hạn, kèm chỉ số đo hiệu quả, ví dụ MTTR, uptime SLA. Bốn: trình bày sơ đồ chuỗi nguyên nhân – hậu quả, thể hiện quan hệ giữa sai cấu hình, tải người dùng, và chính sách cache. Đồng thời đánh giá rủi ro khi bỏ qua bước xác minh sau khắc phục.",
+ v:()=>BOXS(20,10,600,66,1,'1. Quy trình điều tra nguyên nhân gốc',['Ba lớp: phần mềm, hạ tầng mạng, tác nhân con người'],.5)+
+  BOXS(20,82,600,66,3,'2. Tối thiểu 5 giả thuyết khả dĩ',['Kiểm chứng từng giả thuyết bằng công cụ giám sát hoặc log'],8)+
+  BOXS(20,154,600,66,4,'3. Giải pháp ngắn hạn và dài hạn',['Kèm chỉ số đo hiệu quả (ví dụ MTTR, uptime SLA)'],17)+
+  BOXS(20,226,600,66,1,'4. Sơ đồ chuỗi nguyên nhân – hậu quả',['Sai cấu hình, tải người dùng, chính sách cache'],27)+
+  BOXS(20,298,600,48,2,'Đánh giá rủi ro khi bỏ qua bước xác minh sau khắc phục',[],35)},
+{t:"Trắc nghiệm: câu 1–2",d:34000,
+ n:"Trắc nghiệm. Câu một: phát biểu nào mô tả đúng Error trong quy trình tạo lỗi. A: khiếm khuyết trong mã hoặc cấu hình. B: sai sót do con người tạo ra trong quá trình phát triển. C: kết quả sai khi chạy thực tế. D: sự cố mạng làm rớt gói tin. Câu hai: Defect là. A: sai sót do con người. B: khiếm khuyết trong mã hoặc cấu hình. C: sự cố phần cứng. D: hành vi sai của người dùng.",
+ v:()=>QB(10,1,'1. Phát biểu nào mô tả đúng “Error” trong quy trình tạo lỗi',['A. Khiếm khuyết trong mã hoặc cấu hình','B. Sai sót do con người tạo ra trong quá trình phát triển','C. Kết quả sai khi chạy thực tế','D. Sự cố mạng làm rớt gói tin'],.3,2.2)+
+  QB(172,3,'2. “Defect” là',['A. Sai sót do con người','B. Khiếm khuyết trong mã hoặc cấu hình','C. Sự cố phần cứng','D. Hành vi sai của người dùng'],18,2)},
+{t:"Trắc nghiệm: câu 3–4",d:34000,
+ n:"Câu ba: Failure xuất hiện khi. A: chỉ có lỗi giao diện. B: ứng dụng chạy và trả kết quả sai hoặc crash. C: bản vá bảo mật chưa cài. D: tốc độ CPU giảm xung. Câu bốn: triệu chứng nào ưu tiên nghi ngờ lỗi phần mềm thay vì phần cứng. A: tất cả ứng dụng đều không truy cập mạng. B: duy nhất một ứng dụng crash khi nhập ký tự đặc biệt. C: máy liên tục tắt nguồn khi tải nặng. D: ổ cứng báo bad sector.",
+ v:()=>QB(10,1,'3. “Failure” xuất hiện khi',['A. Chỉ có lỗi giao diện','B. Ứng dụng chạy và trả kết quả sai hoặc crash','C. Bản vá bảo mật chưa cài','D. Tốc độ CPU giảm xung'],.3,2)+
+  QB(172,3,'4. Triệu chứng nào ưu tiên nghi ngờ lỗi phần mềm thay vì phần cứng',['A. Tất cả ứng dụng đều không truy cập mạng','B. Duy nhất một ứng dụng crash khi nhập ký tự đặc biệt','C. Máy liên tục tắt nguồn khi tải nặng','D. Ổ cứng báo bad sector'],17,2.4)},
+{t:"Trắc nghiệm: câu 5–6",d:34000,
+ n:"Câu năm: trường hợp nào nên kiểm tra định dạng ngày tháng đầu vào trước. A: app báo cannot connect to server. B: tính BMI ra số âm. C: kết quả tính thuế sai vì thiếu làm tròn. D: sai số khi so sánh ngày do nhầm ngày-tháng-năm và tháng-ngày-năm. Câu sáu: dấu hiệu lỗi mạng điển hình. A: CPU throttling. B: WiFi có chấm than và web không mở. C: font chữ vỡ. D: null pointer.",
+ v:()=>QB(10,1,'5. Trường hợp nào nên kiểm tra định dạng ngày tháng đầu vào trước',['A. App báo cannot connect to server','B. Tính BMI ra số âm','C. Kết quả tính thuế sai vì thiếu làm tròn','D. Sai số khi so sánh ngày do nhầm dd-mm-yyyy và mm-dd-yyyy'],.3,2.4)+
+  QB(172,3,'6. Dấu hiệu lỗi mạng điển hình',['A. CPU throttling','B. WiFi có chấm than và web không mở','C. Font chữ vỡ','D. Null pointer'],18,2)},
+{t:"Trắc nghiệm: câu 7–8",d:34000,
+ n:"Câu bảy: bước đầu để phân biệt mạng hay ứng dụng. A: cài lại hệ điều hành. B: đổi máy khác. C: kiểm tra xem nhiều ứng dụng có cùng lỗi kết nối không. D: nâng cấp RAM. Câu tám: khi đèn DSL, Internet, LOS nhấp nháy bất thường, thao tác ưu tiên. A: cài lại ứng dụng. B: reboot modem và chờ ổn định. C: xóa cache trình duyệt. D: đổi theme hệ điều hành.",
+ v:()=>QB(10,1,'7. Bước đầu để phân biệt mạng hay ứng dụng',['A. Cài lại hệ điều hành','B. Đổi máy khác','C. Kiểm tra xem nhiều ứng dụng có cùng lỗi kết nối không','D. Nâng cấp RAM'],.3,2)+
+  QB(172,3,'8. Khi đèn DSL/Internet/LOS nhấp nháy bất thường, thao tác ưu tiên',['A. Cài lại ứng dụng','B. Reboot modem và chờ ổn định','C. Xóa cache trình duyệt','D. Đổi theme hệ điều hành'],17,2.4)},
+{t:"Câu hỏi thảo luận",d:10000,
+ n:"Cuối cùng là phần câu hỏi thảo luận.",
+ v:()=>T(320,150,'CÂU HỎI THẢO LUẬN','h1',0)+BOXS(130,190,380,60,1,'Thảo luận cùng giảng viên',[],2)}
+];
+
+/* ====== BỘ PHÁT ====== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),fig=$('fig'),ttl=$('ttl'),cap=$('cap'),seg=$('seg'),btn=$('play'),vb=$('voice'),cnt=$('cnt');
+let i=0,el=0,last=performance.now(),playing=true,done=false,voice=false,sd=true,tok=0;
+
+SCENES.forEach((s,k)=>{const b=document.createElement('button');b.setAttribute('aria-label','Phần '+(k+1)+': '+s.t);b.onclick=()=>jump(k);seg.appendChild(b)});
+
+function speak(){
+  if(!('speechSynthesis' in window)){sd=true;return}
+  speechSynthesis.cancel();const k=++tok;
+  const u=new SpeechSynthesisUtterance(SCENES[i].n);u.lang='vi-VN';u.rate=.95;sd=false;
+  u.onend=u.onerror=()=>{if(k===tok)sd=true};
+  speechSynthesis.speak(u);if(!playing)speechSynthesis.pause();
+}
+function fit(svg){const rs=[...svg.querySelectorAll('rect')].map(r=>({x:+r.getAttribute('x'),y:+r.getAttribute('y'),w:+r.getAttribute('width'),h:+r.getAttribute('height')})).filter(r=>r.w<600);
+  svg.querySelectorAll('text').forEach(t=>{const w=t.getComputedTextLength();if(!w)return;const x=+t.getAttribute('x'),y=+t.getAttribute('y'),mid=t.getAttribute('text-anchor')==='middle';
+    const r=rs.filter(r=>x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h).sort((p,q)=>p.w-q.w)[0];if(!r)return;
+    const room=mid?r.w-16:r.x+r.w-8-x;if(w>room){t.setAttribute('textLength',room);t.setAttribute('lengthAdjust','spacingAndGlyphs')}})}
+function show(n){
+  i=n;el=0;sd=true;const s=SCENES[n];
+  fig.innerHTML=`<svg viewBox="0 0 640 360" role="img" aria-label="${s.t}">${DEFS}${s.v()}</svg>`;
+  fit(fig.firstChild);
+  ttl.classList.remove('t');cap.classList.remove('t');void ttl.offsetWidth;ttl.classList.add('t');cap.classList.add('t');
+  ttl.textContent=s.t;cap.textContent=s.n;cnt.textContent=(n+1)+' / '+SCENES.length;
+  if(voice)speak();
+}
+function sync(){stage.classList.toggle('paused',!playing);btn.textContent=done?'Xem lại':playing?'Tạm dừng':'Phát'}
+function jump(n){done=false;playing=true;show(n);sync()}
+btn.onclick=()=>{
+  if(done){jump(0);return}
+  playing=!playing;sync();
+  if(voice&&'speechSynthesis' in window)playing?speechSynthesis.resume():speechSynthesis.pause();
+};
+$('prev').onclick=()=>jump(Math.max(0,i-(el>2000?0:1)));
+$('next').onclick=()=>jump(Math.min(SCENES.length-1,i+1));
+vb.onclick=()=>{
+  voice=!voice;vb.textContent='Giọng đọc: '+(voice?'Bật':'Tắt');vb.setAttribute('aria-pressed',voice);
+  if(voice)speak();else{tok++;sd=true;if('speechSynthesis' in window)speechSynthesis.cancel()}
+};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON')return;
+  if(e.code==='Space'){e.preventDefault();btn.click()}
+  if(e.code==='ArrowRight')$('next').click();
+  if(e.code==='ArrowLeft')$('prev').click();
+});
+
+function tick(ts){
+  const dt=Math.min(ts-last,100);last=ts;
+  if(playing){
+    el+=dt;const d=SCENES[i].d;
+    if(el>=d&&(sd||el>d+6000)){
+      if(i<SCENES.length-1)show(i+1);else{playing=false;done=true;sync()}
+    }
+  }
+  [...seg.children].forEach((b,k)=>b.style.setProperty('--p',(k<i||(done&&k===i)?100:k===i?Math.min(el/SCENES[i].d,1)*100:0)+'%'));
+  requestAnimationFrame(tick);
+}
+show(0);sync();requestAnimationFrame(tick);
+</script>
+</body>
+</html>

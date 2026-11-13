@@ -273,6 +273,11 @@
      khoá ngoài = slug môn, khoá trong = slug bài thi. Trang chủ dùng CK.partFile
      để biết bấm bài thi nào thì mở trang riêng thay vì dựng thẻ trong popup. */
   var PART_FILES = {
+    /* Chứng chỉ Kỹ năng số: mỗi mô đun có trang làm bài riêng trong ky-nang-so/.
+       Mô đun chưa có trang thì bấm vào chỉ hiện thẻ thông tin đề. */
+    "chung-chi-ky-nang-so": {
+      "mo-dun-1": "ky-nang-so/MODULE1-quiz.html"
+    },
     "qpan1": {
       "de-1": "qp-an/qpan1-de-1-quiz.html",
       "de-2": "qp-an/qpan1-de-2-quiz.html",
@@ -440,7 +445,11 @@
     /* Chứng chỉ Kỹ năng số: mỗi mô đun là một bài giảng HTML riêng trong
        thư mục ky-nang-so/. Mô đun chưa có file thì bỏ trống, thêm sau. */
     "chung-chi-ky-nang-so": {
-      "mo-dun-1": "ky-nang-so/MODULE_1_KHAI_THÁC_DỮ_LIỆU_VÀ_THÔNG_TIN.html"
+      "mo-dun-1": "ky-nang-so/MODULE_1_KHAI_THÁC_DỮ_LIỆU_VÀ_THÔNG_TIN.html",
+      "mo-dun-2": "ky-nang-so/MODULE_2_GIAO_TIẾP_VÀ_HỢP_TÁC_TRONG_MÔI_TRƯỜNG_SỐ.html",
+      "mo-dun-3": "ky-nang-so/MODULE_3_SÁNG_TẠO_NỘI_DUNG_SỐ.html",
+      "mo-dun-4": "ky-nang-so/MODULE_4_AN TOÀN.html",
+      "mo-dun-5": "ky-nang-so/MODULE_5_GIẢI_QUYẾT_VẤN_ĐỀ.html"
     },
     "qpan1": "qp-an/qpan1-de-cuong.html",
     "qpan2": "qp-an/qpan2-de-cuong.html",

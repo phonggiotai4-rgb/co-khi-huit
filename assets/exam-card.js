@@ -195,12 +195,17 @@
               if (fLearn) tip += ' · mở trang làm đề';
               if (fSyl) tip += ' · mở trang ' + cur.label.replace(/^Xem\s+/i, "").toLowerCase();
               /* Bài thi chưa có câu hỏi vẫn bấm được để xem thẻ thông tin đề
-                 (thẻ sẽ báo "đang được bổ sung"), tránh nút chết trong popup. */
+                 (thẻ sẽ báo "đang được bổ sung"), tránh nút chết trong popup.
+                 Nếu đã có trang riêng (bài giảng/trang làm đề) thì ghi rõ đích
+                 đến thay vì "đang bổ sung". */
               var label = p.desc
                 ? '<span class="pn">' + p.name + '</span><span class="pdesc">' + p.desc + '</span>'
                 : p.name;
+              var em = n ? n + ' câu'
+                : (fSyl ? cur.label.replace(/^Xem\s+/i, "").toLowerCase()
+                        : (fLearn ? 'làm bài' : 'đang bổ sung'));
               return '<button class="opt' + (p.desc ? ' wide' : '') + '" type="button" data-part="' + p.id + '" title="' + tip + '">' +
-                label + '<em>' + (n ? n + ' câu' : 'đang bổ sung') + '</em></button>';
+                label + '<em>' + em + '</em></button>';
             }).join("") +
           '</div>' +
         '</div>';

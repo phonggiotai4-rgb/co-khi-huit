@@ -1207,7 +1207,7 @@ body.is-result .stage, body.is-result .bottombar,
       <h2 class="rcard-title">Bài làm của bạn đã được gửi đi</h2>
       <div class="score-row">
         <span>Điểm của bạn:</span>
-        <strong id="resScore">0/0</strong>
+        <strong id="resScore">0/10</strong>
       </div>
 
       <div class="rcard-course" id="resCourse">—</div>
@@ -1276,7 +1276,7 @@ body.is-result .stage, body.is-result .bottombar,
   <div class="review-layout" id="reviewLayout">
 
     <aside class="rv-side" id="rvSide">
-      <div class="rv-score"><strong>Điểm:</strong><span id="rvScore">0/0</span></div>
+      <div class="rv-score"><strong>Điểm:</strong><span id="rvScore">0/10</span></div>
       <div class="rv-side-box">
         <div class="rv-side-title">Thông tin chi tiết</div>
         <dl class="rv-meta">
@@ -1290,7 +1290,7 @@ body.is-result .stage, body.is-result .bottombar,
             <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 2.5 2.5L16 9"/></svg>
           </span>
           <span class="rv-part-body">
-            <span class="rv-part-title">Trắc nghiệm<b id="rvPartScore">0 / 0</b></span>
+            <span class="rv-part-title">Trắc nghiệm<b id="rvPartScore">0 / 10</b></span>
             <span class="rv-part-sub" id="rvPartSub">0 câu (0 đúng - 0 sai)</span>
           </span>
         </div>
@@ -1847,12 +1847,14 @@ const ICONS = {
   };
   const isResolved = (q) => state.solved[q.id] || state.skipped[q.id];
 
-  /* ĐIỂM: đúng ngay 100%, sai 1 lần 75%, sai 2 lần 50%, sai từ 3 lần 25%,
+  /* ĐIỂM: bài làm luôn quy về thang điểm 10 (MAX_SCORE). Mỗi câu đúng ngay = 100% giá trị,
+     sai 1 lần 75%, sai 2 lần 50%, sai 3 lần 25%, sai từ 4 lần trở lên = 0%,
      bỏ qua (Esc) hoặc chưa làm = 0%. Quy tắc đầy đủ: scoring.md */
-  const SCORE_RATE_BY_ATTEMPTS = [100, 75, 50, 25];   // % giá trị của câu
+  const MAX_SCORE = 10;                                // thang điểm cố định của cả bài
+  const SCORE_RATE_BY_ATTEMPTS = [100, 75, 50, 25, 0]; // % giá trị câu theo số lần chọn sai
   const pointsOf = (status, attempts) => {
     if (status === 'right') return 1;
-    if (status === 'retry') return SCORE_RATE_BY_ATTEMPTS[Math.min(attempts || 0, 3)] / 100;
+    if (status === 'retry') return SCORE_RATE_BY_ATTEMPTS[Math.min(attempts || 0, 4)] / 100;
     return 0;
   };
   const formatScore = (n) => String(Math.round(n * 100) / 100);
@@ -2244,19 +2246,20 @@ const skipCurrent = () => {
       solved: !!state.solved[q.id],
       firstTry: statusOf(q) === 'right',
       attempts: state.attempts[q.id] || 0,
-      points: pointsOf(statusOf(q), state.attempts[q.id])
+      points: total ? pointsOf(statusOf(q), state.attempts[q.id]) * MAX_SCORE / total : 0
     }));
-    /* Điểm = 100% mỗi câu đúng ngay, 75% nếu sai 1 lần, 50% nếu sai 2 lần,
-       25% nếu sai từ 3 lần; câu bỏ qua bằng Esc hoặc chưa làm = 0 điểm.
+    /* Mỗi câu đúng ngay = 100% giá trị, sai 1 lần 75%, sai 2 lần 50%, sai 3 lần 25%,
+       sai từ 4 lần trở lên hoặc bỏ qua bằng Esc / chưa làm = 0 điểm.
+       Điểm bài làm quy về thang 10: score = (tổng điểm các câu / số câu) × 10.
        Quy tắc đầy đủ: scoring.md */
     const correct = answers.filter(a => a.status !== 'wrong' && a.status !== 'pending').length;
-    const score = answers.reduce((sum, a) => sum + pointsOf(a.status, a.attempts), 0);
+    const score = answers.reduce((sum, a) => sum + a.points, 0);
     const missed = SESSION.filter(q => statusOf(q) !== 'right');
     state.lastResult = {
       total, correct, score, missedCount: missed.length,
       wrongCount: Object.values(state.attempts).reduce((a, b) => a + b, 0),
       seconds: elapsedSeconds(),
-      ratio: total ? Math.round((score / total) * 100) : 0,
+      ratio: total ? Math.round((score / MAX_SCORE) * 100) : 0,
       submittedAt: formatDateTime(new Date()),
       name: CONFIG.candidateName || 'Bạn',
       subject: CONFIG.subjectName || '',      // tên môn học
@@ -2292,14 +2295,15 @@ const skipCurrent = () => {
      Hàng của người làm bài luôn được gộp vào, ưu tiên kết quả vừa làm. */
   const normalizeRow = (row, fallbackTotal) => {
     const total = Number(row.total) > 0 ? Number(row.total) : (fallbackTotal || 0);
-    const score = Number(row.score) || 0;
+    let score = Number(row.score) || 0;
+    if (score > MAX_SCORE && total) score = (score / total) * MAX_SCORE;   // hàng cũ: điểm theo thang số câu
     return {
       name: String(row.name || 'Không rõ'),
       score,
       seconds: Math.max(0, Number(row.seconds) || 0),
       total,
       correct: Number(row.correct) || 0,
-      ratio: total ? Math.round((score / total) * 100) : null
+      ratio: total ? Math.round((score / MAX_SCORE) * 100) : null
     };
   };
 
@@ -2380,7 +2384,7 @@ const skipCurrent = () => {
   const showResultPage = () => {
     const r = state.lastResult;
     if (!r) return;
-    el.resScore.textContent = formatScore(r.score) + '/' + r.total;
+    el.resScore.textContent = formatScore(r.score) + '/' + MAX_SCORE;
     el.resCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
     el.resName.textContent = r.name;
     el.resTime.textContent = formatDuration(r.seconds);
@@ -2509,11 +2513,11 @@ if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
     if (!r) return;
     const wrongCount = r.total - r.correct;
 
-    el.rvScore.textContent = formatScore(r.score) + '/' + r.total;
+    el.rvScore.textContent = formatScore(r.score) + '/' + MAX_SCORE;
     el.rvTime.textContent = formatDuration(r.seconds);
     el.rvSubmit.textContent = r.submittedAt;
     el.rvCourse.textContent = CONFIG.subjectName ? 'Môn học: ' + CONFIG.subjectName : '—';
-    el.rvPartScore.textContent = formatScore(r.score) + ' / ' + r.total;
+    el.rvPartScore.textContent = formatScore(r.score) + ' / ' + MAX_SCORE;
     el.rvPartSub.textContent = r.total + ' câu (' + r.correct + ' đúng - ' + wrongCount + ' sai) · ' + formatScore(r.score) + ' điểm';
 
 reviewState.filter = 0;
@@ -2547,7 +2551,7 @@ reviewState.filter = 0;
   const shareResultText = (r) => {
     const mon = r.subject ? r.subject + ' — ' : '';
     return 'Kết quả bài trắc nghiệm ' + mon + ': ' + r.correct + '/' + r.total +
-      ' đúng (' + formatScore(r.score) + '/' + r.total + ' điểm), thời gian ' + formatDuration(r.seconds);
+      ' đúng (' + formatScore(r.score) + '/' + MAX_SCORE + ' điểm), thời gian ' + formatDuration(r.seconds);
   };
 
   const shareResult = async () => {
@@ -2603,7 +2607,7 @@ reviewState.filter = 0;
   const openShare = () => {
     const r = state.lastResult;
     if (!r) return;
-    el.shareSummary.textContent = formatScore(r.score) + '/' + r.total + ' điểm · ' +
+    el.shareSummary.textContent = formatScore(r.score) + '/' + MAX_SCORE + ' điểm · ' +
       r.correct + '/' + r.total + ' câu đúng · ' + formatDuration(r.seconds);
     openBackdrop(el.shareBackdrop);
   };
