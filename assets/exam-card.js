@@ -186,7 +186,10 @@
       : '<div class="exam-parts">' +
           '<span class="pl">' + pl + '</span>' +
           '<div class="seg">' +
-          parts.map(function (p) {
+          (mode === "sylabus"
+            ? parts.filter(function (p) { return p.id.indexOf("de-thi-thu") !== 0; })
+            : parts
+          ).map(function (p) {
               var n = count(subject, p), r = runs(subject, p);
               /* Trang riêng của bài thi — bấm vào thì mở thẳng trang đó. */
               var fLearn = mode === "learn" && CK.partFile && CK.partFile(subject.slug, p.id);

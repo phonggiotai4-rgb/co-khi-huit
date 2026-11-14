@@ -1245,7 +1245,7 @@ body.is-result .stage, body.is-result .bottombar,
         <div class="rrow">
           <dt>
             <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
-            Số câu trắc nghiệm đúng
+            Số câu đúng ngay lần đầu
           </dt>
           <dd id="resCorrect">0/0</dd>
         </div>
@@ -1495,7 +1495,7 @@ const ICONS = {
   };
   const STATUS_TEXT = {
     right: 'làm đúng ngay',
-    retry: 'làm sai rồi chọn lại đúng',
+    retry: 'sai lần đầu — tính là sai, vẫn làm lại được',
     wrong: 'làm sai, đã bỏ qua bằng phím Esc',
     pending: 'chưa làm'
   };
@@ -1530,7 +1530,9 @@ const ICONS = {
 
   /* ĐIỂM: bài làm luôn quy về thang điểm 10 (MAX_SCORE). Mỗi câu đúng ngay = 100% giá trị,
      sai 1 lần 75%, sai 2 lần 50%, sai 3 lần 25%, sai từ 4 lần trở lên = 0%,
-     bỏ qua (Esc) hoặc chưa làm = 0%. Quy tắc đầy đủ: scoring.md */
+     bỏ qua (Esc) hoặc chưa làm = 0%.
+     "Số câu đúng" thì chỉ đếm câu đúng ngay lần đầu: làm sai 1 lần là câu đó tính sai.
+     Quy tắc đầy đủ: scoring.md */
   const MAX_SCORE = 10;                                // thang điểm cố định của cả bài
   const SCORE_RATE_BY_ATTEMPTS = [100, 75, 50, 25, 0]; // % giá trị câu theo số lần chọn sai
   const pointsOf = (status, attempts) => {
@@ -1858,7 +1860,7 @@ if (picked === q.correct) {
       state.attempts[q.id] = (state.attempts[q.id] || 0) + 1;
       state.lastWrong = { id: q.id, index: picked };
       sfx.wrong();
-      showToast('wrong', 'Không đúng!', 'Hãy chọn lại một đáp án khác');
+      showToast('wrong', 'Không đúng!', 'Câu này đã tính là sai — vẫn chọn lại được để xem đáp án');
       renderQuestion(false);
     }
   };
@@ -1927,8 +1929,11 @@ const skipCurrent = () => {
     /* Mỗi câu đúng ngay = 100% giá trị, sai 1 lần 75%, sai 2 lần 50%, sai 3 lần 25%,
        sai từ 4 lần trở lên hoặc bỏ qua bằng Esc / chưa làm = 0 điểm.
        Điểm bài làm quy về thang 10: score = (tổng điểm các câu / số câu) × 10.
+       "Số câu đúng" chỉ đếm câu đúng ngay lần đầu; làm sai 1 lần là câu đó tính sai.
        Quy tắc đầy đủ: scoring.md */
-    const correct = answers.filter(a => a.status !== 'wrong' && a.status !== 'pending').length;
+    /* "Số câu đúng" chỉ tính câu đúng NGAY lần đầu: làm sai 1 lần là câu đó tính sai.
+       Điểm vẫn giữ nguyên công thức từng phần ở pointsOf (xem scoring.md). */
+    const correct = answers.filter(a => a.firstTry).length;
     const score = answers.reduce((sum, a) => sum + a.points, 0);
     const missed = SESSION.filter(q => statusOf(q) !== 'right');
     state.lastResult = {
@@ -2095,7 +2100,9 @@ const skipCurrent = () => {
 
   const codeOf = (q) => q.code || ('ID:' + (564058296 + q.id));
 
-const isRightStatus = (status) => status === 'right' || status === 'retry';
+/* Câu chỉ được coi là đúng khi đúng ngay lần đầu; sai 1 lần là tính sai
+   (điểm từng phần vẫn hiển thị ở nhãn của câu). */
+const isRightStatus = (status) => status === 'right';
 
   /* Trang xem đáp án có thể rất dài (hàng chục câu) -> hiển thị từng phần
      để lần vẽ đầu tiên không bị nặng. */
@@ -2157,7 +2164,7 @@ const isRightStatus = (status) => status === 'right' || status === 'retry';
       item.querySelectorAll('.rv-options span').forEach((s, i) => { s.textContent = q.options[i]; });
 
 if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
-        'beforeend', '<span class="rv-tag is-retry">Làm sai ' + attempts + ' lần · +' + formatScore(points) + ' điểm</span>');
+        'beforeend', '<span class="rv-tag is-retry">Sai ' + attempts + ' lần · +' + formatScore(points) + ' điểm</span>');
       if (status === 'wrong') item.querySelector('.rv-item-head').insertAdjacentHTML(
         'beforeend', '<span class="rv-tag is-wrong">Bỏ qua</span>');
 

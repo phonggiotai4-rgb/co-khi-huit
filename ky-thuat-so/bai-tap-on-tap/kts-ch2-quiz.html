@@ -1201,7 +1201,7 @@
         <div class="rrow">
           <dt>
             <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
-            Số câu trắc nghiệm đúng
+            Số câu đúng ngay lần đầu
           </dt>
           <dd id="resCorrect">0/0</dd>
         </div>
@@ -1478,7 +1478,7 @@ const ICONS = {
   };
   const STATUS_TEXT = {
     right: 'làm đúng ngay',
-    retry: 'làm sai rồi chọn lại đúng',
+    retry: 'sai lần đầu — tính là sai, vẫn làm lại được',
     wrong: 'làm sai, đã bỏ qua bằng phím Esc',
     pending: 'chưa làm'
   };
@@ -1822,7 +1822,7 @@ const ICONS = {
       state.attempts[q.id] = (state.attempts[q.id] || 0) + 1;
       state.lastWrong = { id: q.id, index: picked };
       sfx.wrong();
-      showToast('wrong', 'Không đúng!', 'Hãy chọn lại một đáp án khác');
+      showToast('wrong', 'Không đúng!', 'Câu này đã tính là sai — vẫn chọn lại được để xem đáp án');
       renderQuestion(false);
     }
   };
@@ -1886,7 +1886,9 @@ const ICONS = {
       attempts: state.attempts[q.id] || 0,
       points: total ? pointsOf(statusOf(q), state.attempts[q.id]) * MAX_SCORE / total : 0
     }));
-    const correct = answers.filter(a => a.status !== 'wrong' && a.status !== 'pending').length;
+    /* "Số câu đúng" chỉ tính câu đúng NGAY lần đầu: làm sai 1 lần là câu đó tính sai.
+       Điểm vẫn giữ nguyên công thức từng phần ở pointsOf (xem scoring.md). */
+    const correct = answers.filter(a => a.firstTry).length;
     const score = answers.reduce((sum, a) => sum + a.points, 0);
     const missed = SESSION.filter(q => statusOf(q) !== 'right');
     state.lastResult = {
@@ -2048,7 +2050,9 @@ const ICONS = {
 
   const codeOf = (q) => q.code || ('ID:' + (564058296 + q.id));
 
-  const isRightStatus = (status) => status === 'right' || status === 'retry';
+  /* Câu chỉ được coi là đúng khi đúng ngay lần đầu; sai 1 lần là tính sai
+   (điểm từng phần vẫn hiển thị ở nhãn của câu). */
+const isRightStatus = (status) => status === 'right';
 
   const REVIEW_PAGE_SIZE = 10;
   let reviewLimit = REVIEW_PAGE_SIZE;
@@ -2108,7 +2112,7 @@ const ICONS = {
       item.querySelectorAll('.rv-options span').forEach((s, i) => { s.textContent = q.options[i]; });
 
       if (status === 'retry') item.querySelector('.rv-item-head').insertAdjacentHTML(
-        'beforeend', '<span class="rv-tag is-retry">Làm sai ' + attempts + ' lần · +' + formatScore(points) + ' điểm</span>');
+        'beforeend', '<span class="rv-tag is-retry">Sai ' + attempts + ' lần · +' + formatScore(points) + ' điểm</span>');
       if (status === 'wrong') item.querySelector('.rv-item-head').insertAdjacentHTML(
         'beforeend', '<span class="rv-tag is-wrong">Bỏ qua</span>');
 

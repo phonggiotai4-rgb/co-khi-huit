@@ -72,7 +72,16 @@ Bài 50 câu (mỗi câu tối đa 0.2 điểm): 40 câu đúng ngay + 10 câu s
 - Thời gian làm bài (`seconds`) — chỉ hiển thị, không cộng/trừ điểm.
 - Thứ tự làm bài, việc có quay lại câu cũ hay không.
 
-## 8. Bảng xếp hạng
+## 8. Đếm "số câu đúng"
+
+- **"Số câu đúng" chỉ đếm câu đúng ngay lần đầu.** Làm sai 1 lần là câu đó tính là sai
+  trong thống kê này (10 câu, sai 1 lần ở 3 câu → **7/10 câu đúng**).
+- Điểm số **không thay đổi**: vẫn theo bảng tỷ lệ ở mục 2, nên ví dụ trên vẫn được
+  7 × 1 + 3 × 0.75 = **9.25/10 điểm**.
+- Màn xem đáp án xếp câu sai-lần-đầu vào nhóm "Sai ✗" và vẫn ghi điểm từng phần của câu
+  ("Sai 1 lần · +0.75 điểm").
+
+## 9. Bảng xếp hạng
 
 - Điểm trên bảng xếp hạng dùng cùng thang 10; tỷ lệ % = điểm ÷ 10 × 100.
 - Hàng cũ (nếu có) có điểm lớn hơn 10 được coi là thang điểm theo số câu và tự quy đổi
