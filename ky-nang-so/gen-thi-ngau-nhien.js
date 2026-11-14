@@ -2,7 +2,7 @@
    CƠ KHÍ HUIT — SINH TRANG THI THỬ NGẪU NHIÊN CHỨNG CHỈ KỸ NĂNG SỐ
    ----------------------------------------------------------------------------
    Nguồn mẫu (chuẩn tham chiếu): ../qp-an/thi-QPAN1-ngau-nhien.html
-     — trang thi thử 40 câu / 60 phút của môn Quốc phòng 1.
+     — trang thi thử 60 câu / 60 phút của môn Quốc phòng 1.
 
    Trang sinh ra GIỮ NGUYÊN toàn bộ giao diện + logic của bản mẫu (CSS, bố cục
    2 pane, đồng hồ theo deadline thật, ưu tiên câu chưa từng làm, bộ lọc,
@@ -12,8 +12,7 @@
      • dòng mô tả bài thi (số câu trong ngân hàng + cấu trúc mô đun)
      • dòng "Mã thi"
      • ngân hàng câu hỏi: đọc CK.PART_QUIZ["chung-chi-ky-nang-so"] từ
-       assets/quiz-bank-ky-nang-so.js thay vì nhúng sẵn (một nguồn duy nhất với
-       trang luyện tập)
+       assets/quiz-bank-ky-nang-so.js (hoặc dùng dữ liệu nhúng sẵn nếu mở trực tiếp)
      • nhãn "Nguồn: đề N" -> "Nguồn: mô đun N"
      • khoá localStorage nhớ câu đã gặp: qpan1_rng_v1 -> kns_rng_v1
      • metadata ghi lịch sử làm bài (slug / môn / nhóm môn / "Đề ngẫu nhiên")
@@ -39,6 +38,7 @@ const SUBJECT = "CHỨNG CHỈ KỸ NĂNG SỐ";
 const CAT = "CHỨNG CHỈ";
 const CAT_NAME = "Chứng chỉ";
 const BANK_FILE = "quiz-bank-ky-nang-so.js";
+const QUIZ_BANK_SRC = path.join(SITE, "assets", BANK_FILE);
 
 let s = fs.readFileSync(SRC, "utf8");
 const eol = s.indexOf("\r\n") !== -1 ? "\r\n" : "\n";
@@ -74,14 +74,33 @@ rep("var STORAGE_KEY = 'qpan1_rng_v1';", "var STORAGE_KEY = 'kns_rng_v1';", 1);
 rep("'Nguồn: đề ' + QUESTIONS[cur].s", "'Nguồn: mô đun ' + QUESTIONS[cur].s", 1);
 rep('/* hiện "nguồn: đề N" dưới mỗi câu */', '/* hiện "nguồn: mô đun N" dưới mỗi câu */', 1);
 
-/* 7) Ngân hàng câu hỏi — đọc CK.PART_QUIZ["chung-chi-ky-nang-so"] lúc chạy */
+/* 7) Nhúng sẵn dữ liệu câu hỏi vào trang (fallback khi mở trực tiếp file://)
+    Đọc quiz-bank-ky-nang-so.js, trích PART_QUIZ["chung-chi-ky-nang-so"],
+    stringify thành JSON để nhúng làm biến KNS_BANK_DATA. Dữ liệu sẽ được dùng
+    bởi hàm_BANK nếu window.CK.PART_QUIZ chưa có (trường hợp mở trực tiếp). */
+const zbRaw = fs.readFileSync(QUIZ_BANK_SRC, "utf8");
+const znMarker = 'g.CK.PART_QUIZ["chung-chi-ky-nang-so"] = ';
+const znIdx = zbRaw.indexOf(znMarker);
+if (znIdx === -1) throw new Error("Không tìm thấy g.CK.PART_QUIZ['chung-chi-ky-nang-so'] trong " + BANK_FILE);
+const znStart = znIdx + znMarker.length;
+let znDepth = 0, znStarted = false, znI;
+for (znI = znStart; znI < zbRaw.length; znI++) {
+  if (zbRaw[znI] === '{') { if (!znStarted) znStarted = true; znDepth++; }
+  else if (zbRaw[znI] === '}') { znDepth--; if (znStarted && znDepth === 0) break; }
+}
+const znData = eval('(' + zbRaw.slice(znStart, znI + 1) + ')');
+const znJson = JSON.stringify(znData);
+console.log("Nhúng " + Object.keys(znData).length + " mô đun, " +
+  Object.values(znData).reduce((a, b) => a + b.length, 0) + " câu → " + znJson.length + " chars JSON");
+
 const bankBlock = `/* ============================================================
    NGÂN HÀNG CÂU HỎI — nạp từ assets/${BANK_FILE} (CK.PART_QUIZ["${SLUG}"])
+   Hoặc dùng dữ liệu nhúng sẵn (KNS_BANK_DATA) khi mở trực tiếp file://
    360 câu / 6 mô đun. Mỗi câu trong ngân hàng: { q, o:[4 phương án], a: chỉ số đáp án đúng }
    -> đổi sang dạng của trang này: { t: nội dung, o: [4 phương án], c: đáp án đúng (0-3), s: số mô đun }
    ============================================================ */
 var BANK = (function () {
-  var src = (window.CK && CK.PART_QUIZ && CK.PART_QUIZ['${SLUG}']) || {};
+  var src = (window.CK && CK.PART_QUIZ && CK.PART_QUIZ['${SLUG}']) || KNS_BANK_DATA || {};
   var out = [];
   Object.keys(src).forEach(function (pid, k) {
     var md = parseInt(String(pid).replace(/^.*-(\\d+)$/, '$1'), 10);
@@ -100,9 +119,9 @@ const bankLineEnd = s.indexOf("\n", s.indexOf("var BANK = ["));
 if (bankStart === -1 || bankLineEnd === -1) throw new Error("Không tìm thấy khối BANK trong bản mẫu");
 s = s.slice(0, bankStart) + bankBlock + s.slice(bankLineEnd + 1);
 
-/* 8) Nạp ngân hàng câu hỏi (CK.PART_QUIZ) trước history.js */
+/* 8) Nạp ngân hàng câu hỏi (CK.PART_QUIZ) trước history.js, kèm fallback inline */
 rep('<script src="../assets/history.js"></script>',
-    '<script src="../assets/' + BANK_FILE + '"></script>\n<script src="../assets/history.js"></script>', 1);
+    '<script>\nvar KNS_BANK_DATA=' + znJson + ';\n</script>\n<script src="../assets/' + BANK_FILE + '"></script>\n<script src="../assets/history.js"></script>', 1);
 
 /* 9) Ghi lịch sử làm bài: khai rõ môn + nhóm môn */
 rep(`  CK.recordHistory({
@@ -131,7 +150,10 @@ rep("40 CÂU NGẪU NHIÊN", "60 CÂU NGẪU NHIÊN", 2);
 /* 11) Đổi số câu mỗi lần thi từ 40 → 60 */
 rep("var EXAM_COUNT = 40;", "var EXAM_COUNT = 60;", 1);
 
-/* 11) Tiêu đề tab đầy đủ + favicon */
+/* 12) Mô tả bài thi: 40 câu → 60 câu */
+rep("Bài thi: 40 câu ngẫu nhiên từ ngân hàng", "Bài thi: 60 câu ngẫu nhiên từ ngân hàng", 1);
+
+/* 13) Tiêu đề tab đầy đủ + favicon */
 rep("<title>" + SUBJECT + " — 60 CÂU NGẪU NHIÊN / 60 PHÚT</title>",
     "<title>" + SUBJECT + " — 60 CÂU NGẪU NHIÊN / 60 PHÚT</title>\n" +
     '<link rel="icon" href="../assets/logo.png" />', 1);

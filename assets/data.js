@@ -214,18 +214,24 @@
         label: "Chương",
         names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5", "Chương 6", "Chương 7", "Chương 8", "File 2"]
       },
-      /* Chứng chỉ Kỹ năng số: 6 mô đun theo khung năng lực số. `descs` là tên
-         chuyên đề in nhỏ dưới tên mô đun trong popup chọn bài thi. */
+      /* Chứng chỉ Kỹ năng số: 6 mô đun theo khung năng lực số + 2 đề thi thử
+         độc lập (mỗi đề 60 câu, trang riêng có chấm điểm). `descs` là tên
+         chuyên đề in nhỏ dưới tên bài trong popup chọn bài thi. */
       "chung-chi-ky-nang-so": {
-        label: "Mô đun",
-        names: ["Mô đun 1", "Mô đun 2", "Mô đun 3", "Mô đun 4", "Mô đun 5", "Mô đun 6"],
+        label: "Bài",
+        names: [
+          "Mô đun 1", "Mô đun 2", "Mô đun 3", "Mô đun 4", "Mô đun 5", "Mô đun 6",
+          "Đề thi thử 1", "Đề thi thử 2"
+        ],
         descs: [
           "Khai thác dữ liệu và thông tin",
           "Giao tiếp và hợp tác trong môi trường số",
           "Sáng tạo nội dung số",
           "An toàn",
           "Giải quyết vấn đề",
-          "Ứng dụng trí tuệ nhân tạo"
+          "Ứng dụng trí tuệ nhân tạo",
+          "60 câu · đề độc lập",
+          "60 câu · đề độc lập"
         ]
       }
    };
@@ -273,16 +279,19 @@
      khoá ngoài = slug môn, khoá trong = slug bài thi. Trang chủ dùng CK.partFile
      để biết bấm bài thi nào thì mở trang riêng thay vì dựng thẻ trong popup. */
   var PART_FILES = {
-    /* Chứng chỉ Kỹ năng số: MỘT trang làm bài dùng chung cho cả 6 mô đun —
-       bài thi nào thì nạp tham số `?d=mo-dun-N`. Câu hỏi đọc từ
-       assets/quiz-bank-ky-nang-so.js (360 câu, 6 mô đun × 60 câu). */
+    /* Chứng chỉ Kỹ năng số: 6 mô đun dùng chung MỘT trang làm bài — bài thi
+       nào thì nạp tham số `?d=mo-dun-N`. Câu hỏi đọc từ
+       assets/quiz-bank-ky-nang-so.js (360 câu, 6 mô đun × 60 câu).
+       2 đề thi thử có trang riêng, tự chứa 60 câu và tự chấm điểm. */
     "chung-chi-ky-nang-so": {
       "mo-dun-1": "ky-nang-so/luyen-tap.html?d=mo-dun-1",
       "mo-dun-2": "ky-nang-so/luyen-tap.html?d=mo-dun-2",
       "mo-dun-3": "ky-nang-so/luyen-tap.html?d=mo-dun-3",
       "mo-dun-4": "ky-nang-so/luyen-tap.html?d=mo-dun-4",
       "mo-dun-5": "ky-nang-so/luyen-tap.html?d=mo-dun-5",
-      "mo-dun-6": "ky-nang-so/luyen-tap.html?d=mo-dun-6"
+      "mo-dun-6": "ky-nang-so/luyen-tap.html?d=mo-dun-6",
+      "de-thi-thu-1": "ky-nang-so/de-thi-thu-1-quiz.html",
+      "de-thi-thu-2": "ky-nang-so/de-thi-thu-2-quiz.html"
     },
     "qpan1": {
       "de-1": "qp-an/qpan1-de-1-quiz.html",
@@ -539,7 +548,7 @@
     /* Quản trị học: trang làm bài = đề thi thử ngẫu nhiên (40 câu / 60 phút). */
     "quan-tri-hoc": "quan-tri-hoc/thi-quan-tri-hoc-ngau-nhien.html",
     /* Chứng chỉ Kỹ năng số: trang làm bài = đề thi thử ngẫu nhiên
-       (40 câu / 60 phút, rút từ 360 câu của 6 mô đun). */
+       (60 câu / 60 phút, rút từ 360 câu của 6 mô đun). */
     "chung-chi-ky-nang-so": "ky-nang-so/thi-chung-chi-ky-nang-so-ngau-nhien.html",
     "quan-tri-chuoi-cung-ung": "quan-tri-chuoi-cung-ung/thi-quan-tri-chuoi-cung-ung-ngau-nhien.html",
     "quan-tri-chat-luong": "quan-tri-chat-luong/thi-quan-tri-chat-luong-ngau-nhien.html",
