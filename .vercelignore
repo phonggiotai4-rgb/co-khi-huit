@@ -1,0 +1,22 @@
+# .vercelignore — không đưa các file không phục vụ website lên bản deploy.
+# Không xóa gì trên máy; chỉ giảm dung lượng bản phát hành.
+
+.git
+.vercel
+.env*
+
+# Tài liệu & nguồn nội dung
+*.md
+docs/
+
+# Công cụ nội bộ (không phải trang web)
+tools/scripts/
+
+# Script test / sinh đề
+*/TN-luyen-tap/
+**/tests/
+
+# File nguồn câu hỏi ở thư mục gốc (web dùng assets/quiz-bank*.js)
+he-dieu-hanh-200.json
+he-dieu-hanh-questions.json
+ppnckh-questions.json
