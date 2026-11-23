@@ -7,14 +7,14 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
 
 <style>
 /* ============================================================
@@ -34,7 +34,7 @@
   --g1-br:rgba(255,255,255,.70); --g2-br:rgba(255,255,255,.85); --g3-br:#fff;
   --fill-weak:rgba(255,255,255,.50); --hi:rgba(255,255,255,.95);
 
-  --text:#4B5563; --strong:#034EA2; --muted:#8B94A3; --faint:#AEB5C0; --invert:#fff;
+  --text:#4B5563; --strong:#034EA2; --muted:#5F6B7A; --faint:#7B8594; --invert:#fff;
 
   --sh-xs:0 1px 2px rgba(3,78,162,.05);
   --sh-sm:0 1px 2px rgba(3,78,162,.04),0 4px 12px rgba(3,78,162,.07);
@@ -377,7 +377,7 @@ body::before{
 .tt-head .corner b{display:block;font-size:8.5px;color:var(--strong);text-transform:none;letter-spacing:0;margin-top:2px}
 .tt-grid{display:grid;grid-template-columns:140px repeat(7,1fr);position:relative}
 .tt-slots{background:var(--b06);font-size:10px}
-.tt-slot{height:64px;padding:6px 8px;display:flex;flex-direction:justify-content:center;
+.tt-slot{height:64px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center;
   border-bottom:1px solid var(--line)}
 .tt-slot .hd{display:flex;align-items:center;justify-content:space-between;gap:5px;font-weight:800;font-size:11.5px}
 .tt-slot .hd .p{font-family:var(--mono);font-size:8.5px;opacity:.75;font-weight:500}
@@ -392,7 +392,7 @@ body::before{
 .tt-cell:hover{background:var(--b06)}
 
 .ev{position:absolute;left:3px;right:3px;border-radius:var(--r-sm);padding:8px 9px;
-  cursor:pointer;overflow:hidden;display:flex;flex-direction:justify-content:space-between;
+  cursor:pointer;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;
   border:1px solid var(--b20);border-left:4px solid transparent;
   box-shadow:var(--sh-xs),inset 0 1px 0 var(--hi);
   transition:transform var(--fast) var(--ease),box-shadow var(--fast) var(--ease);z-index:10}
@@ -555,12 +555,140 @@ body::before{
   .tb-title h2{font-size:14px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
-  <link rel="stylesheet" href="../assets/app.css?v=20261017g">
-</head>
-<body data-depth="1" class="no-sticky-mobile">
+.sr{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
+.src-btn:focus-within{outline:3px solid var(--strong);outline-offset:2px}
+:root{--ck-nav-h:0px}
 
-<div data-ck-nav="features"></div>
+/* ===== GIAO DIỆN MỚI (theo ảnh mẫu): phẳng, sáng, thanh bên trắng ===== */
+:root{--ui-surface:#fff;--ui-bg:#F3F5F9;--ui-line:#E6E9F0;--ui-ink:#1B2433;--ui-sub:#6B7586;--ui-field:#fff;--font:"Inter","Plus Jakarta Sans",system-ui,-apple-system,sans-serif;--rowh:52px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ui-surface:#141B2B;--ui-bg:#0B1220;--ui-line:rgba(255,255,255,.10);--ui-ink:#E8ECF4;--ui-sub:#9AA5B8;--ui-field:#1A2236}}
+:root[data-theme="dark"]{--ui-surface:#141B2B;--ui-bg:#0B1220;--ui-line:rgba(255,255,255,.10);--ui-ink:#E8ECF4;--ui-sub:#9AA5B8;--ui-field:#1A2236}
+body{background:var(--ui-bg)}
+body::before{display:none}
+.glass,.glass.g1{backdrop-filter:none}
+@media (min-width:1024px){
+  .shell{padding:0;gap:0;max-width:none;margin:0;align-items:flex-start}
+  .side.glass{width:384px;max-width:none;height:100vh;top:0;border-radius:0;padding:24px 0 0;background:var(--ui-surface);border:0;border-right:1px solid var(--ui-line);box-shadow:none}
+}
+@media (max-width:1023px){.side.glass{background:var(--ui-surface);border-radius:0;border:0;border-bottom:1px solid var(--ui-line);box-shadow:none}}
+.side-brand{padding:0 22px 18px;gap:12px}
+.side-logo{width:44px;height:44px;border-radius:12px;box-shadow:none}
+.side-brand h1{font-size:22px;font-weight:700;color:var(--ui-ink);letter-spacing:-.01em}
+.side-brand p{font-size:11px;font-weight:600;letter-spacing:.07em;color:var(--ui-sub);margin-top:4px}
+.srcbox{display:flex;flex-direction:column-reverse;background:transparent;border:0;padding:0;margin:0 22px 14px}
+.src-ico{display:none}
+.src-top{margin:10px 0 0}
+.src-txt .a,.src-txt .b{font-size:10.5px;color:var(--ui-sub)}
+.src-btns{gap:10px}
+.src-btn{font-family:inherit;height:34px;padding:0 10px;border-radius:9px;background:var(--ui-surface);border:1px solid var(--b25);color:var(--strong);font-size:12px;font-weight:600;box-shadow:none}
+.src-btn:hover{background:var(--b06)}
+.side-search{padding:0 22px 14px}
+.sfield input{font-family:inherit;min-height:46px;padding-left:46px;border-radius:14px;background:var(--ui-field);border:1px solid var(--ui-line);font-size:13.5px;box-shadow:0 1px 2px rgba(15,27,45,.04)}
+.sfield>svg{left:17px;width:15px;height:15px}
+.srow{margin-top:10px}
+.srow .hint{font-size:12px;color:var(--ui-sub)}
+.btn-auto{border-radius:9px}
+.list{background:var(--ui-bg);border-top:1px solid var(--ui-line);padding:14px;gap:10px}
+.course{background:var(--ui-surface);border:1px solid var(--ui-line);border-radius:14px;box-shadow:0 1px 2px rgba(15,27,45,.04)}
+.course.sel{background:var(--b06);border-color:var(--b25)}
+.ch{padding:14px;align-items:center}
+.ch-name{font-size:14.5px;font-weight:600;color:var(--ui-ink)}
+.ch-cnt{font-size:12px;color:var(--ui-sub);margin-top:3px}
+.fav{margin-top:0;font-size:15px;color:var(--ui-sub);width:26px;height:26px}
+.fav.on{color:#F59E0B}
+.prio{background:var(--ui-bg);border:1px solid var(--ui-line);border-radius:8px;padding:2px}
+.prio button{width:26px;height:24px;font-size:11px;font-weight:600;color:var(--ui-sub)}
+.chev{color:var(--ui-sub)}
+.topbar.glass{position:sticky;top:0;margin:0;border-radius:0;background:var(--ui-surface);border:0;border-bottom:1px solid var(--ui-line);box-shadow:none;padding:12px 22px;gap:14px}
+.tb-title h2{font-size:19px;font-weight:700;color:var(--ui-ink)}
+.tb-title i{color:var(--strong);font-size:17px}
+.seg{border-radius:999px;background:var(--ui-surface);border:1px solid var(--ui-line);padding:3px;box-shadow:none}
+.seg button{font-family:inherit;border-radius:999px;height:34px;font-size:13px;font-weight:500;color:var(--ui-ink)}
+.seg button.on{background:var(--b10);color:var(--strong);font-weight:600;box-shadow:none}
+.seg.arw button{width:34px;color:var(--ui-ink)}
+.seg select{width:230px;max-width:none;height:34px;text-align:center;text-align-last:center;font-size:13.5px;font-weight:600;color:var(--ui-ink)}
+.tpills{display:flex;gap:8px}
+.tpill{font-family:inherit;height:38px;padding:0 15px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;background:var(--ui-surface);border:1px solid var(--ui-line);color:var(--ui-sub);opacity:.6;display:inline-flex;align-items:center;gap:7px;transition:all var(--fast) var(--ease)}
+.tpill.on{opacity:1}
+.tpill.lt.on{background:var(--b10);border-color:var(--b25);color:var(--strong)}
+.tpill.th.on{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.45);color:#C77700}
+.tbtn{height:40px;padding:0 16px;border-radius:999px;background:var(--ui-surface);border:1px solid var(--ui-line);color:var(--ui-ink);font-size:13px;font-weight:500;box-shadow:0 1px 2px rgba(15,27,45,.05)}
+.tbtn i{color:var(--ui-ink)}
+.main>*:not(.topbar){margin:16px 20px 0}
+.main>*:last-child{margin-bottom:24px}
+.timetable.glass{background:var(--ui-surface);border:0;border-radius:18px;box-shadow:0 1px 3px rgba(15,27,45,.06);min-width:0}
+.tt-head,.tt-grid{grid-template-columns:60px repeat(7,1fr)}
+.tt-head{position:static;background:var(--ui-surface);backdrop-filter:none;border-bottom:1px solid var(--ui-line);color:var(--ui-ink)}
+.tt-head>div{padding:14px 8px;font-size:12.5px;font-weight:700;letter-spacing:.05em;border-right:1px solid var(--ui-line)}
+.tt-head .corner{font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--ui-sub);text-transform:uppercase;line-height:1.5;padding:8px 4px}
+.tt-slots{background:transparent}
+.tt-slot{height:var(--rowh);display:flex;align-items:center;justify-content:center;padding:0;font-size:12.5px;font-weight:700;border-left:3px solid transparent;border-bottom:1px solid var(--ui-surface)}
+.tt-slot.sl-1{background:rgba(245,158,11,.10);color:#E07B00;border-left-color:#F5B04A}
+.tt-slot.sl-2{background:rgba(16,185,129,.10);color:#0E9F6E;border-left-color:#5FD0A0}
+.tt-slot.sl-3{background:rgba(124,77,219,.10);color:#7C4DDB;border-left-color:#B79BF0}
+.tt-cell{height:var(--rowh);border-bottom:1px solid var(--ui-line)}
+.tt-col{min-height:calc(var(--rowh) * 16);border-right:1px solid var(--ui-line)}
+.list{min-height:0}
+.list>*{flex:none}
+.course{flex:none;min-height:0}
+.ev,.ev .n,.ev .id,.ev .g,.ev .ft,.ev .ft div{color:#fff}
+.ev .g{opacity:.9}
+.ev .n .tp{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.45);color:#fff}
+.ev .ft{border-top-color:rgba(255,255,255,.35)}
+.ev{box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.tag-el{background:rgba(124,77,219,.12);color:#7C4DDB;border-color:rgba(124,77,219,.3)}
+.tag-zoom{background:rgba(14,116,144,.12);color:#0E7490;border-color:rgba(14,116,144,.3)}
+.daytabs{display:none}
+/* ===== cỡ chữ lớn hơn ===== */
+.side-brand p{font-size:12px}
+.src-txt .a,.src-txt .b{font-size:12px}
+.src-btn{font-size:13px}
+.srow .hint{font-size:13px}
+.selcount,.link-clear{font-size:12px}
+.btn-auto{font-size:12.5px;height:32px}
+.ch-name{font-size:15px}
+.ch-cnt{font-size:13px}
+.tag{font-size:11px}
+.prio button{font-size:12.5px}
+.sec-title{font-size:11px}
+.lhp-id{font-size:13px}
+.lhp-grp{font-size:11px}
+.lhp-meta{font-size:12.5px}
+.lhp-meta .c2{font-size:12px}
+.lhp-meta i{font-size:11px;width:15px}
+.tt-head .corner{font-size:11px}
+.tt-slot{font-size:13px}
+.ev{padding:6px 8px}
+.ev .n{font-size:12.5px}
+.ev .n .tp{font-size:10px}
+.ev .id{font-size:11px}
+.ev .g{font-size:11px}
+.ev .ft{font-size:11px;line-height:1.5;margin-top:4px;padding-top:4px}
+.empty p{font-size:14px}
+.an-card .l{font-size:12.5px}
+.mbody{font-size:14px}
+.mhead .cap,.mhead .sub{font-size:11px}
+.sbox .h,.dbox .l{font-size:12px}
+.itemrow .code,.itemrow .tc{font-size:12px}
+.warn{font-size:13.5px}
+.toast{font-size:14px}
+.tbtn{font-size:13.5px}
+/* ===== điện thoại: xem theo ngày ===== */
+@media (max-width:768px){
+  .daytabs{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto}
+  .daytabs button{flex:1;min-width:42px;height:40px;position:relative;font-family:inherit;font-size:13.5px;font-weight:600;border-radius:12px;cursor:pointer;background:var(--ui-surface);border:1px solid var(--ui-line);color:var(--ui-ink)}
+  .daytabs button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .daytabs .dot{position:absolute;top:5px;right:6px;width:7px;height:7px;border-radius:50%;background:#F59E0B}
+  .m-hide{display:none!important}
+  .tt-head,.tt-grid{grid-template-columns:50px 1fr}
+  .tt-inner{min-width:0}
+  .timetable.glass{overflow-x:hidden}
+  .main>*:not(.topbar){margin:12px 12px 0}
+}
+</style>
+</head>
+<body data-depth="1" class="no-sticky-mobile" @keydown.escape.window="Object.keys(modals).forEach(k => modals[k] = false)">
+
 
 <div class="shell">
 
@@ -583,11 +711,11 @@ body::before{
       </div>
       <div class="src-btns">
         <label class="src-btn">
-          <i class="fa-solid fa-upload"></i><span>Tải lịch (.xls)</span>
-          <input type="file" accept=".xls,.xlsx,.csv" @change="handleFileUpload($event)" class="hidden">
+          <i class="fa-solid fa-upload"></i><span>Tải lịch Excel lên</span>
+          <input type="file" accept=".xls,.xlsx,.csv" @change="handleFileUpload($event)" class="sr">
         </label>
         <button @click="modals.guide = true" class="src-btn">
-          <i class="fa-regular fa-circle-question"></i><span>Hướng dẫn</span>
+          <i class="fa-solid fa-circle-question"></i><span>Hướng dẫn</span>
         </button>
       </div>
     </div>
@@ -595,11 +723,11 @@ body::before{
     <div class="side-search">
       <div class="sfield">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input type="text" x-model="searchQuery" placeholder="Tìm môn học, mã LHP, lớp, giảng viên...">
+        <input type="text" x-model.debounce.200ms="searchQuery" placeholder="Tìm môn học, mã LHP, lớp, giảng viên...">
         <button x-show="searchQuery" @click="searchQuery = ''" class="clr"><i class="fa-solid fa-circle-xmark"></i></button>
       </div>
       <div class="srow">
-        <span class="hint">Đánh trọng số môn để tự xếp lớp</span>
+        <span class="hint">Đánh ⭐ môn muốn học, ưu tiên 1–3 (3 cao nhất)</span>
         <div class="acts">
           <button @click="autoScheduleSolver()" class="btn-auto" title="Tự động chọn lịch không trùng">
             <i class="fa-solid fa-wand-magic-sparkles" style="font-size:10px"></i> Tự xếp lớp
@@ -615,17 +743,14 @@ body::before{
 
     <div class="list">
       <template x-for="course in filteredCourses" :key="course.id">
-        <div class="course" :class="isCourseSelected(course) ? 'sel' : ''">
-          <div class="ch" @click="toggleCourseExpand(course.id)">
+        <div class="course" :class="isCourseSelected(course) ? 'sel' : ''" :style="isCourseSelected(course) && courseColors[course.id] ? 'border-left:5px solid ' + courseColors[course.id] : ''">
+          <div class="ch" role="button" tabindex="0" @click="toggleCourseExpand(course.id)" @keydown.enter="toggleCourseExpand(course.id)" @keydown.space.prevent="toggleCourseExpand(course.id)">
             <button @click.stop="toggleFavorite(course.id)" class="fav" :class="isFavorite(course.id) ? 'on' : ''" title="Đánh dấu yêu thích">
-              <i class="fa-solid fa-star"></i>
+              <i :class="isFavorite(course.id) ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
             </button>
             <div class="ch-main">
               <div class="ch-name" x-text="course.name"></div>
-              <div class="ch-tags">
-                <span class="tag tag-lt" x-text="getLhpCountByType(course, 'LT') + ' lớp LT'"></span>
-                <span class="tag tag-th" x-text="getLhpCountByType(course, 'TH') + ' lớp TH'"></span>
-              </div>
+              <div class="ch-cnt" x-text="course.lhps.length + ' lớp'" :title="getLhpCountByType(course, 'LT') + ' lớp LT · ' + getLhpCountByType(course, 'TH') + ' lớp TH'"></div>
             </div>
             <div class="ch-right" @click.stop>
               <div class="prio">
@@ -638,46 +763,46 @@ body::before{
           </div>
 
           <div class="clbody" x-show="isCourseExpanded(course.id)" x-collapse>
-            <div class="sec" x-show="getLhpsByType(course, 'LT').length > 0">
+            <div class="sec" x-show="expandedLhps(course, 'LT').length > 0">
               <div class="sec-title"><i class="fa-solid fa-book-open"></i> Lớp Lý thuyết (LT)</div>
-              <template x-for="lhp in getLhpsByType(course, 'LT')" :key="lhp.id">
-                <div class="lhp" @click="toggleLhp(lhp.id)" :class="isLhpSelected(lhp.id) ? 'sel' : ''">
+              <template x-for="lhp in expandedLhps(course, 'LT')" :key="lhp.id">
+                <div class="lhp" role="button" tabindex="0" @keydown.enter.prevent="toggleLhp(lhp.id)" @keydown.space.prevent="toggleLhp(lhp.id)" @click="toggleLhp(lhp.id)" :class="isLhpSelected(lhp.id) ? 'sel' : ''">
                   <div class="lhp-top">
                     <div style="display:flex;align-items:center;gap:8px;min-width:0">
                       <span class="lhp-id" x-text="lhp.id"></span>
                       <span class="lhp-grp" x-text="lhp.classGroup"></span>
                     </div>
                     <div class="lhp-right">
-                      <span class="tag tag-lt" x-text="lhp.type"></span>
+                      <span class="tag tag-el" x-show="lhp.elearning" title="E-learning trên HUITx: 10 tuần, 70–80% tự học trên hệ thống, 20–30% học với giảng viên">E-learning</span><span class="tag tag-zoom" x-show="lhp.zoom" title="Học trực tuyến qua Zoom">Zoom</span><span class="tag tag-lt" x-text="lhp.type"></span>
                       <span class="chk"><i class="fa-solid fa-check" x-show="isLhpSelected(lhp.id)"></i></span>
                     </div>
                   </div>
                   <div class="lhp-meta">
-                    <div class="row"><i class="fa-regular fa-calendar"></i><span><b x-text="lhp.dayText"></b>, <span x-text="lhp.slotText"></span></span></div>
+                    <div class="row"><i class="fa-regular fa-calendar"></i><span><b x-text="lhp.dayText"></b></span></div>
                     <div class="row"><i class="fa-regular fa-clock"></i><span>Giờ: <span class="c2" x-text="lhp.timeText"></span></span></div>
-                    <div class="row"><i class="fa-solid fa-location-dot"></i><span x-text="lhp.room + ' · ' + (lhp.lecturer ? lhp.lecturer.split('-')[1] || lhp.lecturer : 'TBA')"></span></div>
+                    <div class="row"><i class="fa-solid fa-location-dot"></i><span x-text="lhp.room + ' · ' + lecName(lhp)"></span></div>
                   </div>
                 </div>
               </template>
             </div>
-            <div class="sec" x-show="getLhpsByType(course, 'TH').length > 0">
+            <div class="sec" x-show="expandedLhps(course, 'TH').length > 0">
               <div class="sec-title th"><i class="fa-solid fa-flask"></i> Lớp Thực hành (TH)</div>
-              <template x-for="lhp in getLhpsByType(course, 'TH')" :key="lhp.id">
-                <div class="lhp" @click="toggleLhp(lhp.id)" :class="isLhpSelected(lhp.id) ? 'sel' : ''">
+              <template x-for="lhp in expandedLhps(course, 'TH')" :key="lhp.id">
+                <div class="lhp" role="button" tabindex="0" @keydown.enter.prevent="toggleLhp(lhp.id)" @keydown.space.prevent="toggleLhp(lhp.id)" @click="toggleLhp(lhp.id)" :class="isLhpSelected(lhp.id) ? 'sel' : ''">
                   <div class="lhp-top">
                     <div style="display:flex;align-items:center;gap:8px;min-width:0">
                       <span class="lhp-id" x-text="lhp.id"></span>
                       <span class="lhp-grp" x-text="lhp.classGroup"></span>
                     </div>
                     <div class="lhp-right">
-                      <span class="tag tag-th" x-text="lhp.type"></span>
+                      <span class="tag tag-el" x-show="lhp.elearning" title="E-learning trên HUITx: 10 tuần, 70–80% tự học trên hệ thống, 20–30% học với giảng viên">E-learning</span><span class="tag tag-zoom" x-show="lhp.zoom" title="Học trực tuyến qua Zoom">Zoom</span><span class="tag tag-th" x-text="lhp.type"></span>
                       <span class="chk"><i class="fa-solid fa-check" x-show="isLhpSelected(lhp.id)"></i></span>
                     </div>
                   </div>
                   <div class="lhp-meta">
-                    <div class="row"><i class="fa-regular fa-calendar"></i><span><b x-text="lhp.dayText"></b>, <span x-text="lhp.slotText"></span></span></div>
+                    <div class="row"><i class="fa-regular fa-calendar"></i><span><b x-text="lhp.dayText"></b></span></div>
                     <div class="row"><i class="fa-regular fa-clock"></i><span>Giờ: <span class="c2" x-text="lhp.timeText"></span></span></div>
-                    <div class="row"><i class="fa-solid fa-location-dot"></i><span x-text="lhp.room + ' · ' + (lhp.lecturer ? lhp.lecturer.split('-')[1] || lhp.lecturer : 'TBA')"></span></div>
+                    <div class="row"><i class="fa-solid fa-location-dot"></i><span x-text="lhp.room + ' · ' + lecName(lhp)"></span></div>
                   </div>
                 </div>
               </template>
@@ -701,19 +826,18 @@ body::before{
 
         <div class="seg arw">
           <button @click="prevWeek()"><i class="fa-solid fa-chevron-left"></i></button>
-          <select x-model="selectedWeek">
+          <select x-model.number="selectedWeek">
             <option value="Toàn bộ khóa học">Toàn bộ khóa học</option>
-            <template x-for="w in 27" :key="w">
+            <template x-for="w in weekCount" :key="w">
               <option :value="w" x-text="'Tuần ' + w"></option>
             </template>
           </select>
           <button @click="nextWeek()"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
 
-        <div class="seg">
-          <button @click="filterType = 'all'" :class="filterType === 'all' ? 'on' : ''">Tất cả</button>
-          <button @click="filterType = 'lt'" :class="filterType === 'lt' ? 'on' : ''"><i class="fa-solid fa-book-open" style="font-size:9px;margin-right:4px"></i>Lý thuyết</button>
-          <button @click="filterType = 'th'" :class="filterType === 'th' ? 'on' : ''"><i class="fa-solid fa-flask" style="font-size:9px;margin-right:4px"></i>Thực hành</button>
+        <div class="tpills">
+          <button class="tpill lt" :class="filterType === 'all' || filterType === 'lt' ? 'on' : ''" @click="toggleType('lt')"><i class="fa-solid fa-book-open"></i> Lý thuyết</button>
+          <button class="tpill th" :class="filterType === 'all' || filterType === 'th' ? 'on' : ''" @click="toggleType('th')"><i class="fa-solid fa-flask"></i> Thực hành</button>
         </div>
 
         <div class="seg">
@@ -723,12 +847,11 @@ body::before{
       </div>
 
       <div class="tb-r">
-        <button @click="modals.scheduleTime = true" class="tbtn amber"><i class="fa-regular fa-clock"></i> ⏰ Thời gian biểu</button>
-        <button @click="copyShareLink()" class="tbtn"><i class="fa-solid fa-share-nodes"></i> Chia sẻ lịch</button>
-        <button @click="modals.tuition = true" class="tbtn"><i class="fa-solid fa-calculator"></i> Học phí (<b x-text="selectedCohort"></b>)</button>
+        <button @click="copyShareLink()" class="tbtn"><i class="fa-solid fa-copy"></i> Sao chép lịch</button>
+        <button @click="modals.tuition = true" class="tbtn"><i class="fa-solid fa-calculator"></i> Dự toán</button>
         <button @click="cycleTheme()" class="tbtn">
           <i class="fa-solid" :class="theme === 'dark' ? 'fa-sun' : 'fa-moon'"></i>
-          <span x-text="theme === 'dark' ? 'Dark' : 'Light'"></span>
+          <span x-text="theme === 'dark' ? 'Tối' : 'Sáng'"></span>
         </button>
       </div>
     </header>
@@ -742,44 +865,41 @@ body::before{
     </div>
 
     <div x-show="activeTab === 'schedule'">
+      <div class="daytabs">
+        <template x-for="d in [2, 3, 4, 5, 6, 7, 8]" :key="d">
+          <button :class="mobileDay === d ? 'on' : ''" @click="mobileDay = d">
+            <span x-text="d === 8 ? 'CN' : 'T' + d"></span><i class="dot" x-show="getEventsForDay(d).length > 0"></i>
+          </button>
+        </template>
+      </div>
       <div class="glass timetable">
         <div class="tt-inner">
           <div class="tt-head">
-            <div class="corner">Ca / Tiết<b>(TB 1427/TB-DCT)</b></div>
-            <div>THỨ 2</div><div>THỨ 3</div><div>THỨ 4</div>
-            <div>THỨ 5</div><div>THỨ 6</div><div>THỨ 7</div><div>CN</div>
+            <div class="corner" @click="modals.scheduleTime = true" title="Xem khung giờ các tiết" style="cursor:pointer">Ca<br>Ngày</div>
+            <template x-for="d in [2, 3, 4, 5, 6, 7, 8]" :key="d"><div :class="d !== mobileDay ? 'm-hide' : ''" x-text="d === 8 ? 'CN' : 'THỨ ' + d"></div></template>
           </div>
 
           <div class="tt-grid">
             <div class="tt-slots">
               <template x-for="slotInfo in timeSlotDetails" :key="slotInfo.slot">
-                <div class="tt-slot">
-                  <div class="hd" :class="getSlotColorClass(slotInfo.slot)">
-                    <span x-text="'Tiết ' + slotInfo.slot"></span>
-                    <span class="p" x-text="slotInfo.period"></span>
-                  </div>
-                  <div class="tm">
-                    <div><em>LT</em><span x-text="slotInfo.lt"></span></div>
-                    <div><em class="th">TH</em><span x-text="slotInfo.th"></span></div>
-                  </div>
-                </div>
+                <div class="tt-slot" :class="getSlotColorClass(slotInfo.slot)" :title="'Tiết ' + slotInfo.slot + ' · LT ' + slotInfo.lt + ' · TH ' + slotInfo.th" x-text="'T' + slotInfo.slot"></div>
               </template>
             </div>
 
             <template x-for="dayIndex in [2, 3, 4, 5, 6, 7, 8]" :key="dayIndex">
-              <div class="tt-col">
+              <div class="tt-col" :class="dayIndex !== mobileDay ? 'm-hide' : ''">
                 <template x-for="slot in 16" :key="slot"><div class="tt-cell"></div></template>
-                <template x-for="event in getEventsForDay(dayIndex)" :key="event.lhp.id">
-                  <div class="ev" @click="openDetailModal(event.lhp, event.course)" :style="eventStyle(event)">
+                <template x-for="event in getEventsForDay(dayIndex)" :key="event.key">
+                  <div class="ev" :title="event.title || ''" @click="openDetailModal(event.lhp, event.course)" :style="eventStyle(event)">
                     <div>
-                      <div class="n"><span x-text="event.course.name"></span><span class="tp" x-text="event.lhp.type"></span></div>
+                      <div class="n"><span x-text="event.course.name"></span><span class="tp" x-text="event.lhp.type + (event.lhp.elearning ? ' · EL' : (event.lhp.zoom ? ' · Zoom' : ''))"></span></div>
                       <div class="id" x-text="event.lhp.id"></div>
                       <div class="g" x-text="event.lhp.classGroup"></div>
                     </div>
                     <div class="ft">
-                      <div><i class="fa-regular fa-clock"></i> <span x-text="event.lhp.timeText"></span></div>
-                      <div><i class="fa-regular fa-calendar"></i> T: <span x-text="event.lhp.weeksText"></span></div>
-                      <div><i class="fa-solid fa-location-dot"></i> <span x-text="event.lhp.room"></span></div>
+                      <div><i class="fa-regular fa-clock"></i> <span x-text="event.s.timeText"></span></div>
+                      <div><i class="fa-regular fa-calendar"></i> T: <span x-text="event.s.weeksText"></span></div>
+                      <div><i class="fa-solid fa-location-dot"></i> <span x-text="event.s.room"></span></div>
                     </div>
                   </div>
                 </template>
@@ -793,7 +913,7 @@ body::before{
         <div class="ring"><i class="fa-regular fa-calendar-xmark"></i></div>
         <h3>Thời khóa biểu hiện đang trống</h3>
         <p>Chọn các lớp <strong>Lý thuyết (LT)</strong> hoặc <strong>Thực hành (TH)</strong> từ sidebar bên trái
-           hoặc nhấn nút <strong>"Tải lịch (.xls)"</strong> để nạp file Excel thời khóa biểu HUIT mới.</p>
+           hoặc nhấn nút <strong>"Tải lịch (.xls)"</strong> để nạp file Excel thời khóa biểu HUIT (chưa có dữ liệu nào được nạp).</p>
       </div>
     </div>
 
@@ -806,14 +926,14 @@ body::before{
         </div>
         <div class="an-badge">
           <span class="a">Đánh giá chung</span>
-          <span class="b" x-text="selectedLhpIds.length === 0 ? 'Chưa xếp' : 'Vừa tầm'"></span>
-          <span class="c" x-text="selectedLhpIds.length + ' môn học đã chọn'"></span>
+          <span class="b" x-text="workloadLabel()"></span>
+          <span class="c" x-text="selectedCourseCount() + ' môn · ' + selectedLhpIds.length + ' lớp HP'"></span>
         </div>
       </div>
 
       <div class="an-grid">
         <div class="glass g1 an-card">
-          <div class="l">Độ phủ học kỳ</div>
+          <div class="l">Mức tải tín chỉ (24 TC = 100%)</div>
           <div class="v" x-text="calculateWorkloadPercent() + '%'"></div>
           <div class="bar2"><i :style="`width: ${calculateWorkloadPercent()}%`"></i></div>
         </div>
@@ -834,7 +954,7 @@ body::before{
   <div @click.away="modals.scheduleTime = false" class="modal w4">
     <div class="mhead alt">
       <div>
-        <span class="cap">Thông báo số 1427/TB-DCT (ÁP DỤNG HK2 2025 - 2026)</span>
+        <span class="cap">Tham khảo TB 1427/TB-DCT (HK2 2025-2026) · kiểm tra thông báo mới nhất</span>
         <h3>Quy định Thời gian biểu HUIT</h3>
       </div>
       <button @click="modals.scheduleTime = false" class="mclose"><i class="fa-solid fa-xmark"></i></button>
@@ -991,7 +1111,7 @@ body::before{
       <div class="totalbox" style="margin-top:18px">
         <div>
           <div class="l">Tổng thanh toán dự kiến (<span x-text="selectedCohort"></span>)</div>
-          <div class="n"><i class="fa-solid fa-circle-check"></i> Tính theo đúng quy định học phí ĐH Công Thương TP.HCM</div>
+          <div class="n"><i class="fa-solid fa-circle-check"></i> Ước tính theo đơn giá hiển thị; hãy đối chiếu thông báo học phí chính thức của Trường</div>
         </div>
         <div class="v"><span x-text="formatCurrency(calculateTotalPrice())"></span> <small>VNĐ</small></div>
       </div>
@@ -1017,13 +1137,15 @@ body::before{
             <div class="duo">
               <span>Mã lớp: <b class="sp" x-text="selectedDetailLhp.id"></b></span>
               <span class="tag" :class="selectedDetailLhp.type === 'LT' ? 'tag-lt' : 'tag-th'" x-text="selectedDetailLhp.type"></span>
+              <span class="tag tag-el" x-show="selectedDetailLhp.elearning">E-learning</span>
+              <span class="tag tag-zoom" x-show="selectedDetailLhp.zoom">Zoom</span>
             </div>
           </div>
 
           <div class="dgrid">
             <div class="dbox">
               <div class="l">Thứ & Ca học</div>
-              <div class="v" x-text="selectedDetailLhp.dayText + ', ' + selectedDetailLhp.slotText"></div>
+              <div class="v" x-text="selectedDetailLhp.dayText"></div>
             </div>
             <div class="dbox">
               <div class="l">Số tín chỉ</div>
@@ -1065,21 +1187,42 @@ body::before{
 /* ==================================================================
    Logic giữ nguyên 100% — chỉ thêm 3 helper định kiểu cho glass
    ================================================================== */
+let LHP_INDEX = new Map();
+const EV_COLORS = ['#034EA2','#B91C1C','#15803D','#7C3AED','#C2410C','#0E7490','#BE185D','#4D7C0F','#4338CA','#B45309','#0F766E','#A21CAF','#1D4ED8','#7C2D12','#0369A1','#5B21B6','#3F6212','#9F1239','#115E59','#854D0E'];
 function scheduleApp() {
     return {
-        theme: (typeof CK !== 'undefined' && CK.theme) ? CK.theme.current() : 'light',
-
+        theme: (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light',
         init() {
-            const self = this;
-            document.addEventListener('ck:theme', (e) => { self.theme = e.detail; });
+            document.documentElement.dataset.theme = this.theme;
+            if (this.$watch) {
+                this.$watch('selectedLhpIds', () => this.ensureColors());
+                this.$watch('searchQuery', () => this.updateAutoOpen());
+            }
+        },
+        courseColors: {},
+        autoOpen: [],
+        mobileDay: ((new Date().getDay() + 6) % 7) + 2,
+        updateAutoOpen() {
+            const f = this.searchQuery.trim() ? this.filteredCourses : [];
+            this.autoOpen = (f.length > 0 && f.length <= 8) ? f.map(c => c.id) : [];
+        },
+        ensureColors() {
+            const ids = new Set();
+            this.selectedLhpIds.forEach(id => { const e = LHP_INDEX.get(id); if (e) ids.add(e.course.id); });
+            Object.keys(this.courseColors).forEach(k => { if (!ids.has(+k)) delete this.courseColors[k]; });
+            ids.forEach(cid => {
+                if (this.courseColors[cid]) return;
+                const used = Object.values(this.courseColors);
+                this.courseColors[cid] = EV_COLORS.find(c => !used.includes(c)) || EV_COLORS[used.length % EV_COLORS.length];
+            });
         },
 
         activeTab: 'schedule',
         searchQuery: '',
         selectedWeek: 'Toàn bộ khóa học',
         filterType: 'all',
-        dataSourceDate: 'HK2 2025-2026 (TB 1427/TB-DCT)',
-        uploadedFileName: 'thoi-khoa-bieu-hoc-ky-2-nam-hoc-2025-2026-he-dh.xls',
+        dataSourceDate: 'Chưa nạp dữ liệu',
+        uploadedFileName: 'Chưa có file — bấm "Tải lịch"',
 
         modals: { scheduleTime: false, guide: false, tuition: false, detail: false },
         selectedDetailLhp: null,
@@ -1092,7 +1235,7 @@ function scheduleApp() {
             setTimeout(() => { this.showToast = false; }, 3500);
         },
 
-        expandedCourses: [1, 2],
+        expandedCourses: [],
         selectedLhpIds: [],
         selectedCohort: 'K16',
         cohortRates: {
@@ -1102,7 +1245,7 @@ function scheduleApp() {
             'K26': { lt: 1100000, th: 1350000 }
         },
         priorities: { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 },
-        favorites: [1, 2],
+        favorites: [],
 
         timeSlotDetails: [
             { slot: 1, period: 'Sáng', lt: '06h30-07h20', th: '07h00-07h50' },
@@ -1123,44 +1266,8 @@ function scheduleApp() {
             { slot: 16, period: 'Tối', lt: '20h40-21h30', th: '20h30-21h20' }
         ],
 
-        courses: [
-            {
-                id: 1,
-                name: 'An ninh khách sạn, nhà hàng',
-                color: '#034EA2',
-                lhps: [
-                    { id: '010110269701', classGroup: '15DHQTKS01', day: 2, dayText: 'Thứ 2', startSlot: 4, endSlot: 6, slotText: 'Tiết 4-6', timeText: '09:30 - 12:00', weeksText: '1-3, 5-10, 12', weeksCount: 10, weeksList: [1,2,3,5,6,7,8,9,10,12,27], room: 'G511', roomFull: 'G511 - phòng lý thuyết - 93 Tân Kỳ Tân Quý', lecturer: '01016021-Phan Thị Cúc', type: 'LT', credits: 2 },
-                    { id: '010110269702', classGroup: '15DHQTKS02', day: 2, dayText: 'Thứ 2', startSlot: 7, endSlot: 9, slotText: 'Tiết 7-9', timeText: '12:30 - 15:00', weeksText: '1-3, 5-11', weeksCount: 10, weeksList: [1,2,3,5,6,7,8,9,10,11], room: 'G511', roomFull: 'G511 - phòng lý thuyết - 93 Tân Kỳ Tân Quý', lecturer: '01016021-Phan Thị Cúc', type: 'LT', credits: 2 },
-                    { id: '010110269701_TH1', classGroup: '15DHQTKS01_TH1', day: 4, dayText: 'Thứ 4', startSlot: 1, endSlot: 3, slotText: 'Tiết 1-3', timeText: '07:00 - 09:30', weeksText: '2-11', weeksCount: 10, weeksList: [2,3,4,5,6,7,8,9,10,11], room: 'G512', roomFull: 'G512 - Phòng thực hành nhà hàng - 93 Tân Kỳ Tân Quý', lecturer: '01016021-Phan Thị Cúc', type: 'TH', credits: 1 }
-                ]
-            },
-            {
-                id: 2,
-                name: 'An toàn Điện - Điện tử',
-                color: '#0F766E',
-                lhps: [
-                    { id: '01010000501', classGroup: '16DHTDH01', day: 3, dayText: 'Thứ 3', startSlot: 10, endSlot: 12, slotText: 'Tiết 10-12', timeText: '15:30 - 18:00', weeksText: '1-3, 5-11', weeksCount: 10, weeksList: [1,2,3,5,6,7,8,9,10,11], room: 'B401', roomFull: 'B401 - 140 Lê Trọng Tấn', lecturer: 'TG00000733-Nguyễn Thị Hoàng Liên', type: 'LT', credits: 2 },
-                    { id: '01010000502', classGroup: '16DHTDH02', day: 3, dayText: 'Thứ 3', startSlot: 7, endSlot: 9, slotText: 'Tiết 7-9', timeText: '12:30 - 15:00', weeksText: '1-3, 5-11', weeksCount: 10, weeksList: [1,2,3,5,6,7,8,9,10,11,27], room: 'B401', roomFull: 'B401 - 140 Lê Trọng Tấn', lecturer: 'TG00000733-Nguyễn Thị Hoàng Liên', type: 'LT', credits: 2 },
-                    { id: '01010000501_TH1', classGroup: '16DHTDH01_TH1', day: 6, dayText: 'Thứ 6', startSlot: 7, endSlot: 9, slotText: 'Tiết 7-9', timeText: '12:30 - 15:00', weeksText: '3-12', weeksCount: 10, weeksList: [3,4,5,6,7,8,9,10,11,12], room: 'B402', roomFull: 'B402 - Phòng TH Điện tử', lecturer: 'TG00000733-Nguyễn Thị Hoàng Liên', type: 'TH', credits: 1 }
-                ]
-            },
-            {
-                id: 3,
-                name: 'An toàn lao động',
-                color: '#6D28D9',
-                lhps: [
-                    { id: '01010000601', classGroup: '16DHLD01', day: 4, dayText: 'Thứ 4', startSlot: 1, endSlot: 3, slotText: 'Tiết 1-3', timeText: '06:30 - 09:00', weeksText: '1-10', weeksCount: 10, weeksList: [1,2,3,4,5,6,7,8,9,10], room: 'A302', roomFull: 'A302 - 140 Lê Trọng Tấn', lecturer: '01018090-Lê Văn Hùng', type: 'LT', credits: 2 }
-                ]
-            },
-            {
-                id: 4,
-                name: 'Anh văn chuyên ngành',
-                color: '#B45309',
-                lhps: [
-                    { id: '01010000701', classGroup: '16DHAV01', day: 6, dayText: 'Thứ 6', startSlot: 4, endSlot: 6, slotText: 'Tiết 4-6', timeText: '09:30 - 12:00', weeksText: '1-12', weeksCount: 12, weeksList: [1,2,3,4,5,6,7,8,9,10,11,12], room: 'C201', roomFull: 'C201 - 140 Lê Trọng Tấn', lecturer: '01019011-Trần Thu Hà', type: 'LT', credits: 3 }
-                ]
-            }
-        ],
+        courses: [],
+        weekCount: 30,
 
         /* ===== 3 helper định kiểu (bổ sung cho glass) ===== */
         hexToRgba(hex, alpha) {
@@ -1171,14 +1278,16 @@ function scheduleApp() {
             return `rgba(${r},${g},${b},${alpha})`;
         },
         eventColorOf(item) {
-            return item.type === 'TH' ? '#B46906' : item.color;
+            const e = LHP_INDEX.get(item.id);
+            return (e && this.courseColors[e.course.id]) || item.color;
         },
         eventStyle(event) {
             const c = this.eventColorOf(event.lhp);
             const tint = this.isDarkMode() ? 0.26 : 0.12;
-            const top = (event.lhp.startSlot - 1) * 64 + 2;
-            const h = (event.lhp.endSlot - event.lhp.startSlot + 1) * 64 - 4;
-            return `top:${top}px; height:${h}px; background:${this.hexToRgba(c, tint)}; border-left-color:${c}; border-color:${this.hexToRgba(c, 0.3)};`;
+            const s = event.s, n = event.cols || 1, i = event.lane || 0;
+            const top = (s.startSlot - 1) * 52 + 2;
+            const h = (s.endSlot - s.startSlot + 1) * 52 - 4;
+            return `top:${top}px; height:${h}px; right:auto; left:calc(${i} * (100% - 6px) / ${n} + 3px); width:calc((100% - 6px) / ${n} - 2px); background:${c}; border-color:rgba(0,0,0,.18); border-left-color:rgba(255,255,255,.55);`;
         },
 
         /* ===== nguyên bản logic ===== */
@@ -1199,7 +1308,7 @@ function scheduleApp() {
         getLhpCountByType(course, type) { return this.getLhpsByType(course, type).length; },
 
         prevWeek() {
-            if (this.selectedWeek === 'Toàn bộ khóa học') { this.selectedWeek = 27; }
+            if (this.selectedWeek === 'Toàn bộ khóa học') { this.selectedWeek = this.weekCount; }
             else if (typeof this.selectedWeek === 'number') {
                 if (this.selectedWeek > 1) { this.selectedWeek--; } else { this.selectedWeek = 'Toàn bộ khóa học'; }
             }
@@ -1207,41 +1316,32 @@ function scheduleApp() {
         nextWeek() {
             if (this.selectedWeek === 'Toàn bộ khóa học') { this.selectedWeek = 1; }
             else if (typeof this.selectedWeek === 'number') {
-                if (this.selectedWeek < 27) { this.selectedWeek++; } else { this.selectedWeek = 'Toàn bộ khóa học'; }
+                if (this.selectedWeek < this.weekCount) { this.selectedWeek++; } else { this.selectedWeek = 'Toàn bộ khóa học'; }
             }
         },
 
-        isDarkMode() {
-            if (typeof CK !== 'undefined' && CK.theme) return CK.theme.current() === 'dark';
-            return this.theme === 'dark';
-        },
+        isDarkMode() { return this.theme === 'dark'; },
         cycleTheme() {
-            if (typeof CK !== 'undefined' && CK.theme) {
-                CK.theme.toggle();
-                this.theme = CK.theme.current();
-                return;
-            }
             this.theme = this.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = this.theme;
         },
 
+        fold(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase(); },
         get filteredCourses() {
-            let q = this.searchQuery.toLowerCase().trim();
+            let q = this.fold(this.searchQuery).trim();
             if (!q) return this.courses;
-            return this.courses.filter(c => {
-                let matchName = c.name.toLowerCase().includes(q);
-                let matchLhp = c.lhps.some(l =>
-                    l.id.toLowerCase().includes(q) ||
-                    (l.lecturer && l.lecturer.toLowerCase().includes(q)) ||
-                    (l.room && l.room.toLowerCase().includes(q))
-                );
-                return matchName || matchLhp;
-            });
+            return this.courses.filter(c => this.fold(c.name).includes(q) || c.lhps.some(l =>
+                this.fold(l.id).includes(q) || this.fold(l.classGroup).includes(q) ||
+                this.fold(l.lecturer).includes(q) || this.fold(l.room).includes(q)));
         },
+        expandedLhps(course, type) { return this.isCourseExpanded(course.id) ? this.getLhpsByType(course, type) : []; },
 
-        isCourseExpanded(id) { return this.expandedCourses.includes(id); },
+        isCourseExpanded(id) { return this.expandedCourses.includes(id) || this.autoOpen.includes(id); },
         toggleCourseExpand(id) {
-            if (this.isCourseExpanded(id)) { this.expandedCourses = this.expandedCourses.filter(i => i !== id); }
-            else { this.expandedCourses.push(id); }
+            if (this.isCourseExpanded(id)) {
+                this.expandedCourses = this.expandedCourses.filter(i => i !== id);
+                this.autoOpen = this.autoOpen.filter(i => i !== id);
+            } else { this.expandedCourses.push(id); }
         },
         isFavorite(id) { return this.favorites.includes(id); },
         toggleFavorite(id) {
@@ -1253,140 +1353,163 @@ function scheduleApp() {
         isLhpSelected(lhpId) { return this.selectedLhpIds.includes(lhpId); },
         isCourseSelected(course) { return course.lhps.some(l => this.isLhpSelected(l.id)); },
         toggleLhp(lhpId) {
-            if (this.isLhpSelected(lhpId)) { this.selectedLhpIds = this.selectedLhpIds.filter(id => id !== lhpId); }
-            else {
-                this.selectedLhpIds.push(lhpId);
-                this.triggerToast('Đã thêm lớp học phần vào thời khóa biểu!');
+            if (this.isLhpSelected(lhpId)) { this.selectedLhpIds = this.selectedLhpIds.filter(id => id !== lhpId); return; }
+            const e = LHP_INDEX.get(lhpId);
+            if (e) {
+                const same = e.course.lhps.filter(l => l.type === e.lhp.type && this.isLhpSelected(l.id)).map(l => l.id);
+                if (same.length) {
+                    this.selectedLhpIds = this.selectedLhpIds.filter(id => !same.includes(id));
+                    this.triggerToast('Mỗi môn chỉ chọn 1 lớp ' + e.lhp.type + ': đã đổi sang lớp ' + lhpId);
+                } else { this.triggerToast('Đã thêm lớp học phần vào thời khóa biểu!'); }
             }
+            this.selectedLhpIds.push(lhpId);
         },
-
+        sessionsConflict(a, b) {
+            return a.sessions.some(x => b.sessions.some(y => x.day === y.day &&
+                Math.max(x.startSlot, y.startSlot) <= Math.min(x.endSlot, y.endSlot) &&
+                x.weeksList.some(w => y.weeksList.includes(w))));
+        },
         get hasConflict() {
-            let selected = this.getSelectedLhpObjects();
-            for (let i = 0; i < selected.length; i++) {
-                for (let j = i + 1; j < selected.length; j++) {
-                    let a = selected[i], b = selected[j];
-                    if (a.day === b.day) {
-                        if (Math.max(a.startSlot, b.startSlot) <= Math.min(a.endSlot, b.endSlot)) {
-                            let weekOverlap = a.weeksList.some(w => b.weeksList.includes(w));
-                            if (weekOverlap) return true;
-                        }
-                    }
-                }
-            }
+            const s = this.getSelectedLhpObjects();
+            for (let i = 0; i < s.length; i++) for (let j = i + 1; j < s.length; j++) if (this.sessionsConflict(s[i], s[j])) return true;
             return false;
         },
         getSelectedLhpObjects() {
-            let result = [];
-            this.courses.forEach(c => {
-                c.lhps.forEach(l => {
-                    if (this.selectedLhpIds.includes(l.id)) {
-                        result.push({ ...l, courseName: c.name, color: c.color });
-                    }
-                });
-            });
-            return result;
+            const out = [];
+            this.selectedLhpIds.forEach(id => { const e = LHP_INDEX.get(id); if (e) out.push({ ...e.lhp, courseName: e.course.name, color: e.course.color }); });
+            return out;
         },
+        selectedCourseCount() { return new Set(this.getSelectedLhpObjects().map(l => l.courseName)).size; },
         getEventsForDay(dayIndex) {
-            let events = [];
-            this.courses.forEach(course => {
-                course.lhps.forEach(lhp => {
-                    if (lhp.day === dayIndex && this.isLhpSelected(lhp.id)) {
-                        if (this.filterType === 'lt' && lhp.type !== 'LT') return;
-                        if (this.filterType === 'th' && lhp.type !== 'TH') return;
-                        if (this.selectedWeek === 'Toàn bộ khóa học' || lhp.weeksList.includes(Number(this.selectedWeek))) {
-                            events.push({ lhp, course });
-                        }
-                    }
+            const ev = [];
+            this.selectedLhpIds.forEach(id => {
+                const e = LHP_INDEX.get(id); if (!e) return;
+                if (this.filterType === 'lt' && e.lhp.type !== 'LT') return;
+                if (this.filterType === 'th' && e.lhp.type !== 'TH') return;
+                e.lhp.sessions.forEach((s, i) => {
+                    if (s.day !== dayIndex) return;
+                    if (this.selectedWeek !== 'Toàn bộ khóa học' && !s.weeksList.includes(Number(this.selectedWeek))) return;
+                    ev.push({ lhp: e.lhp, course: e.course, s, key: id + '-' + i, lane: 0, cols: 1 });
                 });
             });
-            return events;
+            if (this.selectedWeek === 'Toàn bộ khóa học') {
+                const by = {}, out = [];
+                ev.forEach(x => (by[x.lhp.id] = by[x.lhp.id] || []).push(x));
+                Object.values(by).forEach(list => {
+                    list.sort((a, b) => a.s.startSlot - b.s.startSlot);
+                    let cur = null;
+                    list.forEach(x => {
+                        if (cur && x.s.startSlot <= cur.s.endSlot) {
+                            cur.s.endSlot = Math.max(cur.s.endSlot, x.s.endSlot);
+                            cur.s.weeksList = [...new Set([...cur.s.weeksList, ...x.s.weeksList])];
+                            cur.parts.push(x);
+                        } else { cur = { ...x, s: { ...x.s, weeksList: [...x.s.weeksList] }, parts: [x] }; out.push(cur); }
+                    });
+                });
+                out.forEach(c => {
+                    if (c.parts.length < 2) { c.title = ''; return; }
+                    const rooms = [...new Set(c.parts.map(p => p.s.room))];
+                    c.s.weeksText = this.fmtWeeks(c.s.weeksList);
+                    c.s.timeText = this.calculateSlotTimeText(c.s.startSlot, c.s.endSlot, c.lhp.type);
+                    c.s.room = rooms.length > 1 ? rooms[0] + ' …' : rooms[0];
+                    c.title = c.parts.map(p => `Tuần ${p.s.weeksText}: ${p.s.slotText}, ${p.s.room}`).join('\n');
+                });
+                ev.length = 0; out.forEach(o => ev.push(o));
+            }
+            ev.sort((a, b) => a.s.startSlot - b.s.startSlot || a.s.endSlot - b.s.endSlot);
+            let end = -1, cl = [], lanes = [];
+            const flush = () => cl.forEach(x => x.cols = Math.max(1, lanes.length));
+            ev.forEach(x => {
+                if (x.s.startSlot > end) { flush(); cl = []; lanes = []; }
+                let k = lanes.findIndex(v => v < x.s.startSlot);
+                if (k < 0) { k = lanes.length; lanes.push(0); }
+                lanes[k] = x.s.endSlot; x.lane = k; cl.push(x); end = Math.max(end, x.s.endSlot);
+            });
+            flush();
+            return ev;
         },
-        getSlotColorClass(slot) {
-            if (slot <= 6) return 'sl-1';
-            if (slot <= 12) return 'sl-2';
-            return 'sl-3';
-        },
+        getSlotColorClass(slot) { return slot <= 6 ? 'sl-1' : (slot <= 12 ? 'sl-2' : 'sl-3'); },
         openDetailModal(lhp, course) {
             this.selectedDetailLhp = { ...lhp, courseName: course.name, color: course.color };
             this.modals.detail = true;
         },
+        lecName(l) { const s = String((l && l.lecturer) || '').trim(); return s ? (s.replace(/^[A-Za-z0-9._]+\s*-\s*/, '') || s) : 'Chưa phân công'; },
+        toggleType(t) { this.filterType = this.filterType === t ? 'all' : t; },
         formatCurrency(val) { return new Intl.NumberFormat('vi-VN').format(val || 0); },
         calculateWorkloadPercent() {
-            let totalLhps = this.getSelectedLhpObjects().length;
-            return Math.min(100, Math.round((totalLhps / 8) * 100));
+            return Math.min(100, Math.round((this.calculateTotalCreditsLT() + this.calculateTotalCreditsTH()) / 24 * 100));
+        },
+        workloadLabel() {
+            const c = this.calculateTotalCreditsLT() + this.calculateTotalCreditsTH();
+            return c === 0 ? 'Chưa xếp' : (c < 12 ? 'Nhẹ' : (c <= 24 ? 'Vừa tầm' : 'Nặng'));
         },
         calculateAvgHoursPerWeek() {
-            let totalSlots = this.getSelectedLhpObjects().reduce((sum, item) => sum + (item.endSlot - item.startSlot + 1), 0);
-            return (totalSlots * 0.83).toFixed(1);
+            const sel = this.getSelectedLhpObjects(); let sum = 0, n = 0;
+            for (let w = 1; w <= this.weekCount; w++) {
+                let slots = 0;
+                sel.forEach(l => l.sessions.forEach(s => { if (s.weeksList.includes(w)) slots += s.endSlot - s.startSlot + 1; }));
+                if (slots > 0) { sum += slots; n++; }
+            }
+            return n ? (sum / n * 50 / 60).toFixed(1) : '0.0';
         },
         copyShareLink() {
-            let text = window.location.href;
-            if (navigator.clipboard) { navigator.clipboard.writeText(text); }
+            const sel = this.getSelectedLhpObjects();
+            if (!sel.length) { this.triggerToast('Chưa chọn lớp học phần nào để sao chép.'); return; }
+            const text = sel.map(l => `${l.courseName} (${l.id}, ${l.classGroup}, ${l.type}, ${l.credits} TC)\n` +
+                l.sessions.map(s => `  - ${s.dayText}, ${s.slotText} (${s.timeText}), tuần ${s.weeksText}, ${s.roomFull}`).join('\n')).join('\n');
+            const ok = () => this.triggerToast('Đã sao chép thời khóa biểu dạng văn bản!');
+            const fail = () => this.triggerToast('Trình duyệt không cho sao chép tự động. Hãy dùng HTTPS hoặc sao chép thủ công.');
+            if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(ok, fail); }
             else {
-                let input = document.createElement('input');
-                input.value = text;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
+                const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+                let done = false; try { done = document.execCommand('copy'); } catch (e) {}
+                document.body.removeChild(ta); done ? ok() : fail();
             }
-            this.triggerToast('Đã sao chép liên kết thời khóa biểu!');
         },
         autoScheduleSolver() {
-            let newSelection = [];
-            for (let course of this.courses) {
-                let ltLhps = this.getLhpsByType(course, 'LT');
-                let thLhps = this.getLhpsByType(course, 'TH');
-                if (ltLhps.length > 0) {
-                    for (let lhp of ltLhps) {
-                        if (!this.checkConflictWithSelection(lhp, newSelection)) { newSelection.push(lhp.id); break; }
-                    }
+            const pool = this.courses.filter(c => this.isFavorite(c.id));
+            if (!pool.length) { this.triggerToast('Hãy đánh dấu ⭐ các môn muốn học trước (ưu tiên 1–3, 3 là cao nhất).'); return; }
+            const groups = [];
+            pool.forEach(c => ['LT', 'TH'].forEach(ty => { const o = this.getLhpsByType(c, ty); if (o.length) groups.push({ p: this.getPriority(c.id), o }); }));
+            groups.sort((a, b) => b.p - a.p || a.o.length - b.o.length);
+            let best = [], bestScore = -1, nodes = 0; const self = this;
+            const dfs = (i, chosen, score) => {
+                if (nodes++ > 60000) return;
+                if (i === groups.length) { if (score > bestScore) { bestScore = score; best = chosen.slice(); } return; }
+                const rest = groups.slice(i).reduce((s, g) => s + g.p * g.p, 0);
+                if (score + rest <= bestScore) return;
+                const w = groups[i].p * groups[i].p;
+                for (const l of groups[i].o) {
+                    if (chosen.some(x => self.sessionsConflict(x, l))) continue;
+                    chosen.push(l); dfs(i + 1, chosen, score + w); chosen.pop();
+                    if (bestScore >= score + rest) return;
                 }
-                if (thLhps.length > 0) {
-                    for (let lhp of thLhps) {
-                        if (!this.checkConflictWithSelection(lhp, newSelection)) { newSelection.push(lhp.id); break; }
-                    }
-                }
-            }
-            this.selectedLhpIds = newSelection;
-            this.triggerToast('Hệ thống đã tự chọn ' + newSelection.length + ' lớp LT & TH không trùng!');
-        },
-        checkConflictWithSelection(lhp, pickedIds) {
-            for (let pickedId of pickedIds) {
-                let existingLhp = null;
-                this.courses.forEach(c => c.lhps.forEach(l => { if (l.id === pickedId) existingLhp = l; }));
-                if (existingLhp && existingLhp.day === lhp.day) {
-                    if (Math.max(existingLhp.startSlot, lhp.startSlot) <= Math.min(existingLhp.endSlot, lhp.endSlot)) {
-                        let weekOverlap = existingLhp.weeksList.some(w => lhp.weeksList.includes(w));
-                        if (weekOverlap) return true;
-                    }
-                }
-            }
-            return false;
+                dfs(i + 1, chosen, score);
+            };
+            dfs(0, [], 0);
+            this.selectedLhpIds = best.map(l => l.id);
+            this.triggerToast(`Đã xếp ${best.length}/${groups.length} nhóm lớp (LT/TH) của ${pool.length} môn ⭐ không trùng lịch.`);
         },
         handleFileUpload(e) {
-            let file = e.target.files[0];
+            const file = e.target.files[0]; e.target.value = '';
             if (!file) return;
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = (evt) => {
                 try {
-                    let data = new Uint8Array(evt.target.result);
-                    let workbook = XLSX.read(data, { type: 'array' });
-                    let firstSheetName = workbook.SheetNames[0];
-                    let worksheet = workbook.Sheets[firstSheetName];
-                    let rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
-                    let parsedCourses = this.parseHuitExcelData(rawData);
-                    if (parsedCourses && parsedCourses.length > 0) {
-                        this.courses = parsedCourses;
-                        this.selectedLhpIds = [];
-                        this.uploadedFileName = file.name;
-                        this.dataSourceDate = new Date().toLocaleDateString('vi-VN');
-                        let totalLhpCount = parsedCourses.reduce((acc, c) => acc + c.lhps.length, 0);
-                        this.triggerToast(`Nạp thành công ${parsedCourses.length} môn (${totalLhpCount} lớp học phần) từ file Excel!`);
-                        this.expandedCourses = parsedCourses.slice(0, 3).map(c => c.id);
-                    } else {
-                        this.triggerToast(`File Excel đã được nạp: ${file.name}`);
-                    }
+                    const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
+                    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
+                    const res = this.parseHuitExcelData(rows);
+                    if (res.error) { this.triggerToast('Không đọc được file: ' + res.error); return; }
+                    this.courses = res.courses;
+                    LHP_INDEX = new Map();
+                    res.courses.forEach(c => c.lhps.forEach(l => LHP_INDEX.set(l.id, { lhp: l, course: c })));
+                    this.weekCount = res.weekCount;
+                    this.selectedLhpIds = []; this.favorites = []; this.priorities = {};
+                    this.selectedWeek = 'Toàn bộ khóa học'; this.searchQuery = '';
+                    this.courseColors = {}; this.autoOpen = [];
+                    this.expandedCourses = res.courses.slice(0, 3).map(c => c.id);
+                    this.uploadedFileName = file.name; this.dataSourceDate = res.title || new Date().toLocaleDateString('vi-VN');
+                    this.triggerToast(`Nạp ${res.courses.length} môn, ${LHP_INDEX.size} lớp HP` + (res.skipped ? ` (bỏ qua ${res.skipped} dòng lỗi)` : '') + '.');
                 } catch (err) {
                     console.error('Excel parse error:', err);
                     this.triggerToast('Không thể đọc file Excel! Vui lòng kiểm tra lại định dạng file.');
@@ -1394,123 +1517,86 @@ function scheduleApp() {
             };
             reader.readAsArrayBuffer(file);
         },
+        fmtWeeks(list) {
+            const a = [...list].sort((x, y) => x - y), out = [];
+            for (let i = 0; i < a.length;) { let j = i; while (j + 1 < a.length && a[j + 1] === a[j] + 1) j++; out.push(j > i ? a[i] + '-' + a[j] : '' + a[i]); i = j + 1; }
+            return out.join(', ');
+        },
         parseHuitExcelData(rows) {
-            if (!rows || rows.length === 0) return null;
-            let headerRowIndex = -1;
-            for (let r = 0; r < Math.min(25, rows.length); r++) {
-                let rowStr = (rows[r] || []).map(cell => String(cell).toLowerCase()).join(' ');
-                let hits = 0;
-                if (rowStr.includes('mã lhp') || rowStr.includes('mã hp') || rowStr.includes('mã lớp')) hits++;
-                if (rowStr.includes('tên môn') || rowStr.includes('tên hp') || rowStr.includes('học phần')) hits++;
-                if (rowStr.includes('thứ')) hits++;
-                if (rowStr.includes('tiết') || rowStr.includes('bắt đầu')) hits++;
-                if (hits >= 2) { headerRowIndex = r; break; }
-            }
-            if (headerRowIndex === -1) headerRowIndex = 0;
-            let headers = (rows[headerRowIndex] || []).map(h => String(h || '').trim());
-            let colMap = {
-                lhpId: headers.findIndex(h => /mã lhp|mã lớp|mã hp/i.test(h)),
-                courseName: headers.findIndex(h => /tên môn|tên học phần|tên hp|môn học/i.test(h)),
-                credits: headers.findIndex(h => /stc|số tc|tín chỉ/i.test(h)),
-                classGroup: headers.findIndex(h => /lớp hp|lớp học phần|lớp danh nghĩa|lớp/i.test(h)),
-                day: headers.findIndex(h => /thứ/i.test(h)),
-                startSlot: headers.findIndex(h => /tiết bđ|tiết bd|tiết bắt đầu|từ tiết|bắt đầu/i.test(h)),
-                endSlot: headers.findIndex(h => /tiết kt|tiết kết thúc|đến tiết/i.test(h)),
-                numSlots: headers.findIndex(h => /số tiết/i.test(h)),
-                room: headers.findIndex(h => /phòng|phòng học/i.test(h)),
-                lecturer: headers.findIndex(h => /giảng viên|cbgd|gv/i.test(h)),
-                type: headers.findIndex(h => /loại hp|loại lhp|loại lịch|loại/i.test(h)),
-                weeks: headers.findIndex(h => /tuần|tuần học|thời gian/i.test(h))
-            };
-            let colorPalette = ['#034EA2', '#0F766E', '#6D28D9', '#B45309', '#BE123C', '#4D7C0F', '#0E7490', '#9333EA', '#C2410C'];
-            let courseMap = {};
-            let courseCount = 0;
-            for (let r = headerRowIndex + 1; r < rows.length; r++) {
-                let row = rows[r];
-                if (!row || row.length === 0) continue;
-                let lhpId = colMap.lhpId !== -1 ? String(row[colMap.lhpId] || '').trim() : '';
-                let courseName = colMap.courseName !== -1 ? String(row[colMap.courseName] || '').trim() : '';
-                if (!courseName && !lhpId) continue;
-                if (!courseName) courseName = 'Môn học ' + lhpId;
-                if (!courseMap[courseName]) {
-                    courseCount++;
-                    courseMap[courseName] = {
-                        id: courseCount, name: courseName,
-                        color: colorPalette[(courseCount - 1) % colorPalette.length], lhps: []
-                    };
+            const norm = s => String(s == null ? '' : s).replace(/\s+/g, ' ').trim().toLowerCase();
+            let h = -1;
+            for (let r = 0; r < Math.min(40, rows.length); r++) if ((rows[r] || []).some(c => /^mã (lhp|lớp)/.test(norm(c)))) { h = r; break; }
+            if (h < 0) return { error: 'không thấy dòng tiêu đề có "Mã LHP".' };
+            let title = '';
+            for (let r = 0; r < h; r++) { const m = /HK\s*\d\s*NĂM HỌC\s*[\d\s-]+/i.exec((rows[r] || []).join(' ')); if (m) { title = m[0].replace(/\s+/g, ' ').replace(/[\s-]+$/, ''); break; } }
+            const top = rows[h].map(norm), sub = (rows[h + 1] || []).map(norm);
+            const first = h + (sub.some(x => x === 'thứ' || /^t\d+$/.test(x)) ? 2 : 1);
+            const n = Math.max(top.length, sub.length);
+            const col = re => { for (let c = 0; c < n; c++) if (re.test(sub[c] || '')) return c; for (let c = 0; c < n; c++) if (re.test(top[c] || '')) return c; return -1; };
+            const C = { id: col(/^mã (lhp|lớp)/), name: col(/^tên (môn|học phần)/), room: col(/^phòng/), credits: col(/^số tc|^tín chỉ/), cls: col(/^lớp( học)?$/),
+                day: col(/^thứ$/), from: col(/^từ tiết/), to: col(/^đến tiết/), total: col(/^số tiết$/), dstart: col(/^bắt đầu/), dend: col(/^kết thúc/), lec: col(/giảng viên/), nature: col(/tính chất/) };
+            const miss = ['id', 'name', 'day', 'from', 'to'].filter(k => C[k] < 0);
+            if (miss.length) return { error: 'thiếu cột: ' + miss.join(', ') };
+            const weekCols = [];
+            for (let c = 0; c < n; c++) { const m = /^t(\d+)$/.exec(sub[c] || ''); if (m) weekCols.push([c, +m[1]]); }
+            const weekCount = weekCols.length ? Math.max(...weekCols.map(x => x[1])) : 30;
+            const palette = ['#034EA2', '#0F766E', '#6D28D9', '#B45309', '#BE123C', '#4D7C0F', '#0E7490', '#9333EA', '#C2410C'];
+            const cell = (row, k) => C[k] < 0 ? '' : String(row[C[k]] == null ? '' : row[C[k]]).trim();
+            const courses = {}, lhps = new Map(); let skipped = 0, nc = 0;
+            for (let r = first; r < rows.length; r++) {
+                const row = rows[r]; if (!row) continue;
+                const id = cell(row, 'id'), name = cell(row, 'name');
+                if (!id && !name) continue;
+                const dm = /\d+/.exec(cell(row, 'day')); const day = /cn|chủ nhật/i.test(cell(row, 'day')) ? 8 : (dm ? +dm[0] : 0);
+                const from = parseInt(cell(row, 'from')), to = parseInt(cell(row, 'to'));
+                const weeks = weekCols.filter(([c]) => String(row[c] == null ? '' : row[c]).trim() !== '').map(x => x[1]);
+                if (!id || !name || day < 2 || day > 8 || !(from >= 1 && to >= from && to <= 16) || !weeks.length) { skipped++; continue; }
+                if (!courses[name]) { nc++; courses[name] = { id: nc, name, color: palette[(nc - 1) % palette.length], lhps: [] }; }
+                let l = lhps.get(id);
+                if (!l) {
+                    l = { id, classGroup: cell(row, 'cls') || '—', credits: parseInt(cell(row, 'credits')) || 0, lecturer: cell(row, 'lec'),
+                          nature: cell(row, 'nature'), totalPeriods: parseFloat(cell(row, 'total')) || 0, sessions: [] };
+                    lhps.set(id, l); courses[name].lhps.push(l);
                 }
-                let rawDay = colMap.day !== -1 ? row[colMap.day] : 2;
-                let parsedDay = 2;
-                if (typeof rawDay === 'number') { parsedDay = rawDay; }
-                else {
-                    let dayStr = String(rawDay).toLowerCase();
-                    if (dayStr.includes('3')) parsedDay = 3;
-                    else if (dayStr.includes('4')) parsedDay = 4;
-                    else if (dayStr.includes('5')) parsedDay = 5;
-                    else if (dayStr.includes('6')) parsedDay = 6;
-                    else if (dayStr.includes('7')) parsedDay = 7;
-                    else if (dayStr.includes('cn') || dayStr.includes('chủ nhật')) parsedDay = 8;
+                if (!l.lecturer) l.lecturer = cell(row, 'lec');
+                const roomFull = cell(row, 'room') || 'Chưa có phòng';
+                const zoom = /^zoom/i.test(roomFull), rk = zoom ? 'zoom' : roomFull;
+                const ex = l.sessions.find(s => s.day === day && s.startSlot === from && s.endSlot === to && s.roomKey === rk);
+                if (ex) {
+                    ex.weeksList = [...new Set([...ex.weeksList, ...weeks])];
+                    if (zoom && !ex.roomFull.split(', ').includes(roomFull)) ex.roomFull += ', ' + roomFull;
                 }
-                let startSlot = colMap.startSlot !== -1 ? parseInt(row[colMap.startSlot]) || 1 : 1;
-                let endSlot = 1;
-                if (colMap.endSlot !== -1 && row[colMap.endSlot]) { endSlot = parseInt(row[colMap.endSlot]) || startSlot; }
-                else if (colMap.numSlots !== -1 && row[colMap.numSlots]) { let nSlots = parseInt(row[colMap.numSlots]) || 3; endSlot = startSlot + nSlots - 1; }
-                else { endSlot = startSlot + 2; }
-                let rawType = colMap.type !== -1 ? String(row[colMap.type] || '').toUpperCase() : '';
-                let type = (rawType.includes('TH') || rawType.includes('THỰC HÀNH') || rawType.includes('MÁY')) ? 'TH' : 'LT';
-                let timeText = this.calculateSlotTimeText(startSlot, endSlot, type);
-                let rawWeeksStr = colMap.weeks !== -1 ? String(row[colMap.weeks] || '1-10') : '1-10';
-                let weeksList = this.parseWeeksString(rawWeeksStr);
-                let lhpObj = {
-                    id: lhpId || (courseName.substring(0, 6).toUpperCase() + '_0' + (courseMap[courseName].lhps.length + 1)),
-                    classGroup: colMap.classGroup !== -1 ? String(row[colMap.classGroup] || 'Lớp HP') : 'Lớp HP',
-                    day: parsedDay,
-                    dayText: parsedDay === 8 ? 'Chủ nhật' : 'Thứ ' + parsedDay,
-                    startSlot: startSlot, endSlot: endSlot,
-                    slotText: `Tiết ${startSlot}-${endSlot}`,
-                    timeText: timeText,
-                    weeksText: rawWeeksStr,
-                    weeksCount: weeksList.length,
-                    weeksList: weeksList,
-                    room: colMap.room !== -1 ? String(row[colMap.room] || 'P.Học') : 'P.Học',
-                    roomFull: colMap.room !== -1 ? String(row[colMap.room] || 'P.Học HUIT') : 'P.Học HUIT',
-                    lecturer: colMap.lecturer !== -1 ? String(row[colMap.lecturer] || 'TBA') : 'TBA',
-                    type: type,
-                    credits: colMap.credits !== -1 ? parseInt(row[colMap.credits]) || 2 : 2
-                };
-                courseMap[courseName].lhps.push(lhpObj);
+                else l.sessions.push({ day, startSlot: from, endSlot: to, weeksList: weeks, roomKey: rk, roomFull, room: zoom ? 'Zoom' : roomFull.split(' - ')[0], dateStart: cell(row, 'dstart'), dateEnd: cell(row, 'dend') });
             }
-            return Object.values(courseMap);
+            const cap = (a, k) => a.length > k ? a.slice(0, k).join(' · ') + ` · +${a.length - k}` : a.join(' · ');
+            lhps.forEach(l => {
+                const ratio = l.credits ? l.totalPeriods / l.credits : 0;
+                const th = ratio >= 20 || /máy tính|thực hành|thí nghiệm|vi sinh|xưởng|sân |lab/i.test(l.sessions[0].roomFull);
+                l.type = th ? 'TH' : 'LT';
+                l.elearning = /e.?learning/i.test(l.nature);
+                l.zoom = !l.elearning && l.sessions.some(s => /^zoom/i.test(s.roomFull));
+                l.sessions.sort((a, b) => a.day - b.day || a.startSlot - b.startSlot);
+                l.sessions.forEach(s => {
+                    s.dayText = s.day === 8 ? 'Chủ nhật' : 'Thứ ' + s.day; s.slotText = `Tiết ${s.startSlot}-${s.endSlot}`;
+                    s.timeText = this.calculateSlotTimeText(s.startSlot, s.endSlot, l.type); s.weeksText = this.fmtWeeks(s.weeksList);
+                });
+                l.dayText = cap(l.sessions.map(s => `${s.dayText}, ${s.slotText} (T${s.weeksText})`), 3);
+                l.slotText = '';
+                l.timeText = cap([...new Set(l.sessions.map(s => s.timeText))], 3);
+                l.room = new Set(l.sessions.map(s => s.room)).size > 1 ? l.sessions[0].room + ' …' : l.sessions[0].room;
+                l.roomFull = l.sessions[0].roomFull;
+                l.weeksList = [...new Set(l.sessions.flatMap(s => s.weeksList))].sort((a, b) => a - b);
+                l.weeksText = this.fmtWeeks(l.weeksList);
+            });
+            return { courses: Object.values(courses), skipped, weekCount, title };
         },
         calculateSlotTimeText(startSlot, endSlot, type) {
-            let matrix = this.timeSlotDetails;
-            let startObj = matrix.find(m => m.slot === startSlot) || matrix[0];
-            let endObj = matrix.find(m => m.slot === endSlot) || matrix[matrix.length - 1];
-            let startTime = type === 'TH' ? startObj.th.split('-')[0] : startObj.lt.split('-')[0];
-            let endTime = type === 'TH' ? endObj.th.split('-')[1] : endObj.lt.split('-')[1];
-            return `${startTime} - ${endTime}`;
-        },
-        parseWeeksString(str) {
-            if (!str) return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            let weeks = new Set();
-            let parts = String(str).split(/[,;|\s]+/);
-            parts.forEach(part => {
-                if (part.includes('-')) {
-                    let [s, e] = part.split('-').map(n => parseInt(n));
-                    if (!isNaN(s) && !isNaN(e)) { for (let w = s; w <= e; w++) weeks.add(w); }
-                } else {
-                    let w = parseInt(part);
-                    if (!isNaN(w)) weeks.add(w);
-                }
-            });
-            let result = Array.from(weeks).sort((a, b) => a - b);
-            return result.length > 0 ? result : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            const m = this.timeSlotDetails, a = m.find(x => x.slot === startSlot) || m[0], b = m.find(x => x.slot === endSlot) || m[m.length - 1];
+            const k = type === 'TH' ? 'th' : 'lt';
+            return `${a[k].split('-')[0]} - ${b[k].split('-')[1]}`;
         }
     };
 }
 </script>
-<div data-ck-footer></div>
-<script src="../assets/app.js?v=20261017d"></script>
-<script src="../assets/data.js"></script>
 </body>
 </html>

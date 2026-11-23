@@ -214,6 +214,13 @@
         label: "Chương",
         names: ["Chương 1", "Chương 2", "Chương 3", "Chương 4", "Chương 5", "Chương 6", "Chương 7", "Chương 8", "File 2"]
       },
+      /* Vật lí kĩ thuật: popup chọn cách học giống Chứng chỉ Kỹ năng số.
+         Chương nào đã có slide bài giảng thì khai ở đây + PART_SYLLABUS. */
+      "vat-li-ki-thuat": {
+        label: "Chương",
+        names: ["Chương 1", "Chương 3"],
+        descs: ["Mở đầu", "Ánh sáng và Quang học"]
+      },
       /* Chứng chỉ Kỹ năng số: 6 mô đun theo khung năng lực số + 2 đề thi thử
          độc lập (mỗi đề 60 câu, trang riêng có chấm điểm). `descs` là tên
          chuyên đề in nhỏ dưới tên bài trong popup chọn bài thi. */
@@ -242,6 +249,9 @@
   var MODE_LABELS = {
     "chung-chi-ky-nang-so": {
       sylabus: { label: "Xem bài giảng", hint: "Lý thuyết từng mô đun" }
+    },
+    "vat-li-ki-thuat": {
+      sylabus: { label: "Xem bài giảng", hint: "Lý thuyết từng chương" }
     }
   };
 
@@ -466,6 +476,12 @@
       "mo-dun-4": "ky-nang-so/MODULE_4_AN TOÀN.html",
       "mo-dun-5": "ky-nang-so/MODULE_5_GIẢI_QUYẾT_VẤN_ĐỀ.html",
       "mo-dun-6": "ky-nang-so/MODULE_6_ỨNG_DỤNG_TRÍ_TUỆ_NHÂN_TẠO.html"
+    },
+    /* Vật lí kĩ thuật: mỗi chương một file slide bài giảng riêng trong
+       thư mục vat-li-ki-thuat/. Chương chưa có file thì bỏ trống, thêm sau. */
+    "vat-li-ki-thuat": {
+      "chuong-1": "vat-li-ki-thuat/Chuong_1_Mo_dau_Slide.html",
+      "chuong-3": "vat-li-ki-thuat/Chuong3_AnhSang_QuangHoc_Slide.html"
     },
     "qpan1": "qp-an/qpan1-de-cuong.html",
     "qpan2": "qp-an/qpan2-de-cuong.html",

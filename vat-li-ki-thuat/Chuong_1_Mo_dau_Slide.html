@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chương 1: Mở đầu - Vật lý kỹ thuật</title>
+<style>
+:root{--bg:#eef1ee;--ink:#1f2a24;--green:#31644f;--blue:#1f4e8c;--gold:#b8a916;--panel:#fff;--btn:#fff;--line:#c9d2cc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15191a;--ink:#e8eee9;--btn:#232a2b;--line:#3a4546}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.player{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.stage{aspect-ratio:4/3;background:var(--green);border-radius:20px;padding:3.2%;position:relative;container-type:inline-size}
+.panel{background:var(--panel);color:#1f2a24;border-radius:16px;height:72%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4%}
+.chap{font-size:4cqw;font-weight:700;color:var(--blue);text-decoration:underline;margin-bottom:2cqw}
+.ttl{font-size:6.2cqw;font-weight:700;font-style:italic;color:var(--blue);line-height:1.25}
+.panel ul{text-align:left;font-size:4cqw;line-height:1.6;margin:0;color:#1f2a24}
+.panel h2{font-size:5cqw;color:var(--blue);margin:0 0 2cqw}
+.bar{height:5%;background:var(--gold);border-radius:8px;margin-top:3%}
+.logo{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);background:#fff;color:#1f4e8c;font-weight:800;font-size:2.6cqw;padding:.8cqw 2.4cqw;border-radius:6px}
+.stage.content{background:#fff;border:3px solid var(--green);padding:0}
+.stage.content .bar,.stage.content .logo{display:none}
+.stage.content .panel{height:100%;background:#fff;border-radius:0;padding:0;position:relative;align-items:stretch;justify-content:flex-start;text-align:left}
+.msil{position:absolute;top:2.5cqw;left:4cqw;width:15cqw;height:auto}
+.mtitle{font-size:4.8cqw;font-weight:700;font-style:italic;color:var(--blue);text-align:right;padding:4cqw 4.5cqw 0 0}
+.mline{height:2px;background:var(--gold);margin:1.8cqw 3cqw 8cqw}
+.mi{font-size:2.7cqw;font-weight:700;padding:1.3cqw 2cqw;border-radius:6px;margin:0 17cqw 2.7cqw;color:#111}
+.mline.s{margin:10.5cqw 3cqw 0}
+.mcen{position:absolute;left:0;right:0;top:40%;display:flex;justify-content:center}
+.mi.sec{margin:0;font-size:3.2cqw;color:#e00000;padding:1.2cqw 2.6cqw}
+.mfoot{position:absolute;bottom:1.6cqw;left:0;right:0;text-align:center;font-size:1.7cqw;color:#3a5fa0}
+.mnum{position:absolute;bottom:1.6cqw;right:4cqw;font-size:1.9cqw;color:#222}
+.m0{background:linear-gradient(90deg,#f6f1d0,#b8a916)}
+.m1{background:linear-gradient(90deg,#f1f8ee,#8fcf86)}
+.m2{background:linear-gradient(90deg,#eef3f3,#b3c6c9)}
+.stage.hero{background:radial-gradient(ellipse at 20% 0%,#1d7a63 0%,#0b3d33 40%,#041a16 75%,#020c0a 100%)}
+.stage.hero .panel{background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.2);box-shadow:0 1cqw 4cqw rgba(0,0,0,.35);color:#fff;gap:1cqw}
+.stage.hero .bar{background:linear-gradient(90deg,#2dd4a0,#7be0a5 30%,#e6e65a 55%,#ffc94d 75%,#ff9f43);height:4.2%}
+.hero-art{width:56%;height:auto;margin-bottom:1cqw}
+.stage.hero .chap{color:#ffd36b;text-decoration:none;letter-spacing:.7cqw;font-size:4.2cqw;margin:0}
+.stage.hero .ttl{color:#fff;font-style:normal;font-size:8cqw;text-shadow:0 0 2cqw rgba(80,255,200,.55),0 .3cqw 1cqw rgba(0,0,0,.4)}
+.fade{animation:f .4s ease}@keyframes f{from{opacity:0;transform:translateX(3cqw)}to{opacity:1;transform:none}}
+button,select{font:inherit;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--btn);color:var(--ink);cursor:pointer}
+.note{font-size:13px;opacity:.7;margin-top:10px}
+.player{position:relative}
+.vp{position:relative;width:100%;border-radius:20px;overflow:hidden;container-type:inline-size;background:#000}
+.vp .stage{border-radius:0}
+.player:fullscreen,.player:-webkit-full-screen{background:#000;display:flex;align-items:center;justify-content:center}
+.player:fullscreen .vp,.player:-webkit-full-screen .vp{width:min(100vw,calc(100vh*4/3));border-radius:0}
+.player:not(.show){cursor:none}
+#stage{cursor:pointer}
+.cap{position:absolute;left:50%;bottom:17%;transform:translateX(-50%);max-width:88%;width:max-content;background:rgba(8,8,8,.78);color:#fff;font-size:clamp(12px,2.5cqw,26px);line-height:1.45;padding:.25em .6em;border-radius:4px;text-align:center;pointer-events:none;transition:bottom .2s}
+.player:not(.show) .cap{bottom:5%}
+.cap.off{display:none}
+.yt{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 4px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;transition:opacity .2s}
+.player:not(.show) .yt{opacity:0;pointer-events:none}
+.prog{display:flex;gap:2px}
+.seg{flex:1;height:16px;position:relative;cursor:pointer}
+.seg::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:rgba(255,255,255,.3);border-radius:2px;transition:height .1s,margin .1s}
+.seg.done::before{background:#f00}
+.prog:hover .seg::before{height:5px;margin-top:-2.5px}
+.yrow{display:flex;align-items:center;justify-content:space-between}
+.yl,.yr{display:flex;align-items:center;gap:2px}
+.yt button{background:none;border:0;color:#fff;padding:0;width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;opacity:.92;position:relative}
+.yt button:hover{background:rgba(255,255,255,.18);opacity:1}
+.yt button:disabled{opacity:.35;background:none}
+.yt svg{width:26px;height:26px;fill:currentColor}
+.time{font-size:13px;margin-left:8px;white-space:nowrap}
+#cc.on::after{content:"";position:absolute;left:8px;right:8px;bottom:5px;height:3px;background:#f00;border-radius:2px}
+.menu{position:absolute;right:12px;bottom:58px;width:270px;background:rgba(28,28,28,.95);border-radius:12px;padding:8px 0;font-size:13px;display:none}
+.menu.open{display:block}
+.menu label{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 16px}
+.menu select{max-width:150px;background:#333;color:#fff;border:1px solid #555;padding:4px 6px;border-radius:6px;font-size:13px}
+.menu input[type=range]{width:100px}
+.player.pfs{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center}
+.player.pfs .vp{width:min(100vw,calc(100dvh*4/3));border-radius:0}
+@media (hover:none){.note{display:none}}
+@media (max-width:700px) and (orientation:portrait){
+  .wrap{padding:8px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+  .player:not(.isfs) .vp{overflow:visible;border-radius:0;background:none}
+  .player:not(.isfs) .vp .stage{border-radius:12px 12px 0 0}
+  .player:not(.isfs) .cap{position:static;transform:none;width:auto;max-width:none;border-radius:0;background:#1c1c1c;font-size:15px;padding:10px 14px;text-align:left;pointer-events:auto}
+  .player:not(.isfs) .yt{position:relative;padding:2px 6px 6px;background:#111;border-radius:0 0 12px 12px}
+  .player:not(.isfs):not(.show) .yt{opacity:1;pointer-events:auto}
+  .player:not(.isfs) .seg{height:26px}
+  .player:not(.isfs) .menu{bottom:100%;right:6px;margin-bottom:6px;width:min(300px,calc(100vw - 28px))}
+  .yt button{width:44px;height:44px}
+  .yt svg{width:28px;height:28px}
+  .menu label{padding:12px 16px;font-size:15px}
+  .menu select{font-size:16px;max-width:160px;padding:6px}
+  .menu input[type=range]{width:110px}
+  .menu input[type=checkbox]{width:22px;height:22px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  .wrap{padding:8px}
+  .player:not(.isfs) .vp{width:min(100%,calc((100dvh - 16px)*4/3));margin:0 auto}
+}
+
+.stage.toc{background:linear-gradient(135deg,#fff 55%,var(--tint,#eef));border:.3cqw solid var(--navy,#123)}
+.stage.toc .bar,.stage.toc .logo{display:none}
+.stage.toc .panel{height:100%;background:transparent;border-radius:0;padding:0;position:relative;display:block;text-align:left}
+.tstripe{position:absolute;left:0;top:0;bottom:0;width:1.6cqw;background:var(--stripe)}
+.thead{display:flex;align-items:center;justify-content:space-between;padding:2.2cqw 4cqw 0 5cqw;gap:2cqw}
+.ticon{width:24cqw;height:auto;flex:none}
+.ticon *{filter:none}
+.tt{font-size:4.6cqw;font-weight:800;color:var(--navy);text-align:right;line-height:1.15}
+.tline{height:.4cqw;margin:1cqw 3cqw 0 3.6cqw;background:var(--lineh);border-radius:1cqw}
+.tgrid{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:2cqw;padding:2.4cqw 3.5cqw 0 3.6cqw;align-items:start}
+.tgrid.n1{max-width:84%;margin:0 auto}
+.tcol{display:flex;flex-direction:column;gap:1.8cqw}
+.tcard{background:#fff;border-radius:1.2cqw;box-shadow:0 .3cqw 1.4cqw rgba(0,0,0,.14);border-left:.9cqw solid var(--c);padding:1.1cqw 1.6cqw 1.1cqw 1.8cqw;color:#0d1020}
+.tgrid.n1 .tcard{padding:2.2cqw 3cqw}
+.tcard h3{margin:0 0 .5cqw;font-size:calc(var(--fs)*1.3);font-weight:800;line-height:1.2}
+.tcard h3:last-child{margin:0}
+.tcard p{margin:0;font-size:var(--fs);line-height:1.45;color:#2b3042;padding-left:1.2cqw}
+.tcard p.l2{padding-left:3cqw}
+.tcard p::before{content:"• ";color:var(--c);font-weight:800}.tcard p.l2::before,.tcard p.nb::before{content:none}.tcard p.nb{padding-left:1.2cqw}.tgrid.n1{max-width:88%}.tt{min-width:0}.sub2{font-size:2.6cqw;color:#e8fff6;opacity:.92;line-height:1.4}
+.tgrid.n1.wa{max-width:none;margin:0;padding-right:33cqw}.tart{position:absolute;right:3.5cqw;top:19cqw;width:27cqw;height:auto}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes pls{50%{transform:scale(1.4)}}@keyframes shoot{0%{transform:translate(55px,-55px);opacity:0}25%{opacity:1}50%,100%{transform:none;opacity:1}}@keyframes pop{0%{opacity:0}15%,85%{opacity:1}100%{opacity:0}}@keyframes flt{50%{transform:translateY(-10px)}}@keyframes hop{50%{transform:translateY(-9px)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes errx{50%{transform:scaleX(1.5)}}@keyframes fi{to{opacity:1}}
+.spin{animation:spin 16s linear infinite}.pulse{animation:pls 1.8s ease-in-out infinite;transform-origin:0 0}.a7 .pulse{transform-origin:100px 100px}
+.shoot{animation:shoot 3.2s ease-out infinite}.p1,.p2,.p3,.lab{animation:pop 6s ease infinite both}.p2{animation-delay:.5s}.p3{animation-delay:1s}.lab{animation-delay:1.5s}
+.float{animation:flt 2.4s ease-in-out infinite}.orbit{transform-origin:100px 100px;animation:spin 18s linear infinite}
+.a8 circle{animation:hop 1.6s ease-in-out infinite}.a8 circle:nth-child(2){animation-delay:.15s}.a8 circle:nth-child(3){animation-delay:.3s}.a8 circle:nth-child(4){animation-delay:.45s}.a8 circle:nth-child(5){animation-delay:.6s}.a8 circle:nth-child(6){animation-delay:.75s}.a8 circle:nth-child(7){animation-delay:.9s}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s ease forwards .2s}.err{transform-origin:100px 110px;animation:errx 2.2s ease-in-out infinite 2.6s}.fadein{opacity:0;animation:fi 1s ease forwards 2.4s}
+@media (prefers-reduced-motion:reduce){.tart *{animation:none!important}.draw{stroke-dashoffset:0}.fadein,.p1,.p2,.p3,.lab{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(2.5cqw)}to{opacity:1;transform:none}}@keyframes zin{from{opacity:0;transform:scale(.6) rotate(-8deg)}to{opacity:1;transform:none}}@keyframes grow{from{transform:scaleX(0)}to{transform:none}}@keyframes growy{from{transform:scaleY(0)}to{transform:none}}@keyframes slr{from{opacity:0;transform:translateX(4cqw)}to{opacity:1;transform:none}}@keyframes glow{50%{text-shadow:0 0 3.5cqw rgba(80,255,200,.95),0 .3cqw 1cqw rgba(0,0,0,.4)}}
+.tcard,.tcard p{animation:rise .55s ease both}.tt{animation:slr .6s ease both}.ticon{animation:zin .7s ease both}.tline{transform-origin:left;animation:grow .7s ease both .2s}.tstripe{transform-origin:top;animation:growy .8s ease both}.tart{animation:zin .8s ease both .35s}
+.stage.hero .panel>*{animation:rise .8s ease both}.stage.hero .panel>*:nth-child(2){animation-delay:.15s}.stage.hero .panel>*:nth-child(3){animation-delay:.3s}.stage.hero .panel>*:nth-child(4){animation-delay:.5s}.stage.hero .panel>*:nth-child(5){animation-delay:.65s}.stage.hero .panel>*:nth-child(6){animation-delay:.8s}.stage.hero .ttl{animation:rise .8s ease both .3s,glow 3s ease-in-out infinite 1.2s}.stage.hero .hero-art{animation:zin 1s ease both}
+@media (prefers-reduced-motion:reduce){.fade,.tcard,.tcard p,.tt,.ticon,.tline,.tstripe,.tart,.stage.hero .panel>*,.stage.hero .ttl{animation:none!important}}
+.cap.tocv{font-size:clamp(11px,2.15cqw,22px);max-width:94%}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="player show" id="player">
+    <div class="vp" id="vp">
+      <div class="stage" id="stage"><div class="panel" id="panel"></div><div class="bar"></div><div class="logo">HUIT</div></div>
+      <div class="cap" id="sub"></div>
+      <div class="yt" id="yt">
+        <div class="prog" id="prog"></div>
+        <div class="yrow">
+          <div class="yl">
+            <button id="prev" title="Slide trước (←)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+            <button id="play" title="Phát (Dấu cách)"></button>
+            <button id="next" title="Slide sau (→)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            <span class="time" id="cnt"></span>
+          </div>
+          <div class="yr">
+            <button id="cc" class="on" title="Phụ đề (C)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-8 7H9.5v-.5h-2v3h2V13H11v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1zm7 0h-1.5v-.5h-2v3h2V13H18v1a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1z"/></svg></button>
+            <button id="gear" title="Cài đặt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
+            <button id="fs" title="Toàn màn hình (F)"></button>
+          </div>
+        </div>
+        <div class="menu" id="menu">
+          <label>Tốc độ <span><input type="range" id="rate" min="0.6" max="1.5" step="0.1" value="1"> <span id="rv">1.0×</span></span></label>
+          <label>Tự chuyển slide <input type="checkbox" id="auto" checked></label>
+          <label>Đến slide <select id="jump"></select></label>
+          <label>Giọng <select id="voice"></select></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note">Phím tắt: ← → chuyển slide, Dấu cách phát/tạm dừng, F toàn màn hình, C ẩn/hiện phụ đề.</div>
+</div>
+<script>
+// ====== SỬA NỘI DUNG SLIDE Ở ĐÂY ======
+// type: "title" (chương + tiêu đề) hoặc "list" (tiêu đề + gạch đầu dòng)
+// speech: lời đọc của slide
+const slides=[
+ {type:"title",chap:"VẬT LÝ KỸ THUẬT",title:"Chương 1: Mở đầu",sub:["Technical Physics · Mã học phần 100802","Khoa Khoa học Ứng dụng","Trường Đại học Công Thương TP.HCM"],
+  speech:"Xin chào các bạn, chào mừng đến với học phần Vật lý kỹ thuật, mã học phần một không không tám không hai, do Khoa Khoa học Ứng dụng, Trường Đại học Công Thương Thành phố Hồ Chí Minh phụ trách. Hôm nay chúng ta bắt đầu với Chương 1: Mở đầu. Đây là chương ngắn, nhưng đặt nền móng cho mọi thứ các bạn sẽ học trong học kỳ này."},
+ {"type": "toc", "title": "Chương 1: Mở đầu", "fs": 3.1, "cols": [[{"h": "1.1. Giới thiệu về VL học", "items": [], "c": "#2dd4a0"}, {"h": "1.2. Các đại lượng vật lý và hệ đơn vị đo", "items": [], "c": "#e6c42a"}, {"h": "1.3. Bổ trợ toán học", "items": [], "c": "#4aa3df"}]], "speech": "Chương này gồm ba phần. Đầu tiên, ta tìm hiểu vật lý học là gì và vì sao kỹ sư cần nó. Tiếp theo là các đại lượng vật lý và hệ đơn vị đo, tức là ngôn ngữ chung để mô tả thế giới bằng con số. Cuối cùng là phần bổ trợ toán học, bộ công cụ ta sẽ dùng xuyên suốt học phần.", "vars": "--navy:#1f5a45;--tint:#dff3ea;--stripe:linear-gradient(#2dd4a0,#7be0a5,#e6e65a,#ffc94d);--lineh:linear-gradient(90deg,#2dd4a0,#7be0a5,#e6e65a,#ffc94d,transparent)"}
+];
+const V=slides[1].vars,G="#2dd4a0",Y="#e6c42a",B="#4aa3df";
+const S=(title,speech,cols,fs=2.7)=>slides.push({type:"toc",title,fs,cols,speech,vars:V});
+const K=(c,items,h="")=>({h,items,c});
+S("Giới thiệu học phần","Trước hết, ta xem học phần này nói về điều gì. Vật lý kỹ thuật thuộc khối kiến thức đại cương, hai tín chỉ, gồm ba mươi tiết lý thuyết và sáu mươi giờ tự học. Tin vui là học phần không có điều kiện tiên quyết, nên ai cũng có thể bắt đầu từ đây. Nội dung gồm vật lý đại cương cơ bản và một số chuyên đề vật lý hiện đại. Mục đích cuối cùng là để bạn giải thích được hiện tượng tự nhiên, hiểu thiết bị kỹ thuật hoạt động ra sao, và biết cách cải tiến chúng.",
+ [[K(G,["Khối kiến thức giáo dục đại cương, 2 tín chỉ: 30 tiết lý thuyết, 60 giờ tự học","Không có học phần tiên quyết, học trước hay song hành","Nội dung: vật lý đại cương cơ bản và một số chuyên đề vật lý hiện đại","Mục đích: mô tả, giải thích hiện tượng tự nhiên; hiểu nguyên tắc hoạt động của thiết bị kỹ thuật và định hướng cải tiến"])]],2.9);
+S("Mục tiêu và chuẩn đầu ra","Sau học phần này, bạn sẽ đạt năm mục tiêu. Mục tiêu G1 là nắm kiến thức nền và hiện đại về trường điện từ, quang học, quang lượng tử và vật lý hạt nhân. G2 là biết dùng tin học văn phòng và đọc tiếng Anh để tìm tài liệu. G3 là điều kỹ sư cần nhất: vận dụng vật lý để giải thích hiện tượng và chọn giải pháp kỹ thuật phù hợp. G4 là trình bày rõ ràng vấn đề và giải pháp. Cuối cùng, G5 là tự học và làm việc nhóm hiệu quả.",
+ [[K(G,["G1: Nắm kiến thức cơ bản và hiện đại về trường điện từ, quang học sóng, quang lượng tử, vật lý hạt nhân, vật lý hiện đại","G2: Dùng tin học văn phòng và đọc hiểu tiếng Anh để tìm, tổng hợp tài liệu","G3: Vận dụng kiến thức vật lý để giải thích hiện tượng và chọn giải pháp kỹ thuật phù hợp","G4: Truyền đạt vấn đề và giải pháp","G5: Tự học và làm việc nhóm hiệu quả"])]],2.7);
+const ch=(n,t,l,s)=>K(n==1?G:n<4?Y:B,["Lý thuyết "+l+" tiết · Tự học "+s+" giờ"],"Chương "+n+": "+t);
+S("Nội dung và phân bố thời gian","Học phần gồm sáu chương. Chương một, chương chúng ta đang học, chỉ có một tiết lý thuyết. Sau đó là điện từ trường năm tiết, ánh sáng và quang học bốn tiết, vật lý lượng tử sáu tiết. Chương năm, chuyên đề Vật lý hiện đại, chiếm nhiều thời lượng nhất, với mười tiết. Chương sáu là chuyên đề tự chọn, bốn tiết. Tổng cộng là ba mươi tiết lý thuyết và sáu mươi giờ tự học. Hãy nhớ rằng, cứ mỗi tiết trên lớp, bạn cần dành khoảng hai giờ tự học.",
+ [[ch(1,"Mở đầu",1,2),ch(2,"Điện từ trường",5,10),ch(3,"Ánh sáng và quang học",4,8),ch(4,"Vật lý lượng tử",6,12)],[ch(5,"Chuyên đề Vật lý hiện đại",10,20),ch(6,"Chuyên đề vật lý tự chọn",4,8),K("#ffc94d",["Lý thuyết 30 tiết · Tự học 60 giờ"],"Tổng")]],2.5);
+S("Đánh giá và quy định","Về cách đánh giá, điểm học phần gồm ba phần. Hai mươi phần trăm cho chuyên cần, nhận thức và thái độ học tập, được tính suốt quá trình. Ba mươi phần trăm cho bài tập nhóm, nộp vào tuần sáu. Và năm mươi phần trăm cho bài thi cuối kỳ, gồm bốn mươi câu trắc nghiệm, mỗi câu không phẩy hai mươi lăm điểm. Để đạt kết quả tốt, bạn cần tham dự trên bảy mươi lăm phần trăm số giờ lý thuyết, đọc tài liệu trước khi đến lớp, tích cực thảo luận, và làm bài tập một cách trung thực.",
+ [[K(G,["Chuyên cần, nhận thức, thái độ học tập: 20% (suốt quá trình)","Bài tập nhóm (tuần 6): 30%","Thi cuối kỳ: 50%, trắc nghiệm 40 câu, mỗi câu 0,25 điểm","Quy định: tham dự trên 75% giờ lý thuyết; đọc trước tài liệu, ôn tập, tự làm trắc nghiệm; tích cực thảo luận; hoàn thành bài tập trung thực"])]],2.9);
+S("Tài liệu học tập","Về tài liệu, giáo trình chính là Giáo trình Vật lý kỹ thuật của Bộ môn Vật lý, năm hai nghìn không trăm hai mươi, và sách College Physics, ấn bản thứ chín, của Serway cùng các cộng sự. Sách tiếng Anh này cũng là cơ hội để bạn luyện kỹ năng đọc tài liệu chuyên ngành. Ngoài ra, bạn có thể tham khảo Giáo trình Vật lý đại cương, sách Applied Physics, và Vật lý đại cương tập ba của tác giả Lương Duyên Bình.",
+ [[K(G,["Bộ môn Vật lý (2020), Giáo trình Vật lý kỹ thuật","Serway, Faughn, Vuille (2010), College Physics, 9th Edition"],"Giáo trình chính"),K(Y,["Giáo trình Vật lý đại cương (Bộ môn Vật lý, 2020)","Ewen, Schurter, Gundersen (2012), Applied Physics","Lương Duyên Bình (2004), Vật lý đại cương, tập 3"],"Tham khảo")]],2.7);
+S("1.1. Giới thiệu về Vật lý học","Bắt đầu với mục một chấm một. Vật lý học nghiên cứu những dạng vận động tổng quát nhất của vật chất và năng lượng. Các nhà vật lý làm việc theo một chu trình: quan sát hiện tượng, đặt giả thuyết, xây dựng mô hình, làm thực nghiệm để kiểm chứng, và cuối cùng rút ra định luật. Hãy nhìn quanh bạn: máy phát điện, sóng điện từ, laser, sợi quang, vật liệu nano, hay kỹ thuật hạt nhân trong y tế. Tất cả đều là vật lý, và chính là những chủ đề chúng ta sắp học. Vậy vì sao kỹ sư cần vật lý? Vì nó giúp bạn hiểu nguyên lý thiết bị, thiết kế, tối ưu, và phân tích sự cố khi có vấn đề.",
+ [[K(G,["Vật lý nghiên cứu các dạng vận động tổng quát nhất của vật chất và năng lượng","Phương pháp: quan sát → giả thuyết → mô hình → thực nghiệm kiểm chứng → định luật","Ứng dụng kỹ thuật: máy phát điện, sóng điện từ, laser, sợi quang, vật liệu nano, hạt nhân trong y tế (đúng các chương sắp học)","Vì sao kỹ sư cần Vật lý: hiểu nguyên lý thiết bị, thiết kế, tối ưu, phân tích sự cố"])]],2.9);
+S("1.2. Đại lượng vật lý và hệ đơn vị đo","Mục một chấm hai: đại lượng vật lý và hệ đơn vị đo. Đo một đại lượng nghĩa là so sánh nó với một đơn vị cùng loại, nên kết quả luôn gồm hai phần: số đo nhân với đơn vị. Hệ đơn vị quốc tế SI có bảy đơn vị cơ bản: mét, ki-lô-gam, giây, am-pe, kenvin, mol và can-đê-la. Từ đó suy ra các đơn vị dẫn xuất, ví dụ niutơn bằng ki-lô-gam mét trên giây bình phương, jun bằng niutơn nhân mét, oát bằng jun trên giây, và pascal bằng niutơn trên mét vuông. Các tiền tố như nano, micro, mili, ki-lô, mê-ga, gi-ga giúp ta viết gọn những số rất lớn hoặc rất nhỏ. Mẹo đổi đơn vị là nhân với một tỉ số bằng một. Ví dụ, bảy mươi hai ki-lô-mét trên giờ bằng bảy mươi hai nhân một nghìn chia ba nghìn sáu trăm, tức là hai mươi mét trên giây.",
+ [[K(Y,["Đo một đại lượng là so sánh nó với đơn vị cùng loại; kết quả = số đo × đơn vị","Hệ SI có 7 đơn vị cơ bản: m, kg, s, A, K, mol, cd","Đơn vị dẫn xuất: N = kg·m/s², J = N·m, W = J/s, Pa = N/m²","Tiền tố: n (10⁻⁹), µ (10⁻⁶), m (10⁻³), k (10³), M (10⁶), G (10⁹)","Đổi đơn vị bằng cách nhân với tỉ số bằng 1: 72 km/h = 72 × 1000/3600 = 20 m/s"])]],2.7);
+S("Thứ nguyên và sai số","Một công cụ rất mạnh để kiểm tra công thức là thứ nguyên. Vận tốc có thứ nguyên chiều dài chia thời gian, gia tốc là chiều dài chia thời gian bình phương, và lực là khối lượng nhân chiều dài chia thời gian bình phương. Quy tắc vàng: hai vế của một công thức vật lý phải có cùng thứ nguyên. Chẳng hạn, trong công thức quãng đường s bằng v không nhân t cộng một phần hai a t bình phương, mọi số hạng đều có thứ nguyên chiều dài, nên công thức nhất quán. Còn về sai số, kết quả đo được viết dưới dạng giá trị trung bình cộng trừ sai số tuyệt đối, và sai số tương đối là tỉ số giữa hai đại lượng đó, tính theo phần trăm. Phần chữ số có nghĩa và sai số gián tiếp, các bạn xem thêm trong tài liệu tự học.",
+ [[K(Y,["Thứ nguyên: [v] = LT⁻¹, [a] = LT⁻², [F] = MLT⁻². Hai vế của công thức vật lý phải cùng thứ nguyên","Ví dụ: s = v₀t + ½at² nhất quán vì mọi số hạng đều có thứ nguyên L","Kết quả đo viết dạng x = x̄ ± Δx; sai số tương đối δ = Δx/x̄ × 100%","(Phần chữ số có nghĩa và sai số gián tiếp: xem tài liệu tự học)"])]],2.9);
+S("1.3. Bổ trợ toán học (tóm tắt)","Mục một chấm ba là phần bổ trợ toán học, bộ công cụ ta dùng xuyên suốt học phần. Về lượng giác, nhớ rằng sin bình phương cộng cos bình phương bằng một, và tọa độ x bằng r cos theta, y bằng r sin theta. Với vector, ta phân tích thành các thành phần: A x bằng A cos theta, A y bằng A sin theta, rồi cộng vector theo từng thành phần. Tích vô hướng của hai vector bằng tích độ lớn nhân cos góc giữa chúng, như công cơ học bằng lực nhân quãng đường. Tích có hướng có độ lớn bằng tích độ lớn nhân sin góc, như momen lực. Cuối cùng là giải tích: đạo hàm cho biết tốc độ biến thiên, ví dụ vận tốc là đạo hàm của tọa độ theo thời gian, còn tích phân là diện tích dưới đồ thị, nghĩa là cộng dồn. Hai công thức nền cần nhớ là đạo hàm của x mũ n bằng n nhân x mũ n trừ một, và tích phân của x mũ n bằng x mũ n cộng một chia n cộng một, cộng hằng số C.",
+ [[K(B,["Lượng giác: sin²θ + cos²θ = 1; tọa độ x = r cosθ, y = r sinθ","Vector: Aₓ = A cosθ, Aᵧ = A sinθ; cộng theo thành phần","Tích vô hướng A·B = AB cosθ (công W = F·s); tích có hướng |A×B| = AB sinθ (momen lực τ = r × F)","Đạo hàm là tốc độ biến thiên (v = dx/dt); tích phân là diện tích dưới đồ thị (cộng dồn)","Công thức nền: (xⁿ)′ = nxⁿ⁻¹, ∫xⁿdx = xⁿ⁺¹/(n+1) + C"])]],2.8);
+S("Nhiệm vụ tự học, làm việc nhóm và bài tập","Đến phần việc sau buổi học. Thứ nhất, hãy dành hai giờ tự học để ôn lại thứ nguyên, chữ số có nghĩa, sai số, vector, đạo hàm và tích phân. Thứ hai, hãy lập nhóm và chọn chủ đề cho bài tập nhóm nộp vào tuần sáu, chủ đề do giảng viên quy định. Thứ ba, hãy luyện kỹ năng dùng tin học văn phòng và tìm tài liệu tiếng Anh để chuẩn bị báo cáo và thuyết trình. Cuối cùng là bốn bài tập củng cố. Bài một, đổi chín mươi ki-lô-mét trên giờ sang mét trên giây, và hai phẩy năm gam trên xen-ti-mét khối sang ki-lô-gam trên mét khối. Bài hai, dùng thứ nguyên để chứng minh E bằng một phần hai m v bình phương có thứ nguyên của năng lượng. Bài ba, cho vector A bằng ba i cộng bốn j, vector B bằng hai i trừ j, hãy tính A cộng B và tích vô hướng A chấm B. Bài bốn, cho x của t bằng hai t mũ ba trừ bốn t, hãy tìm v của t và a của t. Chúc các bạn học tốt.",
+ [[K(G,["Tự học (2 giờ): ôn thứ nguyên, chữ số có nghĩa, sai số, vector, đạo hàm, tích phân","Nhóm: lập nhóm, chọn chủ đề cho bài tập nhóm nộp ở tuần sáu (chủ đề do giảng viên quy định)","Kỹ năng: dùng tin học văn phòng và tìm tài liệu tiếng Anh (CLO2.1, 2.2) để chuẩn bị báo cáo và thuyết trình"]),K(Y,["#1. Đổi 90 km/h sang m/s; 2,5 g/cm³ sang kg/m³","#2. Dùng thứ nguyên chứng minh E = ½mv² có thứ nguyên của năng lượng","#3. Cho A = 3î + 4ĵ, B = 2î − ĵ. Tính A + B và A·B","#4. Cho x(t) = 2t³ − 4t. Tìm v(t) và a(t)"],"Bài tập củng cố")]],2.3);
+
+const ART={2: '<g transform="translate(100 100)" stroke="#1f5a45" stroke-width="3" fill="none" stroke-linecap="round"><g class="spin"><ellipse rx="85" ry="30" stroke="#2dd4a0"/><ellipse rx="85" ry="30" transform="rotate(60)" stroke="#e6c42a"/><ellipse rx="85" ry="30" transform="rotate(-60)" stroke="#4aa3df"/><circle class="pulse" r="13" fill="#e6c42a" stroke="none"/><circle cx="85" r="7" fill="#1f5a45" stroke="none"/><circle cx="-42" cy="-74" r="7" fill="#1f5a45" stroke="none"/><circle cx="-42" cy="74" r="7" fill="#1f5a45" stroke="none"/></g></g>', 3: '<g stroke="#1f5a45" stroke-width="3" fill="none" stroke-linecap="round"><circle cx="95" cy="105" r="80" stroke="#4aa3df"/><circle cx="95" cy="105" r="55" stroke="#2dd4a0"/><circle cx="95" cy="105" r="30" stroke="#e6c42a"/><circle cx="95" cy="105" r="8" fill="#e6c42a"/><g class="shoot"><path d="M95 105L175 25" stroke-width="5"/><path d="M175 25l-4 22M175 25l-22 4M160 10l15 15M190 40l-15-15" stroke-width="4"/></g></g>', 5: '<g transform="rotate(-90 100 100)" fill="none" stroke-width="40"><circle class="p1" cx="100" cy="100" r="40" stroke="#2dd4a0" stroke-dasharray="50.3 251.3"/><circle class="p2" cx="100" cy="100" r="40" stroke="#e6c42a" stroke-dasharray="75.4 251.3" stroke-dashoffset="-50.3"/><circle class="p3" cx="100" cy="100" r="40" stroke="#4aa3df" stroke-dasharray="125.7 251.3" stroke-dashoffset="-125.7"/></g><g class="lab" font-size="15" font-weight="800" fill="#0d1020" text-anchor="middle"><text x="124" y="72">20%</text><text x="133" y="128">30%</text><text x="60" y="105">50%</text></g>', 6: '<g stroke="#1f5a45" stroke-width="3" stroke-linejoin="round"><rect x="30" y="140" width="140" height="28" rx="3" fill="#4aa3df"/><rect x="40" y="108" width="125" height="28" rx="3" fill="#e6c42a"/><rect x="28" y="76" width="135" height="28" rx="3" fill="#2dd4a0"/><g class="float"><g transform="rotate(-14 60 76)"><rect x="55" y="22" width="110" height="26" rx="3" fill="#ffc94d"/></g></g></g><g stroke="#1f5a45" stroke-width="2"><path d="M45 154h100M55 122h85M42 90h90"/></g>', 7: '<g class="orbit"><g stroke="#1f5a45" stroke-width="3" fill="none" stroke-linecap="round"><circle cx="100" cy="100" r="62" stroke-dasharray="6 7" stroke="#1f5a45"/></g><g fill="#2dd4a0" stroke="#1f5a45" stroke-width="3"><circle cx="100" cy="38" r="16"/><circle cx="162" cy="100" r="16" fill="#e6c42a"/><circle cx="100" cy="162" r="16" fill="#4aa3df"/><circle cx="38" cy="100" r="16" fill="#ffc94d"/></g><g fill="#1f5a45"><polygon points="138,50 120,48 128,64"/><polygon points="150,138 152,120 136,128"/><polygon points="62,150 80,152 72,136"/><polygon points="50,62 48,80 64,72"/></g></g><circle class="pulse" cx="100" cy="100" r="10" fill="#e6c42a" stroke="#1f5a45" stroke-width="3"/>', 8: '<rect x="15" y="70" width="170" height="44" rx="5" fill="#fff6c8" stroke="#1f5a45" stroke-width="3"/><g stroke="#1f5a45" stroke-width="2.5"><path d="M35 70v18M55 70v12M75 70v18M95 70v12M115 70v18M135 70v12M155 70v18M175 70v12"/></g><g fill="#2dd4a0" stroke="#1f5a45" stroke-width="2"><circle cx="30" cy="150" r="8"/><circle cx="58" cy="150" r="8"/><circle cx="86" cy="150" r="8"/><circle cx="114" cy="150" r="8"/><circle cx="142" cy="150" r="8"/><circle cx="170" cy="150" r="8" fill="#e6c42a"/><circle cx="100" cy="178" r="8" fill="#4aa3df"/></g><text x="100" y="50" font-size="26" font-weight="800" fill="#1f5a45" text-anchor="middle">SI</text>', 9: '<path class="draw" pathLength="1" d="M10 165C60 165 70 40 100 40C130 40 140 165 190 165" fill="none" stroke-linecap="round" style="stroke:#4aa3df;stroke-width:4"/><path d="M10 165H190" stroke="#1f5a45" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M100 30V165" stroke="#e6c42a" stroke-width="3" stroke-dasharray="6 5"/><g stroke="#1f5a45" stroke-width="3" fill="none" stroke-linecap="round" class="err" style="stroke:#c0392b"><path d="M72 110H128M72 102v16M128 102v16"/></g><text x="100" y="190" font-size="16" font-weight="700" fill="#1f5a45" text-anchor="middle">x̄ ± Δx</text>', 10: '<g stroke="#1f5a45" stroke-width="3" fill="none" stroke-linecap="round"><path d="M30 170V25M30 170H185"/><path d="M30 25l-5 12M30 25l5 12M185 170l-12-5M185 170l-12 5"/><path class="draw" pathLength="1" d="M30 170L150 65" stroke="#2dd4a0" stroke-width="5"/><path d="M150 65l-18 3M150 65l-8 16" stroke="#2dd4a0" stroke-width="5"/><path class="fadein" d="M150 65V170M150 170H30" stroke="#e6c42a" stroke-dasharray="5 5"/><path class="fadein" d="M75 170A45 45 0 0 0 66 142" stroke="#4aa3df"/></g><g font-size="16" font-weight="700" fill="#1f5a45"><text x="82" y="160">θ</text><text x="80" y="105">A</text><text x="155" y="125">Aᵧ</text><text x="85" y="190">Aₓ</text></g>'};
+Object.entries(ART).forEach(([k,v])=>{slides[k].art=v});slides[10].fs=2.5;slides[3].fs=2.6;
+// =======================================
+const $=id=>document.getElementById(id);
+const sv=d=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+d+'"/></svg>';
+const IC={play:sv("M8 5v14l11-7z"),pause:sv("M6 19h4V5H6v14zm8-14v14h4V5h-4z"),
+ fs:sv("M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"),
+ fsx:sv("M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z")};
+let i=0,playing=false,token=0,voices=[];
+const synth=window.speechSynthesis;
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+const TOCICON=`<svg class="ticon" viewBox="0 0 400 150" aria-hidden="true"><g stroke="#bfeee0" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M50 125H235M50 125V15"/><path d="M62 125v-6M80 125v-9M98 125v-6M116 125v-9M134 125v-6M152 125v-9M170 125v-6M188 125v-9M206 125v-6M224 125v-9" stroke-width="1.6" opacity=".75"/><path d="M50 125L190 45" stroke="#ffd36b" stroke-width="4"/><path d="M190 45L190 125M190 125H50" stroke="#7be0a5" stroke-width="1.6" stroke-dasharray="4 5" opacity=".7"/></g><polygon points="199,40 180,42 188,57" fill="#ffd36b"/><g transform="translate(318 72)" fill="none" stroke-width="2.6"><ellipse rx="60" ry="22" stroke="#2dd4a0"/><ellipse rx="60" ry="22" transform="rotate(60)" stroke="#e6e65a"/><ellipse rx="60" ry="22" transform="rotate(-60)" stroke="#ff9f43"/><circle r="9" fill="#ffd36b" stroke="none"/><circle cx="60" r="5" fill="#fff" stroke="none"/><circle cx="-30" cy="-52" r="5" fill="#fff" stroke="none"/><circle cx="-30" cy="52" r="5" fill="#fff" stroke="none"/></g></svg>`;
+function tocHTML(s){
+  const it=t=>t[0]===">"?`<p class="l2">${esc(t.slice(1))}</p>`:t[0]==="#"?`<p class="nb">${esc(t.slice(1))}</p>`:`<p>${esc(t)}</p>`;
+  const card=c=>`<div class="tcard" style="--c:${c.c}">${c.h?`<h3>${esc(c.h)}</h3>`:""}${c.items.map(it).join("")}</div>`;
+  return `<div class="tstripe"></div><div class="thead">${TOCICON}<div class="tt">${esc(s.title)}</div></div><div class="tline"></div><div class="tgrid n${s.cols.length}${s.art?" wa":""}" style="--n:${s.cols.length};--fs:${s.fs}cqw">${s.cols.map(col=>`<div class="tcol">${col.map(card).join("")}</div>`).join("")}</div>${s.art?`<svg class="tart a${i}" viewBox="0 0 200 200" aria-hidden="true">${s.art}</svg>`:""}<div class="mfoot">BÀI GIẢNG VẬT LÝ KỸ THUẬT</div><div class="mnum">${i+1}</div>`;
+}
+function render(){
+  const s=slides[i];
+  $("stage").className="stage"+(s.type==="menu"||s.type==="section"?" content":s.type==="title"?" hero":s.type==="toc"?" toc":"");
+  $("stage").style.cssText=s.vars||"";
+  $("panel").className="panel fade";
+  $("panel").innerHTML=s.type==="toc"?tocHTML(s):s.type==="section"
+    ?`<svg class="msil" viewBox="0 0 120 70" aria-hidden="true"><g fill="#cfcfcf"><circle cx="38" cy="20" r="13"/><path d="M8 70c0-22 12-32 30-32s30 10 30 32z"/><circle cx="82" cy="26" r="12"/><path d="M56 70c2-18 12-26 26-26s28 8 30 26z"/></g></svg><div class="mline s"></div><div class="mcen"><div class="mi m0 sec">${esc(s.title)}</div></div><div class="mfoot">TÊN BÀI GIẢNG</div><div class="mnum">${i+1}</div>`
+    :s.type==="menu"
+    ?`<svg class="msil" viewBox="0 0 120 70" aria-hidden="true"><g fill="#cfcfcf"><circle cx="38" cy="20" r="13"/><path d="M8 70c0-22 12-32 30-32s30 10 30 32z"/><circle cx="82" cy="26" r="12"/><path d="M56 70c2-18 12-26 26-26s28 8 30 26z"/></g></svg><div class="mtitle">${esc(s.title)}</div><div class="mline"></div>${s.items.map((t,k)=>`<div class="mi m${k%3}">${esc(t)}</div>`).join("")}<div class="mfoot">TÊN BÀI GIẢNG</div><div class="mnum">${i+1}</div>`
+    :s.type==="title"
+    ?`<svg class="hero-art" viewBox="0 0 400 150" aria-hidden="true"><g stroke="#bfeee0" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M50 125H235M50 125V15"/><path d="M62 125v-6M80 125v-9M98 125v-6M116 125v-9M134 125v-6M152 125v-9M170 125v-6M188 125v-9M206 125v-6M224 125v-9" stroke-width="1.6" opacity=".75"/><path d="M50 125L190 45" stroke="#ffd36b" stroke-width="4"/><path d="M190 45L190 125M190 125H50" stroke="#7be0a5" stroke-width="1.6" stroke-dasharray="4 5" opacity=".7"/></g><polygon points="199,40 180,42 188,57" fill="#ffd36b"/><g transform="translate(318 72)" fill="none" stroke-width="2.6"><ellipse rx="60" ry="22" stroke="#2dd4a0"/><ellipse rx="60" ry="22" transform="rotate(60)" stroke="#e6e65a"/><ellipse rx="60" ry="22" transform="rotate(-60)" stroke="#ff9f43"/><circle r="9" fill="#ffd36b" stroke="none"/><circle cx="60" r="5" fill="#fff" stroke="none"/><circle cx="-30" cy="-52" r="5" fill="#fff" stroke="none"/><circle cx="-30" cy="52" r="5" fill="#fff" stroke="none"/></g></svg><div class="chap">${esc(s.chap)}</div><div class="ttl">${esc(s.title)}</div>${(s.sub||[]).map(t=>`<div class="sub2">${esc(t)}</div>`).join("")}`
+    :`<div><h2>${esc(s.title)}</h2><ul>${s.items.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`;
+  if(s.type==="toc"){const g=$("panel").querySelector(".tgrid"),st=$("stage");let f=s.fs;
+    while(f>1.7&&g.getBoundingClientRect().bottom-st.getBoundingClientRect().top>st.clientHeight-st.clientWidth*.07){f-=.1;g.style.setProperty("--fs",f.toFixed(1)+"cqw")}}
+  if(s.type==="toc")$("panel").querySelectorAll(".tcard,.tcard p").forEach((e,n)=>e.style.animationDelay=(.35+n*.13)+"s");
+  $("sub").textContent=sents(s.speech)[0];$("sub").classList.toggle("tocv",s.type==="toc");
+  $("jump").value=i;
+  $("cnt").textContent=(i+1)+" / "+slides.length;
+  updateProg();
+  $("prev").disabled=i===0;
+  $("next").disabled=i===slides.length-1;
+  void $("panel").offsetWidth;
+}
+let audio=null;
+function stopSpeech(){
+  token++;try{synth&&synth.cancel()}catch(e){}
+  if(audio){audio.onended=null;audio.onerror=null;audio.pause();audio=null}
+}
+function sents(t){return t.match(/[^.!?]+[.!?]?/g).map(x=>x.trim()).filter(Boolean)}
+function chunks(t){
+  const parts=t.match(/[^.!?;:]+[.!?;:]?\s*/g)||[t];const out=[];let cur="";
+  for(const p of parts){if((cur+p).length>180&&cur){out.push(cur.trim());cur=p}else cur+=p}
+  if(cur.trim())out.push(cur.trim());
+  return out;
+}
+function speakOnline(my,done){
+  const q=chunks(slides[i].speech);let k=0;
+  const next=()=>{
+    if(my!==token||!playing)return;
+    if(k>=q.length){done();return}
+    $("sub").textContent=q[k];audio=new Audio("https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q="+encodeURIComponent(q[k++]));
+    audio.playbackRate=parseFloat($("rate").value);
+    audio.onended=next;
+    audio.onerror=()=>{if(my===token){setPlaying(false);$("sub").textContent=slides[i].speech+"  (Không tải được giọng trực tuyến, hãy kiểm tra kết nối mạng.)"}};
+    audio.play().catch(()=>{if(my===token)setPlaying(false)});
+  };
+  next();
+}
+function speak(){
+  stopSpeech();
+  const my=token;
+  const done=()=>{
+    if(my!==token||!playing)return;
+    if($("auto").checked&&i<slides.length-1){setTimeout(()=>{if(my===token&&playing){i++;render();speak()}},900)}
+    else setPlaying(false);
+  };
+  if($("voice").value==="gt"){speakOnline(my,done);return}
+  if(!synth){setPlaying(false);return}
+  const q=sents(slides[i].speech);let k=0;
+  const nx=()=>{
+    if(my!==token||!playing)return;
+    if(k>=q.length){done();return}
+    const t=q[k++];$("sub").textContent=t;
+    const u=new SpeechSynthesisUtterance(t);
+    u.lang="vi-VN";u.rate=parseFloat($("rate").value);
+    const v=voices[$("voice").value];if(v){u.voice=v;u.lang=v.lang}
+    u.onend=nx;
+    u.onerror=()=>{if(my===token)setPlaying(false)};
+    synth.speak(u);
+  };
+  nx();
+}
+function setPlaying(p){playing=p;$("play").innerHTML=p?IC.pause:IC.play;$("play").title=p?"Tạm dừng (Dấu cách)":"Phát (Dấu cách)";wake()}
+let started=false;
+function toggle(){
+  if(playing){stopSpeech();setPlaying(false)}
+  else{started=true;setPlaying(true);speak()}
+}
+function go(d){
+  const n=i+d;if(n<0||n>=slides.length)return;
+  i=n;render();
+  if(playing)speak();else stopSpeech();
+}
+function loadVoices(){
+  voices=synth?synth.getVoices():[];
+  const sel=$("voice"),old=sel.value;sel.innerHTML="";
+  const isVi=v=>/^vi/i.test(v.lang.replace("_","-"))||/vi[eệ]t/i.test(v.name);
+  const all=voices.map((v,k)=>[v,k]);
+  const vi=all.filter(x=>isVi(x[0]));
+  (vi.length?vi:all).forEach(([v,k])=>{const o=document.createElement("option");o.value=k;o.textContent=v.name+" ("+v.lang+")";sel.appendChild(o)});
+  const g=document.createElement("option");g.value="gt";g.textContent="Giọng Việt Google (trực tuyến)";sel.appendChild(g);
+  if(old&&[...sel.options].some(o=>o.value===old))sel.value=old;
+}
+if(!synth){$("sub").textContent="Trình duyệt không hỗ trợ giọng đọc có sẵn, hãy chọn giọng trực tuyến trong phần cài đặt."}
+else{synth.onvoiceschanged=loadVoices}
+loadVoices();setTimeout(loadVoices,800);
+function buildJump(){
+  const sel=$("jump");sel.innerHTML="";
+  slides.forEach((s,k)=>{const o=document.createElement("option");o.value=k;
+    const t=s.title.length>40?s.title.slice(0,40)+"…":s.title;
+    o.textContent=(k+1)+". "+t;sel.appendChild(o)});
+  const pg=$("prog");pg.innerHTML="";
+  slides.forEach((s,k)=>{const d=document.createElement("div");d.className="seg";d.title=(k+1)+". "+s.title;
+    d.onclick=()=>{i=k;render();if(playing)speak();else stopSpeech()};pg.appendChild(d)});
+}
+function updateProg(){[...$("prog").children].forEach((d,k)=>d.classList.toggle("done",k<=i))}
+$("jump").onchange=e=>{
+  i=parseInt(e.target.value,10);render();
+  if(playing)speak();else stopSpeech();
+  e.target.blur();
+};
+buildJump();
+const player=$("player"),menu=$("menu");
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+function toggleFS(){
+  if(!canFS){player.classList.toggle("pfs");fsUpdate();return}
+  if(fsEl()){(document.exitFullscreen||document.webkitExitFullscreen).call(document)}
+  else{(player.requestFullscreen||player.webkitRequestFullscreen).call(player)}
+}
+const canFS=!!(player.requestFullscreen||player.webkitRequestFullscreen);
+function fsUpdate(){
+  const on=!!fsEl()||player.classList.contains("pfs");
+  player.classList.toggle("isfs",on);
+  $("fs").innerHTML=on?IC.fsx:IC.fs;$("fs").title=on?"Thoát toàn màn hình (F)":"Toàn màn hình (F)";
+}
+document.addEventListener("fullscreenchange",fsUpdate);
+document.addEventListener("webkitfullscreenchange",fsUpdate);
+$("fs").onclick=()=>{toggleFS();$("fs").blur()};
+function toggleSub(){const off=$("sub").classList.toggle("off");$("cc").classList.toggle("on",!off)}
+$("cc").onclick=()=>{toggleSub();$("cc").blur()};
+let idle=0;
+function wake(){
+  player.classList.add("show");clearTimeout(idle);
+  if(playing&&!menu.classList.contains("open"))idle=setTimeout(()=>player.classList.remove("show"),2500);
+}
+["mousemove","touchstart","click"].forEach(ev=>player.addEventListener(ev,wake,{passive:true}));
+$("gear").onclick=()=>{menu.classList.toggle("open");wake()};
+document.addEventListener("click",e=>{if(!menu.contains(e.target)&&!$("gear").contains(e.target))menu.classList.remove("open")});
+$("stage").onclick=()=>{if(menu.classList.contains("open")){menu.classList.remove("open");return}toggle()};
+$("stage").ondblclick=toggleFS;
+$("prev").onclick=()=>go(-1);$("next").onclick=()=>go(1);$("play").onclick=toggle;
+$("rate").oninput=e=>{$("rv").textContent=parseFloat(e.target.value).toFixed(1)+"×"};
+$("rate").onchange=()=>{if(playing)speak()};
+$("voice").onchange=()=>{if(playing)speak()};
+document.addEventListener("keydown",e=>{
+  if(e.target.tagName==="SELECT"||e.target.tagName==="INPUT")return;
+  wake();
+  if(e.key==="Escape"&&player.classList.contains("pfs")){player.classList.remove("pfs");fsUpdate()}
+  if(e.key==="ArrowLeft")go(-1);
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="f"||e.key==="F")toggleFS();
+  else if(e.key==="c"||e.key==="C")toggleSub();
+  else if(e.key===" "){e.preventDefault();toggle()}
+});
+render();setPlaying(false);fsUpdate();
+</script>
+</body>
+</html>
