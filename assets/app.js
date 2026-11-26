@@ -109,6 +109,9 @@
       icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
     { id: "xep-lich-hoc-phan", href: "https://shounlak.github.io/HUIT-Schedule/", label: "Xếp Lịch Học Phần",
       desc: "Công cụ xếp lịch học phần HUIT",
+      icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" },
+    { id: "huit-schedule", href: "https://pttp-huitsched.site/", label: "HUIT schedule",
+      desc: "Lịch học HUIT",
       icon: "M12 2 4 7v10l8 5 8-5V7l-8-5zM4 7l8 5 8-5M12 12v10" }
   ];
 

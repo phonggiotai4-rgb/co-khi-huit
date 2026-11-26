@@ -35,7 +35,7 @@
 .tbl thead th{
   text-align:left;padding:11px 16px;font:600 11px/1.2 var(--font-display);
   letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);
-  background:var(--brand-06);border-bottom:1px solid var(--brand-06);white-space:nowrap;
+  background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border-bottom:1px solid var(--brand-06);white-space:nowrap;
 }
 .tbl tbody td{padding:14px 16px;border-bottom:1px solid var(--brand-06);vertical-align:middle}
 .tbl tbody tr{transition:background var(--dur-fast) var(--ease-out)}
@@ -44,7 +44,7 @@
 .tbl .c-subj small{display:block;font:400 11.5px/1.4 var(--font-display);color:var(--text-muted);font-weight:400;margin-top:2px}
 .tbl .c-subj .tag-part{
   display:inline-block;margin-left:6px;padding:2px 8px;border-radius:var(--r-full);
-  background:var(--brand-10);color:var(--text-strong);
+  background: linear-gradient(135deg, var(--brand-10), var(--brand-06));color:var(--text-strong);
   font:600 11px/1.4 var(--font-display);vertical-align:1px;
 }
 .tbl .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -53,7 +53,7 @@
   border:0;background:transparent;cursor:pointer;color:var(--brand);
   font:600 13px/1 var(--font-display);padding:8px;border-radius:var(--r-sm);
 }
-.link-del:hover{background:var(--brand-10)}
+.link-del:hover{background: linear-gradient(135deg, var(--brand-10), var(--brand-06))}
 .tbl-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--brand-06)}
 
 /* biểu đồ cột 7 ngày */
@@ -61,11 +61,18 @@
 .chart .col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%}
 /* vùng cột co giãn: trần cột = 100% vùng này, không bao giờ đẩy nhãn ra ngoài */
 .chart .bar-wrap{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:flex-end;justify-content:center}
-.chart .bar{width:100%;max-width:34px;border-radius:8px 8px 4px 4px;background:var(--brand);
-  min-height:4px;box-shadow:0 2px 8px rgba(3,78,162,.22);position:relative}
+.chart .bar{width:100%;max-width:34px;border-radius:8px 8px 4px 4px;background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  min-height:4px;box-shadow:0 2px 8px rgba(3,78,162,.22);position:relative;
+  transform-origin:bottom center;
+  animation:ckBarGrow .6s var(--ease-out) both;
+  animation-delay:calc(var(--i,0) * 70ms)}
 .chart .bar.empty{background:var(--gray-300);box-shadow:none}
-.chart .v{font:600 11px/1 var(--font-mono);color:var(--text-muted)}
-.chart .lb{font:500 10.5px/1 var(--font-display);color:var(--text-muted)}
+@keyframes ckBarGrow{from{transform:scaleY(0);opacity:.35}to{transform:scaleY(1);opacity:1}}
+.chart .v{font:600 11px/1 var(--font-mono);color:var(--text-muted);
+  animation:ckFadeUp .4s var(--ease-out) both;animation-delay:calc(var(--i,0)*70ms + .35s)}
+.chart .lb{font:500 10.5px/1 var(--font-display);color:var(--text-muted);
+  animation:ckFadeUp .4s var(--ease-out) both;animation-delay:calc(var(--i,0)*70ms + .15s)}
+@keyframes ckFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--text-muted)}
 .chart-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
@@ -74,7 +81,7 @@
 .rank li:last-child{border-bottom:0}
 .rank .n{
   width:24px;height:24px;flex:none;border-radius:var(--r-sm);display:grid;place-items:center;
-  font:700 11px/1 var(--font-mono);background:var(--brand-10);color:var(--text-strong);
+  font:700 11px/1 var(--font-mono);background: linear-gradient(135deg, var(--brand-10), var(--brand-06));color:var(--text-strong);
 }
 .rank .nm{flex:1;min-width:0;font-size:13.5px;font-weight:600;color:var(--text-strong);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -96,7 +103,7 @@
   color:var(--text-strong);font:600 13.5px/1 var(--font-display);
   transition:background var(--dur-fast) var(--ease-out);
 }
-.btn-danger:hover{background:var(--brand-10)}
+.btn-danger:hover{background: linear-gradient(135deg, var(--brand-10), var(--brand-06))}
 .btn-danger svg{width:16px;height:16px}
 .btn-danger:disabled{opacity:.45;cursor:not-allowed}
 </style>
@@ -160,7 +167,7 @@
         <p class="sub">Số câu đã làm mỗi ngày.</p>
         <div class="chart" id="chart" role="img" aria-label="Biểu đồ cột số câu đã làm trong 7 ngày qua"></div>
         <div class="chart-legend">
-          <span><i style="background:var(--brand)"></i>Đã làm</span>
+          <span><i style="background: linear-gradient(135deg, var(--brand), var(--brand-deep))"></i>Đã làm</span>
           <span><i style="background:var(--gray-300)"></i>Chưa làm</span>
         </div>
       </section>
@@ -274,9 +281,9 @@
     $("chart").innerHTML = days.map(function (d, i) {
       var h = Math.round(counts[i] / max * 100);
       var lb = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()];
-      return '<div class="col">' +
+      return '<div class="col" style="--i:' + i + '">' +
         '<span class="v">' + (counts[i] || "") + '</span>' +
-        '<div class="bar-wrap"><div class="bar' + (counts[i] ? "" : " empty") + '" style="height:' + (counts[i] ? Math.max(8, h) : 3) + '%"></div></div>' +
+        '<div class="bar-wrap"><div class="bar' + (counts[i] ? "" : " empty") + '" style="height:' + (counts[i] ? Math.max(8, h) : 3) + '%;--i:' + i + '"></div></div>' +
         '<span class="lb">' + lb + '</span>' +
       '</div>';
     }).join("");

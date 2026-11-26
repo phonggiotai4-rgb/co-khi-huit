@@ -291,7 +291,7 @@ body::before {
 .kts-jump a b { font: 700 11px/1 var(--font-mono); color: var(--text-muted); }
 .kts-jump a:hover { background: var(--glass-3-bg); transform: translateY(-1px); }
 .kts-jump a:hover b { color: var(--text-strong); }
-.kts-jump a.is-on { background: var(--brand); color: var(--text-invert); border-color: transparent; }
+.kts-jump a.is-on { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: var(--text-invert); border-color: transparent; }
 .kts-jump a.is-on b { color: rgba(255, 255, 255, .80); }
 
 /* ── KHỐI SECTION ─────────────────────────────────────── */
@@ -344,7 +344,7 @@ body::before {
   bottom: 18px;
   width: 3.5px;
   border-radius: 0 3px 3px 0;
-  background: var(--brand);
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
   opacity: .85;
 }
 .unit-top { display: flex; align-items: center; gap: 10px; }
@@ -357,7 +357,7 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--brand);
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
   color: var(--text-invert);
   font: 700 11.5px/1 var(--font-mono);
   letter-spacing: .05em;
@@ -371,7 +371,7 @@ body::before {
   place-items: center;
   font-size: 17px;
   line-height: 1;
-  background: var(--brand-10);
+  background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
 }
 .unit-nm { margin: 0; font: 700 15px/1.35 var(--font-display); color: var(--text-strong); letter-spacing: -.01em; }
 .unit-vi { margin: 2px 0 0; font: 400 13px/1.45 var(--font-display); color: var(--text-muted); }
@@ -390,7 +390,7 @@ body::before {
   height: 5px;
   margin-top: 8px;
   border-radius: 50%;
-  background: var(--brand);
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
   opacity: .6;
 }
 .unit-foot {
@@ -458,10 +458,10 @@ body::before {
   font: 600 11.5px/1 var(--font-display);
 }
 .tst .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
-.tst.solid { background: var(--brand); color: var(--text-invert); }
+.tst.solid { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: var(--text-invert); }
 .tst.solid .dot { background: #fff; }
-.tst.mid { background: var(--brand-10); color: var(--brand-deep); border-color: var(--brand-20); }
-.tst.mid .dot { background: var(--brand); }
+.tst.mid { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); color: var(--brand-deep); border-color: var(--brand-20); }
+.tst.mid .dot { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); }
 .tst.light { background: rgba(255,255,255,.65); color: var(--text); border-color: var(--brand-25); }
 .tst.light .dot { width: 7px; height: 7px; background: transparent; border: 1.5px solid var(--gray-400); }
 
@@ -488,7 +488,7 @@ body::before {
   border: 0;
   border-radius: var(--r-md);
   cursor: pointer;
-  background: var(--brand);
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
   color: var(--text-invert);
   box-shadow: var(--sh-sm);
   font: 700 12.5px/1 var(--font-display);
@@ -526,7 +526,7 @@ body::before {
   border-radius: var(--r-md);
   display: grid;
   place-items: center;
-  background: var(--brand-10);
+  background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
   color: var(--text-strong);
 }
 .video-card .ico svg { width: 18px; height: 18px; }
@@ -565,7 +565,7 @@ body::before {
   border-radius: var(--r-md);
   display: grid;
   place-items: center;
-  background: var(--brand-10);
+  background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
   color: var(--text-strong);
 }
 .link-card .ico svg { width: 18px; height: 18px; }
@@ -686,7 +686,7 @@ body::before {
   margin: 0 0 12px;
   padding: 12px 15px;
   border-radius: var(--r-md);
-  background: var(--brand-06);
+  background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));
   border-left: 3px solid var(--brand);
   font: 500 13.5px/1.75 var(--font-mono);
   color: var(--brand-deep);
@@ -727,7 +727,7 @@ body::before {
   border-bottom: 1px solid var(--brand-06);
 }
 .doc th {
-  background: var(--brand-06);
+  background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));
   color: var(--text-strong);
   font-weight: 700;
   font-size: 12px;

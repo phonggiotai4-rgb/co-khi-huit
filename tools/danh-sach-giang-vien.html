@@ -88,7 +88,7 @@ body{
   line-height:1.5;-webkit-font-smoothing:antialiased;
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
-::selection{background:var(--brand);color:#fff}
+::selection{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff}
 .hidden{display:none!important}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
   outline:3px solid var(--strong);outline-offset:2px;border-radius:10px;
@@ -155,7 +155,7 @@ body::before{
 }
 .brand{display:flex;align-items:center;gap:13px;min-width:0}
 .logo{width:46px;height:46px;border-radius:var(--r-md);flex:none;display:grid;place-items:center;
-  background:var(--brand);color:#fff;box-shadow:var(--sh-brand);font-size:18px}
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;box-shadow:var(--sh-brand);font-size:18px}
 .brand .eyebrow{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:800;
   letter-spacing:.08em;text-transform:uppercase;color:var(--strong)}
 .brand .eyebrow i{color:var(--g300);font-style:normal}
@@ -171,7 +171,7 @@ body::before{
 /* ---------- BANNER: brand đặc, không gradient §1.2 ---------- */
 .banner{
   position:relative;overflow:hidden;border-radius:var(--r-xl);padding:30px 28px;margin-bottom:24px;
-  background:var(--brand);color:#fff;border:1px solid transparent;
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;border:1px solid transparent;
   box-shadow:var(--sh-brand),inset 0 1px 0 rgba(255,255,255,.22);
 }
 .banner::before{content:"";position:absolute;width:240px;height:240px;right:-80px;bottom:-90px;
@@ -242,7 +242,7 @@ body::before{
   font-size:12.5px;font-weight:600;cursor:pointer;transition:all var(--fast) var(--ease);
 }
 .viewbtn:hover{color:var(--strong);background:var(--g3-bg)}
-.viewbtn.on{background:var(--brand);color:#fff;box-shadow:var(--sh-sm)}
+.viewbtn.on{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;box-shadow:var(--sh-sm)}
 @media (max-width:520px){.viewbtn span{display:none}.viewbtn{padding:0 12px}}
 
 /* ---------- TABLE §4.7 ---------- */
@@ -276,7 +276,7 @@ a.tel:hover{color:var(--strong)}
 /* ---------- ROLE BADGES: 5 mật độ, không hue §4.6 ---------- */
 .bdg{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:9999px;
   font-size:11.5px;font-weight:600;white-space:nowrap;line-height:1.3;border:1px solid transparent}
-.bdg-1{background:var(--brand);color:#fff;box-shadow:0 2px 8px rgba(3,78,162,.28)}
+.bdg-1{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;box-shadow:0 2px 8px rgba(3,78,162,.28)}
 .bdg-2{background:var(--b10);color:var(--strong);border-color:var(--b20)}
 .bdg-3{background:var(--b06);color:var(--g600);border-color:var(--b20)}
 .bdg-4{background:var(--g3-bg);color:var(--text);border-color:var(--g2-br)}
@@ -291,7 +291,7 @@ a.tel:hover{color:var(--strong)}
 .emp:hover{transform:translateY(-3px);box-shadow:var(--sh-md),inset 0 1px 0 var(--hi)}
 .emp-top{display:flex;gap:13px;align-items:flex-start}
 .ava{width:46px;height:46px;border-radius:var(--r-md);flex:none;display:grid;place-items:center;
-  background:var(--brand);color:#fff;font-weight:700;font-size:19px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-weight:700;font-size:19px;
   box-shadow:var(--sh-brand),inset 0 0 0 1px rgba(255,255,255,.2)}
 .emp-info{min-width:0;flex:1}
 .emp-info h3{margin:0;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--strong);line-height:1.3}
@@ -311,7 +311,7 @@ a.tel:hover{color:var(--strong)}
 .act-copy{width:44px;height:40px;border-radius:var(--r-sm);display:grid;place-items:center;
   background:var(--g3-bg);border:1px solid var(--g2-br);color:var(--text);cursor:pointer;
   box-shadow:var(--sh-xs);transition:all var(--fast) var(--ease)}
-.act-copy:hover{background:var(--brand);color:#fff;border-color:transparent}
+.act-copy:hover{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;border-color:transparent}
 
 /* ---------- EMPTY ---------- */
 .empty{padding:64px 24px;text-align:center;border-radius:var(--r-xl);

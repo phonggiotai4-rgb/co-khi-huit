@@ -245,7 +245,7 @@
     font-variant-numeric: tabular-nums;
     box-shadow: var(--sh-xs);
   }
-  .timer.is-warning { background: var(--brand-10); border-color: var(--brand-25); color: var(--brand-deep); }
+  .timer.is-warning { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); border-color: var(--brand-25); color: var(--brand-deep); }
   .timer.is-danger { background: var(--brand-deep); border-color: var(--brand-deep); color: var(--text-invert); }
 
   .icon-btn {
@@ -301,7 +301,7 @@
     letter-spacing: .06em;
     text-transform: uppercase;
   }
-  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--brand-06); }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); }
 
   .options { display: flex; flex-direction: column; gap: .75rem; }
 
@@ -352,8 +352,8 @@
   .option:hover .option-text { border-color: var(--brand-25); background: rgba(255, 255, 255, .88); }
 
   /* da chon */
-  .option.is-selected .option-badge { background: var(--brand); border-color: var(--brand); color: var(--text-invert); }
-  .option.is-selected .option-text { background: var(--brand-06); border-color: var(--brand-25); color: var(--brand-deep); }
+  .option.is-selected .option-badge { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); border-color: var(--brand); color: var(--text-invert); }
+  .option.is-selected .option-text { background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); border-color: var(--brand-25); color: var(--brand-deep); }
 
 /* chon sai: canh bao vang */
   .option.is-wrong .option-badge { background: var(--warn); border-color: var(--warn); color: var(--text-invert); }
@@ -449,7 +449,7 @@
     border-radius: var(--r-sm);
     color: var(--brand-deep);
   }
-  .toast-close:hover { background: var(--brand-10); }
+  .toast-close:hover { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); }
 
   /* ========================= Thanh duoi ========================= */
   .bottombar {
@@ -485,7 +485,7 @@
     color: var(--brand);
     transition: background var(--dur-fast) var(--ease-out);
   }
-  .link-btn:hover { background: var(--brand-06); }
+  .link-btn:hover { background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); }
   .link-btn[disabled] { color: var(--text-faint); }
 
   .counter {
@@ -496,7 +496,7 @@
     min-height: 2.5rem;
     padding: 0 .75rem;
     border-radius: var(--r-full);
-    background: var(--brand-10);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
     color: var(--brand-deep);
     font-size: .8125rem;
     font-weight: 700;
@@ -538,7 +538,7 @@
     min-height: 2.75rem;
     padding: 0 1.5rem;
     border-radius: var(--r-md);
-    background: var(--brand);
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep));
     color: var(--text-invert);
     font-size: .875rem;
     font-weight: 600;
@@ -594,7 +594,7 @@
     margin: -.5rem 0 1.25rem;
     padding: .75rem 1rem;
     border-radius: var(--r-md);
-    background: var(--brand-06);
+    background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));
     border: 1px solid var(--brand-25);
     color: var(--brand-deep);
     font-size: .8125rem;
@@ -625,7 +625,7 @@
     width: 2.25rem;
     height: 2.25rem;
     border-radius: var(--r-sm);
-    background: var(--brand-10);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
     color: var(--brand);
   }
   .share-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -637,7 +637,7 @@
     gap: .75rem;
     padding: 1rem;
     border-radius: var(--r-md);
-    background: var(--brand-06);
+    background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));
     border: 1px solid var(--brand-06);
   }
   .map-btn {
@@ -652,7 +652,7 @@
     transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   }
   .map-btn:hover:not([disabled]) { background: #fff; border-color: var(--brand-25); color: var(--brand); }
-  .map-btn.is-current { border-color: var(--brand); color: var(--brand); background: var(--brand-10); box-shadow: 0 0 0 3px var(--brand-06); }
+  .map-btn.is-current { border-color: var(--brand); color: var(--brand); background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); box-shadow: 0 0 0 3px var(--brand-06); }
   .map-btn.is-done { background: var(--ok-10); border-color: var(--ok-25); color: var(--ok-deep); }
   .map-btn.is-retry { background: var(--warn-10); border-color: var(--warn-25); color: var(--warn-deep); }
   .map-btn.is-bad { background: rgba(255, 255, 255, .9); border-color: var(--bad); color: var(--bad); box-shadow: inset 0 -3px 0 var(--bad); }
@@ -667,7 +667,7 @@
     justify-content: flex-end;
     gap: .75rem;
     padding: 1rem 1.25rem 1.25rem;
-    background: var(--brand-06);
+    background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));
     border-top: 1px solid var(--brand-06);
   }
   .btn-soft {
@@ -748,7 +748,7 @@
   .btn-glass { background: rgba(255, 255, 255, .62); color: var(--brand); box-shadow: var(--sh-xs); }
   .btn-glass:hover { background: #fff; border-color: var(--brand); }
   /* Primary — hanh dong chinh */
-  .btn-solid { background: var(--brand); border-color: var(--brand); color: var(--text-invert); box-shadow: var(--sh-sm); }
+  .btn-solid { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); border-color: var(--brand); color: var(--text-invert); box-shadow: var(--sh-sm); }
   .btn-solid:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
   /* Outline day — nhu "luyen tap lai cau sai" */
   .btn-outline-strong {
@@ -757,7 +757,7 @@
     border: 1.5px solid var(--brand-deep);
     color: var(--brand-deep);
   }
-  .btn-outline-strong:hover { background: var(--brand-10); }
+  .btn-outline-strong:hover { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); }
   .btn-glass:active, .btn-solid:active, .btn-outline-strong:active { transform: scale(.98); box-shadow: var(--sh-press); }
 
   /* Bang xep hang */
@@ -768,7 +768,7 @@
     margin-left: auto;
     padding: .3rem .75rem;
     border-radius: var(--r-full);
-    background: var(--brand-10);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
     color: var(--brand-deep);
     font-size: .75rem;
     font-weight: 600;
@@ -855,7 +855,7 @@
     min-height: 1.5rem;
     padding: 0 .625rem;
     border-radius: var(--r-full);
-    background: var(--brand-10);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
     border: 1px solid var(--brand-25);
     color: var(--brand-deep);
     font-size: .6875rem;
@@ -878,7 +878,7 @@
     font-weight: 600;
     transition: background var(--dur-fast) var(--ease-out);
   }
-  .link-back-result:hover { background: var(--brand-06); }
+  .link-back-result:hover { background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); }
   .link-back-result[hidden] { display: none; }
   /* ========================= Trang xem dap an ========================= */
   .review-page { padding: 1.25rem; }
@@ -911,7 +911,7 @@
   .rv-score strong { color: var(--text); }
   .rv-score span { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; color: var(--text-strong); }
   .rv-side-box { background: var(--glass-1-bg); border: 1px solid var(--glass-1-br); border-radius: var(--r-lg); box-shadow: var(--sh-sm); overflow: hidden; }
-  .rv-side-title { background: var(--brand-06); padding: .875rem 1.25rem; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+  .rv-side-title { background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); padding: .875rem 1.25rem; font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
   .rv-meta { margin: 0; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: .875rem; }
   .rv-meta > div { display: flex; justify-content: space-between; gap: 1rem; font-size: .8125rem; }
   .rv-meta dt { color: var(--text-muted); }
@@ -935,7 +935,7 @@
     width: 2.25rem;
     height: 2.25rem;
     border-radius: var(--r-md);
-    background: var(--brand-10);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-06));
     color: var(--brand);
   }
   .rv-part-body { display: flex; flex-direction: column; min-width: 0; }
@@ -992,10 +992,10 @@
     transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   }
   .rv-filter:hover { background: #fff; }
-  .rv-filter.is-all { background: var(--brand); border-color: var(--brand); color: var(--text-invert); }
+  .rv-filter.is-all { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); border-color: var(--brand); color: var(--text-invert); }
   .rv-filter.is-right { background: var(--ok-10); border-color: var(--ok-25); color: var(--ok-deep); }
   .rv-filter.is-wrong { background: rgba(255, 255, 255, .7); border: 1.5px solid var(--bad); color: var(--bad); }
-  .rv-filter.is-toggle.is-on { background: var(--brand-10); border-color: var(--brand-25); color: var(--brand-deep); box-shadow: inset 0 0 0 1px var(--brand-25); }
+  .rv-filter.is-toggle.is-on { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); border-color: var(--brand-25); color: var(--brand-deep); box-shadow: inset 0 0 0 1px var(--brand-25); }
 
   .rv-tabs { border-bottom: 1px solid var(--brand-06); }
   .rv-tab, .rv-tab.is-active { display: inline-block; padding: .5rem 1.5rem; font-size: .8125rem; font-weight: 700; color: var(--brand); border-bottom: 2px solid var(--brand); margin-bottom: -1px; }

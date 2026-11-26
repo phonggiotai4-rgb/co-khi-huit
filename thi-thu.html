@@ -153,7 +153,7 @@
 
   .q-num {
     display: inline-block; margin: 0 8px 0 0; padding: 4px 10px;
-    background: var(--brand-10); border: 0; border-radius: var(--r-full);
+    background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); border: 0; border-radius: var(--r-full);
     color: var(--brand-deep); font-family: var(--font-mono);
     font-weight: 700; font-size: 13px; text-decoration: none;
     transition: background var(--dur-fast) var(--ease-out);
@@ -181,9 +181,9 @@
   }
   .options tr:hover td { background: rgba(255, 255, 255, .78); }
   .options tr:hover td.k { color: var(--brand); }
-  .options tr.sel td { background: var(--brand-10); color: var(--brand-deep); font-weight: 600; }
+  .options tr.sel td { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); color: var(--brand-deep); font-weight: 600; }
   .options tr.sel td.k {
-    color: var(--text-invert); background: var(--brand);
+    color: var(--text-invert); background: linear-gradient(135deg, var(--brand), var(--brand-deep));
     border-color: var(--brand); font-weight: 700;
   }
 
@@ -208,7 +208,7 @@
   .info { flex: 1 1 auto; border-collapse: separate; border-spacing: 0; font-size: 13px; }
   .info td { padding: 5px 10px; border-bottom: 1px solid var(--brand-06); vertical-align: middle; }
   .info td.k {
-    width: 82px; background: var(--brand-06); color: var(--brand-deep);
+    width: 82px; background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); color: var(--brand-deep);
     white-space: nowrap; font-size: 12px; font-weight: 600;
     border-radius: var(--r-sm) 0 0 var(--r-sm);
   }
@@ -234,11 +234,11 @@
   .btn:disabled { color: var(--text-faint); background: rgba(255, 255, 255, .30); border-color: var(--glass-1-br); box-shadow: none; cursor: default; }
   .btn .ico { vertical-align: -2px; margin-left: 6px; }
 
-  .btn.on { background: var(--brand); color: var(--text-invert); border-color: var(--brand); }
+  .btn.on { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: var(--text-invert); border-color: var(--brand); }
   .btn.on:hover:not(:disabled) { background: var(--brand-deep); border-color: var(--brand-deep); }
 
   .btn#btnSubmit { color: var(--brand); background: transparent; border: 1.5px solid var(--brand); }
-  .btn#btnSubmit:hover:not(:disabled) { background: var(--brand-10); }
+  .btn#btnSubmit:hover:not(:disabled) { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); }
 
   .filter {
     padding: 10px 12px; border-bottom: 1px solid var(--brand-06);
@@ -307,8 +307,8 @@
     background: none; border: 0; padding: 5px 3px; cursor: pointer; border-radius: var(--r-sm);
     transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .fq:hover { background: var(--brand-10); color: var(--brand); }
-  .qrow.flagged .fq { color: var(--brand); background: var(--brand-10); }
+  .fq:hover { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); color: var(--brand); }
+  .qrow.flagged .fq { color: var(--brand); background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); }
 
   .qb {
     width: 26px; height: 26px; margin: 0 auto; padding: 0; cursor: pointer;
@@ -317,16 +317,16 @@
     border: 1px solid var(--brand-25); border-radius: var(--r-full);
     transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .qb:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-10); }
-  .qb.on { background: var(--brand); border-color: var(--brand); color: var(--text-invert); font-weight: 700; }
+  .qb:hover { border-color: var(--brand); color: var(--brand); background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); }
+  .qb.on { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); border-color: var(--brand); color: var(--text-invert); font-weight: 700; }
 
   /* Badge — 3 cấp đều thuộc thang brand */
   .badge {
     display: inline-block; padding: 1px 8px; margin-left: 4px;
     border-radius: var(--r-full); font-size: 11px; font-weight: 700; letter-spacing: .03em;
   }
-  .badge.mid { background: var(--brand-10); color: var(--brand-deep); }
-  .badge.solid { background: var(--brand); color: var(--text-invert); }
+  .badge.mid { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); color: var(--brand-deep); }
+  .badge.solid { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: var(--text-invert); }
 
   /* Modal xác nhận — glass-3, blur 44px, overlay brand-45% */
   .overlay {
@@ -381,7 +381,7 @@
   .modal-icon {
     flex: 0 0 auto; width: 40px; height: 40px;
     display: flex; align-items: center; justify-content: center;
-    background: var(--brand); color: var(--text-invert);
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: var(--text-invert);
     border-radius: var(--r-full);
     font-family: var(--font-mono); font-size: 20px; font-weight: 700;
   }
@@ -403,7 +403,7 @@
     color: var(--text); text-align: right;
   }
   .modal-row .v.num { font-family: var(--font-mono); }
-  .modal-row.hi { background: var(--brand-10); border-color: var(--brand-25); box-shadow: var(--sh-xs); }
+  .modal-row.hi { background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); border-color: var(--brand-25); box-shadow: var(--sh-xs); }
   .modal-row.hi .k { color: var(--brand-deep); font-weight: 600; }
   .modal-row.hi .v { color: var(--brand); font-weight: 700; }
 
@@ -414,7 +414,7 @@
     border-top: 1px solid var(--brand-06);
   }
   .modal-foot .btn { flex: 0 0 auto; min-width: 160px; }
-  .btn.primary { background: var(--brand); color: var(--text-invert); border-color: var(--brand); }
+  .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: var(--text-invert); border-color: var(--brand); }
   .btn.primary:hover:not(:disabled) { background: var(--brand-deep); border-color: var(--brand-deep); }
   .btn.ghost { background: transparent; color: var(--text); border-color: transparent; box-shadow: none; }
   .btn.ghost:hover:not(:disabled) { background: rgba(255, 255, 255, .60); border-color: var(--brand-25); }
@@ -488,14 +488,14 @@
     .pane-side { background: #fff; }
     .sheet-backdrop { background: rgba(0,0,0,.45); cursor: pointer; }
     .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--brand-06); font-weight: 700; position: sticky; top: 0; background: #fff; z-index: 2; }
-    .sheet-close { width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--brand-10); color: var(--brand); font-size: 20px; line-height: 1; cursor: pointer; }
+    .sheet-close { width: 32px; height: 32px; border-radius: 50%; border: 0; background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); color: var(--brand); font-size: 20px; line-height: 1; cursor: pointer; }
     #btnSubmit { display: none; }
     .options, .options tbody, .options tr { display: block; width: 100%; }
     .options tr { display: flex; align-items: center; gap: 12px; border: 1px solid #d8dee9; border-radius: 12px; padding: 12px 14px; min-height: 48px; margin-bottom: 10px; background: #fff; }
     .options td { border: 0; padding: 0; background: transparent; }
-    .options td.k { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--brand-10); color: var(--brand); font-weight: 700; }
-    .options tr.sel td.k { background: var(--brand); color: #fff; }
-    .options tr.sel { border-color: var(--brand); background: var(--brand-06); }
+    .options td.k { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--brand-10), var(--brand-06)); color: var(--brand); font-weight: 700; }
+    .options tr.sel td.k { background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: #fff; }
+    .options tr.sel { border-color: var(--brand); background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02)); }
     body.sheet-open { overflow: hidden; }
   }
 

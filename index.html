@@ -77,7 +77,7 @@
   display:flex;gap:12px;align-items:center}
 .kpi .ico{
   width:40px;height:40px;flex:none;border-radius:var(--r-md);
-  background:var(--brand-10);color:var(--text-strong);display:grid;place-items:center;
+  background:var(--grad-brand-soft);color:var(--text-strong);display:grid;place-items:center;
 }
 .kpi .ico svg{width:19px;height:19px}
 .kpi .l{margin:0;font:600 11px/1.3 var(--font-display);letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
@@ -105,7 +105,7 @@
   transition:all var(--dur-fast) var(--ease-out);
 }
 .chip:hover{background:var(--glass-3-bg)}
-.chip[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:transparent}
+.chip[aria-pressed="true"]{background:var(--grad-brand);color:#fff;border-color:transparent}
 .chip b{font-weight:700;opacity:.72;margin-left:6px;font-size:11px}
 
 /* ── NHÓM MÔN HỌC ─────────────────────────────────────── */
@@ -116,7 +116,7 @@
   color:var(--text-strong);
 }
 .cat-head .n{font:600 12px/1 var(--font-mono);color:var(--text-muted)}
-.cat-head::after{content:"";flex:1 1 60px;height:1px;background:var(--brand-06)}
+.cat-head::after{content:"";flex:1 1 60px;height:1px;background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02))}
 
 .subj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px}
 .subj{
@@ -149,7 +149,7 @@
   font:600 11px/1 var(--font-mono);color:var(--text-muted);
   padding:4px 8px;border-radius:var(--r-full);background:rgba(255,255,255,.6);border:1px solid var(--brand-06);
 }
-.subj .prog.done{background:var(--brand);color:#fff;border-color:transparent}
+.subj .prog.done{background:var(--grad-brand);color:#fff;border-color:transparent}
 
 .empty{padding:34px 20px;text-align:center;color:var(--text-muted)}
 .empty b{display:block;color:var(--text-strong);font-size:15px;margin-bottom:6px}
@@ -169,7 +169,7 @@
 .nlm-item:active { transform: scale(.98); }
 .nlm-ico {
   flex: none; width: 44px; height: 44px; border-radius: var(--r-md);
-  display: grid; place-items: center; background: var(--brand-10); color: var(--text-strong);
+  display: grid; place-items: center; background: var(--grad-brand-soft); color: var(--text-strong);
 }
 .nlm-ico svg { width: 22px; height: 22px; }
 .nlm-tx { flex: 1; min-width: 0; }
@@ -191,7 +191,7 @@
 .nlm-row:hover { background: var(--glass-3-bg); transform: translateY(-1px); box-shadow: var(--sh-sm); }
 .nlm-row .nlm-no {
   flex: none; min-width: 28px; height: 28px; border-radius: var(--r-full);
-  display: grid; place-items: center; background: var(--brand); color: var(--text-invert);
+  display: grid; place-items: center; background: var(--grad-brand); color: var(--text-invert);
   font: 700 11px/1 var(--font-mono);
 }
 .nlm-row .nlm-name { flex: 1; min-width: 0; font: 500 13.5px/1.4 var(--font-display); color: var(--text); }

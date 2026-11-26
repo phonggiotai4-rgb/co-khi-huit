@@ -64,7 +64,7 @@ body::before{
 @supports (backdrop-filter:blur(1px)){.unit-header{backdrop-filter:blur(28px) saturate(120%);}}
 .unit-header .wrap{max-width:none;padding-left:32px;padding-right:32px;padding-bottom:0;}
 .unit-header .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);font-weight:700;}
-.unit-back{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 14px 0 10px;margin-bottom:12px;border-radius:var(--r-full);background:var(--brand);color:#fff;text-decoration:none;font:700 12px/1 "Plus Jakarta Sans","Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.03em;box-shadow:var(--sh-xs);transition:background var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);}
+.unit-back{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 14px 0 10px;margin-bottom:12px;border-radius:var(--r-full);background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;text-decoration:none;font:700 12px/1 "Plus Jakarta Sans","Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.03em;box-shadow:var(--sh-xs);transition:background var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);}
 .unit-back svg{width:15px;height:15px;flex:none}
 .unit-back:hover{background:var(--brand-deep);transform:translateY(-1px)}
 .unit-back:active{transform:scale(.98)}
@@ -79,7 +79,7 @@ nav.toc{
 @supports (backdrop-filter:blur(1px)){nav.toc{backdrop-filter:blur(28px) saturate(120%);}}
 nav.toc a{color:var(--text);text-decoration:none;font-weight:600;padding:8px 10px;border-radius:var(--r-sm);
   transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);}
-nav.toc a:hover{background:var(--brand-06);color:var(--brand);}
+nav.toc a:hover{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));color:var(--brand);}
 
 section.page{
   background:rgba(255,255,255,.86);border:1px solid var(--glass-2-br);border-radius:var(--r-xl);
@@ -90,18 +90,18 @@ section.page{
 .page-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
   border-bottom:1px solid var(--brand-06);padding-bottom:14px;margin-bottom:22px;}
 .page-head h2{font-size:22px;color:var(--text-strong);letter-spacing:-.01em;font-weight:700;}
-.page-num{flex:0 0 auto;background:var(--brand);color:#fff;font-family:"JetBrains Mono",ui-monospace,monospace;
+.page-num{flex:0 0 auto;background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-family:"JetBrains Mono",ui-monospace,monospace;
   font-weight:700;font-size:11px;padding:5px 11px;border-radius:var(--r-full);letter-spacing:.04em;
   text-transform:uppercase;box-shadow:var(--sh-xs);}
 .lesson-title{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px;}
-.lesson-tag{background:var(--brand);color:#fff;font-weight:700;font-size:13px;padding:6px 14px;
+.lesson-tag{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-weight:700;font-size:13px;padding:6px 14px;
   border-radius:var(--r-sm);letter-spacing:.03em;}
 .lesson-title h3{font-size:22px;color:var(--text-strong);}
 .lesson-goals{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;font-size:13px;}
-.goal{display:inline-block;background:var(--brand-06);color:var(--brand-deep);border:1px solid var(--brand-25);
+.goal{display:inline-block;background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));color:var(--brand-deep);border:1px solid var(--brand-25);
   border-radius:var(--r-full);padding:4px 12px;font-weight:600;line-height:1.45;}
 .goal .g{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:6px;
-  background:var(--brand);color:#fff;font-size:11px;font-weight:700;vertical-align:-4px;margin-right:6px;}
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-size:11px;font-weight:700;vertical-align:-4px;margin-right:6px;}
 
 h4.ex{font-size:16px;margin:26px 0 10px;color:var(--text);font-weight:700;line-height:1.45;}
 h4.ex .n{color:var(--brand);font-weight:800;margin-right:6px;}
@@ -129,23 +129,23 @@ ol.roman{list-style:lower-roman;}
 .panel .lbl{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:11px;
   letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;color:var(--brand-deep);}
 .panel .lbl .tag{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;
-  border-radius:6px;background:var(--brand);color:#fff;font-size:11px;font-weight:700;}
-.panel.v{background:var(--brand-06);border-left-color:var(--brand);}
+  border-radius:6px;background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-size:11px;font-weight:700;}
+.panel.v{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border-left-color:var(--brand);}
 .panel.v .lbl{color:var(--brand);}
-.panel.v .lbl .tag{background:var(--brand);}
+.panel.v .lbl .tag{background: linear-gradient(135deg, var(--brand), var(--brand-deep));}
 .panel.g{background:rgba(255,255,255,.62);border-left-color:var(--brand-deep);}
 .panel.g .lbl{color:var(--brand-deep);}
 .panel.g .lbl .tag{background:var(--brand-deep);}
-.panel.fl{background:var(--brand-10);border-left-color:var(--brand);}
+.panel.fl{background: linear-gradient(135deg, var(--brand-10), var(--brand-06));border-left-color:var(--brand);}
 .panel.fl .lbl{color:var(--brand);}
-.panel.fl .lbl .tag{background:var(--brand);}
-.panel.s{background:var(--brand-06);border-left-color:var(--gray-400);}
+.panel.fl .lbl .tag{background: linear-gradient(135deg, var(--brand), var(--brand-deep));}
+.panel.s{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border-left-color:var(--gray-400);}
 .panel.s .lbl{color:var(--gray-600);}
 .panel.s .lbl .tag{background:var(--gray-600);}
 .panel.w{background:rgba(255,255,255,.62);border-left-color:var(--brand-25);}
 .panel.w .lbl{color:var(--brand-deep);}
 .panel.w .lbl .tag{background:var(--brand-deep);}
-.panel.e{background:var(--brand-10);border-left-color:var(--brand-deep);}
+.panel.e{background: linear-gradient(135deg, var(--brand-10), var(--brand-06));border-left-color:var(--brand-deep);}
 .panel.e .lbl{color:var(--brand-deep);}
 .panel.e .lbl .tag{background:var(--brand-deep);}
 .panel.note{background:var(--gray-100);border-left-color:var(--brand-25);}
@@ -159,7 +159,7 @@ ol.roman{list-style:lower-roman;}
   border-radius:var(--r-lg);padding:20px 22px;margin:16px 0;box-shadow:var(--sh-xs);}
 .article h5{font-size:20px;color:var(--text-strong);margin-bottom:10px;letter-spacing:-.02em;}
 .article p{margin:10px 0;}
-.article.blue{background:var(--brand-06);border-left-color:var(--brand-deep);}
+.article.blue{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border-left-color:var(--brand-deep);}
 .article.blue h5{color:var(--text-strong);}
 .article.orange{background:rgba(255,255,255,.62);border-left-color:var(--brand-25);}
 .article.orange h5{color:var(--text-strong);}
@@ -168,7 +168,7 @@ table{border-collapse:separate;border-spacing:0;width:100%;margin:12px 0;font-si
   background:rgba(255,255,255,.55);border:1px solid var(--brand-06);border-radius:var(--r-md);overflow:hidden;}
 th,td{border-bottom:1px solid var(--brand-06);border-right:1px solid var(--brand-06);padding:10px 12px;
   text-align:left;vertical-align:top;}
-th{background:var(--brand-06);color:#5B6474;font-size:11px;font-weight:700;letter-spacing:.04em;
+th{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));color:#5B6474;font-size:11px;font-weight:700;letter-spacing:.04em;
   text-transform:uppercase;}
 tr:last-child td{border-bottom:0;}
 td:last-child,th:last-child{border-right:0;}
@@ -178,15 +178,15 @@ tbody tr:hover{background:rgba(255,255,255,.55);}
 td.center,th.center{text-align:center;}
 
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;}
-.divider{height:1px;background:var(--brand-06);margin:22px 0;}
+.divider{height:1px;background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));margin:22px 0;}
 .muted{color:var(--text-muted);}
 .filled{font-style:italic;border-bottom:2px dotted var(--gray-400);padding:0 3px;color:var(--text);}
 .it{font-style:italic;}
 
-.sol{background:var(--brand-06);border:1px solid var(--brand-10);border-left:4px solid var(--brand);
+.sol{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border:1px solid var(--brand-10);border-left:4px solid var(--brand);
   border-radius:var(--r-md);padding:12px 14px 13px;margin:10px 0 8px;font-size:14px;color:var(--text);
   box-shadow:var(--sh-xs);}
-.sol .hd{display:inline-block;background:var(--brand);color:#fff;font-weight:800;font-size:10.5px;
+.sol .hd{display:inline-block;background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-weight:800;font-size:10.5px;
   letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:var(--r-full);margin-bottom:6px;}
 .sol .hd.warn{background:var(--brand-deep);}
 .sol p{margin:3px 0;}
@@ -207,7 +207,7 @@ details.script summary::before{content:"+";display:inline-flex;align-items:cente
   width:20px;height:20px;border-radius:var(--r-sm);background:var(--white);border:1px solid var(--brand);
   color:var(--brand);font-size:15px;font-weight:700;line-height:1;flex:0 0 auto;}
 details.script[open] summary::before{content:"\2212";}
-details.script summary .track{background:var(--brand);color:#fff;font-family:"JetBrains Mono",ui-monospace,monospace;
+details.script summary .track{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:var(--r-full);flex:0 0 auto;}
 .script-body{padding:0 0 14px;font-size:14.5px;color:var(--text);}
 .script-body p{margin:7px 0;}
@@ -226,8 +226,8 @@ details.script summary .track{background:var(--brand);color:#fff;font-family:"Je
   font-family:inherit;font-size:12px;font-weight:700;color:var(--text);cursor:pointer;letter-spacing:.02em;
   transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);}
 .vi-toggle button + button,.ans-toggle button + button{border-left:1px solid var(--brand-06);}
-.vi-toggle button:hover,.ans-toggle button:hover{background:var(--brand-06);color:var(--brand);}
-.vi-toggle button.active,.ans-toggle button[aria-pressed="true"]{background:var(--brand);color:#fff;}
+.vi-toggle button:hover,.ans-toggle button:hover{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));color:var(--brand);}
+.vi-toggle button.active,.ans-toggle button[aria-pressed="true"]{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;}
 .vi-toggle button:active,.ans-toggle button:active{transform:scale(.98);}
 
 footer.unit-footer{text-align:center;color:var(--text-muted);font-size:12px;padding:18px 0 0;}
@@ -287,7 +287,7 @@ body.hide-answers .tick,body.hide-answers .cross,body.hide-answers .filled{visib
 
 /* ---------- vocab tool ---------- */
 #vocab{padding-bottom:30px}
-.vintro{background:var(--brand-06);border:1px solid var(--brand-10);border-left:5px solid var(--brand);
+.vintro{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border:1px solid var(--brand-10);border-left:5px solid var(--brand);
   border-radius:var(--r-md);padding:12px 16px;font-size:14px;line-height:1.55;margin-bottom:15px;color:var(--text);}
 .vintro b{color:var(--brand-deep)}
 .vtool{background:var(--glass-2-bg);border:1px solid var(--glass-2-br);border-radius:var(--r-lg);
@@ -299,21 +299,21 @@ body.hide-answers .tick,body.hide-answers .cross,body.hide-answers .filled{visib
 .vchip{border:1px solid var(--brand-25);background:rgba(255,255,255,.55);color:var(--brand-deep);
   border-radius:var(--r-full);padding:5px 13px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;
   transition:.13s;}
-.vchip:hover{background:var(--brand-06);}
-.vchip.on{background:var(--brand);color:#fff;border-color:var(--brand);}
+.vchip:hover{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));}
+.vchip.on{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;border-color:var(--brand);}
 .vrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
 .vbtn{border:1px solid var(--brand-25);background:rgba(255,255,255,.55);color:var(--brand-deep);
   border-radius:var(--r-full);padding:6px 14px;font:inherit;font-size:12.5px;font-weight:700;
   cursor:pointer;transition:.13s;white-space:nowrap;}
-.vbtn:hover{background:var(--brand-06);}
+.vbtn:hover{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));}
 .vbtn.on{background:var(--brand-deep);color:#fff;border-color:var(--brand-deep);}
-.vbtn.acc{background:var(--brand);color:#fff;border-color:var(--brand);}
+.vbtn.acc{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;border-color:var(--brand);}
 #vcount{margin-left:auto;font-size:12.5px;font-weight:800;color:var(--brand-deep);}
 .vgrp{margin:0 0 22px;}
 .vgrp > h3{font-size:18px;color:var(--brand);margin:0 0 2px;display:flex;align-items:center;
   gap:9px;flex-wrap:wrap;font-weight:800;}
 .vgrp > h3 small{font-style:italic;font-weight:600;color:var(--gray-400);font-size:12.5px;}
-.vgrp > h3 .cnt{background:var(--brand-06);color:var(--brand-deep);border-radius:var(--r-full);
+.vgrp > h3 .cnt{background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));color:var(--brand-deep);border-radius:var(--r-full);
   font-size:11.5px;padding:2px 9px;font-weight:800;}
 .vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(226px,1fr));gap:9px;margin-top:9px;}
 .vcard{border:1px solid var(--brand-10);border-radius:var(--r-md);padding:9px 12px;
@@ -323,9 +323,9 @@ body.hide-answers .tick,body.hide-answers .cross,body.hide-answers .filled{visib
 .vcard.zero{display:none;}
 .vh{display:flex;align-items:center;gap:7px;}
 .vh > b{font-size:15.5px;color:var(--brand-deep);letter-spacing:.1px;line-height:1.25;font-weight:800;}
-.vsay{margin-left:auto;border:none;background:var(--brand-06);color:var(--brand);border-radius:var(--r-full);
+.vsay{margin-left:auto;border:none;background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));color:var(--brand);border-radius:var(--r-full);
   min-width:40px;height:36px;padding:0 8px;font-size:13px;cursor:pointer;line-height:1;flex:0 0 auto;}
-.vsay:hover{background:var(--brand);color:#fff;}
+.vsay:hover{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:#fff;}
 .ipa{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--gray-400);margin-top:2px;}
 .vm{font-size:14px;color:var(--text);margin-top:3px;}
 .vn{font-size:11.5px;color:var(--gray-400);font-style:italic;margin-top:2px;}
@@ -362,9 +362,9 @@ body.vbi .vm{filter:none !important;opacity:1 !important}
   width:min(560px,94vw);box-shadow:var(--sh-lg);}
 .vqtop{display:flex;justify-content:space-between;align-items:center;
   font-weight:800;color:var(--brand-deep);font-size:14px;}
-.vqx{border:none;background:var(--brand-06);border-radius:var(--r-full);width:30px;height:30px;
+.vqx{border:none;background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border-radius:var(--r-full);width:30px;height:30px;
   cursor:pointer;font-size:15px;color:var(--brand);}
-.vqx:hover{background:var(--brand-10);}
+.vqx:hover{background: linear-gradient(135deg, var(--brand-10), var(--brand-06));}
 .vqcard{margin:14px 0;border:2px solid var(--brand-25);border-radius:var(--r-lg);
   padding:26px 18px;text-align:center;background:rgba(255,255,255,.55);cursor:pointer;min-height:168px;}
 .vqw{font-size:32px;color:var(--brand-deep);line-height:1.15;font-weight:800;}
@@ -1641,7 +1641,7 @@ body.vbi .vcard.zero:hover{display:none !important;}
       <p data-vi="&lt;b&gt;Student A:&lt;/b&gt; Bạn là sinh viên. Đến giờ bạn chưa học hành chăm chỉ lắm. Hãy thuyết phục cố vấn rằng bạn sẽ học chăm hơn trong thời gian tới."><b>Student A:</b> You are a student. You haven't worked very hard until now. Convince your advisor that you are going to work harder in the future.</p>
       <p data-vi="&lt;b&gt;Student B:&lt;/b&gt; Bạn là cố vấn. Hãy cảnh báo sinh viên rằng cậu ấy/cô ấy phải bắt đầu học chăm chỉ hơn."><b>Student B:</b> You are an advisor. Warn your student that he/she has to start working harder.</p>
     </div>
-    <div class="panel s" style="border-left-color:var(--brand-deep);background:var(--brand-10)">
+    <div class="panel s" style="border-left-color:var(--brand-deep);background: linear-gradient(135deg, var(--brand-10), var(--brand-06))">
       <div class="lbl" style="color:var(--brand-deep)" data-vi="&lt;span class=&quot;tag&quot; style=&quot;background:var(--brand-deep)&quot;&gt;B&lt;/span&gt; TẠI PHÒNG KHÁM"><span class="tag" style="background:var(--brand-deep)">B</span> AT THE DOCTOR'S</div>
       <p data-vi="&lt;b&gt;Student A:&lt;/b&gt; Bạn đang ở phòng khám. Đến giờ bạn chưa có thói quen lành mạnh. Hãy nói với bác sĩ rằng bạn sẽ khỏe mạnh hơn nhiều trong tương lai."><b>Student A:</b> You are at the doctor's. You haven't had healthy habits until now. Tell your doctor that you are going to be much healthier in the future.</p>
       <p data-vi="&lt;b&gt;Student B:&lt;/b&gt; Bạn là bác sĩ. Hãy cảnh báo bệnh nhân rằng anh ấy/cô ấy phải chuyển sang một lối sống lành mạnh hơn."><b>Student B:</b> You are a doctor. Warn your patient that he/she has to change to a healthier lifestyle.</p>
@@ -1848,7 +1848,7 @@ body.vbi .vcard.zero:hover{display:none !important;}
     <div class="panel s">
       <p data-vi="Bạn đang nấu bữa tối cho một người bạn, nhưng cô ấy gọi điện nói rằng cô ấy sẽ đi dự tiệc thay vào đó.">You're cooking dinner for a friend, but she calls to say that she is going to a party, instead.</p>
     </div>
-    <div class="panel s" style="background:var(--brand-10);border-left-color:var(--brand-deep)">
+    <div class="panel s" style="background: linear-gradient(135deg, var(--brand-10), var(--brand-06));border-left-color:var(--brand-deep)">
       <p data-vi="Bạn cần giúp đỡ về &lt;b&gt;English homework&lt;/b&gt;, nhưng giáo viên của bạn đang quá bận.">You need help with your <b>English homework</b>, but your teacher is too busy.</p>
     </div>
     <div class="sol">

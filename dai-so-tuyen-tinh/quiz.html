@@ -61,7 +61,7 @@
 }
 .qth-chip em{font:600 10.5px/1 var(--font-mono);font-style:normal;color:var(--text-muted)}
 .qth-chip:hover{background:var(--glass-3-bg);transform:translateY(-1px)}
-.qth-chip[aria-pressed="true"]{background:var(--brand);color:var(--text-invert);border-color:transparent}
+.qth-chip[aria-pressed="true"]{background: linear-gradient(135deg, var(--brand), var(--brand-deep));color:var(--text-invert);border-color:transparent}
 .qth-chip[aria-pressed="true"] em{color:rgba(255,255,255,.78)}
 .qth-chip[disabled]{opacity:.45;cursor:not-allowed;transform:none}
 
@@ -74,7 +74,7 @@
 }
 .qth-q-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .qth-no{font:700 14px/1 var(--font-display);color:var(--text-strong)}
-.qth-code-tag{padding:2px 8px;border-radius:var(--r-sm);background:var(--brand-06);
+.qth-code-tag{padding:2px 8px;border-radius:var(--r-sm);background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));
   color:var(--text-muted);font:500 11px/1.4 var(--font-mono);letter-spacing:.04em}
 .qth-q-text{margin:0 0 14px;font:400 14.5px/1.7 var(--font-display);color:var(--text);max-width:86ch}
 .qth-opts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
@@ -85,14 +85,14 @@
   font:400 14px/1.55 var(--font-display);color:var(--text);
 }
 .qth-opt .k{width:26px;height:26px;flex:none;border-radius:var(--r-sm);display:grid;place-items:center;
-  background:var(--brand-10);color:var(--text-strong);font:700 12px/1 var(--font-display)}
+  background: linear-gradient(135deg, var(--brand-10), var(--brand-06));color:var(--text-strong);font:700 12px/1 var(--font-display)}
 .qth-opt .tx{min-width:0;flex:1}
 .qth-opt.is-ok{border-color:var(--ok);background:var(--ok-10)}
 .qth-opt.is-ok .k{background:var(--ok);color:#fff}
 .qth-opt.is-dim{opacity:.62}
 
 .qth-exp{margin-top:14px;padding:14px 16px;border-radius:var(--r-md);
-  background:var(--brand-06);border-left:3px solid var(--brand)}
+  background: linear-gradient(135deg, var(--brand-06), rgba(3,78,162,.02));border-left:3px solid var(--brand)}
 .qth-exp .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px;
   font:600 11px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)}
 .qth-exp .hd svg{width:14px;height:14px;color:var(--text-strong)}
